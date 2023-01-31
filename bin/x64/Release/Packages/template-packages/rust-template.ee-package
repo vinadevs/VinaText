@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Rust File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+// Desciption            :   file desciption
+// Filename              :   file.rs
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+fn main() {
+    my_function();
+}
+
+fn my_function() {
+    println!("Hello World!");
+}
+
+@@ only main file template:
+// Desciption            :   file desciption
+// Filename              :   file.rs
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+// This is the main function
+fn main() {
+    // Statements here are executed when the compiled binary is called
+
+    // Print text to the console
+    println!("Hello World!");
+}

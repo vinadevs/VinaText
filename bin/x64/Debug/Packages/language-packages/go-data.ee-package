@@ -1,0 +1,26 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Golang settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to install Golang Compiler for windows:
+https://go.dev/
+- After installion, please change below path settings to your installed Golang paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\GO-1.15.6\bin\go.exe
+
+@@ debugger path:
+..\Compilers\GO-1.15.6\bin\go.exe
+
+@@ auto complete:
+break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type continue for import return var
+
+

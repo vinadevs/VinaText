@@ -1,0 +1,61 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext C Shape File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+///-----------------------------------------------------------------
+///   Namespace:      <Class Namespace>
+///   Class:          <Class Name>
+///   Description:    <Description>
+///   Author:         <Author>                    
+///   Date: 		  <DateTime>
+///   Notes:          <Notes>
+///-----------------------------------------------------------------
+
+using System;
+namespace Template
+{
+	class Hello
+	{
+		public void SayHello()
+		{
+			Console.WriteLine("Hello");
+		}
+	}
+
+	class Program
+	{
+		static void Main(string[] args)
+		{
+			var hello = new Hello();
+			hello.SayHello();
+			Console.ReadKey();
+		}
+	}
+}
+
+@@ only main file template:
+///-----------------------------------------------------------------
+///   Namespace:      <Class Namespace>
+///   Class:          <Class Name>
+///   Description:    <Description>
+///   Author:         <Author>                    
+///   Date: 		  <DateTime>
+///   Notes:          <Notes>
+///-----------------------------------------------------------------
+
+using System;
+
+class TestClass
+{
+    static void Main(string[] args)
+    {
+        // Display the number of command line arguments.
+        Console.WriteLine(args.Length);
+    }
+}

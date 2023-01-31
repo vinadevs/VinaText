@@ -1,0 +1,27 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Javascript File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+/**
+ * Copyright (c) 2022
+ *
+ * long description for the file
+ *
+ * @summary short description for the file
+ * @author ABC <abcxyz@gmail.com>
+ *
+ * Created at     : 2022-02-02 02:02:02 
+ * Last modified  : 2022-02-02 02:02:02
+ */
+
+function myFunc() {
+  console.log("Hello from my function!");
+}
+
+myFunc();

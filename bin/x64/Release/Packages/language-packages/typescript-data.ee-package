@@ -1,0 +1,28 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext TypeScript settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to download NodeJS for windows:
+https://nodejs.org/en/
+- After installion:
++ Please change below path settings to your installed NodeJS paths.
++ Add setup for [Preference > Application Preference > File System Settings > NodeJS Interpreter Folder] also.
+- Please go to below website to install TypeScript package for windows:
+https://www.npmjs.com/package/typescript
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\compiler.exe
+
+@@ debugger path:
+..\Compilers\debugger.exe
+
+@@ auto complete:
+break case catch class const continue debugger default delete do else enum export extends false finally for function if import in instanceof new null return super switch this throw true try typeof var void while with as implements interface let package private protected public static yield any boolean constructor declare get module require number set string symbol type from of 

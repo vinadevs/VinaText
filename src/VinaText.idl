@@ -1,0 +1,16 @@
+// VinaText.idl : IDL source for VinaText
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (VinaText.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+[
+	uuid(F38018E8-F7F0-4FD9-AC01-2E7FDDEBECE6),
+	version(1.0)	
+]
+library VinaTextLib
+{
+	importlib("stdole2.tlb");
+};

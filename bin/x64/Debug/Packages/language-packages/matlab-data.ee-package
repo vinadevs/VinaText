@@ -1,0 +1,26 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Matlab settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to install Matlab Compiler for windows:
+https://www.mathworks.com/products/compiler.html
+- After installion, please change below path settings to your installed Matlab paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\compiler.exe
+
+@@ debugger path:
+..\Compilers\debugger.exe
+
+@@ auto complete:
+break case catch classdef continue else elseif end for function global if otherwise parfor persistent return switch try while 
+
+

@@ -1,0 +1,49 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Python File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+#!/usr/bin/env python3  
+# -*- coding: utf-8 -*-
+#----------------------------------------------------------------------------
+# Created By  : name_of_the_creator
+# Created Date: date/month/time ..etc
+# version ='1.0'
+# ---------------------------------------------------------------------------
+""" Details about the module and for what purpose it was built for """
+# ---------------------------------------------------------------------------
+
+def my_function():
+	"""
+    my_function does blah blah blah.
+    :param p1: describe about parameter p1
+    :param p2: describe about parameter p2
+    :param p3: describe about parameter p3
+    :return: describe what it returns
+    """ 
+	print("Hello from my function!")
+
+# call my_function()
+my_function()
+
+@@ only main file template:
+#!/usr/bin/env python3  
+# -*- coding: utf-8 -*-
+#----------------------------------------------------------------------------
+# Created By  : name_of_the_creator
+# Created Date: date/month/time ..etc
+# version ='1.0'
+# ---------------------------------------------------------------------------
+""" Details about the module and for what purpose it was built for """
+# ---------------------------------------------------------------------------
+
+def main():
+    print("Hello World")
+
+if __name__=="__main__":
+    main()

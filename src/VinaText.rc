@@ -1,0 +1,2952 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+#include "verrsrc.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (United States) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "#include ""verrsrc.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
+    "LANGUAGE 9, 1\r\n"
+    "#include ""..\\res\\VinaText.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""      // Standard components\r\n"
+    "#include ""afxprint.rc""    // printing/print preview resources\r\n"
+    "#if !defined(_AFXDLL)\r\n"
+    "#include ""afxribbon.rc""        // MFC ribbon and control bar resources\r\n"
+    "#endif\r\n"
+    "#endif\r\n"
+    "\r\n"
+    "1 TYPELIB ""VinaText.tlb""\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "..\\res\\app.ico"
+
+IDR_EDITOR_DOC          ICON                    "..\\res\\editor.ico"
+
+IDR_IMAGE_DOC           ICON                    "..\\res\\image.ico"
+
+IDR_PDF_DOC             ICON                    "..\\res\\pdf.ico"
+
+IDR_MEDIA_DOC           ICON                    "..\\res\\media.ico"
+
+IDR_HOST_DOC            ICON                    "..\\res\\host.ico"
+
+IDR_FILE_EXPLORER_DOC   ICON                    "..\\res\\fileexplorer.ico"
+
+IDR_TERMINAL_DOC        ICON                    "..\\res\\terminal.ico"
+
+IDR_MSEDGE_DOC          ICON                    "..\\res\\msinternet.ico"
+
+IDR_GOOGLE_CHROME_DOC   ICON                    "..\\res\\googlechrome.ico"
+
+IDR_MOZILLA_FIREFOX_DOC ICON                    "..\\res\\mozillafirefox.ico"
+
+IDR_MSPAINT_DOC         ICON                    "..\\res\\mspaint.ico"
+
+IDR_MSPPT_DOC           ICON                    "..\\res\\msppt.ico"
+
+IDR_MSEXCEL_DOC         ICON                    "..\\res\\msexcel.ico"
+
+IDR_MSWORD_DOC          ICON                    "..\\res\\msword.ico"
+
+IDR_EDITOR_DOC_READ_ONLY ICON                    "..\\res\\docreadonly.ico"
+
+IDR_FILE_EXPLORER_WINDOW ICON                    "..\\res\\explorerwindow.ico"
+
+IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
+
+IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
+
+IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
+
+IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
+
+IDR_BOOKMARK_WINDOW     ICON                    "..\\res\\bookmarkwindow.ico"
+
+IDR_FILE_RESULT_WINDOW  ICON                    "..\\res\\fileresultwindow.ico"
+
+IDR_SEARCH              ICON                    "..\\res\\search.ico"
+
+IDR_REPLACE             ICON                    "..\\res\\replace.ico"
+
+IDR_GOTO                ICON                    "..\\res\\goto.ico"
+
+IDR_BRACKETS_OUTLINE    ICON                    "..\\res\\brackets_outline.ico"
+
+IDR_AUTO_COMPLETE       ICON                    "..\\res\\autocomplete.ico"
+
+IDR_BREAKPOINT_WINDOW   ICON                    "..\\res\\breakpointwindow.ico"
+
+IDR_SETTING_TAB         ICON                    "..\\res\\settingtab.ico"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDR_TREEFILECTRL_DROPCOPY CURSOR                  "..\\res\\tfdropcopy.cur"
+
+IDR_TREEFILECTRL_NO_DROPCOPY CURSOR                  "..\\res\\tfnodropcopy.cur"
+
+IDR_TREEFILECTRL_NO_DROPMOVE CURSOR                  "..\\res\\tfnodropmove.cur"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "..\\res\\Toolbar.bmp"
+
+IDR_MAINFRAME_24        BITMAP                  "..\\res\\Toolbar24.bmp"
+
+IDR_TOOLBAR_DEBUGGER    BITMAP                  "..\\res\\Debugger.bmp"
+
+IDR_TOOLBAR_DEBUGGER_24 BITMAP                  "..\\res\\Debugger24.bmp"
+
+IDR_EXPLORER_TOOLBAR    BITMAP                  "..\\res\\Explorertoolbar16.bmp"
+
+IDR_EXPLORER_TOOLBAR_24 BITMAP                  "..\\res\\Explorertoolbar24.bmp"
+
+IDR_FOLDER_ROOT         BITMAP                  "..\\res\\Folder.bmp"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    BUTTON      ID_FILE_SAVE_ALL
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_PANE_FILE_EXPLORER
+    SEPARATOR
+    BUTTON      ID_EDIT_UNDO
+    BUTTON      ID_EDIT_REDO
+    SEPARATOR
+    BUTTON      ID_PANE_OUTPUT_WINDOW
+    BUTTON      ID_QUICK_SEARCH
+    BUTTON      ID_PANE_SEARCH_AND_REPLACE_WINDOW
+    BUTTON      ID_WINDOW_MANAGER
+    SEPARATOR
+    BUTTON      ID_EDITOR_COMMENT
+    BUTTON      ID_EDITOR_UNCOMMENT
+    BUTTON      ID_DOCUMENT_SET_READ_ONLY
+    BUTTON      ID_MDI_TAB_CLOSE_ALL_DOC
+    BUTTON      ID_EDIT_SHOW_ALL_CHARACTOR
+    BUTTON      ID_EDITOR_SHOW_TRACKING_BAR
+    BUTTON      ID_EDITOR_FULL_SCREEN_MODE
+    SEPARATOR
+    BUTTON      ID_DEBUGGER_START
+    BUTTON      ID_TOGGLE_AUTO_COMPLETE
+    BUTTON      ID_PATH_VINATEXT_BOOKMARK_TABLE
+    BUTTON      ID_DOCUMENT_FILE_SUMMARY
+    BUTTON      ID_MDI_TAB_MOVE_PREVIOUS_TAB
+	BUTTON      ID_MDI_TAB_NEW_VERTICAL_TAB
+    SEPARATOR
+    BUTTON      ID_MDI_TAB_OPEN_CONTAINER_FOLDER
+    BUTTON      ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER
+    BUTTON      ID_MDI_TAB_OPEN_CMD
+    BUTTON      ID_DOCUMENT_TRANSLATE
+    BUTTON      ID_MDI_TAB_RELOAD
+    BUTTON      ID_MDI_TAB_CLOSE
+END
+
+IDR_MAINFRAME_24 TOOLBAR 16, 16
+BEGIN
+    BUTTON      ID_FILE_NEW
+    BUTTON      ID_FILE_OPEN
+    BUTTON      ID_FILE_SAVE
+    BUTTON      ID_FILE_SAVE_ALL
+    SEPARATOR
+    BUTTON      ID_EDIT_CUT
+    BUTTON      ID_EDIT_COPY
+    BUTTON      ID_EDIT_PASTE
+    SEPARATOR
+    BUTTON      ID_PANE_FILE_EXPLORER
+    SEPARATOR
+    BUTTON      ID_EDIT_UNDO
+    BUTTON      ID_EDIT_REDO
+    SEPARATOR
+    BUTTON      ID_PANE_OUTPUT_WINDOW
+    BUTTON      ID_QUICK_SEARCH
+    BUTTON      ID_PANE_SEARCH_AND_REPLACE_WINDOW
+    BUTTON      ID_WINDOW_MANAGER
+    SEPARATOR
+    BUTTON      ID_EDITOR_COMMENT
+    BUTTON      ID_EDITOR_UNCOMMENT
+    BUTTON      ID_DOCUMENT_SET_READ_ONLY
+    BUTTON      ID_MDI_TAB_CLOSE_ALL_DOC
+    BUTTON      ID_EDIT_SHOW_ALL_CHARACTOR
+    BUTTON      ID_EDITOR_SHOW_TRACKING_BAR
+    BUTTON      ID_EDITOR_FULL_SCREEN_MODE
+    SEPARATOR
+    BUTTON      ID_DEBUGGER_START
+    BUTTON      ID_TOGGLE_AUTO_COMPLETE
+    BUTTON      ID_PATH_VINATEXT_BOOKMARK_TABLE
+    BUTTON      ID_DOCUMENT_FILE_SUMMARY
+    BUTTON      ID_MDI_TAB_MOVE_PREVIOUS_TAB
+	BUTTON      ID_MDI_TAB_NEW_VERTICAL_TAB
+    SEPARATOR
+    BUTTON      ID_MDI_TAB_OPEN_CONTAINER_FOLDER
+    BUTTON      ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER
+    BUTTON      ID_MDI_TAB_OPEN_CMD
+    BUTTON      ID_DOCUMENT_TRANSLATE
+    BUTTON      ID_MDI_TAB_RELOAD
+    BUTTON      ID_MDI_TAB_CLOSE
+END
+
+IDR_TOOLBAR_DEBUGGER TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_DEBUGGER_START
+    BUTTON      ID_DEBUGGER_CALL_STACK
+    BUTTON      ID_DEBUGGER_STOP
+    BUTTON      ID_DEBUGGER_RESTART
+    BUTTON      ID_DEBUGGER_STEPINTO
+    BUTTON      ID_DEBUGGER_STEPOVER
+    BUTTON      ID_DEBUGGER_STEPOUT
+END
+
+IDR_TOOLBAR_DEBUGGER_24 TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_DEBUGGER_START
+    BUTTON      ID_DEBUGGER_CALL_STACK
+    BUTTON      ID_DEBUGGER_STOP
+    BUTTON      ID_DEBUGGER_RESTART
+    BUTTON      ID_DEBUGGER_STEPINTO
+    BUTTON      ID_DEBUGGER_STEPOVER
+    BUTTON      ID_DEBUGGER_STEPOUT
+END
+
+IDR_EXPLORER_TOOLBAR TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_EXPLORER_TB_GO_BACK
+    BUTTON      ID_EXPLORER_TB_GO_FORWARD
+    BUTTON      ID_EXPLORER_TB_DELETE
+    BUTTON      ID_EXPLORER_TB_REFRESH
+    BUTTON      ID_EXPLORER_TB_BACK_TO_DESKTOP
+    BUTTON      ID_EXPLORER_TB_SEARCH_FILE
+    BUTTON      ID_EXPLORER_TB_BOOKMARK_PATH
+    BUTTON      ID_EXPLORER_TB_PRINT_FILE
+    BUTTON      ID_EXPLORER_TB_RENAME
+END
+
+IDR_EXPLORER_TOOLBAR_24 TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_EXPLORER_TB_GO_BACK
+    BUTTON      ID_EXPLORER_TB_GO_FORWARD
+    BUTTON      ID_EXPLORER_TB_DELETE
+    BUTTON      ID_EXPLORER_TB_REFRESH
+    BUTTON      ID_EXPLORER_TB_BACK_TO_DESKTOP
+    BUTTON      ID_EXPLORER_TB_SEARCH_FILE
+    BUTTON      ID_EXPLORER_TB_BOOKMARK_PATH
+    BUTTON      ID_EXPLORER_TB_PRINT_FILE
+    BUTTON      ID_EXPLORER_TB_RENAME
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&New Template...\tCtrl+Shift+P",            ID_CREATE_TEMPLATE_PROJECT
+        MENUITEM "N&ew File\tCtrl+N",                   ID_FILE_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "&Open File\tCtrl+O",                  ID_FILE_OPEN
+        POPUP "Reopen &With Encoding"
+        BEGIN
+            MENUITEM "ANSI",                        ID_OPEN_ENCODING_ANSI
+            MENUITEM "UTF-8",                       ID_OPEN_ENCODING_UTF8
+            MENUITEM "UTF-16 (LE)",                 ID_OPEN_ENCODING_UTF16LE
+            MENUITEM "UTF-16 (BE)",                 ID_OPEN_ENCODING_UTF16BE
+            MENUITEM "UTF-32 (LE)",                 ID_OPEN_ENCODING_UTF32LE
+            MENUITEM "UTF-32 (BE)",                 ID_OPEN_ENCODING_UTF32BE
+            MENUITEM SEPARATOR
+            MENUITEM "Code Page Table...",          ID_FILE_OPEN_AS_ENCODING
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Save File\tCtrl+S",                  ID_FILE_SAVE
+        MENUITEM "Save File &As\tCtrl+Shift+S",               ID_FILE_SAVE_AS
+        MENUITEM "Sa&ve All",                   ID_FILE_SAVE_ALL
+        POPUP "Save As &Encoding"
+        BEGIN
+            MENUITEM "ANSI",                        ID_SAVE_ENCODING_ANSI
+            MENUITEM "UTF-8",                       ID_SAVE_ENCODING_UTF8
+            MENUITEM "UTF-16 (LE)",                 ID_SAVE_ENCODING_UTF16LE
+            MENUITEM "UTF-16 (BE)",                 ID_SAVE_ENCODING_UTF16BE
+            MENUITEM "UTF-32 (LE)",                 ID_SAVE_ENCODING_UTF32LE
+            MENUITEM "UTF-32 (BE)",                 ID_SAVE_ENCODING_UTF32BE
+            MENUITEM SEPARATOR
+            MENUITEM "Code Page Table...",          ID_FILE_SAVE_AS_ENCODING
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Close File\tCtrl+W",             ID_MDI_TAB_CLOSE
+        POPUP "C&lose All"
+        BEGIN
+            MENUITEM "Close All &Tabs\tCtrl+Alt+F4", ID_MDI_TAB_CLOSE_ALL_DOC
+            MENUITEM "Close All Le&ft Tabs",        ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
+            MENUITEM "&Close All R&ight Tabs",      ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
+            MENUITEM "&Close All Unchan&geds",      ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
+            MENUITEM "&Close All B&UT This",        ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
+        END
+        MENUITEM SEPARATOR
+        POPUP "Security..."
+        BEGIN
+            MENUITEM "Lock File With Password",     ID_SAVE_FILE_CRYPTOGRAPHY
+            MENUITEM "Unlock File With Password",   ID_READ_FILE_CRYPTOGRAPHY
+        END
+        MENUITEM SEPARATOR
+        POPUP "Print..."
+        BEGIN
+            MENUITEM "Print Active File",           ID_EXPLORER_PRINT_FILE_NOW
+            MENUITEM "Printer Setup\tCtrl+P",               ID_EXPLORER_PRINT_SETUP_DLG
+            MENUITEM "Printer Page Setup",          ID_EXPLORER_PRINT_PAGE_DLG
+        END
+        MENUITEM "Sen&d Mail Attach Active File", ID_FILE_SEND_MAIL
+        POPUP "&Recent Manager"
+        BEGIN
+            MENUITEM "&Open Recent Closed File\tCtrl+Shift+T",    ID_FILE_OPEN_CLOSED_RECENT
+            MENUITEM "Open &All Recent Files",      ID_FILE_OPEN_ALL_CLOSED_RECENT
+            MENUITEM "Clear &Recent List",          ID_FILE_CLEAR_CLOSED_RECENT
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Recent &Files",               ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit\tAlt+F4",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Undo\tCtrl+Z",                       ID_EDIT_UNDO
+        MENUITEM "&Redo\tCtrl+Y",                       ID_EDIT_REDO
+        MENUITEM SEPARATOR
+        MENUITEM "Undo To &Last Action\tCtrl+Shift+Z",        ID_EDIT_UNDO_ALL
+        MENUITEM "Redo &To Last Action\tCtrl+Shift+Y",        ID_EDIT_REDO_ALL
+        MENUITEM SEPARATOR
+        MENUITEM "U&ndo &For &All Files",       ID_EDIT_UNDO_ALL_FILE
+        MENUITEM "Redo For Al&l Files",         ID_EDIT_REDO_ALL_FILE
+        MENUITEM SEPARATOR
+        MENUITEM "Large File Edit Mode",        ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM SEPARATOR
+        POPUP "&Search And Replace"
+        BEGIN
+            MENUITEM "&Quick Search\tCtrl+F",               ID_QUICK_SEARCH
+            MENUITEM "&Quick Replace\tCtrl+H",              ID_QUICK_REPLACE
+            MENUITEM SEPARATOR
+            MENUITEM "&Search In Files\tCtrl+Shift+F",            ID_EDIT_FIND
+            MENUITEM "&Replace In Files\tCtrl+Shift+H",           ID_EDIT_REPLACE
+            MENUITEM SEPARATOR
+            MENUITEM "&Show Folding Map\tAlt+M",           ID_DOCUMENT_SHOW_FUNCTION_LIST
+        END
+        MENUITEM SEPARATOR
+        POPUP "Line &Bookmark"
+        BEGIN
+            MENUITEM "&Add New Bookmark\tF8",           ID_OPTIONS_ADD_BOOKMARK
+            MENUITEM "&Remove Bookmark\tF8",            ID_OPTIONS_DELETE_BOOKMARK
+            MENUITEM "&Remove All Bookmarks",       ID_OPTIONS_DELETE_ALL_BOOKMARK
+            MENUITEM SEPARATOR
+            MENUITEM "&Goto Next Bookmark",         ID_OPTIONS_FIND_NEXT_BOOKMARK
+            MENUITEM "&Goto Previous Bookmark",     ID_OPTIONS_FIND_PREV_BOOKMARK
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Synchronize Views"
+        BEGIN
+            MENUITEM "&Zoom View In\tCtrl+ScrollUp",   ID_VIEW_ZOOM_IN
+            MENUITEM "&Zoom View Out\tCtrl+ScrollDown", ID_VIEW_ZOOM_OUT
+            MENUITEM SEPARATOR
+            MENUITEM "&Reset Zoom",                 ID_VIEW_ZOOM_RESET
+            MENUITEM SEPARATOR
+            MENUITEM "&Enable Sync. Scrolling",     ID_EDIT_SYNC_SCROLL_VIEW
+        END
+        MENUITEM SEPARATOR
+        POPUP "Scrolling View"
+        BEGIN
+            MENUITEM "Line Up\tCtrl+Up",                     ID_EDIT_LINEUP
+            MENUITEM "Line Down\tCtrl+Down",                   ID_EDIT_LINEDOWN
+        END
+        MENUITEM SEPARATOR
+        POPUP "Margin Bar &Look"
+        BEGIN
+            MENUITEM "Show Line Number Margin",     ID_OPTIONS_VIEW_LINENUMBERS
+            MENUITEM "Show Bookmark / Breakpoint Margin", ID_OPTIONS_SELECTION_MARGIN
+            MENUITEM "Show Folding Margin",         ID_OPTIONS_FOLD_MARGIN
+        END
+        MENUITEM SEPARATOR
+        POPUP "Toggle &Render"
+        BEGIN
+            MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",             ID_OPTIONS_WRAPLINE
+            MENUITEM "&Long Line Checker",          ID_DISPLAY_LONG_LINE_CHECKER
+            MENUITEM "&End Of Line Character",      ID_DOCUMENT_DISPLAY_EOL
+            MENUITEM "&Whitespace And Tab Hint",    ID_DOCUMENT_DISPLAY_WHITE_SPACE
+            MENUITEM "&Tab Indentation Hint",       ID_DISPLAY_TAB_INDENT
+            MENUITEM "&Right To Left Document\tCtrl+Shift+R",     ID_CHANGE_TEXT_BIDIRECTIONAL
+            MENUITEM "&Hide Lines",                 ID_DOCUMENT_HIDE_LINES
+            MENUITEM "&All Hidden Characters\tCtrl+Q",      ID_EDIT_SHOW_ALL_CHARACTOR
+        END
+    END
+    POPUP "&Explorer"
+    BEGIN
+        MENUITEM "New File Explorer Tab\tCtrl+Shift+E",       ID_HOST_FILE_EXPLORER
+        MENUITEM "&Add New Workspace...\tCtrl+Shift+O",       ID_FILE_OPEN_FOLDER_TO_WORKSPACE
+        MENUITEM "&Open Bookmark Path Table\tCtrl+Shift+B",   ID_PATH_VINATEXT_BOOKMARK_TABLE
+        MENUITEM SEPARATOR
+        MENUITEM "&Enable Auto Refresh",        ID_TOOLS_AUTOREFRESH
+        MENUITEM "&Enable Preview Mode",        ID_TOOLS_PREVIEW_MODE
+        MENUITEM SEPARATOR
+        MENUITEM "&Switch Focus To Active Tab\tCtrl+Shift+Q", ID_SWITCH_EPLORER_TO_ACTIVE_TAB
+        MENUITEM SEPARATOR
+        POPUP "&Tree Navigation"
+        BEGIN
+            MENUITEM "&Go Up",                      ID_TOOLS_UPONELEVEL
+            MENUITEM "&Goto Previous Path",         ID_TOOLS_BACK
+            MENUITEM "&Goto Next Path",             ID_TOOLS_FORWARD
+            MENUITEM "&Go Back To Desktop",         ID_TOOLS_BACK_TO_ORIGINAL
+        END
+        MENUITEM SEPARATOR
+        POPUP "Application Paths"
+        BEGIN
+            MENUITEM "&Installation Path",          ID_PATH_EXPLORER_EXTRA
+            MENUITEM "&Compiler Path",              ID_PATH_VINATEXT_COMPILER
+            MENUITEM "&Package Path",               ID_PATH_VINATEXT_PACKAGE
+            MENUITEM "&App Data Path",              ID_PATH_VINATEXT_APPDATA
+            MENUITEM "&Temporary Path",             ID_PATH_VINATEXT_TEMP
+        END
+        MENUITEM SEPARATOR
+        POPUP "Configuration"
+        BEGIN
+            POPUP "Allow"
+            BEGIN
+                MENUITEM "Allow Rename",                ID_TOOLS_ALLOWRENAME
+                MENUITEM "Allow Open",                  ID_TOOLS_ALLOWOPEN
+                MENUITEM "Allow Create Folder And File", ID_TOOLS_ALLOWCREATEFOLDER
+                MENUITEM "Allow Properties",            ID_TOOLS_ALLOWPROPERTIES
+                MENUITEM "Allow Delete",                ID_TOOLS_ALLOWDELETE
+                MENUITEM "Allow Drag/Drop",             ID_TOOLS_ALLOWDRAGDROP
+            END
+            MENUITEM SEPARATOR
+            POPUP "Show"
+            BEGIN
+                MENUITEM "Show Files",                  ID_TOOLS_SHOWFILES
+                MENUITEM "Show Rooted Folder",          ID_TOOLS_SHOWROOTEDFOLDER
+                MENUITEM "Show Shared Folders",         ID_TOOLS_SHOWSHAREDFOLDERS
+                MENUITEM "Show Drive Labels",           ID_TOOLS_SHOWDRIVELABELS
+                MENUITEM "Show All Network Items",      ID_TOOLS_SHOWALLNETWORKITEMS
+                MENUITEM "Show Only Network Printers",  ID_TOOLS_SHOWNETWORKPRINTERS
+                MENUITEM "Show Only Network Shares",    ID_TOOLS_SHOWNETWORKSHARES
+            END
+            MENUITEM SEPARATOR
+            POPUP "Hide Drives"
+            BEGIN
+                MENUITEM "Hide Removable drives",       ID_TOOLS_HIDEREMOVABLE
+                MENUITEM "Hide Fixed drives",           ID_TOOLS_HIDEFIXED
+                MENUITEM "Hide Remote drives",          ID_TOOLS_HIDEREMOTE
+                MENUITEM "Hide CDROM drives",           ID_TOOLS_HIDECDROM
+                MENUITEM "Hide Ramdisk drives",         ID_TOOLS_HIDERAMDISKS
+            END
+            POPUP "Hide Files"
+            BEGIN
+                MENUITEM "Hide Archived files",         ID_TOOLS_HIDEARCHIVE
+                MENUITEM "Hide Compressed files",       ID_TOOLS_HIDECOMPRESSED
+                MENUITEM "Hide Hidden files",           ID_TOOLS_HIDEHIDDEN
+                MENUITEM "Hide System files",           ID_TOOLS_HIDESYSTEM
+                MENUITEM "Hide Temporary files",        ID_TOOLS_HIDETEMPORARY
+                MENUITEM "Hide Encrypted files",        ID_TOOLS_HIDEENCRYPTED
+                MENUITEM "Hide Offline files",          ID_TOOLS_HIDEOFFLINE
+                MENUITEM "Hide Read only files",        ID_TOOLS_HIDEREADONLY
+                MENUITEM "Hide Reparse Point files",    ID_TOOLS_HIDEREPARSEPOINT
+                MENUITEM "Hide Sparse Point files",     ID_TOOLS_HIDESPARSE
+            END
+            POPUP "Hide Folders"
+            BEGIN
+                MENUITEM "Hide Archived folders",       ID_TOOLS_HIDEARCHIVE2
+                MENUITEM "Hide Compressed folders",     ID_TOOLS_HIDECOMPRESSED2
+                MENUITEM "Hide Hidden folders",         ID_TOOLS_HIDEHIDDEN2
+                MENUITEM "Hide System folders",         ID_TOOLS_HIDESYSTEM2
+                MENUITEM "Hide Temporary folders",      ID_TOOLS_HIDETEMPORARY2
+                MENUITEM "Hide Encrypted folders",      ID_TOOLS_HIDEENCRYPTED2
+                MENUITEM "Hide Offline folders",        ID_TOOLS_HIDEOFFLINE2
+                MENUITEM "Hide Read only folders",      ID_TOOLS_HIDEREADONLY2
+                MENUITEM "Hide Reparse Point folders",  ID_TOOLS_HIDEREPARSEPOINT2
+                MENUITEM "Hide Sparse Point folders",   ID_TOOLS_HIDESPARSE2
+            END
+            POPUP "Hide Systems"
+            BEGIN
+                MENUITEM "Hide Desktop",                ID_TOOLS_HIDEDESKTOP
+                MENUITEM "Hide My Computer",            ID_TOOLS_HIDEMYCOMPUTER
+                MENUITEM "Hide My Documents",           ID_TOOLS_HIDEMYDOCUMENTS
+                MENUITEM "Hide Current User Folder",    ID_TOOLS_HIDECURRENTUSERFOLDER
+                MENUITEM "Hide Network",                ID_TOOLS_HIDENETWORK
+            END
+        END
+    END
+    POPUP "Te&xt"
+    BEGIN
+        POPUP "&Comment"
+        BEGIN
+            MENUITEM "&Add Comment\tCtrl+Shift+C",                     ID_EDITOR_COMMENT
+            MENUITEM "Remove Comment\tCtrl+Shift+X",                   ID_EDITOR_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Block Comment\tCtrl+K",               ID_EDITOR_BLOCK_COMMENT
+            MENUITEM "Block Uncomment\tCtrl+Shift+K",             ID_EDITOR_BLOCK_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Toggle Comment\tAlt+K",              ID_EDITOR_TOGGLE_COMMENT
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Convert"
+        BEGIN
+            POPUP "&Case"
+            BEGIN
+                MENUITEM "&To Upper Case\tCtrl+Shift+U", ID_DOCUMENT_TO_UPPER_CASE
+                MENUITEM "To &Lower Case\tCtrl+U",      ID_DOCUMENT_TO_LOWER_CASE
+                MENUITEM "To Lo&wer Kebab - Case",      ID_DOCUMENT_TO_LOWER_KEBAB_CASE
+                MENUITEM "To Upper &Kebab - Case",      ID_DOCUMENT_TO_UPPER_KEBAB_CASE
+                MENUITEM "To Lower S&nake Case",        ID_DOCUMENT_TO_LOWER_CASE_SNAKE
+                MENUITEM "To Upper Snake Cas&e",        ID_DOCUMENT_TO_UPPER_CASE_SNAKE
+                MENUITEM SEPARATOR
+                MENUITEM "To &Reverse Case\tCtrl+R",    ID_DOCUMENT_TO_REVERSE_TEXT
+                MENUITEM "To &Invert Case\tCtrl+I",     ID_DOCUMENT_TO_INVERT_CASE
+                MENUITEM SEPARATOR
+                MENUITEM "To Title - Sna&ke Case",      ID_DOCUMENT_TO_PASCAL_SNAKE_CASE
+                MENUITEM "To Title - Ke&bab Case",      ID_DOCUMENT_TO_PASCAL_KEBAB_CASE
+                MENUITEM "To Title &Upper Case",        ID_DOCUMENT_TO_TIILE_UPPER
+                MENUITEM SEPARATOR
+                MENUITEM "To &Camel Case",              ID_DOCUMENT_TO_UPPER_CASE_CAMEL
+                MENUITEM "To &Pascal Case",             ID_DOCUMENT_TO_PASCAL_CASE
+                MENUITEM "To &Dot Case",                ID_DOCUMENT_TO_DOT_CASE
+                MENUITEM "To &Sentence Case",           ID_DOCUMENT_TO_SENTENCE_CASE
+                MENUITEM "To R&andom Case",             ID_DOCUMENT_TO_RANDOM_CASE
+                MENUITEM SEPARATOR
+                MENUITEM "From Pascal Case To &Split Case", ID_DOCUMENT_PASCAL_CASE_TO_SPLIT_CASE
+                MENUITEM "From &Snake Case To Split Case", ID_DOCUMENT_SNAKE_CASE_TO_SPLIT_CASE
+            END
+            MENUITEM SEPARATOR
+            MENUITEM "EOL To &Window Type (CR-LF)", ID_EOL_WINDOW_CRLF
+            MENUITEM "EOL To &Unix Type (LF)",      ID_EOL_LINUX_LF
+            MENUITEM "EOL To &Macintosh Type (CR)", ID_EOL_MACOS_CR
+            MENUITEM SEPARATOR
+            MENUITEM "&From 4 Spaces To Tab",       ID_OPTIONS_REPLACE_SPACE_BY_TAB
+            MENUITEM "From &Tab To 4 Spaces",       ID_OPTIONS_REPLACE_TAB_BY_SPACE
+            MENUITEM SEPARATOR
+            MENUITEM "Fro&m \\ To /",               ID_EDIT_CONVERT_BACKSLASH_TO_FOWARDSLASH
+            MENUITEM "Fr&om / To \\",               ID_EDIT_CONVERT_FOWARDSLASH_TO_BACKSLASH
+            MENUITEM "F&rom \\ To \\\\",            ID_EDIT_CONVERT_BACKSLASH_TO_DOUBLESLASH
+            MENUITEM SEPARATOR
+            MENUITEM "&To Double Quote",            ID_EDIT_SELECTION_TO_DOUBLE_QUOTE
+        END
+        MENUITEM SEPARATOR
+        POPUP "For&mat"
+        BEGIN
+            MENUITEM "Convert Text To Base64",      ID_TOOL_TO_BASE64
+            MENUITEM "Convert Text To Hexa",        ID_TOOLS_CONVERT_TEXT_TO_HEXA
+            MENUITEM "Convert Text To Decimal",     ID_TOOLS_CONVERT_TEXT_TO_DECIMAL
+            MENUITEM "Convert Text To Binary",      ID_TOOLS_CONVERT_TEXT_TO_BINARY
+            MENUITEM "Convert Text To Octadecimal", ID_TOOLS_CONVERT_TEXT_TO_OCTA
+            MENUITEM SEPARATOR
+            MENUITEM "Get Text From Base64",        ID_TOOL_FROM_BASE64
+            MENUITEM "Get Text From Hexa",          ID_TOOLS_CONVERT_TEXT_FROM_HEXA
+            MENUITEM "Get Text From Decimal",       ID_TOOLS_CONVERT_TEXT_FROM_DECIMAL
+            MENUITEM "Get Text From Binary",        ID_TOOLS_CONVERT_TEXT_FROM_BINARY
+            MENUITEM "Get Text From Octadecimal",   ID_TOOLS_CONVERT_TEXT_FROM_OCTA
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Remove"
+        BEGIN
+            MENUITEM "Remove Line\tCtrl+Shift+L",   ID_EDIT_DELETE_LINE
+            MENUITEM "Remove Spaces",               ID_EDIT_REMOVE_SPACE
+            MENUITEM "Remove Empty Lines",          ID_EDIT_REMOVE_EMPTY_LINE
+            MENUITEM "Remove Word Left\tCtrl+Backspace", ID_DELETE_LEFT_WORD
+            MENUITEM "Remove Word Right\tCtrl+Delete", ID_DELETE_RIGHT_WORD
+            MENUITEM "Remove To Begin Line",        ID_DELETE_TO_BEGIN_LINE
+            MENUITEM "Remove To End Line",          ID_DELETE_TO_END_LINE
+            MENUITEM "Remove Selection\tDelete",    ID_EDIT_CLEAR
+            MENUITEM SEPARATOR
+            MENUITEM "Remove Duplicate Lines (Keep Line)", ID_EDIT_REMOVE_DUPLICATE_LINE
+            MENUITEM "Remove Duplicate Lines (Include Line)", ID_EDIT_REMOVE_DUPLICATE_LINE_NOT_KEEP
+            MENUITEM "Remove Duplicate Words In Each Line", ID_EDIT_REMOVE_DUPLICATE_WORD_IN_LINE
+            MENUITEM "Remove Duplicate Words (Match Case)", ID_EDIT_REMOVE_DUPLICATE_MACTCH_CASE_WORD
+            MENUITEM "Remove Duplicate Words",      ID_EDIT_REMOVE_DUPLICATE_WORD
+            MENUITEM SEPARATOR
+            MENUITEM "Remove From Position X To Y In Line", ID_EDIT_REMOVE_FROM_X_Y_LINE
+            MENUITEM "Remove From Character X To Y In Line", ID_EDIT_REMOVE_FROM_CHAR_X_Y_LINE
+            MENUITEM "Remove Before Word In Line",  ID_EDIT_REMOVE_BEFORE_LINE
+            MENUITEM "Remove After Word In Line",   ID_EDIT_REMOVE_AFTER_LINE
+            MENUITEM "Remove Lines Contain X",      ID_EDIT_DELETE_LINE_CONTAIN
+            MENUITEM "Remove Lines NOT Contain X",  ID_EDIT_DELETE_LINE_NOT_CONTAIN
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Insert"
+        BEGIN
+            MENUITEM "&Duplicate Line / Selection\tCtrl+Shift+D", ID_EDIT_DUPLICATE_SELECTION
+            MENUITEM "&Insert Text From File",      ID_INSERT_FILE_AS_TEXT
+            MENUITEM SEPARATOR
+            MENUITEM "Insert New Line Above",       ID_EDIT_INSERT_LINE_ABOVE
+            MENUITEM "Insert New Line Below",       ID_EDIT_INSERT_LINE_BELOW
+            MENUITEM SEPARATOR
+            MENUITEM "&Insert X At Begin Line",     ID_EDIT_INSERT_X_AT_BEGIN_LINE
+            MENUITEM "&Insert X At End Line",       ID_EDIT_INSERT_X_AT_END_LINE
+            MENUITEM "&Insert X At Position In Line", ID_EDIT_INSERT_X_AT_POSITION_LINE
+            MENUITEM "&Insert X Before Word In Line", ID_EDIT_INSERT_X_BEFORE_WORD_LINE
+            MENUITEM "&Insert X After Word In Line", ID_EDIT_INSERT_X_AFTER_WORD_LINE
+            MENUITEM "&Insert X Between Lines",     ID_VIEW_INSERT_BETWEEN_LINE
+            MENUITEM SEPARATOR
+            MENUITEM "&Insert Prefix Line Number From X", ID_EDIT_INDEXING_NUMBER_LINE
+            MENUITEM "&Insert Prefix Line Alphabet From X", ID_EDIT_INDEXING_ALPHABET_LINE
+            MENUITEM "&Insert Prefix Line Roman From X", ID_EDIT_INDEXING_ROMAN_LINE
+            MENUITEM "&Insert Suffix Line Number From X", ID_EDIT_END_INDEXING_NUMBER_LINE
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Count"
+        BEGIN
+            MENUITEM "Count Total Words",           ID_EDIT_COUNT_WORD
+            MENUITEM "Count Total Unique Words",    ID_EDIT_COUNT_DUPLICATE_WORD
+            MENUITEM "Count Total Duplicate Lines", ID_EDIT_COUNT_DUPLICATE_LINE
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Alignment"
+        BEGIN
+            POPUP "Tab Indentation"
+            BEGIN
+                MENUITEM "Increase Tab Indentation\tTab", ID_INCREASE_TAB_INDENTATION
+                MENUITEM "Decrease Tab Indentation\tShift+Tab", ID_DECREASE_TAB_INDENTATION
+            END
+            POPUP "Line Alignment"
+            BEGIN
+                MENUITEM "Left",                        ID_EDIT_ALIGN_LEFT
+                MENUITEM "Right",                       ID_EDIT_ALIGN_RIGHT
+                MENUITEM "Center",                      ID_EDIT_ALIGN_CENTER
+                MENUITEM "Justify",                     ID_EDIT_ALIGN_JUSTIFY
+            END
+            POPUP "File Alignment"
+            BEGIN
+                MENUITEM "Left",                        ID_EDIT_ALIGN_LEFT_MOT_KEEP_LINE
+                MENUITEM "Right",                       ID_EDIT_ALIGN_RIGHT_MOT_KEEP_LINE
+                MENUITEM "Center",                      ID_EDIT_ALIGN_CENTER_MOT_KEEP_LINE
+                MENUITEM "Justify",                     ID_EDIT_ALIGN_JUSTIFY_MOT_KEEP_LINE
+            END
+            MENUITEM "&Format File\tCtrl+Shift+J",  ID_DOCUMENT_FORMAT_FILE
+        END
+        MENUITEM SEPARATOR
+        POPUP "&Miscellaneous"
+        BEGIN
+            MENUITEM "Line Transpose\tCtrl+T",      ID_LINE_TRANSPOSE
+            MENUITEM SEPARATOR
+            MENUITEM "Split Line With Delimiter X", ID_EDIT_SPLIT_LINE_WITH_DEMILITER
+            MENUITEM "Join Line With Delimiter X",  ID_EDIT_JOIN_LINE_WITH_DEMILITER
+            MENUITEM SEPARATOR
+            MENUITEM "Sort Line Length Ascending",  ID_EDIT_SORT_LINE_ASCENDING
+            MENUITEM "Sort Line Length Descending", ID_EDIT_SORT_LINE_DECENDING
+            MENUITEM "Sort Line A-Z Alphabet",      ID_EDIT_SORT_LINE_AZ
+            MENUITEM "Sort Line Z-A Alphabet",      ID_EDIT_SORT_LINE_ZA
+            MENUITEM SEPARATOR
+            MENUITEM "Trim Space Line ->| |<-",     ID_EDIT_TRIM_SPACE_LINE
+            MENUITEM "Trim Trailing Space Line |<-", ID_EDIT_REMOVE_TRAILING_SPACE_LINE
+            MENUITEM "Trim Heading Space Line ->|", ID_EDIT_REMOVE_HEADING_SPACE_LINE
+        END
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Explorer Window",            ID_PANE_FILE_EXPLORER
+        MENUITEM "&Search Text Window",         ID_PANE_SEARCH_AND_REPLACE_WINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Message Window",             ID_PANE_OUTPUT_WINDOW
+        MENUITEM "&Debug Window",               ID_PANE_BUILD_WINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Text Result Window",         ID_PANE_TEXT_RESULT_WINDOW
+        MENUITEM "&Path Result Window",         ID_PANE_FILE_RESULT_WINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Bookmark Window",            ID_PANE_BOOKMARK_WINDOW
+        MENUITEM "&Breakpoint Window",          ID_PANE_BREAKPOINT_WINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Right Tracking Bar",         ID_EDITOR_SHOW_TRACKING_BAR
+        MENUITEM "Bott&om Status Bar",          ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Hide All Dock Windows",      ID_HIDE_ALL_DOCKWINDOW
+        MENUITEM "S&how All Dock Windows",      ID_SHOW_ALL_DOCKWINDOW
+        MENUITEM "Cle&ar All Dock Windows",     ID_CLEAN_UP_ALL_WINDOW
+    END
+    POPUP "&Run"
+    BEGIN
+        MENUITEM "&Start Debugging\tF5",            ID_DEBUGGER_START
+        MENUITEM "&Stop Debugging\tShift+F5",             ID_DEBUGGER_STOP
+        MENUITEM SEPARATOR
+        MENUITEM "&Step Into\tF11",                  ID_DEBUGGER_STEPINTO
+        MENUITEM "&Step Over\tF10",                  ID_DEBUGGER_STEPOVER
+        MENUITEM "&Step Out\tShift+F11",                   ID_DEBUGGER_STEPOUT
+        MENUITEM SEPARATOR
+        MENUITEM "&Dump Call Stack\tCtrl+Alt+C",            ID_DEBUGGER_CALL_STACK
+        MENUITEM "&Dump Variable Value\tF12",        ID_DEBUGGER_VARIABLE_VALUE
+        MENUITEM "&Dump Variable Type\tShift+F12",         ID_DEBUGGER_VARIABLE_TYPE
+        MENUITEM SEPARATOR
+        MENUITEM "&Add New Breakpoint\tF9",         ID_OPTIONS_ADD_NEW_BREAKPOINT
+        MENUITEM "&Remove Breakpoint\tF9",          ID_OPTIONS_DELETE_BREAKPOINT
+        MENUITEM "&Remove All Breakpoints",     ID_OPTIONS_DELETE_ALL_BREAKPOINT
+        MENUITEM SEPARATOR
+        MENUITEM "&Goto Next Breakpoint",       ID_OPTIONS_FIND_NEXT_BREAKPOINT
+        MENUITEM "&Goto Previous Breakpoint",   ID_OPTIONS_FIND_PREV_BREAKPOINT
+        MENUITEM SEPARATOR
+        MENUITEM "&Generate File Build",        ID_DOCUMENT_GENERATE_BUILD_FILE
+        MENUITEM "&Clean Up Build Temporary",   ID_DOCUMENT_CLEAN_BUILD_FILE
+        MENUITEM SEPARATOR
+        MENUITEM "&Show Error Annotation Hint", ID_OPTIONS_SHOW_ERROR
+    END
+    POPUP "&Terminal"
+    BEGIN
+        MENUITEM "&New CMD Terminal Tab",       ID_OPEN_NEW_CMD_WINDOW
+        MENUITEM "&New PowerShell Terminal Tab\tCtrl+Alt+T", ID_OPEN_NEW_POWERSHELL_WINDOW
+        MENUITEM SEPARATOR
+        MENUITEM "&Run Active File",            ID_RUN_ACTIVE_FILE
+        MENUITEM "&Run Selected Text",          ID_RUN_SELECTED_TEXT
+        MENUITEM SEPARATOR
+        MENUITEM "&Open CMD Terminal", ID_MDI_TAB_OPEN_CMD
+        MENUITEM "&Open CMD Terminal Paste Clipboard", ID_MDI_TAB_OPEN_CMD_PASTE_CLIPBOARD
+        MENUITEM "&Open CMD Terminal Append File Name", ID_MDI_TAB_OPEN_CMD_APPEND_FILE
+        MENUITEM "&Open CMD Terminal Append File Path", ID_MDI_TAB_OPEN_CMD_APPEND_PATH
+        MENUITEM SEPARATOR
+        MENUITEM "&Open PowerShell Terminal",   ID_MDI_TAB_OPEN_POWERSHELL
+        MENUITEM "&Open Git Bash Terminal",     ID_MDI_TAB_OPEN_GITBASH
+        MENUITEM "&Open WSL Terminal",          ID_MDI_TAB_OPEN_WSL
+        MENUITEM SEPARATOR
+        MENUITEM "Python Package Manager (pip3)", ID_TOOL_PYTHON_PIP_WINDOW
+        MENUITEM "NodeJS Package Manager (npm)", ID_TOOL_NODEJS_NPM_WINDOW
+    END
+    POPUP "&Image"
+    BEGIN
+        MENUITEM "&Edit With Microsoft Paint",  ID_IMAGE_EDIT_WIH_MSPAINT
+        MENUITEM "&Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Zoom Out\tCtrl+Down",        ID_IMAGE_ZOOM_OUT
+        MENUITEM "&Zoom In\tCtrl+Up",           ID_IMAGE_ZOOM_IN
+        MENUITEM SEPARATOR
+        MENUITEM "&Rotate Left 90*\tCtrl+Left", ID_IMAGE_LEFT_ROTATE
+        MENUITEM "&Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
+        MENUITEM "&Rotate Flip\tCtrl+D",        ID_IMAGE_FLIP
+        MENUITEM "&Rotate Mirror\tCtrl+M",      ID_IMAGE_MIRROR
+        MENUITEM SEPARATOR
+        POPUP "Bitmap Effects"
+        BEGIN
+            MENUITEM "&Negative",                   ID_IMAGE_NEGATIVE
+            MENUITEM "&Grayscale",                  ID_IMAGE_GRAYSCALE
+            MENUITEM "&Threshold",                  ID_IMAGE_THRESHOLD
+            MENUITEM "&Lighten",                    ID_IMAGE_LIGHTEN
+            MENUITEM "&Darken",                     ID_IMAGE_DARKEN
+            MENUITEM "&Contrast",                   ID_IMAGE_CONTRAST
+            MENUITEM "&Shapern",                    ID_IMAGE_SHARPEN
+            MENUITEM "&Gamma",                      ID_IMAGE_GAMMA
+        END
+        POPUP "Gif"
+        BEGIN
+            MENUITEM "&Pause / Unpause\tSpace",     ID_IMAGE_GIF_PAUSE
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Return Original Image\tCtrl+R", ID_IMAGE_RETURN_ORIGINAL
+    END
+    POPUP "&Tools"
+    BEGIN
+        //MENUITEM "<User defined tools>",			ID_TOOLS_ENTRY
+        //MENUITEM SEPARATOR
+        POPUP "&Host Application"
+        BEGIN
+            MENUITEM "New Microsoft Paint",         ID_HOST_MS_PAINT
+        END
+        POPUP "&Quick Window Shortcuts"
+        BEGIN
+            MENUITEM "&All Control Panel Items",      ID_SHORTCUT_CONTROL_PANEL
+            MENUITEM "&Environmental Variables PATH", ID_SHORTCUT_ENVIRONMENT_PATH
+            MENUITEM "&Window32 Host Location",       ID_SHORTCUT_WINDOW_HOST_FOLDER
+        END
+        POPUP "&Dump Message Output"
+        BEGIN
+            MENUITEM "Dump &System Information",    ID_TOOL_GET_SYSTEM_INFO
+            MENUITEM "Dump &PATH Environments",     ID_TOOL_GET_PATH_ENV_VARIABLE_INFO
+            MENUITEM "Dump &File Text Summary",     ID_DOCUMENT_FILE_SUMMARY
+            MENUITEM "Dump &Wifi Information",      ID_TOOL_GET_WIFI_INFO
+        END
+        MENUITEM SEPARATOR
+        POPUP "String &Generator"
+        BEGIN
+            MENUITEM "Generate GUID String",        ID_TOOL_CREATE_GUID
+            MENUITEM "Generate MD5 String",         ID_TOOL_CREATE_MD5
+            MENUITEM "Generate CRC32 String",       ID_TOOL_CREATE_CRC
+            MENUITEM "Generate SHA-256 String",     ID_TOOL_CREATE_SHA256
+            MENUITEM "Generate SHA-1 String",       ID_TOOL_CREATE_SHA1
+            MENUITEM "Generate Time-Date String",   ID_TOOL_CREATE_TIMEDATE
+            MENUITEM "Generate Url Escape String",  ID_DOCUMENT_URL_ESCAPSE
+        END
+    END
+    POPUP "&Window"
+    BEGIN
+        MENUITEM "Full Screen Mode\tAlt+F11",            ID_EDITOR_FULL_SCREEN_MODE
+        MENUITEM "Split Current View\tCtrl+F1",          ID_WINDOW_NEW
+        MENUITEM SEPARATOR
+        MENUITEM "Switch To Next Tab\tCtrl+Tab",          ID_MDI_SWITCH_TO_NEXT_TAB
+        MENUITEM "Switch To Previous Tab\tCtrl+Shift+Tab",      ID_MDI_SWITCH_TO_PREVIOUS_TAB
+        MENUITEM SEPARATOR
+        MENUITEM "Move To Vertical Tab Group\tCtrl+Numpad1",  ID_MDI_TAB_NEW_VERTICAL_TAB
+        MENUITEM "Move To Horizontal Tab Group\tCtrl+Numpad2", ID_MDI_TAB_NEW_HORIZONTAL_TAB
+        MENUITEM "Move To New App Instance\tCtrl+Shift+N",    ID_MDI_TAB_MOVE_NEW_WINDOW
+    END
+    POPUP "&Preference"
+    BEGIN
+        MENUITEM "&Toolbar And Menu",           ID_VIEW_CUSTOMIZE
+        MENUITEM SEPARATOR
+        POPUP "&Language Preference"
+        BEGIN
+            MENUITEM "Python",                      ID_LANGUAGE_FILE_CONFIG_PYTHON
+            MENUITEM "C++",                         ID_LANGUAGE_FILE_CONFIG_CPP
+            MENUITEM "C",                           ID_LANGUAGE_FILE_CONFIG_C
+            MENUITEM "C#",                          ID_LANGUAGE_FILE_CONFIG_CSHAPE
+            MENUITEM "JavaScript",                  ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
+            MENUITEM "Java",                        ID_LANGUAGE_FILE_CONFIG_JAVA
+            MENUITEM "Pascal",                      ID_LANGUAGE_FILE_CONFIG_PASCAL
+            MENUITEM "Assembly",                    ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
+            MENUITEM "Rust",                        ID_LANGUAGE_FILE_CONFIG_RUST
+            MENUITEM "Go Lang",                     ID_LANGUAGE_FILE_CONFIG_GO
+            MENUITEM "Batch",                       ID_LANGUAGE_FILE_CONFIG_BATCH
+            MENUITEM "PowerShell",                  ID_LANGUAGE_FILE_CONFIG_POWERSHELL
+            MENUITEM "HTML",                        ID_LANGUAGE_FILE_CONFIG_HTML
+            MENUITEM "PHP",                         ID_LANGUAGE_FILE_CONFIG_PHP
+            MENUITEM "Perl",                        ID_LANGUAGE_FILE_CONFIG_PERL
+            MENUITEM "SQL",                         ID_LANGUAGE_FILE_CONFIG_SQL
+            MENUITEM "Verilog",                     ID_LANGUAGE_FILE_CONFIG_VERILOG
+            MENUITEM "Ruby",                        ID_LANGUAGE_FILE_CONFIG_RUBY
+            MENUITEM "TCL",                         ID_LANGUAGE_FILE_CONFIG_TCL
+            MENUITEM "Auto IT",                     ID_LANGUAGE_FILE_CONFIG_AUTOIT
+            MENUITEM "Visual Basic",                ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
+            MENUITEM "R (Data Science)",            ID_LANGUAGE_FILE_CONFIG_R
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&Application Preference",     ID_VIEW_APP_SETTINGS
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "Documentation",               ID_VINATEXT_DOCUMENTATION
+        MENUITEM "Keyboard Shortcuts Ref.",     ID_KEYBOARD_SHORTCUTS_REFERENCE
+        MENUITEM SEPARATOR
+        MENUITEM "Report An Issue",             ID_VINATEXT_REPORT_ISSUE
+        MENUITEM "Release Notes...",            ID_VINATEXT_RELEASE_NOTE
+        MENUITEM "Check For Updates",           ID_VINATEXT_CHECK_FOR_UPDATE
+        MENUITEM SEPARATOR
+        MENUITEM "About VinaText",        ID_APP_ABOUT
+    END
+END
+
+IDR_TREEFILECTRL_POPUP MENU
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "Edit with Microsoft Paint",   ID_TREEFILECTRL_EDIT_WIH_MSPAINT
+        MENUITEM "&Refresh\tF5",                ID_TREEFILECTRL_REFRESH
+        MENUITEM SEPARATOR
+        MENUITEM "&Expand Folder (All Sub)\tCtrl+Shift+N", ID_TREEFILECTRL_EXPAND_ALL
+        MENUITEM "&Collapse Folder (All Sub)\tCtrl+Shift+M", ID_TREEFILECTRL_COLLAPSE_ALL
+        MENUITEM "&Collapse Current Folder\tCtrl+Shift+M", ID_TREEFILECTRL_COLLAPSE_PARENT
+        MENUITEM SEPARATOR
+        POPUP "Create New"
+        BEGIN
+            MENUITEM "New File\tCtrl+N",            ID_TREEFILECTRL_CREATEFILE
+            MENUITEM "New Folder\tCtrl+M",          ID_TREEFILECTRL_CREATEFOLDER
+            MENUITEM "New Template\tCtrl+Shift+P",  ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT
+            MENUITEM SEPARATOR
+            MENUITEM "New Multiple...",             ID_TREEFILECTRL_CREATE_MULTIPLE
+        END
+        POPUP "Get Path String"
+        BEGIN
+            MENUITEM "Get Full Path\tCtrl+Shift+C", ID_TREEFILECTRL_GET_FULL_FILE_PATH
+            MENUITEM "Get Full Path Double Slash (\\)", ID_TREEFILECTRL_GET_FULL_FILE_PATH_DOUBLE_SLASH
+            MENUITEM "Get Full Path Forward Slash (/)", ID_TREEFILECTRL_GET_FULL_FILE_PATH_FORWARD_SLASH
+            MENUITEM "Get Full Path Double Quote",  ID_TREEFILECTRL_GET_FULL_FILE_PATH_DOUBLE_QUOTE
+            MENUITEM SEPARATOR
+            MENUITEM "Get Container Path",          ID_TREEFILECTRL_GET_FOLDER_PATH
+            MENUITEM "Get Path Name",               ID_TREEFILECTRL_GET_FILE_NAME
+        END
+        POPUP "Open Path"
+        BEGIN
+            MENUITEM "Open By Default Application\tCtrl+Enter", ID_TREEFILECTRL_OPEN
+			MENUITEM "Open As Raw Format\tCtrl++Shift+Enter", ID_TREEFILECTRL_OPEN_BY_AS_RAW_FORMAT
+			MENUITEM "Open By VinaText\tDoubleClick",   ID_TREEFILECTRL_OPEN_BY_EXPLORER_EXTRA
+            MENUITEM "Open All Files In Folder",    ID_TREEFILECTRL_OPEN_ALL_BY_EXPLORER_EXTRA
+            MENUITEM "Open Container Folder\tCtrl+E", ID_TREEFILECTRL_OPEN_CONTAINER
+            MENUITEM "Open File Explorer Tab\tCtrl+Shift+E", ID_TREEFILECTRL_NEW_FILE_EXPLORER_TAB
+            MENUITEM SEPARATOR
+            MENUITEM "Open File In Chrome",         ID_TREEFILECTRL_FILE_CHROME
+            MENUITEM "Open File In Edge",           ID_TREEFILECTRL_FILE_EDGE
+            MENUITEM "Open File In Firefox",        ID_TREEFILECTRL_FILE_FIREFOX
+        END
+        POPUP "Open Terminal"
+        BEGIN
+            MENUITEM "&New CMD Terminal Tab",       ID_TREEFILECTRL_OPEN_NEW_CMD_WINDOW
+            MENUITEM "&New Power Shell Terminal Tab\tCtrl+Alt+T", ID_TREEFILECTRL_OPEN_NEW_POWERSHELL_WINDOW
+            MENUITEM SEPARATOR
+            MENUITEM "&Run Selected Path",          ID_TREEFILECTRL_RUN_ACTIVE_FILE
+            MENUITEM SEPARATOR
+            MENUITEM "Open CMD Window",             ID_TREEFILECTRL_OPEN_CMD
+            MENUITEM "Open CMD Window Append Path Name", ID_TREEFILECTRL_OPEN_CMD_APPEND_FILE
+            MENUITEM "Open CMD Window Append Full Path", ID_TREEFILECTRL_OPEN_CMD_APPEND_PATH
+            MENUITEM "Open CMD Window Paste Clipboard", ID_TREEFILECTRL_OPEN_CMD_PASTE_CLIPBOARD
+            MENUITEM SEPARATOR
+            MENUITEM "Open Power Shell Window",     ID_TREEFILECTRL_OPEN_POWERSHELL
+            MENUITEM "Open Git Bash Window",        ID_TREEFILECTRL_OPEN_GITBASH
+            MENUITEM "Open WSL Window",             ID_TREEFILECTRL_OPEN_WSL
+        END
+        POPUP "Folder Operations"
+        BEGIN
+            MENUITEM "Search/Navigate At Path\tCtrl+F", ID_TREEFILECTRL_SEARCH_FILES
+            MENUITEM "Search Text At Path\tCtrl+Shift+F", ID_TREEFILECTRL_SEARCH_ON_FOLDER
+            MENUITEM "Replace Text At Path\tCtrl+Shift+H", ID_TREEFILECTRL_REPLACE_ON_FOLDER
+            MENUITEM "Search All Files At Path\tCtrl+D", ID_TREEFILECTRL_LIST_ALL_FILE
+            MENUITEM "Search All Folders At Path\tCtrl+Shift+D", ID_TREEFILECTRL_LIST_ALL_FOLDER
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Set File Extension Filter",   ID_TREEFILECTRL_FILENAME_FILTER
+        MENUITEM "Add Auto Complete Dataset",   ID_TREEFILECTRL_LOAD_AUTOCOMPLETE
+        MENUITEM "Bookmark Path\tCtrl+B",       ID_TREEFILECTRL_BOOKMARKPATH
+        MENUITEM "Back To Desktop\tShift+Tab",  ID_TREEFILECTRL_BACK_TO_ORIGINAL
+        MENUITEM "Display This Path Only\tTab", ID_TREEFILECTRL_SETROOTFOLDER
+        MENUITEM "Save Active File At Here\tCtrl+S", ID_TREEFILECTRL_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "Close Active File\tCtrl+W",   ID_TREEFILECTRL_CLOSE
+        MENUITEM "Goto Path\tCtrl+G",           ID_TREEFILECTRL_SETSELECTEDPATH
+        MENUITEM "Goto Parent Folder\tBackspace", ID_TREEFILECTRL_UPONELEVEL
+        MENUITEM SEPARATOR
+        MENUITEM "&Rename\tF2",                 ID_TREEFILECTRL_RENAME
+        MENUITEM "Remove From Explorer\tCtrl+Delete", ID_TREEFILECTRL_REMOVE_FOLDER
+        MENUITEM "Send To Recycle Bin\tDelete", ID_TREEFILECTRL_DELETE
+        MENUITEM "Send File In Folder To Recycle Bin", ID_TREEFILECTRL_DELETE_FILE_BY_EXTENSION
+        MENUITEM SEPARATOR
+        MENUITEM "Restore From Recycle Bin",    ID_TREEFILECTRL_SHOW_RECYCLE_BIN
+        MENUITEM SEPARATOR
+        MENUITEM "Virus Scanner",               ID_TREEFILECTRL_VIRUS_SCANNER
+        MENUITEM "Show Properties\tCtrl+P",     ID_TREEFILECTRL_PROPERTIES
+        MENUITEM "Show System Menu\tShift+Rightclick", ID_TREEFILECTRL_SHOW_SYSTEM_MENU
+    END
+END
+
+IDR_MDI_TAB_POPUP MENU
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "&Close\tCtrl+W",              ID_MDI_TAB_CLOSE
+        POPUP "Close All"
+        BEGIN
+            MENUITEM "&Close All\tCtrl+Alt+F4",     ID_MDI_TAB_CLOSE_ALL_DOC
+            MENUITEM "&Close All Left",             ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
+            MENUITEM "&Close All Right",            ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
+            MENUITEM "&Close All Unchanged",        ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
+            MENUITEM "&Close All BUT This",         ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "&New File\tCtrl+N",           ID_MDI_TAB_NEW_FILE
+        MENUITEM "&New File In New Tab Group",  ID_MDI_TAB_NEW_FILE_VERTICAL_GROUP
+        MENUITEM SEPARATOR
+        MENUITEM "&Save\tCtrl+S",               ID_FILE_SAVE
+        MENUITEM "&Save As...\tCtrl+Shift+S",   ID_FILE_SAVE_AS
+        MENUITEM "&Save All",                   ID_FILE_SAVE_ALL
+        MENUITEM SEPARATOR
+        POPUP "Get Path String"
+        BEGIN
+            MENUITEM "&Get Full Path",              ID_MDI_TAB_GET_FULL_FILE_PATH
+            MENUITEM "Get Full Path Double Slash (\\)", ID_MDI_TAB_GET_FULL_FILE_PATH_DOUBLE_SLASH
+            MENUITEM "Get Full Path Forward Slash (/)", ID_MDI_TAB_GET_FULL_FILE_PATH_FORWARD_SLASH
+            MENUITEM "Get Full Path Double Quote",  ID_MDI_TAB_GET_FULL_FILE_PATH_DOUBLE_QUOTE
+            MENUITEM SEPARATOR
+            MENUITEM "&Get Container Path",         ID_MDI_TAB_GET_FOLDER_PATH
+            MENUITEM SEPARATOR
+            MENUITEM "&Get Tab Name",               ID_MDI_TAB_GET_FILE_NAME
+            MENUITEM "&Get Tab Name No Extension",  ID_MDI_TAB_GET_FILE_NAME_NO_EXTENSION
+        END
+        POPUP "File Options"
+        BEGIN
+            MENUITEM "&Reload File\tF4",            ID_MDI_TAB_RELOAD
+            MENUITEM "&Bookmark File\tCtrl+B",      ID_MDI_TAB_BOOKMARK_FILE
+            MENUITEM "&Rename File\tF2",            ID_MDI_TAB_RENAME
+            MENUITEM "&Clone File\tCtrl+F3",        ID_MDI_TAB_CLONE_FILE
+            MENUITEM "&Send File To Recycle Bin\tDelete", ID_MDI_TAB_DELETE_FILE
+            MENUITEM SEPARATOR
+            MENUITEM "&Copy File To Clipboard",     ID_MDI_TAB_FILE_COPY
+            MENUITEM SEPARATOR
+            MENUITEM "&Open File In Chrome",        ID_MDI_TAB_FILE_CHROME
+            MENUITEM "&Open File In Edge",          ID_MDI_TAB_FILE_EDGE
+            MENUITEM "&Open File In Firefox",       ID_MDI_TAB_FILE_FIREFOX
+        END
+        MENUITEM "&Reveal in Container Folder\tCtrl+E", ID_MDI_TAB_OPEN_CONTAINER_FOLDER
+        MENUITEM "&Reveal in Explorer Window\tCtrl+Shift+Q", ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER
+        MENUITEM SEPARATOR
+        MENUITEM "&New Vertical Tab Group\tCtrl+Numpad1", ID_MDI_TAB_NEW_VERTICAL_TAB
+        MENUITEM "&New Horizontal Tab Group\tCtrl+Numpad2", ID_MDI_TAB_NEW_HORIZONTAL_TAB
+        MENUITEM "&Move To New App Instance\tCtrl+Shift+N", ID_MDI_TAB_MOVE_NEW_WINDOW
+        MENUITEM "&Move To Next Tab Group",     ID_MDI_TAB_MOVE_NEXT_TAB
+        MENUITEM "&Move To Previous Tab Group", ID_MDI_TAB_MOVE_PREVIOUS_TAB
+        MENUITEM "&Move All To Next Tab Group", ID_MDI_TAB_MOVE_ALL_NEXT_TAB
+        MENUITEM "&Move All To Previous Tab Group", ID_MDI_TAB_MOVE_ALL_PREVIOUS_TAB
+    END
+END
+
+IDR_EDITOR_POPUP MENU
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "&Open Path",                  ID_EDIT_OPEN_FROM_SELECTION
+        MENUITEM "&Reveal Path In Explorer",    ID_EDIT_REVEAL_PATH_FROM_SELECTION
+        POPUP "Selection"
+        BEGIN
+            MENUITEM "&All Text\tCtrl+A",           ID_EDIT_SELECT_ALL
+            MENUITEM "&All Sensitive Matched\tSelection+Ctrl+A", ID_EDIT_SELECT_ALL_SELECTION
+            MENUITEM "&All Insensitive Matched\tSelection+Ctrl+Shift+A", ID_EDIT_SELECT_ALL_SELECTION_NOT_MC_MW
+            MENUITEM SEPARATOR
+            MENUITEM "Invert Selection\tCtrl+Shift+I", ID_INVERT_SELECTION
+            MENUITEM "Use Column Mode\tAlt+Left Mouse Drag", ID_SELECTION_WITH_COLUMN_MODE
+            MENUITEM "Split Selection Into Lines\tAlt+L", ID_SPLIT_SELECTION_INTO_LINES
+            MENUITEM SEPARATOR
+            MENUITEM "Swap Two Selections",         ID_EDIT_SWAP_TWO_SELECTIONS
+            MENUITEM "Move Selected Line Up\tCtrl+Shift+Up", ID_EDIT_MOVE_SELECTED_LINE_UP
+            MENUITEM "Move Selected Line Down\tCtrl+Shift+Down", ID_EDIT_MOVE_SELECTED_LINE_DOWN
+            MENUITEM SEPARATOR
+            MENUITEM "Expand Selection To Word\tCtrl+D", ID_SELECTION_TO_WORD
+            MENUITEM "Expand Selection To Line\tCtrl+L", ID_SELECTION_TO_LINE
+            MENUITEM "Expand Selection To Quote\tCtrl+Shift+A", ID_SELECTION_TO_QUOTE
+            MENUITEM "Expand Selection Previous Line\tCtrl+Alt+Up", ID_ADD_PREIVOUS_LINE_SELECTION
+            MENUITEM "Expand Selection Next Line\tCtrl+Alt+Down", ID_ADD_NEXT_LINE_SELECTION
+            MENUITEM "Expand Selection To Next Paragraph\tCtrl+Shift+]", ID_SELECTION_TO_NEXT_PARAGRAPH
+            MENUITEM "Expand Selection To Previous Paragraph\tCtrl+Shift+[", ID_SELECTION_TO_PREV_PARAGRAPH
+            MENUITEM "Expand Selection End File\tCtrl+Shift+End", ID_SELECTION_TO_END_FILE
+            MENUITEM "Expand Selection Begin File\tCtrl+Shift+Home", ID_SELECTION_TO_BEGIN_FILE
+            MENUITEM "Expand Selection To Word Left\tCtrl+Shift+Left", ID_SELECTION_TO_WORD_LEFT
+            MENUITEM "Expand Selection To Word Right\tCtrl+Shift+Right", ID_SELECTION_TO_WORD_RIGHT
+            MENUITEM "Expand Selection To Part Left\tCtrl+Shift+/", ID_SELECTION_TO_PART_LEFT
+            MENUITEM "Expand Selection To Part Right\tCtrl+Shift+\\", ID_SELECTION_TO_PART_RIGHT
+        END
+        MENUITEM "&Cut\tCtrl+X",                ID_EDIT_CUT
+        POPUP "Copy"
+        BEGIN
+            MENUITEM "&Copy Selection/Line\tCtrl+C", ID_EDIT_COPY
+            MENUITEM "&Copy With Double Quote",     ID_OPTIONS_COPY_WITH_QUOTE
+            MENUITEM "&Copy All Visible Lines",     ID_EDIT_COPY_VISIBLE_LINE
+        END
+        POPUP "Paste"
+        BEGIN
+            MENUITEM "&Paste As Plain Text\tCtrl+V", ID_EDIT_PASTE
+            MENUITEM "&Paste As HTML",              ID_EDIT_PASTE_HTML
+            MENUITEM "&Paste As Rich Text Format",  ID_EDIT_PASTE_RFT
+            MENUITEM "&Paste As Double Quote\tCtrl+Shift+V", ID_EDIT_PATSE_DOUBLE_QUOTE
+            MENUITEM "&Paste As Forward Slash (/)", ID_EDIT_PATSE_FORWARD_SLASH
+            MENUITEM SEPARATOR
+            MENUITEM "&Paste At Beginning All Files", ID_EDIT_PATSE_BEGIN_ALL_FILE
+            MENUITEM "&Paste At Ending All Files",  ID_EDIT_PATSE_END_ALL_FILE
+            MENUITEM SEPARATOR
+            MENUITEM "&Show Copy History\tWindows+V", ID_EDIT_COPY_HISTORY
+            MENUITEM "&Clear Copy History",         ID_EDIT_EMPTY_CLIPBOARD
+        END
+        MENUITEM "&Comment\tCtrl+Shift+C",      ID_EDITOR_COMMENT
+        MENUITEM "&Uncomment\tCtrl+Shift+X",    ID_EDITOR_UNCOMMENT
+        MENUITEM SEPARATOR
+        MENUITEM "Disable Edit Mode\tCtrl+J",   ID_DOCUMENT_SET_READ_ONLY
+        MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",              ID_OPTIONS_WRAPLINE
+        POPUP "Search And Replace"
+        BEGIN
+            MENUITEM "&Search\tCtrl+Shift+F",       ID_EDIT_FIND
+            MENUITEM "&Replace\tCtrl+Shift+H",      ID_EDIT_REPLACE
+            MENUITEM "Show &Folding Map\tAlt+M",    ID_DOCUMENT_SHOW_FUNCTION_LIST
+        END
+        POPUP "Goto"
+        BEGIN
+            MENUITEM "&Goto Line\tCtrl+G",          ID_OPTIONS_GOTOLINE
+            MENUITEM "Goto &Position",              ID_OPTIONS_GOTOPOS
+            MENUITEM SEPARATOR
+            MENUITEM "Goto &Next Paragraph\tCtrl+]", ID_OPTIONS_GOTO_NEXT_PARAGRAPH
+            MENUITEM "Goto &Previous Paragraph\tCtrl+[", ID_OPTIONS_GOTO_PREV_PARAGRAPH
+            MENUITEM SEPARATOR
+            MENUITEM "Goto To &Caret\tMiddle Mouse", ID_EDIT_SCROLL_TO_CARET
+        END
+        MENUITEM SEPARATOR
+        POPUP "Folding Level"
+        BEGIN
+            MENUITEM "&Fold All\tCtrl+Shift+M",     ID_DOCUMENT_COLLAPSE_BRACKETS
+            MENUITEM "&Unfold All\tCtrl+Shift+M",   ID_DOCUMENT_EXPAND_BRACKETS
+            MENUITEM SEPARATOR
+            MENUITEM "&At Current Line\tCtrl+M",    ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
+            MENUITEM SEPARATOR
+            POPUP "Toggle As Level"
+            BEGIN
+                MENUITEM "&Level 1",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
+                MENUITEM "&Level 2",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
+                MENUITEM "&Level 3",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
+                MENUITEM "&Level 4",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
+                MENUITEM "&Level 5",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
+                MENUITEM "&Level 6",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
+                MENUITEM "&Level 7",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
+                MENUITEM "&Level 8",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
+                MENUITEM "&Level 9",                    ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
+            END
+        END
+        POPUP "Text Highlight"
+        BEGIN
+            MENUITEM "&Style C++",                  ID_DOCUMENT_TEXT_LEXER_CPP
+            MENUITEM "&Style Python",               ID_DOCUMENT_TEXT_LEXER_PYTHON
+            MENUITEM "&Style HTML/XML",             ID_DOCUMENT_TEXT_LEXER_HTML_XML
+            MENUITEM SEPARATOR
+            MENUITEM "&Remove Current Style",       ID_DOCUMENT_TEXT_LEXER_NON
+        END
+        POPUP "&Auto Complete"
+        BEGIN
+            MENUITEM "&Auto Show Complete List\tAlt+A", ID_TOGGLE_AUTO_COMPLETE
+            MENUITEM "&Show Completions\tCtrl+Space", ID_SHOW_COMPLETIONS
+            MENUITEM SEPARATOR
+            MENUITEM "&Add Dataset From File",      ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
+            MENUITEM "&Add Dataset From Folder",    ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
+            MENUITEM SEPARATOR
+            MENUITEM "&Using Vietnamese Dataset",   ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
+            MENUITEM "&Using English Dataset",      ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
+            MENUITEM SEPARATOR
+            MENUITEM "&Clear All Datasets",         ID_DOCUMENT_CLEAR_AC_DATASET
+        END
+        MENUITEM SEPARATOR
+        POPUP "Translate"
+        BEGIN
+            MENUITEM "&Translate And Display Result\tF1", ID_DOCUMENT_TRANSLATE
+            MENUITEM "&Translate And Copy Result",  ID_DOCUMENT_TRANSLATE_COPY
+            MENUITEM "&Insert Translate Result",    ID_DOCUMENT_TRANSLATE_GENERATE
+            MENUITEM "&Open Google Translate",      ID_DOCUMENT_TRANSLATE_WEB
+        END
+        POPUP "Search On Internet"
+        BEGIN
+            MENUITEM "&Search On Google\tF3",       ID_DOCUMENT_GOOGLE_IT
+            MENUITEM "&Search On StackOverFlow",    ID_DOCUMENT_GOOGLE_STACKOVERFLOW
+            MENUITEM "&Search On Wikipedia",        ID_DOCUMENT_WIKI_IT
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Realtime Update Content",     ID_START_MONITER_FILE
+        MENUITEM "Dump File Information",       ID_DOCUMENT_FILE_SUMMARY
+        MENUITEM "&Show System Menu\tShift+Rightclick", ID_DOCUMENT_SHOW_MENU_SYSTEM
+        MENUITEM "Spell Checking",              ID_EDIT_SPELL_CHECK
+    END
+END
+
+IDR_IMAGE_POPUP MENU
+BEGIN
+    POPUP "_POPUP_"
+    BEGIN
+        MENUITEM "&Edit With Microsoft Paint",  ID_IMAGE_EDIT_WIH_MSPAINT
+        MENUITEM "&Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Zoom Out\tCtrl+Down",        ID_IMAGE_ZOOM_OUT
+        MENUITEM "&Zoom In\tCtrl+Up",           ID_IMAGE_ZOOM_IN
+        MENUITEM SEPARATOR
+        MENUITEM "&Rotate Left 90*\tCtrl+Left", ID_IMAGE_LEFT_ROTATE
+        MENUITEM "&Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
+        MENUITEM "&Rotate Flip\tCtrl+D",        ID_IMAGE_FLIP
+        MENUITEM "&Rotate Mirror\tCtrl+M",      ID_IMAGE_MIRROR
+        MENUITEM "&Pause / UnPause\tSpace",     ID_IMAGE_GIF_PAUSE
+        MENUITEM SEPARATOR
+        MENUITEM "&Show System Menu\tShift+RightClick", ID_IMAGE_SHOW_SYSTEM_MENU
+    END
+END
+
+IDR_BUILD_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Clear\tCtrl+Delete",         ID_EDIT_CLEAR_ALL
+        MENUITEM "&Wrap Long Line\tCtrl+W",     ID_EDIT_WRAPLINE_BUILD
+        MENUITEM "&Search On Internet\tF3",     ID_EDIT_GOOGLE_IT
+        MENUITEM "&Translate Text\tF1",         ID_EDIT_TRANSLATE_IT
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Open Path\tCtrl+O",          ID_EDIT_BUILD_WINDOWN_OPENPATH
+        MENUITEM "&Reveal In Explorer\tCtrl+Shift+Q", ID_EDIT_BUILD_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_TEXT_RESULT_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Copy Full Path\tCtrl+Shift+C", ID_EDIT_COPY_FULL_PATH
+        MENUITEM "&Count Selection\tCtrl+R",    ID_EDIT_COUNT_SELECTION
+        MENUITEM "&Delete All\tCtrl+Delete",    ID_EDIT_CLEAR_ALL
+        MENUITEM "&Delete Rows\tDelete",        ID_EDIT_DELETE_FROM_LIST
+        MENUITEM "&Send File To Recycle Bin\tShift+Delete", ID_EDIT_SEND_RECYCLE_BIN
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Save As File Excel\tCtrl+S", ID_EDIT_SAVE_LOG_TO_FILE
+        MENUITEM "&Reveal In Explorer\tDouble Click", ID_EDIT_SEARCH_RESULT_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_PATH_RESULT_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Copy Full Path\tCtrl+Shift+C", ID_EDIT_COPY_FULL_PATH
+        MENUITEM "&Count Selection\tCtrl+R",    ID_EDIT_COUNT_SELECTION
+        MENUITEM "&Delete All\tCtrl+Delete",    ID_EDIT_CLEAR_ALL
+        MENUITEM "&Delete Rows\tDelete",        ID_EDIT_DELETE_FROM_LIST
+        MENUITEM "&Send Path To Recycle Bin\tShift+Delete", ID_EDIT_SEND_RECYCLE_BIN
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Save As File Excel\tCtrl+S", ID_EDIT_SAVE_LOG_TO_FILE
+        MENUITEM "&Reveal In Explorer\tCtrl+shift+Q", ID_EDIT_PATH_RESULT_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_BOOKMARK_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Delete All\tCtrl+Delete",    ID_EDIT_CLEAR_ALL
+        MENUITEM "&Delete Bookmark\tDelete",    ID_EDIT_CLEAR_SELECTED
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Save As File Excel\tCtrl+S", ID_EDIT_SAVE_LOG_TO_FILE
+        MENUITEM "&Reveal In Explorer\tDouble Click", ID_EDIT_BOOKMARK_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_BREAKPOINT_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Delete All\tCtrl+Delete",    ID_EDIT_CLEAR_ALL
+        MENUITEM "&Delete Breakpoint\tDelete",  ID_EDIT_CLEAR_SELECTED
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Save As File Excel\tCtrl+S", ID_EDIT_SAVE_LOG_TO_FILE
+        MENUITEM "&Reveal In Explorer\tDouble Click", ID_EDIT_BREAKPOINT_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_FOLDING_LIST_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Refresh",                    ID_EDIT_REFRESH_FOLDING_MAP
+        MENUITEM SEPARATOR
+        MENUITEM "&Level 1",                    ID_EDIT_FOLDING_MAP_LEVEL_1
+        MENUITEM "&Level 2",                    ID_EDIT_FOLDING_MAP_LEVEL_2
+        MENUITEM "&Level 3",                    ID_EDIT_FOLDING_MAP_LEVEL_3
+        MENUITEM "&Level 4",                    ID_EDIT_FOLDING_MAP_LEVEL_4
+        MENUITEM "&Level 5",                    ID_EDIT_FOLDING_MAP_LEVEL_5
+        MENUITEM "&Level 6",                    ID_EDIT_FOLDING_MAP_LEVEL_6
+        MENUITEM "&Level 7",                    ID_EDIT_FOLDING_MAP_LEVEL_7
+        MENUITEM "&Level 8",                    ID_EDIT_FOLDING_MAP_LEVEL_8
+        MENUITEM "&Level 9",                    ID_EDIT_FOLDING_MAP_LEVEL_9
+        MENUITEM SEPARATOR
+        MENUITEM "&Clear",                      ID_EDIT_CLEAR_ALL
+        MENUITEM "&Save To File",               ID_EDIT_FOLDING_MAP_SAVE_FILE
+    END
+END
+
+IDR_OUTPUT_WINDOW_CONTEXT_MENU MENU
+BEGIN
+    POPUP "Popup"
+    BEGIN
+        MENUITEM "&Select All\tCtrl+A",         ID_EDIT_SELECT_ALL
+        MENUITEM "&Copy\tCtrl+C",               ID_EDIT_COPY
+        MENUITEM "&Clear\tCtrl+Delete",         ID_EDIT_CLEAR_ALL
+        MENUITEM "&Wrap Long Line\tCtrl+W",     ID_EDIT_WRAPLINE_OUTPUT
+        MENUITEM "&Line Count\tCtrl+L",         ID_EDIT_COUNT_MESSAGE_LINE
+        MENUITEM "&Search On Internet\tF3",     ID_EDIT_GOOGLE_IT
+        MENUITEM "&Translate Text\tF1",         ID_EDIT_TRANSLATE_IT
+        MENUITEM "&View In Editor\tCtrl+E",     ID_EDIT_LOG_TO_EDITOR
+        MENUITEM "&Open Path\tCtrl+O",          ID_EDIT_MESSAGE_WINDOWN_OPENPATH
+        MENUITEM "&Reveal In Explorer\tCtrl+Shift+Q", ID_EDIT_MESSAGE_WINDOWN_REVEALPATH
+    END
+END
+
+IDR_MENU_ARGS MENU
+BEGIN
+    POPUP "_DUMMY_"
+    BEGIN
+        MENUITEM "Line Number",                 ID_MENU_ITEM1
+        MENUITEM "Current Position",            ID_MENU_ITEM2
+        MENUITEM "Full File Path",              ID_MENU_ITEM3
+        MENUITEM "File Name",                   ID_MENU_ITEM4
+        MENUITEM "File Extension",              ID_MENU_ITEM5
+        MENUITEM "File Directory",              ID_MENU_ITEM6
+        MENUITEM "Selected Text",               ID_MENU_ITEM7
+        MENUITEM "All Text",                    ID_MENU_ITEM8
+    END
+END
+
+IDR_MENU_DIRS MENU
+BEGIN
+    POPUP "DUMMY"
+    BEGIN
+        MENUITEM "File Directory",              ID_MENU_DIR1
+        MENUITEM "Windows Directory",           ID_MENU_DIR2
+        MENUITEM "System Directory",            ID_MENU_DIR3
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS
+BEGIN
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
+    "P",            ID_EXPLORER_PRINT_SETUP_DLG, VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
+    "Z",            ID_EDIT_UNDO_ALL,       VIRTKEY, SHIFT, CONTROL
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
+    "Y",            ID_EDIT_REDO,           VIRTKEY, CONTROL
+    "Y",            ID_EDIT_REDO_ALL,       VIRTKEY, SHIFT, CONTROL
+    "W",            ID_MDI_TAB_CLOSE,       VIRTKEY, CONTROL
+    "Z",            ID_OPTIONS_WRAPLINE,    VIRTKEY, CONTROL, ALT
+    "M",            ID_DOCUMENT_SHOW_FUNCTION_LIST, VIRTKEY, ALT
+    "R",            ID_CHANGE_TEXT_BIDIRECTIONAL, VIRTKEY, SHIFT, CONTROL
+    "G",            ID_OPTIONS_GOTOLINE,    VIRTKEY, CONTROL
+    "E",            ID_MDI_TAB_OPEN_CONTAINER_FOLDER, VIRTKEY, CONTROL
+    "E",            ID_HOST_FILE_EXPLORER,  VIRTKEY, SHIFT, CONTROL
+    "Q",            ID_EDIT_SHOW_ALL_CHARACTOR, VIRTKEY, CONTROL
+    "Q",            ID_SWITCH_EPLORER_TO_ACTIVE_TAB, VIRTKEY, SHIFT, CONTROL
+    "B",            ID_MDI_TAB_BOOKMARK_FILE, VIRTKEY, CONTROL
+    "B",            ID_PATH_VINATEXT_BOOKMARK_TABLE, VIRTKEY, SHIFT, CONTROL
+    "N",            ID_MDI_TAB_MOVE_NEW_WINDOW, VIRTKEY, SHIFT, CONTROL
+    "P",            ID_CREATE_TEMPLATE_PROJECT, VIRTKEY, SHIFT, CONTROL
+    "S",            ID_FILE_SAVE_AS,        VIRTKEY, SHIFT, CONTROL
+    "F",            ID_EDIT_FIND,           VIRTKEY, SHIFT, CONTROL
+    "F",            ID_QUICK_SEARCH,        VIRTKEY, CONTROL
+    "H",            ID_EDIT_REPLACE,        VIRTKEY, SHIFT, CONTROL
+    "H",            ID_QUICK_REPLACE,       VIRTKEY, CONTROL
+    "T",            ID_FILE_OPEN_CLOSED_RECENT, VIRTKEY, SHIFT, CONTROL
+    "T",            ID_OPEN_NEW_POWERSHELL_WINDOW, VIRTKEY, CONTROL, ALT
+    "O",            ID_FILE_OPEN_FOLDER_TO_WORKSPACE, VIRTKEY, SHIFT, CONTROL
+    VK_F11,         ID_EDITOR_FULL_SCREEN_MODE, VIRTKEY, ALT
+    "C",            ID_EDITOR_COMMENT,      VIRTKEY, SHIFT, CONTROL
+    "X",            ID_EDITOR_UNCOMMENT,    VIRTKEY, SHIFT, CONTROL
+    "K",            ID_EDITOR_TOGGLE_COMMENT, VIRTKEY, ALT
+    "K",            ID_EDITOR_BLOCK_COMMENT, VIRTKEY, CONTROL
+    "K",            ID_EDITOR_BLOCK_UNCOMMENT, VIRTKEY, SHIFT, CONTROL
+    VK_F8,          ID_OPTIONS_ADD_BOOKMARK, VIRTKEY 
+    VK_F5,          ID_DEBUGGER_START,      VIRTKEY 
+    VK_F4,          ID_MDI_TAB_RELOAD,      VIRTKEY 
+    VK_F4,          ID_MDI_TAB_CLOSE_ALL_DOC, VIRTKEY, CONTROL, ALT
+    VK_F5,          ID_DEBUGGER_STOP,       VIRTKEY, SHIFT
+    VK_F11,         ID_DEBUGGER_STEPINTO,   VIRTKEY 
+    VK_F10,         ID_DEBUGGER_STEPOVER,   VIRTKEY 
+    VK_F11,         ID_DEBUGGER_STEPOUT,    VIRTKEY, SHIFT
+    VK_F12,         ID_DEBUGGER_VARIABLE_VALUE, VIRTKEY 
+    VK_F12,         ID_DEBUGGER_VARIABLE_TYPE, VIRTKEY, SHIFT
+    "C",            ID_DEBUGGER_CALL_STACK, VIRTKEY, CONTROL, ALT
+    VK_F9,          ID_OPTIONS_ADD_NEW_BREAKPOINT, VIRTKEY 
+    VK_NUMPAD1,     ID_MDI_TAB_NEW_VERTICAL_TAB, VIRTKEY, CONTROL
+    VK_NUMPAD2,     ID_MDI_TAB_NEW_HORIZONTAL_TAB, VIRTKEY, CONTROL
+    VK_F1,          ID_WINDOW_NEW,          VIRTKEY, CONTROL
+    VK_F2,          ID_MDI_TAB_RENAME,      VIRTKEY 
+    VK_TAB,         ID_MDI_SWITCH_TO_NEXT_TAB, VIRTKEY, CONTROL
+    VK_TAB,         ID_MDI_SWITCH_TO_PREVIOUS_TAB, VIRTKEY, SHIFT, CONTROL
+    "W",            ID_WINDOW_MANAGER,      VIRTKEY, SHIFT, CONTROL
+    "R",            ID_IMAGE_RETURN_ORIGINAL, VIRTKEY, CONTROL
+    "U",            ID_DOCUMENT_TO_UPPER_CASE, VIRTKEY, SHIFT, CONTROL
+    "U",            ID_DOCUMENT_TO_LOWER_CASE, VIRTKEY, CONTROL
+    "I",            ID_DOCUMENT_TO_INVERT_CASE, VIRTKEY, CONTROL
+    "I",            ID_EDIT_DELETE_LINE,    VIRTKEY, SHIFT, CONTROL
+    VK_BACK,        ID_DELETE_LEFT_WORD,    VIRTKEY, CONTROL
+    VK_DELETE,      ID_DELETE_RIGHT_WORD,   VIRTKEY, CONTROL
+    VK_DELETE,      ID_EDIT_CLEAR,          VIRTKEY 
+    "D",            ID_EDIT_DUPLICATE_SELECTION, VIRTKEY, SHIFT, CONTROL
+    VK_TAB,         ID_INCREASE_TAB_INDENTATION, VIRTKEY 
+    VK_TAB,         ID_DECREASE_TAB_INDENTATION, VIRTKEY, SHIFT
+    VK_UP,          ID_EDIT_MOVE_SELECTED_LINE_UP, VIRTKEY, SHIFT, CONTROL
+    VK_DOWN,        ID_EDIT_MOVE_SELECTED_LINE_DOWN, VIRTKEY, SHIFT, CONTROL
+    VK_UP,          ID_EDIT_LINEUP,         VIRTKEY, CONTROL
+    VK_DOWN,        ID_EDIT_LINEDOWN,       VIRTKEY, CONTROL
+    "J",            ID_DOCUMENT_FORMAT_FILE, VIRTKEY, SHIFT, CONTROL
+    "J",            ID_DOCUMENT_SET_READ_ONLY, VIRTKEY, CONTROL
+    "T",            ID_LINE_TRANSPOSE,      VIRTKEY, CONTROL
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 239, 121
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,23,28,20,20
+    LTEXT           "VinaText is a free software for text editor and more...",IDC_STATIC,64,14,155,22,SS_NOPREFIX
+    DEFPUSHBUTTON   "Got it!",IDOK,93,92,55,19,WS_GROUP
+    CONTROL         "https://VinaText.com",IDC_MFCLINK_EXPLORER_EXTRA,
+                    "MfcLink",WS_TABSTOP,112,71,91,12
+    LTEXT           "Home Page:",IDC_STATIC,64,72,40,8
+    LTEXT           "Release Version: 1.0.9",IDC_STATIC,64,37,125,8
+    LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,54,100,8
+END
+
+IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
+STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_BRACKETS_OUTLINE_TREE,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_CLIPCHILDREN | WS_VSCROLL | WS_HSCROLL,0,0,227,215
+END
+
+IDD_POS DIALOGEX 0, 0, 227, 185
+STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "Goto Position:",ID_EDITOR_GOTO_POSITION_STATIC,12,42,50,8
+    EDITTEXT        IDC_POSITION,85,40,71,14,ES_AUTOHSCROLL
+    LTEXT           "Goto Line:",ID_EDITOR_GOTO_LINE_STATIC,12,67,74,21
+    EDITTEXT        IDC_LINE,85,65,71,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "GO",ID_EDITOR_POSITION_GO,169,38,50,18
+    DEFPUSHBUTTON   "GO",ID_EDITOR_LINE_GO,169,63,50,18
+    LTEXT           "Goto Point          - X:",ID_EDITOR_GOTO_POINT_X_STATIC,12,17,68,8
+    EDITTEXT        ID_EDITOR_GOTO_POINT_X,85,14,24,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "GO",ID_EDITOR_POINT_GO,169,12,50,18
+    EDITTEXT        ID_EDITOR_GOTO_POINT_Y,132,14,24,14,ES_AUTOHSCROLL
+    LTEXT           "- Y:",ID_EDITOR_GOTO_POINT_Y_STATIC,116,17,12,8
+    DEFPUSHBUTTON   "[<< Goto Previous Paragraph",ID_EDITOR_LINE_GO_PREVIOUS_PARAH,12,95,205,20
+    DEFPUSHBUTTON   "Goto Next Paragraph >>]",ID_EDITOR_LINE_GO_NEXT_PARAH,12,122,205,20
+    DEFPUSHBUTTON   "Goto Caret >> |",ID_EDITOR_LINE_GO_TO_CARET,12,148,205,20
+END
+
+IDD_FIND DIALOGEX 0, 0, 234, 502
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Search Previous",ID_EDITOR_SEARCH_PREVIOUS,84,279,62,19
+    LTEXT           "Search What:",ID_EDITOR_SEARCH_STATIC,16,11,56,8
+    COMBOBOX        ID_EDITOR_SEARCH_COMBO,16,22,200,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Search Options",ID_EDITOR_SEARCH_GROUPBOX,15,168,200,105
+    CONTROL         "Match case",ID_EDITOR_SEARCH_CHECK_MATCH_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,185,74,10
+    CONTROL         "Match whole word",ID_EDITOR_SEARCH_CHECK_MATCH_WHOLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,199,111,10
+    CONTROL         "Regular Expressions",ID_EDITOR_SEARCH_CHECK_REGEX,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,213,105,10
+    DEFPUSHBUTTON   "Search Next",ID_EDITOR_SEARCH_NEXT,17,279,62,19
+    LTEXT           "Search Scope:",ID_EDITOR_SEARCH_SCOPE_STATIC,16,41,56,8
+    COMBOBOX        ID_EDITOR_SEARCH_SCOPE_COMBO,16,53,200,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "Search All",ID_EDITOR_SEARCH_ALL,151,279,62,19
+    LTEXT           "File Filter:",ID_EDITOR_SEARCH_FILE_FILTER_STATIC,16,101,56,8
+    EDITTEXT        ID_EDITOR_SEARCH_FILE_FILTER_EDIT,16,114,200,14,ES_AUTOHSCROLL
+    LTEXT           "Specific Path:",ID_EDITOR_SEARCH_FILE_SPECIFIC_PATH_STATIC,16,135,56,8
+    EDITTEXT        ID_EDITOR_SEARCH_PATH_SPECIFIC_EDIT,16,147,200,14,ES_AUTOHSCROLL
+    CONTROL         "Append Search Results",ID_EDITOR_SEARCH_CHECK_APPEND_SEACH_RESULT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,227,111,10
+    CONTROL         "Show File Name Only",ID_EDITOR_SEARCH_CHECK_SHOW_FILE_NAME,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,240,105,10
+    LTEXT           "Regex Pattern:",ID_EDITOR_SEARCH_PATTERN_STATIC,16,71,56,8
+    COMBOBOX        ID_EDITOR_SEARCH_REGEX_COMBO,16,83,200,417,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Exclude Sub Folder",ID_EDITOR_SEARCH_CHECK_EXCLUDE_SUB_FOLDER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,254,105,10
+END
+
+IDD_REPLACE DIALOGEX 0, 0, 234, 507
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Search Next",ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN,17,311,62,19
+    PUSHBUTTON      "Replace",ID_EDITOR_REPLACE_DLG_REPLACE_BTN,84,311,62,19
+    PUSHBUTTON      "Replace All",ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN,151,311,62,19
+    LTEXT           "Search What:",ID_EDITOR_REPLACE_DLG_FINDWHAT_STATIC,16,11,56,8
+    COMBOBOX        ID_EDITOR_REPLACE_DLG_FINDWHAT_COMBO,16,22,200,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Replace With:",ID_EDITOR_REPLACE_DLG_REPLACEWITH_STATIC,16,41,56,8
+    COMBOBOX        ID_EDITOR_REPLACE_DLG_REPLACEWITH_COMBO,16,53,200,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Replace Options",ID_EDITOR_REPLACE_DLG_OPTIONS_STATIC,16,202,199,104,WS_TABSTOP
+    CONTROL         "Match case",ID_EDITOR_REPLACE_DLG_MATCHCASE_CHECKBOX,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,219,74,10
+    CONTROL         "Match whole word",ID_EDITOR_REPLACE_DLG_WRAPAROUND_CHECKBOX,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,232,111,10
+    CONTROL         "Regular Expressions",ID_EDITOR_REPLACE_DLG_REGEX_CHECKBOX,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,245,105,10
+    LTEXT           "File Filter:",ID_EDITOR_REPLACE_FILE_FILTER_STATIC,16,136,56,8
+    EDITTEXT        ID_EDITOR_REPLACE_FILE_FILTER_EDIT,16,148,200,14,ES_AUTOHSCROLL
+    LTEXT           "Replace Scope:",ID_EDITOR_REPLACE_SCOPE_STATIC,16,104,56,8
+    COMBOBOX        ID_EDITOR_REPLACE_DLG_SCOPE_COMBO,16,116,200,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Specific Path:",ID_EDITOR_REPLACE_FILE_SPECIFIC_PATH_STATIC,16,170,56,8
+    EDITTEXT        ID_EDITOR_REPLACE_PATH_SPECIFIC_EDIT,16,182,200,14,ES_AUTOHSCROLL
+    LTEXT           "Regex Pattern:",ID_EDITOR_REPLACE_PATTERN_STATIC,16,72,56,8
+    COMBOBOX        ID_EDITOR_REPLACE_REGEX_COMBO,16,84,200,417,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Append Search Results",ID_EDITOR_REPLACE_CHECK_APPEND_SEACH_RESULT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,258,111,10
+    CONTROL         "Show File Name Only",ID_EDITOR_REPLACE_CHECK_SHOW_FILE_NAME,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,272,105,10
+    CONTROL         "Exclude Sub Folder",ID_EDITOR_REPLACE_CHECK_EXCLUDE_SUB_FOLDER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,286,105,10
+END
+
+IDD_SEARCH_AND_REPLACE_DIALOG_PANE DIALOGEX 0, 0, 675, 75
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",ID_PANE_SEARCH_AND_REPLACE_TAB,"SysTabControl32",0x0,9,5,290,145
+END
+
+IDD_DIALOG_FILE_EXPLORER DIALOGEX 0, 0, 675, 75
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Tree1",IDC_FILE_EXPLODER_CTRL,"SysTreeView32",TVS_HASBUTTONS | TVS_EDITLABELS | TVS_SHOWSELALWAYS | TVS_FULLROWSELECT | WS_BORDER | WS_HSCROLL | WS_TABSTOP,7,7,253,187
+END
+
+IDD_FILENAME_MASK DIALOGEX 0, 0, 187, 53
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Display file extensions only"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "File Extension:",IDC_STATIC,11,12,50,8
+    EDITTEXT        IDC_MASK,66,10,110,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,66,32,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,126,32,50,14
+END
+
+IDD_ROOTFOLDER DIALOGEX 0, 0, 293, 51
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Please enter the display folder"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Path:",IDC_STATIC,13,13,25,8
+    EDITTEXT        IDC_FOLDER,42,11,236,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,172,32,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,229,32,50,14
+END
+
+IDD_SELECTEDPATH DIALOGEX 0, 0, 375, 61
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Please enter the path to go"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Path:",IDC_STATIC,15,15,20,8
+    CONTROL         "&Expand All Child Paths",IDC_EXPANDED,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,15,40,111,10
+    DEFPUSHBUTTON   "GO",IDOK,251,36,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,307,36,50,14
+    COMBOBOX        IDC_COMBO_GOTO_PATH,43,12,313,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+END
+
+ID_DIALOG_BUILD_PANE DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+ID_DIALOG_MESSAGE_PANE DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+END
+
+IDD_APP_LOOK DIALOGEX 0, 0, 293, 204
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Visual Theme Setting"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    LTEXT           "Please choose the preferred look and click OK to continue.",IDC_STATIC,12,10,214,8
+    LTEXT           "&Visual Manager:",IDC_STATIC,19,31,52,8
+    COMBOBOX        IDC_APP_LOOK,112,28,140,199,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "&Style (Office 2007 only):",IDC_STATIC,19,55,76,8
+    COMBOBOX        IDC_STYLE,112,53,72,165,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Show ""Close"" Button on the &Active Tab",IDC_ACTIVETAB_CLOSE_BUTTON,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,77,141,10
+    CONTROL         "One&Note?E?-style MDI tabs",IDC_ONENOTE_TABS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,92,97,10
+    CONTROL         "Docking Tab &Colors",IDC_DOCK_TAB_COLORS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,107,79,10
+    CONTROL         "&3D Rounded Docking Tabs and Auto Hide Buttons (VS 2005 only)",IDC_ROUNDED_TABS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,122,225,10
+    CONTROL         "Show Extended &Tooltips",IDC_CUSTOM_TOOLTIPS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,137,93,10
+    LTEXT           "Note: you may change the application look in  ""View | Application Look"" dialog.",IDC_STATIC,17,156,268,8
+    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,7,172,229,1
+    CONTROL         "S&how this dialog at startup",IDC_SHOW_AT_STARTUP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,11,183,99,10
+    DEFPUSHBUTTON   "OK",IDOK,127,180,50,17
+    PUSHBUTTON      "Cancel",IDCANCEL,181,180,50,17
+    PUSHBUTTON      "Apply",IDC_APPLY,235,180,50,17
+END
+
+IDD_EDIT_WITH_X DIALOGEX 0, 0, 205, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Please enter X"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "X Value:",IDC_STATIC,10,11,29,8
+    EDITTEXT        IDC_X_INPUT,46,8,144,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,80,30,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,140,30,50,14
+END
+
+IDD_REMOVE_FILE_WITH_EXTENSION DIALOGEX 0, 0, 293, 74
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remove File By Extension..."
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Folder:",IDC_STATIC,26,13,22,8
+    EDITTEXT        IDC_PATH,56,11,229,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,175,54,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,235,54,50,14
+    LTEXT           "Extension:",IDC_STATIC,13,36,34,8
+    EDITTEXT        IDC_EXTENSION_INPUT,56,34,229,14,ES_AUTOHSCROLL
+END
+
+IDD_BOOKMARK_PATH_DLG DIALOGEX 0, 0, 595, 224
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Path Bookmarks Table"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Add To Explorer Window",ID_BOOKMARK_TO_EXPLORER,487,84,96,14
+    PUSHBUTTON      "Cancel",IDCANCEL,487,197,96,14
+    CONTROL         "",IDC_LIST_BOOKMARK_PATH,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,8,7,468,209,WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+    DEFPUSHBUTTON   "Add New Bookmark",ID_ADD_BOOKBARK_PATH,487,9,96,14
+    PUSHBUTTON      "Remove Path",ID_REMOVE_BOOKBARK_PATH,487,159,96,14
+    DEFPUSHBUTTON   "Open Path",ID_BOOKMARK_OPEN,487,28,96,14
+    DEFPUSHBUTTON   "Copy Full Path",ID_BOOKMARK_COPY_PATH,487,103,96,14
+    DEFPUSHBUTTON   "Open CMD",ID_BOOKMARK_OPEN_CMD,487,140,96,14
+    DEFPUSHBUTTON   "Reveal In Explorer",ID_BOOKMARK_REVEAL_IN_EXPLORER,487,65,96,14
+    PUSHBUTTON      "Remove All",ID_BOOKMARK_CLEAR_ALL,487,178,96,14
+    DEFPUSHBUTTON   "Open Container Folder",ID_BOOKMARK_OPEN_CONTAINER,487,47,96,14
+    DEFPUSHBUTTON   "Copy To Clipboard",ID_BOOKMARK_COPY_CLIPBOARD,487,122,96,14
+END
+
+IDD_EDIT_REMOVE_FROM_X_TO_Y DIALOGEX 0, 0, 215, 110
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remove From Position X To Y In Line"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,87,89,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,89,50,14
+    LTEXT           "From X:",IDC_STATIC,23,18,26,8
+    LTEXT           "To Y:",IDC_STATIC,24,43,18,8
+    EDITTEXT        IDC_EDIT_REMOVE_FROM_X,64,15,129,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_REMOVE_TO_Y,64,40,129,14,ES_AUTOHSCROLL
+    CONTROL         "Remove From Line End",IDC_CHECK_REMOVE_FROM_END_LINE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,69,132,10
+END
+
+IDD_DIALOG_REMOVE_AFTER_BEFORE_WORD DIALOGEX 0, 0, 217, 60
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Remove After Word In Line"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,92,39,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,150,39,50,14
+    CTEXT           "After Word:",IDC_STATIC_TARGET_WORD,10,18,59,8
+    EDITTEXT        IDC_EDIT_TARGET_WORD,74,15,124,14,ES_AUTOHSCROLL
+END
+
+IDD_EDIT_INSERT_AT_POSITION_X DIALOGEX 0, 0, 215, 110
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Insert At Position X In Line"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,87,89,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,89,50,14
+    LTEXT           "Position X:",IDC_STATIC,16,18,34,8
+    LTEXT           "Insert What:",IDC_STATIC,16,43,42,8
+    EDITTEXT        IDC_EDIT_INSERT_POSITION_X,64,15,129,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_INSERT_WHAT,64,40,129,14,ES_AUTOHSCROLL
+    CONTROL         "Insert From Line End",IDC_CHECK_INSERT_FROM_END_LINE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,69,132,10
+END
+
+IDD_EDIT_INSERT_AFTER_WORD_IN_LINE DIALOGEX 0, 0, 215, 86
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Insert After Word In Line"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,88,65,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,146,65,50,14
+    LTEXT           "After Word:",IDC_STATIC_TARGET_WORD,16,18,45,8
+    LTEXT           "Insert What:",IDC_STATIC,16,43,46,8
+    EDITTEXT        IDC_EDIT_INSERT_AFTER_WORD,66,15,129,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_INSERT_WHAT,66,40,129,14,ES_AUTOHSCROLL
+END
+
+IDD_DIALOG_PROJECT_TEMPLATE DIALOGEX 0, 0, 401, 119
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "File Template Creator"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Create",IDOK,250,96,63,17
+    PUSHBUTTON      "Cancel",IDCANCEL,321,96,63,17
+    EDITTEXT        IDC_EDIT_PROJECT_TEMPLATE_LOCATION,57,76,327,12,ES_AUTOHSCROLL
+    LTEXT           "Location:",IDC_STATIC,20,79,30,8
+    COMBOBOX        IDC_COMBO_PROJECT_TEMPLATE_TYPE,57,30,327,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Template:",IDC_STATIC,18,32,32,8
+    LTEXT           "File Name:",IDC_STATIC,16,55,34,8
+    EDITTEXT        IDC_EDIT_PROJECT_TEMPLATE_PROJECT_NAME,57,53,327,12,ES_AUTOHSCROLL
+    LTEXT           "Language:",IDC_STATIC,15,9,35,8
+    COMBOBOX        IDC_COMBO_PROJECT_TEMPLATE_LANGUAGE,57,7,327,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG_SEARCH_FILE DIALOGEX 0, 0, 369, 327
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION " Search/Navigate Path"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Search All",IDOK,147,301,75,21
+    PUSHBUTTON      "Cancel",IDCANCEL,243,301,75,21
+    LTEXT           "Search Folder:",IDC_STATIC,18,22,48,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_SEARCH_ON_PATH,73,20,277,14,ES_AUTOHSCROLL
+    LTEXT           "Search Name:",IDC_STATIC,10,47,56,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_FILE_NAME,73,45,277,14,ES_AUTOHSCROLL
+    CONTROL         "Match Case",IDC_CHECK_SERACH_FILE_MATCH_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,136,81,10
+    CONTROL         "Search File Only",IDC_CHECK_SERACH_FILE_ONLY,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,139,135,81,10
+    CONTROL         "Add Result To New Editor",IDC_CHECK_ADD_TO_EDITOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,209,255,128,10
+    DEFPUSHBUTTON   "Next Match",IDC_BUTTON_SEARCH_PATH_NEXT_MATCH,51,301,75,21
+    GROUPBOX        "Search Define:",IDC_STATIC,0,5,369,102
+    GROUPBOX        "Search Options:",IDC_STATIC,0,115,369,114
+    GROUPBOX        "Search Result:",IDC_STATIC,0,236,369,60
+    CONTROL         "Add Result To Path Result Window",IDC_CHECK_ADD_TO_SEARCH_FILE_RESULT_WINDOW,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,48,255,138,10
+    CONTROL         "Replace Current Result",IDC_RADIO_SEARCH_RESULT_REPLACE,
+                    "Button",BS_AUTORADIOBUTTON | WS_GROUP,48,276,130,10
+    CONTROL         "Append To Current Result",IDC_RADIO_SEARCH_RESULT_APPEND,
+                    "Button",BS_AUTORADIOBUTTON,209,276,128,10
+    CONTROL         "Search In Subdirectory",IDC_CHECK_SERACH_IN_SUBDIRECTORY,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,253,135,87,10
+    CONTROL         "Size file between (Byte):",IDC_CHECK_SERACH_FILE_SIZE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,157,96,10
+    EDITTEXT        IDC_EDIT_MIN_FILE_SIZE,139,155,94,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_MAX_FILE_SIZE,253,154,94,15,ES_AUTOHSCROLL
+    CONTROL         "Date modified between:",IDC_CHECK_DATE_MODIFIED_BETWEEN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,202,87,10
+    CONTROL         "",IDC_DATETIMEPICKER_START,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,139,200,94,15
+    CONTROL         "",IDC_DATETIMEPICKER_END,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,253,199,94,15
+    CONTROL         "Date created between:",IDC_CHECK_DATE_CREATED_BETWEEN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,179,91,10
+    CONTROL         "",IDC_DATETIMEPICKER_START_CREATED,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,139,177,94,15
+    CONTROL         "",IDC_DATETIMEPICKER_END_CREATED,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,253,176,94,15
+    CONTROL         "Search Without Name",IDC_CHECK_SEARCH_WITHOUT_MATCH_NAME,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,92,81,10
+    LTEXT           "Search Filter:",IDC_STATIC,10,70,56,8,0,WS_EX_RIGHT
+    EDITTEXT        IDC_EDIT_PATH_FILTER,73,69,277,14,ES_AUTOHSCROLL
+END
+
+IDD_CODEPAGEMFC_DIALOG DIALOGEX 0, 0, 343, 335
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "VinaText System Code Page"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LTEXT           "Supported Code Pages (Use for Reopen/Save)",IDC_STATIC,12,6,251,8
+    CONTROL         "List1",IDC_INSTALLED,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,13,16,314,290
+    DEFPUSHBUTTON   "Reopen File",IDOK,203,312,57,17
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,266,312,57,17
+END
+
+IDD_SEARCH_RESULT_DLG DIALOGEX 0, 0, 234, 115
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_SEARCH_RESULT,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_OWNERDATA | LVS_NOSORTHEADER | WS_BORDER | WS_TABSTOP,0,22,233,93
+END
+
+IDD_EDIT_INSERT_BETWEEN_LINES DIALOGEX 0, 0, 233, 97
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Insert X Between Lines"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "Cancel",IDCANCEL,165,76,50,14
+    LTEXT           "Insert What:",IDC_STATIC,15,16,42,8
+    EDITTEXT        IDC_EDIT_INSERT_WHAT,63,14,153,14,ES_AUTOHSCROLL
+    CONTROL         "Insert At Top Also",IDC_CHECK_INSERT_MOST_TOP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,40,132,10
+    DEFPUSHBUTTON   "OK",IDOK,107,76,50,14
+    CONTROL         "Insert At Bottom Also",IDC_CHECK_INSERT_MOST_BOTTOM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,58,132,10
+END
+
+IDD_DIALOG_GAMMA DIALOGEX 0, 0, 129, 50
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Change Image Gamma"
+FONT 8, "MS Sans Serif", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,71,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,71,24,50,14
+    EDITTEXT        IDC_EDIT_GAMMA,7,20,50,12,ES_AUTOHSCROLL
+    LTEXT           "Gamma Factor",IDC_STATIC,7,7,60,10
+END
+
+IDD_DIALOG_MISSPELLED_REPLACE DIALOGEX 0, 0, 143, 137
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Misspelled Replace With..."
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Replace",IDOK,19,117,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,73,117,50,14
+    LISTBOX         IDC_LIST_MISSPELLED_REPLACE,6,31,130,81,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Target Word:",IDC_STATIC,6,15,46,8
+    EDITTEXT        IDC_EDIT_MISSPELLED_REPLACE,59,12,77,14,ES_AUTOHSCROLL | ES_READONLY
+END
+
+IDD_DIALOG_QUICK_SEARCH_AND_REPLACE DIALOGEX 0, 0, 180, 87
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_BORDER | WS_SYSMENU
+EXSTYLE WS_EX_CLIENTEDGE | WS_EX_STATICEDGE
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_TAB_QUICK_SEARCH,"SysTabControl32",0x0,0,0,179,87
+    PUSHBUTTON      "X",IDCANCEL,161,0,17,12
+END
+
+IDD_DIALOG_QUICK_REPLACE DIALOGEX 0, 0, 186, 79
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        ID_EDITOR_QUICK_REPLACE_SEARCH_COMBO,5,3,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "Replace",ID_EDITOR_QUICK_REPLACE_NEXT,66,54,47,19
+    PUSHBUTTON      "Replace All",ID_EDITOR_QUICK_REPLACE_ALL,119,54,47,19
+    COMBOBOX        ID_EDITOR_QUICK_REPLACE_OPTION_COMBO,5,37,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_EDITOR_QUICK_REPLACE_COMBO,5,20,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "S. Next",ID_EDITOR_QUICK_SEARCH_REPLACE_NEXT,14,54,47,19
+END
+
+IDD_DLG_QUICK_SEARCH DIALOGEX 0, 0, 189, 82
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        ID_EDITOR_QUICK_SEARCH_COMBO,5,8,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "S. Previous",ID_EDITOR_QUICK_SEARCH_PREVIOUS,67,48,47,19
+    DEFPUSHBUTTON   "S. Next",ID_EDITOR_QUICK_SEARCH_NEXT,15,48,47,19
+    PUSHBUTTON      "Search All",ID_EDITOR_QUICK_SEARCH_ALL,119,48,47,19
+    COMBOBOX        ID_EDITOR_QUICK_SEARCH_OPTION_COMBO,5,27,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_OPEN_FILE_WITH_PASSWORD_DIALOG DIALOGEX 0, 0, 315, 59
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Unlock File With Password..."
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,251,35,50,16
+    LTEXT           "Password:",IDC_STATIC,15,14,39,8
+    EDITTEXT        IDC_EDIT_KEY,58,12,243,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "Unlock",IDOK,193,35,50,16
+    CONTROL         "Show Password",IDC_CHECK_SHOW_PASSWORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,38,66,10
+END
+
+IDD_SAVE_FILE_WITH_PASSWORD_DIALOG DIALOGEX 0, 0, 315, 59
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Lock File With Password..."
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "Cancel",IDCANCEL,251,35,50,16
+    LTEXT           "Password:",IDC_STATIC,15,14,39,8
+    EDITTEXT        IDC_EDIT_KEY,58,12,243,14,ES_PASSWORD | ES_AUTOHSCROLL
+    PUSHBUTTON      "Lock",IDOK,193,35,50,16
+    CONTROL         "Show Password",IDC_CHECK_SHOW_PASSWORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,38,66,10
+END
+
+IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 593, 318
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "VinaText Preference"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,264,295,58,18
+    PUSHBUTTON      "Cancel",IDCANCEL,335,295,58,18
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,193,295,58,18
+    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,6,5,579,284,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
+END
+
+IDD_DIALOG_SETTING_TOGGLE DIALOGEX 0, 0, 572, 291
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Add Host Path To Recent List",ID_ADD_HOST_PATH_TO_RECENT_LIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,18,109,10
+    CONTROL         "Allow Open File Has Error Build",ID_ALLOW_OPEN_FILE_HAS_ERROR_BUILD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,36,113,10
+    CONTROL         "Ask Before Terminate Program",ID_ASK_BEFORE_TERMINATE_PROGRAM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,54,113,10
+    CONTROL         "Auto Complete Ignore Case",ID_AUTO_COMPLETE_IGNORE_CASE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,72,105,10
+    CONTROL         "Auto Complete Ignore Numbers",ID_AUTO_COMPLETE_IGNORE_NUMBERS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,90,117,10
+    CONTROL         "Auto Save Document When Build",ID_AUTO_SAVE_DOCUMENT_WHENBUILD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,108,119,10
+    CONTROL         "Check File Size Before Open",ID_CHECK_FILE_SIZE_BEFORE_OPEN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,126,105,10
+    CONTROL         "Detect File Change From Out Side",ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,144,124,10
+    CONTROL         "Display Message Box For File Change",ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,162,135,10
+    CONTROL         "Draw Caret Line Frame",ID_DRAW_CARET_LINE_FRAME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,180,89,10
+    CONTROL         "Draw Folding Line Under Line Style",ID_DRAW_FOLDING_LINE_UNDER_LINE_STYLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,18,126,10
+    CONTROL         "Editor Enable Bold Font",ID_EDITOR_ENABLE_BOLD_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,180,90,10
+    CONTROL         "Enable Auto Complete",ID_ENABLE_AUTO_COMPLETE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,36,87,10
+    CONTROL         "Enable Auto Search When Typing",ID_ENABLE_AUTO_SEARCH_WHEN_TYPING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,54,123,10
+    CONTROL         "Enable Caret Blink",ID_ENABLE_CARET_BLINK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,72,73,10
+    CONTROL         "Enable Display Build Error On Editor",ID_ENABLE_DISPLAY_BUILD_ERROR_ON_EDITOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,90,129,10
+    CONTROL         "Enable Hight Light Folder",ID_ENABLE_HIGHT_LIGHT_FOLDER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,108,95,10
+    CONTROL         "Enable Multiple Cursor",ID_ENABLE_MUTILPLE_CURSOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,126,87,10
+    CONTROL         "Enable Path Navigation",ID_ENABLE_PATH_NAVIGATION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,144,90,10
+    CONTROL         "Enable Preview File",ID_ENABLE_PREVIEW_FILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,161,77,10
+    CONTROL         "Enable Process Indentation Tab",ID_ENABLE_PROCESS_INDENTATION_TAB,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,233,117,10
+    CONTROL         "Enable Synchronize Scrolling",ID_ENABLE_SYNCHRONIZE_SCROLLING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,233,106,10
+    CONTROL         "Enable Url Highlight",ID_ENABLE_URL_HIGHLIGHT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,18,77,10
+    CONTROL         "Enable W-Flag For CPP 11",ID_ENABLE_WFLAG_CPP11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,34,97,10
+    CONTROL         "Enable Warning Flag For C And CPP",ID_ENABLE_WARNING_FLAG_FOR_C_AND_CPP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,50,130,10
+    CONTROL         "Enable Window Subsystem Flag For C And CPP",ID_ENABLE_WINDOW_SUBSYTEM_FLAG_FOR_C_AND_CPP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,66,162,10
+    CONTROL         "Hide All Target File System",ID_HIDE_ALL_TARGET_FILE_SYSTEM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,82,101,10
+    CONTROL         "Open Window CMD When Run Program",ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,99,141,10
+    CONTROL         "Return Previous Editor State",ID_RETURN_PREVIOUS_EDITOR_STATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,116,107,10
+    CONTROL         "Reveal Explorer When Double Click On Tab",ID_REVEAL_EXPLORER_WHEN_DLB_CLK_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,133,153,10
+    CONTROL         "Reveal Explorer When Switch Tab",ID_REVEAL_EXPLORER_WHEN_SWITCH_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,150,124,10
+    CONTROL         "Save Data Bookmark Window",ID_SAVE_DATA_BOOKMARK_WINDOW,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,166,109,10
+    CONTROL         "Show Tracking Bar",ID_SHOW_TRACKING_BAR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,183,75,10
+    CONTROL         "Use Folder Margin Classic",ID_USE_FOLDER_MARGIN_CLASSIC,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,200,97,10
+    CONTROL         "Use Initial File Picker Path",ID_ALLOW_USE_INITIAL_FILE_PICKER_PATH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,217,97,10
+    CONTROL         "Use Win10 Explorer Style",ID_USE_WIN10_EXPLORER_STYLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,198,97,10
+    CONTROL         "Warning For File Not Exist",ID_WARNING_FOR_FILE_NOT_EXIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,216,99,10
+    CONTROL         "Editor Enable Italic Font",ID_EDITOR_ENABLE_ITALIC_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,198,92,10
+    CONTROL         "Editor Enable Underline Font",ID_EDITOR_ENABLE_UNDERLINE_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,215,107,10
+    CONTROL         "Ask Before Replace In Files",ID_ASK_BEFORE_REPLACE_IN_FILES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,233,103,10
+    CONTROL         "Enable Auto Detect Code Page",ID_ENABLE_AUTO_DETECT_CODE_PAGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,250,115,10
+END
+
+IDD_DIALOG_SETTING_CUSTOMIZE DIALOGEX 0, 0, 572, 291
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        ID_ACTIVE_TAB_COLOR_COMBO,119,20,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Active Tab Color:",IDC_STATIC,51,22,56,8
+    LTEXT           "Caret Blink Color:",IDC_STATIC,51,48,56,8
+    COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,119,46,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dialog Font Height:",IDC_STATIC,45,74,62,8
+    LTEXT           "Dialog Font Name:",IDC_STATIC,47,98,60,8
+    LTEXT           "Dialog Font Weight:",IDC_STATIC,43,124,64,8
+    LTEXT           "Dock Window Font Height:",IDC_STATIC,21,149,86,8
+    LTEXT           "Dock Window Font Name:",IDC_STATIC,24,174,83,8
+    LTEXT           "Dock Window Font Weight:",IDC_STATIC,19,201,88,8
+    EDITTEXT        ID_DIALOG_FONT_HEIGHT_EDIT,119,72,138,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select Font",ID_DIALOG_FONT_NAME_BUTTON,119,96,138,14
+    LTEXT           "Editor Line Number Font Size:",IDC_STATIC,294,20,95,8
+    LTEXT           "Editor Text Font Size:",IDC_STATIC,319,45,70,8
+    EDITTEXT        ID_DOCK_WINDOW_FONT_HEIGHT_EDIT,119,147,138,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "Select Font",ID_DOCK_WINDOW_FONT_NAME_BUTTON,119,171,138,14
+    EDITTEXT        ID_EDITOR_TEXT_FONT_SIZE_EDIT,399,42,138,12,ES_AUTOHSCROLL
+    EDITTEXT        ID_EDITOR_LINE_NUMBER_FONT_SIZE_EDIT,399,18,138,12,ES_AUTOHSCROLL
+    LTEXT           "Folder Margin Style:",IDC_STATIC,324,67,65,8
+    LTEXT           "Duplicate Word Indicator Color:",IDC_STATIC,287,89,102,8
+    LTEXT           "Duplicate Word Indicator Style:",IDC_STATIC,288,112,101,8
+    COMBOBOX        ID_INDICATOR_COLOR_COMBO,399,87,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_INDICATOR_STYLE_COMBO,399,110,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Page Alignment Width:",IDC_STATIC,315,180,74,8
+    LTEXT           "Render Indicator Action:",IDC_STATIC,309,201,80,8
+    LTEXT           "Application Theme Color:",IDC_STATIC,309,135,80,8
+    EDITTEXT        ID_PAGE_ALIGNMENT_WIDTH_EDIT,399,179,138,12,ES_AUTOHSCROLL
+    COMBOBOX        ID_THEME_COLOR_COMBO,399,133,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,399,201,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_FOLDER_MARGIN_STYLE_COMBO,399,64,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Editor Font Name:",IDC_STATIC,48,224,59,8
+    PUSHBUTTON      "Select Font",ID_EDITOR_FONT_NAME_BUTTON,119,222,138,14
+    LTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,296,224,93,8
+    COMBOBOX        ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO,399,224,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_DIALOG_FONT_WEIGHT_COMBO,119,122,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_DOCK_WINDOW_FONT_WEIGHT_COMBO,119,198,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Application Theme Look:",IDC_STATIC,311,158,78,8
+    COMBOBOX        ID_THEME_LOOK_COMBO,399,156,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+END
+
+IDD_DIALOG_SETTING_FILE_SYSTEM DIALOGEX 0, 0, 572, 291
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    LTEXT           "Line Space Above:",IDC_STATIC,337,24,60,8
+    LTEXT           "Line Space Below:",IDC_STATIC,339,48,58,8
+    LTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,23,49,104,8
+    LTEXT           "Python Interpreter Folder Path:",IDC_STATIC,27,73,100,8
+    LTEXT           "Recent File Limitation:",IDC_STATIC,326,193,71,8
+    EDITTEXT        ID_LINE_SPACE_ABOVE_EDIT,411,22,126,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_NODE_JS_FOLDER_PATH_EDIT,141,47,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    EDITTEXT        ID_PYTHON_FOLDER_PATH_EDIT,141,71,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    EDITTEXT        ID_LINE_SPACE_BELOW_EDIT,411,46,126,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_RECENT_FILE_LIMIT_EDIT,411,191,126,14,ES_AUTOHSCROLL
+    LTEXT           "Initial File Picker Path:",IDC_STATIC,56,26,71,8
+    LTEXT           "Auto Save Interval Minutes:",IDC_STATIC,306,95,91,8
+    LTEXT           "Language Spell Check:",IDC_STATIC,54,168,73,8
+    LTEXT           "Language Translate To:",IDC_STATIC,50,216,77,8
+    LTEXT           "Language Translate From:",IDC_STATIC,42,192,85,8
+    EDITTEXT        ID_INITIAL_FILE_PICKER_PATH_EDIT,141,23,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    EDITTEXT        ID_INTERVAL_MINUTES_EDIT,411,93,126,14,ES_AUTOHSCROLL
+    LTEXT           "Explorer Expand Limit File Open:",IDC_STATIC,293,119,104,8
+    LTEXT           "Explorer Expand Limit Level:",IDC_STATIC,306,145,91,8
+    LTEXT           "File Preview Size Limitation:",IDC_STATIC,309,169,88,8
+    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_FILE_OPEN_EDIT,411,117,126,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_LEVEL_EDIT,411,142,126,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_FILE_PREVIEW_SIZE_LIMIT_EDIT,411,166,126,14,ES_AUTOHSCROLL
+    LTEXT           "Git Window Folder Path:",IDC_STATIC,49,97,78,8
+    EDITTEXT        ID_GIT_WINDOW_FOLDER_PATH_EDIT,141,95,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    EDITTEXT        ID_ANTI_VIRUS_ARGUMENT_EDIT,141,143,126,14,ES_AUTOHSCROLL
+    LTEXT           "Anti Virus Argument:",IDC_STATIC,60,145,67,8
+    LTEXT           "Anti Virus Program:",IDC_STATIC,65,121,62,8
+    EDITTEXT        ID_ANTI_VIRUS_PROGRAM_EDIT,141,119,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    LTEXT           "Binary File Extension List:",IDC_STATIC,315,217,82,8
+    COMBOBOX        ID_LANGUAGE_TRANSLATE_TO_COMBO,141,214,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_LANGUAGE_TRANSLATE_FROM_COMBO,141,191,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_LANGGUAGE_SPELL_CHECK_COMBO,141,167,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,411,215,126,14,ES_AUTOHSCROLL
+    LTEXT           "Long Line Maximum:",IDC_STATIC,332,72,65,8
+    EDITTEXT        ID_LONG_LINE_MAXIMUM_EDIT,411,70,126,14,ES_AUTOHSCROLL
+END
+
+IDD_CREATE_NEW_MULTIPLE DIALOGEX 0, 0, 293, 51
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Create Paths From Data File [full_path, path_type]"
+FONT 8, "MS Shell Dlg", 0, 0, 0x0
+BEGIN
+    LTEXT           "Data Path:",IDC_STATIC,13,13,38,8
+    EDITTEXT        IDC_FILE_DATA_PATH,55,11,223,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "Create",IDOK,172,32,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,229,32,50,14
+    CONTROL         "Overwrite File If Existed",IDC_CHECK_OVERWRITE_FILE_EXIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,34,93,10
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x40004L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904B0"
+        BEGIN
+            VALUE "CompanyName", "Vinatools"
+            VALUE "FileDescription", "VinaText"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "VinaText.exe"
+            VALUE "LegalCopyright", "Vinatools.  All rights reserved."
+            VALUE "OriginalFilename", "VinaText.exe"
+            VALUE "ProductName", "VinaText"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 232
+        TOPMARGIN, 7
+    END
+
+    IDD_BRACKET_OUTLINE, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 111
+    END
+
+    IDD_POS, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 165
+    END
+
+    IDD_FIND, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 298
+    END
+
+    IDD_REPLACE, DIALOG
+    BEGIN
+        RIGHTMARGIN, 225
+        BOTTOMMARGIN, 501
+    END
+
+    IDD_SEARCH_AND_REPLACE_DIALOG_PANE, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG_FILE_EXPLORER, DIALOG
+    BEGIN
+    END
+
+    IDD_FILENAME_MASK, DIALOG
+    BEGIN
+    END
+
+    IDD_ROOTFOLDER, DIALOG
+    BEGIN
+    END
+
+    IDD_SELECTEDPATH, DIALOG
+    BEGIN
+        RIGHTMARGIN, 293
+    END
+
+    ID_DIALOG_BUILD_PANE, DIALOG
+    BEGIN
+    END
+
+    IDD_APP_LOOK, DIALOG
+    BEGIN
+    END
+
+    IDD_EDIT_WITH_X, DIALOG
+    BEGIN
+        RIGHTMARGIN, 163
+    END
+
+    IDD_REMOVE_FILE_WITH_EXTENSION, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 69
+    END
+
+    IDD_BOOKMARK_PATH_DLG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 593
+        BOTTOMMARGIN, 215
+    END
+
+    IDD_EDIT_REMOVE_FROM_X_TO_Y, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    IDD_DIALOG_REMOVE_AFTER_BEFORE_WORD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 210
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 53
+    END
+
+    IDD_EDIT_INSERT_AT_POSITION_X, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 103
+    END
+
+    IDD_EDIT_INSERT_AFTER_WORD_IN_LINE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 208
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 79
+    END
+
+    IDD_DIALOG_PROJECT_TEMPLATE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 398
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 118
+    END
+
+    IDD_DIALOG_SEARCH_FILE, DIALOG
+    BEGIN
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 320
+    END
+
+    IDD_CODEPAGEMFC_DIALOG, DIALOG
+    BEGIN
+        RIGHTMARGIN, 342
+    END
+
+    IDD_SEARCH_RESULT_DLG, DIALOG
+    BEGIN
+    END
+
+    IDD_EDIT_INSERT_BETWEEN_LINES, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 226
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 90
+    END
+
+    IDD_DIALOG_GAMMA, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 121
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_DIALOG_MISSPELLED_REPLACE, DIALOG
+    BEGIN
+        LEFTMARGIN, 6
+        RIGHTMARGIN, 136
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 130
+    END
+
+    IDD_DIALOG_QUICK_SEARCH_AND_REPLACE, DIALOG
+    BEGIN
+        RIGHTMARGIN, 178
+        BOTTOMMARGIN, 80
+    END
+
+    IDD_DIALOG_QUICK_REPLACE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 179
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 72
+    END
+
+    IDD_DLG_QUICK_SEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 4
+        RIGHTMARGIN, 182
+        TOPMARGIN, 9
+        BOTTOMMARGIN, 75
+    END
+
+    IDD_OPEN_FILE_WITH_PASSWORD_DIALOG, DIALOG
+    BEGIN
+    END
+
+    IDD_SAVE_FILE_WITH_PASSWORD_DIALOG, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG_APP_SETTINGS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 585
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 314
+    END
+
+    IDD_DIALOG_SETTING_TOGGLE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 565
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 283
+    END
+
+    IDD_DIALOG_SETTING_CUSTOMIZE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 565
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 284
+    END
+
+    IDD_DIALOG_SETTING_FILE_SYSTEM, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 565
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 284
+    END
+
+    IDD_CREATE_NEW_MULTIPLE, DIALOG
+    BEGIN
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_ABOUTBOX AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_FIND AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REPLACE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_POS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_WITH_X AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_REMOVE_FILE_WITH_EXTENSION AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SELECTEDPATH AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_ROOTFOLDER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_FILENAME_MASK AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_BOOKMARK_PATH_DLG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_REMOVE_FROM_X_TO_Y AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_REMOVE_AFTER_BEFORE_WORD AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_INSERT_AT_POSITION_X AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_EDIT_INSERT_AFTER_WORD_IN_LINE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_BRACKET_OUTLINE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_PROJECT_TEMPLATE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SAVE_FILE_WITH_PASSWORD_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SEARCH_FILE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CODEPAGEMFC_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_SEARCH_RESULT_DLG AFX_DIALOG_LAYOUT
+BEGIN
+    0,
+    0, 0, 0, 0,
+    100, 100, 100, 100
+END
+
+IDD_EDIT_INSERT_BETWEEN_LINES AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_MISSPELLED_REPLACE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_QUICK_SEARCH_AND_REPLACE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_QUICK_REPLACE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DLG_QUICK_SEARCH AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_OPEN_FILE_WITH_PASSWORD_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_APP_LOOK AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_APP_SETTINGS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_TOGGLE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_CUSTOMIZE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_FILE_SYSTEM AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_CREATE_NEW_MULTIPLE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog Info
+//
+
+IDD_APP_LOOK DLGINIT
+BEGIN
+    IDC_APP_LOOK, 0x403, 22, 0
+0x694d, 0x7263, 0x736f, 0x666f, 0x2074, 0x664f, 0x6966, 0x6563, 0x3220, 
+0x3030, 0x0033, 
+    IDC_APP_LOOK, 0x403, 29, 0
+0x694d, 0x7263, 0x736f, 0x666f, 0x2074, 0x6956, 0x7573, 0x6c61, 0x5320, 
+0x7574, 0x6964, 0x206f, 0x3032, 0x3530, "\000" 
+    IDC_APP_LOOK, 0x403, 33, 0
+0x694d, 0x7263, 0x736f, 0x666f, 0x2074, 0x6957, 0x646e, 0x776f, 0x2073, 
+0x5058, 0x6e20, 0x7461, 0x7669, 0x2065, 0x6f6c, 0x6b6f, "\000" 
+    IDC_APP_LOOK, 0x403, 22, 0
+0x694d, 0x7263, 0x736f, 0x666f, 0x2074, 0x664f, 0x6966, 0x6563, 0x3220, 
+0x3030, 0x0037, 
+    IDC_APP_LOOK, 0x403, 29, 0
+0x694d, 0x7263, 0x736f, 0x666f, 0x2074, 0x6956, 0x7573, 0x6c61, 0x5320, 
+0x7574, 0x6964, 0x206f, 0x3032, 0x3830, "\000" 
+    IDC_STYLE, 0x403, 12, 0
+0x754c, 0x616e, 0x2d20, 0x6220, 0x756c, 0x0065, 
+    IDC_STYLE, 0x403, 17, 0
+0x624f, 0x6973, 0x6964, 0x6e61, 0x2d20, 0x6220, 0x616c, 0x6b63, "\000" 
+    IDC_STYLE, 0x403, 5, 0
+0x7141, 0x6175, "\000" 
+    IDC_STYLE, 0x403, 7, 0
+0x6953, 0x766c, 0x7265, "\000" 
+    0
+END
+
+IDD_ABOUTBOX DLGINIT
+BEGIN
+    IDC_MFCLINK_EXPLORER_EXTRA, 0x37c, 157, 0
+0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x555f, 0x6c72, 0x3c3e, 0x4d2f, 0x4346, 
+0x694c, 0x6b6e, 0x555f, 0x6c72, 0x3c3e, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 
+0x7255, 0x506c, 0x6572, 0x6966, 0x3e78, 0x2f3c, 0x464d, 0x4c43, 0x6e69, 
+0x5f6b, 0x7255, 0x506c, 0x6572, 0x6966, 0x3e78, 0x4d3c, 0x4346, 0x694c, 
+0x6b6e, 0x545f, 0x6f6f, 0x746c, 0x7069, 0x3c3e, 0x4d2f, 0x4346, 0x694c, 
+0x6b6e, 0x545f, 0x6f6f, 0x746c, 0x7069, 0x3c3e, 0x464d, 0x4c43, 0x6e69, 
+0x5f6b, 0x7546, 0x6c6c, 0x6554, 0x7478, 0x6f54, 0x6c6f, 0x6974, 0x3e70, 
+0x4146, 0x534c, 0x3c45, 0x4d2f, 0x4346, 0x694c, 0x6b6e, 0x465f, 0x6c75, 
+0x546c, 0x7865, 0x5474, 0x6f6f, 0x746c, 0x7069, "\076" 
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_VinaText       REGISTRY                "VinaText.rgs"
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDP_OLE_INIT_FAILED     "OLE initialization failed.  Make sure that the OLE libraries are the correct version."
+END
+
+STRINGTABLE
+BEGIN
+    IDR_MAINFRAME           "VinaText"
+END
+
+STRINGTABLE
+BEGIN
+    IDR_EDITOR_DOC          "\nVinaText\nVinaText\n\n\nVinaText.Document\nVinaText.Document"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_APP_TITLE       "VinaText"
+    AFX_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXT        "EXT"
+    ID_INDICATOR_CAPS       "  CAPLOCK  "
+    ID_INDICATOR_NUM        "  NUMBER  "
+    ID_INDICATOR_SCRL       "SCRL"
+    ID_INDICATOR_OVR        "  OVERTYPE  "
+    ID_INDICATOR_REC        "REC"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_CURRENT_LANGUAGE_INDICATOR 
+                            "  %s                                          "
+    ID_INDICATOR_ENCODING   "        UTF-8                                "
+    IDS_ENCODING_INDICATOR  "     %s                              "
+    ID_OPTIONS_DELETE_ALL_BREAKPOINT 
+                            "Remove All Breakpoints\\Remove All Breakpoints"
+    ID_INDICATOR_INS        "  INSERT  "
+    ID_TOOL_PYTHON_PIP_WINDOW 
+                            ".\\python.exe -m pip install -t Lib\\site-packages -U <package>"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EXPLORER_SELECTED_PATH 
+                            "                                                                                                                                                                                                 "
+    ID_PANE_FILE_RESULT_WINDOW 
+                            "Shows or hides the Path Result Window\\Path Result Window"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_NEW             "Create a new document\nNew"
+    ID_FILE_OPEN            "Open an existing document\nOpen"
+    ID_FILE_CLOSE           "Close the active document\nClose"
+    ID_FILE_SAVE            "Save the active document\nSave"
+    ID_FILE_SAVE_AS         "Save the active document with a new name\nSave As"
+    ID_FILE_PAGE_SETUP      "Change the printing options\nPage Setup"
+    ID_FILE_PRINT_SETUP     "Change the printer and printing options\nPrint Setup"
+    ID_FILE_PRINT           "Print the active document\nPrint"
+    ID_FILE_PRINT_DIRECT    "Print the active document using current options\nQuick Print"
+    ID_FILE_PRINT_PREVIEW   "Display full pages\nPrint Preview"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_SAVE_ALL        "Saves all open documents\nSave All Files"
+END
+
+STRINGTABLE
+BEGIN
+    ID_DEBUGGER_START       "Local Window Debugger\nRun Active File"
+END
+
+STRINGTABLE
+BEGIN
+    ID_BUILD_WARNING        "Enable/Disable Compiler Warning Flag\nCompiler Warning Flag"
+    ID_BUILD_PROGRAM        "Build Program\nBuild"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANE_BUILD_WINDOW    "Shows or hides the Build Window\nBuild Window"
+    ID_OPTIONS_SHOW_ERROR   "Show build error lines\nShow Build Error"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANE_BOOKMARK_WINDOW "Shows or hides the Bookmark Window\\Bookmark Window"
+END
+
+STRINGTABLE
+BEGIN
+    ID_MDI_TAB_RELOAD       "Reload Active File\nReload File"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_SPELL_CHECK     "Enable Spell Checker\nEnable Spell Checker"
+    ID_LAUNCH_CMD_WINDOW    "Enable CMD Window Mode\nOpen CMD Window When Run Program"
+END
+
+STRINGTABLE
+BEGIN
+    ID_DOCUMENT_TRANSLATE   "Translate selected text and display right below\nTranslate Selected Text"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_STOP_PROGRAM    "Stop Window Debugger\nStop Window Debugger"
+    ID_EDITOR_UNCOMMENT     "Uncomment Line or Block\nUnComment"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TOOL_NODEJS_NPM_WINDOW "npm install --prefix <package>"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDITOR_COMMENT       "Comment Line or Block\nComment"
+    ID_PANE_FILE_EXPLORER   "Shows or hides the File Explorer\nExplorer Tree Window"
+    ID_PANE_OUTPUT_WINDOW   "Shows or hides the Message Log\nMessage Ouput Log"
+	ID_QUICK_SEARCH			"Quick Search Popup\nQuick Search Popup Dialog"
+	ID_WINDOW_MANAGER		"Window Manager\n Document List"
+	ID_MDI_TAB_CLOSE_ALL_DOC "Close all opened tabs\nClose All Opened tabs"
+	ID_EDIT_SHOW_ALL_CHARACTOR "Show All Hiden Characters\nShow All Hiden Characters"
+	ID_DOCUMENT_FILE_SUMMARY "Dump File Information\nDump File Information Message"
+	ID_MDI_TAB_MOVE_PREVIOUS_TAB "Move Current Tab To Previous Group\nMove Current Tab To Previous Group"
+	ID_MDI_TAB_NEW_VERTICAL_TAB "Move Current Tab To Vertical Group\nMove Current Tab To Vertical Group"
+	ID_MDI_TAB_CLOSE		"Close active tab\nClose Active Tab"
+    ID_INDICATOR_CARET_INFO "     cine 1, column 1                                                                 "
+    IDS_INDICATOR_CARET_INFO_CURRENT 
+                            "     ln %d, col %d, pos %d                                                                "
+    ID_INDICATOR_MATCHEDS   "     matches: 1                                                  "
+    IDS_LENGTH_INDICATOR    "     matches: %d                                                  "
+END
+
+STRINGTABLE
+BEGIN
+    IDS_INDICATOR_CARET_INFO_SELECTED 
+                            "     %d lines, %d characters                                                                                      "
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_SELECTIONS "     selections: 1                                                  "
+    IDS_SELECTIONS_INDICATOR 
+                            "     selections: %d                                                  "
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANE_TEXT_RESULT_WINDOW 
+                            "Shows or hides the Text Result Window\nText Result Window"
+    ID_VINATEXT_DOCUMENTATION "VinaText Help\nHelp"
+    ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER 
+                            "Reveal Active File In Explorer Window\nReveal In Explorer"
+    ID_INDICATOR_CURRENT_LANGUAGE "Language: text            "
+END
+
+STRINGTABLE
+BEGIN
+    ID_PANE_SEARCH_AND_REPLACE_WINDOW 
+                            "Shows or hides the Advance Search Text Window\nAdvance Search Text Window"
+    ID_EDITOR_FULL_SCREEN_MODE "Enable Full Screen Mode\nFull Screen Mode"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TREEFILECTRL_CREATEFOLDER "Creates a new folder"
+    ID_OPTIONS_ADD_NEW_BREAKPOINT 
+                            "Add New Breakpoint At Current Line\nAdd New Breakpoint"
+END
+
+STRINGTABLE
+BEGIN
+    ID_TOGGLE_AUTO_COMPLETE "Enable Auto Complete Feature\nEnable Auto Complete"
+END
+
+STRINGTABLE
+BEGIN
+    ID_OPTIONS_DELETE_BREAKPOINT 
+                            "Delete Breakpoint At Current Line\nDelete Breakpoint"
+    ID_OPTIONS_FIND_NEXT_BREAKPOINT "Jump to Next Breakpoint\nNext Breakpoint"
+    ID_OPTIONS_FIND_PREV_BREAKPOINT 
+                            "Jump to Previous Breakpoint\nPrevious Breakpoint"
+END
+
+STRINGTABLE
+BEGIN
+    ID_DOCUMENT_FORMAT_FILE "Format File\nFormat File"
+    ID_DOCUMENT_SET_READ_ONLY "Enable/Disable Edit Mode\nDisable Edit Mode"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_EDIT_MENU           "Edit"
+    ID_EDITOR_SHOW_TRACKING_BAR 
+                            "Show Editor Tracking Bar\nShow Vertical Tracking Bar"
+END
+
+STRINGTABLE
+BEGIN
+    ID_MDI_TAB_OPEN_CONTAINER_FOLDER 
+                            "Reveal Active File In Container Folder\nReveal In Container Folder"
+    ID_MDI_TAB_OPEN_CMD     "Open Command Line Window At Active File Path\nOpen CMD Window"
+END
+
+STRINGTABLE
+BEGIN
+    ID_PATH_VINATEXT_BOOKMARK_TABLE 
+                            "Bookmark Path Table\nOpen Bookmark Path Table"
+END
+
+STRINGTABLE
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout VinaText..."
+    ID_APP_EXIT             "Quit the application; prompts to save documents\nExit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_FILE_MRU_FILE1       "Open this document"
+    ID_FILE_MRU_FILE2       "Open this document"
+    ID_FILE_MRU_FILE3       "Open this document"
+    ID_FILE_MRU_FILE4       "Open this document"
+    ID_FILE_MRU_FILE5       "Open this document"
+    ID_FILE_MRU_FILE6       "Open this document"
+    ID_FILE_MRU_FILE7       "Open this document"
+    ID_FILE_MRU_FILE8       "Open this document"
+    ID_FILE_MRU_FILE9       "Open this document"
+    ID_FILE_MRU_FILE10      "Open this document"
+    ID_FILE_MRU_FILE11      "Open this document"
+    ID_FILE_MRU_FILE12      "Open this document"
+    ID_FILE_MRU_FILE13      "Open this document"
+    ID_FILE_MRU_FILE14      "Open this document"
+    ID_FILE_MRU_FILE15      "Open this document"
+    ID_FILE_MRU_FILE16      "Open this document"
+END
+
+STRINGTABLE
+BEGIN
+    ID_NEXT_PANE            "Switch to the next window pane\nNext Pane"
+    ID_PREV_PANE            "Switch back to the previous window pane\nPrevious Pane"
+END
+
+STRINGTABLE
+BEGIN
+    ID_WINDOW_NEW           "Open another window for the active document\nNew Window"
+    ID_WINDOW_ARRANGE       "Arrange icons at the bottom of the window\nArrange Icons"
+    ID_WINDOW_CASCADE       "Arrange windows so they overlap\nCascade Windows"
+    ID_WINDOW_TILE_HORZ     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_TILE_VERT     "Arrange windows as non-overlapping tiles\nTile Windows"
+    ID_WINDOW_SPLIT         "Split the active window into panes\nSplit"
+END
+
+STRINGTABLE
+BEGIN
+    ID_EDIT_CLEAR           "Erase the selection\nErase"
+    ID_EDIT_CLEAR_ALL       "Erase everything\nErase All"
+    ID_EDIT_COPY            "Copy the selection and put it on the Clipboard\nCopy"
+    ID_EDIT_CUT             "Cut the selection and put it on the Clipboard\nCut"
+    ID_EDIT_FIND            "Search the specified text\nFind"
+    ID_EDIT_PASTE           "Insert Clipboard contents\nPaste"
+    ID_EDIT_REPEAT          "Repeat the last action\nRepeat"
+    ID_EDIT_REPLACE         "Replace specific text with different text\nReplace"
+    ID_EDIT_SELECT_ALL      "Select the entire document\nSelect All"
+    ID_EDIT_UNDO            "Undo the last action\nUndo"
+    ID_EDIT_REDO            "Redo the previously undone action\nRedo"
+END
+
+STRINGTABLE
+BEGIN
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle Status Bar"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCSIZE          "Change the window size"
+    AFX_IDS_SCMOVE          "Change the window position"
+    AFX_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    AFX_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    AFX_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    AFX_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    AFX_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_SCRESTORE       "Restore the window to normal size"
+    AFX_IDS_SCTASKLIST      "Activate Task List"
+    AFX_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE
+BEGIN
+    AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_TOOLBAR_STANDARD    "Top Main Toolbar"
+    IDS_TOOLBAR_CUSTOMIZE   "Customize Toolbar and Menu"
+END
+
+STRINGTABLE
+BEGIN
+    ID_MENU_ITEM1           "$(LINE_NUMBER)"
+    ID_MENU_ITEM2           "$(POSITION)"
+    ID_MENU_ITEM3           "$(FILE_PATH)"
+END
+
+STRINGTABLE
+BEGIN
+    ID_MENU_ITEM4           "$(FILE_NAME)"
+    ID_MENU_ITEM5           "$(FILE_EXT)"
+    ID_MENU_ITEM6           "$(FILE_DIR)"
+    ID_MENU_ITEM7           "$(SELECTED_TEXT)"
+    ID_MENU_ITEM8           "$(ALL_TEXT)"
+    ID_MENU_DIR1            "$(INIT_FILE_DIR)"
+    ID_MENU_DIR2            "$(INIT_WINDOW_DIR)"
+    ID_MENU_DIR3            "$(INIT_SYSTEM_DIR)"
+END
+
+#endif    // English (United States) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE 9, 1
+#include "..\res\VinaText.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"      // Standard components
+#include "afxprint.rc"    // printing/print preview resources
+#if !defined(_AFXDLL)
+#include "afxribbon.rc"        // MFC ribbon and control bar resources
+#endif
+#endif
+
+1 TYPELIB "VinaText.tlb"
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

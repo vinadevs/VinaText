@@ -1,0 +1,41 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext PHP File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+// Desciption            :   file desciption
+// Filename              :   file.php
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+<?php
+function writeMsg() {
+  echo "Hello world!";
+}
+
+writeMsg(); // call the function
+?>
+
+@@ only main file template:
+// Desciption            :   file desciption
+// Filename              :   file.php
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+<html>
+ <head>
+  <title>PHP Main</title>
+ </head>
+ <body>
+ <?php echo '<p>Hello World</p>'; ?> 
+ </body>
+</html>

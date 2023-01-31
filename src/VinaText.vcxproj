@@ -1,0 +1,624 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BE816CD9-8C1F-4929-91D2-A2B3E01A9DF4}</ProjectGuid>
+    <RootNamespace>VinaText</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <Keyword>MFCProj</Keyword>
+    <ProjectName>VinaText</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
+    <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(IncludePath);</IncludePath>
+    <LibraryPath>$(LibraryPath);</LibraryPath>
+    <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalIncludeDirectories>..\..\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <RegisterOutput>true</RegisterOutput>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>gdiplus.lib;Imm32.lib;libcurl.lib;Rpcrt4.lib;bcrypt.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>../lib/$(Configuration)/$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <RegisterOutput>true</RegisterOutput>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <RegisterOutput>true</RegisterOutput>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../lib/$(Configuration)/$(PlatformName);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gdiplus.lib;Imm32.lib;libcurl.lib;Rpcrt4.lib;bcrypt.lib;Shlwapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <RegisterOutput>true</RegisterOutput>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.md" />
+    <Text Include="uchardet\README.TXT" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AdobeAcrobatWrapper.h" />
+    <ClInclude Include="AppAboutDlg.h" />
+    <ClInclude Include="BreakpointWindow.h" />
+    <ClInclude Include="translator\PODictionary.h" />
+    <ClInclude Include="translator\POHandler.h" />
+    <ClInclude Include="uchardet\CharDistribution.h" />
+    <ClInclude Include="uchardet\JpCntx.h" />
+    <ClInclude Include="uchardet\nsBig5Prober.h" />
+    <ClInclude Include="uchardet\nsCharSetProber.h" />
+    <ClInclude Include="uchardet\nsCodingStateMachine.h" />
+    <ClInclude Include="uchardet\nscore.h" />
+    <ClInclude Include="uchardet\nsEscCharsetProber.h" />
+    <ClInclude Include="uchardet\nsEUCJPProber.h" />
+    <ClInclude Include="uchardet\nsEUCKRProber.h" />
+    <ClInclude Include="uchardet\nsEUCTWProber.h" />
+    <ClInclude Include="uchardet\nsGB2312Prober.h" />
+    <ClInclude Include="uchardet\nsHebrewProber.h" />
+    <ClInclude Include="uchardet\nsLatin1Prober.h" />
+    <ClInclude Include="uchardet\nsMBCSGroupProber.h" />
+    <ClInclude Include="uchardet\nsPkgInt.h" />
+    <ClInclude Include="uchardet\nsSBCharSetProber.h" />
+    <ClInclude Include="uchardet\nsSBCSGroupProber.h" />
+    <ClInclude Include="uchardet\nsSJISProber.h" />
+    <ClInclude Include="uchardet\nsUniversalDetector.h" />
+    <ClInclude Include="uchardet\nsUTF8Prober.h" />
+    <ClInclude Include="uchardet\prmem.h" />
+    <ClInclude Include="uchardet\uchardet.h" />
+    <ClInclude Include="WindowsPrinter.h" />
+    <ClInclude Include="CreateNewMultiplePath.h" />
+    <ClInclude Include="VinaTextSettingDlg.h" />
+    <ClInclude Include="Hpsutils.h" />
+    <ClInclude Include="SettingDlgToggle.h" />
+    <ClInclude Include="SettingDlgCustomize.h" />
+    <ClInclude Include="SettingDlgFileSystem.h" />
+    <ClInclude Include="TemplateCreator.h" />
+    <ClInclude Include="Textfile.h" />
+    <ClInclude Include="TextFormatConverter.h" />
+    <ClInclude Include="BaseDoc.h" />
+    <ClInclude Include="BookMarkPathDlg.h" />
+    <ClInclude Include="BracketOutLineDlg.h" />
+    <ClInclude Include="CMemDC.h" />
+    <ClInclude Include="CodePageMFC.h" />
+    <ClInclude Include="CodePageMFCDlg.h" />
+    <ClInclude Include="ComboboxMultiLine.h" />
+    <ClInclude Include="Compiler.h" />
+    <ClInclude Include="Cryptography.h" />
+    <ClInclude Include="CustomizeUserTool.h" />
+    <ClInclude Include="CWMPEventDispatch.h" />
+    <ClInclude Include="CWMPHost.h" />
+    <ClInclude Include="Debugger.h" />
+    <ClInclude Include="BuildWindow.h" />
+    <ClInclude Include="CommandLine.h" />
+    <ClInclude Include="EditorDataStructure.h" />
+    <ClInclude Include="EnumDef.h" />
+    <ClInclude Include="DialogBase.h" />
+    <ClInclude Include="AppSettings.h" />
+    <ClInclude Include="EditWithXDlg.h" />
+    <ClInclude Include="FileExplorerDoc.h" />
+    <ClInclude Include="FileExplorerView.h" />
+    <ClInclude Include="FileBrowser.h" />
+    <ClInclude Include="PathResultWindow.h" />
+    <ClInclude Include="FindPathWorker.h" />
+    <ClInclude Include="FindReplaceTextWorker.h" />
+    <ClInclude Include="GammaDlg.h" />
+    <ClInclude Include="GifHandler.h" />
+    <ClInclude Include="GuiUtils.h" />
+    <ClInclude Include="HostDoc.h" />
+    <ClInclude Include="HostManager.h" />
+    <ClInclude Include="HostView.h" />
+    <ClInclude Include="ImageDoc.h" />
+    <ClInclude Include="InsertBetweenLines.h" />
+    <ClInclude Include="MediaDoc.h" />
+    <ClInclude Include="MediaView.h" />
+    <ClInclude Include="Memdc.h" />
+    <ClInclude Include="MisspelledReplaceWithDlg.h" />
+    <ClInclude Include="MultiDocTemplateEx.h" />
+    <ClInclude Include="OSUtil.h" />
+    <ClInclude Include="PathUtil.h" />
+    <ClInclude Include="PdfDoc.h" />
+    <ClInclude Include="PdfView.h" />
+    <ClInclude Include="QuickReplace.h" />
+    <ClInclude Include="QuickSearch.h" />
+    <ClInclude Include="QuickSearchDialog.h" />
+    <ClInclude Include="RecentCloseFileManager.h" />
+    <ClInclude Include="ReopenFileWithPasswordDlg.h" />
+    <ClInclude Include="SaveFileWithPassWordDlg.h" />
+    <ClInclude Include="TextResultWindow.h" />
+    <ClInclude Include="ImageView.h" />
+    <ClInclude Include="SmartHandle.h" />
+    <ClInclude Include="SpellChecker.h" />
+    <ClInclude Include="TextProgressCtrl.h" />
+    <ClInclude Include="ThreadPool.h" />
+    <ClInclude Include="UnicodeUtils.h" />
+    <ClInclude Include="ViewBase.h" />
+    <ClInclude Include="BookmarkWindow.h" />
+    <ClInclude Include="WebHandler.h" />
+    <ClInclude Include="SystemInfo.h" />
+    <ClInclude Include="SearchNavigatePathDlg.h" />
+    <ClInclude Include="FileUtil.h" />
+    <ClInclude Include="ProjectTempateCreatorDlg.h" />
+    <ClInclude Include="RAIIUtils.h" />
+    <ClInclude Include="MacroDef.h" />
+    <ClInclude Include="InsertAfterWordInLineDlg.h" />
+    <ClInclude Include="InsertFromPositionXDlg.h" />
+    <ClInclude Include="MessageWindow.h" />
+    <ClInclude Include="NamedPipe.h" />
+    <ClInclude Include="RemoveAfterBeforeWordDlg.h" />
+    <ClInclude Include="RemoveFromXToYDlg.h" />
+    <ClInclude Include="SetDeleteFileByExtDlg.h" />
+    <ClInclude Include="ShellContextMenu.h" />
+    <ClInclude Include="SingleInstanceApp.h" />
+    <ClInclude Include="DockPaneBase.h" />
+    <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="SearchAndReplaceWindow.h" />
+    <ClInclude Include="SearchAndReplaceDlg.h" />
+    <ClInclude Include="FileExplorerDlg.h" />
+    <ClInclude Include="FileExplorerWindow.h" />
+    <ClInclude Include="FileExplorerCtrl.h" />
+    <ClInclude Include="FilenameFilterDlg.h" />
+    <ClInclude Include="GotoDlg.h" />
+    <ClInclude Include="EditorDatabase.h" />
+    <ClInclude Include="VinaTextApp.h" />
+    <ClInclude Include="EditorDoc.h" />
+    <ClInclude Include="EditorView.h" />
+    <ClInclude Include="AppUtil.h" />
+    <ClInclude Include="VinaTextProgressBar.h" />
+    <ClInclude Include="LexerParser.h" />
+    <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MultiThreadWorker.h" />
+    <ClInclude Include="ReplaceDlg.h" />
+    <ClInclude Include="FindDlg.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Editor.h" />
+    <ClInclude Include="LexerCore.h" />
+    <ClInclude Include="ScrollHelper.h" />
+    <ClInclude Include="SearchEngine.h" />
+    <ClInclude Include="SetBookmarkPathDlg.h" />
+    <ClInclude Include="SelectedPathDlg.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StringHelper.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="ProgramStatusBarEx.h" />
+    <ClInclude Include="tinyXml\tinystr.h" />
+    <ClInclude Include="tinyXml\tinyxml.h" />
+    <ClInclude Include="TreeHelper.h" />
+    <ClInclude Include="UndoRedoEditControl.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AdobeAcrobatWrapper.cpp" />
+    <ClCompile Include="AppAboutDlg.cpp" />
+    <ClCompile Include="BreakpointWindow.cpp" />
+    <ClCompile Include="translator\PODictionary.cpp" />
+    <ClCompile Include="translator\POHandler.cpp" />
+    <ClCompile Include="uchardet\CharDistribution.cpp" />
+    <ClCompile Include="uchardet\JpCntx.cpp" />
+    <ClCompile Include="uchardet\LangBulgarianModel.cpp" />
+    <ClCompile Include="uchardet\LangCyrillicModel.cpp" />
+    <ClCompile Include="uchardet\LangGreekModel.cpp" />
+    <ClCompile Include="uchardet\LangHebrewModel.cpp" />
+    <ClCompile Include="uchardet\LangHungarianModel.cpp" />
+    <ClCompile Include="uchardet\LangThaiModel.cpp" />
+    <ClCompile Include="uchardet\nsBig5Prober.cpp" />
+    <ClCompile Include="uchardet\nsCharSetProber.cpp" />
+    <ClCompile Include="uchardet\nsEscCharsetProber.cpp" />
+    <ClCompile Include="uchardet\nsEscSM.cpp" />
+    <ClCompile Include="uchardet\nsEUCJPProber.cpp" />
+    <ClCompile Include="uchardet\nsEUCKRProber.cpp" />
+    <ClCompile Include="uchardet\nsEUCTWProber.cpp" />
+    <ClCompile Include="uchardet\nsGB2312Prober.cpp" />
+    <ClCompile Include="uchardet\nsHebrewProber.cpp" />
+    <ClCompile Include="uchardet\nsLatin1Prober.cpp" />
+    <ClCompile Include="uchardet\nsMBCSGroupProber.cpp" />
+    <ClCompile Include="uchardet\nsMBCSSM.cpp" />
+    <ClCompile Include="uchardet\nsSBCharSetProber.cpp" />
+    <ClCompile Include="uchardet\nsSBCSGroupProber.cpp" />
+    <ClCompile Include="uchardet\nsSJISProber.cpp" />
+    <ClCompile Include="uchardet\nsUniversalDetector.cpp" />
+    <ClCompile Include="uchardet\nsUTF8Prober.cpp" />
+    <ClCompile Include="uchardet\uchardet.cpp" />
+    <ClCompile Include="WindowsPrinter.cpp" />
+    <ClCompile Include="CreateNewMultiplePath.cpp" />
+    <ClCompile Include="VinaTextSettingDlg.cpp" />
+    <ClCompile Include="Hpslib.cpp" />
+    <ClCompile Include="SettingDlgToggle.cpp" />
+    <ClCompile Include="SettingDlgCustomize.cpp" />
+    <ClCompile Include="SettingDlgFileSystem.cpp" />
+    <ClCompile Include="TemplateCreator.cpp" />
+    <ClCompile Include="Textfile.cpp" />
+    <ClCompile Include="TextFormatConverter.cpp" />
+    <ClCompile Include="BaseDoc.cpp" />
+    <ClCompile Include="BookMarkPathDlg.cpp" />
+    <ClCompile Include="BracketOutLineDlg.cpp" />
+    <ClCompile Include="CodePageMFC.cpp" />
+    <ClCompile Include="CodePageMFCDlg.cpp" />
+    <ClCompile Include="ComboboxMultiLine.cpp" />
+    <ClCompile Include="Compiler.cpp" />
+    <ClCompile Include="Cryptography.cpp" />
+    <ClCompile Include="CustomizeUserTool.cpp" />
+    <ClCompile Include="CWMPEventDispatch.cpp" />
+    <ClCompile Include="CWMPHost.cpp" />
+    <ClCompile Include="Debugger.cpp" />
+    <ClCompile Include="BuildWindow.cpp" />
+    <ClCompile Include="CommandLine.cpp" />
+    <ClCompile Include="DialogBase.cpp" />
+    <ClCompile Include="AppSettings.cpp" />
+    <ClCompile Include="EditWithXDlg.cpp" />
+    <ClCompile Include="FileExplorerDoc.cpp" />
+    <ClCompile Include="FileExplorerView.cpp" />
+    <ClCompile Include="FileBrowser.cpp" />
+    <ClCompile Include="PathResultWindow.cpp" />
+    <ClCompile Include="FindPathWorker.cpp" />
+    <ClCompile Include="FindReplaceTextWorker.cpp" />
+    <ClCompile Include="GammaDlg.cpp" />
+    <ClCompile Include="GifHandler.cpp" />
+    <ClCompile Include="GuiUtils.cpp" />
+    <ClCompile Include="STLHelper.h" />
+    <ClCompile Include="HostDoc.cpp" />
+    <ClCompile Include="HostManager.cpp" />
+    <ClCompile Include="HostView.cpp" />
+    <ClCompile Include="ImageDoc.cpp" />
+    <ClCompile Include="InsertBetweenLines.cpp" />
+    <ClCompile Include="MediaDoc.cpp" />
+    <ClCompile Include="MediaView.cpp" />
+    <ClCompile Include="MisspelledReplaceWithDlg.cpp" />
+    <ClCompile Include="MultiDocTemplateEx.cpp" />
+    <ClCompile Include="OSUtil.cpp" />
+    <ClCompile Include="PathUtil.cpp" />
+    <ClCompile Include="PdfDoc.cpp" />
+    <ClCompile Include="PdfView.cpp" />
+    <ClCompile Include="QuickReplace.cpp" />
+    <ClCompile Include="QuickSearch.cpp" />
+    <ClCompile Include="QuickSearchDialog.cpp" />
+    <ClCompile Include="RecentCloseFileManager.cpp" />
+    <ClCompile Include="ReopenFileWithPasswordDlg.cpp" />
+    <ClCompile Include="SaveFileWithPassWordDlg.cpp" />
+    <ClCompile Include="TextResultWindow.cpp" />
+    <ClCompile Include="ImageView.cpp" />
+    <ClCompile Include="SpellChecker.cpp" />
+    <ClCompile Include="TextProgressCtrl.cpp" />
+    <ClCompile Include="UnicodeUtils.cpp" />
+    <ClCompile Include="ViewBase.cpp" />
+    <ClCompile Include="BookmarkWindow.cpp" />
+    <ClCompile Include="WebHandler.cpp" />
+    <ClCompile Include="SystemInfo.cpp" />
+    <ClCompile Include="SearchNavigatePathDlg.cpp" />
+    <ClCompile Include="FileUtil.cpp" />
+    <ClCompile Include="InsertAfterWordInLineDlg.cpp" />
+    <ClCompile Include="InsertFromPositionXDlg.cpp" />
+    <ClCompile Include="MessageWindow.cpp" />
+    <ClCompile Include="ProjectTempateCreatorDlg.cpp" />
+    <ClCompile Include="RAIIUtils.cpp" />
+    <ClCompile Include="RemoveAfterBeforeWordDlg.cpp" />
+    <ClCompile Include="RemoveFromXToYDlg.cpp" />
+    <ClCompile Include="SetDeleteFileByExtDlg.cpp" />
+    <ClCompile Include="ShellContextMenu.cpp" />
+    <ClCompile Include="SingleInstanceApp.cpp" />
+    <ClCompile Include="DockPaneBase.cpp" />
+    <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="SearchAndReplaceWindow.cpp" />
+    <ClCompile Include="SearchAndReplaceDlg.cpp" />
+    <ClCompile Include="FileExplorerDlg.cpp" />
+    <ClCompile Include="FileExplorerWindow.cpp" />
+    <ClCompile Include="FileExplorerCtrl.cpp" />
+    <ClCompile Include="FilenameFilterDlg.cpp" />
+    <ClCompile Include="GotoDlg.cpp" />
+    <ClCompile Include="EditorDatabase.cpp" />
+    <ClCompile Include="VinaTextApp.cpp" />
+    <ClCompile Include="EditorDoc.cpp" />
+    <ClCompile Include="EditorView.cpp" />
+    <ClCompile Include="AppUtil.cpp" />
+    <ClCompile Include="VinaTextProgressBar.cpp" />
+    <ClCompile Include="LexerParser.cpp" />
+    <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MultiThreadWorker.cpp" />
+    <ClCompile Include="ReplaceDlg.cpp" />
+    <ClCompile Include="FindDlg.cpp" />
+    <ClCompile Include="Editor.cpp" />
+    <ClCompile Include="ScrollHelper.cpp" />
+    <ClCompile Include="SetBookmarkPathDlg.cpp" />
+    <ClCompile Include="SelectedPathDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="ProgramStatusBarEx.cpp" />
+    <ClCompile Include="StringHelper.cpp" />
+    <ClCompile Include="tinyXml\tinystr.cpp" />
+    <ClCompile Include="tinyXml\tinyxml.cpp" />
+    <ClCompile Include="tinyXml\tinyxmlerror.cpp" />
+    <ClCompile Include="tinyXml\tinyxmlparser.cpp" />
+    <ClCompile Include="TreeHelper.cpp" />
+    <ClCompile Include="UndoRedoEditControl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="VinaText.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\..\..\..\..\Downloads\3xhumed-Mega-Games-Pack-40-Starcraft-2-Editor-2.ico" />
+    <Image Include="..\..\..\..\..\Downloads\Designcontest-Ecommerce-Business-Notes.ico" />
+    <Image Include="..\..\..\..\..\Downloads\Matiasam-Ios7-Style-Notes.ico" />
+    <Image Include="C:\Users\TechnoStar\Downloads\add-file.png" />
+    <Image Include="res\app.ico" />
+    <Image Include="res\autocomplete.ico" />
+    <Image Include="res\bookmarkwindow.ico" />
+    <Image Include="res\brackets_outline.ico" />
+    <Image Include="res\breakpointwindow.ico" />
+    <Image Include="res\build.ico" />
+    <Image Include="res\buildwindow.ico" />
+    <Image Include="res\Debugger.bmp" />
+    <Image Include="res\Debugger24.bmp" />
+    <Image Include="res\doc.ico" />
+    <Image Include="res\docreadonly.ico" />
+    <Image Include="res\editor.ico" />
+    <Image Include="res\explorer.ico" />
+    <Image Include="res\Explorertoolbar16.bmp" />
+    <Image Include="res\Explorertoolbar24.bmp" />
+    <Image Include="res\explorerwindow.ico" />
+    <Image Include="res\fileexplorer.ico" />
+    <Image Include="res\fileresultwindow.ico" />
+    <Image Include="res\Folder.bmp" />
+    <Image Include="res\googlechrome.ico" />
+    <Image Include="res\goto.ico" />
+    <Image Include="res\host.ico" />
+    <Image Include="res\VinaText.ico" />
+    <Image Include="res\VinaTextDoc.ico" />
+    <Image Include="res\image.ico" />
+    <Image Include="res\Insert.bmp" />
+    <Image Include="res\log.ico" />
+    <Image Include="res\logwindow.ico" />
+    <Image Include="res\media.ico" />
+    <Image Include="res\menu256.bmp" />
+    <Image Include="res\menu_img.bmp" />
+    <Image Include="res\mozillafirefox.ico" />
+    <Image Include="res\msexcel.ico" />
+    <Image Include="res\msinternet.ico" />
+    <Image Include="res\mspaint.ico" />
+    <Image Include="res\msppt.ico" />
+    <Image Include="res\msword.ico" />
+    <Image Include="res\pdf.ico" />
+    <Image Include="res\replace.ico" />
+    <Image Include="res\search.ico" />
+    <Image Include="res\searchresultwindow.ico" />
+    <Image Include="res\searchwindow.ico" />
+    <Image Include="res\settingtab.ico" />
+    <Image Include="res\terminal.ico" />
+    <Image Include="res\textreferencewindow.ico" />
+    <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\Toolbar1.bmp" />
+    <Image Include="res\Toolbar2.bmp" />
+    <Image Include="res\Toolbar24.bmp" />
+    <Image Include="res\Toolbar256.bmp" />
+    <Image Include="res\ToolbarBreakPoint.bmp" />
+    <Image Include="res\ToolbarBreakPoint24.bmp" />
+    <Image Include="res\ToolbarBuild.bmp" />
+    <Image Include="res\ToolbarBuild24.bmp" />
+    <Image Include="UserImages.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VinaText.rgs" />
+    <None Include="Hpslib.hr" />
+    <None Include="VinaText.aps" />
+    <None Include="res\VinaText.rc2" />
+    <None Include="res\tfdropcopy.cur" />
+    <None Include="res\tfnodropcopy.cur" />
+    <None Include="res\tfnodropmove.cur" />
+    <None Include="uchardet\Big5Freq.tab" />
+    <None Include="uchardet\EUCKRFreq.tab" />
+    <None Include="uchardet\EUCTWFreq.tab" />
+    <None Include="uchardet\GB2312Freq.tab" />
+    <None Include="uchardet\JISFreq.tab" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="VinaText.idl">
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Win32</TargetEnvironment>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateStublessProxies>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)$(ProjectName).tlb</TypeLibraryName>
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</MkTypLibCompatible>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VinaText_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">VinaText_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateStublessProxies>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)$(ProjectName).tlb</TypeLibraryName>
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</MkTypLibCompatible>
+      <TargetEnvironment Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Win32</TargetEnvironment>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VinaText_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">VinaText_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateStublessProxies>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)$(ProjectName).tlb</TypeLibraryName>
+      <MkTypLibCompatible Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</MkTypLibCompatible>
+      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VinaText_i.h</HeaderFileName>
+      <InterfaceIdentifierFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">VinaText_i.c</InterfaceIdentifierFileName>
+      <GenerateStublessProxies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateStublessProxies>
+      <TypeLibraryName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IntDir)$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="VinaText.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

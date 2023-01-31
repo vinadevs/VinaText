@@ -1,0 +1,72 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Python settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to download Python for windows:
+https://www.python.org/downloads/
+- After installion:
++ Please change below path settings to your installed Python paths.
++ Add setup for [Preference > Application Preference > File System Settings > Python Interpreter Folder] also.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+\Python\Python39\python.exe
+
+@@ debugger path:
+\Python\Python39\python.exe
+
+@@ auto complete:
+and as assert async await break class continue def del elif else except finally for
+from global if import in is lambda nonlocal not or pass raise return try while with yield
+ArithmeticError AssertionError AttributeError BaseException BlockingIOError BrokenPipeError
+BufferError BytesWarning ChildProcessError ConnectionAbortedError ConnectionError ConnectionRefusedError ConnectionResetError
+DeprecationWarning EOFError Ellipsis EnvironmentError Exception False FileExistsError FileNotFoundError FloatingPointError FutureWarning
+GeneratorExit IOError ImportError ImportWarning IndentationError IndexError InterruptedError IsADirectoryError KeyError KeyboardInterrupt
+LookupError MemoryError ModuleNotFoundError NameError None NotADirectoryError NotImplemented NotImplementedError OSError OverflowError
+PendingDeprecationWarning PermissionError ProcessLookupError RecursionError ReferenceError ResourceWarning RuntimeError RuntimeWarning
+StopAsyncIteration StopIteration SyntaxError SyntaxWarning SystemError SystemExit TabError TimeoutError True TypeError UnboundLocalError
+UnicodeDecodeError UnicodeEncodeError UnicodeError UnicodeTranslateError UnicodeWarning UserWarning ValueError Warning WindowsError
+ZeroDivisionError abs all any ascii bin bool breakpoint bytearray bytes callable chr classmethod compile complex copyright credit
+delattr dict dir divmod enumerate eval exec exit filter float format frozenset getattr globals hasattr hash help hex id
+input int isinstance issubclass iter len license list locals map max memoryview min next object oct open ord pow print
+property quit range repr reversed round set setattr slice sorted staticmethod str sum super tuple type vars zip
+random pipe close write curdir mkdir chdir rmdir getcwd remove rename seek tell strftime argv
+today version date datetime sys re statistics system os
+abort numpy array split math strip rstrip lstrip join append matplotlib replace find insert sort count clear __main__ __init__
+itertools groupby shutil copyfile move values sklearn pandas extend sleep PIL _thread getpass runpy
+_threading_local gettext sched _tkinter glob secrets _tracemalloc graphlib select __future__ _uuid
+gzip selectors _abc _warnings hashlib setuptools _aix_support _weakref heapq shelve _ast
+_weakrefset hmac shlex _asyncio _winapi html _bisect _xxsubinterpreters http signal
+_blake2 _zoneinfo idlelib site _bootlocale abc imaplib six _bootsubprocess aifc imghdr smtpd
+_bz2 antigravity imp smtplib _codecs argparse importlib sndhdr _codecs_cn inspect socket
+_codecs_hk ast io socketserver _codecs_iso2022 asynchat ipaddress sqlite3 _codecs_jp asyncio
+sre_compile _codecs_kr asyncore json sre_constants _codecs_tw atexit keyword sre_parse _collections
+audioop kiwisolver ssl _collections_abc base64 lib2to3 stat _compat_pickle bdb linecache
+_compression binascii locale string _contextvars binhex logging stringprep _csv bisect
+lzma struct _ctypes builtins mailbox subprocess _ctypes_test bz2 mailcap sunau _datetime
+cProfile marshal symbol _decimal calendar symtable _elementtree cgi _functools cgitb mimetypes
+sysconfig _hashlib chunk mmap tabnanny _heapq cmath modulefinder tarfile _imp cmd msilib telnetlib
+_io code msvcrt tempfile _json codecs multiprocessing test _locale codeop netrc textwrap _lsprof
+collections nntplib this _lzma colorsys nt threading _markupbase compileall ntpath time _md5 concurrent
+nturl2path timeit _msi configparser numbers tkinter _multibytecodec contextlib token
+_multiprocessing contextvars opcode tokenize _opcode copy operator trace _operator
+copyreg optparse traceback _osx_support crypt tracemalloc _overlapped csv parser
+tty _peg_parser ctypes pathlib turtle _pickle curses pdb turtledemo _py_abc cycler
+pickle types _pydecimal dataclasses pickletools typing _pyio pip unicodedata _queue
+dateutil pipes unittest _random dbm pkg_resources urllib _sha1 decimal pkgutil uu
+_sha256 difflib platform uuid _sha3 dis plistlib venv _sha512 distutils poplib warnings
+_signal doctest posixpath wave _sitebuiltins easy_install pprint weakref _socket email
+profile webbrowser _sqlite3 encodings pstats winreg _sre ensurepip pty winsound _ssl
+enum py_compile wsgiref _stat errno pyclbr xdrlib _statistics faulthandler pydoc xml
+_string filecmp pydoc_data xmlrpc _strptime fileinput pyexpat xxsubtype _struct fnmatch
+pylab zipapp _symtable formatter pyparsing zipfile _testbuffer fractions queue zipimport
+_testcapi ftplib quopri zlib _testconsole functools zoneinfo _testimportmultiple gc
+_testinternalcapi genericpath reprlib _testmultiphase getopt rlcompleter
+

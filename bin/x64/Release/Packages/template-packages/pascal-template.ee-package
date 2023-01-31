@@ -1,0 +1,46 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Pascal File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+// Desciption            :   file desciption
+// Filename              :   file.pas
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+program exProcedure;
+
+procedure myFunction(); 
+(* Finds the minimum of the 3 values *)
+
+begin
+   writeln('Hello World!');
+end; { end of procedure myFunction }  
+
+begin
+   myFunction(); (* Procedure call *)
+end.
+
+@@ only main file template:
+// Desciption            :   file desciption
+// Filename              :   file.pas
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+program HelloWorld;
+uses crt;
+
+(* Here the main program block starts *)
+begin
+   writeln('Hello, World!');
+   readkey;
+end.
