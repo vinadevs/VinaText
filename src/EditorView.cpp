@@ -8180,7 +8180,8 @@ void CEditorView::OnGenerateBuildFile()
 
 void CEditorView::OnUpdateShowBuildErrors(CCmdUI * pCmdUI)
 {
-	if (!ThreadWorkerMgr.IsRunning() && PathFileExists(m_pDocument->GetPathName()))
+	if (!ThreadWorkerMgr.IsRunning() && PathFileExists(m_pDocument->GetPathName())
+		&& AppUtils::IsLanguageSupportErrorAnnotation(m_CurrentDocLanguage))
 	{
 		pCmdUI->Enable(TRUE);
 	}

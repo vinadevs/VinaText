@@ -1,0 +1,8 @@
+temp/
+.vs/
+src/VinaText_i.c
+src/VinaText_i.h
+bin/x64/Release/VinaText.exe
+bin/x64/Release/VinaText.pdb
+bin/x64/Debug/VinaText.exe
+bin/x64/Debug/VinaText.pdb

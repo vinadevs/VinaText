@@ -115,6 +115,7 @@ namespace AppUtils
 	BOOL IsXMLWhitespace(int ch);
 	CString GetLanguageStringName(VINATEXT_SUPPORTED_LANGUAGE language);
 	BOOL IsLanguageSupportDebugger(VINATEXT_SUPPORTED_LANGUAGE language);
+	BOOL IsLanguageSupportErrorAnnotation(VINATEXT_SUPPORTED_LANGUAGE language);
 	BOOL IsLanguageSupportLexer(VINATEXT_SUPPORTED_LANGUAGE language);
 	std::vector<std::string> SplitterStdString(const std::string & str, const std::string & delimiter);
 	std::vector<std::wstring> SplitterWStdString(const std::wstring & str, const std::wstring & delimiter);

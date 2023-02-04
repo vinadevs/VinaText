@@ -2,7 +2,7 @@
 # COPYRIGHT NOTES
 # ---------------
 # This is a part of VinaText Project
-# Copyright(C) - free open source - vinadevs
+# Copyright(C) - free open source
 # This source code can be used, distributed or modified under MIT license
 #*******************************************************************************/
 
@@ -24,7 +24,7 @@
 #include "UnicodeUtils.h"
 #include "SmartHandle.h"
 
-CEditorCtrl::CEditorCtrl() 
+CEditorCtrl::CEditorCtrl()
 {
 	m_wideBuf = std::make_unique<wchar_t[]>(m_wideBufSize);
 	m_charBuf = std::make_unique<char[]>(m_charBufSize);
@@ -78,7 +78,7 @@ BOOL CEditorCtrl::Create(CString strWindowName, DWORD dwStyle, const RECT& rect,
 		ASSERT(m_DirectFunc); return FALSE;
 	}
 	if (!m_pDirectPtr)
-	{	
+	{
 		ASSERT(m_pDirectPtr); return FALSE;
 	}
 	return TRUE;
@@ -88,34 +88,17 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 {
 	DoCommand(SCI_SETIMEINTERACTION, SC_IME_WINDOWED);
 
-	////// test
-	//AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLACK;
-	//AppSettingMgr.m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_BLACK;
-	//AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING;
-	//////
-	
 	// Editor font settings
-	if (AppSettingMgr.m_ThemeColor == EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING)
-	{
-		SetColorForStyle(STYLE_DEFAULT,
-			EditorRules::visualBackground,
-			AppSettingMgr.m_ThemeColor,
-			AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
-			AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
-	}
-	else
-	{
-		SetColorForStyle(STYLE_DEFAULT,
-			EditorRules::foregroundMonokai,
-			AppSettingMgr.m_ThemeColor,
-			AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
-			AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
-	}
+	SetColorForStyle(STYLE_DEFAULT,
+		EditorRules::foregroundMonokai,
+		AppSettingMgr.m_ThemeColor,
+		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
+		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
 
 	DoCommand(SCI_STYLESETBOLD, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableBoldFont);
 	DoCommand(SCI_STYLESETITALIC, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableItalicFont);
 	DoCommand(SCI_STYLESETUNDERLINE, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableUnderlineFont);
-	
+
 	// This message sets all styles to have the same attributes as STYLE_DEFAULT.
 	// If you are setting up Scintilla for syntax colouring, it is likely that the
 	// lexical styles you set will be very similar.
@@ -126,22 +109,11 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	SetTabSettings(m_tabSpace);
 
 	SetLineNumberWidth();
-	if (AppSettingMgr.m_ThemeColor == EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING)
-	{
-		SetColorForStyle(STYLE_LINENUMBER,
-			EditorRules::linenumberDark,
-			AppSettingMgr.m_ThemeColor,
-			AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
-			AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
-	}
-	else
-	{
-		SetColorForStyle(STYLE_LINENUMBER,
-			EditorRules::linenumberLight,
-			AppSettingMgr.m_ThemeColor,
-			AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
-			AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
-	}
+	SetColorForStyle(STYLE_LINENUMBER,
+		EditorRules::linenumberLight,
+		AppSettingMgr.m_ThemeColor,
+		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
+		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
 
 	// folding
 	DoCommand(SCI_SETPROPERTY, (WPARAM)"fold", reinterpret_cast<LPARAM>("1"));
@@ -351,19 +323,12 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 
 	// menu pop up
-	DoCommand(SCI_USEPOPUP, 0, 0); 
+	DoCommand(SCI_USEPOPUP, 0, 0);
 	// long line checker
 	DoCommand(SCI_SETEDGECOLUMN, AppSettingMgr.m_nLongLineMaximum);
 	// selection
-	if (AppSettingMgr.m_ThemeColor == EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING)
-	{
-		SetSelectionTextColor(EditorRules::black, 60);
-	}
-	else
-	{
-		SetSelectionTextColor(EditorRules::white, 60);
-	}
-	// caret blink
+	SetSelectionTextColor(EditorRules::white, 60);
+
 	if (AppSettingMgr.m_bEnableCaretBlink)
 	{
 		DoCommand(SCI_SETCARETPERIOD, 500, 0);
@@ -386,7 +351,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	// set space line ascent
 	DoCommand(SCI_SETEXTRAASCENT, AppSettingMgr.m_nLineSpaceAbove);
 	DoCommand(SCI_SETEXTRADESCENT, AppSettingMgr.m_nLineSpaceBelow);
-	
+
 	DoCommand(SCI_SETMOUSEWHEELCAPTURES, 0);
 
 	// set indicator styles (foreground and alpha maybe overridden by style settings)
@@ -547,7 +512,7 @@ void CEditorCtrl::Init_asm_Editor(CLanguageDatabase* pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_inno_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_inno_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("asm");
 	SetKeywords(EditorRules::g_inno_KeyWords);
@@ -812,7 +777,7 @@ void CEditorCtrl::Init_javascript_Editor(CLanguageDatabase* pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_typescript_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_typescript_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
 	SetKeywords(EditorRules::g_typescript_KeyWords);
@@ -1028,7 +993,7 @@ void CEditorCtrl::Init_rust_Editor(CLanguageDatabase* pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_golang_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_golang_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
 	SetKeywords(EditorRules::g_go_KeyWords);
@@ -1200,7 +1165,7 @@ void CEditorCtrl::Init_json_Editor(CLanguageDatabase* pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_markdown_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_markdown_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("markdown");
 	SetKeywords(EditorRules::g_markdown_KeyWords);
@@ -1216,7 +1181,7 @@ void CEditorCtrl::Init_markdown_Editor(CLanguageDatabase * pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_protobuf_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_protobuf_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
 	SetKeywords(EditorRules::g_protobuf_KeyWords);
@@ -1232,7 +1197,7 @@ void CEditorCtrl::Init_protobuf_Editor(CLanguageDatabase * pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_r_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_r_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("r");
 	SetKeywords(EditorRules::g_r_KeyWords);
@@ -1263,7 +1228,7 @@ void CEditorCtrl::Init_r_Editor(CLanguageDatabase * pDatabase)
 	LoadExternalSettings(pDatabase);
 }
 
-void CEditorCtrl::Init_flexlicense_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_flexlicense_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("python");
 	SetKeywords(EditorRules::g_flexlicense_KeyWords);
@@ -1293,7 +1258,7 @@ void CEditorCtrl::Init_flexlicense_Editor(CLanguageDatabase * pDatabase)
 	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_flexlicense_commentEnd);
 }
 
-void CEditorCtrl::Init_resource_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_resource_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
 	SetKeywords(EditorRules::g_resource_KeyWords);
@@ -1310,7 +1275,7 @@ void CEditorCtrl::Init_resource_Editor(CLanguageDatabase * pDatabase)
 	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
-void CEditorCtrl::Init_autoit_Editor(CLanguageDatabase * pDatabase)
+void CEditorCtrl::Init_autoit_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
 	SetKeywords(EditorRules::g_autoit_KeyWords);
@@ -1327,7 +1292,7 @@ void CEditorCtrl::Init_autoit_Editor(CLanguageDatabase * pDatabase)
 	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
-void CEditorCtrl::LoadExternalSettings(CLanguageDatabase * pDatabase)
+void CEditorCtrl::LoadExternalSettings(CLanguageDatabase* pDatabase)
 {
 	CString strLanguageSettingFilePath = PathUtils::GetLanguageSettingFilePath(pDatabase->GetLanguageName());
 
@@ -1394,7 +1359,7 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase * pDatabase)
 			{
 				strSnippetCode += strLine.Trim();
 			}*/
-		} 
+		}
 		pDatabase->SetLanguageAutoComplete(strAutoCompletes);
 		pDatabase->SetCompilerPath(strCompilerPath);
 		pDatabase->SetDebuggerPath(strDebuggerPath);
@@ -1403,7 +1368,7 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase * pDatabase)
 	stdFile.Close();
 }
 
-void CEditorCtrl::SetColorForStyle(int style, COLORREF fore, COLORREF back, int size, const char * face)
+void CEditorCtrl::SetColorForStyle(int style, COLORREF fore, COLORREF back, int size, const char* face)
 {
 	DoCommand(SCI_STYLESETFORE, style, fore);
 	DoCommand(SCI_STYLESETBACK, style, back);
@@ -1429,14 +1394,14 @@ void CEditorCtrl::SetTextToEditor(const CString& strText)
 	SetFocus();
 }
 
-void CEditorCtrl::GetText(CString &strText)
+void CEditorCtrl::GetText(CString& strText)
 {
 	auto GetTextFromEditor = [&]() -> char*
 	{
 		int lLen = (int)DoCommand(SCI_GETLENGTH) + 1;
 		if (lLen > 0)
 		{
-			char *pReturn = new char[lLen + 1];
+			char* pReturn = new char[lLen + 1];
 			if (pReturn != NULL)
 			{
 				*pReturn = '\0';
@@ -1466,7 +1431,7 @@ CString CEditorCtrl::GetAllText()
 		int lLen = (int)DoCommand(SCI_GETLENGTH) + 1;
 		if (lLen > 0)
 		{
-			char *pReturn = new char[lLen + 1];
+			char* pReturn = new char[lLen + 1];
 			if (pReturn != NULL)
 			{
 				*pReturn = '\0';
@@ -1491,7 +1456,7 @@ CString CEditorCtrl::GetAllText()
 	return strText;
 }
 
-void CEditorCtrl::GetTextRange(Sci_TextRange * txtRange)
+void CEditorCtrl::GetTextRange(Sci_TextRange* txtRange)
 {
 	DoCommand(SCI_GETTEXTRANGE, 0, sptr_t(txtRange));
 }
@@ -1520,7 +1485,7 @@ void CEditorCtrl::InsertText(const CString& strText, int pos)
 	}
 }
 
-void CEditorCtrl::InsertTextAtCurrentPos(const CString & strText)
+void CEditorCtrl::InsertTextAtCurrentPos(const CString& strText)
 {
 	if (strText.GetLength() <= 0) return;
 
@@ -1537,7 +1502,7 @@ void CEditorCtrl::InsertTextAtCurrentPos(const CString & strText)
 	}
 }
 
-void CEditorCtrl::InsertTextAtSelectionNumber(const CString & strText, int lSelectionCaretPosN)
+void CEditorCtrl::InsertTextAtSelectionNumber(const CString& strText, int lSelectionCaretPosN)
 {
 	CT2A bufferUTF8(strText, TF_UTF8);
 	LPCTSTR szUTF8 = (LPCTSTR)bufferUTF8.m_psz;
@@ -1557,7 +1522,7 @@ int CEditorCtrl::GetSelectionNumberAnchor(int nSelectionNumber)
 	return (int)DoCommand(SCI_GETSELECTIONNANCHOR, nSelectionNumber);
 }
 
-void CEditorCtrl::InsertTextInMultiSelectionMode(const CString & strText, int nSelections, BOOL bIsBracket)
+void CEditorCtrl::InsertTextInMultiSelectionMode(const CString& strText, int nSelections, BOOL bIsBracket)
 {
 	std::vector<int> vecCaret;
 	vecCaret.reserve(nSelections);
@@ -1622,7 +1587,7 @@ void CEditorCtrl::ReplaceSelectionWithText(const CString& strText)
 	}
 }
 
-void CEditorCtrl::ReplaceSelectionNWithText(const CString & strText, int nSel)
+void CEditorCtrl::ReplaceSelectionNWithText(const CString& strText, int nSel)
 {
 	int anchorPos = GetSelectionNumberAnchor(nSel);
 	int curPos = GetSelectionNumberCaret(nSel);
@@ -1642,7 +1607,7 @@ void CEditorCtrl::ReplaceSelectionNWithText(const CString & strText, int nSel)
 	}
 }
 
-void CEditorCtrl::ReplaceCurrentWord(const CString & strNewWord)
+void CEditorCtrl::ReplaceCurrentWord(const CString& strNewWord)
 {
 	int currentPos = int(DoCommand(SCI_GETCURRENTPOS));
 	int startPos = int(DoCommand(SCI_WORDSTARTPOSITION, currentPos, 1));
@@ -1651,7 +1616,7 @@ void CEditorCtrl::ReplaceCurrentWord(const CString & strNewWord)
 	ReplaceSelectionWithText(strNewWord);
 }
 
-void CEditorCtrl::ReplaceLine(int lLine, const CString & strText)
+void CEditorCtrl::ReplaceLine(int lLine, const CString& strText)
 {
 	if (lLine < 0) return;
 	int StartLinePos = GetLineStartPosition(lLine);
@@ -1680,14 +1645,14 @@ void CEditorCtrl::RemoveSelectionText()
 	DoCommand(SCI_REPLACETARGET, 0, reinterpret_cast<LPARAM>(""));
 }
 
-void CEditorCtrl::GetTextFromLine(int nline, CString & strText)
+void CEditorCtrl::GetTextFromLine(int nline, CString& strText)
 {
-	auto GetTextFromEditor = [&]() -> char *
+	auto GetTextFromEditor = [&]() -> char*
 	{
 		int lLen = (int)DoCommand(SCI_LINELENGTH, nline - 1);
 		if (lLen > 0)
 		{
-			char *pReturn = new char[lLen + 1];
+			char* pReturn = new char[lLen + 1];
 			if (pReturn != NULL)
 			{
 				*pReturn = '\0';
@@ -1767,10 +1732,10 @@ void CEditorCtrl::CopyText(const CString& strText, int length)
 {
 	char* bufUtf8 = NULL;
 	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText)
-	if (bufUtf8 != NULL)
-	{
-		DoCommand(SCI_COPYTEXT, length, reinterpret_cast<LPARAM>(bufUtf8));
-	}
+		if (bufUtf8 != NULL)
+		{
+			DoCommand(SCI_COPYTEXT, length, reinterpret_cast<LPARAM>(bufUtf8));
+		}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -1831,7 +1796,7 @@ CString CEditorCtrl::GetSelectedText()
 		int lLen = (GetSelectionEndPosition() - GetSelectionStartPosition()) + 1;
 		if (lLen > 0)
 		{
-			char *pReturn = new char[lLen + 1];
+			char* pReturn = new char[lLen + 1];
 			if (pReturn != NULL)
 			{
 				*pReturn = '\0';
@@ -1841,7 +1806,7 @@ CString CEditorCtrl::GetSelectedText()
 				CString strReturn = AppUtils::ArrayCharToCString(pReturn);
 				AppUtils::SetCurrentCodePage(uiCodePage);
 				DELETE_POINTER_CPP_ARRAY(pReturn)
-				return strReturn;
+					return strReturn;
 			}
 		}
 	}
@@ -1874,7 +1839,7 @@ CString CEditorCtrl::GetUserTextLexer()
 	return m_strUserTextLexer;;
 }
 
-void CEditorCtrl::SetUserTextLexer(const CString & strUserLexerName)
+void CEditorCtrl::SetUserTextLexer(const CString& strUserLexerName)
 {
 	m_strUserTextLexer = m_strUserTextLexer;
 }
@@ -1898,7 +1863,7 @@ void CEditorCtrl::SetLexer(const char* m_strLexerNameName)
 {
 	if (m_strLexerNameName != NULL)
 	{
-		void *pLexer = m_CreateLexerFunc(m_strLexerNameName);
+		void* pLexer = m_CreateLexerFunc(m_strLexerNameName);
 		DoCommand(SCI_SETILEXER, 0, reinterpret_cast<LPARAM>(pLexer));
 	}
 
@@ -2129,14 +2094,14 @@ BOOL CEditorCtrl::IsBraceCharacter(int nCharValue)
 {
 	switch (nCharValue)
 	{
-		case '(':
-		case ')':
-		case '[':
-		case ']':
-		case '{':
-		case '}':
-		case '<':
-		case '>':
+	case '(':
+	case ')':
+	case '[':
+	case ']':
+	case '{':
+	case '}':
+	case '<':
+	case '>':
 		return TRUE;
 	}
 	return FALSE;
@@ -2785,7 +2750,7 @@ int CEditorCtrl::FindNextMatchWordPostion(const CString& strSearhWord, int lStar
 	return lPos;
 }
 
-int CEditorCtrl::FindPreviousMatchWordPostion(const CString & strSearhWord, int lStartSearchPos, int lMinSel, int nSearchFlag)
+int CEditorCtrl::FindPreviousMatchWordPostion(const CString& strSearhWord, int lStartSearchPos, int lMinSel, int nSearchFlag)
 {
 	ExpandAllFoldings();
 	CT2A stUTF8(strSearhWord, TF_UTF8);
@@ -2802,7 +2767,7 @@ int CEditorCtrl::FindPreviousMatchWordPostion(const CString & strSearhWord, int 
 	return lPos;
 }
 
-BOOL CEditorCtrl::SearchForward(const CString& strText) 
+BOOL CEditorCtrl::SearchForward(const CString& strText)
 {
 	if (strText.IsEmpty())
 	{
@@ -3387,7 +3352,7 @@ namespace // File IO
 	}
 
 	bool SaveAsOther(char* buf, size_t lengthDoc, CAutoFile& hFile, std::wstring& err
-	, int _encoding, bool _bHasBOM,
+		, int _encoding, bool _bHasBOM,
 		int _encodingSaving, bool _bHasBOMSaving)
 	{
 		constexpr int wideBufSize = WriteBlockSize * 2;
@@ -3406,7 +3371,7 @@ namespace // File IO
 			int  charStart = UTF8Helper::characterStart(writeBuf, static_cast<int>(min(WriteBlockSize, lengthDoc)));
 			int  wideLen = MultiByteToWideChar(TF_UTF8, 0, writeBuf, charStart, wideBuf.get(), wideBufSize);
 			BOOL usedDefaultChar = FALSE;
-			int  charLen = WideCharToMultiByte(encoding < 0 ? CP_ACP : encoding, 0, wideBuf.get(), wideLen, charBuf.get(), charBufSize, nullptr, &usedDefaultChar);
+			int  charLen = WideCharToMultiByte(encoding < 0 ? CP_ACP : encoding, 0, wideBuf.get(), wideLen, charBuf.get(), charBufSize, nullptr, & usedDefaultChar);
 			if (usedDefaultChar && _encodingSaving == -1)
 			{
 				// stream could not be properly converted to ANSI, write it 'as is'
@@ -3636,7 +3601,7 @@ BOOL CEditorCtrl::SaveFileWithEncoding(const CString& strFilePath)
 
 	size_t lengthDoc = DoCommand(SCI_GETLENGTH);
 	// get characters directly from Scintilla buffer
-	char*        buf = reinterpret_cast<char*>(DoCommand(SCI_GETCHARACTERPOINTER));
+	char* buf = reinterpret_cast<char*>(DoCommand(SCI_GETCHARACTERPOINTER));
 	bool         bRetSave = FALSE;
 	std::wstring err;
 	auto         encoding = m_encodingLoading;
@@ -3800,14 +3765,14 @@ BOOL CEditorCtrl::LoadDataFileToEditor(const CString& szFile, CString& m_strLexe
 	int result = tf_in->Open(szFile, TF_READ, AppUtils::GetVinaTextApp()->m_UserEncoding);
 	if (result < 0)
 	{
-		TCHAR *errmsg = GetLastErrorString();
+		TCHAR* errmsg = GetLastErrorString();
 		LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
 		return FALSE;
 	}
 
 	// real reading, load file data to editor...
 	BOOL bLinuxFileDetectFlag = FALSE;
-	TCHAR *lineBuffer = NULL;
+	TCHAR* lineBuffer = NULL;
 	while (1)
 	{
 		result = tf_in->ReadLine(NULL, &lineBuffer);
@@ -3815,7 +3780,7 @@ BOOL CEditorCtrl::LoadDataFileToEditor(const CString& szFile, CString& m_strLexe
 		{
 			if (result == TF_ERROR) // else TF_EOF
 			{
-				TCHAR *errmsg = GetLastErrorString();
+				TCHAR* errmsg = GetLastErrorString();
 				LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
 			}
 			if (bLinuxFileDetectFlag)
@@ -3881,7 +3846,7 @@ BOOL CEditorCtrl::SaveEditorDataToFile(const CString& szFile, CString& m_strLexe
 	int result = tf_out->Open(szFile, TF_WRITE, AppUtils::GetVinaTextApp()->m_UserEncoding);
 	if (result < 0)
 	{
-		TCHAR *errmsg = GetLastErrorString();
+		TCHAR* errmsg = GetLastErrorString();
 		LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
 		return FALSE;
 	}
@@ -3921,7 +3886,7 @@ BOOL CEditorCtrl::SaveEditorDataToFile(const CString& szFile, CString& m_strLexe
 		{
 			if (result == TF_ERROR) // else TF_EOF
 			{
-				TCHAR *errmsg = GetLastErrorString();
+				TCHAR* errmsg = GetLastErrorString();
 				LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
 			}
 			break;
@@ -3961,10 +3926,10 @@ void CEditorCtrl::SetFontname(int nStyle, CString szFontname)
 {
 	char* bufUtf8 = NULL;
 	CREATE_BUFFER_FROM_CSTRING(bufUtf8, szFontname)
-	if (bufUtf8 != NULL)
-	{
-		DoCommand(SCI_STYLESETFONT, nStyle, reinterpret_cast<LPARAM>(bufUtf8));
-	}
+		if (bufUtf8 != NULL)
+		{
+			DoCommand(SCI_STYLESETFONT, nStyle, reinterpret_cast<LPARAM>(bufUtf8));
+		}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -4013,7 +3978,7 @@ void CEditorCtrl::Refresh()
 	DoCommand(SCI_COLOURISE, 0, -1);
 }
 
-void CEditorCtrl::SetSelectionTextColor(COLORREF color,unsigned int nAlpha)
+void CEditorCtrl::SetSelectionTextColor(COLORREF color, unsigned int nAlpha)
 {
 	DoCommand(SCI_SETSELBACK, 1, color);
 	DoCommand(SCI_SETSELALPHA, nAlpha);
@@ -4234,20 +4199,20 @@ void CEditorCtrl::ReplaceSearchedText(const CString& strText)
 	if (strText.IsEmpty()) return;
 	char* bufUtf8 = NULL;
 	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText)
-	if (bufUtf8 != NULL)
-	{		
-		// set target search
-		DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
-		DoCommand(SCI_TARGETFROMSELECTION, 0, 0);
-		if (m_nSearchflags & SCFIND_REGEXP)
+		if (bufUtf8 != NULL)
 		{
-			DoCommand(SCI_REPLACETARGETRE, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
+			// set target search
+			DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
+			DoCommand(SCI_TARGETFROMSELECTION, 0, 0);
+			if (m_nSearchflags & SCFIND_REGEXP)
+			{
+				DoCommand(SCI_REPLACETARGETRE, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
+			}
+			else
+			{
+				DoCommand(SCI_REPLACETARGET, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
+			}
 		}
-		else
-		{
-			DoCommand(SCI_REPLACETARGET, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
-		}
-	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -4454,7 +4419,7 @@ int CEditorCtrl::SearchTextInRange(const CString& strText, int lStartRange, int 
 	CT2A stUTF8(strText, TF_UTF8);
 	LPCTSTR szUTF8 = (LPCTSTR)stUTF8.m_psz;
 	DoCommand(SCI_SETTARGETRANGE, lStartRange, lEndRange);
-	const char *target = (const char*)(szUTF8);
+	const char* target = (const char*)(szUTF8);
 	int targetLength = static_cast<int>(strlen(target));
 	int len = (strText.GetLength() > targetLength) ? strText.GetLength() : targetLength;
 	return static_cast<int>(DoCommand(SCI_SEARCHINTARGET, len, reinterpret_cast<LPARAM>(target)));
@@ -4467,14 +4432,14 @@ int CEditorCtrl::SearchTextInEditor(const CString& strText)
 	return SearchTextInRange(strText, startRange, endRange);
 }
 
-void CEditorCtrl::GetTextRange(CString &strText, size_t start, size_t end)
+void CEditorCtrl::GetTextRange(CString& strText, size_t start, size_t end)
 {
 	auto GetTextFromEditor = [&]() -> char*
 	{
 		int lLen = (int)DoCommand(SCI_GETLENGTH) + 1;
 		if (lLen > 0)
 		{
-			char *pReturn = new char[lLen + 1];
+			char* pReturn = new char[lLen + 1];
 			if (pReturn != NULL)
 			{
 				Sci_TextRange tr;
@@ -4500,7 +4465,7 @@ void CEditorCtrl::GetTextRange(CString &strText, size_t start, size_t end)
 	}
 }
 
-void CEditorCtrl::GetTextRange(char *strText, int lStart, int lEnd)
+void CEditorCtrl::GetTextRange(char* strText, int lStart, int lEnd)
 {
 	Sci_TextRange tr;
 	tr.chrg.cpMin = lStart;
@@ -4641,7 +4606,7 @@ BOOL CEditorCtrl::IsEditorLongLineCheckerEnable()
 void CEditorCtrl::EnableBidirectionalRightToLeft(BOOL bEnable)
 {
 	long exStyle = static_cast<long>(::GetWindowLongPtr(this->GetSafeHwnd(), GWL_EXSTYLE));
-	exStyle = bEnable ? exStyle | WS_EX_LAYOUTRTL : exStyle&(~WS_EX_LAYOUTRTL);
+	exStyle = bEnable ? exStyle | WS_EX_LAYOUTRTL : exStyle & (~WS_EX_LAYOUTRTL);
 	::SetWindowLongPtr(this->GetSafeHwnd(), GWL_EXSTYLE, exStyle);
 	BOOL bWraped = IsEditorInWrapMode();
 	EnableTextWrappingMode(!bWraped);
@@ -4867,7 +4832,7 @@ void CEditorCtrl::SetReadOnlyEditor(BOOL bEnable)
 BOOL CEditorCtrl::IsReadOnlyEditor()
 {
 	BOOL bIsROEditor = (BOOL)DoCommand(SCI_GETREADONLY);
-	if (bIsROEditor ||  m_bIsReadOnlyEditor)
+	if (bIsROEditor || m_bIsReadOnlyEditor)
 	{
 		return TRUE;
 	}
@@ -4879,14 +4844,14 @@ CString CEditorCtrl::GetEOLCString()
 	int currentEOL = (int)DoCommand(SCI_GETEOLMODE);
 	switch (currentEOL)
 	{
-		case SC_EOL_CRLF:
-			return _T("\r\n");
-		case SC_EOL_CR:
-			return _T("\r");
-		case SC_EOL_LF:
-			return _T("\n");
-		default:
-			break;
+	case SC_EOL_CRLF:
+		return _T("\r\n");
+	case SC_EOL_CR:
+		return _T("\r");
+	case SC_EOL_LF:
+		return _T("\n");
+	default:
+		break;
 	}
 	return _T("\r\n");
 }
@@ -5033,7 +4998,7 @@ CString CEditorCtrl::GetEncodingName()
 
 	if ((m_encodingSaving != TF_INT) &&
 		((m_encodingLoading != m_encodingSaving)
-		|| (m_bHasBOM != m_bHasBOMSaving)))
+			|| (m_bHasBOM != m_bHasBOMSaving)))
 	{
 		switch (m_encodingSaving)
 		{
@@ -5182,7 +5147,7 @@ void CEditorCtrl::SetLanguageCFontStyle(int iItem, COLORREF rgb)
 	}
 }
 
-void CEditorCtrl::GetFunctionListFromEditor(const TCHAR *pszChars, int lLength, std::vector<CString>& vecFunctionList)
+void CEditorCtrl::GetFunctionListFromEditor(const TCHAR* pszChars, int lLength, std::vector<CString>& vecFunctionList)
 {
 	if (lLength == 0) return;
 
@@ -5198,7 +5163,7 @@ void CEditorCtrl::GetFunctionListFromEditor(const TCHAR *pszChars, int lLength, 
 		if (StringHelper::xisalnum(pszChars[I])
 			|| pszChars[I] == '.' && I > 0
 			&& (!StringHelper::xisalpha(pszChars[nPreviousIdent])
-			&& !StringHelper::xisalpha(pszChars[I + 1])))
+				&& !StringHelper::xisalpha(pszChars[I + 1])))
 		{
 			if (nIdentBegin == -1)
 			{
@@ -5335,7 +5300,7 @@ void CEditorCtrl::RenderHotSpotForUrlLinks()
 		int lenEncoded = 0;
 		while (TRUE)
 		{
-			BOOL bUrlDetected  = AppUtils::IsUrlHyperLink((LPWSTR)pWideText.get(), wideTextLen, startWide, &lenWide);
+			BOOL bUrlDetected = AppUtils::IsUrlHyperLink((LPWSTR)pWideText.get(), wideTextLen, startWide, &lenWide);
 			if (lenWide <= 0) break;
 			ASSERT((startWide + lenWide) <= wideTextLen);
 			lenEncoded = WideCharToMultiByte(currentCP, 0, &pWideText.get()[startWide], lenWide, NULL, 0, NULL, NULL);
@@ -5368,7 +5333,7 @@ void CEditorCtrl::SetIndicatorForHighlightWord()
 		{
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_PYTHON, INDIC_BOX);
 		}
-		else 
+		else
 		{
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 		}
@@ -5492,10 +5457,10 @@ FoldingLineDataList CEditorCtrl::GetFoldingLineDataList(int levelMax)
 							}
 							else if (m_strLexerName == _T("python"))
 							{
-								if(strLineText.Find(_T("class ")) != -1 || strLineText.Find(_T("def ")) != -1
-								|| strLineText.Find(_T("if ")) != -1 && strLineTextTemp.Find(_T("elif ")) != -1
-								|| strLineText.Find(_T("for ")) != -1 && strLineTextTemp.Find(_T("while ")) != -1
-								|| strLineText.Find(_T("return ")) != -1)
+								if (strLineText.Find(_T("class ")) != -1 || strLineText.Find(_T("def ")) != -1
+									|| strLineText.Find(_T("if ")) != -1 && strLineTextTemp.Find(_T("elif ")) != -1
+									|| strLineText.Find(_T("for ")) != -1 && strLineTextTemp.Find(_T("while ")) != -1
+									|| strLineText.Find(_T("return ")) != -1)
 								{
 									strLineText.Replace(_T(":"), _T(""));
 									datalist.push_back(FoldingLineData(headerLine + 1, strLineText));
@@ -5511,10 +5476,10 @@ FoldingLineDataList CEditorCtrl::GetFoldingLineDataList(int levelMax)
 			}
 		}
 	}
-	std::sort(datalist.begin(), datalist.end(), [](const FoldingLineData &a, const FoldingLineData &b)
-	{
-		return a._lineNumber < b._lineNumber;
-	});
+	std::sort(datalist.begin(), datalist.end(), [](const FoldingLineData& a, const FoldingLineData& b)
+		{
+			return a._lineNumber < b._lineNumber;
+		});
 	SetFirstVisibleLine(lFirstLineVisiable);
 	return datalist;
 }
@@ -5527,7 +5492,7 @@ void CEditorCtrl::LoadPythonHightlight()
 	{
 		auto iItem = EditorRules::g_rgb_Syntax_python_2[i].iItem;
 		auto rgb = EditorRules::g_rgb_Syntax_python_2[i].rgb;
-		SetColorForStyle(iItem, rgb, EditorRules::black);
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 	}
 }
 
@@ -5629,7 +5594,7 @@ void CEditorCtrl::SetIncreaseSelectionMode(BOOL bFlag, BOOL bIsSearchFromStartFi
 
 BOOL CEditorCtrl::IsHorizonScrollBarVisible()
 {
-	BOOL bScroll = (GetStyle() & WS_HSCROLL)  > 0 ? TRUE : FALSE;
+	BOOL bScroll = (GetStyle() & WS_HSCROLL) > 0 ? TRUE : FALSE;
 	return bScroll;
 }
 
@@ -5873,7 +5838,7 @@ int CEditorCtrl::MultiCaretTransaction(int token, UndoRedoSelection& selection, 
 	}
 
 	// get or set map item request ?
-	if ((token >= 0) && (utoken < uiTokenCnt)) 
+	if ((token >= 0) && (utoken < uiTokenCnt))
 	{
 		if (selection.IsEmpty())
 		{
@@ -5881,7 +5846,7 @@ int CEditorCtrl::MultiCaretTransaction(int token, UndoRedoSelection& selection, 
 			selection = m_MapUndoRedoSelection[utoken];
 			utokenMap = utoken;
 		}
-		else 
+		else
 		{
 			// this is a set request (fill redo pos)
 			assert(false); // not used yet
@@ -5930,14 +5895,14 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 		PosAnchorVS = bUndo ? array_front(undoRedoSelection.anchorVS_undo) : array_front(undoRedoSelection.anchorVS_redo);
 		PosCurVS = bUndo ? array_front(undoRedoSelection.curVS_undo) : array_front(undoRedoSelection.curVS_redo);
 
-		if (PosAnchor > 0 && PosCur > 0) 
+		if (PosAnchor > 0 && PosCur > 0)
 		{
 			// Ensure that the first and last lines of a selection are always unfolded
 			// This needs to be done _before_ the SCI_SETSEL message
 			Sci_Position const anchorPosLine = GetLineFromPosition(static_cast<int>(PosAnchor));
 			Sci_Position const currPosLine = GetLineFromPosition(static_cast<int>(PosCur));
 			PostMessage(SCI_ENSUREVISIBLE, anchorPosLine, 0);
-			if (anchorPosLine != currPosLine) 
+			if (anchorPosLine != currPosLine)
 			{
 				PostMessage(SCI_ENSUREVISIBLE, currPosLine, 0);
 			}
@@ -5948,58 +5913,58 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 
 			switch (selectionMode)
 			{
-				case SEL_MULTI_MODE:
+			case SEL_MULTI_MODE:
+			{
+				unsigned int i = 0;
+				Sci_PositionU const selCount = bUndo ? array_len(undoRedoSelection.anchorPos_undo) : array_len(undoRedoSelection.anchorPos_redo);
+				Sci_PositionU const selCountVS = bUndo ? array_len(undoRedoSelection.anchorVS_undo) : array_len(undoRedoSelection.anchorVS_redo);
+				PostMessage(SCI_SETSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
+				if (PosAnchorVS && PosCurVS)
 				{
-					unsigned int i = 0;
-					Sci_PositionU const selCount = bUndo ? array_len(undoRedoSelection.anchorPos_undo) : array_len(undoRedoSelection.anchorPos_redo);
-					Sci_PositionU const selCountVS = bUndo ? array_len(undoRedoSelection.anchorVS_undo) : array_len(undoRedoSelection.anchorVS_redo);
-					PostMessage(SCI_SETSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
-					if (PosAnchorVS && PosCurVS)
-					{
-						PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)0, (LPARAM)(PosAnchorVS));
-						PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)0, (LPARAM)(PosCurVS));
-					}
-					PostMessage(SCI_CANCEL, 0, 0); // (!) else shift-key selection behavior is kept
+					PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)0, (LPARAM)(PosAnchorVS));
+					PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)0, (LPARAM)(PosCurVS));
+				}
+				PostMessage(SCI_CANCEL, 0, 0); // (!) else shift-key selection behavior is kept
 
-					++i;
-					while (i < selCount)
+				++i;
+				while (i < selCount)
+				{
+					PosAnchor = bUndo ? array_eltptr(undoRedoSelection.anchorPos_undo, i) : array_eltptr(undoRedoSelection.anchorPos_redo, i);
+					PosCur = bUndo ? array_eltptr(undoRedoSelection.curPos_undo, i) : array_eltptr(undoRedoSelection.curPos_redo, i);
+					if (PosAnchor && PosCur)
 					{
-						PosAnchor = bUndo ? array_eltptr(undoRedoSelection.anchorPos_undo, i) : array_eltptr(undoRedoSelection.anchorPos_redo, i);
-						PosCur = bUndo ? array_eltptr(undoRedoSelection.curPos_undo, i) : array_eltptr(undoRedoSelection.curPos_redo, i);
-						if (PosAnchor && PosCur) 
+						PostMessage(SCI_ADDSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
+						if (i < selCountVS)
 						{
-							PostMessage(SCI_ADDSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
-							if (i < selCountVS) 
+							PosAnchorVS = bUndo ? array_eltptr(undoRedoSelection.anchorVS_undo, i) : array_eltptr(undoRedoSelection.anchorVS_redo, i);
+							PosCurVS = bUndo ? array_eltptr(undoRedoSelection.curVS_undo, i) : array_eltptr(undoRedoSelection.curVS_redo, i);
+							if (PosAnchorVS && PosCurVS)
 							{
-								PosAnchorVS = bUndo ? array_eltptr(undoRedoSelection.anchorVS_undo, i) : array_eltptr(undoRedoSelection.anchorVS_redo, i);
-								PosCurVS = bUndo ? array_eltptr(undoRedoSelection.curVS_undo, i) : array_eltptr(undoRedoSelection.curVS_redo, i);
-								if (PosAnchorVS && PosCurVS) 
-								{
-									PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosAnchorVS));
-									PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosCurVS));
-								}
+								PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosAnchorVS));
+								PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosCurVS));
 							}
 						}
-						++i;
 					}
+					++i;
 				}
+			}
+			break;
+
+			case SC_SEL_RECTANGLE:
+			case SC_SEL_THIN:
+				PostMessage(SCI_SETRECTANGULARSELECTIONANCHOR, (WPARAM)(PosAnchor), 0);
+				PostMessage(SCI_SETRECTANGULARSELECTIONCARET, (WPARAM)(PosCur), 0);
+				if (PosAnchorVS && PosCurVS)
+				{
+					PostMessage(SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE, (WPARAM)(PosAnchorVS), 0);
+					PostMessage(SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE, (WPARAM)(PosCurVS), 0);
+				}
+				PostMessage(SCI_CANCEL, 0, 0); // (!) else shift-key selection behavior is kept
 				break;
 
-				case SC_SEL_RECTANGLE:
-				case SC_SEL_THIN:
-					PostMessage(SCI_SETRECTANGULARSELECTIONANCHOR, (WPARAM)(PosAnchor), 0);
-					PostMessage(SCI_SETRECTANGULARSELECTIONCARET, (WPARAM)(PosCur), 0);
-					if (PosAnchorVS && PosCurVS) 
-					{
-						PostMessage(SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE, (WPARAM)(PosAnchorVS), 0);
-						PostMessage(SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE, (WPARAM)(PosCurVS), 0);
-					}
-					PostMessage(SCI_CANCEL, 0, 0); // (!) else shift-key selection behavior is kept
-					break;
-
-				case SC_SEL_LINES:
-				case SC_SEL_STREAM:
-				default:
+			case SC_SEL_LINES:
+			case SC_SEL_STREAM:
+			default:
 				if (PosAnchor && PosCur)
 				{
 					PostMessage(SCI_SETSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
@@ -6039,11 +6004,11 @@ int CEditorCtrl::SaveUndoMultiSelection()
 
 	sel.selMode_undo = selMode;
 
-	switch (selMode) 
+	switch (selMode)
 	{
 	case SEL_MULTI_MODE:
 	{
-		for (int i = 0; i < numOfSel; ++i) 
+		for (int i = 0; i < numOfSel; ++i)
 		{
 			int const anchorPos = GetSelectionNumberAnchor(i);
 			array_push_back(sel.anchorPos_undo, anchorPos);
@@ -6084,7 +6049,7 @@ int CEditorCtrl::SaveUndoMultiSelection()
 		array_push_back(sel.anchorVS_undo, dummy);
 		array_push_back(sel.curVS_undo, dummy);
 	}
-		break;
+	break;
 	}
 
 	unsigned int utokenMap;
@@ -6102,7 +6067,7 @@ int CEditorCtrl::SaveUndoMultiSelection()
 void CEditorCtrl::SaveRedoMultiSelection(int token)
 {
 	static Sci_PositionU _s_iSelection = 0;  // index
-	if (token < 0) 
+	if (token < 0)
 	{
 		return;
 	}
@@ -6147,7 +6112,7 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 		break;
 
 		case SC_SEL_RECTANGLE:
-		case SC_SEL_THIN: 
+		case SC_SEL_THIN:
 		{
 			Sci_Position const anchorPos = GetRectangularSelectionAnchor();
 			array_push_back(m_MapUndoRedoSelection[utokenMap].anchorPos_redo, anchorPos);
@@ -6162,14 +6127,14 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 
 		case SC_SEL_LINES:
 		case SC_SEL_STREAM:
-		default: 
+		default:
 		{
 			Sci_Position const anchorPos = GetCurrentAnchor();
 			array_push_back(m_MapUndoRedoSelection[utokenMap].anchorPos_redo, anchorPos);
 			Sci_Position const curPos = GetCurrentPosition();
 			array_push_back(m_MapUndoRedoSelection[utokenMap].curPos_redo, curPos);
 		}
-			break;
+		break;
 		}
 	}
 }

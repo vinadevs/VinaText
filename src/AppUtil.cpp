@@ -2230,9 +2230,36 @@ BOOL AppUtils::IsLanguageSupportDebugger(VINATEXT_SUPPORTED_LANGUAGE language)
 	return FALSE;
 }
 
+const VINATEXT_SUPPORTED_LANGUAGE arrLangSupportErrorAnnotation[] = {
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CSHAPE,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PHP,
+	VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_RUST,
+	// update more...
+};
+
+BOOL AppUtils::IsLanguageSupportErrorAnnotation(VINATEXT_SUPPORTED_LANGUAGE language)
+{
+	for (int i = 0; i < _countof(arrLangSupportErrorAnnotation); ++i)
+	{
+		if (language == arrLangSupportErrorAnnotation[i])
+		{
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
 BOOL AppUtils::IsLanguageSupportLexer(VINATEXT_SUPPORTED_LANGUAGE language)
 {
-	for (int languageEnum = LANGUAGE_TEXT + 1; languageEnum < LANGUAGE_END; ++languageEnum)
+	for (int languageEnum = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT + 1;
+		languageEnum < VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_END; ++languageEnum)
 	{
 		if (language == languageEnum)
 		{
