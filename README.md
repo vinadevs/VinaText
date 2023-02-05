@@ -25,6 +25,15 @@ A lightweight and fast text editor and file explorer for Windows.
 # Video player
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_7.png?raw=true)
 
+# PDF viewer (If Adobe Arobat Reader installed)
+![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_8.png?raw=true)
+
+# Text Translator (Vietnamese Only)
+![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_9.png?raw=true)
+
+# Simple IDE for studying
+![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_10.png?raw=true)
+
 ###################################################################################################
 
 # Project Build Requirements

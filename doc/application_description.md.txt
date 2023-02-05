@@ -1,81 +1,36 @@
 1 . Tabbed GUI design
-​The software is designed in tab form (similar to Visual Studio Code, Sublime Text, ...), supports the function of creating groups of files, viewing vertically, horizontally. Support Vietnamese interface.
-
-
-
+?The software is designed in tab form (similar to Visual Studio Code, Sublime Text, ...), supports the function of creating groups of files, viewing vertically, horizontally. Support Vietnamese interface.
 2 . View many different file formats
- 
-Explorer Extra can open more than 200 file formats. View dozens of common file types, such as PDFs, Office documents, image, audio, and video files, all with one program. Bring all your essential tools into a single workplace. You can also print many file formats from images, text, pdf,...
-
-
-
+Explorer window can open more than 200 file formats. View dozens of common file types, such as PDFs, Office documents, image, audio, and video files, all with one program. Bring all your essential tools into a single workplace. You can also print many file formats from images, text, pdf,...
 3 . Watch videos, photos and gifs
 With basic image processing tools that allow you to quickly edit your favorite screenshots or photos. Supports copy to clipboard so you can paste images into emails, web pages, chat boxes, or edit them directly with Microsoft Paint.
-
 - Using Image Render Engine - GDI Plus, allowing to display bitmap images and videos with high resolution.
-
 - Can display gif animation file with high frame rate.
-
 - Support to export images to a variety of bitmaps bmp, tiff, png, jpeg, ...
-
-
-
 4 . Edit text files
- 
 - Press Ctrl + Shift + F as shortcut to find a word in multiple files.
-
 - Press Ctrl + Shift + H as keyboard shortcut to find and replace a word in multiple files.
-
 - You can define your search scope. You can search not only the current open file in the editor but also all open documents, container folders, specific paths. - Support many different search modes.
-
 - Search results will be displayed in list view for easy reading
-
-
-
 5 . Search file path
-- Explorer Extra indexes files and folders from all attached drives so you can look through all drives to find what you're looking for.
-
+- Explorer window indexes files and folders from all attached drives so you can look through all drives to find what you're looking for.
 - Exclusion filter allows you to exclude files by name, path, date, file size and parent folder using wildcards or specific text/phrases.
-
-
-
 6 . A basic text editor
- 
 - Support multiple cursor
-
 - Column editing mode
-
 - Highlight line
-
 - Syntax color
-
 - Minimap
-
 - Spell check
-
 - Open file in browser
-
 - Monokai theme
-
 - Support google search, translate text on the spot
-
 - Quickly open large files up to 2 million lines of text
-
- 
- 
 7 . A simple IDE
- 
 - Supports more than 20 popular languages.
-
 - Debugger support for C, C++, Python and JavaScript
-
 - Autocomplete keywords
-
 - Annotate errors after compilation
-
 - Support operation on terminal: MS-DOS CMD, PowserShell, Window Subsystem Linux, ...
-
-
-
 8. Run fast and lightweight application
 - The processor core is written in C / C ++ and based on Win32 API, COM and ATL , providing very fast running speed and small program size. Use less than 8 MB of RAM and less than 10 MB of your hard drive.

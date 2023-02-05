@@ -1,6 +1,4 @@
 1 . From the editor (Text Editor)
-
-
 Double-click a word to highlight all matching words.
 Double-click the tab area to display the path in the explorer tree or use the keyboard shortcut [Ctrl + Shift + Q].
 Move the mouse to the tab area and use the keyboard shortcut [Ctrl + Shift + C] to copy the full current path.
@@ -27,7 +25,6 @@ Use keyboard shortcut [Ctrl + Shift + M] to fold/unfold all brackets.
 Use the keyboard shortcut [Ctrl + Shift + V] to paste the text into the quote.
 Use the keyboard shortcut [Windows + V] to open the clipboard history dialog box.
 Use the keyboard shortcut [Ctrl + J] to disable editing mode.
-
 Use the keyboard shortcut [Ctrl + D] to expand the selection to the next matching word.
 Use the keyboard shortcut [Ctrl + Shift + A] to expand the selection to all matching words, to a single quote.
 Use the keyboard shortcut [Alt + L] to split the selection into lines.
@@ -37,10 +34,7 @@ Use the keyboard shortcut [Ctrl + Alt + UpArrow] to extend the selection down to
 Use the keyboard shortcut [F5] to run the current file.
 Use the keyboard shortcut [Shift + F5] to stop the current program.
 
-
 2 . From File Explorer (File Explorer Tree)
-
-
 Use the keyboard shortcut [F5] to refresh the tree.
 Use the keyboard shortcut [Ctrl + Enter] to open the current path by default application.
 Use the keyboard shortcut [Ctrl + Shift + C] to copy the current path in full.
