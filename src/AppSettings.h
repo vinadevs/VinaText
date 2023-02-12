@@ -31,7 +31,7 @@ enum EDITOR_THEME_BACKGROUND_COLOR
 {
 	THEME_BACKGROUND_COLOR_SIERRA_BLUE = RGB(39, 50, 50), // sierra blue
 	THEME_BACKGROUND_COLOR_MONOKAI = RGB(39, 40, 34), // monokai
-	THEME_BACKGROUND_COLOR_LIGHTING = RGB(255, 255, 255), // lighting
+	THEME_BACKGROUND_COLOR_LIGHT = RGB(255, 255, 255), // light
 };
 
 enum APPLICATION_THEME_LOOK
@@ -105,16 +105,16 @@ struct DockWindowFontSetting
 
 struct DialogFontSetting
 {
-	CString _font = VINATEXT_TEXT_FONT_NAME[TOHOMA];
+	CString _font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
 	int _lfHeight = 14;
 	int _lfWeight = FW_MEDIUM;
 };
 
 struct EditorFontSetting
 {
-	CString _font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
-	int _nEditorTextFontSize = 9;
-	int _nEditorLineNumberFontSize = 9;
+	CString _font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
+	int _nEditorTextFontSize = 11;
+	int _nEditorLineNumberFontSize = 11;
 	BOOL _bEnableBoldFont = FALSE;
 	BOOL _bEnableItalicFont = FALSE;
 	BOOL _bEnableUnderlineFont = FALSE;
@@ -186,9 +186,10 @@ public:
 	BOOL m_bEnableAutoSearchWhenTyping = TRUE;
 	BOOL m_bAskBeforeReplaceInFiles = TRUE;
 	BOOL m_bEnableAutoDetectCodePage = TRUE;
+	BOOL m_bEnableShowHideFoldingMargin = FALSE;
 
 	// editor style
-	FOLDER_MARGIN_STYPE m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_ARROW;
+	FOLDER_MARGIN_STYPE m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 	EDITOR_INDICATOR_STYLE m_IndicatorStyle = EDITOR_INDICATOR_STYLE::BOX;
 	
 	// editor auto save file
@@ -217,7 +218,7 @@ public:
 	EDITOR_TAB_ACTIVE_COLOR m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY;
 	RENDER_INDICATOR_ACTION m_RenderIndicatorAction = RENDER_INDICATOR_ACTION::DOUBLE_CLICK_ACTION;
 	EDITOR_INDICATOR_COLOR m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_YELLOW;
-	EDITOR_THEME_BACKGROUND_COLOR m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
+	EDITOR_THEME_BACKGROUND_COLOR m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	APPLICATION_THEME_LOOK m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_WINDOWS_XP_NATIVE;
 	APPLICATION_LANGUAGE m_ApplicationLanguage = APPLICATION_LANGUAGE::LANGUAGE_ENGLISH;
 
@@ -225,8 +226,8 @@ public:
 	int m_nPageAlignmentWidth = 78;
 	int m_nLongLineMaximum = 80;
 	int m_nRecentFileLimit = MAXIMUM_MOST_RECENT_FILE;
-	int m_nLineSpaceAbove = 2;
-	int m_nLineSpaceBelow = 2;
+	int m_nLineSpaceAbove = 0;
+	int m_nLineSpaceBelow = 0;
 	int m_nExplorerExpandLimitLevel = 50;
 	int m_nExplorerExpandLimitFileOpen = 20;
 	int m_nFilePreviewSizeLimit = 10000000; // 10 MB

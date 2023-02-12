@@ -75,4 +75,5 @@ public:
 	BOOL m_bEditorEnableUnderlineFont;
 	BOOL m_bAskBeforeReplaceInFiles;
 	BOOL m_bEnableAutoDetectCodePage;
+	BOOL m_bEnableShowHideFoldingMargin;
 };

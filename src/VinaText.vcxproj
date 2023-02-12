@@ -213,6 +213,8 @@
     <ClInclude Include="AdobeAcrobatWrapper.h" />
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
+    <ClInclude Include="EditorDef.h" />
+    <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="translator\PODictionary.h" />
     <ClInclude Include="translator\POHandler.h" />
     <ClInclude Include="uchardet\CharDistribution.h" />
@@ -343,7 +345,7 @@
     <ClInclude Include="FindDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Editor.h" />
-    <ClInclude Include="LexerCore.h" />
+    <ClInclude Include="EditorColorDark.h" />
     <ClInclude Include="ScrollHelper.h" />
     <ClInclude Include="SearchEngine.h" />
     <ClInclude Include="SetBookmarkPathDlg.h" />

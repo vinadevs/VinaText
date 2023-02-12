@@ -472,7 +472,7 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Application Paths"
         BEGIN
-            MENUITEM "&Installation Path",          ID_PATH_EXPLORER_EXTRA
+            MENUITEM "&Installation Path",          ID_PATH_VINATEXT
             MENUITEM "&Compiler Path",              ID_PATH_VINATEXT_COMPILER
             MENUITEM "&Package Path",               ID_PATH_VINATEXT_PACKAGE
             MENUITEM "&App Data Path",              ID_PATH_VINATEXT_APPDATA
@@ -930,8 +930,8 @@ BEGIN
         BEGIN
             MENUITEM "Open By Default Application\tCtrl+Enter", ID_TREEFILECTRL_OPEN
 			MENUITEM "Open As Raw Format\tCtrl++Shift+Enter", ID_TREEFILECTRL_OPEN_BY_AS_RAW_FORMAT
-			MENUITEM "Open By VinaText\tDoubleClick",   ID_TREEFILECTRL_OPEN_BY_EXPLORER_EXTRA
-            MENUITEM "Open All Files In Folder",    ID_TREEFILECTRL_OPEN_ALL_BY_EXPLORER_EXTRA
+			MENUITEM "Open By VinaText\tDoubleClick",   ID_TREEFILECTRL_OPEN_BY_VINATEXT
+            MENUITEM "Open All Files In Folder",    ID_TREEFILECTRL_OPEN_ALL_BY_VINATEXT
             MENUITEM "Open Container Folder\tCtrl+E", ID_TREEFILECTRL_OPEN_CONTAINER
             MENUITEM "Open File Explorer Tab\tCtrl+Shift+E", ID_TREEFILECTRL_NEW_FILE_EXPLORER_TAB
             MENUITEM SEPARATOR
@@ -1447,7 +1447,7 @@ BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,23,28,20,20
     LTEXT           "VinaText is a free software for text editor and more...",IDC_STATIC,64,14,155,22,SS_NOPREFIX
     DEFPUSHBUTTON   "Got it!",IDOK,93,92,55,19,WS_GROUP
-    CONTROL         "https://VinaText.com",IDC_MFCLINK_EXPLORER_EXTRA,
+    CONTROL         "https://VinaText.com",IDC_MFCLINK_VINATEXT,
                     "MfcLink",WS_TABSTOP,112,71,91,12
     LTEXT           "Home Page:",IDC_STATIC,64,72,40,8
     LTEXT           "Release Version: 1.0.9",IDC_STATIC,64,37,125,8
@@ -2568,7 +2568,7 @@ END
 
 IDD_ABOUTBOX DLGINIT
 BEGIN
-    IDC_MFCLINK_EXPLORER_EXTRA, 0x37c, 157, 0
+    IDC_MFCLINK_VINATEXT, 0x37c, 157, 0
 0x4d3c, 0x4346, 0x694c, 0x6b6e, 0x555f, 0x6c72, 0x3c3e, 0x4d2f, 0x4346, 
 0x694c, 0x6b6e, 0x555f, 0x6c72, 0x3c3e, 0x464d, 0x4c43, 0x6e69, 0x5f6b, 
 0x7255, 0x506c, 0x6572, 0x6966, 0x3e78, 0x2f3c, 0x464d, 0x4c43, 0x6e69, 

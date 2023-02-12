@@ -8,7 +8,9 @@
 
 #pragma once
 
-#include "LexerCore.h"
+#include "EditorColorDark.h"
+#include "EditorColorLight.h"
+#include "EditorDef.h"
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -228,3 +230,11 @@ typedef sptr_t(*DirectFunc) (void *, unsigned int, uptr_t, sptr_t);
 typedef void * DirectPtr;
 
 /////////////////////////////////////////////////////////////////////////////
+
+struct EditorThemeColorSet
+{
+	COLORREF _lineNumberColor{ 0 };
+	COLORREF _selectionTextColor{ 0 };
+	COLORREF _editorTextColor{ 0 };
+	COLORREF _editorMarginBarColor{ 0 };
+};

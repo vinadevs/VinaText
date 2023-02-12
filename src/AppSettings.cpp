@@ -114,7 +114,7 @@ void CAppSettings::ResetAllSettings()
 	m_bEnableAutoSearchWhenTyping = TRUE;
 	m_bAskBeforeReplaceInFiles = TRUE;
 	m_bEnableAutoDetectCodePage = TRUE;
-
+	m_bEnableShowHideFoldingMargin = FALSE;
 	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_ARROW;
 
 	// indicator style
@@ -136,21 +136,21 @@ void CAppSettings::ResetAllSettings()
 	// spell checker
 	m_strLangguageSpellCheck = _T("en-us");
 
-	// font settings
-	m_EditorFontSetting._font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
-	m_EditorFontSetting._bEnableBoldFont = FALSE;
-	m_EditorFontSetting._bEnableItalicFont = FALSE;
-	m_EditorFontSetting._bEnableUnderlineFont = FALSE;
-	m_EditorFontSetting._nEditorTextFontSize = 10;
-	m_EditorFontSetting._nEditorLineNumberFontSize = 9;
-
 	m_DockWindowFontSetting._font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
 	m_DockWindowFontSetting._lfHeight = 14;
 	m_DockWindowFontSetting._lfWeight = FW_MEDIUM;
 
-	m_DialogFontSetting._font = VINATEXT_TEXT_FONT_NAME[TOHOMA];
+	m_DialogFontSetting._font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
 	m_DialogFontSetting._lfHeight = 14;
 	m_DialogFontSetting._lfWeight = FW_MEDIUM;
+
+	// font settings
+	m_EditorFontSetting._font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
+	m_EditorFontSetting._bEnableBoldFont = FALSE;
+	m_EditorFontSetting._bEnableItalicFont = FALSE;
+	m_EditorFontSetting._bEnableUnderlineFont = FALSE;
+	m_EditorFontSetting._nEditorTextFontSize = 11;
+	m_EditorFontSetting._nEditorLineNumberFontSize = 10;
 
 	// ui
 	m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_YELLOW;
@@ -166,8 +166,8 @@ void CAppSettings::ResetAllSettings()
 	m_nLongLineMaximum = 80;
 	m_nRecentFileLimit = MAXIMUM_MOST_RECENT_FILE;
 	m_nFilePreviewSizeLimit = 10000000; // 5 MB
-	m_nLineSpaceAbove = 2;
-	m_nLineSpaceBelow = 2;
+	m_nLineSpaceAbove = 0;
+	m_nLineSpaceBelow = 0;
 	m_nExplorerExpandLimitLevel = 50;
 	m_nExplorerExpandLimitFileOpen = 20;
 
@@ -184,7 +184,7 @@ void CAppSettings::ResetAllSettings()
 
 BOOL CAppSettings::SaveSetting()
 {
-	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("explorer-extra-app-settings.json");
+	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
 	JSonWriter jsonWriter(strJsonFilePath, "VinaText Setting");
 
 	jsonWriter.AddBOOL("OpenWindowCmdWhenRunProgram", m_bOpenWindowCmdWhenRunProgram);
@@ -225,6 +225,7 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddBOOL("EnableAutoSearchWhenTyping", m_bEnableAutoSearchWhenTyping);
 	jsonWriter.AddBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonWriter.AddBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
+	jsonWriter.AddBOOL("m_bEnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LangguageSpellCheck", AppUtils::CStringToStd(m_strLangguageSpellCheck));
 	jsonWriter.AddValue("DockWindowFontName", AppUtils::CStringToStd(m_DockWindowFontSetting._font));
@@ -274,7 +275,7 @@ BOOL CAppSettings::SaveSetting()
 
 BOOL CAppSettings::LoadSetting()
 {
-	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("explorer-extra-app-settings.json");
+	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
 	if (!PathFileExists(strJsonFilePath))
 	{
 		ResetAllSettings();
@@ -322,6 +323,7 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadBOOL("EnableAutoSearchWhenTyping", m_bEnableAutoSearchWhenTyping);
 	jsonReader.ReadBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonReader.ReadBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
+	jsonReader.ReadBOOL("m_bEnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
 	jsonReader.ReadCString("LangguageSpellCheck", m_strLangguageSpellCheck);

@@ -16,147 +16,8 @@
 #include <scintilla\SciLexer.h>
 #include <scintilla\ILoader.h>
 
-//----------------------------------------------------------------------------
-// In-house definitions, not from Scintilla
-//----------------------------------------------------------------------------
-#define STR_SCINTILLAWND _T("Scintilla")
-#define STR_EDITORDLL     _T("VinaTextEditor.dll")
-#define STR_LEXERDLL      _T("VinaTextLexer.dll")
-#define LEXER_PLAIN_TEXT  _T("plaintext")
-#define FOLDED_MARKER_TEXT	  " --- "
-#define FOLDED_MARKER_CPP	  " { ... } "
-#define FOLDED_MARKER_HTML	  " < ... > "
-#define IMAGE_AUTOCSETSEPARATOR '?'
-#define WORD_AUTOCSETSEPARATOR '$'
-#define SC_SETMARGINTYPE_LINENUM 0
-#define SC_SETMARGINTYPE_MAKER 1
-#define SC_SETMARGINTYPE_FOLDING 2
-#define SC_MARKER_ENABLE_BREAKPOINT 0
-#define SC_MARKER_DISABLE_BREAKPOINT 1
-#define SC_MARKER_INSTRUCTION_POINTER 2
-#define SC_MARKER_BOOKMARK 3
-#define SC_MARKER_FOLDING 4
-#define SC_MARKER_LINE_NUMBER 5
-#define SC_CURSOR_RIGHT_HAND 8
-#define VINATEXT_MARGINWIDTH 16
-#define VINATEXT_MARGINWIDTH 16
-#define VINATEXT_MAXIMUM_MARGIN 3
-#define SINGLE_SELECTION 1
-#define SCROLLING_PIXEL_WIDTH 5
-#define INDIC_BRACEMATCH  (INDIC_CONTAINER + 1)
-#define INDIC_TAGMATCH    (INDIC_CONTAINER + 2)
-#define INDIC_TAGATTR     (INDIC_CONTAINER + 3)
-#define INDIC_HIGHLIGHT_PYTHON  (INDIC_CONTAINER + 4)
-#define INDIC_HIGHLIGHT_GENERAL (INDIC_CONTAINER + 5)
-#define INDIC_URL_HOTSPOT (INDIC_CONTAINER + 6)
-#define INDIC_SPELL_CHECKER (INDIC_CONTAINER + 7)
-
-#define SEL_MULTI_MODE (SC_SEL_RECTANGLE + SC_SEL_LINES + SC_SEL_THIN)
-
-#define SCI_MODEVENTMASK_FULL (SC_MOD_CONTAINER | SC_PERFORMED_UNDO | SC_PERFORMED_REDO | SC_MULTILINEUNDOREDO \
-        | SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT | SC_MOD_BEFOREINSERT | SC_MOD_BEFOREDELETE \
-        | SC_MULTISTEPUNDOREDO | SC_LASTSTEPINUNDOREDO)
-
-#define UNDOREDO_FREE (-1L)
-#define UNDOREDO_BLOCKED (-2L)
-
-namespace EditorRules
+namespace EditorColorDark
 {
-	//----------------------------------------------------------------------------
-	// File extension definitions [MUST BE SAME ORDER WITH LEXER NAME DEFINITIONS]
-	//----------------------------------------------------------------------------
-	static CString strLangExtensions[] =
-	{
-		_T("py|pyw"),				     // SCLEX_PYTHON
-		_T("cpp|cxx|h|hh|hpp|hxx"),      // SCLEX_CPP
-		_T("ada|ads|adb"),               // SCLEX_ADA
-		_T("asm"),                       // SCLEX_ASM
-		_T("iss"),                       // SCLEX_INNOSETUP
-		_T("sh"),                        // SCLEX_BASH
-		_T("bat|cmd|nt"),                // SCLEX_BATCH
-		_T("c|cc"),					          // SCLEX_C
-		_T("cmake"),				          // SCLEX_CMAKE
-		_T("cs"),					                  // SCLEX_CS
-		_T("css"),                                    // SCLEX_CSS
-		_T("erl|hrl"),				                  // SCLEX_CS
-		_T("f|for|f90|f95|f77"),                      // SCLEX_FORTRAN
-		_T("htm|html|shtml|htt|cfm|tpl|hta"),         // SCLEX_HTML
-		_T("java"),							// SCLEX_CPP
-		_T("js|jsx"),							// SCLEX_CPP
-		_T("ts|tsx"),							// SCLEX_CPP
-		_T("lua"),								// SCLEX_LUA
-		_T("m"),                                      // SCLEX_MATLAB// SCLEX_LUA
-		_T("pas|inc|pp"),                         // SCLEX_PASCAL
-		_T("pl|pm|cgi|pod"),                          // SCLEX_PERL
-		_T("php|php3|php4|php5|phps|phpt|phtml"),     // SCLEX_PHP
-		_T("ps1|psm1"),								  // SCLEX_POWERSHELL
-		_T("rb"),                                     // SCLEX_RUBY
-		_T("rs"),                                     // SCLEX_RUST
-		_T("sql|spec|body|sps|spb|sf|sp"),            // SCLEX_SQL
-		_T("tcl"),                                    // SCLEX_TCL
-		_T("vb|vbs|bas|frm|cls|ctl|pag|dsr|dob"),     // SCLEX_VB
-		_T("v|sv|vh|svh"),							  //SCLEX_VERILOG
-		_T("vhd|vhdl"),								  //SCLEX_VHDL
-		_T("xml|gcl|xsl|svg|xul|xsd|dtd|xslt|axl"),   // SCLEX_XML
-		_T("json"),								      // SCLEX_JSON
-		_T("go"),                                     // SCLEX_GOLANG
-		_T("md|markdown|rmd"),						  // SCLEX_MARKDOWN
-		_T("proto"),								 //  SCLEX_CPP
-		_T("r"),                                     //  SCLEX_R
-		_T("lic"),                                   //  SCLEX_PYTHON
-		_T("rc"),                                     // SCLEX_CPP
-		_T("au3"),                                    // SCLEX_CPP
-		0,
-	};
-
-	//----------------------------------------------------------------------------
-	// Lexer name definitions [MUST BE SAME ORDER WITH FILE EXTENSION DEFINITIONS]
-	//----------------------------------------------------------------------------
-	static const char* arrLexerNames[] =
-	{
-		"python",
-		"cpp",
-		"ada",
-		"asm",
-		"inno",
-		"bash",
-		"batch",
-		"c",
-		"cmake",
-		"cs",
-		"css",
-		"erlang",
-		"fortran",
-		"hypertext",
-		"java",
-		"javascript",
-		"typescript",
-		"lua",
-		"matlab",
-		"pascal",
-		"perl",
-		"phpscript",
-		"powershell",
-		"ruby",
-		"rust",
-		"sql",
-		"tcl",
-		"vb",
-		"verilog",
-		"vhdl",
-		"xml",
-		"kix",
-		"golang",
-		"markdown",
-		"protobuf",
-		"r",
-		"FLEXlm",
-		"Resource",
-		"autoit",
-		"plaintext",
-		0,
-	};
-
 	//----------------------------------------------------------------------------
 	// Color definitions
 	//----------------------------------------------------------------------------
@@ -169,11 +30,9 @@ namespace EditorRules
 	// reference color
 	const COLORREF black = RGB(0, 0, 0);
 	const COLORREF darkslategray = RGB(47, 79, 79);
-	const COLORREF visualBackground = RGB(39, 50, 50);
 	const COLORREF visualForeground = RGB(220, 220, 220);
-	const COLORREF foregroundMonokai = RGB(248, 248, 240);
-	const COLORREF linenumberLight = RGB(200, 200, 200);
-	const COLORREF linenumberDark = RGB(0, 0, 0);
+	const COLORREF editorTextColor = RGB(248, 248, 240);
+	const COLORREF linenumber = RGB(200, 200, 200);
 	const COLORREF visualCommentColor = RGB(87, 166, 74);
 	const COLORREF visualStringColor = RGB(214, 157, 133);
 	const COLORREF white = RGB(255, 255, 255);
@@ -203,7 +62,6 @@ namespace EditorRules
 	const COLORREF comment = RGB(166, 226, 46);
 	const COLORREF comment_monokai = RGB(170, 170, 170);
 	const COLORREF string = RGB(230, 159, 102); // orange
-	const COLORREF background_editor = RGB(39, 50, 50);
 	const COLORREF currentline = RGB(249, 38, 114);
 	const COLORREF builtin = RGB(102, 217, 239); // Blue
 	const COLORREF number = RGB(174, 129, 255); // Purple
@@ -261,7 +119,7 @@ namespace EditorRules
 		"__virtual_inheritance ";
 	// text color 
 	static SScintillaColors g_rgb_Syntax_cpp[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -272,7 +130,7 @@ namespace EditorRules
 	{ SCE_C_UUID,				instance },
 	{ SCE_C_PREPROCESSOR,				comment_monokai },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -323,7 +181,7 @@ namespace EditorRules
 	// color text 
 	static SScintillaColors g_rgb_Syntax_python[] =
 	{
-		{ SCE_P_DEFAULT,		foregroundMonokai },
+		{ SCE_P_DEFAULT,		editorTextColor },
 		{ SCE_P_COMMENTLINE,		comment_monokai },
 		{ SCE_P_NUMBER,				number },
 		{ SCE_P_STRING,		    string },
@@ -334,11 +192,11 @@ namespace EditorRules
 		{ SCE_P_CLASSNAME,			comment },
 		{ SCE_P_DEFNAME,			comment },
 		{ SCE_P_OPERATOR,			builtin },
-		{ SCE_P_IDENTIFIER,		        foregroundMonokai },
+		{ SCE_P_IDENTIFIER,		        editorTextColor },
 		{ SCE_P_COMMENTBLOCK,		        comment_monokai },
 		{ SCE_P_STRINGEOL,		        string },
 		{ SCE_P_WORD2,				keyword },
-		{ SCE_P_DECORATOR,		    foregroundMonokai },
+		{ SCE_P_DECORATOR,		    editorTextColor },
 		{ SCE_P_FSTRING,		    string },
 		{ SCE_P_FCHARACTER,		    string },
 		{ SCE_P_FTRIPLE,		    string },
@@ -351,14 +209,14 @@ namespace EditorRules
 		{ SCE_P_COMMENTLINE,		comment },
 		{ SCE_P_COMMENTBLOCK,		comment },
 		{ SCE_P_NUMBER,				yellowgreen },
-		{ SCE_P_DEFAULT,		    foregroundMonokai },
+		{ SCE_P_DEFAULT,		    editorTextColor },
 		{ SCE_P_CLASSNAME,			cyan },
 		{ SCE_P_STRING,				string },
 		{ SCE_P_CHARACTER,			string },
-		{ SCE_P_IDENTIFIER,			foregroundMonokai },
+		{ SCE_P_IDENTIFIER,			editorTextColor },
 		{ SCE_P_OPERATOR,			keyword },
 		{ SCE_P_DEFNAME,			magenta },
-		{ SCE_P_STRINGEOL,			foregroundMonokai },
+		{ SCE_P_STRINGEOL,			editorTextColor },
 		{ SCE_P_WORD,		        darkorange },
 		{ SCE_P_WORD2,		        darkorange },
 		{ SCE_P_TRIPLE,		        comment },
@@ -385,7 +243,7 @@ namespace EditorRules
 		"abort abs abstract accept access aliased all and array at begin body case constant declare delay delta digits do else elsif end entry exception exit for function generic goto if in interface is limited loop mod new not null of or others out overriding package pragma private procedure protected raise range record rem renames requeue return reverse select separate some subtype synchronized tagged task terminate then type until use when while with xor ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_ada[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -396,7 +254,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -439,18 +297,18 @@ namespace EditorRules
 		"addpd addps addsd addss andpd andps andnpd andnps cmpeqpd cmpltpd cmplepd cmpunordpd cmpnepd cmpnltpd cmpnlepd cmpordpd cmpeqps cmpltps cmpleps cmpunordps cmpneps cmpnltps cmpnleps cmpordps cmpeqsd cmpltsd cmplesd cmpunordsd cmpnesd cmpnltsd cmpnlesd cmpordsd cmpeqss cmpltss cmpless cmpunordss cmpness cmpnltss cmpnless cmpordss comisd comiss cvtdq2pd cvtdq2ps cvtpd2dq cvtpd2pi cvtpd2ps cvtpi2pd cvtpi2ps cvtps2dq cvtps2pd cvtps2pi cvtss2sd cvtss2si cvtsd2si cvtsd2ss cvtsi2sd cvtsi2ss cvttpd2dq cvttpd2pi cvttps2dq cvttps2pi cvttsd2si cvttss2si divpd divps divsd divss fxrstor fxsave ldmxscr lfence mfence maskmovdqu maskmovdq maxpd maxps paxsd maxss minpd minps minsd minss movapd movaps movdq2q movdqa movdqu movhlps movhpd movhps movd movq movlhps movlpd movlps movmskpd movmskps movntdq movnti movntpd movntps movntq movq2dq movsd movss movupd movups mulpd mulps mulsd mulss orpd orps packssdw packsswb packuswb paddb paddsb paddw paddsw paddd paddsiw paddq paddusb paddusw pand pandn pause paveb pavgb pavgw pavgusb pdistib pextrw pcmpeqb pcmpeqw pcmpeqd pcmpgtb pcmpgtw pcmpgtd pf2id pf2iw pfacc pfadd pfcmpeq pfcmpge pfcmpgt pfmax pfmin pfmul pmachriw pmaddwd pmagw pmaxsw pmaxub pminsw pminub pmovmskb pmulhrwc pmulhriw pmulhrwa pmulhuw pmulhw pmullw pmuludq pmvzb pmvnzb pmvlzb pmvgezb pfnacc pfpnacc por prefetch prefetchw prefetchnta prefetcht0 prefetcht1 prefetcht2 pfrcp pfrcpit1 pfrcpit2 pfrsqit1 pfrsqrt pfsub pfsubr pi2fd pinsrw psadbw pshufd pshufhw pshuflw pshufw psllw pslld psllq pslldq psraw psrad psrlw psrld psrlq psrldq psubb psubw psubd psubq psubsb psubsw psubusb psubusw psubsiw pswapd punpckhbw punpckhwd punpckhdq punpckhqdq punpcklbw punpcklwd punpckldq punpcklqdq pxor rcpps rcpss rsqrtps rsqrtss sfence shufpd shufps sqrtpd sqrtps sqrtsd sqrtss stmxcsr subpd subps subsd subss ucomisd ucomiss unpckhpd unpckhps unpcklpd unpcklps xorpd xorps ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_asm[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			keyword },
 	{ SCE_C_COMMENTDOC,				keyword },
 	{ SCE_C_NUMBER,				builtin },
-	{ SCE_C_WORD,			foregroundMonokai },
+	{ SCE_C_WORD,			editorTextColor },
 	{ SCE_C_STRING,				string },
 	{ SCE_C_CHARACTER,			string },
 	{ SCE_C_UUID,		instance },
-	{ SCE_C_PREPROCESSOR,				foregroundMonokai },
+	{ SCE_C_PREPROCESSOR,				editorTextColor },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    string },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -487,7 +345,7 @@ namespace EditorRules
 		"7z adduser alias apt-get ar as asa autoconf automake awk banner base64 basename bash bc bdiff blkid break bsdcpio bsdtar bunzip2 bzcmp bzdiff bzegrep bzfgrep bzgrep bzip2 bzip2recover bzless bzmore c++ cal calendar case cat cc cd cfdisk chattr chgrp chmod chown chroot chvt cksum clang clang++ clear cmp col column comm compgen compress continue convert cp cpio crontab crypt csplit ctags curl cut date dc dd deallocvt declare deluser depmod deroff df dialog diff diff3 dig dircmp dirname disown dmesg do done dpkg dpkg-deb du echo ed egrep elif else env esac eval ex exec exit expand export expr fakeroot false fc fdisk ffmpeg fgrep fi file find flex flock fmt fold for fsck function functions fuser fusermount g++ gas gawk gcc gdb genisoimage getconf getopt getopts git gpg gpgsplit gpgv grep gres groff groups gunzip gzexe hash hd head help hexdump hg history httpd iconv id if ifconfig ifdown ifquery ifup in insmod integer inxi ip ip6tables ip6tables-save ip6tables-restore iptables iptables-save iptables-restore ip jobs join kill killall killall5 lc ld ldd let lex line ln local logname look ls lsattr lsb_release lsblk lscpu lshw lslocks lsmod lsusb lzcmp lzegrep lzfgrep lzgrep lzless lzma lzmainfo lzmore m4 mail mailx make man mkdir mkfifo mkswap mktemp modinfo modprobe mogrify more mount msgfmt mt mv nameif nasm nc ndisasm netcat newgrp nl nm nohup ntps objdump od openssl p7zip pacman passwd paste patch pathchk pax pcat pcregrep pcretest perl pg ping ping6 pivot_root poweroff pr print printf ps pwd python python2 python3 ranlib read readlink readonly reboot reset return rev rm rmdir rmmod rpm rsync sed select service set sh sha1sum sha224sum sha256sum sha3sum sha512sum shift shred shuf shutdown size sleep sort spell split start stop strings strip stty su sudo sum suspend switch_root sync systemctl tac tail tar tee test then time times touch tr trap troff true tsort tty type typeset ulimit umask umount unalias uname uncompress unexpand uniq unlink unlzma unset until unzip unzipsfx useradd userdel uudecode uuencode vi vim wait wc wget whence which while who wpaste wstart xargs xdotool xxd xz xzcat xzcmp xzdiff xzfgrep xzgrep xzless xzmore yes yum zcat zcmp zdiff zegrep zfgrep zforce zgrep zless zmore znew zsh ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_bash[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -498,7 +356,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -536,34 +394,34 @@ namespace EditorRules
 		"assoc aux break call cd chcp chdir choice cls cmdextversion color com com1 com2 com3 com4 con copy country ctty date defined del dir do dpath echo else endlocal erase errorlevel exist exit for ftype goto if in loadfix loadhigh lpt lpt1 lpt2 lpt3 lpt4 md mkdir move not nul path pause popd prn prompt pushd rd rem ren rename rmdir set setlocal shift start time title type ver verify vol ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_batch[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		string },
 	{ SCE_C_COMMENTLINE,			definition },
 	{ SCE_C_COMMENTDOC,				definition },
 	{ SCE_C_NUMBER,				keyword },
 	{ SCE_C_WORD,			builtin },
-	{ SCE_C_STRING,				foregroundMonokai },
-	{ SCE_C_CHARACTER,			foregroundMonokai },
+	{ SCE_C_STRING,				editorTextColor },
+	{ SCE_C_CHARACTER,			editorTextColor },
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				builtin },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
-	{ SCE_C_COMMENTLINEDOC,				foregroundMonokai },
+	{ SCE_C_COMMENTLINEDOC,				editorTextColor },
 	{ SCE_C_WORD2,				definition },
-	{ SCE_C_COMMENTDOCKEYWORD,				foregroundMonokai },
-	{ SCE_C_COMMENTDOCKEYWORDERROR,				foregroundMonokai },
+	{ SCE_C_COMMENTDOCKEYWORD,				editorTextColor },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				editorTextColor },
 	{ SCE_C_GLOBALCLASS,				magenta },
-	{ SCE_C_STRINGRAW,				foregroundMonokai },
-	{ SCE_C_TRIPLEVERBATIM,				foregroundMonokai },
-	{ SCE_C_HASHQUOTEDSTRING,				foregroundMonokai },
-	{ SCE_C_PREPROCESSORCOMMENT,				foregroundMonokai },
+	{ SCE_C_STRINGRAW,				editorTextColor },
+	{ SCE_C_TRIPLEVERBATIM,				editorTextColor },
+	{ SCE_C_HASHQUOTEDSTRING,				editorTextColor },
+	{ SCE_C_PREPROCESSORCOMMENT,				editorTextColor },
 	{ SCE_C_PREPROCESSORCOMMENTDOC,				yellow },
-	{ SCE_C_USERLITERAL,				foregroundMonokai },
-	{ SCE_C_TASKMARKER,				foregroundMonokai },
-	{ SCE_C_ESCAPESEQUENCE,				foregroundMonokai },
+	{ SCE_C_USERLITERAL,				editorTextColor },
+	{ SCE_C_TASKMARKER,				editorTextColor },
+	{ SCE_C_ESCAPESEQUENCE,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -585,7 +443,7 @@ namespace EditorRules
 		"void struct union enum char short int long double float signed unsigned const static extern auto register volatile restrict _Atomic bool _Bool complex _Complex imaginary _Imaginary inline noreturn _Noreturn alignas _Alignas thread_local _Thread_local uint8_t uint16_t uint32_t uint64_t int8_t int16_t int32_t int64_t uint_least8_t uint_least16_t uint_least32_t uint_least64_t int_least8_t int_least16_t int_least32_t int_least64_t uint_fast8_t uint_fast16_t uint_fast32_t uint_fast64_t int_fast8_t int_fast16_t int_fast32_t int_fast64_t uintptr_t intptr_t uintmax_t intmax_t ptrdiff_t max_align_t div_t ldiv_t lldiv_t imaxdiv_t size_t time_t clock_t wchar_t char16_t char32_t sig_atomic_t FILE ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_c[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -596,7 +454,7 @@ namespace EditorRules
 	{ SCE_C_UUID,				instance },
 	{ SCE_C_PREPROCESSOR,				comment_monokai },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -634,7 +492,7 @@ namespace EditorRules
 		"ABSOLUTE ABSTRACT ADDITIONAL_MAKE_CLEAN_FILES ALL AND APPEND ARGS ASCII BEFORE CACHE CACHE_VARIABLES CLEAR COMMAND COMMANDS COMMAND_NAME COMMENT COMPARE COMPILE_FLAGS COPYONLY DEFINED DEFINE_SYMBOL DEPENDS DOC EQUAL ESCAPE_QUOTES EXCLUDE EXCLUDE_FROM_ALL EXISTS EXPORT_MACRO EXT EXTRA_INCLUDE FATAL_ERROR FILE FILES FORCE FUNCTION GENERATED GLOB GLOB_RECURSE GREATER GROUP_SIZE HEADER_FILE_ONLY HEADER_LOCATION IMMEDIATE INCLUDES INCLUDE_DIRECTORIES INCLUDE_INTERNALS INCLUDE_REGULAR_EXPRESSION LESS LINK_DIRECTORIES LINK_FLAGS LOCATION MACOSX_BUNDLE MACROS MAIN_DEPENDENCY MAKE_DIRECTORY MATCH MATCHALL MATCHES MODULE NAME NAME_WE NOT NOTEQUAL NO_SYSTEM_PATH OBJECT_DEPENDS OPTIONAL OR OUTPUT OUTPUT_VARIABLE PATH PATHS POST_BUILD POST_INSTALL_SCRIPT PREFIX PREORDER PRE_BUILD PRE_INSTALL_SCRIPT PRE_LINK PROGRAM PROGRAM_ARGS PROPERTIES QUIET RANGE READ REGEX REGULAR_EXPRESSION REPLACE REQUIRED RETURN_VALUE RUNTIME_DIRECTORY SEND_ERROR SHARED SOURCES STATIC STATUS STREQUAL STRGREATER STRLESS SUFFIX TARGET TOLOWER TOUPPER VAR VARIABLES VERSION WIN32 WRAP_EXCLUDE WRITE APPLE MINGW MSYS CYGWIN BORLAND WATCOM MSVC MSVC_IDE MSVC60 MSVC70 MSVC71 MSVC80 CMAKE_COMPILER_2005 OFF ON ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_cmake[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -645,7 +503,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -683,7 +541,7 @@ namespace EditorRules
 		"bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort var void ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_cs[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -694,7 +552,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -732,12 +590,12 @@ namespace EditorRules
 		"active after before check checked disabled empty enabled first first-child first-letter first-line first-of-type focus hover indeterminate invalid lang last-child last-of-type left link not nth-child nth-last-child nth-of-type nth-last-of-type only-child only-of-type optional read-only read-write required right root selection target valid visited ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_css[] =
-	{ { SCE_CSS_DEFAULT,		foregroundMonokai },
+	{ { SCE_CSS_DEFAULT,		editorTextColor },
 	{ SCE_CSS_TAG,		keyword },
 	{ SCE_CSS_CLASS,			comment },
 	{ SCE_CSS_PSEUDOCLASS,				keyword },
-	{ SCE_CSS_UNKNOWN_PSEUDOCLASS,				foregroundMonokai },
-	{ SCE_CSS_OPERATOR,			foregroundMonokai },
+	{ SCE_CSS_UNKNOWN_PSEUDOCLASS,				editorTextColor },
+	{ SCE_CSS_OPERATOR,			editorTextColor },
 	{ SCE_CSS_IDENTIFIER,				builtin },
 	{ SCE_CSS_UNKNOWN_IDENTIFIER,			builtin },
 	{ SCE_CSS_VALUE,		number },
@@ -755,7 +613,7 @@ namespace EditorRules
 	{ SCE_CSS_EXTENDED_PSEUDOCLASS,				keyword },
 	{ SCE_CSS_EXTENDED_PSEUDOELEMENT,				keyword },
 	{ SCE_CSS_MEDIA,				keyword },
-	{ SCE_CSS_VARIABLE,				foregroundMonokai },
+	{ SCE_CSS_VARIABLE,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -781,7 +639,7 @@ namespace EditorRules
 		"@date @docRoot @link @module @package @section @time @type @version ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_erlang[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -792,7 +650,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -831,7 +689,7 @@ namespace EditorRules
 		"cdabs cdcos cdexp cdlog cdsin cdsqrt cotan cotand dcmplx dconjg dcotan dcotand decode dimag dll_export dll_import doublecomplex dreal dvchk encode find flen flush getarg getcharqq getcl getdat getenv gettim hfix ibchng IDEntifier imag int1 int2 int4 intc intrup invalop iostat_msg isha ishc ishl jfix lacfar locking locnear map nargs nbreak ndperr ndpexc offset ovefl peekcharqq precfill prompt qabs qacos qacosd qasin qasind qatan qatand qatan2 qcmplx qconjg qcos qcosd qcosh qdim qexp qext qextd qfloat qimag qlog qlog10 qmax1 qmin1 qmod qreal qsign qsin qsind qsinh qsqrt qtan qtand qtanh ran rand randu rewrite segment setdat settim system timer undfl unlock union val virtual volatile zabs zcos zexp zlog zsin zsqrt ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_fortran[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -842,7 +700,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -879,14 +737,14 @@ namespace EditorRules
 		"!doctype a abbr accept accept-charset accesskey acronym action address align alink alt applet archive area article asIDE async audio autocomplete autofocus axis b background base basefont bdi bdo bgcolor bgsound big blink blockquote body border br button canvas caption cellpadding cellspacing center char charoff charset checkbox checked cite class classid clear code codebase codetype col colgroup color cols colspan command compact content contenteditable contextmenu coords data datafld dataformatas datalist datapagesize datasrc datetime dd declare defer del details dfn dialog dir disabled div dl draggable dropzone dt element em embed enctype event face fieldset figcaption figure file font footer for form formaction formenctype formmethod formnovalidate formtarget frame frameborder frameset h1 h2 h3 h4 h5 h6 head header headers height hgroup hidden hr href hreflang hspace html http-equiv i id iframe image img input ins isindex ismap kbd keygen label lang language leftmargin legend li link list listing longdesc main manifest map marginheight marginwidth mark marquee max maxlength media menu menuitem meta meter method min multicol multiple name nav nobr noembed noframes nohref noresize noscript noshade novalidate nowrap object ol onabort onafterprint onautocomplete onautocompleteerror onbeforeonload onbeforeprint onblur oncancel oncanplay oncanplaythrough onchange onclick onclose oncontextmenu oncuechange ondblclick ondrag ondragend ondragenter ondragleave ondragover ondragstart ondrop ondurationchange onemptied onended onerror onfocus onhashchange oninput oninvalid onkeydown onkeypress onkeyup onload onloadeddata onloadedmetadata onloadstart onmessage onmousedown onmouseenter onmouseleave onmousemove onmouseout onmouseover onmouseup onmousewheel onoffline ononline onpagehIDE onpageshow onpause onplay onplaying onpointercancel onpointerdown onpointerenter onpointerleave onpointerlockchange onpointerlockerror onpointermove onpointerout onpointerover onpointerup onpopstate onprogress onratechange onreadystatechange onredo onreset onresize onscroll onseeked onseeking onselect onshow onsort onstalled onstorage onsubmit onsuspend ontimeupdate ontoggle onundo onunload onvolumechange onwaiting optgroup option output p param password pattern picture placeholder plaintext pre profile progress prompt public q radio readonly rel required reset rev reversed role rows rowspan rp rt rtc ruby rules s samp sandbox scheme scope scoped script seamless section select selected shadow shape size sizes small source spacer span spellcheck src srcdoc standby start step strike strong style sub submit summary sup svg svg:svg tabindex table target tbody td template text textarea tfoot th thead time title topmargin tr track tt type u ul usemap valign value valuetype var version vIDEo vlink vspace wbr width xml xmlns xmp ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_html[] =
-	{ { SCE_H_DEFAULT,		foregroundMonokai },
+	{ { SCE_H_DEFAULT,		editorTextColor },
 	{ SCE_H_TAG,		keyword },
-	{ SCE_H_TAGUNKNOWN,			foregroundMonokai },
+	{ SCE_H_TAGUNKNOWN,			editorTextColor },
 	{ SCE_H_ATTRIBUTE,				comment },
 	{ SCE_H_ATTRIBUTEUNKNOWN,				comment },
 	{ SCE_H_NUMBER,			number },
-	{ SCE_H_DOUBLESTRING,				foregroundMonokai },
-	{ SCE_H_SINGLESTRING,			foregroundMonokai },
+	{ SCE_H_DOUBLESTRING,				editorTextColor },
+	{ SCE_H_SINGLESTRING,			editorTextColor },
 	{ SCE_H_OTHER,		builtin },
 	{ SCE_H_COMMENT,				comment_monokai },
 	{ SCE_H_ENTITY,				builtin },
@@ -917,7 +775,7 @@ namespace EditorRules
 	{ SCE_HJ_COMMENTLINE,				comment_monokai },
 	{ SCE_HJ_COMMENTDOC,				comment_monokai },
 	{ SCE_HJ_NUMBER,				number },
-	{ SCE_HJ_WORD,				foregroundMonokai },
+	{ SCE_HJ_WORD,				editorTextColor },
 	{ SCE_HJ_KEYWORD,				keyword },
 	{ SCE_HJ_DOUBLESTRING,				string },
 	{ SCE_HJ_SINGLESTRING,				string },
@@ -1011,7 +869,7 @@ namespace EditorRules
 		"package transient strictfp void char short int long double float const static volatile byte boolean class interface native private protected public final abstract synchronized enum ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_java[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1022,7 +880,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1059,7 +917,7 @@ namespace EditorRules
 		"abstract arguments await boolean break byte case catch char class const continue debugger default delete do double else enum eval export extends false final finally float for function goto if implements import in instanceof int interface let long native new null package private protected public return short static super switch synchronized this throw throws transient true try typeof var void volatile while with yield Array Date eval function hasOwnProperty Infinity isFinite isNaN isPrototypeOf length Math NaN Number Object prototype String toString undefined valueOf from ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_javascript[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1070,7 +928,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1107,7 +965,7 @@ namespace EditorRules
 		"break case catch class const continue debugger default delete do else enum export extends false finally for function if import in instanceof new null return super switch this throw true try typeof var void while with as implements interface let package private protected public static yield any boolean constructor declare get module require number set string symbol type from of ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_typescript[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1118,7 +976,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1158,7 +1016,7 @@ namespace EditorRules
 		"close flush lines read seek setvbuf write clock date difftime execute exit getenv remove rename setlocale time tmpname coroutine.create coroutine.resume coroutine.running coroutine.status coroutine.wrap coroutine.yield io.close io.flush io.input io.lines io.open io.output io.popen io.read io.tmpfile io.type io.write io.stderr io.stdin io.stdout os.clock os.date os.difftime os.execute os.exit os.getenv os.remove os.rename os.setlocale os.time os.tmpname debug.debug debug.getfenv debug.gethook debug.getinfo debug.getlocal debug.getmetatable debug.getregistry debug.getupvalue debug.getuservalue debug.setfenv debug.sethook debug.setlocal debug.setmetatable debug.setupvalue debug.setuservalue debug.traceback debug.upvalueid debug.upvaluejoin package.cpath package.loaded package.loaders package.loadlib package.path package.preload package.seeall ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_lua[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1169,7 +1027,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1206,7 +1064,7 @@ namespace EditorRules
 		"break case catch classdef continue else elseif end for function global if otherwise parfor persistent return switch try while ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_matlab[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1217,7 +1075,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1254,8 +1112,8 @@ namespace EditorRules
 		"and array asm begin case cdecl class const constructor default destructor div do downto else end end. except exit exports external far file finalization finally for function goto if implementation in index inherited initialization inline interface label library message mod near nil not object of on or out overload overrIDE packed pascal private procedure program property protected public published raise read record register repeat resourcestring safecall set shl shr stdcall stored string then threadvar to try type unit until uses var virtual while with write xor ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_pascal[] =
-	{ { SCE_PAS_DEFAULT,		foregroundMonokai },
-	{ SCE_PAS_IDENTIFIER,		foregroundMonokai },
+	{ { SCE_PAS_DEFAULT,		editorTextColor },
+	{ SCE_PAS_IDENTIFIER,		editorTextColor },
 	{ SCE_PAS_COMMENT,			comment },
 	{ SCE_PAS_COMMENT2,				comment },
 	{ SCE_PAS_COMMENTLINE,				comment },
@@ -1288,7 +1146,7 @@ namespace EditorRules
 		"NULL __FILE__ __LINE__ __PACKAGE__ __DATA__ __END__ AUTOLOAD BEGIN CORE DESTROY END EQ GE GT INIT LE LT NE CHECK abs accept alarm and atan2 bind binmode bless caller chdir chmod chomp chop chown chr chroot close closedir cmp connect continue cos crypt dbmclose dbmopen defined delete die do dump each else elsif endgrent endhostent endnetent endprotoent endpwent endservent eof eq eval exec exists exit exp fcntl fileno flock for foreach fork format formline ge getc getgrent getgrgid getgrnam gethostbyaddr gethostbyname gethostent getlogin getnetbyaddr getnetbyname getnetent getpeername getpgrp getppid getpriority getprotobyname getprotobynumber getprotoent getpwent getpwnam getpwuid getservbyname getservbyport getservent getsockname getsockopt glob gmtime goto grep gt hex if index int ioctl join keys kill last lc lcfirst le length link listen local localtime lock log lstat lt m map mkdir msgctl msgget msgrcv msgsnd my ne next no not oct open opendir or ord our pack package pipe pop pos print printf prototype push q qq qr quotemeta qu qw qx rand read readdir readline readlink readpipe recv redo ref rename require reset return reverse rewinddir rindex rmdir s scalar seek seekdir select semctl semget semop send setgrent sethostent setnetent setpgrp setpriority setprotoent setpwent setservent setsockopt shift shmctl shmget shmread shmwrite shutdown sin sleep socket socketpair sort splice split sprintf sqrt srand stat study sub substr symlink syscall sysopen sysread sysseek system syswrite tell telldir tie tied time times tr truncate uc ucfirst umask undef unless unlink unpack unshift untie until use utime values vec wait waitpid wantarray warn while write x xor y ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_perl[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1299,7 +1157,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1357,7 +1215,7 @@ namespace EditorRules
 	"kadm5_princ_expire_time kadm5_principal kadm5_pw_expiration kadm5_randkey key key_exists krb5_kdb_disallow_all_tix ";
 			// color text
 	static SScintillaColors g_rgb_Syntax_php[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1368,7 +1226,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1405,7 +1263,7 @@ namespace EditorRules
 		"ARGF ARGV BEGIN END ENV FALSE DATA NIL RUBY_PATCHLEVEL RUBY_PLATFORM RUBY_RELEASE_DATE RUBY_VERSION PLATFORM RELEASE_DATE STDERR STDIN STDOUT TOPLEVEL_BINDING TRUE __ENCODING__ __END__ __FILE__ __LINE__ alias and begin break case class def defined? do else elsif end ensure false for if in module next nil not or redo rescue retry return self super then true undef unless until when while yield ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_ruby[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1416,7 +1274,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1454,7 +1312,7 @@ namespace EditorRules
 		"bool char f32 f64 i128 i16 i32 i64 i8 isize str u128 u16 u32 u64 u8 usize Self ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_rust[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1467,21 +1325,21 @@ namespace EditorRules
 	{ SCE_C_OPERATOR,				builtin },
 	{ SCE_C_IDENTIFIER,				builtin },
 	{ SCE_C_STRINGEOL,    red },
-	{ SCE_C_VERBATIM,				foregroundMonokai },
+	{ SCE_C_VERBATIM,				editorTextColor },
 	{ SCE_C_REGEX,				builtin },
-	{ SCE_C_COMMENTLINEDOC,				foregroundMonokai },
-	{ SCE_C_WORD2,				foregroundMonokai },
+	{ SCE_C_COMMENTLINEDOC,				editorTextColor },
+	{ SCE_C_WORD2,				editorTextColor },
 	{ SCE_C_COMMENTDOCKEYWORD,				builtin },
-	{ SCE_C_COMMENTDOCKEYWORDERROR,				foregroundMonokai },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				editorTextColor },
 	{ SCE_C_GLOBALCLASS,				builtin },
 	{ SCE_C_STRINGRAW,				builtin },
 	{ SCE_C_TRIPLEVERBATIM,				builtin },
 	{ SCE_C_HASHQUOTEDSTRING,				builtin },
 	{ SCE_C_PREPROCESSORCOMMENT,				builtin },
-	{ SCE_C_PREPROCESSORCOMMENTDOC,				foregroundMonokai },
-	{ SCE_C_USERLITERAL,				foregroundMonokai },
-	{ SCE_C_TASKMARKER,				foregroundMonokai },
-	{ SCE_C_ESCAPESEQUENCE,				foregroundMonokai },
+	{ SCE_C_PREPROCESSORCOMMENTDOC,				editorTextColor },
+	{ SCE_C_USERLITERAL,				editorTextColor },
+	{ SCE_C_TASKMARKER,				editorTextColor },
+	{ SCE_C_ESCAPESEQUENCE,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -1503,7 +1361,7 @@ namespace EditorRules
 		"bfile bigint binary binary_integer bit blob bool boolean char char_base clob cursor date datetime datetime2 datetimeoffset day dec decimal double enum float hierarchyid image int integer interval long longblob longtext mediumblob mediumint mediumtext money nchar nclob ntext number numeric nvarchar precision raw real rowid smalldatetime smallint smallmoney sql_variant text time timestamp tinyblob tinyint tinytext uniqueIDEntifier urowid varbinary varchar varchar2 xml year ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_sql[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1514,7 +1372,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1554,7 +1412,7 @@ namespace EditorRules
 		"tkButtonDown tkButtonEnter tkButtonInvoke tkButtonLeave tkButtonUp tkCancelRepeat tkCheckRadioInvoke tkDarken tkEntryAutoScan tkEntryBackspace tkEntryButton1 tkEntryClosestGap tkEntryInsert tkEntryKeySelect tkEntryMouseSelect tkEntryNextWord tkEntryPaste tkEntryPreviousWord tkEntrySeeInsert tkEntrySetCursor tkEntryTranspose tkEventMotifBindings tkFDGetFileTypes tkFirstMenu tkFocusGroup_Destroy tkFocusGroup_In tkFocusGroup_Out tkFocusOK tkListboxAutoScan tkListboxBeginExtend tkListboxBeginSelect tkListboxBeginToggle tkListboxCancel tkListboxDataExtend tkListboxExtendUpDown tkListboxMotion tkListboxSelectAll tkListboxUpDown tkMbButtonUp tkMbEnter tkMbLeave tkMbMotion tkMbPost tkMenuButtonDown tkMenuDownArrow tkMenuDup tkMenuEscape tkMenuFind tkMenuFindName tkMenuFirstEntry tkMenuInvoke tkMenuLeave tkMenuLeftArrow tkMenuMotion tkMenuNextEntry tkMenuNextMenu tkMenuRightArrow tkMenuUnpost tkMenuUpArrow tkMessageBox tkPostOverPoint tkRecolorTree tkRestoreOldGrab tkSaveGrabInfo tkScaleActivate tkScaleButton2Down tkScaleButtonDown tkScaleControlPress tkScaleDrag tkScaleEndDrag tkScaleIncrement tkScreenChanged tkScrollButton2Down tkScrollButtonDown tkScrollButtonUp tkScrollByPages tkScrollByUnits tkScrollDrag tkScrollEndDrag tkScrollSelect tkScrollStartDrag tkScrollToPos  tkScrollTopBottom tkTabToWindow tkTearOffMenu tkTextAutoScan tkTextButton1 tkTextClosestGap tkTextInsert tkTextKeyExtend tkTextKeySelect tkTextNextPara tkTextNextPos tkTextNextWord tkTextPaste tkTextPrevPara tkTextPrevPos tkTextResetAnchor tkTextScrollPages tkTextSelectTo tkTextSetCursor tkTextTranspose tkTextUpDownLine tkTraverseToMenu tkTraverseWithinMenu tk_bisque tk_chooseColor tk_dialog tk_focusFollowsMouse tk_focusNext tk_focusPrev tk_getOpenFile tk_getSaveFile tk_messageBox tk_optionMenu tk_popup tk_setPalette tk_textCopy tk_textCut tk_textPaste ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_tcl[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1565,7 +1423,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1609,11 +1467,11 @@ namespace EditorRules
 	{ SCE_C_NUMBER,				string },
 	{ SCE_C_WORD,			comment },
 	{ SCE_C_STRING,				orangered },
-	{ SCE_C_CHARACTER,			foregroundMonokai },
+	{ SCE_C_CHARACTER,			editorTextColor },
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				comment },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1651,7 +1509,7 @@ namespace EditorRules
 		"$acos $acosh $asin $asinh $assertcontrol $assertkill $assertoff $asserton $assertpasson $assertpassoff $assertfailon $assertfailoff $assertnonvacuouson $assertvacuousoff $async$and$array $async$and$plane $async$nand$array $async$nand$plane $async$nor$array $async$nor$plane $async$or$array $async$or$plane $atan $atan2 $atanh $bits $bitstoreal $bitstoshortreal $cast $ceil $changed_gclk $changing_gclk $clog2 $comment $cos $cosh $countdrivers $countones $coverage_control $coverage_get $coverage_get_max $coverage_merge $coverage_save $date $dimensions $display $displayb $displayh $displayo $dist_chi_square $dist_erlang $dist_exponential $dist_normal $dist_poisson $dist_t $dist_uniform $dumpall $dumpfile $dumpflush $dumplimit $dumpoff $dumpon $dumpportsall $dumpportsflush $dumpportslimit $dumpportsoff $dumpportson $dumpvars $end $enddefinitions $error $exit $exp $falling_gclk $fatal $fclose $fdisplay $fdisplayb $fdisplayh $fdisplayo $fell $fell_gclk $feof $ferror $fflush $fgetc $fgets $finish $floor $fmonitor $fmonitorb $fmonitorh $fmonitoro $fopen $fread $fscanf $fseek $fstrobe $ftell $fullskew $future_gclk $fwrite $fwriteb $fwriteh $fwriteo $getpattern $get_coverage $high $history $hold $hypot $increment $incsave $info $input $isunbounded $isunknown $itor $key $left $list $ln $load_coverage_db $log $log10 $low $monitor $monitorb $monitorh $monitoro $monitoroff $monitoron $nochange $nokey $nolog $onehot $onehot0 $past $past_gclk $period $pow $printtimescale $q_add $q_exam $q_full $q_initialize $q_remove $random $readmemb $readmemh $realtime $realtobits $recovery $recrem $removal $reset $reset_count $reset_value $restart $rewind $right $rising_gclk $root $rose $rose_gclk $rtoi $sampled $save $scale $scope $setup $setuphold $set_coverage_db_name $sformat $sformatf $shortrealtobits $showscopes $showvariables $showvars $signed $sin $sinh $size $skew $sqrt $sreadmemb $sreadmemh $sscanf $stable $stable_gclk $steady_gclk $stime $stop $strobe $strobeb $strobeh $strobeo $swrite $sync$and$array $sync$and$plane $sync$nand$array $sync$nand$plane $sync$nor$array $sync$nor$plane $sync$or$array $sync$or$plane $system $tan $tanh $test$plusargs $time $timeformat $timescale $timeskew $typename $typeof $uandom $ungetc $unit $unpacked_dimensions $unsigned $upscope $urandom_range $value$plusargs $var $vcdclose $version $warning $width $write $writeb $writeh $writememb $writememh $writeo ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_verilog[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1662,7 +1520,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1704,7 +1562,7 @@ namespace EditorRules
 		"boolean bit character severity_level integer real time delay_length natural positive string bit_vector file_open_kind file_open_status line text sIDE width std_ulogic std_ulogic_vector std_logic std_logic_vector X01 X01Z UX01 UX01Z unsigned signed ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_vhdl[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1715,7 +1573,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1751,7 +1609,7 @@ namespace EditorRules
 	static const char* g_xml_KeyWords = "";
 	// color text
 	static SScintillaColors g_rgb_Syntax_xml[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		keyword },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1762,7 +1620,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		builtin },
 	{ SCE_C_PREPROCESSOR,				definition },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -1800,12 +1658,12 @@ namespace EditorRules
 		"@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_json[] =
-	{ { SCE_JSON_DEFAULT,		foregroundMonokai },
+	{ { SCE_JSON_DEFAULT,		editorTextColor },
 	{ SCE_JSON_NUMBER,		number },
 	{ SCE_JSON_STRING,			string },
 	{ SCE_JSON_STRINGEOL,				string },
 	{ SCE_JSON_PROPERTYNAME,				keyword },
-	{ SCE_JSON_ESCAPESEQUENCE,			foregroundMonokai },
+	{ SCE_JSON_ESCAPESEQUENCE,			editorTextColor },
 	{ SCE_JSON_LINECOMMENT,				comment },
 	{ SCE_JSON_BLOCKCOMMENT,			comment },
 	{ SCE_JSON_OPERATOR,		builtin },
@@ -1833,7 +1691,7 @@ namespace EditorRules
 	static const char* g_markdown_KeyWords = "";
 	// color text
 	static SScintillaColors g_rgb_Syntax_markdown[] =
-	{ { SCE_MARKDOWN_DEFAULT,		foregroundMonokai },
+	{ { SCE_MARKDOWN_DEFAULT,		editorTextColor },
 	{ SCE_MARKDOWN_LINE_BEGIN,		instance },
 	{ SCE_MARKDOWN_STRONG1,			keyword },
 	{ SCE_MARKDOWN_STRONG2,				keyword },
@@ -1877,34 +1735,34 @@ namespace EditorRules
 		"component description example externalhelp forwardhelpcategory forwardhelptargetname functionality inputs link notes outputs parameter remotehelprunspace role synopsis ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_powershell[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment_monokai },
 	{ SCE_C_COMMENTLINE,			comment_monokai },
 	{ SCE_C_COMMENTDOC,				string },
 	{ SCE_C_NUMBER,				number },
 	{ SCE_C_WORD,			builtin },
-	{ SCE_C_STRING,				foregroundMonokai },
-	{ SCE_C_CHARACTER,			foregroundMonokai },
+	{ SCE_C_STRING,				editorTextColor },
+	{ SCE_C_CHARACTER,			editorTextColor },
 	{ SCE_C_UUID,		definition },
 	{ SCE_C_PREPROCESSOR,				builtin },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
-	{ SCE_C_COMMENTLINEDOC,				foregroundMonokai },
+	{ SCE_C_COMMENTLINEDOC,				editorTextColor },
 	{ SCE_C_WORD2,				string },
-	{ SCE_C_COMMENTDOCKEYWORD,				foregroundMonokai },
-	{ SCE_C_COMMENTDOCKEYWORDERROR,				foregroundMonokai },
+	{ SCE_C_COMMENTDOCKEYWORD,				editorTextColor },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				editorTextColor },
 	{ SCE_C_GLOBALCLASS,				magenta },
-	{ SCE_C_STRINGRAW,				foregroundMonokai },
-	{ SCE_C_TRIPLEVERBATIM,				foregroundMonokai },
-	{ SCE_C_HASHQUOTEDSTRING,				foregroundMonokai },
-	{ SCE_C_PREPROCESSORCOMMENT,				foregroundMonokai },
+	{ SCE_C_STRINGRAW,				editorTextColor },
+	{ SCE_C_TRIPLEVERBATIM,				editorTextColor },
+	{ SCE_C_HASHQUOTEDSTRING,				editorTextColor },
+	{ SCE_C_PREPROCESSORCOMMENT,				editorTextColor },
 	{ SCE_C_PREPROCESSORCOMMENTDOC,				yellow },
-	{ SCE_C_USERLITERAL,				foregroundMonokai },
-	{ SCE_C_TASKMARKER,				foregroundMonokai },
-	{ SCE_C_ESCAPESEQUENCE,				foregroundMonokai },
+	{ SCE_C_USERLITERAL,				editorTextColor },
+	{ SCE_C_TASKMARKER,				editorTextColor },
+	{ SCE_C_ESCAPESEQUENCE,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -1925,7 +1783,7 @@ namespace EditorRules
 		"break default func interface select case defer go map struct chan else goto package switch const fallthrough if range type continue for import return var ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_go[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		comment },
 	{ SCE_C_COMMENTLINE,			comment },
 	{ SCE_C_COMMENTDOC,				comment },
@@ -1936,23 +1794,23 @@ namespace EditorRules
 	{ SCE_C_UUID,		instance },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
-	{ SCE_C_VERBATIM,				foregroundMonokai },
-	{ SCE_C_REGEX,				foregroundMonokai },
-	{ SCE_C_COMMENTLINEDOC,				foregroundMonokai },
-	{ SCE_C_WORD2,				foregroundMonokai },
-	{ SCE_C_COMMENTDOCKEYWORD,				foregroundMonokai },
-	{ SCE_C_COMMENTDOCKEYWORDERROR,				foregroundMonokai },
-	{ SCE_C_GLOBALCLASS,				foregroundMonokai },
-	{ SCE_C_STRINGRAW,				foregroundMonokai },
-	{ SCE_C_TRIPLEVERBATIM,				foregroundMonokai },
-	{ SCE_C_HASHQUOTEDSTRING,				foregroundMonokai },
-	{ SCE_C_PREPROCESSORCOMMENT,				foregroundMonokai },
-	{ SCE_C_PREPROCESSORCOMMENTDOC,				foregroundMonokai },
-	{ SCE_C_USERLITERAL,				foregroundMonokai },
-	{ SCE_C_TASKMARKER,				foregroundMonokai },
-	{ SCE_C_ESCAPESEQUENCE,				foregroundMonokai },
+	{ SCE_C_VERBATIM,				editorTextColor },
+	{ SCE_C_REGEX,				editorTextColor },
+	{ SCE_C_COMMENTLINEDOC,				editorTextColor },
+	{ SCE_C_WORD2,				editorTextColor },
+	{ SCE_C_COMMENTDOCKEYWORD,				editorTextColor },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				editorTextColor },
+	{ SCE_C_GLOBALCLASS,				editorTextColor },
+	{ SCE_C_STRINGRAW,				editorTextColor },
+	{ SCE_C_TRIPLEVERBATIM,				editorTextColor },
+	{ SCE_C_HASHQUOTEDSTRING,				editorTextColor },
+	{ SCE_C_PREPROCESSORCOMMENT,				editorTextColor },
+	{ SCE_C_PREPROCESSORCOMMENTDOC,				editorTextColor },
+	{ SCE_C_USERLITERAL,				editorTextColor },
+	{ SCE_C_TASKMARKER,				editorTextColor },
+	{ SCE_C_ESCAPESEQUENCE,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -1973,18 +1831,18 @@ namespace EditorRules
 		"and array asm begin case cdecl class const constructor default destructor div do downto else end end. except exit exports external far file finalization finally for function goto if implementation in index inherited initialization inline interface label library message mod near nil not object of on or out overload overrIDE packed pascal private procedure program property protected public published raise read record register repeat resourcestring safecall set shl shr stdcall stored string then threadvar to try type unit until uses var virtual while with write xor ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_inno[] =
-	{ { SCE_C_DEFAULT,		foregroundMonokai },
-	{ SCE_C_COMMENT,		foregroundMonokai },
+	{ { SCE_C_DEFAULT,		editorTextColor },
+	{ SCE_C_COMMENT,		editorTextColor },
 	{ SCE_C_COMMENTLINE,			keyword },
 	{ SCE_C_COMMENTDOC,				keyword },
 	{ SCE_C_NUMBER,				builtin },
-	{ SCE_C_WORD,			foregroundMonokai },
+	{ SCE_C_WORD,			editorTextColor },
 	{ SCE_C_STRING,				string },
 	{ SCE_C_CHARACTER,			string },
 	{ SCE_C_UUID,		instance },
-	{ SCE_C_PREPROCESSOR,				foregroundMonokai },
+	{ SCE_C_PREPROCESSOR,				editorTextColor },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    string },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -2032,7 +1890,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		keyword },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    string },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -2069,14 +1927,14 @@ namespace EditorRules
 		"if else while repeat for function in next break TRUE FALSE NULL Inf NaN NA NA_integer NA_real NA_complex_ NA_character_ ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_r[] =
-	{ { SCE_R_DEFAULT,		foregroundMonokai },
+	{ { SCE_R_DEFAULT,		editorTextColor },
 	{ SCE_R_COMMENT,		comment },
 	{ SCE_R_KWORD,			keyword },
 	{ SCE_R_BASEKWORD,				comment },
 	{ SCE_R_OTHERKWORD,				number },
 	{ SCE_R_NUMBER,			number },
-	{ SCE_R_STRING,				foregroundMonokai },
-	{ SCE_R_STRING2,			foregroundMonokai },
+	{ SCE_R_STRING,				editorTextColor },
+	{ SCE_R_STRING2,			editorTextColor },
 	{ SCE_R_OPERATOR,		builtin },
 	{ SCE_R_IDENTIFIER,				light_orange },
 	{ SCE_R_INFIX,				yellow },
@@ -2112,7 +1970,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		keyword },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    string },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
@@ -2149,9 +2007,9 @@ namespace EditorRules
 		"INCREMENT uncounted HOSTID SIGN ISSUED ";
 	// color text 
 	static SScintillaColors g_rgb_Syntax_flexlicense[] =
-	{ { SCE_P_DEFAULT,		foregroundMonokai },
+	{ { SCE_P_DEFAULT,		editorTextColor },
 	{ SCE_P_COMMENTLINE,		comment_monokai },
-	{ SCE_P_NUMBER,				foregroundMonokai },
+	{ SCE_P_NUMBER,				editorTextColor },
 	{ SCE_P_STRING,		    string },
 	{ SCE_P_CHARACTER,			string },
 	{ SCE_P_WORD,				keyword },
@@ -2160,11 +2018,11 @@ namespace EditorRules
 	{ SCE_P_CLASSNAME,			comment },
 	{ SCE_P_DEFNAME,			comment },
 	{ SCE_P_OPERATOR,			builtin },
-	{ SCE_P_IDENTIFIER,		        foregroundMonokai },
+	{ SCE_P_IDENTIFIER,		        editorTextColor },
 	{ SCE_P_COMMENTBLOCK,		        comment_monokai },
 	{ SCE_P_STRINGEOL,		        string },
 	{ SCE_P_WORD2,				keyword },
-	{ SCE_P_DECORATOR,		    foregroundMonokai },
+	{ SCE_P_DECORATOR,		    editorTextColor },
 	{ SCE_P_FSTRING,		    string },
 	{ SCE_P_FCHARACTER,		    string },
 	{ SCE_P_FTRIPLE,		    string },
@@ -2200,7 +2058,7 @@ namespace EditorRules
 	{ SCE_C_UUID,		keyword },
 	{ SCE_C_PREPROCESSOR,				keyword },
 	{ SCE_C_OPERATOR,				builtin },
-	{ SCE_C_IDENTIFIER,				foregroundMonokai },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    string },
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },

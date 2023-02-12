@@ -87,7 +87,7 @@ struct STDeleteOperator
 
 #define CREATE_CSTRING_FROM_BUFFER 1
 
-#define PIPE_CMD_OUTPUT_CONSOLE _T("\\\\.\\PIPE\\EXPLORER_EXTRA");  
+#define PIPE_CMD_OUTPUT_CONSOLE _T("\\\\.\\PIPE\\VINATEXT");  
 
 #define SET_FOCUS_ON_CHILD_DLG_CONTROL(control) \
 	SendMessage(WM_NEXTDLGCTL, (WPARAM)control.GetSafeHwnd(), TRUE);

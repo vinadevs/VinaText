@@ -398,4 +398,6 @@ private:
 	TabSpace              m_tabSpace = TabSpace::Default;
 	EOLFormat             m_format = EOLFormat::Unknown_Format;
 	uptr_t				  m_DocumentID = 0;
+	// theme color
+	EditorThemeColorSet   m_ThemeColorSet;
 };

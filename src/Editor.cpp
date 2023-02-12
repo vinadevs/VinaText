@@ -88,9 +88,25 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 {
 	DoCommand(SCI_SETIMEINTERACTION, SC_IME_WINDOWED);
 
+	// Preset theme colors
+	if (AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT)
+	{
+		m_ThemeColorSet._lineNumberColor = EditorColorLight::linenumber;
+		m_ThemeColorSet._selectionTextColor = EditorColorLight::black;
+		m_ThemeColorSet._editorTextColor = EditorColorLight::editorTextColor;
+		m_ThemeColorSet._editorMarginBarColor = EditorColorLight::editorMarginBarColor;
+	}
+	else
+	{
+		m_ThemeColorSet._lineNumberColor = EditorColorDark::linenumber;
+		m_ThemeColorSet._selectionTextColor = EditorColorDark::white;
+		m_ThemeColorSet._editorTextColor = EditorColorDark::editorTextColor;
+		m_ThemeColorSet._editorMarginBarColor = EditorColorLight::editorMarginBarColor;
+	}
+
 	// Editor font settings
 	SetColorForStyle(STYLE_DEFAULT,
-		EditorRules::foregroundMonokai,
+		m_ThemeColorSet._editorTextColor,
 		AppSettingMgr.m_ThemeColor,
 		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
 		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
@@ -110,8 +126,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 
 	SetLineNumberWidth();
 	SetColorForStyle(STYLE_LINENUMBER,
-		EditorRules::linenumberLight,
-		AppSettingMgr.m_ThemeColor,
+		m_ThemeColorSet._lineNumberColor,
+		m_ThemeColorSet._editorMarginBarColor,
 		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
 		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
 
@@ -169,7 +185,6 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	DoCommand(SCI_SETMARGINTYPEN, SC_SETMARGINTYPE_FOLDING, SC_MARGIN_SYMBOL);
 	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_LINENUM, ~SC_MASK_FOLDERS);
 	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_MAKER, ~SC_MASK_FOLDERS);
-	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, ~SC_MASK_FOLDERS);
 	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_MAKER, // multiple maker in one margin number 2
 		(1 << SC_MARKER_ENABLE_BREAKPOINT)
 		| (1 << SC_MARKER_DISABLE_BREAKPOINT)
@@ -177,6 +192,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		| (1 << SC_MARKER_BOOKMARK));
 	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, 1 << SC_MARKER_FOLDING);
 	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_LINENUM, 1 << SC_MARKER_LINE_NUMBER);
+	DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, SC_MASK_FOLDERS);
 
 	//Register Enable breakpoint maker
 	DoCommand(SCI_MARKERDEFINE, SC_MARKER_ENABLE_BREAKPOINT, SC_MARK_CIRCLE);
@@ -206,8 +222,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	else
 	{
-		DoCommand(SCI_SETFOLDMARGINCOLOUR, 1, AppSettingMgr.m_ThemeColor);
-		DoCommand(SCI_SETFOLDMARGINHICOLOUR, 1, AppSettingMgr.m_ThemeColor);
+		DoCommand(SCI_SETFOLDMARGINCOLOUR, 1, m_ThemeColorSet._editorMarginBarColor);
+		DoCommand(SCI_SETFOLDMARGINHICOLOUR, 1, m_ThemeColorSet._editorMarginBarColor);
 	}
 
 	// folder style
@@ -313,7 +329,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	DoCommand(SCI_SETCARETLINEVISIBLE, 1);
 	DoCommand(SCI_SETCARETLINEVISIBLEALWAYS, 1);
-	DoCommand(SCI_SETCARETLINEBACK, EditorRules::foregroundMonokai);
+	DoCommand(SCI_SETCARETLINEBACK, m_ThemeColorSet._editorTextColor);
 	DoCommand(SCI_SETCARETLINEBACKALPHA, 100);
 	DoCommand(SCI_SETCARETWIDTH, 2);
 
@@ -327,7 +343,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	// long line checker
 	DoCommand(SCI_SETEDGECOLUMN, AppSettingMgr.m_nLongLineMaximum);
 	// selection
-	SetSelectionTextColor(EditorRules::white, 60);
+	SetSelectionTextColor(m_ThemeColorSet._selectionTextColor, 60);
 
 	if (AppSettingMgr.m_bEnableCaretBlink)
 	{
@@ -483,76 +499,76 @@ BOOL CEditorCtrl::UpdateLanguageDatabase(CLanguageDatabase* pDatabase, const CSt
 void CEditorCtrl::Init_ada_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("ada");
-	SetKeywords(EditorRules::g_ada_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_ada[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_ada_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_ada[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_ada[i].iItem, EditorRules::g_rgb_Syntax_ada[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_ada[i].iItem, EditorColorDark::g_rgb_Syntax_ada[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_ada_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_ada_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_ada_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_ada_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_ada_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_ada_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_ada_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_ada_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_ada_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_ada_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_asm_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("asm");
-	SetKeywords(EditorRules::g_asm_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_asm[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_asm_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_asm[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_asm[i].iItem, EditorRules::g_rgb_Syntax_asm[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_asm[i].iItem, EditorColorDark::g_rgb_Syntax_asm[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_asm_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_asm_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_asm_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_asm_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_asm_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_asm_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_asm_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_asm_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_asm_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_asm_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_inno_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("asm");
-	SetKeywords(EditorRules::g_inno_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_inno[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_inno_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_inno[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_inno[i].iItem, EditorRules::g_rgb_Syntax_inno[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_inno[i].iItem, EditorColorDark::g_rgb_Syntax_inno[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_inno_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_inno_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_inno_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_inno_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_inno_commentEnd);
-	CString strKeywords = AppUtils::StdToCString(EditorRules::g_inno_KeyWords);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_inno_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_inno_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_inno_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_inno_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_inno_commentEnd);
+	CString strKeywords = AppUtils::StdToCString(EditorColorDark::g_inno_KeyWords);
 	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
 void CEditorCtrl::Init_bash_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("bash");
-	SetKeywords(EditorRules::g_bash_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_bash[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_bash_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_bash[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_bash[i].iItem, EditorRules::g_rgb_Syntax_bash[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_bash[i].iItem, EditorColorDark::g_rgb_Syntax_bash[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_bash_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_bash_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_bash_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_bash_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_bash_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_bash_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_bash_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_bash_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_bash_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_bash_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_batch_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("batch");
-	SetKeywords(EditorRules::g_batch_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_batch[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_batch_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_batch[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_batch[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_batch[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_batch[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_batch[i].rgb;
 		if (iItem == SCE_C_COMMENTLINE || iItem == SCE_C_COMMENTDOC || iItem == SCE_C_WORD2)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -568,86 +584,86 @@ void CEditorCtrl::Init_batch_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_batch_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_batch_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_batch_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_batch_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_batch_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_batch_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_batch_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_batch_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_batch_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_batch_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_c_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_c_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_c[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_c_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_c[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_c[i].iItem, EditorRules::g_rgb_Syntax_c[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_c[i].iItem, EditorColorDark::g_rgb_Syntax_c[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_c_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_c_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_c_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_c_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_c_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_c_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_c_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_c_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_c_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_c_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_cmake_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cmake");
-	SetKeywords(EditorRules::g_cmake_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_cmake[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_cmake_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_cmake[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_cmake[i].iItem, EditorRules::g_rgb_Syntax_cmake[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_cmake[i].iItem, EditorColorDark::g_rgb_Syntax_cmake[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_cmake_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_cmake_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_cmake_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_cmake_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_cmake_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_cmake_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_cmake_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_cmake_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_cmake_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_cmake_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_cpp_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_cpp_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_cpp[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_cpp_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_cpp[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_cpp[i].iItem, EditorRules::g_rgb_Syntax_cpp[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_cpp[i].iItem, EditorColorDark::g_rgb_Syntax_cpp[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_cpp_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_cpp_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_cpp_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_cpp_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_cpp_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_cpp_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_cpp_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_cpp_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_cpp_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_cpp_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_cshape_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_cs_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_cs[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_cs_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_cs[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_cs[i].iItem, EditorRules::g_rgb_Syntax_cs[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_cs[i].iItem, EditorColorDark::g_rgb_Syntax_cs[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_cs_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_cs_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_cs_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_cs_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_cs_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_cs_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_cs_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_cs_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_cs_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_cs_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_css_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("css");
-	SetKeywords(EditorRules::g_css_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_css[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_css_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_css[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_css[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_css[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_css[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_css[i].rgb;
 		if (iItem == SCE_CSS_TAG || iItem == SCE_CSS_PSEUDOCLASS || iItem == SCE_CSS_OPERATOR || iItem == SCE_CSS_IMPORTANT)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -669,54 +685,54 @@ void CEditorCtrl::Init_css_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_css_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_css_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_css_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_css_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_css_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_css_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_css_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_css_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_css_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_css_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_erlang_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("erlang");
-	SetKeywords(EditorRules::g_erlang_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_erlang[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_erlang_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_erlang[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_erlang[i].iItem, EditorRules::g_rgb_Syntax_erlang[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_erlang[i].iItem, EditorColorDark::g_rgb_Syntax_erlang[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_erlang_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_erlang_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_erlang_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_erlang_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_erlang_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_erlang_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_erlang_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_erlang_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_erlang_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_erlang_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_fortran_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("fortran");
-	SetKeywords(EditorRules::g_fortran_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_fortran[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_fortran_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_fortran[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_fortran[i].iItem, EditorRules::g_rgb_Syntax_fortran[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_fortran[i].iItem, EditorColorDark::g_rgb_Syntax_fortran[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_fortran_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_fortran_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_fortran_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_fortran_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_fortran_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_fortran_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_fortran_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_fortran_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_fortran_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_fortran_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_html_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("hypertext");
-	SetKeywords(EditorRules::g_html_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_html[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_html_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_html[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_html[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_html[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_html[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		/*if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -737,102 +753,102 @@ void CEditorCtrl::Init_html_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_html_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_html_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_html_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_html_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_html_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_html_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_html_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_html_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_html_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_html_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_java_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_java_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_java[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_java_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_java[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_java[i].iItem, EditorRules::g_rgb_Syntax_java[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_java[i].iItem, EditorColorDark::g_rgb_Syntax_java[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_java_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_java_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_java_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_java_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_java_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_java_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_java_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_java_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_java_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_java_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_javascript_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_javascript_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_javascript[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_javascript_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_javascript[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_javascript[i].iItem, EditorRules::g_rgb_Syntax_javascript[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_javascript[i].iItem, EditorColorDark::g_rgb_Syntax_javascript[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_javascript_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_javascript_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_javascript_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_javascript_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_javascript_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_javascript_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_javascript_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_javascript_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_javascript_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_javascript_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_typescript_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_typescript_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_typescript[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_typescript_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_typescript[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_typescript[i].iItem, EditorRules::g_rgb_Syntax_typescript[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_typescript[i].iItem, EditorColorDark::g_rgb_Syntax_typescript[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_typescript_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_typescript_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_typescript_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_typescript_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_typescript_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_typescript_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_typescript_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_typescript_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_typescript_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_typescript_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_lua_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("lua");
-	SetKeywords(EditorRules::g_lua_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_lua[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_lua_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_lua[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_lua[i].iItem, EditorRules::g_rgb_Syntax_lua[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_lua[i].iItem, EditorColorDark::g_rgb_Syntax_lua[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_lua_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_lua_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_lua_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_lua_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_lua_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_lua_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_lua_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_lua_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_lua_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_lua_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_matlab_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("matlab");
-	SetKeywords(EditorRules::g_matlab_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_matlab[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_matlab_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_matlab[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_matlab[i].iItem, EditorRules::g_rgb_Syntax_matlab[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_matlab[i].iItem, EditorColorDark::g_rgb_Syntax_matlab[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_matlab_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_matlab_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_matlab_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_matlab_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_matlab_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_matlab_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_matlab_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_matlab_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_matlab_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_matlab_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_pascal_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("pascal");
-	SetKeywords(EditorRules::g_pascal_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_pascal[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_pascal_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_pascal[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_pascal[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_pascal[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_pascal[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_pascal[i].rgb;
 		if (iItem == SCE_PAS_WORD)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -853,54 +869,54 @@ void CEditorCtrl::Init_pascal_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_pascal_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_pascal_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_pascal_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_pascal_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_pascal_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_pascal_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_pascal_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_pascal_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_pascal_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_pascal_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_perl_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("perl");
-	SetKeywords(EditorRules::g_perl_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_perl[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_perl_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_perl[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_perl[i].iItem, EditorRules::g_rgb_Syntax_perl[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_perl[i].iItem, EditorColorDark::g_rgb_Syntax_perl[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_perl_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_perl_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_perl_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_perl_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_perl_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_perl_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_perl_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_perl_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_perl_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_perl_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_php_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_php_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_php[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_php_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_php[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_php[i].iItem, EditorRules::g_rgb_Syntax_php[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_php[i].iItem, EditorColorDark::g_rgb_Syntax_php[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_php_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_php_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_php_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_php_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_php_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_php_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_php_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_php_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_php_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_php_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_powershell_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("powershell");
-	SetKeywords(EditorRules::g_powershell_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_powershell[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_powershell_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_powershell[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_powershell[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_powershell[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_powershell[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_powershell[i].rgb;
 		if (iItem == SCE_C_WORD || iItem == SCE_C_PREPROCESSOR || iItem == SCE_C_OPERATOR ||
 			iItem == SCE_C_UUID || iItem == SCE_C_NUMBER)
 		{
@@ -917,22 +933,22 @@ void CEditorCtrl::Init_powershell_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_powershell_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_powershell_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_powershell_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_powershell_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_powershell_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_powershell_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_powershell_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_powershell_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_powershell_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_powershell_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_python_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("python");
-	SetKeywords(EditorRules::g_python_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_python[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_python_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_python[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_python[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_python[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_python[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_python[i].rgb;
 		if (iItem == SCE_P_WORD || iItem == SCE_P_WORD2 || iItem == SCE_P_OPERATOR)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -954,101 +970,101 @@ void CEditorCtrl::Init_python_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_python_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_python_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_python_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_python_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_python_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_python_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_python_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_python_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_python_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_python_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_ruby_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("ruby");
-	SetKeywords(EditorRules::g_ruby_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_ruby[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_ruby_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_ruby[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_ruby[i].iItem, EditorRules::g_rgb_Syntax_ruby[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_ruby[i].iItem, EditorColorDark::g_rgb_Syntax_ruby[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_ruby_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_ruby_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_ruby_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_ruby_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_ruby_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_ruby_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_ruby_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_ruby_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_ruby_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_ruby_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 void CEditorCtrl::Init_rust_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("rust");
-	SetKeywords(EditorRules::g_rust_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_rust[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_rust_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_rust[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_rust[i].iItem, EditorRules::g_rgb_Syntax_rust[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_rust[i].iItem, EditorColorDark::g_rgb_Syntax_rust[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_rust_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_rust_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_rust_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_rust_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_rust_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_rust_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_rust_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_rust_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_rust_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_rust_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_golang_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_go_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_go[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_go_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_go[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_go[i].iItem, EditorRules::g_rgb_Syntax_go[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_go[i].iItem, EditorColorDark::g_rgb_Syntax_go[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_go_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_go_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_go_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_go_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_go_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_go_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_go_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_go_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_go_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_go_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_sql_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("sql");
-	SetKeywords(EditorRules::g_sql_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_sql[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_sql_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_sql[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_sql[i].iItem, EditorRules::g_rgb_Syntax_sql[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_sql[i].iItem, EditorColorDark::g_rgb_Syntax_sql[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_sql_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_sql_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_sql_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_sql_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_sql_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_sql_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_sql_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_sql_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_sql_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_sql_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_tcl_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("tcl");
-	SetKeywords(EditorRules::g_tcl_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_tcl[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_tcl_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_tcl[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_tcl[i].iItem, EditorRules::g_rgb_Syntax_tcl[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_tcl[i].iItem, EditorColorDark::g_rgb_Syntax_tcl[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_tcl_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_tcl_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_tcl_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_tcl_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_tcl_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_tcl_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_tcl_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_tcl_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_tcl_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_tcl_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_vb_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("vb");
-	SetKeywords(EditorRules::g_vb_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_vb[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_vb_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_vb[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_vb[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_vb[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_vb[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_vb[i].rgb;
 		if (iItem == SCE_C_COMMENTDOC)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -1064,53 +1080,53 @@ void CEditorCtrl::Init_vb_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_vb_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_vb_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_vb_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_vb_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_vb_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_vb_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_vb_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_vb_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_vb_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_vb_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_verilog_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("verilog");
-	SetKeywords(EditorRules::g_verilog_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_verilog[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_verilog_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_verilog[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_verilog[i].iItem, EditorRules::g_rgb_Syntax_verilog[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_verilog[i].iItem, EditorColorDark::g_rgb_Syntax_verilog[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_verilog_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_verilog_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_verilog_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_verilog_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_verilog_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_verilog_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_verilog_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_verilog_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_verilog_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_verilog_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 void CEditorCtrl::Init_vhdl_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("vhdl");
-	SetKeywords(EditorRules::g_vhdl_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_vhdl[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_vhdl_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_vhdl[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_vhdl[i].iItem, EditorRules::g_rgb_Syntax_vhdl[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_vhdl[i].iItem, EditorColorDark::g_rgb_Syntax_vhdl[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_vhdl_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_vhdl_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_vhdl_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_vhdl_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_vhdl_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_vhdl_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_vhdl_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_vhdl_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_vhdl_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_vhdl_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_xml_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("xml");
-	SetKeywords(EditorRules::g_xml_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_html[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_xml_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_html[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_html[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_html[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_html[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		/*if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -1131,22 +1147,22 @@ void CEditorCtrl::Init_xml_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_xml_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_xml_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_xml_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_xml_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_xml_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_xml_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_xml_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_xml_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_xml_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_xml_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_json_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("kix");
-	SetKeywords(EditorRules::g_json_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_json[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_json_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_json[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_json[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_json[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_json[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_json[i].rgb;
 		if (iItem == SCE_JSON_DEFAULT || iItem == SCE_JSON_ESCAPESEQUENCE)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -1157,54 +1173,54 @@ void CEditorCtrl::Init_json_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_json_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_json_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_json_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_json_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_json_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_json_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_json_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_json_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_json_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_json_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_markdown_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("markdown");
-	SetKeywords(EditorRules::g_markdown_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_markdown[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_markdown_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_markdown[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_markdown[i].iItem, EditorRules::g_rgb_Syntax_markdown[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_markdown[i].iItem, EditorColorDark::g_rgb_Syntax_markdown[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_markdown_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_markdown_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_markdown_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_markdown_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_markdown_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_markdown_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_markdown_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_markdown_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_markdown_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_markdown_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_protobuf_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_protobuf_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_protobuf[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_protobuf_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_protobuf[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_protobuf[i].iItem, EditorRules::g_rgb_Syntax_protobuf[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_protobuf[i].iItem, EditorColorDark::g_rgb_Syntax_protobuf[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_protobuf_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_protobuf_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_protobuf_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_protobuf_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_protobuf_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_protobuf_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_protobuf_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_protobuf_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_protobuf_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_protobuf_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_r_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("r");
-	SetKeywords(EditorRules::g_r_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_r[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_r_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_r[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_r[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_r[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_r[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_r[i].rgb;
 		if (iItem == SCE_R_KWORD || iItem == SCE_R_BASEKWORD)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -1220,22 +1236,22 @@ void CEditorCtrl::Init_r_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_r_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_r_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_r_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_r_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_r_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_r_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_r_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_r_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_r_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_r_commentEnd);
 	LoadExternalSettings(pDatabase);
 }
 
 void CEditorCtrl::Init_flexlicense_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("python");
-	SetKeywords(EditorRules::g_flexlicense_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_flexlicense[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_flexlicense_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_flexlicense[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_flexlicense[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_flexlicense[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_flexlicense[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_flexlicense[i].rgb;
 		if (iItem == SCE_P_WORD || iItem == SCE_P_WORD2 || iItem == SCE_P_OPERATOR)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -1251,44 +1267,44 @@ void CEditorCtrl::Init_flexlicense_Editor(CLanguageDatabase* pDatabase)
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 		}
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_flexlicense_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_flexlicense_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_flexlicense_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_flexlicense_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_flexlicense_commentEnd);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_flexlicense_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_flexlicense_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_flexlicense_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_flexlicense_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_flexlicense_commentEnd);
 }
 
 void CEditorCtrl::Init_resource_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_resource_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_resource[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_resource_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_resource[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_resource[i].iItem, EditorRules::g_rgb_Syntax_resource[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_resource[i].iItem, EditorColorDark::g_rgb_Syntax_resource[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_resource_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_resource_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_resource_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_resource_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_resource_commentEnd);
-	CString strKeywords = AppUtils::StdToCString(EditorRules::g_resource_KeyWords);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_resource_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_resource_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_resource_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_resource_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_resource_commentEnd);
+	CString strKeywords = AppUtils::StdToCString(EditorColorDark::g_resource_KeyWords);
 	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
 void CEditorCtrl::Init_autoit_Editor(CLanguageDatabase* pDatabase)
 {
 	SetLexer("cpp");
-	SetKeywords(EditorRules::g_autoit_KeyWords);
-	for (int i = 0; EditorRules::g_rgb_Syntax_autoit[i].iItem != -1; i++)
+	SetKeywords(EditorColorDark::g_autoit_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_autoit[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_autoit[i].iItem, EditorRules::g_rgb_Syntax_autoit[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_autoit[i].iItem, EditorColorDark::g_rgb_Syntax_autoit[i].rgb);
 	}
-	pDatabase->SetLanguageName(EditorRules::g_str_autoit_language);
-	pDatabase->SetLanguageExtension(EditorRules::g_str_autoit_extention);
-	pDatabase->SetLanguageCommentSymbol(EditorRules::g_str_autoit_commentline);
-	pDatabase->SetLanguageCommentStart(EditorRules::g_str_autoit_commentStart);
-	pDatabase->SetLanguageCommentEnd(EditorRules::g_str_autoit_commentEnd);
-	CString strKeywords = AppUtils::StdToCString(EditorRules::g_autoit_KeyWords);
+	pDatabase->SetLanguageName(EditorColorDark::g_str_autoit_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_autoit_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_autoit_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_autoit_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_autoit_commentEnd);
+	CString strKeywords = AppUtils::StdToCString(EditorColorDark::g_autoit_KeyWords);
 	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
@@ -2790,7 +2806,7 @@ BOOL CEditorCtrl::SearchForward(const CString& strText)
 	{
 		SetFocus();
 		GotoPosition(lPos);
-		SetSelectionTextColor(EditorRules::yellow, 90);
+		SetSelectionTextColor(EditorColorDark::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
 		SetLineCenterKeepView(GetCurrentLine());
 		return TRUE;
@@ -2823,7 +2839,7 @@ BOOL CEditorCtrl::SearchBackward(const CString& strText)
 	{
 		SetFocus();
 		GotoPosition(lPos);
-		SetSelectionTextColor(EditorRules::yellow, 90);
+		SetSelectionTextColor(EditorColorDark::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
 		SetLineCenterBackwardDisplay(GetCurrentLine());
 		return TRUE;
@@ -3905,19 +3921,19 @@ BOOL CEditorCtrl::SaveEditorDataToFile(const CString& szFile, CString& m_strLexe
 CString CEditorCtrl::GetLexerNameFromExtension(const CString& szExtension)
 {
 	int lexerIndex = 0;
-	CString pExtension = EditorRules::strLangExtensions[lexerIndex];
+	CString pExtension = EditorLanguageDef::arrLangExtensions[lexerIndex];
 	while (!pExtension.IsEmpty())
 	{
-		CLexingParser parser(EditorRules::strLangExtensions[lexerIndex], _T("|"));
+		CLexingParser parser(EditorLanguageDef::arrLangExtensions[lexerIndex], _T("|"));
 		while (parser.HasMoreTokens())
 		{
 			if (parser.Next().CompareNoCase(szExtension) == 0)
 			{
-				return AppUtils::StdToCString(EditorRules::arrLexerNames[lexerIndex]);
+				return AppUtils::StdToCString(EditorLanguageDef::arrLexerNames[lexerIndex]);
 			}
 		}
 		lexerIndex++;
-		pExtension = EditorRules::strLangExtensions[lexerIndex];
+		pExtension = EditorLanguageDef::arrLangExtensions[lexerIndex];
 	}
 	return LEXER_PLAIN_TEXT;
 }
@@ -5070,7 +5086,7 @@ void CEditorCtrl::ClearAllAnnotationText()
 
 void CEditorCtrl::StartRenderStyleUrl(int lStartStyling, int lLength)
 {
-	DoCommand(SCI_SETHOTSPOTACTIVEFORE, 1, EditorRules::foregroundMonokai);
+	DoCommand(SCI_SETHOTSPOTACTIVEFORE, 1, m_ThemeColorSet._editorTextColor);
 	DoCommand(SCI_SETHOTSPOTACTIVEBACK, 1, AppSettingMgr.m_ThemeColor);
 	DoCommand(SCI_STARTSTYLING, lStartStyling, 2);
 	DoCommand(SCI_SETSTYLING, lLength, 2);
@@ -5278,7 +5294,7 @@ void CEditorCtrl::RenderHotSpotForUrlLinks()
 	DoCommand(SCI_INDICSETSTYLE, INDIC_URL_HOTSPOT, INDIC_PLAIN);
 	DoCommand(SCI_INDICSETHOVERSTYLE, INDIC_URL_HOTSPOT, INDIC_FULLBOX);
 	DoCommand(SCI_INDICSETALPHA, INDIC_URL_HOTSPOT, 70);
-	DoCommand(SCI_INDICSETFORE, INDIC_URL_HOTSPOT, EditorRules::orangered);
+	DoCommand(SCI_INDICSETFORE, INDIC_URL_HOTSPOT, EditorColorDark::orangered);
 	DoCommand(SCI_INDICSETFLAGS, INDIC_URL_HOTSPOT, SC_INDICFLAG_VALUEFORE);
 	DoCommand(SCI_SETINDICATORCURRENT, INDIC_URL_HOTSPOT);
 	LRESULT indicFore = DoCommand(SCI_STYLEGETFORE, STYLE_DEFAULT);
@@ -5367,7 +5383,7 @@ void CEditorCtrl::UpdateCaretLineVisible()
 {
 	if (DoCommand(SCI_GETSELECTIONEMPTY, 0, 0) && DoCommand(SCI_GETSELECTIONS) == SINGLE_SELECTION)
 	{
-		DoCommand(SCI_SETSELBACK, 1, EditorRules::white);
+		DoCommand(SCI_SETSELBACK, 1, m_ThemeColorSet._selectionTextColor);
 		DoCommand(SCI_SETSELALPHA, 60);
 		DoCommand(SCI_SETCARETLINEVISIBLE, 1);
 	}
@@ -5488,10 +5504,10 @@ void CEditorCtrl::LoadPythonHightlight()
 {
 	SetLexer("python");
 	SetKeywords("");
-	for (int i = 0; EditorRules::g_rgb_Syntax_python_2[i].iItem != -1; i++)
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_python_2[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_python_2[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_python_2[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_python_2[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_python_2[i].rgb;
 		SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
 	}
 }
@@ -5500,9 +5516,9 @@ void CEditorCtrl::LoadCPPHightlight()
 {
 	SetLexer("cpp");
 	SetKeywords("");
-	for (int i = 0; EditorRules::g_rgb_Syntax_cpp[i].iItem != -1; i++)
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_cpp[i].iItem != -1; i++)
 	{
-		SetLanguageCFontStyle(EditorRules::g_rgb_Syntax_cpp[i].iItem, EditorRules::g_rgb_Syntax_cpp[i].rgb);
+		SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_cpp[i].iItem, EditorColorDark::g_rgb_Syntax_cpp[i].rgb);
 	}
 }
 
@@ -5510,10 +5526,10 @@ void CEditorCtrl::LoadHTMLHightlight()
 {
 	SetLexer("hypertext");
 	SetKeywords("");
-	for (int i = 0; EditorRules::g_rgb_Syntax_html[i].iItem != -1; i++)
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_html[i].iItem != -1; i++)
 	{
-		auto iItem = EditorRules::g_rgb_Syntax_html[i].iItem;
-		auto rgb = EditorRules::g_rgb_Syntax_html[i].rgb;
+		auto iItem = EditorColorDark::g_rgb_Syntax_html[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
 			SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
@@ -5544,16 +5560,24 @@ void CEditorCtrl::LoadTextHightlight()
 
 void CEditorCtrl::ShowHideFoldingMargin(int nPosMouseX)
 {
-	if (m_bIsContextMenuPopup)
+	if (AppSettingMgr.m_bEnableShowHideFoldingMargin)
 	{
-		DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, ~SC_MASK_FOLDERS);
+		if (m_bIsContextMenuPopup)
+		{
+			DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, ~SC_MASK_FOLDERS);
+		}
+		else
+		{
+			int nMask = static_cast<int>(DoCommand(SCI_GETMARGINMASKN, SC_SETMARGINTYPE_FOLDING));
+			nMask = nPosMouseX <= 0 || nPosMouseX > VINATEXT_MARGINWIDTH * 2 + GetLineNumberWidth() ? (nMask & ~SC_MASK_FOLDERS) : (nMask | SC_MASK_FOLDERS);
+			DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, nMask);
+		}
 	}
 	else
 	{
-		int nMask = static_cast<int>(DoCommand(SCI_GETMARGINMASKN, SC_SETMARGINTYPE_FOLDING));
-		nMask = nPosMouseX <= 0 || nPosMouseX > VINATEXT_MARGINWIDTH * 2 + GetLineNumberWidth() ? (nMask & ~SC_MASK_FOLDERS) : (nMask | SC_MASK_FOLDERS);
-		DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, nMask);
+		DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, ~SC_MASK_FOLDERS);
 	}
+
 }
 
 void CEditorCtrl::SetContextMenuPopupFlag(BOOL bFlag)

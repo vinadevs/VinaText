@@ -6549,7 +6549,8 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			}
 			break;
 		}
-		case SCN_DWELLSTART:
+		// this feature is for a future release because it affects mouse moving
+		/*case SCN_DWELLSTART:
 		{
 			m_EditorCtrl.ShowHideFoldingMargin(pScinNotification->x);
 			break;
@@ -6558,7 +6559,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		{
 			m_EditorCtrl.ShowHideFoldingMargin(pScinNotification->x);
 			break;
-		}
+		}*/
 		case SCN_INDICATORCLICK:
 			{
 				LRESULT IndicatorBmp = m_EditorCtrl.DoCommand(SCI_INDICATORALLONFOR, pScinNotification->position);

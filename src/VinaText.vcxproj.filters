@@ -264,9 +264,6 @@
     <ClInclude Include="FileUtil.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="LexerCore.h">
-      <Filter>Control UI\Editor\Lexer</Filter>
-    </ClInclude>
     <ClInclude Include="LexerParser.h">
       <Filter>Control UI\Editor\Lexer</Filter>
     </ClInclude>
@@ -581,6 +578,15 @@
     </ClInclude>
     <ClInclude Include="translator\PODictionary.h">
       <Filter>Translator</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorDef.h">
+      <Filter>Control UI\Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorColorLight.h">
+      <Filter>Control UI\Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorColorDark.h">
+      <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

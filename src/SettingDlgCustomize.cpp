@@ -221,7 +221,7 @@ void SettingDlgCustomize::InitThemeColorCombobox()
 	case EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI:
 		m_ThemeColorCombo.SetCurSel(1);
 		break;
-	case EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING:
+	case EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT:
 		m_ThemeColorCombo.SetCurSel(2);
 		break;
 	default:
@@ -497,7 +497,7 @@ void SettingDlgCustomize::FromThemeColorCombobox()
 		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
 		break;
 	case 2:
-		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHTING;
+		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 		break;
 	default:
 		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;

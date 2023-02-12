@@ -59,6 +59,7 @@ SettingDlgToggle::SettingDlgToggle(CWnd* pParent /*=NULL*/)
 	, m_bEditorEnableUnderlineFont(FALSE)
 	, m_bAskBeforeReplaceInFiles(FALSE)
 	, m_bEnableAutoDetectCodePage(FALSE)
+	, m_bEnableShowHideFoldingMargin(FALSE)
 {
 
 }
