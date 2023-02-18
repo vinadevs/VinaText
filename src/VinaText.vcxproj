@@ -215,6 +215,8 @@
     <ClInclude Include="BreakpointWindow.h" />
     <ClInclude Include="EditorDef.h" />
     <ClInclude Include="EditorColorLight.h" />
+    <ClInclude Include="EditorLexerDark.h" />
+    <ClInclude Include="EditorLexerLight.h" />
     <ClInclude Include="translator\PODictionary.h" />
     <ClInclude Include="translator\POHandler.h" />
     <ClInclude Include="uchardet\CharDistribution.h" />
@@ -363,6 +365,8 @@
     <ClCompile Include="AdobeAcrobatWrapper.cpp" />
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
+    <ClCompile Include="EditorLexerDark.cpp" />
+    <ClCompile Include="EditorLexerLight.cpp" />
     <ClCompile Include="translator\PODictionary.cpp" />
     <ClCompile Include="translator\POHandler.cpp" />
     <ClCompile Include="uchardet\CharDistribution.cpp" />

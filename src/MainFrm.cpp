@@ -2546,51 +2546,51 @@ void CMainFrame::SetDockingPaneIcons(BOOL bBigIcons)
 BOOL CMainFrame::CreateDockingBars()
 {
 	DWORD dwLeftStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_LEFT | CBRS_FLOAT_MULTI;
-	if (!m_wndFileExplorer.Create(Native_Language("&Explorer Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_FILE_EXPLORER, dwLeftStyle))
+	if (!m_wndFileExplorer.Create(Native_Language("Explorer Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_FILE_EXPLORER, dwLeftStyle))
 	{
 		TRACE0("Failed to create Explorer Window\n");
 		return FALSE; // failed to create
 	}
 
 	DWORD dwBottomStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_BOTTOM | CBRS_FLOAT_MULTI;
-	if (!m_wndMessageWindow.Create(Native_Language("&Message Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_OUTPUT_WINDOW, dwBottomStyle))
+	if (!m_wndMessageWindow.Create(Native_Language("Message Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_OUTPUT_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Message Window\n");
 		return FALSE; // failed to create
 	}
 
 	DWORD dwRightStyle = WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | CBRS_RIGHT | CBRS_FLOAT_MULTI;
-	if (!m_wndSearchAndReplaceWindow.Create(Native_Language("&Search Text Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_SEARCH_AND_REPLACE_WINDOW, dwRightStyle))
+	if (!m_wndSearchAndReplaceWindow.Create(Native_Language("Search Text Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_SEARCH_AND_REPLACE_WINDOW, dwRightStyle))
 	{
 		TRACE0("Failed to create Search Text Window\n");
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndSearchResultPane.Create(Native_Language("&Text Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_TEXT_RESULT_WINDOW, dwBottomStyle))
+	if (!m_wndSearchResultPane.Create(Native_Language("Text Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_TEXT_RESULT_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Text Result Window\n");
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndBuildWindow.Create(Native_Language("&Debug Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BUILD_WINDOW, dwBottomStyle))
+	if (!m_wndBuildWindow.Create(Native_Language("Debug Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BUILD_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Build Window\n");
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndBookmarkWindow.Create(Native_Language("&Bookmark Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BOOKMARK_WINDOW, dwBottomStyle))
+	if (!m_wndBookmarkWindow.Create(Native_Language("Bookmark Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BOOKMARK_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Bookmark Window\n");
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndBreakpointWindow.Create(Native_Language("&Breakpoint Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BREAKPOINT_WINDOW, dwBottomStyle))
+	if (!m_wndBreakpointWindow.Create(Native_Language("Breakpoint Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_BREAKPOINT_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Breakpoint Window\n");
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndPathResultWindow.Create(Native_Language("&Path Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_FILE_RESULT_WINDOW, dwBottomStyle))
+	if (!m_wndPathResultWindow.Create(Native_Language("Path Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_FILE_RESULT_WINDOW, dwBottomStyle))
 	{
 		TRACE0("Failed to create Path Result Window\n");
 		return FALSE; // failed to create
@@ -4556,31 +4556,31 @@ void CMainFrame::OnUpdatePrintPageSetupDlg(CCmdUI * pCmdUI)
 BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & strTTText) const
 {
 	if (pButton->m_nID == ID_FILE_NEW)
-		strTTText = Native_Language("N&ew File");
+		strTTText = Native_Language("New File");
 	else if (pButton->m_nID == ID_FILE_OPEN)
-		strTTText = Native_Language("&Open File");
+		strTTText = Native_Language("Open File");
 	else if (pButton->m_nID == ID_FILE_SAVE)
-		strTTText = Native_Language("&Save File");
+		strTTText = Native_Language("Save File");
 	else if (pButton->m_nID == ID_FILE_SAVE_ALL)
-		strTTText = Native_Language("Sa&ve All");
+		strTTText = Native_Language("Save All");
 	else if (pButton->m_nID == ID_EDIT_CUT)
-		strTTText = Native_Language("&Cut\tCtrl+X");
+		strTTText = Native_Language("Cut");
 	else if (pButton->m_nID == ID_EDIT_COPY)
-		strTTText = Native_Language("&Copy Selection/Line");
+		strTTText = Native_Language("Copy");
 	else if (pButton->m_nID == ID_EDIT_PASTE)
-		strTTText = Native_Language("&Paste As Plain Text");
+		strTTText = Native_Language("Paste");
 	else if (pButton->m_nID == ID_PANE_FILE_EXPLORER)
-		strTTText = Native_Language("&Explorer Window");
+		strTTText = Native_Language("Explorer Window (Ctrl + Shift + Q");
 	else if (pButton->m_nID == ID_EDIT_UNDO)
-		strTTText = Native_Language("&Undo");
+		strTTText = Native_Language("Undo");
 	else if (pButton->m_nID == ID_EDIT_REDO)
-		strTTText = Native_Language("&Redo");
+		strTTText = Native_Language("Redo");
 	else if (pButton->m_nID == ID_PANE_OUTPUT_WINDOW)
-		strTTText = Native_Language("&Message Window");
+		strTTText = Native_Language("Message Window");
 	else if (pButton->m_nID == ID_QUICK_SEARCH)
-		strTTText = Native_Language("&Quick Search");
+		strTTText = Native_Language("Quick Search Dialog");
 	else if (pButton->m_nID == ID_PANE_SEARCH_AND_REPLACE_WINDOW)
-		strTTText = Native_Language("&Search Text Window");
+		strTTText = Native_Language("Search Text Window");
 	else if (pButton->m_nID == ID_WINDOW_MANAGER)
 		strTTText = Native_Language("Window Manager");
 	else if (pButton->m_nID == ID_EDITOR_COMMENT)
@@ -4590,36 +4590,36 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_DOCUMENT_SET_READ_ONLY)
 		strTTText = Native_Language("Disable Edit Mode");
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE_ALL_DOC)
-		strTTText = Native_Language("Close All &Tabs");
+		strTTText = Native_Language("Close All Tabs");
 	else if (pButton->m_nID == ID_EDIT_SHOW_ALL_CHARACTOR)
-		strTTText = Native_Language("&All Hidden Characters");
+		strTTText = Native_Language("All Hidden Characters");
 	else if (pButton->m_nID == ID_EDITOR_SHOW_TRACKING_BAR)
-		strTTText = Native_Language("&Right Tracking Bar");
+		strTTText = Native_Language("Right Tracking Bar");
 	else if (pButton->m_nID == ID_EDITOR_FULL_SCREEN_MODE)
 		strTTText = Native_Language("Full Screen Mode");
 	else if (pButton->m_nID == ID_DEBUGGER_START)
-		strTTText = Native_Language("&Start Debugging");
+		strTTText = Native_Language("Start Debugging");
 	else if (pButton->m_nID == ID_TOGGLE_AUTO_COMPLETE)
-		strTTText = Native_Language("&Auto Show Complete List");
+		strTTText = Native_Language("Auto Show Complete");
 	else if (pButton->m_nID == ID_PATH_VINATEXT_BOOKMARK_TABLE)
-		strTTText = Native_Language("&Open Bookmark Path Table");
+		strTTText = Native_Language("Open Bookmark Path Table");
 	else if (pButton->m_nID == ID_DOCUMENT_FILE_SUMMARY)
-		strTTText = Native_Language("Dump &File Text Summary");
+		strTTText = Native_Language("Dump File Text Summary");
 	else if (pButton->m_nID == ID_MDI_TAB_MOVE_PREVIOUS_TAB)
-		strTTText = Native_Language("&Move To Previous Tab Group");
+		strTTText = Native_Language("Move To Previous Tab Group");
 	else if (pButton->m_nID == ID_MDI_TAB_NEW_VERTICAL_TAB)
 		strTTText = Native_Language("Move To Vertical Tab Group");
 	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CONTAINER_FOLDER)
-		strTTText = Native_Language("&Reveal in Container Folder");
+		strTTText = Native_Language("Reveal in Container Folder");
 	else if (pButton->m_nID == ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER)
-		strTTText = Native_Language("&Reveal in Explorer Window");
+		strTTText = Native_Language("Reveal in Explorer Window");
 	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CMD)
-		strTTText = Native_Language("&Open CMD Terminal");
+		strTTText = Native_Language("Open CMD Terminal");
 	else if (pButton->m_nID == ID_DOCUMENT_TRANSLATE)
-		strTTText = Native_Language("&Translate And Display Result");
+		strTTText = Native_Language("Translate Selected Text");
 	else if (pButton->m_nID == ID_MDI_TAB_RELOAD)
-		strTTText = Native_Language("&Reload File");
+		strTTText = Native_Language("Reload File");
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE)
-		strTTText = Native_Language("&Close File");
+		strTTText = Native_Language("Close File");
 	return TRUE;
 }

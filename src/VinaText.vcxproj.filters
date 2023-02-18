@@ -588,6 +588,12 @@
     <ClInclude Include="EditorColorDark.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
+    <ClInclude Include="EditorLexerDark.h">
+      <Filter>Control UI\Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorLexerLight.h">
+      <Filter>Control UI\Editor\Editor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1012,6 +1018,12 @@
     </ClCompile>
     <ClCompile Include="FileExplorerView.cpp">
       <Filter>Main Files\Main Skeleton\View</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorLexerDark.cpp">
+      <Filter>Control UI\Editor\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorLexerLight.cpp">
+      <Filter>Control UI\Editor\Editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

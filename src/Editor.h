@@ -134,9 +134,10 @@ public:
 	void SetDisplayFolding(BOOL bFlag = TRUE);
 	int GetCurrentStyle();
 	int GetCurrentLineFoldinglevel(int lLine);
-	BOOL LineHasFoldingLevel(int lLine);
+	BOOL IsLineHasFoldingLevel(int lLine);
+	BOOL IsLineExpanded(int lLine);
 	void ExpandFoldedLine(int lPosition);
-	void DoTolggleFolding(int lPosition);
+	void DoToggleFolding(int lPosition);
 	void GotoLine(int lLine);
 	void SetScrollCaret();
 	void SetLineCenterDisplay(int lLine);
@@ -148,7 +149,6 @@ public:
 	void SetTabSettings(TabSpace ts);
 	BOOL LoadFile(const CString& strFilePath, int nLoadEncoding = -1, BOOL bCreateIfMissing = FALSE);
 	BOOL SaveFile(const CString& strFilePath);
-	BOOL UpdateLanguageDatabase(CLanguageDatabase* pDatabase, const CString& czLexer);
 	void SetFontname(int nStyle, CString szFontname);
 	void SetFontheight(int nStyle, int nHeight);
 	void SetForeground(int nStyle, COLORREF crForeground);
@@ -266,53 +266,11 @@ public:
 	void RenderSearchResultInLine(int lLine, const CString& strWord);
 	FoldingLineDataList GetFoldingLineDataList(int levelMax = 3);
 
-	// for database languagues
-	void Init_python_Editor(CLanguageDatabase* pDatabase);
-	void Init_cpp_Editor(CLanguageDatabase* pDatabase);
-	void Init_ada_Editor(CLanguageDatabase* pDatabase);
-	void Init_asm_Editor(CLanguageDatabase* pDatabase);
-	void Init_inno_Editor(CLanguageDatabase* pDatabase);
-	void Init_bash_Editor(CLanguageDatabase* pDatabase);
-	void Init_batch_Editor(CLanguageDatabase* pDatabase);
-	void Init_c_Editor(CLanguageDatabase * pDatabase);
-	void Init_cmake_Editor(CLanguageDatabase* pDatabase);
-	void Init_cshape_Editor(CLanguageDatabase* pDatabase);
-	void Init_css_Editor(CLanguageDatabase* pDatabase);
-	void Init_erlang_Editor(CLanguageDatabase* pDatabase);
-	void Init_fortran_Editor(CLanguageDatabase* pDatabase);
-	void Init_html_Editor(CLanguageDatabase* pDatabase);
-	void Init_java_Editor(CLanguageDatabase* pDatabase);
-	void Init_javascript_Editor(CLanguageDatabase* pDatabase);
-	void Init_typescript_Editor(CLanguageDatabase* pDatabase);
-	void Init_lua_Editor(CLanguageDatabase* pDatabase);
-	void Init_matlab_Editor(CLanguageDatabase* pDatabase);
-	void Init_pascal_Editor(CLanguageDatabase* pDatabase);
-	void Init_perl_Editor(CLanguageDatabase* pDatabase);
-	void Init_php_Editor(CLanguageDatabase* pDatabase);
-	void Init_powershell_Editor(CLanguageDatabase* pDatabase);
-	void Init_ruby_Editor(CLanguageDatabase* pDatabase);
-	void Init_rust_Editor(CLanguageDatabase* pDatabase);
-	void Init_golang_Editor(CLanguageDatabase* pDatabase);
-	void Init_sql_Editor(CLanguageDatabase* pDatabase);
-	void Init_tcl_Editor(CLanguageDatabase* pDatabase);
-	void Init_vb_Editor(CLanguageDatabase* pDatabase);
-	void Init_verilog_Editor(CLanguageDatabase* pDatabase);
-	void Init_vhdl_Editor(CLanguageDatabase* pDatabase);
-	void Init_xml_Editor(CLanguageDatabase* pDatabase);
-	void Init_json_Editor(CLanguageDatabase * pDatabase);
-	void Init_markdown_Editor(CLanguageDatabase * pDatabase);
-	void Init_protobuf_Editor(CLanguageDatabase * pDatabase);
-	void Init_r_Editor(CLanguageDatabase * pDatabase);
-	void Init_flexlicense_Editor(CLanguageDatabase * pDatabase);
-	void Init_resource_Editor(CLanguageDatabase * pDatabase);
-	void Init_autoit_Editor(CLanguageDatabase* pDatabase);
-	// for database languagues
-
 	// only highlight text
 	void LoadPythonHightlight();
 	void LoadCPPHightlight();
 	void LoadHTMLHightlight();
-	void LoadTextHightlight();
+	void RemoveTextHightlight();
 	// only highlight text
 
 	void RePaintUI();
@@ -350,13 +308,13 @@ public:
 	// text database transaction, actually trantraction will be processed in external dll, above functions are just pre-processing...
 
 	// the fast way to control Scintilla, shoule be inline function
-	inline LRESULT DoCommand(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0)
-	{	
+	inline LRESULT DoCommand(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0) {	
 		return m_DirectFunc(m_pDirectPtr, Msg, wParam, lParam);
 	}
+	void SetColorForStyle(int style, COLORREF fore, COLORREF back = RGB(0, 0, 0), int size = -1, const char* face = 0);
+
 private:
 	BOOL SaveFileWithEncoding(const CString& strFilePath);
-	void SetColorForStyle(int style, COLORREF fore, COLORREF back = RGB(0, 0, 0), int size = -1, const char *face = 0);
 	int  m_nSearchflags = 0;
 	BOOL m_bLinenumbers = TRUE;
 	BOOL m_bSelection = TRUE;

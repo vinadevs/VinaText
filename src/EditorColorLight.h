@@ -32,7 +32,9 @@ namespace EditorColorLight
 	const COLORREF darkslategray = RGB(47, 79, 79);
 	const COLORREF visualForeground = RGB(220, 220, 220);
 	const COLORREF editorTextColor = RGB(0, 0, 0);
-	const COLORREF editorMarginBarColor = RGB(50, 50, 50);
+	const COLORREF editorMarginBarColor = RGB(220, 220, 220);
+	const COLORREF editorFolderBackColor = RGB(128, 128, 128);
+	const COLORREF editorFolderForeColor = RGB(220, 220, 220);
 	const COLORREF linenumber = RGB(0, 0, 0);
 	const COLORREF visualCommentColor = RGB(87, 166, 74);
 	const COLORREF visualStringColor = RGB(214, 157, 133);

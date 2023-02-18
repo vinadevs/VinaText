@@ -3481,14 +3481,35 @@ void CEditorView::UpdateDockPaneBreakpoint(int nLineNumber, BOOL bDeleteFromList
 	// update dock pane
 	CMainFrame* pFrame = AppUtils::GetMainFrame();
 	if (!pFrame) return;
+
+	CString strTextLine;
+	m_EditorCtrl.GetTextFromLine(nLineNumber, strTextLine);
+
 	BREAKPOINT_LINE_DATA data;
 	data._bDeleteFromList = bDeleteFromList;
 	data._nLineNumber = nLineNumber;
-	data._strLine = m_EditorCtrl.GetTextFromCurrentLine();
+	data._strLine = strTextLine;
 	data._strTargetFile = strPathName;
 	data._strProcessName = strProcessName;
 	data._strTargetLanguage = m_strCurrentDocLanguageName;
 	pFrame->AddBreakpointLineDataToPane(data);
+}
+
+void CEditorView::UpdateDockPaneBookmark(int nLineNumber, BOOL bDeleteFromList, const CString& strPathName)
+{
+	// update dock pane
+	CMainFrame* pFrame = AppUtils::GetMainFrame();
+	if (!pFrame) return;
+
+	CString strTextLine;
+	m_EditorCtrl.GetTextFromLine(nLineNumber, strTextLine);
+
+	BOOKMARK_LINE_DATA data;
+	data._bDeleteFromList = bDeleteFromList;
+	data._nLineNumber = nLineNumber;
+	data._strLine = strTextLine;
+	data._strTargetFile = strPathName;
+	pFrame->AddBookmarkLineDataToPane(data);
 }
 
 void CEditorView::OnOptionsAddBreakPoint()
@@ -3511,7 +3532,7 @@ void CEditorView::OnOptionsAddBreakPoint()
 void CEditorView::OnUpdateOptionsAddBreakPoint(CCmdUI * pCmdUI)
 {
 	pCmdUI->Enable(!m_EditorCtrl.IsLineHasBreakPoint(m_EditorCtrl.GetCurrentLine())
-		&& AppUtils::IsLanguageSupportDebugger(m_CurrentDocLanguage));
+	&& AppUtils::IsLanguageSupportDebugger(m_CurrentDocLanguage));
 }
 
 void CEditorView::OnOptionsDeleteBreakPoint()
@@ -3597,14 +3618,7 @@ void CEditorView::OnOptionsAddBookmark()
 	int nBookmarkLine = m_EditorCtrl.GetCurrentLine();
 	if (m_EditorCtrl.AddBookMark(nBookmarkLine, strPathName))
 	{
-		// update dock pane
-		CMainFrame* pFrame = AppUtils::GetMainFrame();
-		if (!pFrame) return;
-		BOOKMARK_LINE_DATA data;
-		data._nLineNumber = nBookmarkLine;
-		data._strLine = m_EditorCtrl.GetTextFromCurrentLine();
-		data._strTargetFile = strPathName;
-		pFrame->AddBookmarkLineDataToPane(data);
+		UpdateDockPaneBookmark(nBookmarkLine, FALSE, strPathName);
 	}
 }
 
@@ -3622,15 +3636,7 @@ void CEditorView::OnOptionsDeleteBookmark()
 	int nBookmarkLine = m_EditorCtrl.GetCurrentLine();
 	if (m_EditorCtrl.DeleteBookMark(nBookmarkLine, strPathName))
 	{
-		// update dock pane
-		CMainFrame* pFrame = AppUtils::GetMainFrame();
-		if (!pFrame) return;
-		BOOKMARK_LINE_DATA data;
-		data._bDeleteFromList = TRUE;
-		data._nLineNumber = nBookmarkLine;
-		data._strLine = m_EditorCtrl.GetTextFromCurrentLine();
-		data._strTargetFile = strPathName;
-		pFrame->AddBookmarkLineDataToPane(data);
+		UpdateDockPaneBookmark(nBookmarkLine, TRUE, strPathName);
 	}
 }
 
@@ -6766,19 +6772,19 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		{
 			if (pScinNotification->margin == SC_SETMARGINTYPE_FOLDING)
 			{
-				m_EditorCtrl.DoTolggleFolding(static_cast<int>(pScinNotification->position));
+				m_EditorCtrl.DoToggleFolding(static_cast<int>(pScinNotification->position));
 			}
 			else if (pScinNotification->margin == SC_SETMARGINTYPE_MAKER)
 			{
 				int lLine = m_EditorCtrl.GetLineFromPosition(static_cast<int>(pScinNotification->position)) + 1;
-				if (m_EditorCtrl.IsLineHasBreakPoint(lLine))
+				if (m_EditorCtrl.IsLineHasBookMark(lLine))
 				{
 					CString strPathName = m_pDocument->GetPathName();
 					if (PathFileExists(strPathName))
 					{
-						if (m_EditorCtrl.DeleteBreakPoint(m_CurrentDocLanguage, lLine, strPathName))
+						if (m_EditorCtrl.DeleteBookMark(lLine, strPathName))
 						{
-							UpdateDockPaneBreakpoint(m_EditorCtrl.GetCurrentLine(), TRUE, strPathName, PathUtils::GetFileNameWithoutExtension(m_pDocument->GetTitle()));
+							UpdateDockPaneBookmark(lLine, TRUE, strPathName);
 						}
 					}
 				}
@@ -6787,14 +6793,9 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					CString strPathName = m_pDocument->GetPathName();
 					if (PathFileExists(strPathName))
 					{
-						CString strLine;
-						m_EditorCtrl.GetTextFromLine(lLine, strLine);
-						if (!strLine.Trim().IsEmpty() && !IsCommentLineCode(strLine))
+						if (m_EditorCtrl.AddBookMark(lLine, strPathName))
 						{
-							if (m_EditorCtrl.AddBreakPoint(m_CurrentDocLanguage, lLine, strPathName))
-							{
-								UpdateDockPaneBreakpoint(m_EditorCtrl.GetCurrentLine(), TRUE, strPathName, PathUtils::GetFileNameWithoutExtension(m_pDocument->GetTitle()));
-							}
+							UpdateDockPaneBookmark(lLine, FALSE, strPathName);
 						}
 					}
 				}
@@ -9842,7 +9843,7 @@ void CEditorView::OnOptionsChangeTextLexerHtmlXml()
 
 void CEditorView::OnOptionsChangeTextLexerNon()
 {
-	m_EditorCtrl.LoadTextHightlight();
+	m_EditorCtrl.RemoveTextHightlight();
 	CEditorDoc *pDoc = GetEditorDocument();
 	ASSERT(pDoc);
 	if (!pDoc) return;

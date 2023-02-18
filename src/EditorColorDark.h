@@ -31,8 +31,11 @@ namespace EditorColorDark
 	const COLORREF black = RGB(0, 0, 0);
 	const COLORREF darkslategray = RGB(47, 79, 79);
 	const COLORREF visualForeground = RGB(220, 220, 220);
-	const COLORREF editorTextColor = RGB(248, 248, 240);
-	const COLORREF linenumber = RGB(200, 200, 200);
+	const COLORREF editorTextColor = RGB(255, 255, 255);
+	const COLORREF editorMarginBarColor = RGB(80, 80, 80);
+	const COLORREF editorFolderBackColor = RGB(128, 128, 128);
+	const COLORREF editorFolderForeColor = RGB(80, 80, 80);
+	const COLORREF linenumber = RGB(255, 255, 255);
 	const COLORREF visualCommentColor = RGB(87, 166, 74);
 	const COLORREF visualStringColor = RGB(214, 157, 133);
 	const COLORREF white = RGB(255, 255, 255);
@@ -74,8 +77,26 @@ namespace EditorColorDark
 	//----------------------------------------------------------------------------
 	//---- plain text
 	//----------------------------------------------------------------------------
-	// language
-	static CString g_str_plantext= _T("plain text");
+	static SScintillaColors g_rgb_Syntax_Text[] =
+	{
+		{ SCE_P_COMMENTLINE,		comment },
+		{ SCE_P_COMMENTBLOCK,		comment },
+		{ SCE_P_NUMBER,				yellowgreen },
+		{ SCE_P_DEFAULT,		    editorTextColor },
+		{ SCE_P_CLASSNAME,			cyan },
+		{ SCE_P_STRING,				string },
+		{ SCE_P_CHARACTER,			string },
+		{ SCE_P_IDENTIFIER,			editorTextColor },
+		{ SCE_P_OPERATOR,			keyword },
+		{ SCE_P_DEFNAME,			magenta },
+		{ SCE_P_STRINGEOL,			editorTextColor },
+		{ SCE_P_WORD,		        darkorange },
+		{ SCE_P_WORD2,		        darkorange },
+		{ SCE_P_TRIPLE,		        comment },
+		{ SCE_P_TRIPLEDOUBLE,		comment },
+		{ SCE_P_DECORATOR,		    builtin },
+		{ -1,						0 }
+	};
 
 	//----------------------------------------------------------------------------
 	//---- cpp Language

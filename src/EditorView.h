@@ -487,7 +487,9 @@ protected:
 	void CHAR_ADDED_PROCESSOR(SCNotification *pScinNotification);
 	void OpenFileLanguageConfig(const CString & strLexerName);
 	void AdjustEditorPosition(int cx, int cy);
+
 	void UpdateDockPaneBreakpoint(int nLineNumber, BOOL bDeleteFromList, const CString & strPathName, const CString & strProcessName);
+	void UpdateDockPaneBookmark(int nLineNumber, BOOL bDeleteFromList, const CString& strPathName);
 
 	// run program...
 	void RunExeAfterCompile();

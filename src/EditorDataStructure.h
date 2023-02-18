@@ -8,8 +8,6 @@
 
 #pragma once
 
-#include "EditorColorDark.h"
-#include "EditorColorLight.h"
 #include "EditorDef.h"
 
 /////////////////////////////////////////////////////////////////////////////
@@ -237,4 +235,6 @@ struct EditorThemeColorSet
 	COLORREF _selectionTextColor{ 0 };
 	COLORREF _editorTextColor{ 0 };
 	COLORREF _editorMarginBarColor{ 0 };
+	COLORREF _editorFolderBackColor{ 0 };
+	COLORREF _editorFolderForeColor{ 0 };
 };
