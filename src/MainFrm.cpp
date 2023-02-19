@@ -4355,11 +4355,13 @@ void CMainFrame::OnHostMSExcel()
 }
 
 void CMainFrame::OnHostMSWord()
-{	CString strMSWordPath = OSUtils::GetRegistryAppPath(L"WINWORD.EXE");
+{
+	CString strMSWordPath = OSUtils::GetRegistryAppPath(L"WINWORD.EXE");
 	if (!PathFileExists(strMSWordPath))
 	{
 		AfxMessageBox(_T("[Host Error] Can not found Microsoft Word on this PC!")); return;
-	}	HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, L"/s");
+	}
+	HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, L"/s");
 }
 
 void CMainFrame::OnToolPythonPipWindow()
@@ -4602,9 +4604,9 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_TOGGLE_AUTO_COMPLETE)
 		strTTText = Native_Language("Auto Show Complete");
 	else if (pButton->m_nID == ID_PATH_VINATEXT_BOOKMARK_TABLE)
-		strTTText = Native_Language("Open Bookmark Path Table");
+		strTTText = Native_Language("Open Path Bookmark Table");
 	else if (pButton->m_nID == ID_DOCUMENT_FILE_SUMMARY)
-		strTTText = Native_Language("Dump File Text Summary");
+		strTTText = Native_Language("Print File Information");
 	else if (pButton->m_nID == ID_MDI_TAB_MOVE_PREVIOUS_TAB)
 		strTTText = Native_Language("Move To Previous Tab Group");
 	else if (pButton->m_nID == ID_MDI_TAB_NEW_VERTICAL_TAB)

@@ -95,7 +95,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 {
 	DoCommand(SCI_SETIMEINTERACTION, SC_IME_WINDOWED);
 
-	AppSettingMgr.m_ThemeColor = THEME_BACKGROUND_COLOR_MONOKAI;
+	AppSettingMgr.m_ThemeColor = THEME_BACKGROUND_COLOR_LIGHT;
 	// Preset theme colors
 	if (AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT)
 	{
@@ -105,6 +105,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		m_ThemeColorSet._editorMarginBarColor = EditorColorLight::editorMarginBarColor;
 		m_ThemeColorSet._editorFolderBackColor = EditorColorLight::editorFolderBackColor;
 		m_ThemeColorSet._editorFolderForeColor = EditorColorLight::editorFolderForeColor;
+		m_ThemeColorSet._editorCaretColor = EditorColorLight::editorCaretColor;
+		m_ThemeColorSet._editorIndicatorColor = EditorColorLight::editorIndicatorColor;
 	}
 	else
 	{
@@ -113,7 +115,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		m_ThemeColorSet._editorTextColor = EditorColorDark::editorTextColor;
 		m_ThemeColorSet._editorMarginBarColor = EditorColorDark::editorMarginBarColor;
 		m_ThemeColorSet._editorFolderBackColor = EditorColorDark::editorFolderBackColor;
-		m_ThemeColorSet._editorFolderForeColor = EditorColorDark::editorFolderForeColor;
+		m_ThemeColorSet._editorCaretColor = EditorColorDark::editorCaretColor;
+		m_ThemeColorSet._editorIndicatorColor = EditorColorDark::editorIndicatorColor;
 	}
 
 	// Editor font settings
@@ -365,8 +368,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	DoCommand(SCI_SETWRAPVISUALFLAGS, SC_WRAPVISUALFLAG_END);
 
-	DoCommand(SCI_SETCARETFORE, AppSettingMgr.m_CaretBlinkColor);
-	DoCommand(SCI_SETADDITIONALCARETFORE, AppSettingMgr.m_CaretBlinkColor);
+	DoCommand(SCI_SETCARETFORE, m_ThemeColorSet._editorCaretColor);
+	DoCommand(SCI_SETADDITIONALCARETFORE, m_ThemeColorSet._editorCaretColor);
 
 	if (AppSettingMgr.m_bDrawCaretLineFrame)
 	{
@@ -4509,7 +4512,7 @@ void CEditorCtrl::SetIndicatorForHighlightWord()
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 		}
 		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_PYTHON, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_PYTHON, AppSettingMgr.m_IndicatorColor);
+		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_PYTHON, m_ThemeColorSet._editorIndicatorColor);
 		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
 	}
 	else
@@ -4527,7 +4530,7 @@ void CEditorCtrl::SetIndicatorForHighlightWord()
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 		}
 		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_GENERAL, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, AppSettingMgr.m_IndicatorColor);
+		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, m_ThemeColorSet._editorIndicatorColor);
 		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
 	}
 	LRESULT indicatorForeground = DoCommand(SCI_STYLEGETFORE, STYLE_DEFAULT);

@@ -169,17 +169,17 @@ void SettingDlgCustomize::InitIndicatorColorCombobox()
 {
 	m_IndicatorColorCombo.ResetContent();
 	m_IndicatorColorCombo.AddString(_T("Yellow Color"));
-	m_IndicatorColorCombo.AddString(_T("Write Color"));
-	m_IndicatorColorCombo.AddString(_T("Black Color"));
+	m_IndicatorColorCombo.AddString(_T("Blue Color"));
+	m_IndicatorColorCombo.AddString(_T("Orange Color"));
 	switch (AppSettingMgr.m_IndicatorColor)
 	{
 	case EDITOR_INDICATOR_COLOR::INDICATOR_YELLOW:
 		m_IndicatorColorCombo.SetCurSel(0);
 		break;
-	case EDITOR_INDICATOR_COLOR::INDICATOR_WHITE:
+	case EDITOR_INDICATOR_COLOR::INDICATOR_BLUE:
 		m_IndicatorColorCombo.SetCurSel(1);
 		break;
-	case EDITOR_INDICATOR_COLOR::INDICATOR_BLACK:
+	case EDITOR_INDICATOR_COLOR::INDICATOR_ORANGE:
 		m_IndicatorColorCombo.SetCurSel(2);
 		break;
 	default:
@@ -457,10 +457,10 @@ void SettingDlgCustomize::FromIndicatorColorCombobox()
 		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_YELLOW;
 		break;
 	case 1:
-		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_WHITE;
+		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLUE;
 		break;
 	case 2:
-		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLACK;
+		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_ORANGE;
 		break;
 	default:
 		AppSettingMgr.m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_YELLOW;

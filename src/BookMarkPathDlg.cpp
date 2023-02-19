@@ -246,7 +246,7 @@ void CBookMarkPathDlg::OnBnClickedRemoveBookbarkPath()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 	UpdateData(FALSE);
 }
@@ -277,7 +277,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpen()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -312,7 +312,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkToExplorer()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -336,7 +336,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkRevealInExplorer()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -368,7 +368,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkCopyPath()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -401,7 +401,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenCmd()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -432,7 +432,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenContainer()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }
 
@@ -462,6 +462,6 @@ void CBookMarkPathDlg::OnBnClickedBookmarkCopyClipboard()
 	}
 	else
 	{
-		AfxMessageBox(_T("There is no available bookmark!"));
+		AfxMessageBox(_T("Please select one bookmark to proceed command!"));
 	}
 }

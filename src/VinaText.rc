@@ -455,7 +455,7 @@ BEGIN
     BEGIN
         MENUITEM "New File Explorer Tab\tCtrl+Shift+E",       ID_HOST_FILE_EXPLORER
         MENUITEM "Add New Workspace...\tCtrl+Shift+O",       ID_FILE_OPEN_FOLDER_TO_WORKSPACE
-        MENUITEM "Open Bookmark Path Table\tCtrl+Shift+B",   ID_PATH_VINATEXT_BOOKMARK_TABLE
+        MENUITEM "Open Path Bookmark Table\tCtrl+Shift+B",   ID_PATH_VINATEXT_BOOKMARK_TABLE
         MENUITEM SEPARATOR
         MENUITEM "Enable Auto Refresh",        ID_TOOLS_AUTOREFRESH
         MENUITEM "Enable Preview Mode",        ID_TOOLS_PREVIEW_MODE
@@ -821,12 +821,12 @@ BEGIN
             MENUITEM "Environmental Variables PATH", ID_SHORTCUT_ENVIRONMENT_PATH
             MENUITEM "Window32 Host Location",       ID_SHORTCUT_WINDOW_HOST_FOLDER
         END
-        POPUP "Dump Message Output"
+        POPUP "Print Message Output"
         BEGIN
-            MENUITEM "Dump System Information",    ID_TOOL_GET_SYSTEM_INFO
-            MENUITEM "Dump PATH Environments",     ID_TOOL_GET_PATH_ENV_VARIABLE_INFO
-            MENUITEM "Dump File Text Summary",     ID_DOCUMENT_FILE_SUMMARY
-            MENUITEM "Dump Wifi Information",      ID_TOOL_GET_WIFI_INFO
+            MENUITEM "Print System Information",    ID_TOOL_GET_SYSTEM_INFO
+            MENUITEM "Print PATH Environments",     ID_TOOL_GET_PATH_ENV_VARIABLE_INFO
+            MENUITEM "Print File Information",     ID_DOCUMENT_FILE_SUMMARY
+            MENUITEM "Print Wifi Information",      ID_TOOL_GET_WIFI_INFO
         END
         MENUITEM SEPARATOR
         POPUP "String Generator"
@@ -1169,7 +1169,7 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Translate"
         BEGIN
-            MENUITEM "Translate Selected Tex\tF1", ID_DOCUMENT_TRANSLATE
+            MENUITEM "Translate Selected Text\tF1", ID_DOCUMENT_TRANSLATE
             MENUITEM "Translate And Copy Result",  ID_DOCUMENT_TRANSLATE_COPY
             MENUITEM "Insert Translate Result",    ID_DOCUMENT_TRANSLATE_GENERATE
             MENUITEM "Open Google Translate Page",      ID_DOCUMENT_TRANSLATE_WEB
@@ -2809,7 +2809,7 @@ END
 STRINGTABLE
 BEGIN
     ID_PATH_VINATEXT_BOOKMARK_TABLE 
-                            "Bookmark Path Table\nOpen Bookmark Path Table"
+                            "Path Bookmark Table\nOpen Path Bookmark Table"
 END
 
 STRINGTABLE

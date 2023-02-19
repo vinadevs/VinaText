@@ -29,37 +29,27 @@ namespace EditorColorDark
 
 	// reference color
 	const COLORREF black = RGB(0, 0, 0);
-	const COLORREF darkslategray = RGB(47, 79, 79);
-	const COLORREF visualForeground = RGB(220, 220, 220);
 	const COLORREF editorTextColor = RGB(255, 255, 255);
 	const COLORREF editorMarginBarColor = RGB(80, 80, 80);
 	const COLORREF editorFolderBackColor = RGB(128, 128, 128);
 	const COLORREF editorFolderForeColor = RGB(80, 80, 80);
+	const COLORREF editorCaretColor = RGB(255, 255, 255);
+	const COLORREF editorIndicatorColor = RGB(255, 255, 255);
 	const COLORREF linenumber = RGB(255, 255, 255);
-	const COLORREF visualCommentColor = RGB(87, 166, 74);
-	const COLORREF visualStringColor = RGB(214, 157, 133);
 	const COLORREF white = RGB(255, 255, 255);
-	const COLORREF navajowhite = RGB(255, 222, 173);
-	const COLORREF darkgray = RGB(30, 30, 30);
-	const COLORREF gray = RGB(128, 128, 128);
 	const COLORREF green = RGB(0, 255, 0);
-	const COLORREF springgreen = RGB(0, 255, 127);
 	const COLORREF red = RGB(255, 0, 0);
 	const COLORREF orangered = RGB(255, 69, 0);
 	const COLORREF blue = RGB(0, 0, 255);
-	const COLORREF blueviolet = RGB(138, 43, 226);
 	const COLORREF yellow = RGB(235, 245, 0);
 	const COLORREF olive = RGB(128, 128, 0);
 	const COLORREF magenta = RGB(255, 0, 255);
 	const COLORREF peachpuff = RGB(255, 200, 185);
 	const COLORREF cyan = RGB(0, 255, 255);
-	const COLORREF teal = RGB(0, 128, 128);
 	const COLORREF darkorange = RGB(255, 140, 0);
-	const COLORREF coral = RGB(255, 127, 80);
 	const COLORREF yellowgreen = RGB(154, 205, 50);
-	const COLORREF indigo = RGB(75, 0, 130);
 
-	// main text color
+	// language lexer color
 	const COLORREF keyword = RGB(255, 40, 120); // Red
 	const COLORREF definition = RGB(0, 255, 0); // Green
 	const COLORREF comment = RGB(166, 226, 46);

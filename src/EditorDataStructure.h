@@ -237,4 +237,6 @@ struct EditorThemeColorSet
 	COLORREF _editorMarginBarColor{ 0 };
 	COLORREF _editorFolderBackColor{ 0 };
 	COLORREF _editorFolderForeColor{ 0 };
+	COLORREF _editorCaretColor{ 0 };
+	COLORREF _editorIndicatorColor{ 0 };
 };

@@ -62,7 +62,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_POWERSHELL
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_BATCH)
 	{
-		CString strMsg; strMsg.Format(_T("[Error] Compiler path does not exist, please setup path in [Prefrerence > Language Prefrerence] and reopen current file to active it!\n"), strCompilerPath);
+		CString strMsg; strMsg.Format(_T("[Path Error] Compiler path does not exist, please setup path in [Prefrerence > Language Prefrerence] and reopen current file to active it!\n"), strCompilerPath);
 		AfxMessageBox(strMsg);
 		return;
 	}

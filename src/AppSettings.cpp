@@ -115,10 +115,10 @@ void CAppSettings::ResetAllSettings()
 	m_bAskBeforeReplaceInFiles = TRUE;
 	m_bEnableAutoDetectCodePage = TRUE;
 	m_bEnableShowHideFoldingMargin = FALSE;
-	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_ARROW;
+	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 
 	// indicator style
-	m_IndicatorStyle = EDITOR_INDICATOR_STYLE::BOX;
+	m_IndicatorStyle = EDITOR_INDICATOR_STYLE::FULL_BOX;
 
 	// auto save file interval
 	m_nIntervalMinutes = 9;
@@ -156,9 +156,9 @@ void CAppSettings::ResetAllSettings()
 	m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_YELLOW;
 	m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY;
 	m_RenderIndicatorAction = RENDER_INDICATOR_ACTION::DOUBLE_CLICK_ACTION;
-	m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_YELLOW;
+	m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLUE;
 	m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
-	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_VISUAL_STUDIO_2008_LOOK;
+	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_WINDOWS_XP_NATIVE;
 	m_ApplicationLanguage = APPLICATION_LANGUAGE::LANGUAGE_ENGLISH;
 
 	// page width alignment text

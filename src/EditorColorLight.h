@@ -29,45 +29,35 @@ namespace EditorColorLight
 
 	// reference color
 	const COLORREF black = RGB(0, 0, 0);
-	const COLORREF darkslategray = RGB(47, 79, 79);
-	const COLORREF visualForeground = RGB(220, 220, 220);
 	const COLORREF editorTextColor = RGB(0, 0, 0);
 	const COLORREF editorMarginBarColor = RGB(220, 220, 220);
 	const COLORREF editorFolderBackColor = RGB(128, 128, 128);
 	const COLORREF editorFolderForeColor = RGB(220, 220, 220);
+	const COLORREF editorCaretColor = RGB(0, 0, 0);
+	const COLORREF editorIndicatorColor = RGB(20, 135, 226);
 	const COLORREF linenumber = RGB(0, 0, 0);
-	const COLORREF visualCommentColor = RGB(87, 166, 74);
-	const COLORREF visualStringColor = RGB(214, 157, 133);
 	const COLORREF white = RGB(255, 255, 255);
-	const COLORREF navajowhite = RGB(255, 222, 173);
-	const COLORREF darkgray = RGB(30, 30, 30);
-	const COLORREF gray = RGB(128, 128, 128);
 	const COLORREF green = RGB(0, 255, 0);
-	const COLORREF springgreen = RGB(0, 255, 127);
 	const COLORREF red = RGB(255, 0, 0);
 	const COLORREF orangered = RGB(255, 69, 0);
 	const COLORREF blue = RGB(0, 0, 255);
-	const COLORREF blueviolet = RGB(138, 43, 226);
 	const COLORREF yellow = RGB(235, 245, 0);
 	const COLORREF olive = RGB(128, 128, 0);
 	const COLORREF magenta = RGB(255, 0, 255);
 	const COLORREF peachpuff = RGB(255, 200, 185);
 	const COLORREF cyan = RGB(0, 255, 255);
-	const COLORREF teal = RGB(0, 128, 128);
 	const COLORREF darkorange = RGB(255, 140, 0);
-	const COLORREF coral = RGB(255, 127, 80);
 	const COLORREF yellowgreen = RGB(154, 205, 50);
-	const COLORREF indigo = RGB(75, 0, 130);
 
-	// main text color
-	const COLORREF keyword = RGB(255, 40, 120); // Red
+	// language lexer color
+	const COLORREF keyword = RGB(255, 30, 110); // Red
 	const COLORREF definition = RGB(0, 255, 0); // Green
-	const COLORREF comment = RGB(166, 226, 46);
-	const COLORREF comment_monokai = RGB(170, 170, 170);
-	const COLORREF string = RGB(230, 159, 102); // orange
+	const COLORREF comment = RGB(10, 103, 4);
+	const COLORREF preprocessor = RGB(18, 107, 241);
+	const COLORREF string = RGB(158, 66, 5); // orange
 	const COLORREF currentline = RGB(249, 38, 114);
-	const COLORREF builtin = RGB(102, 217, 239); // Blue
-	const COLORREF number = RGB(174, 129, 255); // Purple
+	const COLORREF builtin = RGB(10, 103, 175); // Blue
+	const COLORREF number = RGB(49, 3, 99); // Purple
 	const COLORREF instance = RGB(146, 73, 0);
 	const COLORREF Orange = RGB(253, 151, 31);
 	const COLORREF light_orange = RGB(255, 140, 0);
@@ -131,7 +121,7 @@ namespace EditorColorLight
 	{ SCE_C_STRING,				string },
 	{ SCE_C_CHARACTER,			definition },
 	{ SCE_C_UUID,				instance },
-	{ SCE_C_PREPROCESSOR,				comment_monokai },
+	{ SCE_C_PREPROCESSOR,				preprocessor },
 	{ SCE_C_OPERATOR,				builtin },
 	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
@@ -185,18 +175,18 @@ namespace EditorColorLight
 	static SScintillaColors g_rgb_Syntax_python[] =
 	{
 		{ SCE_P_DEFAULT,		editorTextColor },
-		{ SCE_P_COMMENTLINE,		comment_monokai },
+		{ SCE_P_COMMENTLINE,		preprocessor },
 		{ SCE_P_NUMBER,				number },
 		{ SCE_P_STRING,		    string },
 		{ SCE_P_CHARACTER,			string },
 		{ SCE_P_WORD,				keyword },
-		{ SCE_P_TRIPLE,			comment_monokai },
-		{ SCE_P_TRIPLEDOUBLE,			comment_monokai },
+		{ SCE_P_TRIPLE,			preprocessor },
+		{ SCE_P_TRIPLEDOUBLE,			preprocessor },
 		{ SCE_P_CLASSNAME,			comment },
 		{ SCE_P_DEFNAME,			comment },
 		{ SCE_P_OPERATOR,			builtin },
 		{ SCE_P_IDENTIFIER,		        editorTextColor },
-		{ SCE_P_COMMENTBLOCK,		        comment_monokai },
+		{ SCE_P_COMMENTBLOCK,		        preprocessor },
 		{ SCE_P_STRINGEOL,		        string },
 		{ SCE_P_WORD2,				keyword },
 		{ SCE_P_DECORATOR,		    editorTextColor },
@@ -399,8 +389,8 @@ namespace EditorColorLight
 	static SScintillaColors g_rgb_Syntax_batch[] =
 	{ { SCE_C_DEFAULT,		editorTextColor },
 	{ SCE_C_COMMENT,		string },
-	{ SCE_C_COMMENTLINE,			definition },
-	{ SCE_C_COMMENTDOC,				definition },
+	{ SCE_C_COMMENTLINE,			keyword },
+	{ SCE_C_COMMENTDOC,				keyword },
 	{ SCE_C_NUMBER,				keyword },
 	{ SCE_C_WORD,			builtin },
 	{ SCE_C_STRING,				editorTextColor },
@@ -413,7 +403,7 @@ namespace EditorColorLight
 	{ SCE_C_VERBATIM,				yellow },
 	{ SCE_C_REGEX,				yellow },
 	{ SCE_C_COMMENTLINEDOC,				editorTextColor },
-	{ SCE_C_WORD2,				definition },
+	{ SCE_C_WORD2,				keyword },
 	{ SCE_C_COMMENTDOCKEYWORD,				editorTextColor },
 	{ SCE_C_COMMENTDOCKEYWORDERROR,				editorTextColor },
 	{ SCE_C_GLOBALCLASS,				magenta },
@@ -455,7 +445,7 @@ namespace EditorColorLight
 	{ SCE_C_STRING,				string },
 	{ SCE_C_CHARACTER,			definition },
 	{ SCE_C_UUID,				instance },
-	{ SCE_C_PREPROCESSOR,				comment_monokai },
+	{ SCE_C_PREPROCESSOR,				preprocessor },
 	{ SCE_C_OPERATOR,				builtin },
 	{ SCE_C_IDENTIFIER,				editorTextColor },
 	{ SCE_C_STRINGEOL,    red },
@@ -602,7 +592,7 @@ namespace EditorColorLight
 	{ SCE_CSS_IDENTIFIER,				builtin },
 	{ SCE_CSS_UNKNOWN_IDENTIFIER,			builtin },
 	{ SCE_CSS_VALUE,		number },
-	{ SCE_CSS_COMMENT,				comment_monokai },
+	{ SCE_CSS_COMMENT,				preprocessor },
 	{ SCE_CSS_ID,				builtin },
 	{ SCE_CSS_IMPORTANT,				orangered },
 	{ SCE_CSS_DIRECTIVE,    keyword },
@@ -749,7 +739,7 @@ namespace EditorColorLight
 	{ SCE_H_DOUBLESTRING,				editorTextColor },
 	{ SCE_H_SINGLESTRING,			editorTextColor },
 	{ SCE_H_OTHER,		builtin },
-	{ SCE_H_COMMENT,				comment_monokai },
+	{ SCE_H_COMMENT,				preprocessor },
 	{ SCE_H_ENTITY,				builtin },
 	{ SCE_H_TAGEND,				keyword },
 	{ SCE_H_XMLSTART,    light_orange },
@@ -774,9 +764,9 @@ namespace EditorColorLight
 	{ SCE_H_SGML_BLOCK_DEFAULT,				light_orange },
 	{ SCE_HJ_START,				light_orange },
 	{ SCE_HJ_DEFAULT,				light_orange },
-	{ SCE_HJ_COMMENT,				comment_monokai },
-	{ SCE_HJ_COMMENTLINE,				comment_monokai },
-	{ SCE_HJ_COMMENTDOC,				comment_monokai },
+	{ SCE_HJ_COMMENT,				preprocessor },
+	{ SCE_HJ_COMMENTLINE,				preprocessor },
+	{ SCE_HJ_COMMENTDOC,				preprocessor },
 	{ SCE_HJ_NUMBER,				number },
 	{ SCE_HJ_WORD,				editorTextColor },
 	{ SCE_HJ_KEYWORD,				keyword },
@@ -787,9 +777,9 @@ namespace EditorColorLight
 	{ SCE_HJ_REGEX,				string },
 	{ SCE_HJA_START, orangered },
 	{ SCE_HJA_DEFAULT, builtin },
-	{ SCE_HJA_COMMENT, comment_monokai },
-	{ SCE_HJA_COMMENTLINE, comment_monokai },
-	{ SCE_HJA_COMMENTDOC, comment_monokai },
+	{ SCE_HJA_COMMENT, preprocessor },
+	{ SCE_HJA_COMMENTLINE, preprocessor },
+	{ SCE_HJA_COMMENTDOC, preprocessor },
 	{ SCE_HJA_NUMBER, number },
 	{ SCE_HJA_WORD, keyword },
 	{ SCE_HJA_KEYWORD, keyword },
@@ -800,7 +790,7 @@ namespace EditorColorLight
 	{ SCE_HJA_REGEX, string },
 	{ SCE_HB_START, string },
 	{ SCE_HB_DEFAULT, builtin },
-	{ SCE_HB_COMMENTLINE, comment_monokai },
+	{ SCE_HB_COMMENTLINE, preprocessor },
 	{ SCE_HB_NUMBER, number },
 	{ SCE_HB_WORD, comment },
 	{ SCE_HB_STRING, string },
@@ -808,7 +798,7 @@ namespace EditorColorLight
 	{ SCE_HB_STRINGEOL, string },
 	{ SCE_HBA_START, string },
 	{ SCE_HBA_DEFAULT, string },
-	{ SCE_HBA_COMMENTLINE, comment_monokai },
+	{ SCE_HBA_COMMENTLINE, preprocessor },
 	{ SCE_HBA_NUMBER, number },
 	{ SCE_HBA_WORD, comment },
 	{ SCE_HBA_STRING, string },
@@ -816,7 +806,7 @@ namespace EditorColorLight
 	{ SCE_HBA_STRINGEOL, string },
 	{ SCE_HP_START, string },
 	{ SCE_HP_DEFAULT, string },
-	{ SCE_HP_COMMENTLINE, comment_monokai },
+	{ SCE_HP_COMMENTLINE, preprocessor },
 	{ SCE_HP_NUMBER, number },
 	{ SCE_HP_STRING, string },
 	{ SCE_HP_CHARACTER, string },
@@ -830,7 +820,7 @@ namespace EditorColorLight
 	{ SCE_HPHP_COMPLEX_VARIABLE , string },
 	{ SCE_HPA_START, string },
 	{ SCE_HPA_DEFAULT, string },
-	{ SCE_HPA_COMMENTLINE, comment_monokai },
+	{ SCE_HPA_COMMENTLINE, preprocessor },
 	{ SCE_HPA_NUMBER, number },
 	{ SCE_HPA_STRING, string },
 	{ SCE_HPA_CHARACTER, string },
@@ -847,8 +837,8 @@ namespace EditorColorLight
 	{ SCE_HPHP_WORD, comment },
 	{ SCE_HPHP_NUMBER, number },
 	{ SCE_HPHP_VARIABLE, string },
-	{ SCE_HPHP_COMMENT, comment_monokai },
-	{ SCE_HPHP_COMMENTLINE, comment_monokai },
+	{ SCE_HPHP_COMMENT, preprocessor },
+	{ SCE_HPHP_COMMENTLINE, preprocessor },
 	{ SCE_HPHP_HSTRING_VARIABLE, string },
 	{ SCE_HPHP_OPERATOR, builtin },
 	{ -1,						0 } };
@@ -1663,18 +1653,18 @@ namespace EditorColorLight
 	static SScintillaColors g_rgb_Syntax_json[] =
 	{ { SCE_JSON_DEFAULT,		editorTextColor },
 	{ SCE_JSON_NUMBER,		number },
-	{ SCE_JSON_STRING,			string },
-	{ SCE_JSON_STRINGEOL,				string },
-	{ SCE_JSON_PROPERTYNAME,				keyword },
+	{ SCE_JSON_STRING,			editorTextColor },
+	{ SCE_JSON_STRINGEOL,				editorTextColor },
+	{ SCE_JSON_PROPERTYNAME,				red },
 	{ SCE_JSON_ESCAPESEQUENCE,			editorTextColor },
-	{ SCE_JSON_LINECOMMENT,				comment },
-	{ SCE_JSON_BLOCKCOMMENT,			comment },
+	{ SCE_JSON_LINECOMMENT,				red },
+	{ SCE_JSON_BLOCKCOMMENT,			red },
 	{ SCE_JSON_OPERATOR,		builtin },
-	{ SCE_JSON_URI,				string },
-	{ SCE_JSON_COMPACTIRI,				string },
-	{ SCE_JSON_KEYWORD,				keyword },
-	{ SCE_JSON_LDKEYWORD,    keyword },
-	{ SCE_JSON_ERROR,				keyword },
+	{ SCE_JSON_URI,				editorTextColor },
+	{ SCE_JSON_COMPACTIRI,				editorTextColor },
+	{ SCE_JSON_KEYWORD,				red },
+	{ SCE_JSON_LDKEYWORD,    red },
+	{ SCE_JSON_ERROR,				red },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -1739,14 +1729,14 @@ namespace EditorColorLight
 	// color text
 	static SScintillaColors g_rgb_Syntax_powershell[] =
 	{ { SCE_C_DEFAULT,		editorTextColor },
-	{ SCE_C_COMMENT,		comment_monokai },
-	{ SCE_C_COMMENTLINE,			comment_monokai },
+	{ SCE_C_COMMENT,		preprocessor },
+	{ SCE_C_COMMENTLINE,			preprocessor },
 	{ SCE_C_COMMENTDOC,				string },
 	{ SCE_C_NUMBER,				number },
 	{ SCE_C_WORD,			builtin },
 	{ SCE_C_STRING,				editorTextColor },
 	{ SCE_C_CHARACTER,			editorTextColor },
-	{ SCE_C_UUID,		definition },
+	{ SCE_C_UUID,		keyword },
 	{ SCE_C_PREPROCESSOR,				builtin },
 	{ SCE_C_OPERATOR,				builtin },
 	{ SCE_C_IDENTIFIER,				editorTextColor },
@@ -2011,18 +2001,18 @@ namespace EditorColorLight
 	// color text 
 	static SScintillaColors g_rgb_Syntax_flexlicense[] =
 	{ { SCE_P_DEFAULT,		editorTextColor },
-	{ SCE_P_COMMENTLINE,		comment_monokai },
+	{ SCE_P_COMMENTLINE,		preprocessor },
 	{ SCE_P_NUMBER,				editorTextColor },
 	{ SCE_P_STRING,		    string },
 	{ SCE_P_CHARACTER,			string },
 	{ SCE_P_WORD,				keyword },
-	{ SCE_P_TRIPLE,			comment_monokai },
-	{ SCE_P_TRIPLEDOUBLE,			comment_monokai },
+	{ SCE_P_TRIPLE,			preprocessor },
+	{ SCE_P_TRIPLEDOUBLE,			preprocessor },
 	{ SCE_P_CLASSNAME,			comment },
 	{ SCE_P_DEFNAME,			comment },
 	{ SCE_P_OPERATOR,			builtin },
 	{ SCE_P_IDENTIFIER,		        editorTextColor },
-	{ SCE_P_COMMENTBLOCK,		        comment_monokai },
+	{ SCE_P_COMMENTBLOCK,		        preprocessor },
 	{ SCE_P_STRINGEOL,		        string },
 	{ SCE_P_WORD2,				keyword },
 	{ SCE_P_DECORATOR,		    editorTextColor },
