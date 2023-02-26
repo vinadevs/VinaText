@@ -9,7 +9,7 @@
 #include "stdafx.h"
 #define BUILD_HPSLIB
 #include "Hpsutils.h"
-#include "Textfile.h"
+#include "TextFile.h"
 #include "Hpslib.hr"
 #include "uchardet\uchardet.h"
 

@@ -44,7 +44,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 	{
 		CString strMsg;
 		strMsg.Format(_T("> [Path Error] %s does not exist...\n"), strFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 
@@ -200,7 +200,7 @@ void VinaTextCompiler::START_GDB_CMD(VINATEXT_SUPPORTED_LANGUAGE docLanguage, CE
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Debugger Error] %s does not exist...\n"), strGdbDebugger);
-			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			return;
 		}
 		SetCurrentDirectoryW(pView->m_BuildSessionInfo._strExeFolderPath);
@@ -234,7 +234,7 @@ void VinaTextCompiler::START_GDB_DEBUGGER(VINATEXT_SUPPORTED_LANGUAGE docLanguag
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Debugger Error] %s does not exist...\n"), strGdbDebugger);
-			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			return;
 		}
 
@@ -338,7 +338,7 @@ void VinaTextCompiler::BuildCPP(CMainFrame* pFrame, CEditorView* pView, const CS
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Build C++ Error] Can not generate file build configuration %s...\n"), strFilePath);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		}
 	}
 
@@ -379,7 +379,7 @@ CString VinaTextCompiler::GetBuildCommandlineCPP(CEditorView* pView, const CStri
 	if (libraryname.IsEmpty() || librarypath.IsEmpty() || debug.IsEmpty() || warningflag.IsEmpty() ||
 		cpp11flag.IsEmpty() || includepath.IsEmpty() || outputpath.IsEmpty() || sourcepath.IsEmpty())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Compiler Error] C++ Build configuration file invalid..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Compiler Error] C++ Build configuration file invalid..."), BasicColors::orange);
 		return CString();
 	}
 
@@ -557,7 +557,7 @@ void VinaTextCompiler::BuildC(CMainFrame* pFrame, CEditorView* pView, const CStr
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Build C Error] Can not generate file build configuration %s...\n"), strFilePath);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		}
 	}
 
@@ -597,7 +597,7 @@ CString VinaTextCompiler::GetBuildCommandlineC(CEditorView* pView, const CString
 	if (libraryname.IsEmpty() || librarypath.IsEmpty() || debug.IsEmpty() ||
 		warning.IsEmpty() || includepath.IsEmpty() || outputpath.IsEmpty() || sourcepath.IsEmpty())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Compiler Error] C configuration file invalid..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Compiler Error] C configuration file invalid..."), BasicColors::orange);
 		return CString();
 	}
 
@@ -799,7 +799,7 @@ void VinaTextCompiler::BuildJavaScript(CMainFrame * pFrame, CEditorView * pView,
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -862,7 +862,7 @@ void VinaTextCompiler::BuildPython(CMainFrame * pFrame, CEditorView * pView, con
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -1159,7 +1159,7 @@ void VinaTextCompiler::BuildGo(CMainFrame * pFrame, CEditorView * pView, const C
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -1338,7 +1338,7 @@ void VinaTextCompiler::BuildR(CMainFrame * pFrame, CEditorView * pView, const CS
 
 	task.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
 	task.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-	pView->LOG_BUILD_INFO_MESSAGE(task.strCommandLine, _T("R (Data Science)"));
+	pView->LOG_BUILD_INFO_MESSAGE(task.strCommandLine, _T("R"));
 	pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 	ThreadWorkerMgr.CreateWorkerThread(task);
 }

@@ -495,7 +495,7 @@
     <ClInclude Include="Hpsutils.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="Textfile.h">
+    <ClInclude Include="TextFile.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="WindowsPrinter.h">
@@ -579,7 +579,7 @@
     <ClInclude Include="translator\PODictionary.h">
       <Filter>Translator</Filter>
     </ClInclude>
-    <ClInclude Include="EditorDef.h">
+    <ClInclude Include="EditorCommonDef.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="EditorColorLight.h">
@@ -920,7 +920,7 @@
     <ClCompile Include="Hpslib.cpp">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClCompile>
-    <ClCompile Include="Textfile.cpp">
+    <ClCompile Include="TextFile.cpp">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="WindowsPrinter.cpp">

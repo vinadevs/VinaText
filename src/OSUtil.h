@@ -11,6 +11,8 @@
 //////////////////////////////////
 // operation system utils
 
+#include "AppSettings.h"
+
 class CMainFrame;
 
 namespace OSUtils
@@ -22,7 +24,7 @@ namespace OSUtils
 	CString     DateToCStringABDHMSY(tm * time, BOOL bDisableSpecialChar = FALSE);
 	LONGLONG    StartBenchmark();
 	double	    StopBenchmark(LONGLONG counterBegin);
-	void	    LogStopBenchmark(LOG_TARGET target, LONGLONG counterBegin, const CString& strMessage, COLORREF color = RGB(255, 255, 255));
+	void	    LogStopBenchmark(LOG_TARGET target, LONGLONG counterBegin, const CString& strMessage, COLORREF color = IS_LIGHT_THEME ? RGB(0, 0, 0) : RGB(255, 255, 255));
 	void	    CreateProcessAsynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show = FALSE);
 	unsigned long CreateProcessSynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show = FALSE);
 	BOOL		CreateWin32Process(CString strCmdLine);

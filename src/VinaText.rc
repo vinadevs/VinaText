@@ -879,7 +879,7 @@ BEGIN
             MENUITEM "TCL",                         ID_LANGUAGE_FILE_CONFIG_TCL
             MENUITEM "Auto IT",                     ID_LANGUAGE_FILE_CONFIG_AUTOIT
             MENUITEM "Visual Basic",                ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
-            MENUITEM "R (Data Science)",            ID_LANGUAGE_FILE_CONFIG_R
+            MENUITEM "R",                           ID_LANGUAGE_FILE_CONFIG_R
         END
         MENUITEM SEPARATOR
         MENUITEM "Application Preference",     ID_VIEW_APP_SETTINGS
@@ -1021,7 +1021,7 @@ BEGIN
             MENUITEM "Get Tab Name",               ID_MDI_TAB_GET_FILE_NAME
             MENUITEM "Get Tab Name No Extension",  ID_MDI_TAB_GET_FILE_NAME_NO_EXTENSION
         END
-        POPUP "File Options"
+        POPUP "File Operation"
         BEGIN
             MENUITEM "Reload File\tF4",            ID_MDI_TAB_RELOAD
             MENUITEM "Bookmark File\tCtrl+B",      ID_MDI_TAB_BOOKMARK_FILE

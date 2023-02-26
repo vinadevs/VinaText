@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include "EditorDef.h"
+#include "EditorCommonDef.h"
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -239,4 +239,6 @@ struct EditorThemeColorSet
 	COLORREF _editorFolderForeColor{ 0 };
 	COLORREF _editorCaretColor{ 0 };
 	COLORREF _editorIndicatorColor{ 0 };
+	COLORREF _editorSpellCheckColor{ 0 };
+	COLORREF _editorTagMatchColor{ 0 };
 };

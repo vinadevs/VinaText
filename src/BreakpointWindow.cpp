@@ -476,7 +476,7 @@ void CBreakpointDlg::UpdateListCtrlVisual()
 {
 	m_wndBreakpointList.SetFont(&m_Font);
 	m_wndBreakpointList.SetBkColor(AppSettingMgr.m_ThemeColor);
-	m_wndBreakpointList.SetTextColor(RGB(255, 255, 255));
+	m_wndBreakpointList.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 	m_wndBreakpointList.SetTextBkColor(AppSettingMgr.m_ThemeColor);
 }
 

@@ -55,7 +55,7 @@ namespace
 			if (pEditorView)
 			{
 				pEditorView->SetEncodingFromUser(newEncoding);
-				LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Changed Code Page] %s..."), strCodePageName), BasicColors::orangered);
+				LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Changed Code Page] %s..."), strCodePageName), BasicColors::orange);
 				AppUtils::GetMainFrame()->OnReLoadDocument();
 			}
 		}

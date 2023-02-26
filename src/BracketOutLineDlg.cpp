@@ -91,7 +91,7 @@ BOOL CBracketOutLineDlg::OnInitDialog()
 	DWORD dwExtendedStyle = m_BracketTree.GetExtendedStyle() | TVS_EX_DOUBLEBUFFER | TVS_EX_DRAWIMAGEASYNC;
 	m_BracketTree.SetExtendedStyle(dwExtendedStyle, dwExtendedStyle);
 	m_BracketTree.SetParrentWindow(this);
-	m_BracketTree.SetTextColor(RGB(255, 255, 255));
+	m_BracketTree.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 	m_BracketTree.SetBkColor(AppSettingMgr.m_ThemeColor);
 	m_BracketTree.EnableToolTips(TRUE);
 	m_BracketTree.SetFont(&m_Font);

@@ -200,7 +200,7 @@ void CFindDlg::SearchAllOnFileFromEditor(const CString& strSearchWhat)
 			pEditor->GetText(strScript);
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
-			AppUtils::SplitCString(strScript, listLine);
+			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int count = 0;
 			ResultSearchData._nTotalSearchFile = 1;
@@ -449,7 +449,7 @@ void CFindDlg::OnSearchAll()
 				pEditor->GetText(strScript);
 				if (strScript.IsEmpty()) return;
 				std::vector<CString> listLine;
-				AppUtils::SplitCString(strScript, listLine);
+				AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 				unsigned int curLine = 0;
 				unsigned int MatchedWords = 0;
 				ResultSearchData._nMatchedFiles = 1;
@@ -511,7 +511,7 @@ void CFindDlg::OnSearchAll()
 							pEditor->GetText(strScript);
 							if (strScript.IsEmpty()) continue;
 							std::vector<CString> listLine;
-							AppUtils::SplitCString(strScript, listLine);
+							AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 							unsigned int curLine = 0;
 							for (int i = 0; i < listLine.size(); ++i)
 							{
@@ -896,7 +896,7 @@ HBRUSH CFindDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_SEARCH_PREVIOUS
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_SEARCH_ALL)
 	{
-		pDC->SetTextColor(RGB(255, 255, 255));
+		pDC->SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		pDC->SetBkMode(TRANSPARENT);
 		return CreateSolidBrush(AppSettingMgr.m_ThemeColor);
 	}

@@ -142,7 +142,7 @@ void CCodePageMFCDlg::OnBnClickedOk()
 					pEditorCtrl->SetSaveEncoding(nCodePageID);
 				}
 			}
-			LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Changed Code Page] %s..."), strCodePageName), BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Changed Code Page] %s..."), strCodePageName), BasicColors::orange);
 		}
 	}
 }

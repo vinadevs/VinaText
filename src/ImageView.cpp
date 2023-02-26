@@ -1234,7 +1234,7 @@ int CImageView::WatchFileSystemState()
 				}
 				else
 				{
-					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed read only state..."), BasicColors::orangered);
+					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed read only state..."), BasicColors::orange);
 				}
 			}
 			if (nFileState & FILE_SYSTEM_STATE::FILE_CONTENT_MODIFIED)

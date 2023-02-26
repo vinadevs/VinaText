@@ -247,3 +247,4 @@ private:
 };
 
 #define AppSettingMgr CAppSettings::GetInstance()
+#define IS_LIGHT_THEME AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT

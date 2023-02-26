@@ -89,7 +89,7 @@ void CMessagePane::OnSize(UINT nType, int cx, int cy)
 	m_LogPaneDlg.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-void CMessagePane::AddLogMessage(CString str, COLORREF color)
+void CMessagePane::AddLogMessage(const CString& str, COLORREF color)
 {
 	m_LogPaneDlg.AddLogMessage(str, color);
 }
@@ -442,7 +442,7 @@ void CMessagePaneDlg::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 }
 
-void CMessagePaneDlg::AddLogMessage(CString str, COLORREF col)
+void CMessagePaneDlg::AddLogMessage(const CString& str, COLORREF color)
 {
 	if (str.IsEmpty()) return;
 
@@ -454,7 +454,7 @@ void CMessagePaneDlg::AddLogMessage(CString str, COLORREF col)
 	cf.cbSize = sizeof(CHARFORMAT);
 	cf.dwMask = CFM_COLOR;
 	cf.dwEffects = 0; // To disable CFE_AUTOCOLOR
-	cf.crTextColor = col;
+	cf.crTextColor = color;
 
 	// Set insertion point to end of text
 	lInsertionPoint = m_wndOutput.GetWindowTextLength();
@@ -567,7 +567,8 @@ BOOL CMessagePaneDlg::OnInitDialog()
 	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_ThemeColor);
 	m_wndOutput.LimitText(0xfffffff);
 	m_wndOutput.m_bEnableLineWrap = FALSE;
-	AddLogMessage(_T("> Thank you very much for using VinaText, copyright(C) www.VinaText.com\n"), RGB(255, 255, 255));
+	AddLogMessage(_T("> Thank you for using VinaText, copyright(C) www.VinaText.com\n"),
+		IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 	UpdateData(FALSE);
 	return TRUE;

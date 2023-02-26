@@ -107,7 +107,7 @@ void CEditorThreadCompiler::WriteUserInputToPipe(CString strUserInput)
 		BOOL bRet = WriteFile(g_hChildStd_IN_Wr, strPass, (DWORD)strlen(strPass), &dwWritten, &osWriteUserInput);
 		if (!bRet)
 		{
-			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::MESSAGE_WINDOW, m_Task.pWndFrame, _T("[Error] Can not pass arguments to process..."), BasicColors::orangered);
+			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::MESSAGE_WINDOW, m_Task.pWndFrame, _T("[Error] Can not pass arguments to process..."), BasicColors::orange);
 			g_bIsIOBusy = FALSE;
 			return;
 		}
@@ -124,7 +124,7 @@ void CEditorThreadCompiler::WriteUserInputToPipe(CString strUserInput)
 		BOOL bRet = WriteFile(g_hChildStd_IN_Wr, strEnterCommand, strEnterCommand.GetLength(), &dwWritten, &osWriteReturn);
 		if (!bRet)
 		{
-			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::MESSAGE_WINDOW, m_Task.pWndFrame, _T("[Error] Can not pass arguments to process..."), BasicColors::orangered);
+			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::MESSAGE_WINDOW, m_Task.pWndFrame, _T("[Error] Can not pass arguments to process..."), BasicColors::orange);
 			g_bIsIOBusy = FALSE;
 			return;
 		}
@@ -229,17 +229,17 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 			if (m_Task.processType == PROCESS_TYPE::BUILDING_TYPE)
 			{
 				m_Task.pWndGUI->SendNotifyMessage(UWM_GUI_WORKER_HANDLER_BUILD_NOTIFY_EXIT_CODE, NULL, LPARAM(nLastError));
-				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create buid process..."), BasicColors::orangered);
+				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create buid process..."), BasicColors::orange);
 			}
 			else if (m_Task.processType == PROCESS_TYPE::RUNNING_TYPE)
 			{
 				m_Task.pWndGUI->SendNotifyMessage(UWM_GUI_WORKER_HANDLER_RUN_NOTIFY_EXIT_CODE, NULL, LPARAM(nLastError));
-				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create program process..."), BasicColors::orangered);
+				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create program process..."), BasicColors::orange);
 			}
 			else if (m_Task.processType == PROCESS_TYPE::DEBUGGING_TYPE)
 			{
 				m_Task.pWndGUI->SendNotifyMessage(UWM_GUI_WORKER_HANDLER_DEBUG_NOTIFY_EXIT_CODE, NULL, LPARAM(nLastError));
-				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create debugger process..."), BasicColors::orangered);
+				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not create debugger process..."), BasicColors::orange);
 			}
 		}
 
@@ -295,7 +295,7 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 				::TerminateProcess(pi.hProcess, (UINT)dwExitCode);
 				if (::GetExitCodeProcess(pi.hProcess, &dwExitCode) == FALSE)
 				{
-					LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orangered);
+					LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orange);
 				}
 				if (STILL_ACTIVE == dwExitCode)
 				{
@@ -331,7 +331,7 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 			DWORD dwExitCode = 0;
 			if (::GetExitCodeProcess(pi.hProcess, &dwExitCode) == FALSE)
 			{
-				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orangered);
+				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orange);
 			}
 			if (STILL_ACTIVE == dwExitCode)
 			{
@@ -361,7 +361,7 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 			DWORD dwExitCode = 0;
 			if (::GetExitCodeProcess(pi.hProcess, &dwExitCode) == FALSE)
 			{
-				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orangered);
+				LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, _T("[Error] Can not get exit code from process..."), BasicColors::orange);
 			}
 			if (m_Task.pWndGUI && ::IsWindow(m_Task.pWndGUI->GetSafeHwnd()))
 			{

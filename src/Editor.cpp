@@ -19,12 +19,13 @@
 #include "MultiThreadWorker.h"
 
 #include "Hpsutils.h"
-#include "Textfile.h"
 #include "GuiUtils.h"
 #include "PathUtil.h"
 #include "OSUtil.h"
 #include "AppUtil.h"
 #include "UnicodeUtils.h"
+
+#include "TextFile.h"
 
 #include "EditorLexerDark.h"
 #include "EditorLexerLight.h"
@@ -97,7 +98,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 
 	AppSettingMgr.m_ThemeColor = THEME_BACKGROUND_COLOR_LIGHT;
 	// Preset theme colors
-	if (AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT)
+	if (IS_LIGHT_THEME)
 	{
 		m_ThemeColorSet._lineNumberColor = EditorColorLight::linenumber;
 		m_ThemeColorSet._selectionTextColor = EditorColorLight::black;
@@ -107,6 +108,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		m_ThemeColorSet._editorFolderForeColor = EditorColorLight::editorFolderForeColor;
 		m_ThemeColorSet._editorCaretColor = EditorColorLight::editorCaretColor;
 		m_ThemeColorSet._editorIndicatorColor = EditorColorLight::editorIndicatorColor;
+		m_ThemeColorSet._editorSpellCheckColor = EditorColorLight::editorSpellCheckColor;
+		m_ThemeColorSet._editorTagMatchColor = EditorColorLight::editorTagMatchColor;
 	}
 	else
 	{
@@ -115,8 +118,11 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		m_ThemeColorSet._editorTextColor = EditorColorDark::editorTextColor;
 		m_ThemeColorSet._editorMarginBarColor = EditorColorDark::editorMarginBarColor;
 		m_ThemeColorSet._editorFolderBackColor = EditorColorDark::editorFolderBackColor;
+		m_ThemeColorSet._editorFolderForeColor = EditorColorDark::editorFolderForeColor;
 		m_ThemeColorSet._editorCaretColor = EditorColorDark::editorCaretColor;
 		m_ThemeColorSet._editorIndicatorColor = EditorColorDark::editorIndicatorColor;
+		m_ThemeColorSet._editorSpellCheckColor = EditorColorDark::editorSpellCheckColor;
+		m_ThemeColorSet._editorTagMatchColor = EditorColorDark::editorTagMatchColor;
 	}
 
 	// Editor font settings
@@ -424,13 +430,13 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 
 	// set indicator styles (foreground and alpha maybe overridden by style settings)
 	DoCommand(SCI_INDICSETSTYLE, STYLE_BRACELIGHT, INDIC_FULLBOX);
-	DoCommand(SCI_STYLESETFORE, STYLE_BRACELIGHT, RGB(235, 245, 0)); // yellow
+	DoCommand(SCI_STYLESETFORE, STYLE_BRACELIGHT, BasicColors::red);
 	DoCommand(SCI_INDICSETALPHA, STYLE_BRACELIGHT, 120);
 	DoCommand(SCI_INDICSETOUTLINEALPHA, STYLE_BRACELIGHT, 120);
 	DoCommand(SCI_STYLESETBOLD, STYLE_BRACELIGHT, 1);
 
 	DoCommand(SCI_INDICSETSTYLE, STYLE_BRACEBAD, INDIC_FULLBOX);
-	DoCommand(SCI_STYLESETFORE, STYLE_BRACEBAD, RGB(255, 0, 0));
+	DoCommand(SCI_STYLESETFORE, STYLE_BRACEBAD, BasicColors::blue);
 	DoCommand(SCI_INDICSETALPHA, STYLE_BRACEBAD, 120);
 	DoCommand(SCI_INDICSETOUTLINEALPHA, STYLE_BRACEBAD, 120);
 	DoCommand(SCI_STYLESETBOLD, STYLE_BRACEBAD, 1);
@@ -441,8 +447,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	//DoCommand(SCI_INDICSETUNDER, INDIC_BRACEMATCH, true);
 	//DoCommand(SCI_INDICSETFORE, INDIC_BRACEMATCH, RGB(0, 150, 0));
 
-	DoCommand(SCI_INDICSETFORE, INDIC_TAGMATCH, RGB(235, 245, 0));
-	DoCommand(SCI_INDICSETFORE, INDIC_TAGATTR, RGB(235, 245, 0));
+	DoCommand(SCI_INDICSETFORE, INDIC_TAGMATCH, m_ThemeColorSet._editorTagMatchColor);
+	DoCommand(SCI_INDICSETFORE, INDIC_TAGATTR, m_ThemeColorSet._editorTagMatchColor);
 	DoCommand(SCI_INDICSETSTYLE, INDIC_TAGMATCH, INDIC_DASH);
 	DoCommand(SCI_INDICSETSTYLE, INDIC_TAGATTR, INDIC_DASH);
 	DoCommand(SCI_INDICSETALPHA, INDIC_TAGMATCH, 50);
@@ -451,7 +457,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	DoCommand(SCI_INDICSETUNDER, INDIC_TAGATTR, 1);
 
 	DoCommand(SCI_INDICSETSTYLE, INDIC_SPELL_CHECKER, INDIC_SQUIGGLELOW);
-	DoCommand(SCI_INDICSETFORE, INDIC_SPELL_CHECKER, RGB(235, 245, 0));
+	DoCommand(SCI_INDICSETFORE, INDIC_SPELL_CHECKER, m_ThemeColorSet._editorSpellCheckColor);
 	DoCommand(SCI_INDICSETUNDER, INDIC_SPELL_CHECKER, 1);
 }
 
@@ -1959,7 +1965,7 @@ BOOL CEditorCtrl::SearchForward(const CString& strText)
 	{
 		SetFocus();
 		GotoPosition(lPos);
-		SetSelectionTextColor(EditorColorDark::yellow, 90);
+		SetSelectionTextColor(BasicColors::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
 		SetLineCenterKeepView(GetCurrentLine());
 		return TRUE;
@@ -1992,7 +1998,7 @@ BOOL CEditorCtrl::SearchBackward(const CString& strText)
 	{
 		SetFocus();
 		GotoPosition(lPos);
-		SetSelectionTextColor(EditorColorDark::yellow, 90);
+		SetSelectionTextColor(BasicColors::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
 		SetLineCenterBackwardDisplay(GetCurrentLine());
 		return TRUE;
@@ -3176,7 +3182,7 @@ BOOL CEditorCtrl::AddBreakPoint(VINATEXT_SUPPORTED_LANGUAGE language, int lLine,
 	}
 	else
 	{
-		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Debug Warning] Can not add breakpoint for this file format..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Debug Warning] Can not add breakpoint for this file format..."), BasicColors::orange);
 	}
 	return FALSE;
 }
@@ -4047,11 +4053,6 @@ CString CEditorCtrl::GetEOLName()
 	return _T("Window (CRLF)");
 }
 
-int CEditorCtrl::GetEOLFile()
-{
-	return (int)DoCommand(SCI_GETEOLMODE);
-}
-
 int CEditorCtrl::GetSelectionNumber()
 {
 	return (int)DoCommand(SCI_GETSELECTIONS);
@@ -4452,7 +4453,7 @@ void CEditorCtrl::RenderHotSpotForUrlLinks()
 	DoCommand(SCI_INDICSETSTYLE, INDIC_URL_HOTSPOT, INDIC_PLAIN);
 	DoCommand(SCI_INDICSETHOVERSTYLE, INDIC_URL_HOTSPOT, INDIC_FULLBOX);
 	DoCommand(SCI_INDICSETALPHA, INDIC_URL_HOTSPOT, 70);
-	DoCommand(SCI_INDICSETFORE, INDIC_URL_HOTSPOT, EditorColorDark::orangered);
+	DoCommand(SCI_INDICSETFORE, INDIC_URL_HOTSPOT, BasicColors::orange);
 	DoCommand(SCI_INDICSETFLAGS, INDIC_URL_HOTSPOT, SC_INDICFLAG_VALUEFORE);
 	DoCommand(SCI_SETINDICATORCURRENT, INDIC_URL_HOTSPOT);
 	LRESULT indicFore = DoCommand(SCI_STYLEGETFORE, STYLE_DEFAULT);

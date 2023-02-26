@@ -359,13 +359,12 @@ CString AppUtils::GetSubCStringBetweenTwoDemiliter(const CString & strTarget, co
 void AppUtils::SplitCString(const CString & strFields, const CString & strDelimiters, CStringArray & arFields, BOOL bForceTrim)
 {
 	arFields.RemoveAll();
-	// Do not process empty strings.
 	if (!strFields.IsEmpty() && !strDelimiters.IsEmpty())
 	{
 		int nPosition = 0, nTotalFields = 0;
 		do
 		{
-			int nOldPosition = nPosition;   // Store the previous position value.
+			int nOldPosition = nPosition;
 			CString strField = strFields.Tokenize(strDelimiters, nPosition);
 			if (nPosition != -1)
 			{
@@ -375,7 +374,6 @@ void AppUtils::SplitCString(const CString & strFields, const CString & strDelimi
 			{
 				nTotalFields += (strFields.GetLength() + 1 - nOldPosition);
 			}
-			// By using SetAtGrow(), empty strings are automatically added to the array.
 			if (bForceTrim)
 			{
 				if (!strField.Trim().IsEmpty())
@@ -416,21 +414,32 @@ void AppUtils::SplitCString(const CString& strFields, const CString& strDelimite
 	}
 }
 
-void AppUtils::SplitCString(const CString & strFields, std::vector<CString>& arFields, const wchar_t& strDelimiters, BOOL bForceTrim)
+void AppUtils::SplitCString(const CString & strFields, const CString& strDelimiters, std::vector<CString>& arFields, BOOL bForceTrim)
 {
-	if (strFields.IsEmpty()) return;
-	std::wstringstream ss(CStringToWStd(strFields));
-	std::wstring strToken;
-	while (std::getline(ss, strToken, strDelimiters))
+	arFields.clear();
+	if (!strFields.IsEmpty() && !strDelimiters.IsEmpty())
 	{
-		CString CstrToken = WStdToCString(strToken);
-		if (bForceTrim)
+		int nPosition = 0, nTotalFields = 0;
+		do
 		{
-			if (!CstrToken.Trim().IsEmpty())
-				arFields.push_back(CstrToken);
-		}
-		else
-			arFields.push_back(CstrToken);
+			int nOldPosition = nPosition;
+			CString strField = strFields.Tokenize(strDelimiters, nPosition);
+			if (nPosition != -1)
+			{
+				nTotalFields += (nPosition - nOldPosition - strField.GetLength());
+			}
+			else
+			{
+				nTotalFields += (strFields.GetLength() + 1 - nOldPosition);
+			}
+			if (bForceTrim)
+			{
+				if (!strField.Trim().IsEmpty())
+					arFields.push_back(strField);
+			}
+			else
+				arFields.push_back(strField);
+		} while (nPosition != -1 && nPosition <= strFields.GetLength());
 	}
 }
 
@@ -510,6 +519,7 @@ int AppUtils::ReplaceFirstOf(CString& str, const CString& pszOld, const CString&
 	return found;
 }
 
+#if 0
 void AppUtils::RemoveSpecialCharacters(CString & strWord)
 {
 	std::wstring str = CStringToWStd(strWord);
@@ -520,6 +530,7 @@ void AppUtils::RemoveSpecialCharacters(CString & strWord)
 	}), str.end());
 	strWord = WStdToCString(str);
 }
+#endif
 
 BOOL AppUtils::IsCStringAllDigits(const CString &str)
 {
@@ -2271,7 +2282,7 @@ BOOL AppUtils::IsLanguageSupportLexer(VINATEXT_SUPPORTED_LANGUAGE language)
 
 ///////////////// GLOBAL HELPERS //////////////////////////
 
-static void LOG_MESSAGE(LOG_TARGET target, LPCTSTR lpszMsg, COLORREF col)
+void LOG_MESSAGE(LOG_TARGET target, LPCTSTR lpszMsg, COLORREF col)
 {
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	if (pFrame)
@@ -2282,7 +2293,7 @@ static void LOG_MESSAGE(LOG_TARGET target, LPCTSTR lpszMsg, COLORREF col)
 
 void LOG_OUTPUT_MESSAGE_LAST_ERROR()
 {
-	LOG_MESSAGE(LOG_TARGET::MESSAGE_WINDOW, _T("> ") + OSUtils::GetLastErrorAsString(), BasicColors::orangered);
+	LOG_MESSAGE(LOG_TARGET::MESSAGE_WINDOW, _T("> ") + OSUtils::GetLastErrorAsString(), BasicColors::orange);
 }
 
 void LOG_OUTPUT_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF col)
@@ -2297,7 +2308,7 @@ void LOG_OUTPUT_MESSAGE_FORMAT(const TCHAR* Fmt, ...)
 	CString strMsg;
 	strMsg.FormatV(Fmt, args);
 	va_end(args);
-	COLORREF col = RGB(255, 255, 255); // default white
+	COLORREF col = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white;
 	LOG_MESSAGE(LOG_TARGET::MESSAGE_WINDOW, strMsg, col);
 }
 
@@ -2319,7 +2330,7 @@ void LOG_BUILD_MESSAGE_FORMAT(const TCHAR * Fmt, ...)
 	CString strMsg;
 	strMsg.FormatV(Fmt, args);
 	va_end(args);
-	COLORREF col = RGB(255, 255, 255); // default white
+	COLORREF col = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white;
 	LOG_MESSAGE(LOG_TARGET::BUILD_WINDOW, strMsg, col);
 }
 

@@ -219,7 +219,6 @@ public:
 	void ShowLines(int lLineStart, int lLineEnd);
 	void SetReadOnlyEditor(BOOL bEnable);
 	BOOL IsReadOnlyEditor();
-	int GetEOLFile();
 	CString GetEOLCString();
 	CString GetEOLName();
 

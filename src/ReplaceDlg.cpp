@@ -269,7 +269,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 {
 	if (ThreadWorkerMgr.IsRunning() || ThreadWorkerMgr.IsDebuggerRunning())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Replace Warning] Program/Debugger is running now, do not allow replacement in files..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Replace Warning] Program/Debugger is running now, do not allow replacement in files..."), BasicColors::orange);
 		return;
 	}
 
@@ -409,7 +409,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 							bHasTrailingReturn = TRUE;
 						}
 						std::vector<CString> listLine;
-						AppUtils::SplitCString(strScript, listLine);
+						AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 						std::wstring inputfile = AppUtils::CStringToWStd(strFile);
 						std::wstring replace_what = AppUtils::CStringToWStd(strSearchWhat);
 						std::wstring replace_with = AppUtils::CStringToWStd(strReplaceWith);
@@ -670,7 +670,7 @@ HBRUSH CFindAndReplaceDlg::OnCtlColor(CDC * pDC, CWnd * pWnd, UINT nCtlColor)
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_REPLACE_DLG_REPLACE_BTN
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)
 	{
-		pDC->SetTextColor(RGB(255, 255, 255));
+		pDC->SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		pDC->SetBkMode(TRANSPARENT);
 		return CreateSolidBrush(AppSettingMgr.m_ThemeColor);
 	}

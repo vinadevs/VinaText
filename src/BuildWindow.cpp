@@ -93,9 +93,9 @@ void CBuildPane::OnSize(UINT nType, int cx, int cy)
 	m_LogPaneDlg.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
-void CBuildPane::AddLogMessage(CString str, COLORREF color)
+void CBuildPane::AddLogMessage(CString strMsg, COLORREF color)
 {
-	m_LogPaneDlg.AddLogMessage(str, color);
+	m_LogPaneDlg.AddLogMessage(strMsg, color);
 }
 
 void CBuildPane::ClearAll()
@@ -878,8 +878,8 @@ BOOL CEditBuild::PreTranslateMessage(MSG* pMsg)
 
 HBRUSH CEditBuild::CtlColor(CDC* pDC, UINT nCtlColor)
 {
-	pDC->SetTextColor(RGB(255, 255 ,255));
-	pDC->SetBkColor(RGB(47, 79, 79));
+	pDC->SetTextColor(BasicColors::white);
+	pDC->SetBkColor(BasicColors::light_green);
 	return ::GetSysColorBrush(COLOR_WINDOW);
 }
 
@@ -974,7 +974,7 @@ void CBuildPaneDlg::UpdateLogVisual()
 	m_wndUserInput.SetFont(&m_Font);
 }
 
-void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF col)
+void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF color)
 {
 	if (strMessage.IsEmpty()) return;
 
@@ -1048,7 +1048,7 @@ void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF col)
 		cf.cbSize = sizeof(CHARFORMAT);
 		cf.dwMask = CFM_COLOR;
 		cf.dwEffects = 0; // To disable CFE_AUTOCOLOR
-		cf.crTextColor = col;
+		cf.crTextColor = color;
 
 		// Set insertion point to end of text
 		lInsertionPoint = m_wndOutput.GetWindowTextLength();
@@ -1497,7 +1497,8 @@ BOOL CBuildPaneDlg::OnInitDialog()
 	m_wndUserInput.ModifyStyleEx(NULL, WS_EX_STATICEDGE);
 	m_wndUserInput.SetWindowTextW(_T("> > > ..."));
 
-	AddLogMessage(_T("Program log will be displayed here...\n"), RGB(0, 255, 0));
+	AddLogMessage(_T("Program log will be displayed here...\n"),
+		IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 	UpdateData(FALSE);
 	return TRUE;
@@ -1514,7 +1515,8 @@ LRESULT CBuildPaneDlg::OnUserInput(WPARAM wParam, LPARAM lParam)
 	}
 	else
 	{
-		AddLogMessage(_T("[Error] There is no running program now...\n"), BasicColors::orangered);
+		AddLogMessage(_T("[Error] There is no running program now...\n"),
+			IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		return -1;
 	}
 	return 0;

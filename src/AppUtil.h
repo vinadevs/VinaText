@@ -9,6 +9,7 @@
 #pragma once
 
 #include "STLHelper.h"
+#include "AppSettings.h"
 
 class CMainFrame;
 class CVinaTextApp;
@@ -22,10 +23,12 @@ namespace BasicColors
 {
 	const COLORREF black = RGB(0, 0, 0);
 	const COLORREF white = RGB(255, 255, 255);
+	const COLORREF light_white = RGB(200, 200, 200);
 	const COLORREF gray = RGB(128, 128, 128);
 	const COLORREF green = RGB(0, 255, 0);
+	const COLORREF light_green = RGB(47, 79, 79);
 	const COLORREF red = RGB(255, 0, 0);
-	const COLORREF orangered = RGB(255, 69, 0);
+	const COLORREF orange = RGB(255, 69, 0);
 	const COLORREF blue = RGB(0, 0, 255);
 	const COLORREF yellow = RGB(235, 245, 0);
 }
@@ -61,7 +64,7 @@ namespace AppUtils
 	CString GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, CStringArray& arFields, BOOL bForceTrim = FALSE);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, std::list<CString>& arFields, BOOL bForceTrim = FALSE);
-	void SplitCString(const CString& strFields, std::vector<CString> & arFields, const wchar_t& strDelimiters = L'\r', BOOL bForceTrim = FALSE);
+	void SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields, BOOL bForceTrim = FALSE);
 	std::wstring GetUnicodeWString(const std::string & multibyte, bool stopAtNull);
 	void SetCurrentCodePage(unsigned int uiCodePage);
 	unsigned int GetCurrentCodePage();
@@ -125,7 +128,6 @@ namespace AppUtils
 	BOOL StringIsDigits(const std::wstring & str);
 	BOOL StringIsInteger(const std::string & str);
 	BOOL StringIsFloat(const std::string & str);
-	void RemoveSpecialCharacters(CString& strWord);
 	BOOL IsCStringAllDigits(const CString & str);
 	BOOL IsUrlHyperLink(const CString& strString);
 	BOOL IsUrlHyperLink(TCHAR * text, int textLen, int start, int * segmentLen);
@@ -143,26 +145,28 @@ namespace AppUtils
 // GLOBAL API 
 // DO NOT CALL BELOW LOG FUNCTIONS IN FOR LOOP!!!
 
+void LOG_MESSAGE(LOG_TARGET target, LPCTSTR lpszMsg, COLORREF color);
+
 void LOG_OUTPUT_MESSAGE_LAST_ERROR();
 
-void LOG_OUTPUT_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF col = RGB(255, 255, 255));
+void LOG_OUTPUT_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 void LOG_OUTPUT_MESSAGE_FORMAT(const TCHAR * Fmt, ...);
 
-void LOG_OUTPUT_MESSAGE_WITH_TIME(LPCTSTR lpszMsg, COLORREF col = RGB(255, 255, 255));
+void LOG_OUTPUT_MESSAGE_WITH_TIME(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
-void LOG_BUILD_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF col = RGB(255, 255, 255));
+void LOG_BUILD_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 void LOG_BUILD_MESSAGE_FORMAT(const TCHAR * Fmt, ...);
 
 // only use when log 1 time, for mutil message use LOG_OUTPUT_MESSAGE
-void LOG_OUTPUT_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF col = RGB(255, 255, 255));
+void LOG_OUTPUT_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 // only use when log 1 time, for mutil message use LOG_BUILD_MESSAGE
-void LOG_BUILD_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF col = RGB(255, 255, 255));
+void LOG_BUILD_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 // use for worker thread
-void LOG_MESSAGE_FROM_THREAD(LOG_TARGET target, CMainFrame* pFrame, LPCTSTR lpszMsg, COLORREF col, CDocument* pDoc = NULL);
+void LOG_MESSAGE_FROM_THREAD(LOG_TARGET target, CMainFrame* pFrame, LPCTSTR lpszMsg, COLORREF color, CDocument* pDoc = NULL);
 
 // Docking Window and Frames update
 inline void UPDATE_MAIN_FRAME(UINT uiTarget, UINT uiHint, CDocument* pDoc = NULL)

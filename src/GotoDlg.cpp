@@ -261,7 +261,7 @@ HBRUSH CGotoDlg::OnCtlColor(CDC * pDC, CWnd * pWnd, UINT nCtlColor)
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_GOTO_POINT_X_STATIC
 		|| pWnd->GetDlgCtrlID() == ID_EDITOR_GOTO_POINT_Y_STATIC)
 	{
-		pDC->SetTextColor(RGB(255, 255, 255));
+		pDC->SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		pDC->SetBkMode(TRANSPARENT);
 		return CreateSolidBrush(AppSettingMgr.m_ThemeColor);
 	}

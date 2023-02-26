@@ -213,7 +213,7 @@
     <ClInclude Include="AdobeAcrobatWrapper.h" />
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
-    <ClInclude Include="EditorDef.h" />
+    <ClInclude Include="EditorCommonDef.h" />
     <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="EditorLexerDark.h" />
     <ClInclude Include="EditorLexerLight.h" />
@@ -249,7 +249,7 @@
     <ClInclude Include="SettingDlgCustomize.h" />
     <ClInclude Include="SettingDlgFileSystem.h" />
     <ClInclude Include="TemplateCreator.h" />
-    <ClInclude Include="Textfile.h" />
+    <ClInclude Include="TextFile.h" />
     <ClInclude Include="TextFormatConverter.h" />
     <ClInclude Include="BaseDoc.h" />
     <ClInclude Include="BookMarkPathDlg.h" />
@@ -403,7 +403,7 @@
     <ClCompile Include="SettingDlgCustomize.cpp" />
     <ClCompile Include="SettingDlgFileSystem.cpp" />
     <ClCompile Include="TemplateCreator.cpp" />
-    <ClCompile Include="Textfile.cpp" />
+    <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="TextFormatConverter.cpp" />
     <ClCompile Include="BaseDoc.cpp" />
     <ClCompile Include="BookMarkPathDlg.cpp" />

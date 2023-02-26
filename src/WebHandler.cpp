@@ -185,7 +185,7 @@ std::wstring CWebHandler::GetResultFromUrl(const std::string & strURL, const std
 	else
 	{
 		// Error during Curl_init
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [HTTP Error] lib Curl load failed..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [HTTP Error] lib Curl load failed..."), BasicColors::orange);
 		return ERROR_RESULT_TRANSLATOR;
 	}
 }

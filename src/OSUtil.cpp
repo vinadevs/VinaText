@@ -31,15 +31,6 @@ double OSUtils::StopBenchmark(LONGLONG counterBegin)
 	return dElaspedTime;
 }
 
-static void LOG_MESSAGE(LOG_TARGET target, LPCTSTR lpszMsg, COLORREF col)
-{
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	if (pFrame)
-	{
-		pFrame->PrintMessage(target, lpszMsg, col);
-	}
-}
-
 void OSUtils::LogStopBenchmark(LOG_TARGET target, LONGLONG counterBegin, const CString& strMessage, COLORREF color)
 {
 	LONGLONG counterEnd = 0;
@@ -54,7 +45,7 @@ void OSUtils::CreateProcessAsynchronous(const CString & lpVerb, const CString & 
 {
 	//const TCHAR *opVerb = m_runAsAdmin ? TEXT("runas") : TEXT("open");
 	::ShellExecute(::GetDesktopWindow(), lpVerb, cmd, args, cDir, show);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::orange);
 }
 
 unsigned long OSUtils::CreateProcessSynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show)
@@ -79,7 +70,7 @@ unsigned long OSUtils::CreateProcessSynchronous(const CString & lpVerb, const CS
 		throw GetLastErrorAsString();
 	}
 
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::orange);
 	return exitCode;
 }
 
@@ -108,19 +99,19 @@ BOOL OSUtils::CreateWin32Process(CString strCmdLine)
 	{
 		DWORD nCode = ::GetLastError();
 		TRACE("CreateProcess Failed code: %d\n", nCode);
-		LOG_OUTPUT_MESSAGE_COLOR(_T("> Failed system command line: ") + strCmdLine, BasicColors::green);
+		LOG_OUTPUT_MESSAGE_COLOR(_T("> Failed system command line: ") + strCmdLine, BasicColors::orange);
 		return FALSE;
 	}
 	DELETE_WIN32_HANDLE(pi.hProcess);
 	DELETE_WIN32_HANDLE(pi.hThread);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::orange);
 	return TRUE;
 }
 
 void OSUtils::RunSystemCMD(CString strCmdLine)
 {
 	::_wsystem(AppUtils::CStringToWStd(strCmdLine).c_str());
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::orange);
 }
 
 // DO NOT USE FOR PROCESSES WHICH WILL NOT EXIT LATER
@@ -429,7 +420,7 @@ void OSUtils::UseAdministrationHandler()
 		else
 		{
 			CString strMsg; strMsg.Format(_T("[Path Error] %s does not exist...\n"), strPathVinaTextExe);
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		}
 	}
 }

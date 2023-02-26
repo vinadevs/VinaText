@@ -135,7 +135,7 @@ void CBookMarkPathDlg::InitListBookmarkPath(BOOL bIsAddBookMark)
 			0);
 		if (!hCreateFile)
 		{
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Bookmark Path] Failed to create file: ") + m_strBookmarkFile, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Bookmark Path] Failed to create file: ") + m_strBookmarkFile, BasicColors::orange);
 		}
 		else
 		{

@@ -1195,7 +1195,7 @@ void CEditorView::LOG_BUILD_INFO_MESSAGE(const CString& strCMD, const CString& m
 		}
 		else
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T("[Build Warning] Current file has been modified but not saved yet. This build will used previous script data...\n"), BasicColors::orangered);
+			LOG_BUILD_MESSAGE_COLOR(_T("[Build Warning] Current file has been modified but not saved yet. This build will used previous script data...\n"), BasicColors::orange);
 		}
 	}
 	CString strPathName = m_pDocument->GetPathName();
@@ -2679,7 +2679,7 @@ int CEditorView::WatchFileSystemState()
 					}
 					else
 					{
-						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed to read only file..."), BasicColors::orangered);
+						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed to read only file..."), BasicColors::orange);
 					}
 				}
 				else
@@ -2692,7 +2692,7 @@ int CEditorView::WatchFileSystemState()
 					}
 					else
 					{
-						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has removed read only attribute..."), BasicColors::orangered);
+						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has removed read only attribute..."), BasicColors::orange);
 					}
 				}
 			}
@@ -2713,7 +2713,7 @@ int CEditorView::WatchFileSystemState()
 					}
 					else
 					{
-						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has been modified by other process, file content updated..."), BasicColors::orangered);
+						LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has been modified by other process, file content updated..."), BasicColors::orange);
 					}
 					AppUtils::UpdateModifiedDocumentTitle(m_pDocument, FALSE);
 				}
@@ -4767,7 +4767,7 @@ void CEditorView::OnOptionsDeleteLine()
 
 void CEditorView::OnOptionsSelectionColumnMode()
 {
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> Selection by column mode can be used with [Ctrl + Shift + Arrow Up/Down] or [Alt + Left Mouse Drag] or [Shift + Alt + Arrow Key]..."), BasicColors::orangered);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> Selection by column mode can be used with [Ctrl + Shift + Arrow Up/Down] or [Alt + Left Mouse Drag] or [Shift + Alt + Arrow Key]..."), BasicColors::orange);
 }
 
 void CEditorView::OnOptionsInsertXAtBeginLine()
@@ -5956,7 +5956,7 @@ void CEditorView::OnEditCountWords()
 				lCountWord++;
 			}
 			strMsg.Format(_T("> [Count statistics] Total %d word(s) saperated by space in current file.\n"), lCountWord);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 		}
 		else
 		{
@@ -5969,13 +5969,13 @@ void CEditorView::OnEditCountWords()
 				lCountWord++;
 			}
 			strMsg.Format(_T("> [Count statistics] Total %d word(s) saperated by space in selection.\n"), lCountWord);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 		}
 	}
 	if (strMsg.IsEmpty())
 	{
 		strMsg.Format(_T("> [Count statistics] Total 0 word(s) saperated by space in current file.\n"), lCountWord);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+		LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 	}
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::LOG_MESSAGE_PANE);
 	m_EditorCtrl.SetFocus();
@@ -6016,7 +6016,7 @@ void CEditorView::OnEditCountDuplicateWords()
 			CString strStatistics;
 			strStatistics.Format(_T("> [Count statistics] Total %d unique word(s) saperated by space in current file.\n\n"), static_cast<int>(word_data.size()));
 			strMsg += strStatistics;
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 
 		}
 		else
@@ -6044,13 +6044,13 @@ void CEditorView::OnEditCountDuplicateWords()
 			CString strStatistics;
 			strStatistics.Format(_T("> [Count statistics] Total %d unique word(s) saperated by space in selection.\n"), static_cast<int>(word_data.size()));
 			strMsg += strStatistics;
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 		}
 	}
 	if (strMsg.IsEmpty())
 	{
 		strMsg.Format(_T("> [Count statistics] Total 0 word(s) unique word(s) saperated by space in current file.\n\n"), lCountWord);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+		LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 	}
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::LOG_MESSAGE_PANE);
 	m_EditorCtrl.SetFocus();
@@ -6102,7 +6102,7 @@ void CEditorView::OnEditCountDuplicateLines()
 			CString strStatistics;
 			strStatistics.Format(_T("> [Line statistics] Total %d duplicate line(s) in current file.\n\n"), static_cast<int>(duplicatelines.size()));
 			strMsg += strStatistics;
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 
 		}
 		else
@@ -6141,13 +6141,13 @@ void CEditorView::OnEditCountDuplicateLines()
 			CString strStatistics;
 			strStatistics.Format(_T("> [Line statistics] Total %d duplicate line(s) in current file.\n"), static_cast<int>(duplicatelines.size()));
 			strMsg += strStatistics;
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 		}
 	}
 	if (strMsg.IsEmpty())
 	{
 		strMsg.Format(_T("> [Line statistics] Total 0 duplicate line(s) in current file.\n"), lCountWord);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, RGB(255, 255, 255));
+		LOG_OUTPUT_MESSAGE_COLOR(strMsg);
 	}
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::LOG_MESSAGE_PANE);
 	m_EditorCtrl.SetFocus();
@@ -6583,7 +6583,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 				}
 				else
 				{
-					LOG_OUTPUT_MESSAGE_COLOR(_T("> [Url Link] To open url link in web browser, use ctrl + left mouse click..."), BasicColors::orangered);
+					LOG_OUTPUT_MESSAGE_COLOR(_T("> [Url Link] To open url link in web browser, use ctrl + left mouse click..."), BasicColors::orange);
 				}
 			}
 			break;
@@ -7522,7 +7522,7 @@ void CEditorView::OnDocumentFormatFile()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist...\n"), strFilePath);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 	if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
@@ -7538,7 +7538,7 @@ void CEditorView::OnDocumentFormatFile()
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Path Error] %s does not exist, this file need NodeJS for formatting. Please be sure to install it on your computer...\n"), strFolderPath);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			AfxMessageBox(strMsg);
 			return;
 		}
@@ -7569,7 +7569,7 @@ void CEditorView::OnDocumentFormatFile()
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Path Error] %s does not exist, this file need autopep8 for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error]  %s does not exist, this file need autopep8 program for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
 			return;
 		}
@@ -7663,11 +7663,11 @@ void CEditorView::OnDocumentSetLargeFileEditMode()
 	TOGGLE_FLAG(m_bEnableLargeFileEditMode);
 	if (m_bEnableLargeFileEditMode)
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Large File Edit] To boost up editor performance, following features will be disabled [auto complete, auto tab indentation, render duplicate word]..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Large File Edit] To boost up editor performance, following features will be disabled [auto complete, auto tab indentation, render duplicate word]..."), BasicColors::orange);
 	}
 	else
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Large File Edit] return normal mode..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Large File Edit] return normal mode..."), BasicColors::orange);
 	}
 }
 
@@ -7932,7 +7932,7 @@ void CEditorView::OnStartDebugger()
 			CMainFrame* pFrame = AppUtils::GetMainFrame();
 			if (!pFrame) return;
 			pFrame->ClearDataOnDockPane(DOCKABLE_PANE_TYPE::BUILD_PANE);
-			LOG_BUILD_MESSAGE_COLOR(_T("[Compiler Error] Current file format have not defined build configuration yet..."), BasicColors::orangered);
+			LOG_BUILD_MESSAGE_COLOR(_T("[Compiler Error] Current file format have not defined build configuration yet..."), BasicColors::orange);
 			return;
 		}
 	}
@@ -8228,7 +8228,7 @@ void CEditorView::RunExeAfterCompile()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -8254,7 +8254,7 @@ void CEditorView::RunGDBDebuggerAfterCompile()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -8281,7 +8281,7 @@ void CEditorView::RunJavaExeAfterCompile(const CString& strCommandLine)
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist!\nPlease check class name and file name are matched or not..."), m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
 }
@@ -8351,7 +8351,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 				{
 					CString strMsg;
 					strMsg.Format(_T("[Path Error] %s does not exist...\n"), m_BuildSessionInfo._strJavaVMPath);
-					LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+					LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 					return 1L;
 				}
 				CString strCommandLine = _T("\"") + m_BuildSessionInfo._strJavaVMPath + _T("\" -classpath \"") + m_BuildSessionInfo._strExeFolderPath + _T("\" \"") + m_BuildSessionInfo._strExeFileName + _T("\"");
@@ -8367,7 +8367,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("\n[Error] Build process failed by errors...\n"), BasicColors::orangered);
+			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("\n[Error] Build process failed by errors...\n"), BasicColors::orange);
 			OnShowBuildErrors();
 			return 1L;
 		}
@@ -8382,7 +8382,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 	{
 		CString strMsg;
 		strMsg.Format(_T("\n[Error] Build process failed, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		DisableAllDocumemtReadOnly();
 		return 1L;
 	}
@@ -8429,7 +8429,7 @@ LRESULT CEditorView::OnCompilerNotifyRunExitCode(WPARAM wParam, LPARAM lParam)
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Error] Program start failed, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		OnRemoveAllDebugPointer();
 		DisableAllDocumemtReadOnly();
 		return 1L;
@@ -8492,7 +8492,7 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 		}
 		else
 		{
-			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("\n[Error] Build process for debugger failed by errors...\n"), BasicColors::orangered);
+			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("\n[Error] Build process for debugger failed by errors...\n"), BasicColors::orange);
 			OnShowBuildErrors();
 			return 1L;
 		}
@@ -8507,7 +8507,7 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 	{
 		CString strMsg;
 		strMsg.Format(_T("\n[Error] Build process for debugger failed, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		OnRemoveAllDebugPointer();
 		DisableAllDocumemtReadOnly();
 		return 1L;
@@ -8840,7 +8840,7 @@ void CEditorView::OnFileSummary()
 	// dump to log window...
 	CMainFrame* pFrame = AppUtils::GetMainFrame();
 	if (!pFrame) return;
-	LOG_OUTPUT_MESSAGE_COLOR(strMessageFileSummary, RGB(255, 255, 255));
+	LOG_OUTPUT_MESSAGE_COLOR(strMessageFileSummary);
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::LOG_MESSAGE_PANE);
 }
 
@@ -9857,7 +9857,7 @@ void CEditorView::OnQuickFindAllInFile()
 	CString strSelectedWord = m_EditorCtrl.GetSelectedText();
 	if (strSelectedWord.IsEmpty())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Quick Search All] Selection is empty..."), BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Quick Search All] Selection is empty..."), BasicColors::orange);
 		return;
 	}
 	pFrame->SearchAllOnFileFromEditor(m_EditorCtrl.GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
@@ -9888,7 +9888,7 @@ void CEditorView::OnToolCreateGUID()
 {
 	CString strID = OSUtils::GetGUIDGlobal();
 	CString strResultText = AfxCStringFormat(_T("> [GUID Generator] result: %s"), strID);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnToolCreateMd5()
@@ -9901,7 +9901,7 @@ void CEditorView::OnToolCreateMd5()
 	}
 	CString strConvertedText = AppUtils::WStdToCString(md5_digest(AppUtils::CStringToStd(strSelectedText)));
 	CString strResultText = AfxCStringFormat(_T("> [MD5 Generator] result: %s"), strConvertedText);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnToolCreateCRC()
@@ -9914,7 +9914,7 @@ void CEditorView::OnToolCreateCRC()
 	}
 	CString strConvertedText = AppUtils::IntToCString(crc32_generate(AppUtils::CStringToStd(strSelectedText)));
 	CString strResultText = AfxCStringFormat(_T("> [CRC32 Generator] result: %s"), strConvertedText);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnToolCreateSha256()
@@ -9927,7 +9927,7 @@ void CEditorView::OnToolCreateSha256()
 	}
 	CString strConvertedText = AppUtils::WStdToCString(sha256_hash(AppUtils::CStringToStd(strSelectedText)));
 	CString strResultText = AfxCStringFormat(_T("> [SHA256 Generator] result: %s"), strConvertedText);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnToolCreateSha1()
@@ -9940,14 +9940,14 @@ void CEditorView::OnToolCreateSha1()
 	}
 	CString strConvertedText = AppUtils::StdToCString(sha1_hash(AppUtils::CStringToStd(strSelectedText)));
 	CString strResultText = AfxCStringFormat(_T("> [SHA1 Generator] result: %s"), strConvertedText);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnOptionsGenerateTimeDate()
 {
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
 	CString strResultText = AfxCStringFormat(_T("> [Timedate Generator] result: %s"), strCurrentTime);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::OnOptionsUrlEscapse()
@@ -9960,7 +9960,7 @@ void CEditorView::OnOptionsUrlEscapse()
 	}
 	std::string strEncoded = CWebHandler::EncodeStringForCurl(AppUtils::CStringToStd(strSelectedText));
 	CString strResultText = AfxCStringFormat(_T("> [Url Generator] result: %s"), strEncoded);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::green);
+	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 
 void CEditorView::ConvertSlash(int option)

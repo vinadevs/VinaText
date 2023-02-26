@@ -593,7 +593,7 @@ void CSearchResultDlg::UpdateListCtrlVisual()
 {
 	m_wndResultList.SetFont(&m_Font);
 	m_wndResultList.SetBkColor(AppSettingMgr.m_ThemeColor);
-	m_wndResultList.SetTextColor(RGB(255, 255, 255));
+	m_wndResultList.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 	m_wndResultList.SetTextBkColor(AppSettingMgr.m_ThemeColor);
 }
 
@@ -1143,8 +1143,8 @@ BOOL CEditFilter::PreTranslateMessage(MSG* pMsg)
 
 HBRUSH CEditFilter::CtlColor(CDC* pDC, UINT nCtlColor)
 {
-	pDC->SetTextColor(RGB(255, 255, 255));
-	pDC->SetBkColor(RGB(47, 79, 79));
+	pDC->SetTextColor(BasicColors::white);
+	pDC->SetBkColor(BasicColors::light_green);
 	return ::GetSysColorBrush(COLOR_WINDOW);
 }
 

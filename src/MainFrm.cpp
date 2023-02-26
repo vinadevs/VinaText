@@ -3876,7 +3876,7 @@ void CMainFrame::OnOpenGitBashHere()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist, please install git...\n"), strGitBash);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 	}
 	SetCurrentDirectoryTerminal();
 	CString strCommandLine = _T("start \"\" \"") + strGitBash + _T("\"") + _T(" --login");
@@ -3966,7 +3966,7 @@ void CMainFrame::OnReLoadDocument()
 		if (PathFileExists(pDoc->GetPathName()))
 		{
 			VinaTextDebugger.RemoveBreakPointDataInFile(pDoc->GetPathName());
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(AfxCStringFormat(_T("> [Reload File] %s..."), pDoc->GetPathName()), BasicColors::green);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(AfxCStringFormat(_T("> [Reload File] %s..."), pDoc->GetPathName()), BasicColors::orange);
 		}
 	}
 }
@@ -4034,7 +4034,7 @@ void CMainFrame::OnMDITabMoveToNewVinaText()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] %s does not exist...\n"), strPathVinaTextExe);
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 	}
 }
 
@@ -4375,7 +4375,7 @@ void CMainFrame::OnToolPythonPipWindow()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Pip Path Error] %s does not exist...\n"), AppSettingMgr.m_strPythonFolderPath);
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		return;
 	}
 	SetCurrentDirectoryW(AppSettingMgr.m_strPythonFolderPath);
@@ -4399,7 +4399,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 	{
 		CString strMsg;
 		strMsg.Format(_T("[NodeJS Path Error] %s does not exist...\n"), AppSettingMgr.m_strNodeJSFolderPath);
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orangered);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		return;
 	}
 	SetCurrentDirectoryW(AppSettingMgr.m_strNodeJSFolderPath);
@@ -4414,7 +4414,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 
 void CMainFrame::OnOptionsGetWifiInformation()
 {
-	CString strMsg = _T("\n________________| INTERNET WIFI INFORMATION |_____________________________\n");
+	CString strMsg = _T("\n________________| INTERNET WIFI INFORMATION |______________________________\n");
 	CSystemInfo info;
 	std::vector<std::wstring> wifi = info.GetSystemWifiList();
 	if (wifi.empty())
@@ -4429,7 +4429,7 @@ void CMainFrame::OnOptionsGetWifiInformation()
 			strMsg += _T("Password\t:\t") + AppUtils::WStdToCString(info.GetWifiPassword(ssid)) + _T("\n\n");
 		}
 	}
-	strMsg += _T("__________________________________________________________________________\n\n");
+	strMsg += _T("___________________________________________________________________________\n\n");
 	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg);
 }
 
@@ -4484,7 +4484,7 @@ void CMainFrame::OnPrintFileNow()
 		if (pEditorDoc == NULL) return;
 		CWindowsPrinter printer(pEditorDoc->GetPathName(), this->GetSafeHwnd());
 		printer.PrintText(FALSE, pEditorDoc->GetEditorCtrl());
-		LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Text Printer] Printing %s..."), pEditorDoc->GetPathName()), BasicColors::green);
+		LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Text Printer] Printing %s..."), pEditorDoc->GetPathName()), BasicColors::orange);
 	}
 	else if (pDoc->IsKindOf(RUNTIME_CLASS(CImageDoc)))
 	{
@@ -4492,7 +4492,7 @@ void CMainFrame::OnPrintFileNow()
 		if (pImageDoc == NULL) return;
 		CWindowsPrinter printer(pImageDoc->GetPathName(), this->GetSafeHwnd());
 		printer.PrintImage(FALSE, pImageDoc->GetImageView());
-		LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Image Printer] Printing %s..."), pImageDoc->GetPathName()), BasicColors::green);
+		LOG_OUTPUT_MESSAGE_COLOR(AfxCStringFormat(_T("> [Image Printer] Printing %s..."), pImageDoc->GetPathName()), BasicColors::orange);
 	}
 }
 

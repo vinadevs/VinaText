@@ -65,7 +65,7 @@ public:
 #endif
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	void AddLogMessage(CString str, COLORREF col = RGB(200, 200, 200));
+	void AddLogMessage(const CString& str, COLORREF color);
 	int GetNumVisibleLines(CRichEditCtrl * pCtrl);
 	void ClearAll();
 	void UpdateDlgFont();
@@ -95,7 +95,7 @@ public:
 
 // Implementation
 public:
-	void AddLogMessage( CString strMsg, COLORREF col = 0 );
+	void AddLogMessage(const CString& strMsg, COLORREF color);
 	void ClearAll();
 
 protected:

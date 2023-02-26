@@ -76,7 +76,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 	// create folders first
 	int nCountCreated = 0;
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
-	LOG_OUTPUT_MESSAGE_COLOR(_T("\n[Multiple Paths Session: ") + strCurrentTime + _T("]\n"), BasicColors::green);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("\n[Multiple Paths Session: ") + strCurrentTime + _T("]\n"), BasicColors::orange);
 	for (int i = 0; i < arrPath.GetSize(); ++i)
 	{
 		CString strPathData = arrPath[i].Trim();
@@ -92,7 +92,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 				// Try to create the new folder
 				if (!PathUtils::CreateDirectoryIfNotExited(strFullPath))
 				{
-					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Path Existed-Admin Right] Failed to create folder: ") + strPathData, BasicColors::orangered);
+					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Path Existed-Admin Right] Failed to create folder: ") + strPathData, BasicColors::orange);
 				}
 				else
 				{
@@ -103,7 +103,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 		}
 		else
 		{
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Invalid Data] Failed to create folder: ") + strPathData, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Invalid Data] Failed to create folder: ") + strPathData, BasicColors::orange);
 		}
 	}
 	// create files
@@ -121,7 +121,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 			{
 				if (!m_bOverwriteFileIfExisted && PathFileExists(strFullPath))
 				{
-					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Path Existed] Failed to create file: ") + strPathData, BasicColors::orangered);
+					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Path Existed] Failed to create file: ") + strPathData, BasicColors::orange);
 					continue;
 				}
 				// Try to create the new file
@@ -134,7 +134,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 					0);
 				if (!hCreateFile)
 				{
-					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Admin Right] Failed to create file: ") + strPathData, BasicColors::orangered);
+					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Admin Right] Failed to create file: ") + strPathData, BasicColors::orange);
 				}
 				else
 				{
@@ -146,7 +146,7 @@ void CCreateNewMultiplePathDlg::OnBnClickedOk()
 		}
 		else
 		{
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Invalid Data] Data line is not followed by format [full_path, path_type] : ") + strPathData, BasicColors::orangered);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Invalid Data] Data line is not followed by format [full_path, path_type] : ") + strPathData, BasicColors::orange);
 		}
 	}
 	LOG_OUTPUT_MESSAGE_FORMAT(_T("\n"));

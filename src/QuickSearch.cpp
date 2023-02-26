@@ -225,7 +225,7 @@ void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 			pEditor->GetText(strScript);
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
-			AppUtils::SplitCString(strScript, listLine);
+			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int MatchedWords = 0;
 			ResultSearchData._nMatchedFiles = 1;

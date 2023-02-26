@@ -47,7 +47,7 @@ static unsigned int pos_of_char(const unsigned char chr) {
 		// 2020-10-23: Throw std::exception rather than const char*
 		//(Pablo Martin-Gomez, https://github.com/Bouska)
 		//
-		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Base64 Converter] Input text is not valid base64-encoded data."), BasicColors::orangered); return 0;
+		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Base64 Converter] Input text is not valid base64-encoded data."), BasicColors::orange); return 0;
 }
 
 static std::string insert_linebreaks(std::string str, size_t distance) {
