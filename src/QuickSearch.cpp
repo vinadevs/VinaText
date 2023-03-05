@@ -131,7 +131,7 @@ void CQuickSearch::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOO
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 					}
 				}
 			}
@@ -167,7 +167,7 @@ void CQuickSearch::DoSeachPrevious(CString strSearchWhat)
 				{
 					pEditor->SetFirstVisibleLine(nVisualLine);
 					pEditor->GotoPosition(nCurPos);
-					AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+					AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 				}
 			}
 			strSearchWhat.UnlockBuffer();
@@ -225,6 +225,7 @@ void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 			pEditor->GetText(strScript);
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
+			listLine.reserve(pEditor->GetLineCount());
 			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int MatchedWords = 0;

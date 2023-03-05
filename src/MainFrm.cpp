@@ -206,6 +206,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_HIDECURRENTUSERFOLDER, &CMainFrame::OnUpdateToolsHideCurrentUserFolder)
 	ON_COMMAND(ID_MDI_TABBED_DOCUMENT, &CMainFrame::OnMdiTabbedDocument)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TABBED_DOCUMENT, &CMainFrame::OnUpdateMdiTabbedDocument)	
+	ON_COMMAND(ID_APP_THEME_LIGHT, &CMainFrame::OnVinaTextThemeLight)
+	ON_COMMAND(ID_APP_THEME_MONOKAI, &CMainFrame::OnVinaTextThemeMonokai)
+	ON_COMMAND(ID_APP_THEME_SIERRABLUE, &CMainFrame::OnVinaTextThemeSierraBlue)
 	ON_COMMAND(ID_VIEW_APP_SETTINGS, &CMainFrame::OnVinaTextSettings)
 	ON_COMMAND(ID_TOOLS_SETROOTFOLDER, &CMainFrame::OnToolsSetRootFolder)
 	ON_COMMAND(ID_TOOLS_REMOVE_FOLDER, &CMainFrame::OnToolsRemoveFolder)
@@ -373,13 +376,12 @@ LRESULT CMainFrame::OnMainFrameUpdate(WPARAM wParam, LPARAM lParam)
 void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIFrameWndEx::OnSize(nType, cx, cy);
-	//ResizeQuickSearchDialog();
 }
 
 void CMainFrame::OnMoving(UINT nSide, LPRECT lpRect)
 {
 	CMDIFrameWndEx::OnMoving(nSide, lpRect);
-	//ResizeQuickSearchDialog();
+	ResizeQuickSearchDialog();
 }
 
 void CMainFrame::OnDropFiles(HDROP hDropInfo)
@@ -1848,6 +1850,27 @@ void CMainFrame::OnUpdateToolsHideCurrentUserFolder(CCmdUI* pCmdUI)
 	pCmdUI->SetCheck(!GetFileExplorerCtrl().GetShowCurrentUserFolder());
 }
 
+void CMainFrame::OnVinaTextThemeLight()
+{
+	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
+	AppUtils::UpdateSettingsForVinatext();
+	AfxMessageBox(_T("Theme changed to light."), MB_ICONINFORMATION);
+}
+
+void CMainFrame::OnVinaTextThemeMonokai()
+{
+	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
+	AppUtils::UpdateSettingsForVinatext();
+	AfxMessageBox(_T("Theme changed to monokai."), MB_ICONINFORMATION);
+}
+
+void CMainFrame::OnVinaTextThemeSierraBlue()
+{
+	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
+	AppUtils::UpdateSettingsForVinatext();
+	AfxMessageBox(_T("Theme changed to sierra blue."), MB_ICONINFORMATION);
+}
+
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 {
 	switch (pMsg->message)
@@ -1870,7 +1893,10 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 					{
 						CString strTabLabel;
 						tabGroup->GetTabLabel(i, strTabLabel);
-						if (i != tabIndex && pDoc->GetTitle() != strTabLabel)
+						if (strTabLabel == _T("vinatext-app-settings.json")) {
+							tabGroup->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
+						}
+						else if (i != tabIndex && pDoc->GetTitle() != strTabLabel)
 						{
 							tabGroup->SetTabBkColor(i, MDITAB_NON_ACTIVE_COLOR);
 						}
@@ -1886,7 +1912,10 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 					{
 						CString strTabLabel;
 						tabGroup->GetTabLabel(i, strTabLabel);
-						if (pDoc->GetTitle() != strTabLabel)
+						if (strTabLabel == _T("vinatext-app-settings.json")) {
+							tabGroup->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
+						}
+						else if (pDoc->GetTitle() != strTabLabel)
 						{
 							tabGroup->SetTabBkColor(i, MDITAB_NON_ACTIVE_COLOR);
 						}
@@ -2916,8 +2945,10 @@ void CMainFrame::OnHighLightMDIActiveTab()
 	{
 		CString strTabLabel;
 		pMDITabs->GetTabLabel(i, strTabLabel);
-
-		if (pDoc->GetTitle() == strTabLabel)
+		if (strTabLabel == _T("vinatext-app-settings.json")) {
+			pMDITabs->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
+		}
+		else if (pDoc->GetTitle() == strTabLabel)
 		{
 			pMDITabs->SetTabBkColor(i, AppSettingMgr.m_ActiveTabColor);
 		}
@@ -2927,7 +2958,6 @@ void CMainFrame::OnHighLightMDIActiveTab()
 		}
 	}
 	pMDITabs->RedrawWindow();
-	ResizeQuickSearchDialog();
 }
 
 void CMainFrame::OnUpdateIconReadOnlyTab()
@@ -3065,8 +3095,19 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 
 void CMainFrame::OnVinaTextSettings()
 {
-	VinaTextSettingDlg dlg;
-	dlg.DoModal();
+	/*VinaTextSettingDlg dlg;
+	dlg.DoModal();*/
+	// use file setting temporary
+	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
+	if (PathFileExists(strJsonFilePath))
+	{
+		AppUtils::CreateDocumentFromFile(strJsonFilePath);
+		AfxMessageBox(_T("After changed settings, please restart application to apply it."), MB_ICONINFORMATION);
+	}
+	else
+	{
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strJsonFilePath);
+	}
 }
 
 void CMainFrame::OnToolsRemoveFolder()
@@ -3338,9 +3379,13 @@ void CMainFrame::ResizeQuickSearchDialog()
 		CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 		if (pParentDocument && pEditorActiveDoc)
 		{
-			if (pEditorActiveDoc == pParentDocument)
+			if (IsSameMDITabGroup(pParentDocument->GetEditorView(), pEditorActiveDoc->GetEditorView()))
 			{
-				CEditorCtrl* pEditor = pEditorActiveDoc->GetEditorCtrl();
+				m_pQuickSearchDialog->ShowWindow(SW_HIDE);
+			}
+			else
+			{
+				CEditorCtrl* pEditor = pParentDocument->GetEditorCtrl();
 				if (pEditor)
 				{
 					CRect rect;
@@ -3371,10 +3416,6 @@ void CMainFrame::ResizeQuickSearchDialog()
 						m_pQuickSearchDialog->ShowWindow(SW_SHOW);
 					}
 				}
-			}
-			else if (IsSameMDITabGroup(pParentDocument->GetEditorView(), pEditorActiveDoc->GetEditorView()))
-			{
-				m_pQuickSearchDialog->ShowWindow(SW_HIDE);
 			}
 		}
 		else
@@ -4368,7 +4409,7 @@ void CMainFrame::OnToolPythonPipWindow()
 {
 	if (AppSettingMgr.m_strPythonFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("Python Pip path does not exist, please set up it in Preference > Application Preference > File System Setting!"));
+		AfxMessageBox(_T("Python Pip path does not exist, please set up it in Preference > Settings!"));
 		return;
 	}
 	if (FALSE == PathFileExists(AppSettingMgr.m_strPythonFolderPath))
@@ -4392,7 +4433,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 {
 	if (AppSettingMgr.m_strNodeJSFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > Application Preference > File System Setting!"));
+		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > Settings!"));
 		return;
 	}
 	if (FALSE == PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))

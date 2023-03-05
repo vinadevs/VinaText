@@ -28,6 +28,7 @@ public:
 	void InitGotoInfoFromEditor(CString strSearchWhat);
 	void InitGotoRangeByDocument();
 	void ClearAll();
+	void UpdateUIVisual();
 
 protected:
 	std::unique_ptr<CScrollHelper> m_pScrollHelper;

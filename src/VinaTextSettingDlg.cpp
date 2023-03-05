@@ -104,10 +104,7 @@ void VinaTextSettingDlg::UpdateSettings()
 	m_SettingDlgFileSystem.UpdateGUISettings(TRUE);
 	// reflect new changes
 	UpdateApplicationLook();
-	AppUtils::UpdateSettingForEditors();
-	UPDATE_MAIN_FRAME(MAIN_FRAME_UPDATE_MSG::MAIN_FRAME_UPDATE_ALL_DOCKPANE,
-		MAIN_FRAME_UPDATE_HINT::MAIN_FRAME_UPDATE_HINT_SETTING_CHANGED);
-
+	AppUtils::UpdateSettingsForVinatext();
 }
 
 void VinaTextSettingDlg::OnBnClickedApply()

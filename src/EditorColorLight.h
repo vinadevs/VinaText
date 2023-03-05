@@ -1653,20 +1653,20 @@ namespace EditorColorLight
 		"@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_json[] =
-	{ { SCE_JSON_DEFAULT,		editorTextColor },
+	{ { SCE_JSON_DEFAULT,		red },
 	{ SCE_JSON_NUMBER,		number },
-	{ SCE_JSON_STRING,			editorTextColor },
-	{ SCE_JSON_STRINGEOL,				editorTextColor },
-	{ SCE_JSON_PROPERTYNAME,				red },
-	{ SCE_JSON_ESCAPESEQUENCE,			editorTextColor },
-	{ SCE_JSON_LINECOMMENT,				red },
-	{ SCE_JSON_BLOCKCOMMENT,			red },
+	{ SCE_JSON_STRING,			red },
+	{ SCE_JSON_STRINGEOL,				red },
+	{ SCE_JSON_PROPERTYNAME,				editorTextColor },
+	{ SCE_JSON_ESCAPESEQUENCE,			red },
+	{ SCE_JSON_LINECOMMENT,				editorTextColor },
+	{ SCE_JSON_BLOCKCOMMENT,			editorTextColor },
 	{ SCE_JSON_OPERATOR,		builtin },
 	{ SCE_JSON_URI,				editorTextColor },
 	{ SCE_JSON_COMPACTIRI,				editorTextColor },
-	{ SCE_JSON_KEYWORD,				red },
-	{ SCE_JSON_LDKEYWORD,    red },
-	{ SCE_JSON_ERROR,				red },
+	{ SCE_JSON_KEYWORD,				editorTextColor },
+	{ SCE_JSON_LDKEYWORD,    editorTextColor },
+	{ SCE_JSON_ERROR,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------

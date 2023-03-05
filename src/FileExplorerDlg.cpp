@@ -95,8 +95,7 @@ BOOL CFileExplorerDlg::OnInitDialog()
 	// init control
 	m_FileExplorerCtrl.SendMessage(TVM_SETEXTENDEDSTYLE, 0, TVS_EX_DOUBLEBUFFER);
 	m_FileExplorerCtrl.PopulateTree();
-	m_FileExplorerCtrl.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
-	m_FileExplorerCtrl.SetBkColor(AppSettingMgr.m_ThemeColor);
+	UpdateUIVisual();
 	m_FileExplorerCtrl.EnableToolTips(TRUE);
 	if (AppSettingMgr.m_bUseWin10ExplorerStyle)
 	{
@@ -151,6 +150,7 @@ BOOL CFileExplorerDlg::OnInitDialog()
 
 void CFileExplorerDlg::UpdateUIVisual()
 {
+	m_FileExplorerCtrl.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 	m_FileExplorerCtrl.SetBkColor(AppSettingMgr.m_ThemeColor);
 }
 

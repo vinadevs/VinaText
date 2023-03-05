@@ -351,7 +351,7 @@ void CQuickReplace::OnBnClickedEditorQuickReplaceNext()
 			int nPos = pActiveEditor->ReplaceNext(strSearchWhat, strReplaceWith);
 			if (nPos == -1)
 			{
-				AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+				AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 			}
 		}
 		else
@@ -487,7 +487,7 @@ void CQuickReplace::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BO
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 					}
 				}
 			}

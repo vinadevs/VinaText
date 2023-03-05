@@ -806,7 +806,7 @@ void EditorLexerLight::Init_xml_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 
 void EditorLexerLight::Init_json_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
 {
-	pEditorCtrl->SetLexer("kix");
+	pEditorCtrl->SetLexer("cpp");
 	pEditorCtrl->SetKeywords(EditorColorLight::g_json_KeyWords);
 	for (int i = 0; EditorColorLight::g_rgb_Syntax_json[i].iItem != -1; i++)
 	{

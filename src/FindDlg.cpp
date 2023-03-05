@@ -18,6 +18,7 @@
 #include "VinaTextProgressBar.h"
 #include "AppSettings.h"
 #include "FileUtil.h"
+#include "GuiUtils.h"
 
 #pragma warning(disable : 4244)
 
@@ -200,6 +201,7 @@ void CFindDlg::SearchAllOnFileFromEditor(const CString& strSearchWhat)
 			pEditor->GetText(strScript);
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
+			listLine.reserve(pEditor->GetLineCount());
 			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int count = 0;
@@ -326,7 +328,7 @@ void CFindDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOOL bS
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 					}
 				}
 			}
@@ -364,7 +366,7 @@ void CFindDlg::DoSeachPrevious(CString strSearchWhat)
 				{
 					pEditor->SetFirstVisibleLine(nVisualLine);
 					pEditor->GotoPosition(nCurPos);
-					AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+					AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 				}
 			}
 			strSearchWhat.UnlockBuffer();
@@ -449,6 +451,7 @@ void CFindDlg::OnSearchAll()
 				pEditor->GetText(strScript);
 				if (strScript.IsEmpty()) return;
 				std::vector<CString> listLine;
+				listLine.reserve(pEditor->GetLineCount());
 				AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 				unsigned int curLine = 0;
 				unsigned int MatchedWords = 0;
@@ -511,6 +514,7 @@ void CFindDlg::OnSearchAll()
 							pEditor->GetText(strScript);
 							if (strScript.IsEmpty()) continue;
 							std::vector<CString> listLine;
+							listLine.reserve(pEditor->GetLineCount());
 							AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 							unsigned int curLine = 0;
 							for (int i = 0; i < listLine.size(); ++i)
@@ -1120,6 +1124,11 @@ void CFindDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings & setting
 		EnableButtons(TRUE);
 	}
 	UpdateData(FALSE);
+}
+
+void CFindDlg::UpdateUIVisual()
+{
+	GuiUtils::ForceRedrawCWnd(this);
 }
 
 void CFindDlg::OnSearchEditChange()

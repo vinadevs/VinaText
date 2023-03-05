@@ -80,7 +80,6 @@ void SettingDlgCustomize::InitActiveTabColorCombobox()
 {
 	m_ActiveTabColorCombo.ResetContent();
 	m_ActiveTabColorCombo.AddString(_T("Gray Color"));
-	m_ActiveTabColorCombo.AddString(_T("Orrange Color"));
 	m_ActiveTabColorCombo.AddString(_T("Green Color"));
 	m_ActiveTabColorCombo.AddString(_T("Yellow Color"));
 	switch (AppSettingMgr.m_ActiveTabColor)
@@ -88,14 +87,11 @@ void SettingDlgCustomize::InitActiveTabColorCombobox()
 	case EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY:
 		m_ActiveTabColorCombo.SetCurSel(0);
 		break;
-	case EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_ORRANGE:
+	case EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GREEN:
 		m_ActiveTabColorCombo.SetCurSel(1);
 		break;
-	case EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GREEN:
-		m_ActiveTabColorCombo.SetCurSel(2);
-		break;
 	case EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_YELLOW:
-		m_ActiveTabColorCombo.SetCurSel(3);
+		m_ActiveTabColorCombo.SetCurSel(2);
 		break;
 	default:
 		m_ActiveTabColorCombo.SetCurSel(0);
@@ -382,12 +378,9 @@ void SettingDlgCustomize::FromActiveTabColorCombobox()
 		AppSettingMgr.m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY;
 		break;
 	case 1:
-		AppSettingMgr.m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_ORRANGE;
-		break;
-	case 2:
 		AppSettingMgr.m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GREEN;
 		break;
-	case 3:
+	case 2:
 		AppSettingMgr.m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_YELLOW;
 		break;
 	default:

@@ -1209,6 +1209,117 @@
     <Image Include="res\VinaTextDoc.ico">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\res\app.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\editor.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\image.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\pdf.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\media.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\host.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\fileexplorer.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\terminal.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\msinternet.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\googlechrome.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\mozillafirefox.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\mspaint.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\msppt.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\msexcel.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\msword.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\docreadonly.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\explorerwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\logwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\searchwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\searchresultwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\buildwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\bookmarkwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\fileresultwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\search.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\replace.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\goto.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\brackets_outline.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\autocomplete.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\breakpointwindow.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\settingtab.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Toolbar.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Toolbar24.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Debugger.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Debugger24.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Explorertoolbar16.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Explorertoolbar24.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\res\Folder.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\tfdropcopy.cur">
@@ -1243,6 +1354,15 @@
     </None>
     <None Include="VinaText.aps" />
     <None Include="res\VinaText.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\tfdropcopy.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\tfnodropcopy.cur">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\res\tfnodropmove.cur">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

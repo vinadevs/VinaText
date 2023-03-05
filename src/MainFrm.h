@@ -282,6 +282,9 @@ public:
 	afx_msg void OnUpdateToolsHideMyDocuments(CCmdUI* pCmdUI);
 	afx_msg void OnToolsHideCurrentUserFolder();
 	afx_msg void OnUpdateToolsHideCurrentUserFolder(CCmdUI* pCmdUI);
+	afx_msg void OnVinaTextThemeLight();
+	afx_msg void OnVinaTextThemeMonokai();
+	afx_msg void OnVinaTextThemeSierraBlue();
 	afx_msg void OnVinaTextSettings();
 	afx_msg void OnToolsRemoveFolder();
 	afx_msg void OnToolsBackToOriginalExplorer();

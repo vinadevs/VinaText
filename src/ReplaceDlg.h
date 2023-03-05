@@ -43,6 +43,7 @@ public:
 
 	SycnFindReplaceSettings GetSycnFindReplaceSettings();
 	void SyncSearchReplaceSettings(const SycnFindReplaceSettings& settings);
+	void UpdateUIVisual();
 
 protected:
 	BOOL	m_bMatchcase;

@@ -356,6 +356,7 @@ CString AppUtils::GetSubCStringBetweenTwoDemiliter(const CString & strTarget, co
 	return strTarget.Mid(nStartPos + 1, nStopPos - nStartPos - 1);
 }
 
+// https://www.codeproject.com/Tips/676464/How-to-Parse-Empty-Tokens-using-CString-Tokenize
 void AppUtils::SplitCString(const CString & strFields, const CString & strDelimiters, CStringArray & arFields, BOOL bForceTrim)
 {
 	arFields.RemoveAll();
@@ -414,33 +415,24 @@ void AppUtils::SplitCString(const CString& strFields, const CString& strDelimite
 	}
 }
 
-void AppUtils::SplitCString(const CString & strFields, const CString& strDelimiters, std::vector<CString>& arFields, BOOL bForceTrim)
+void AppUtils::SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields)
 {
-	arFields.clear();
-	if (!strFields.IsEmpty() && !strDelimiters.IsEmpty())
+	// Start at the beginning
+	int lastPos = 0;
+	// Find position of the first delimiter
+	int pos = strFields.Find(strDelimiters, lastPos);
+	// While we still have string to read
+	while (std::wstring::npos != pos && std::wstring::npos != lastPos)
 	{
-		int nPosition = 0, nTotalFields = 0;
-		do
-		{
-			int nOldPosition = nPosition;
-			CString strField = strFields.Tokenize(strDelimiters, nPosition);
-			if (nPosition != -1)
-			{
-				nTotalFields += (nPosition - nOldPosition - strField.GetLength());
-			}
-			else
-			{
-				nTotalFields += (strFields.GetLength() + 1 - nOldPosition);
-			}
-			if (bForceTrim)
-			{
-				if (!strField.Trim().IsEmpty())
-					arFields.push_back(strField);
-			}
-			else
-				arFields.push_back(strField);
-		} while (nPosition != -1 && nPosition <= strFields.GetLength());
+		// Found a token, add it to the vector
+		arFields.push_back(strFields.Mid(lastPos, pos - lastPos));
+		// Look at the next token instead of skipping delimiters
+		lastPos = pos + 1;
+		// Find the position of the next delimiter
+		pos = strFields.Find(strDelimiters, lastPos);
 	}
+	// Push the last token
+	arFields.push_back(strFields.Mid(lastPos, pos - lastPos));
 }
 
 std::wstring AppUtils::GetUnicodeWString(const std::string& multibyte, bool stopAtNull)
@@ -1777,38 +1769,6 @@ std::vector<CEditorCtrl*> AppUtils::GetAllEditors()
 	return vecEditors;
 }
 
-void AppUtils::UpdateSettingForEditors()
-{
-	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
-	while (posTemplate)
-	{
-		CDocTemplate* pDocTemplate = AfxGetApp()->GetNextDocTemplate(posTemplate);
-		if (pDocTemplate)
-		{
-			POSITION posDoc = pDocTemplate->GetFirstDocPosition();
-			while (posDoc)
-			{
-				CDocument* pDocument = pDocTemplate->GetNextDoc(posDoc);
-				if (pDocument)
-				{
-					if (pDocument->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
-					{
-						CEditorDoc* pTmpDoc = dynamic_cast<CEditorDoc*>(pDocument);
-						if (pTmpDoc)
-						{
-							CEditorCtrl* pEditor = pTmpDoc->GetEditorCtrl();
-							if (pEditor)
-							{
-								pEditor->InitilizeSetting(pTmpDoc->GetDocLanguageDatabase());
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 void AppUtils::ResizeAllViews()
 {
 	CMainFrame* pFrame = AppUtils::GetMainFrame();
@@ -2278,6 +2238,40 @@ BOOL AppUtils::IsLanguageSupportLexer(VINATEXT_SUPPORTED_LANGUAGE language)
 		}
 	}
 	return FALSE;
+}
+
+void AppUtils::UpdateSettingsForVinatext()
+{
+	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
+	while (posTemplate)
+	{
+		CDocTemplate* pDocTemplate = AfxGetApp()->GetNextDocTemplate(posTemplate);
+		if (pDocTemplate)
+		{
+			POSITION posDoc = pDocTemplate->GetFirstDocPosition();
+			while (posDoc)
+			{
+				CDocument* pDocument = pDocTemplate->GetNextDoc(posDoc);
+				if (pDocument)
+				{
+					if (pDocument->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
+					{
+						CEditorDoc* pTmpDoc = dynamic_cast<CEditorDoc*>(pDocument);
+						if (pTmpDoc)
+						{
+							CEditorCtrl* pEditor = pTmpDoc->GetEditorCtrl();
+							if (pEditor)
+							{
+								pEditor->InitilizeSetting(pTmpDoc->GetDocLanguageDatabase());
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	UPDATE_MAIN_FRAME(MAIN_FRAME_UPDATE_MSG::MAIN_FRAME_UPDATE_ALL_DOCKPANE,
+		MAIN_FRAME_UPDATE_HINT::MAIN_FRAME_UPDATE_HINT_SETTING_CHANGED);
 }
 
 ///////////////// GLOBAL HELPERS //////////////////////////

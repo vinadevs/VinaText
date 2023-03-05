@@ -451,5 +451,8 @@ unsigned int CSearchAndReplaceWindowDlg::GetSearchOption()
 
 void CSearchAndReplaceWindowDlg::UpdateUIVisual()
 {
+	m_FindDlg.UpdateUIVisual();
+	m_FindAndReplaceDlg.UpdateUIVisual();
+	m_GotoDlg.UpdateUIVisual();
 	m_BracketOutLineDlg.UpdateUIVisual();
 }

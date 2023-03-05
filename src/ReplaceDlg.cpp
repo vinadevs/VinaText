@@ -20,6 +20,7 @@
 #include "AppSettings.h"
 #include "AppSettings.h"
 #include "FileUtil.h"
+#include "GuiUtils.h"
 
 // CFindAndReplaceDlg dialog
 
@@ -204,7 +205,7 @@ void CFindAndReplaceDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBo
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 					}
 				}
 			}
@@ -255,7 +256,7 @@ void CFindAndReplaceDlg::OnReplaceWith()
 			int nPos = pActiveEditor->ReplaceNext(strSearchWhat, strReplaceWith);
 			if (nPos == -1)
 			{
-				AfxMessageBox(_T("WORD NOT FOUND."), MB_ICONINFORMATION);
+				AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
 			}
 		}
 		else
@@ -409,6 +410,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 							bHasTrailingReturn = TRUE;
 						}
 						std::vector<CString> listLine;
+						listLine.reserve(pEditor->GetLineCount());
 						AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 						std::wstring inputfile = AppUtils::CStringToWStd(strFile);
 						std::wstring replace_what = AppUtils::CStringToWStd(strSearchWhat);
@@ -1077,6 +1079,11 @@ void CFindAndReplaceDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings
 		EnableButtons(TRUE);
 	}
 	UpdateData(FALSE);
+}
+
+void CFindAndReplaceDlg::UpdateUIVisual()
+{
+	GuiUtils::ForceRedrawCWnd(this);
 }
 
 BOOL CFindAndReplaceDlg::AskBeforeContinueReplace(const CString& strWhereToReplace)

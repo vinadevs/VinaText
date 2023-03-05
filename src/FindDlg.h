@@ -38,6 +38,7 @@ public:
 
 	SycnFindReplaceSettings GetSycnFindReplaceSettings();
 	void SyncSearchReplaceSettings(const SycnFindReplaceSettings& settings);
+	void UpdateUIVisual();
 
 	enum { IDD = IDD_FIND };
 

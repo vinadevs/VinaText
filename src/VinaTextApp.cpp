@@ -878,17 +878,17 @@ void CVinaTextApp::OnFileOpen()
 	// Default File Filter
 	CString strDefaultFilter = PathUtils::GetDataBaseFileFilter();
 
-	CString strSavePath;
+	CString strInitialPath;
 	if (AppSettingMgr.m_bUseInitialFilePickerPath)
 	{
-		strSavePath = AppSettingMgr.m_strInitialFilePickerPath;
+		strInitialPath = AppSettingMgr.m_strInitialFilePickerPath;
 	}
 
 	// Create a file open dialog
 	CFileDialog fdOpen(TRUE, NULL, NULL, OFN_FILEMUSTEXIST | OFN_ALLOWMULTISELECT | OFN_ENABLESIZING, strDefaultFilter);
 
 	// Set current directory for file open dialog
-	fdOpen.m_ofn.lpstrInitialDir = strSavePath;
+	fdOpen.m_ofn.lpstrInitialDir = strInitialPath;
 
 	// Set title
 	fdOpen.m_ofn.lpstrTitle = _T("Open File (Accept multiple files)");

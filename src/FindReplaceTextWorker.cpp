@@ -197,6 +197,7 @@ void CReplaceWorker::ReplaceInFolder()
 							bHasTrailingReturn = TRUE;
 						}
 						std::vector<CString> listLine;
+						listLine.reserve(pEditor->GetLineCount());
 						AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
 						std::wstring inputfile = AppUtils::CStringToWStd(pDocEditor->GetPathName());
 						std::wstring replace_what = AppUtils::CStringToWStd(m_strSearchWhat);

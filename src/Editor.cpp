@@ -96,7 +96,6 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 {
 	DoCommand(SCI_SETIMEINTERACTION, SC_IME_WINDOWED);
 
-	AppSettingMgr.m_ThemeColor = THEME_BACKGROUND_COLOR_LIGHT;
 	// Preset theme colors
 	if (IS_LIGHT_THEME)
 	{

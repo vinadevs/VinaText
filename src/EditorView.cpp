@@ -64,7 +64,7 @@
 #define TRACKING_BAR_LEFT_POSITION 5
 #define TRACKING_BAR_LINE_WIDTH 3
 #define TRACKING_BAR_OFFSET_TOP 25
-#define TRACKING_BAR_OFFSET_BOTTOM 60
+#define TRACKING_BAR_OFFSET_BOTTOM 90
 
 // keep current view
 #define BACKUP_VISIBLE_EDITOR_STATE \
@@ -6508,6 +6508,7 @@ void CEditorView::OnSize(UINT nType, int cx, int cy)
 	{
 		AdjustEditorPosition(cx, cy);
 	}
+	AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
 }
 
 void CEditorView::OnSetFocus(CWnd * pOldWnd)
@@ -7358,7 +7359,10 @@ CString CEditorView::TranlateText(CString strSelectedText, int nLineEnd)
 		return strSelectedText;
 	}
 
-	AppUtils::ReplaceAllInWStdString(strTranlatedText, L"\\r\\n", L"\n");
+	if (m_EditorCtrl.GetEOLCString() == _T("\r\n"))
+		AppUtils::ReplaceAllInWStdString(strTranlatedText, L"\\r\\n", L"\n");
+	else
+		AppUtils::ReplaceAllInWStdString(strTranlatedText, L"\\n", L"\n");
 	AppUtils::ReplaceAllInWStdString(strTranlatedText, L"\"", L"");
 	return AppUtils::WStdToCString(strTranlatedText); 
 }
@@ -7623,9 +7627,7 @@ void CEditorView::ReupdateTrackingBar()
 			m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
 		}
 	}
-	CMainFrame* pFrame = AppUtils::GetMainFrame();
-	if (!pFrame) return;
-	pFrame->ResizeQuickSearchDialog();
+	AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
 }
 
 void CEditorView::OnDocumentShowTrackingBar()

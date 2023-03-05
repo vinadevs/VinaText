@@ -14,6 +14,7 @@
 #include "Editor.h"
 #include "ScrollHelper.h"
 #include "AppSettings.h"
+#include "GuiUtils.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -90,6 +91,11 @@ void CGotoDlg::ClearAll()
 	m_EditLine.SetWindowTextW(_T(""));
 	m_EditPointX.SetWindowTextW(_T(""));
 	m_EditPointY.SetWindowTextW(_T(""));
+}
+
+void CGotoDlg::UpdateUIVisual()
+{
+	GuiUtils::ForceRedrawCWnd(this);
 }
 
 void CGotoDlg::DoDataExchange(CDataExchange* pDX)

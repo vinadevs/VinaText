@@ -64,7 +64,7 @@ namespace AppUtils
 	CString GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, CStringArray& arFields, BOOL bForceTrim = FALSE);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, std::list<CString>& arFields, BOOL bForceTrim = FALSE);
-	void SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields, BOOL bForceTrim = FALSE);
+	void SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields); // recommend version
 	std::wstring GetUnicodeWString(const std::string & multibyte, bool stopAtNull);
 	void SetCurrentCodePage(unsigned int uiCodePage);
 	unsigned int GetCurrentCodePage();
@@ -100,7 +100,6 @@ namespace AppUtils
 	std::vector<CDocument*> GetAllDocuments();
 	std::vector<CDocument*> GetAllDocumentTypes(DOCUMENT_TYPE type);
 	std::vector<CEditorCtrl*> GetAllEditors();
-	void UpdateSettingForEditors();
 	void ResizeAllViews();
 	void SyncActionAllEditorDocuments(std::function<void(CEditorDoc* pDoc)> pFunctor, CEditorDoc* pExcludeDoc = NULL);
 	BOOL IsDocumentExisted(CString strFile);
@@ -139,6 +138,7 @@ namespace AppUtils
 	void CreateNewEditorWithText(const CString & strTitle, const CString & strText);
 	CString GetFileTypeByExtension(const CString& strFileExt);
 	CString GetFileFormatDescription(const CString& strFileExt);
+	void UpdateSettingsForVinatext();
 }
 
 //////////////////////////////////
