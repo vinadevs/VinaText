@@ -526,29 +526,29 @@ void CVinaTextDebugger::WatchVariableType(const CString & strVariable)
 	{
 		if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Python Object Type] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Python Object Type] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_VARS_TYPE_PDB + strVariable + _T(")");
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C++ Object Type] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C++ Object Type] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_VARS_TYPE_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C Object Type] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C Object Type] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_VARS_TYPE_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch JavaScript Object Type] : NodeJS debugger has not supported view object type yet..."), RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch JavaScript Object Type] : NodeJS debugger has not supported view object type yet..."), BasicColors::light_orange);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Java Object Type] : JVM debugger has not supported view object type yet..."), RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Java Object Type] : JVM debugger has not supported view object type yet..."), BasicColors::light_orange);
 		}
 		RunNextCommandLine();
 	}
@@ -564,32 +564,32 @@ void CVinaTextDebugger::WatchVariableValue(const CString & strVariable)
 	{
 		if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Python Object Value] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Python Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRETTY_PRINT_VARS_PDB + strVariable + _T(")");
 			m_strWatchNonObjectCommand = CMD_PRETTY_PRINT_PDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C++ Object Value] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C++ Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C Object Value] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch JavaScript Object Value] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch JavaScript Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_NODEJS + strVariable + _T("\")");
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA)
 		{
-			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Java Object Value] : ") + strVariable, RGB(253, 151, 31));
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Java Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_VARS_JDB + strVariable + _T("\")");
 			PuskCommandLineToQueue(strCommand);
 		}

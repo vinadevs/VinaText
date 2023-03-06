@@ -807,7 +807,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Return Original Image\tCtrl+R", ID_IMAGE_RETURN_ORIGINAL
     END
-    POPUP "Video"
+    POPUP "Media"
     BEGIN
         MENUITEM "Play\tSpace",                 ID_VIDEO_PLAY
         MENUITEM "Pause\tSpace",                ID_VIDEO_PAUSE

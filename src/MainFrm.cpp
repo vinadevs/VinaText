@@ -4409,7 +4409,7 @@ void CMainFrame::OnToolPythonPipWindow()
 {
 	if (AppSettingMgr.m_strPythonFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("Python Pip path does not exist, please set up it in Preference > Settings!"));
+		AfxMessageBox(_T("Python Pip3 path does not exist, please set up it in Preference > General Settings > PythonFolderPath!"));
 		return;
 	}
 	if (FALSE == PathFileExists(AppSettingMgr.m_strPythonFolderPath))
@@ -4433,7 +4433,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 {
 	if (AppSettingMgr.m_strNodeJSFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > Settings!"));
+		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > General Settings > NodeJSFolderPath!"));
 		return;
 	}
 	if (FALSE == PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))

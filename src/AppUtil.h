@@ -29,6 +29,7 @@ namespace BasicColors
 	const COLORREF light_green = RGB(47, 79, 79);
 	const COLORREF red = RGB(255, 0, 0);
 	const COLORREF orange = RGB(255, 69, 0);
+	const COLORREF light_orange = RGB(253, 151, 31);
 	const COLORREF blue = RGB(0, 0, 255);
 	const COLORREF yellow = RGB(235, 245, 0);
 }
@@ -166,7 +167,7 @@ void LOG_OUTPUT_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_T
 void LOG_BUILD_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 // use for worker thread
-void LOG_MESSAGE_FROM_THREAD(LOG_TARGET target, CMainFrame* pFrame, LPCTSTR lpszMsg, COLORREF color, CDocument* pDoc = NULL);
+void LOG_MESSAGE_FROM_THREAD(LOG_TARGET target, CMainFrame* pFrame, LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white, CDocument* pDoc = NULL);
 
 // Docking Window and Frames update
 inline void UPDATE_MAIN_FRAME(UINT uiTarget, UINT uiHint, CDocument* pDoc = NULL)

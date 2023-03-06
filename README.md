@@ -1,9 +1,6 @@
 # VinaText
 A lightweight and fast text editor and file explorer for Windows.
 
-# Overview Application Architecture
-![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/architecure_diagram.png?raw=true)
-
 # Mutiple tabbed views
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_1.png?raw=true)
 
@@ -31,7 +28,7 @@ A lightweight and fast text editor and file explorer for Windows.
 # Text Translator (Vietnamese Only)
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_9.png?raw=true)
 
-# Simple IDE for studying
+# Simple IDE supported debug for Python, Javascript, C, C++
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_10.png?raw=true)
 
 ###################################################################################################

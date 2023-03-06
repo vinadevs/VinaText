@@ -265,7 +265,7 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 			ReadFile(g_hChildStd_OUT_Rd, pbBuffer, sizeof(pbBuffer), &dwRead, NULL);
 			std::fill(tlog, tlog + BUFFER_SIZE_OUTPUT, 0);
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, (LPCSTR)pbBuffer, dwRead, tlog, (sizeof tlog) / 2);
-			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, tlog, RGB(255, 255, 255));
+			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, tlog);
 		}
 
 		PeekNamedPipe(g_hChildStd_OUT_Wr, NULL, 0, NULL, &dwAvailSize, NULL);
@@ -275,7 +275,7 @@ void CEditorThreadCompiler::START_WIN32_PIPE_IPC_MODEL()
 			ReadFile(g_hChildStd_OUT_Wr, pbBuffer, sizeof(pbBuffer), &dwRead, NULL);
 			std::fill(tlog, tlog + BUFFER_SIZE_OUTPUT, 0);
 			MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, (LPCSTR)pbBuffer, dwRead, tlog, (sizeof tlog) / 2);
-			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, tlog, RGB(255, 255, 255));
+			LOG_MESSAGE_FROM_THREAD(LOG_TARGET::BUILD_WINDOW, m_Task.pWndFrame, tlog);
 		}
 
 		if (g_bForceCancelWorker) // cancel from user

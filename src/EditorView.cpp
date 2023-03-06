@@ -1205,24 +1205,24 @@ void CEditorView::LOG_BUILD_INFO_MESSAGE(const CString& strCMD, const CString& m
 	CString strTitleBuild = _T(">------ VinaText build started: Project: %s | Configuration: %s for window x64 ------");
 	strTitleBuild.Format(strTitleBuild, strFileNameNoExt, strConfiguration);
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
-	LOG_BUILD_MESSAGE_COLOR(strTitleBuild, RGB(253, 151, 31));
-	LOG_BUILD_MESSAGE_COLOR(_T("[SystemTime] ") + strCurrentTime, RGB(0, 255, 0));
-	LOG_BUILD_MESSAGE_COLOR(_T("[MainFile] " + strPathName), RGB(0, 255, 0));
-	LOG_BUILD_MESSAGE_COLOR(_T("[Language] " + m_strCurrentDocLanguageName), RGB(0, 255, 0));
-	LOG_BUILD_MESSAGE_COLOR(_T("[CommandLine] ") + strCMD, RGB(0, 255, 0));
+	LOG_BUILD_MESSAGE_COLOR(strTitleBuild, IS_LIGHT_THEME? BasicColors::black : BasicColors::light_orange);
+	LOG_BUILD_MESSAGE_COLOR(_T("[SystemTime] ") + strCurrentTime, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+	LOG_BUILD_MESSAGE_COLOR(_T("[MainFile] " + strPathName), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+	LOG_BUILD_MESSAGE_COLOR(_T("[Language] " + m_strCurrentDocLanguageName), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+	LOG_BUILD_MESSAGE_COLOR(_T("[CommandLine] ") + strCMD, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	if (PathFileExists(strFileBuildconfig))
 	{
 		CString strMessage = _T("[Message] Generated file build configuration %s...");
 		strMessage.Format(strMessage, strFileBuildconfig);
-		LOG_BUILD_MESSAGE_COLOR(strMessage, RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_COLOR(strMessage, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	if (bDebugMode)
 	{
-		LOG_BUILD_MESSAGE_COLOR(_T("[Message] Start build process for debug mode..."), RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_COLOR(_T("[Message] Start build process for debug mode..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	else
 	{
-		LOG_BUILD_MESSAGE_COLOR(_T("[Message] Start build process for release mode..."), RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_COLOR(_T("[Message] Start build process for release mode..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::BUILD_PANE);
 }
@@ -6615,7 +6615,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			{
 				ProcessIndentationTab();
 			}
-			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, typingProfiler, _T("> Benchmark charadded : "), RGB(0, 255, 0));
+			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, typingProfiler, _T("> Benchmark charadded : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
 		break;
 		case SCN_UPDATEUI:
@@ -6673,7 +6673,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					m_EditorCtrl.UpdateMainSelectionInCurrentView();
 				}
 			}
-			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, selectionProfiler, _T("> Benchmark selection : "), RGB(0, 255, 0));
+			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, selectionProfiler, _T("> Benchmark selection : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
 		break;
 		case SCN_MODIFIED:
@@ -8326,7 +8326,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 			LOG_BUILD_MESSAGE_COLOR(_T("\n.................................................................................... END ]\n"));
 		}
 
-		OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Build process finished after : "), RGB(0, 255, 0));
+		OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Build process finished after : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 
 		m_BuildSessionInfo._BuildMeasureTime = 0;
 		if (nExitCode == 0)
@@ -8339,16 +8339,16 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_ASSEMBLY
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_VISUALBASIC)
 			{
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process succeed..."), RGB(0, 255, 0));
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initialize loader for execution..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initialize loader for execution..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
 				m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 				RunExeAfterCompile();
 			}
 			else if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA)
 			{
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Java build process succeed..."), RGB(0, 255, 0));
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Lauching Java virtual machine (JVM), initiating loader for execution..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Java build process succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Lauching Java virtual machine (JVM), initiating loader for execution..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				if (FALSE == PathFileExists(m_BuildSessionInfo._strJavaVMPath))
 				{
 					CString strMsg;
@@ -8357,14 +8357,14 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 					return 1L;
 				}
 				CString strCommandLine = _T("\"") + m_BuildSessionInfo._strJavaVMPath + _T("\" -classpath \"") + m_BuildSessionInfo._strExeFolderPath + _T("\" \"") + m_BuildSessionInfo._strExeFileName + _T("\"");
-				LOG_BUILD_MESSAGE_COLOR(_T("[CommandLine] ") + strCommandLine, RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_COLOR(_T("[CommandLine] ") + strCommandLine, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
 				m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 				RunJavaExeAfterCompile(strCommandLine);
 			}
 			else
 			{
-				LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Message] Build process succeed..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Message] Build process succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 			}
 		}
 		else
@@ -8378,7 +8378,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 	{
 		CString strMsg;
 		strMsg.Format(_T("\n[Message] Build process exit by user, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	else if (threadStatus == CEditorThreadCompiler::THREAD_STATUS::THREAD_STATUS_FAILED)
 	{
@@ -8401,7 +8401,7 @@ LRESULT CEditorView::OnCompilerNotifyRunExitCode(WPARAM wParam, LPARAM lParam)
 						   
 	LOG_BUILD_MESSAGE_COLOR(_T("\n..................................................................................... END ]\n"));
 
-	OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Run finished after : "), RGB(0, 255, 0));
+	OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Run finished after : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	m_BuildSessionInfo._BuildMeasureTime = 0;
 
 	CEditorThreadCompiler::THREAD_STATUS threadStatus = (CEditorThreadCompiler::THREAD_STATUS)wParam;
@@ -8412,20 +8412,20 @@ LRESULT CEditorView::OnCompilerNotifyRunExitCode(WPARAM wParam, LPARAM lParam)
 		{
 			CString strMsg;
 			strMsg.Format(_T("[Message] Program exit as a succeed run, exit code is %d...\n"), nExitCode);
-			LOG_BUILD_MESSAGE_COLOR(strMsg, RGB(0, 255, 0));
+			LOG_BUILD_MESSAGE_COLOR(strMsg, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
 		else
 		{
 			CString strMsg;
 			strMsg.Format(_T("[Error] Program exit as a failed run, exit code is %d...\n"), nExitCode);
-			LOG_BUILD_MESSAGE_COLOR(strMsg, RGB(0, 255, 0));
+			LOG_BUILD_MESSAGE_COLOR(strMsg, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
 	}
 	else if (threadStatus == CEditorThreadCompiler::THREAD_STATUS::THREAD_STATUS_ABORT)
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Message] Program exit by user, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_COLOR(strMsg, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	else if (threadStatus == CEditorThreadCompiler::THREAD_STATUS::THREAD_STATUS_FAILED)
 	{
@@ -8462,7 +8462,7 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 			LOG_BUILD_MESSAGE_COLOR(_T("\n.................................................................................... END ]\n"));
 		}
 
-		OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Build process for debugger finished after : "), RGB(0, 255, 0));
+		OSUtils::LogStopBenchmark(LOG_TARGET::BUILD_WINDOW, m_BuildSessionInfo._BuildMeasureTime, _T("[Message] Build process for debugger finished after : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 
 		m_BuildSessionInfo._BuildMeasureTime = 0;
 		if (nExitCode == 0)
@@ -8473,23 +8473,23 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_RUST
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_ASSEMBLY)
 			{
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process for debugger succeed..."), RGB(0, 255, 0));
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initiating debugger..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process for debugger succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initiating debugger..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[ DEBUG ................................................................................"));
 				m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 				RunGDBDebuggerAfterCompile();
 			}
 			else if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA)
 			{
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process for Java debugger succeed..."), RGB(0, 255, 0));
-				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Lauching Java virtual machine (JVM), Initialize loader for execution..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process for Java debugger succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
+				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Lauching Java virtual machine (JVM), Initialize loader for execution..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[ DEBUG ................................................................................"));
 				m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 				RunJavaDebuggerAfterCompile();
 			}
 			else
 			{
-				LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Message] Build process for debugger succeed..."), RGB(0, 255, 0));
+				LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Message] Build process for debugger succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 			}
 		}
 		else
@@ -8503,7 +8503,7 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 	{
 		CString strMsg;
 		strMsg.Format(_T("\n[Message] Build process for debugger exit by user, exit code is %d...\n"), nExitCode);
-		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, RGB(0, 255, 0));
+		LOG_BUILD_MESSAGE_ACTIVE_PANE(strMsg, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 	}
 	else if (threadStatus == CEditorThreadCompiler::THREAD_STATUS::THREAD_STATUS_FAILED)
 	{
