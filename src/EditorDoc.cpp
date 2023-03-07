@@ -203,7 +203,7 @@ void CEditorDoc::Serialize(CArchive& ar)
 void CEditorDoc::OnCloseDocument()
 {
 	CString strPathName = GetPathName();
-	if (AppUtils::GetDocumentCount() == 1 && !PathFileExists(strPathName) && !IsModified())
+	if (AppUtils::GetDocumentCount() == 1 && strPathName.IsEmpty() && !IsModified())
 	{
 		AppSettingMgr.RemoveDocumentUndefTitle(GetTitle());
 		SetTitle(AppSettingMgr.CreateDocumentUndefTitle());
@@ -232,13 +232,7 @@ void CEditorDoc::OnCloseDocument()
 
 	// every data get from document must be done before this...
 	CDocument::OnCloseDocument();
-	if (AppUtils::GetDocumentCount() == 0)
-	{
-		if (!pFrame->IsClosingVinaText() && !AppUtils::GetVinaTextApp()->m_bIsReloadDocument)
-		{
-			AppUtils::GetVinaTextApp()->OnFileNewEditor();
-		}
-	}
+	AppUtils::CheckLastOpenDocument();
 }
 
 void CEditorDoc::OnFileSave()

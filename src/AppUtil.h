@@ -87,7 +87,6 @@ namespace AppUtils
 	void CloseMDIDocument(CDocument * pDocTarget);
 	void CloseDocumentByFilePath(CString strFile);
 	void CloseDocumentByTitle(const CString& strTitle);
-	void CloseDocumentByView(CView * pCloseView);
 	void CloseDeletedDocument(CView * pCloseView, const CString& strFileDeleted);
 	void CloseAllDocument();
 	void CloseAllDocumentUnmodified();
@@ -106,6 +105,7 @@ namespace AppUtils
 	BOOL IsDocumentExisted(CString strFile);
 	int GetDocumentCount();
 	int GetDocumentTypeCount(DOCUMENT_TYPE type);
+	void CheckLastOpenDocument();
 	void UpdateModifiedDocumentTitle(CDocument * pDoc, BOOL bAddMarker = TRUE);
 	bool IsAlphaNumberString(const std::string & str);
 	void ReplaceAllInStdString(std::string & str, const std::string & from, const std::string & to);

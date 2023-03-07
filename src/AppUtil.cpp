@@ -1210,35 +1210,31 @@ void AppUtils::CloseDocumentByTitle(const CString& strTitle)
 	}
 }
 
-void AppUtils::CloseDocumentByView(CView * pCloseView)
+void AppUtils::CloseDeletedDocument(CView * pCloseView, const CString & strFileDeleted)
 {
 	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
 	while (posTemplate)
 	{
-		CDocTemplate *doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
+		CDocTemplate* doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
 		if (!doctempl) return;
 		POSITION posDoc = doctempl->GetFirstDocPosition();
 		while (posDoc)
 		{
 			CDocument* doc = doctempl->GetNextDoc(posDoc);
-			POSITION p3 = doc->GetFirstViewPosition();
-			while (p3)
-			{
-				CView* view = doc->GetNextView(p3);
-				if (view && view->GetParentFrame() && view == pCloseView)
+			if (doc) {
+				POSITION p3 = doc->GetFirstViewPosition();
+				while (p3)
 				{
-					view->GetParentFrame()->SendMessage(WM_CLOSE);
+					CView* view = doc->GetNextView(p3);
+					if (view && view->GetParentFrame() && view == pCloseView)
+					{
+						view->GetParentFrame()->SendMessage(WM_CLOSE);
+					}
 				}
 			}
 		}
 	}
-}
-
-void AppUtils::CloseDeletedDocument(CView * pCloseView, const CString & strFileDeleted)
-{
-	AppUtils::CloseDocumentByView(pCloseView);
-	Sleep(1000); // wait for closing completed
-	// remove from explorer also...
+	// remove it from explorer also...
 	CMainFrame* pFrame = AppUtils::GetMainFrame();
 	if (pFrame)
 	{
@@ -1869,6 +1865,17 @@ int AppUtils::GetDocumentCount()
 int AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE type)
 {
 	return static_cast<int>(GetAllDocumentTypes(type).size());
+}
+
+void AppUtils::CheckLastOpenDocument()
+{
+	if (GetDocumentCount() == 0) {
+		const CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+		ASSERT(pFrame); if (!pFrame) return;
+		if (!pFrame->IsClosingVinaText() && !GetVinaTextApp()->m_bIsReloadDocument) {
+			GetVinaTextApp()->OnFileNewEditor();
+		}
+	}
 }
 
 void AppUtils::UpdateModifiedDocumentTitle(CDocument* pDoc, BOOL bAddMarker)

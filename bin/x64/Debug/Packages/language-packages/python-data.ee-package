@@ -12,15 +12,15 @@
 https://www.python.org/downloads/
 - After installion:
 + Please change below path settings to your installed Python paths.
-+ Add setup for [Preference > Application Preference > File System Settings > Python Interpreter Folder] also.
++ Add setup Pip3 path in [Preference > General Settings > PythonFolderPath] also.
 - You can also add more key words to auto complete word list.
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-\Python\Python39\python.exe
+..\Compilers\compiler.exe
 
 @@ debugger path:
-\Python\Python39\python.exe
+..\Compilers\compiler.exe
 
 @@ auto complete:
 and as assert async await break class continue def del elif else except finally for

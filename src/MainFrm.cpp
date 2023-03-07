@@ -3700,8 +3700,7 @@ void CMainFrame::ReOpenCurrentDocument(const CString & strReplaceFile)
 
 void CMainFrame::OnCloseDocument()
 {
-	CView* pView = AppUtils::GetMDIActiveView();
-	AppUtils::CloseDocumentByView(pView);
+	AppUtils::CloseMDIDocument(GetActiveFrame()->GetActiveDocument());
 }
 
 void CMainFrame::OnCloseAllDocument()

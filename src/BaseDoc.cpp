@@ -45,10 +45,6 @@ BOOL CBaseDoc::OnOpenDocument(LPCTSTR lpszPathName)
 
 void CBaseDoc::OnCloseDocument() // not for CEditorDoc 
 {
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	ASSERT(pFrame);
-	if (!pFrame) return;
-
 	// save recent data
 	CString strPathName = GetPathName();
 	if (PathFileExists(strPathName))
@@ -58,13 +54,7 @@ void CBaseDoc::OnCloseDocument() // not for CEditorDoc
 
 	// every data get from document must be done before this...
 	CDocument::OnCloseDocument();
-	if (AppUtils::GetDocumentCount() == 0)
-	{
-		if (!pFrame->IsClosingVinaText() && !AppUtils::GetVinaTextApp()->m_bIsReloadDocument)
-		{
-			AppUtils::GetVinaTextApp()->OnFileNewEditor();
-		}
-	}
+	AppUtils::CheckLastOpenDocument();
 }
 
 BOOL CBaseDoc::OnNewDocument()
