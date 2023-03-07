@@ -1,10 +1,10 @@
 # VinaText
 A lightweight and fast text editor and file explorer for Windows.
 
-# Mutiple tabbed views
+# Multiple tabbed views
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_1.png?raw=true)
 
-# Integrated Ternimal
+# Integrated Terminal
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_2.png?raw=true)
 
 # Image viewer
