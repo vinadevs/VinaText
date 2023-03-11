@@ -13,7 +13,7 @@ Use keyboard shortcut [Ctrl + F] to open quick search popup.
 Use the keyboard shortcut [Ctrl + H] to open a quick alternative pop-up.
 Use the keyboard shortcut [Ctrl + G] to open the Goto dialog box.
 Use the keyboard shortcut [Ctrl + Shift + G] to quickly search all selected text.
-Use the keyboard shortcut [Ctrl + Shift + N] to open a new Explorer Extra instance.
+Use the keyboard shortcut [Ctrl + Shift + N] to open a new VinaText instance.
 Use the keyboard shortcut [Ctrl + Shift + T] to open a recently closed file.
 Use the keyboard shortcut [Ctrl + Alt + T] to open a terminal tab at the container folder.
 Use the keyboard shortcut [Ctrl + Shift + W] to open the opened file manager dialog.

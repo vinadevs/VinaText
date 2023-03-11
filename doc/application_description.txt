@@ -1,5 +1,5 @@
 1 . Tabbed GUI design
-?The software is designed in tab form (similar to Visual Studio Code, Sublime Text, ...), supports the function of creating groups of files, viewing vertically, horizontally. Support Vietnamese interface.
+The software is designed in tab form (similar to Visual Studio Code, Sublime Text, ...), supports the function of creating groups of files, viewing vertically, horizontally. Support Vietnamese interface.
 2 . View many different file formats
 Explorer window can open more than 200 file formats. View dozens of common file types, such as PDFs, Office documents, image, audio, and video files, all with one program. Bring all your essential tools into a single workplace. You can also print many file formats from images, text, pdf,...
 3 . Watch videos, photos and gifs
