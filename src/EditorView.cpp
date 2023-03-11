@@ -216,6 +216,10 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_INCREASE_TAB_INDENTATION, OnOptionsIncreaseTabIndentation)
 	ON_COMMAND(ID_SELECTION_TO_END_FILE, OnOptionsSelectToEnd)
 	ON_COMMAND(ID_SELECTION_TO_BEGIN_FILE, OnOptionsSelectToBegin)
+	ON_COMMAND(ID_SELECTION_TO_WORD_LEFT, OnOptionsSelectToWordLeft)
+	ON_COMMAND(ID_SELECTION_TO_WORD_RIGHT, OnOptionsSelectToWordRight)
+	ON_COMMAND(ID_SELECTION_TO_PART_LEFT, OnOptionsSelectToPartLeft)
+	ON_COMMAND(ID_SELECTION_TO_PART_RIGHT, OnOptionsSelectToPartRight)
 	ON_COMMAND(ID_EDIT_REMOVE_DUPLICATE_LINE, OnOptionsRemoveDuplicateLine)
 	ON_COMMAND(ID_EDIT_REMOVE_DUPLICATE_LINE_NOT_KEEP, OnOptionsRemoveDuplicateLineNotKeep)
 	ON_COMMAND(ID_EDIT_REMOVE_DUPLICATE_WORD_IN_LINE, OnOptionsRemoveDuplicateWordInLine)
@@ -3804,6 +3808,26 @@ void CEditorView::OnOptionsSelectToBegin()
 	m_EditorCtrl.SetStartSelection(0);
 	m_EditorCtrl.SetEndSelection(m_EditorCtrl.GetCurrentPosition());
 	m_EditorCtrl.SetFocus();
+}
+
+void CEditorView::OnOptionsSelectToWordLeft()
+{
+	m_EditorCtrl.DoCommand(SCI_WORDLEFTENDEXTEND);
+}
+
+void CEditorView::OnOptionsSelectToWordRight()
+{
+	m_EditorCtrl.DoCommand(SCI_WORDRIGHTENDEXTEND);
+}
+
+void CEditorView::OnOptionsSelectToPartLeft()
+{
+	m_EditorCtrl.DoCommand(SCI_WORDPARTLEFTEXTEND);
+}
+
+void CEditorView::OnOptionsSelectToPartRight()
+{
+	m_EditorCtrl.DoCommand(SCI_WORDPARTRIGHTEXTEND);
 }
 
 void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()

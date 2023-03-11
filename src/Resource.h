@@ -1014,7 +1014,6 @@
 #define ID_EDIT_SCROLL_TO_CARET         36419
 #define ID_EDIT_LINEUP                  36420
 #define ID_EDIT_LINEDOWN                36421
-#define ID_SELECTION_TO_WORD_LEFT       36421
 #define ID_SELECTION_TO_WORD_RIGHT      36422
 #define ID_SELECTION_TO_PART_LEFT       36423
 #define ID_SELECTION_TO_PART_RIGHT      36424
@@ -1038,13 +1037,14 @@
 #define ID_APP_THEME_LIGHT 36442
 #define ID_APP_THEME_MONOKAI    36443
 #define ID_APP_THEME_SIERRABLUE 36444
+#define ID_SELECTION_TO_WORD_LEFT 36445
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        535
-#define _APS_NEXT_COMMAND_VALUE         36445
+#define _APS_NEXT_COMMAND_VALUE         36446
 #define _APS_NEXT_CONTROL_VALUE         1229
 #define _APS_NEXT_SYMED_VALUE           321
 #endif

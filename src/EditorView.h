@@ -167,6 +167,10 @@ public:
 	afx_msg void OnUpdateEditBlockUnComment(CCmdUI* pCmdUI);
 	afx_msg void OnOptionsSelectToEnd();
 	afx_msg void OnOptionsSelectToBegin();
+	afx_msg void OnOptionsSelectToWordLeft();
+	afx_msg void OnOptionsSelectToWordRight();
+	afx_msg void OnOptionsSelectToPartLeft();
+	afx_msg void OnOptionsSelectToPartRight();
 	afx_msg void OnOptionsRemoveDuplicateLineNotKeep();
 	afx_msg void OnOptionsRemoveDuplicateLine ();
 	afx_msg void OnOptionsRemoveDuplicateWordInLine();
