@@ -290,9 +290,7 @@ public:
 	afx_msg void OnToolsBackToOriginalExplorer();
 	afx_msg void OnToolsBookMarkAPath();
 	afx_msg void OnToolsOpenBookMarkPathTable();
-	afx_msg void OnToolsOpenFolderCompiler();
 	afx_msg void OnToolsOpenFolderVinaText();
-	afx_msg void OnToolsOpenFolderDatabase();
 	afx_msg void OnToolsOpenFolderTemp();
 	afx_msg void OnToolsOpenFolderAppData();
 	afx_msg void OnToolsControlPanel();

@@ -176,9 +176,9 @@ public:
 	BOOL m_bHideAllTargetFileSystem = FALSE;
 	BOOL m_bUseFolderMarginClassic = FALSE;
 	BOOL m_bEnableCaretBlink = FALSE;
-	BOOL m_bEnableMutilpleCursor = TRUE;
+	BOOL m_bEnableMultipleCursor = TRUE;
 	BOOL m_bUseInitialFilePickerPath = FALSE;
-	BOOL m_bReturnPreviousEditorState = TRUE;
+	BOOL m_bKeepPreviousEditorState = TRUE;
 	BOOL m_bEnablePathNavigation = TRUE;
 	BOOL m_bShowTrackingBar = TRUE;
 	BOOL m_bSaveDataBookmarkWindow = TRUE;
@@ -194,7 +194,7 @@ public:
 	EDITOR_INDICATOR_STYLE m_IndicatorStyle = EDITOR_INDICATOR_STYLE::FULL_BOX;
 	
 	// editor auto save file
-	int m_nIntervalMinutes = 9;
+	int m_nIntervalAutoSaveFileMinutes = 9;
 
 	// paths
 	CString m_strInitialFilePickerPath = _T("C:\\");
@@ -219,7 +219,7 @@ public:
 	EDITOR_TAB_ACTIVE_COLOR m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY;
 	RENDER_INDICATOR_ACTION m_RenderIndicatorAction = RENDER_INDICATOR_ACTION::DOUBLE_CLICK_ACTION;
 	EDITOR_INDICATOR_COLOR m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLUE;
-	EDITOR_THEME_BACKGROUND_COLOR m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
+	EDITOR_THEME_BACKGROUND_COLOR m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	APPLICATION_THEME_LOOK m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_WINDOWS_XP_NATIVE;
 	APPLICATION_LANGUAGE m_ApplicationLanguage = APPLICATION_LANGUAGE::LANGUAGE_ENGLISH;
 
@@ -248,4 +248,4 @@ private:
 };
 
 #define AppSettingMgr CAppSettings::GetInstance()
-#define IS_LIGHT_THEME AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT
+#define IS_LIGHT_THEME AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT

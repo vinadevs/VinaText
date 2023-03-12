@@ -243,11 +243,7 @@
     <ClInclude Include="uchardet\uchardet.h" />
     <ClInclude Include="WindowsPrinter.h" />
     <ClInclude Include="CreateNewMultiplePath.h" />
-    <ClInclude Include="VinaTextSettingDlg.h" />
     <ClInclude Include="Hpsutils.h" />
-    <ClInclude Include="SettingDlgToggle.h" />
-    <ClInclude Include="SettingDlgCustomize.h" />
-    <ClInclude Include="SettingDlgFileSystem.h" />
     <ClInclude Include="TemplateCreator.h" />
     <ClInclude Include="TextFile.h" />
     <ClInclude Include="TextFormatConverter.h" />
@@ -397,11 +393,7 @@
     <ClCompile Include="uchardet\uchardet.cpp" />
     <ClCompile Include="WindowsPrinter.cpp" />
     <ClCompile Include="CreateNewMultiplePath.cpp" />
-    <ClCompile Include="VinaTextSettingDlg.cpp" />
     <ClCompile Include="Hpslib.cpp" />
-    <ClCompile Include="SettingDlgToggle.cpp" />
-    <ClCompile Include="SettingDlgCustomize.cpp" />
-    <ClCompile Include="SettingDlgFileSystem.cpp" />
     <ClCompile Include="TemplateCreator.cpp" />
     <ClCompile Include="TextFile.cpp" />
     <ClCompile Include="TextFormatConverter.cpp" />

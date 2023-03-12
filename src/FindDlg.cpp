@@ -874,7 +874,7 @@ BOOL CFindDlg::OnEraseBkgnd(CDC * pDC)
 {
 	CRect rect;
 	GetClientRect(&rect);
-	CBrush myBrush(AppSettingMgr.m_ThemeColor); 
+	CBrush myBrush(AppSettingMgr.m_AppThemeColor); 
 	CBrush *pOld = pDC->SelectObject(&myBrush);
 	BOOL bRes = pDC->PatBlt(0, 0, rect.Width(), rect.Height(), PATCOPY);
 	pDC->SelectObject(pOld); 
@@ -902,7 +902,7 @@ HBRUSH CFindDlg::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 	{
 		pDC->SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		pDC->SetBkMode(TRANSPARENT);
-		return CreateSolidBrush(AppSettingMgr.m_ThemeColor);
+		return CreateSolidBrush(AppSettingMgr.m_AppThemeColor);
 	}
 	return hbr;
 }

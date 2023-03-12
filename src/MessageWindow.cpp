@@ -564,7 +564,7 @@ BOOL CMessagePaneDlg::OnInitDialog()
 	// To turn word wrap on - based on window width
 	m_wndOutput.SetTargetDevice(NULL, 0);
 	m_wndOutput.SetFont(&m_Font);
-	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_ThemeColor);
+	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_AppThemeColor);
 	m_wndOutput.LimitText(0xfffffff);
 	m_wndOutput.m_bEnableLineWrap = FALSE;
 	AddLogMessage(_T("> Thank you for using VinaText, copyright(C) www.VinaText.com\n"),
@@ -584,5 +584,5 @@ void CMessagePaneDlg::UpdateLogVisual()
 	m_wndOutput.SetWindowText(_T(""));
 	m_wndOutput.UpdateData(FALSE);
 	m_wndOutput.SetFont(&m_Font);
-	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_ThemeColor);
+	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_AppThemeColor);
 }

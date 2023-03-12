@@ -99,35 +99,35 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	// Preset theme colors
 	if (IS_LIGHT_THEME)
 	{
-		m_ThemeColorSet._lineNumberColor = EditorColorLight::linenumber;
-		m_ThemeColorSet._selectionTextColor = EditorColorLight::black;
-		m_ThemeColorSet._editorTextColor = EditorColorLight::editorTextColor;
-		m_ThemeColorSet._editorMarginBarColor = EditorColorLight::editorMarginBarColor;
-		m_ThemeColorSet._editorFolderBackColor = EditorColorLight::editorFolderBackColor;
-		m_ThemeColorSet._editorFolderForeColor = EditorColorLight::editorFolderForeColor;
-		m_ThemeColorSet._editorCaretColor = EditorColorLight::editorCaretColor;
-		m_ThemeColorSet._editorIndicatorColor = EditorColorLight::editorIndicatorColor;
-		m_ThemeColorSet._editorSpellCheckColor = EditorColorLight::editorSpellCheckColor;
-		m_ThemeColorSet._editorTagMatchColor = EditorColorLight::editorTagMatchColor;
+		m_AppThemeColorSet._lineNumberColor = EditorColorLight::linenumber;
+		m_AppThemeColorSet._selectionTextColor = EditorColorLight::black;
+		m_AppThemeColorSet._editorTextColor = EditorColorLight::editorTextColor;
+		m_AppThemeColorSet._editorMarginBarColor = EditorColorLight::editorMarginBarColor;
+		m_AppThemeColorSet._editorFolderBackColor = EditorColorLight::editorFolderBackColor;
+		m_AppThemeColorSet._editorFolderForeColor = EditorColorLight::editorFolderForeColor;
+		m_AppThemeColorSet._editorCaretColor = EditorColorLight::editorCaretColor;
+		m_AppThemeColorSet._editorIndicatorColor = EditorColorLight::editorIndicatorColor;
+		m_AppThemeColorSet._editorSpellCheckColor = EditorColorLight::editorSpellCheckColor;
+		m_AppThemeColorSet._editorTagMatchColor = EditorColorLight::editorTagMatchColor;
 	}
 	else
 	{
-		m_ThemeColorSet._lineNumberColor = EditorColorDark::linenumber;
-		m_ThemeColorSet._selectionTextColor = EditorColorDark::white;
-		m_ThemeColorSet._editorTextColor = EditorColorDark::editorTextColor;
-		m_ThemeColorSet._editorMarginBarColor = EditorColorDark::editorMarginBarColor;
-		m_ThemeColorSet._editorFolderBackColor = EditorColorDark::editorFolderBackColor;
-		m_ThemeColorSet._editorFolderForeColor = EditorColorDark::editorFolderForeColor;
-		m_ThemeColorSet._editorCaretColor = EditorColorDark::editorCaretColor;
-		m_ThemeColorSet._editorIndicatorColor = EditorColorDark::editorIndicatorColor;
-		m_ThemeColorSet._editorSpellCheckColor = EditorColorDark::editorSpellCheckColor;
-		m_ThemeColorSet._editorTagMatchColor = EditorColorDark::editorTagMatchColor;
+		m_AppThemeColorSet._lineNumberColor = EditorColorDark::linenumber;
+		m_AppThemeColorSet._selectionTextColor = EditorColorDark::white;
+		m_AppThemeColorSet._editorTextColor = EditorColorDark::editorTextColor;
+		m_AppThemeColorSet._editorMarginBarColor = EditorColorDark::editorMarginBarColor;
+		m_AppThemeColorSet._editorFolderBackColor = EditorColorDark::editorFolderBackColor;
+		m_AppThemeColorSet._editorFolderForeColor = EditorColorDark::editorFolderForeColor;
+		m_AppThemeColorSet._editorCaretColor = EditorColorDark::editorCaretColor;
+		m_AppThemeColorSet._editorIndicatorColor = EditorColorDark::editorIndicatorColor;
+		m_AppThemeColorSet._editorSpellCheckColor = EditorColorDark::editorSpellCheckColor;
+		m_AppThemeColorSet._editorTagMatchColor = EditorColorDark::editorTagMatchColor;
 	}
 
 	// Editor font settings
 	SetColorForStyle(STYLE_DEFAULT,
-		m_ThemeColorSet._editorTextColor,
-		AppSettingMgr.m_ThemeColor,
+		m_AppThemeColorSet._editorTextColor,
+		AppSettingMgr.m_AppThemeColor,
 		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
 		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
 
@@ -144,7 +144,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	if (m_strLexerName.IsEmpty()) {
 		m_strLexerName = LEXER_PLAIN_TEXT;
 	}
-	AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
+	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
 		EditorLexerLight::LoadLexer(pDatabase, this, m_strLexerName):
 		EditorLexerDark::LoadLexer(pDatabase, this, m_strLexerName);
 
@@ -152,8 +152,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 
 	SetLineNumberWidth();
 	SetColorForStyle(STYLE_LINENUMBER,
-		m_ThemeColorSet._lineNumberColor,
-		m_ThemeColorSet._editorMarginBarColor,
+		m_AppThemeColorSet._lineNumberColor,
+		m_AppThemeColorSet._editorMarginBarColor,
 		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
 		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
 
@@ -248,8 +248,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	else
 	{
-		DoCommand(SCI_SETFOLDMARGINCOLOUR, 1, m_ThemeColorSet._editorMarginBarColor);
-		DoCommand(SCI_SETFOLDMARGINHICOLOUR, 1, m_ThemeColorSet._editorMarginBarColor);
+		DoCommand(SCI_SETFOLDMARGINCOLOUR, 1, m_AppThemeColorSet._editorMarginBarColor);
+		DoCommand(SCI_SETFOLDMARGINHICOLOUR, 1, m_AppThemeColorSet._editorMarginBarColor);
 	}
 
 	// folder style
@@ -307,20 +307,20 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERMIDTAIL, RGB(255, 255, 255));
 		DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERMIDTAIL, RGB(0, 0, 0));
 	}
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEROPEN, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEROPEN, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDER, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDER, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERSUB, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERSUB, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERTAIL, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERTAIL, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEREND, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEREND, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEROPENMID, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEROPENMID, m_ThemeColorSet._editorFolderBackColor);
-	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERMIDTAIL, m_ThemeColorSet._editorFolderForeColor);
-	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERMIDTAIL, m_ThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEROPEN, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEROPEN, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDER, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDER, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERSUB, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERSUB, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERTAIL, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERTAIL, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEREND, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEREND, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDEROPENMID, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDEROPENMID, m_AppThemeColorSet._editorFolderBackColor);
+	DoCommand(SCI_MARKERSETFORE, SC_MARKNUM_FOLDERMIDTAIL, m_AppThemeColorSet._editorFolderForeColor);
+	DoCommand(SCI_MARKERSETBACK, SC_MARKNUM_FOLDERMIDTAIL, m_AppThemeColorSet._editorFolderBackColor);
 
 	if (AppSettingMgr.m_bEnableHightLightFolder)
 	{
@@ -373,8 +373,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	DoCommand(SCI_SETWRAPVISUALFLAGS, SC_WRAPVISUALFLAG_END);
 
-	DoCommand(SCI_SETCARETFORE, m_ThemeColorSet._editorCaretColor);
-	DoCommand(SCI_SETADDITIONALCARETFORE, m_ThemeColorSet._editorCaretColor);
+	DoCommand(SCI_SETCARETFORE, m_AppThemeColorSet._editorCaretColor);
+	DoCommand(SCI_SETADDITIONALCARETFORE, m_AppThemeColorSet._editorCaretColor);
 
 	if (AppSettingMgr.m_bDrawCaretLineFrame)
 	{
@@ -386,7 +386,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	}
 	DoCommand(SCI_SETCARETLINEVISIBLE, 1);
 	DoCommand(SCI_SETCARETLINEVISIBLEALWAYS, 1);
-	DoCommand(SCI_SETCARETLINEBACK, m_ThemeColorSet._editorTextColor);
+	DoCommand(SCI_SETCARETLINEBACK, m_AppThemeColorSet._editorTextColor);
 	DoCommand(SCI_SETCARETLINEBACKALPHA, 100);
 	DoCommand(SCI_SETCARETWIDTH, 2);
 
@@ -400,7 +400,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	// long line checker
 	DoCommand(SCI_SETEDGECOLUMN, AppSettingMgr.m_nLongLineMaximum);
 	// selection
-	SetSelectionTextColor(m_ThemeColorSet._selectionTextColor, 60);
+	SetSelectionTextColor(m_AppThemeColorSet._selectionTextColor, 60);
 
 	if (AppSettingMgr.m_bEnableCaretBlink)
 	{
@@ -413,7 +413,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		DoCommand(SCI_SETADDITIONALCARETSBLINK, FALSE);
 	}
 
-	EnableMultiCursorMode(AppSettingMgr.m_bEnableMutilpleCursor);
+	EnableMultiCursorMode(AppSettingMgr.m_bEnableMultipleCursor);
 
 	// set dwell timer, change to 0 if we want to use feature showhide folding bar
 	DoCommand(SCI_SETMOUSEDWELLTIME, SC_TIME_FOREVER);
@@ -446,8 +446,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	//DoCommand(SCI_INDICSETUNDER, INDIC_BRACEMATCH, true);
 	//DoCommand(SCI_INDICSETFORE, INDIC_BRACEMATCH, RGB(0, 150, 0));
 
-	DoCommand(SCI_INDICSETFORE, INDIC_TAGMATCH, m_ThemeColorSet._editorTagMatchColor);
-	DoCommand(SCI_INDICSETFORE, INDIC_TAGATTR, m_ThemeColorSet._editorTagMatchColor);
+	DoCommand(SCI_INDICSETFORE, INDIC_TAGMATCH, m_AppThemeColorSet._editorTagMatchColor);
+	DoCommand(SCI_INDICSETFORE, INDIC_TAGATTR, m_AppThemeColorSet._editorTagMatchColor);
 	DoCommand(SCI_INDICSETSTYLE, INDIC_TAGMATCH, INDIC_DASH);
 	DoCommand(SCI_INDICSETSTYLE, INDIC_TAGATTR, INDIC_DASH);
 	DoCommand(SCI_INDICSETALPHA, INDIC_TAGMATCH, 50);
@@ -456,7 +456,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	DoCommand(SCI_INDICSETUNDER, INDIC_TAGATTR, 1);
 
 	DoCommand(SCI_INDICSETSTYLE, INDIC_SPELL_CHECKER, INDIC_SQUIGGLELOW);
-	DoCommand(SCI_INDICSETFORE, INDIC_SPELL_CHECKER, m_ThemeColorSet._editorSpellCheckColor);
+	DoCommand(SCI_INDICSETFORE, INDIC_SPELL_CHECKER, m_AppThemeColorSet._editorSpellCheckColor);
 	DoCommand(SCI_INDICSETUNDER, INDIC_SPELL_CHECKER, 1);
 }
 
@@ -4244,8 +4244,8 @@ void CEditorCtrl::ClearAllAnnotationText()
 
 void CEditorCtrl::StartRenderStyleUrl(int lStartStyling, int lLength)
 {
-	DoCommand(SCI_SETHOTSPOTACTIVEFORE, 1, m_ThemeColorSet._editorTextColor);
-	DoCommand(SCI_SETHOTSPOTACTIVEBACK, 1, AppSettingMgr.m_ThemeColor);
+	DoCommand(SCI_SETHOTSPOTACTIVEFORE, 1, m_AppThemeColorSet._editorTextColor);
+	DoCommand(SCI_SETHOTSPOTACTIVEBACK, 1, AppSettingMgr.m_AppThemeColor);
 	DoCommand(SCI_STARTSTYLING, lStartStyling, 2);
 	DoCommand(SCI_SETSTYLING, lLength, 2);
 }
@@ -4307,17 +4307,17 @@ void CEditorCtrl::SetLanguageCFontStyle(int iItem, COLORREF rgb)
 {
 	if (iItem == SCE_C_WORD || iItem == SCE_C_PREPROCESSOR || iItem == SCE_C_OPERATOR)
 	{
-		SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		DoCommand(SCI_STYLESETBOLD, iItem, 1);
 	}
 	else if (iItem == SCE_C_STRING || iItem == SCE_C_CHARACTER)
 	{
-		SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		DoCommand(SCI_STYLESETITALIC, iItem, 1);
 	}
 	else
 	{
-		SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 	}
 }
 
@@ -4512,7 +4512,7 @@ void CEditorCtrl::SetIndicatorForHighlightWord()
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 		}
 		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_PYTHON, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_PYTHON, m_ThemeColorSet._editorIndicatorColor);
+		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_PYTHON, m_AppThemeColorSet._editorIndicatorColor);
 		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
 	}
 	else
@@ -4530,7 +4530,7 @@ void CEditorCtrl::SetIndicatorForHighlightWord()
 			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 		}
 		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_GENERAL, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, m_ThemeColorSet._editorIndicatorColor);
+		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, m_AppThemeColorSet._editorIndicatorColor);
 		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
 	}
 	LRESULT indicatorForeground = DoCommand(SCI_STYLEGETFORE, STYLE_DEFAULT);
@@ -4541,7 +4541,7 @@ void CEditorCtrl::UpdateCaretLineVisible()
 {
 	if (DoCommand(SCI_GETSELECTIONEMPTY, 0, 0) && DoCommand(SCI_GETSELECTIONS) == SINGLE_SELECTION)
 	{
-		DoCommand(SCI_SETSELBACK, 1, m_ThemeColorSet._selectionTextColor);
+		DoCommand(SCI_SETSELBACK, 1, m_AppThemeColorSet._selectionTextColor);
 		DoCommand(SCI_SETSELALPHA, 60);
 		DoCommand(SCI_SETCARETLINEVISIBLE, 1);
 	}
@@ -4660,28 +4660,28 @@ FoldingLineDataList CEditorCtrl::GetFoldingLineDataList(int levelMax)
 
 void CEditorCtrl::LoadPythonHightlight()
 {
-	AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
+	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
 		EditorLexerLight::Init_python_Editor_NoDB(this) :
 		EditorLexerDark::Init_python_Editor_NoDB(this);
 }
 
 void CEditorCtrl::LoadCPPHightlight()
 {
-	AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
+	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
 		EditorLexerLight::Init_python_Editor_NoDB(this) :
 		EditorLexerDark::Init_python_Editor_NoDB(this);
 }
 
 void CEditorCtrl::LoadHTMLHightlight()
 {
-	AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
+	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
 		EditorLexerLight::Init_python_Editor_NoDB(this) :
 		EditorLexerDark::Init_python_Editor_NoDB(this);
 }
 
 void CEditorCtrl::RemoveTextHightlight()
 {
-	AppSettingMgr.m_ThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
+	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
 		EditorLexerLight::Init_text_Editor(this) :
 		EditorLexerDark::Init_text_Editor(this);
 }

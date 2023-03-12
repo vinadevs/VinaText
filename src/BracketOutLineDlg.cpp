@@ -75,7 +75,7 @@ void CBracketOutLineDlg::ClearAll()
 
 void CBracketOutLineDlg::UpdateUIVisual()
 {
-	m_BracketTree.SetBkColor(AppSettingMgr.m_ThemeColor);
+	m_BracketTree.SetBkColor(AppSettingMgr.m_AppThemeColor);
 }
 
 void CBracketOutLineDlg::DoDataExchange(CDataExchange* pDX)
@@ -92,7 +92,7 @@ BOOL CBracketOutLineDlg::OnInitDialog()
 	m_BracketTree.SetExtendedStyle(dwExtendedStyle, dwExtendedStyle);
 	m_BracketTree.SetParrentWindow(this);
 	m_BracketTree.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
-	m_BracketTree.SetBkColor(AppSettingMgr.m_ThemeColor);
+	m_BracketTree.SetBkColor(AppSettingMgr.m_AppThemeColor);
 	m_BracketTree.EnableToolTips(TRUE);
 	m_BracketTree.SetFont(&m_Font);
 	m_BracketTree.EnableSetBoldDbClick(FALSE);

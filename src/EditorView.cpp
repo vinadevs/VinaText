@@ -976,7 +976,7 @@ void CEditorView::OnInitialUpdate()
 	UpdateFileLastWriteTime(strEditorPathName);
 
 	// return previous state
-	if (AppSettingMgr.m_bReturnPreviousEditorState && PathFileExists(strEditorPathName))
+	if (AppSettingMgr.m_bKeepPreviousEditorState && PathFileExists(strEditorPathName))
 	{
 		RecentEditorInfo info = AppSettingMgr.GetRecentEditorInfo(strEditorPathName);
 		if (info._nWrapMode == 0)
@@ -4603,22 +4603,49 @@ void CEditorView::OnOptionsIncreaseSelectionToPartRight()
 	m_EditorCtrl.SetFocus();
 }
 
+void CEditorView::ResetMultipleSelectionsBuffer()
+{
+	m_strSelectedWord.Empty();
+	m_nLatestCaretPosition = 0;
+	m_PositionMultipleCaretsBuffer.clear();
+	m_nIncreaseSelectionSearchFlag = SCFIND_WHOLEWORD | SCFIND_MATCHCASE;
+	m_bSelectionByMouseDrag = FALSE;
+}
+
 void CEditorView::OnOptionsIncreaseSelectionToWord()
 {
+	auto fAddNewSelection = [&](int lNextPos, int lAnchorPos) -> BOOL {
+		m_nLatestCaretPosition = lNextPos + m_strSelectedWord.GetLength();
+		if (m_PositionMultipleCaretsBuffer.find(m_nLatestCaretPosition) != m_PositionMultipleCaretsBuffer.end()) return FALSE;
+		m_PositionMultipleCaretsBuffer.insert(m_nLatestCaretPosition);
+		if (m_nLatestCaretPosition != lAnchorPos)
+		{
+			m_EditorCtrl.DoCommand(SCI_ADDSELECTION, m_nLatestCaretPosition, lNextPos);
+			m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, m_nLatestCaretPosition);
+		}
+		else
+		{
+			lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, lAnchorPos, m_nIncreaseSelectionSearchFlag);
+			if (lNextPos >= 0)
+			{
+				m_EditorCtrl.DoCommand(SCI_ADDSELECTION, m_nLatestCaretPosition, lNextPos);
+				m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, m_nLatestCaretPosition);
+			}
+		}
+		return TRUE;
+	};
+
 	BOOL bIsSearchFromStartFile = FALSE;
 	m_EditorCtrl.SetIncreaseSelectionMode(FALSE, FALSE);
 	int nSels = m_EditorCtrl.GetSelectionNumber();
-	if (nSels == 1 && m_EditorCtrl.GetSelectedText().IsEmpty())
+	if (nSels == 1 && m_EditorCtrl.GetSelectedText().IsEmpty()) // reset conditions
 	{
-		m_strSelectedWord.Empty();
 		m_EditorCtrl.DoCommand(SCI_MULTIPLESELECTADDNEXT);
 		m_EditorCtrl.SetLineCenterKeepView(m_EditorCtrl.GetCurrentLine());
+		ResetMultipleSelectionsBuffer();
 		m_strSelectedWord = m_EditorCtrl.GetSelectedText();
-		m_nIncreaseSelectionSearchFlag = SCFIND_WHOLEWORD | SCFIND_MATCHCASE;
-		m_bSelectionByMouseDrag = FALSE;
 		// mark all to decide stop at next word or not...
 		RenderIndicatorWordsAndCount(m_strSelectedWord);
-		m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
 	}
 	else
 	{ 
@@ -4632,29 +4659,19 @@ void CEditorView::OnOptionsIncreaseSelectionToWord()
 			m_strSelectedWord = m_EditorCtrl.GetSelectedText();
 			// mark all to decide stop at next word or not...
 			RenderIndicatorWordsAndCount(m_strSelectedWord);
-			m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
 		}
 		if (!m_strSelectedWord.IsEmpty())
 		{
-			int lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, m_EditorCtrl.GetCurrentPosition(), m_nIncreaseSelectionSearchFlag);
+			if (m_nLatestCaretPosition == 0) {
+				m_nLatestCaretPosition = m_EditorCtrl.GetSelectionEndPosition();
+				m_PositionMultipleCaretsBuffer.insert(m_nLatestCaretPosition);
+			}
+			int lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, m_nLatestCaretPosition, m_nIncreaseSelectionSearchFlag);
 			int lAnchorPos = m_EditorCtrl.GetCurrentAnchor();
 			if (lNextPos >= 0)
 			{
-				if (lNextPos + m_strSelectedWord.GetLength() != lAnchorPos)
-				{
-					m_EditorCtrl.DoCommand(SCI_ADDSELECTION, lNextPos + m_strSelectedWord.GetLength(), lNextPos);
-					m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, lNextPos + m_strSelectedWord.GetLength());
-				}
-				else
-				{
-					lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, lAnchorPos, m_nIncreaseSelectionSearchFlag);
-					if (lNextPos >= 0)
-					{
-						m_EditorCtrl.DoCommand(SCI_ADDSELECTION, lNextPos + m_strSelectedWord.GetLength(), lNextPos);
-						m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, lNextPos + m_strSelectedWord.GetLength());
-					}
-				}
-				m_EditorCtrl.SetLineCenterKeepView(m_EditorCtrl.GetCurrentLine());
+				if (fAddNewSelection(lNextPos, lAnchorPos))
+					m_EditorCtrl.SetLineCenterKeepView(m_EditorCtrl.GetCurrentLine());
 			}
 			else // search from start file position if there is no more match word...
 			{
@@ -4662,25 +4679,8 @@ void CEditorView::OnOptionsIncreaseSelectionToWord()
 				lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, 0, m_nIncreaseSelectionSearchFlag);
 				if (lNextPos >= 0)
 				{
-					if (lNextPos + m_strSelectedWord.GetLength() != lAnchorPos)
-					{
-						m_EditorCtrl.DoCommand(SCI_ADDSELECTION, lNextPos + m_strSelectedWord.GetLength(), lNextPos);
-						m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, lNextPos + m_strSelectedWord.GetLength());
-					}
-					else
-					{
-						lNextPos = m_EditorCtrl.FindNextMatchWordPostion(m_strSelectedWord, lAnchorPos, m_nIncreaseSelectionSearchFlag);
-						if (lNextPos >= 0)
-						{
-							m_EditorCtrl.DoCommand(SCI_ADDSELECTION, lNextPos + m_strSelectedWord.GetLength(), lNextPos);
-							m_EditorCtrl.RemoveEachIndicatorHightLight(lNextPos, lNextPos + m_strSelectedWord.GetLength());
-						}
-					}
-					m_EditorCtrl.SetLineCenterDisplay(m_EditorCtrl.GetCurrentLine());
-				}
-				else
-				{
-					m_strSelectedWord.Empty();
+					if (fAddNewSelection(lNextPos, lAnchorPos))
+						m_EditorCtrl.SetLineCenterDisplay(m_EditorCtrl.GetCurrentLine());
 				}
 			}
 		}
@@ -4704,7 +4704,7 @@ void CEditorView::OnOptionsIncreaseSelectionToWord()
 			}
 		}
 	}
-	// save information for mutilple undo redo transactions
+	// save information for multiple undo redo transactions
 	m_EditorCtrl.SetIncreaseSelectionMode(TRUE, bIsSearchFromStartFile);
 	m_EditorCtrl.SetFocus();
 }
@@ -6280,6 +6280,7 @@ void CEditorView::GetIntellisenseList(CString strPreviousWord, std::vector<CStri
 
 void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/, BOOL bClearSelection/*= TRUE*/)
 {
+	int nCurPosition = m_EditorCtrl.GetCurrentPosition();
 	m_nIndicatorCount = 0;
 	m_MatchedLineDataset.clear();
 	m_EditorCtrl.RemoveIndicatorHightLightRenders();
@@ -6287,7 +6288,7 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 	{
 		if (bClearSelection)
 		{
-			m_EditorCtrl.ClearSelection(m_EditorCtrl.GetCurrentPosition());
+			m_EditorCtrl.ClearSelection(nCurPosition);
 		}
 		GuiUtils::ForceRedrawCWnd(this);  // force tracking bar refresh...
 		return;
@@ -6320,7 +6321,8 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 		if (indicatorLength > 0)
 		{
 			m_nIndicatorCount++;
-			m_EditorCtrl.DoCommand(SCI_INDICATORFILLRANGE, targetStart, indicatorLength);
+			if (targetEnd != nCurPosition)
+				m_EditorCtrl.DoCommand(SCI_INDICATORFILLRANGE, targetStart, indicatorLength);
 			if (AppSettingMgr.m_bShowTrackingBar)
 			{
 				m_MatchedLineDataset.insert(m_EditorCtrl.GetLineFromPosition(targetStart));
@@ -6561,7 +6563,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			if (!m_bAlreadyRestoreState)
 			{
 				CString strEditorPathName = m_pDocument->GetPathName();
-				if (AppSettingMgr.m_bReturnPreviousEditorState && PathFileExists(strEditorPathName))
+				if (AppSettingMgr.m_bKeepPreviousEditorState && PathFileExists(strEditorPathName))
 				{
 					RecentEditorInfo info = AppSettingMgr.GetRecentEditorInfo(strEditorPathName);
 					if (info._nWrapMode == 1 && !m_EditorCtrl.IsEditorInWrapMode())
@@ -6642,7 +6644,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, typingProfiler, _T("> Benchmark charadded : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
 		break;
-		case SCN_UPDATEUI:
+		case SCN_UPDATEUI: // the speed is most important for this event, so avoid wrapping function as much as possible...
 		{
 			//auto selectionProfiler = OSUtils::StartBenchmark();
 			m_EditorCtrl.UpdateCaretLineVisible();
@@ -6658,14 +6660,15 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			}
 			if (pScinNotification->updated == SC_UPDATE_SELECTION)
 			{
-				if (!m_strSelectedWord.IsEmpty())
-				{
-					m_strSelectedWord.Empty();
-				}
 				if (m_EditorCtrl.DoCommand(SCI_GETSELECTIONS) == SINGLE_SELECTION)
 				{
+					if (!m_strSelectedWord.IsEmpty())
+					{
+						ResetMultipleSelectionsBuffer();
+					}
 					if (CanResetHightlight())
 					{
+						// reset matched word highlights
 						if (m_MatchedLineDataset.size() > 0)
 						{
 							m_MatchedLineDataset.clear();
@@ -6673,15 +6676,29 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 						}
 						m_nIndicatorCount = 0;
 						m_EditorCtrl.RemoveIndicatorHightLightRenders();
-					}
-				}
-				if (AppSettingMgr.m_RenderIndicatorAction == RENDER_INDICATOR_ACTION::SINGLE_CLICK_ACTION && !m_bEnableLargeFileEditMode)
-				{
-					CString strWordAroundCaret = m_EditorCtrl.GetWordFromPosition(m_EditorCtrl.GetCurrentPosition());
-					if (!strWordAroundCaret.IsEmpty() && !m_EditorCtrl.IsTextSelected())
-					{
-						RenderIndicatorWordsAndCount(strWordAroundCaret);
-						m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
+
+						// re-render matched words by single dragging selection if any
+						if (!m_bEnableLargeFileEditMode)
+						{
+							if (AppSettingMgr.m_RenderIndicatorAction == RENDER_INDICATOR_ACTION::SINGLE_CLICK_ACTION)
+							{
+								CString strWordAroundCaret = m_EditorCtrl.GetWordFromPosition(m_EditorCtrl.GetCurrentPosition());
+								if (!strWordAroundCaret.IsEmpty() && !m_EditorCtrl.IsTextSelected())
+								{
+									RenderIndicatorWordsAndCount(strWordAroundCaret);
+								}
+							}
+							else
+							{
+								int nCurPosition = m_EditorCtrl.GetCurrentPosition();
+								int nWordStart = m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, nCurPosition, true);
+								int nWordEnd = m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, nWordStart, true);
+								if (nWordStart != nWordEnd && nWordStart == m_EditorCtrl.GetSelectionStartPosition() && nWordEnd == m_EditorCtrl.GetSelectionEndPosition()) {
+									CString strSelectedWord = m_EditorCtrl.GetSelectedText();
+									RenderIndicatorWordsAndCount(strSelectedWord);
+								}
+							}
+						}
 					}
 				}
 			}
@@ -6832,35 +6849,15 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			// clear annotations
 			m_EditorCtrl.ClearAllAnnotationText();
 			m_EditorCtrl.UpdateCaretLineVisible();
-			CString strSelectedWord = m_EditorCtrl.GetSelectedText();
-
-			BOOL bCanResetHightlight = CanResetHightlight();
-			if (bCanResetHightlight && m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
+			if (CanResetHightlight() && m_EditorCtrl.DoCommand(SCI_GETSELECTIONS) == SINGLE_SELECTION)
 			{
 				if (AppSettingMgr.m_RenderIndicatorAction == RENDER_INDICATOR_ACTION::DOUBLE_CLICK_ACTION && !m_bEnableLargeFileEditMode)
 				{
-					RenderIndicatorWordsAndCount(strSelectedWord);
-					m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
+					RenderIndicatorWordsAndCount(m_EditorCtrl.GetSelectedText());
 				}
 			}
-
 			// expand a folded line
 			m_EditorCtrl.ExpandFoldedLine(m_EditorCtrl.GetCurrentPosition());
-
-			/*if (strLine.Find(_T(".")) != -1)
-			{
-				if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
-				{
-					ShowCallTipPython(strLine, strSelectedWord);
-				}
-			}
-			else
-			{
-				if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
-				{
-					ShowFuncProtypeDocPython(strLine);
-				}
-			}*/
 		}
 		break;
 		case SCN_AUTOCSELECTION:
@@ -7643,12 +7640,9 @@ void CEditorView::ReupdateTrackingBar()
 	AdjustEditorPosition(rect.Width(), rect.Height());
 	if (AppSettingMgr.m_bShowTrackingBar) // re-update hightlighs
 	{
-		CString strSelectedWord = m_EditorCtrl.GetSelectedText();
-		BOOL bCanResetHightlight = CanResetHightlight();
-		if (bCanResetHightlight && m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION && !m_bEnableLargeFileEditMode)
+		if (CanResetHightlight() && m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION && !m_bEnableLargeFileEditMode)
 		{
-			RenderIndicatorWordsAndCount(strSelectedWord);
-			m_EditorCtrl.RemoveEachIndicatorHightLight(m_EditorCtrl.GetSelectionStartPosition(), m_EditorCtrl.GetSelectionEndPosition());
+			RenderIndicatorWordsAndCount(m_EditorCtrl.GetSelectedText());
 		}
 	}
 	AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
@@ -10251,22 +10245,22 @@ void CEditorView::OnOptionsSelectionAddPreviousLine()
 {
 	if (m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
 	{
-		m_LineMutilpleCaretsBuffer.clear();
-		m_nOriginalMutilCaretColumn = m_EditorCtrl.GetCurrentColumn();
+		m_LineMultipleCaretsBuffer.clear();
+		m_nOriginalMultiCaretColumn = m_EditorCtrl.GetCurrentColumn();
 	}
 	int lCurrentLine = m_EditorCtrl.GetCurrentLine();
-	m_LineMutilpleCaretsBuffer.push_back(lCurrentLine);
-	for (auto const& line : m_LineMutilpleCaretsBuffer)
+	m_LineMultipleCaretsBuffer.push_back(lCurrentLine);
+	for (auto const& line : m_LineMultipleCaretsBuffer)
 	{
 		if (lCurrentLine == line)
 		{
-			lCurrentLine = *std::min_element(m_LineMutilpleCaretsBuffer.begin(), m_LineMutilpleCaretsBuffer.end());
+			lCurrentLine = *std::min_element(m_LineMultipleCaretsBuffer.begin(), m_LineMultipleCaretsBuffer.end());
 			break;
 		}
 	}
 	int lPreviousLineStartPos = m_EditorCtrl.GetLineStartPosition(lCurrentLine - 2);
 	int lPreviousLineEndPos = m_EditorCtrl.GetLineEndPosition(lCurrentLine - 2);
-	if (m_nOriginalMutilCaretColumn > 0)
+	if (m_nOriginalMultiCaretColumn > 0)
 	{
 		while (true)
 		{
@@ -10277,7 +10271,7 @@ void CEditorView::OnOptionsSelectionAddPreviousLine()
 				break;
 			}
 			int lColumn = m_EditorCtrl.GetColumnAtPosition(lPreviousLineStartPos);
-			if (lColumn == m_nOriginalMutilCaretColumn) break;
+			if (lColumn == m_nOriginalMultiCaretColumn) break;
 		}
 	}
 	m_EditorCtrl.DoCommand(SCI_ADDSELECTION, lPreviousLineStartPos, lPreviousLineStartPos);
@@ -10289,22 +10283,22 @@ void CEditorView::OnOptionsSelectionAddNextLine()
 {
 	if (m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
 	{
-		m_LineMutilpleCaretsBuffer.clear();
-		m_nOriginalMutilCaretColumn = m_EditorCtrl.GetCurrentColumn();
+		m_LineMultipleCaretsBuffer.clear();
+		m_nOriginalMultiCaretColumn = m_EditorCtrl.GetCurrentColumn();
 	}
 	int lCurrentLine = m_EditorCtrl.GetCurrentLine();
-	m_LineMutilpleCaretsBuffer.push_back(lCurrentLine);
-	for (auto const& line : m_LineMutilpleCaretsBuffer)
+	m_LineMultipleCaretsBuffer.push_back(lCurrentLine);
+	for (auto const& line : m_LineMultipleCaretsBuffer)
 	{
 		if (lCurrentLine == line)
 		{
-			lCurrentLine = *std::max_element(m_LineMutilpleCaretsBuffer.begin(), m_LineMutilpleCaretsBuffer.end());
+			lCurrentLine = *std::max_element(m_LineMultipleCaretsBuffer.begin(), m_LineMultipleCaretsBuffer.end());
 			break;
 		}
 	}
 	int llNextStartPos = m_EditorCtrl.GetLineStartPosition(lCurrentLine);
 	int lNextLineEndPos = m_EditorCtrl.GetLineEndPosition(lCurrentLine);
-	if (m_nOriginalMutilCaretColumn > 0)
+	if (m_nOriginalMultiCaretColumn > 0)
 	{
 		while (true)
 		{
@@ -10315,7 +10309,7 @@ void CEditorView::OnOptionsSelectionAddNextLine()
 				break;
 			}
 			int lColumn = m_EditorCtrl.GetColumnAtPosition(llNextStartPos);
-			if (lColumn == m_nOriginalMutilCaretColumn) break;
+			if (lColumn == m_nOriginalMultiCaretColumn) break;
 		}
 	}
 	if (llNextStartPos <= m_EditorCtrl.GetTextLength() && lCurrentLine != m_EditorCtrl.GetLineEnd() + 1)

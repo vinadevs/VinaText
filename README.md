@@ -16,6 +16,9 @@ A lightweight and fast text editor for Windows.
 # Simple code IDE, supported debugger for Python, Javascript, C, C++
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_5.png?raw=true)
 
+# Native, extremely fast and lightweight program
+![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_6.png?raw=true)
+
 # Project Build Requirements
 
 - Visual Studio 2017

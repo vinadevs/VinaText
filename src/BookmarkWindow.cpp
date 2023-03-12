@@ -448,9 +448,9 @@ void CBookmarkDlg::InitListCtrl()
 void CBookmarkDlg::UpdateListCtrlVisual()
 {
 	m_wndBookmarkList.SetFont(&m_Font);
-	m_wndBookmarkList.SetBkColor(AppSettingMgr.m_ThemeColor);
+	m_wndBookmarkList.SetBkColor(AppSettingMgr.m_AppThemeColor);
 	m_wndBookmarkList.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
-	m_wndBookmarkList.SetTextBkColor(AppSettingMgr.m_ThemeColor);
+	m_wndBookmarkList.SetTextBkColor(AppSettingMgr.m_AppThemeColor);
 }
 
 void CBookmarkDlg::SaveBookmarkData()

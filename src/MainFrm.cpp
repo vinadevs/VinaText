@@ -216,8 +216,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_PATH_VINATEXT_BOOKMARK, &CMainFrame::OnToolsBookMarkAPath)
 	ON_COMMAND(ID_PATH_VINATEXT_BOOKMARK_TABLE, &CMainFrame::OnToolsOpenBookMarkPathTable)
 	ON_COMMAND(ID_PATH_VINATEXT, &CMainFrame::OnToolsOpenFolderVinaText)
-	ON_COMMAND(ID_PATH_VINATEXT_COMPILER, &CMainFrame::OnToolsOpenFolderCompiler)
-	ON_COMMAND(ID_PATH_VINATEXT_PACKAGE, &CMainFrame::OnToolsOpenFolderDatabase)
 	ON_COMMAND(ID_PATH_VINATEXT_TEMP, &CMainFrame::OnToolsOpenFolderTemp)
 	ON_COMMAND(ID_PATH_VINATEXT_APPDATA, &CMainFrame::OnToolsOpenFolderAppData)
 	ON_COMMAND(ID_SHORTCUT_CONTROL_PANEL, &CMainFrame::OnToolsControlPanel)
@@ -1852,21 +1850,21 @@ void CMainFrame::OnUpdateToolsHideCurrentUserFolder(CCmdUI* pCmdUI)
 
 void CMainFrame::OnVinaTextThemeLight()
 {
-	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
+	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	AppUtils::UpdateSettingsForVinatext();
 	AfxMessageBox(_T("Theme changed to light."), MB_ICONINFORMATION);
 }
 
 void CMainFrame::OnVinaTextThemeMonokai()
 {
-	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
+	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
 	AppUtils::UpdateSettingsForVinatext();
 	AfxMessageBox(_T("Theme changed to monokai."), MB_ICONINFORMATION);
 }
 
 void CMainFrame::OnVinaTextThemeSierraBlue()
 {
-	AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
+	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
 	AppUtils::UpdateSettingsForVinatext();
 	AfxMessageBox(_T("Theme changed to sierra blue."), MB_ICONINFORMATION);
 }
@@ -3218,34 +3216,12 @@ void CMainFrame::ReactiveTabAfterFloatPane()
 	RecalcLayout();
 }
 
-void CMainFrame::OnToolsOpenFolderCompiler()
-{
-	CString strFolderPath = PathUtils::GetVinaTextCompilerPath();
-	if (!PathFileExists(strFolderPath))
-	{
-		AfxMessageBox(_T("[Path Error] VinaText compiler path does not exist!"));
-		return;
-	}
-	RevealInExplorerWindow(strFolderPath);
-}
-
 void CMainFrame::OnToolsOpenFolderVinaText()
 {
 	CString strFolderPath = PathUtils::GetVinaTextPath();
 	if (!PathFileExists(strFolderPath))
 	{
 		AfxMessageBox(_T("[Path Error] VinaText install path does not exist!"));
-		return;
-	}
-	RevealInExplorerWindow(strFolderPath);
-}
-
-void CMainFrame::OnToolsOpenFolderDatabase()
-{
-	CString strFolderPath = PathUtils::GetVinaTextPackagePath();
-	if (!PathFileExists(strFolderPath))
-	{
-		AfxMessageBox(_T("[Path Error] VinaText database path does not exist!"));
 		return;
 	}
 	RevealInExplorerWindow(strFolderPath);
@@ -3475,7 +3451,7 @@ void CMainFrame::EnableAutoSaveDocument()
 	if (AppSettingMgr.m_bAutoSaveDocument) 
 	{
 		KillTimer(AUTO_SAVE_DOCUMENT_TIMER);
-		SetTimer(AUTO_SAVE_DOCUMENT_TIMER, AppSettingMgr.m_nIntervalMinutes*60*1000, NULL);
+		SetTimer(AUTO_SAVE_DOCUMENT_TIMER, AppSettingMgr.m_nIntervalAutoSaveFileMinutes*60*1000, NULL);
 	}
 	else 
 	{

@@ -665,8 +665,6 @@ BEGIN
         POPUP "Application Paths"
         BEGIN
             MENUITEM "Installation Path", ID_PATH_VINATEXT
-            MENUITEM "Compiler Path", ID_PATH_VINATEXT_COMPILER
-            MENUITEM "Package Path", ID_PATH_VINATEXT_PACKAGE
             MENUITEM "App Data Path", ID_PATH_VINATEXT_APPDATA
             MENUITEM "Temporary Path", ID_PATH_VINATEXT_TEMP
         END

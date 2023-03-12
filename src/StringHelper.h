@@ -22,12 +22,12 @@ template<typename ... Args> std::string explorer_extra_string_format(const std::
 }
 
 //////////////////////////////////
-// Mutilple byte buffer allocator
+// Multiple byte buffer allocator
 
-template <class T> class CMutilByteBuffer final
+template <class T> class CMultiByteBuffer final
 {
 public:
-	~CMutilByteBuffer() { if (_allocLen) delete[] _str; }
+	~CMultiByteBuffer() { if (_allocLen) delete[] _str; }
 
 	void sizeTo(size_t size)
 	{

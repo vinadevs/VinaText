@@ -249,7 +249,7 @@ BOOL CGotoDlg::OnEraseBkgnd(CDC * pDC)
 {
 	CRect rect;
 	GetClientRect(&rect);
-	CBrush myBrush(AppSettingMgr.m_ThemeColor);    // dialog background color
+	CBrush myBrush(AppSettingMgr.m_AppThemeColor);    // dialog background color
 	CBrush *pOld = pDC->SelectObject(&myBrush);
 	BOOL bRes = pDC->PatBlt(0, 0, rect.Width(), rect.Height(), PATCOPY);
 	pDC->SelectObject(pOld);    // restore old brush
@@ -269,7 +269,7 @@ HBRUSH CGotoDlg::OnCtlColor(CDC * pDC, CWnd * pWnd, UINT nCtlColor)
 	{
 		pDC->SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 		pDC->SetBkMode(TRANSPARENT);
-		return CreateSolidBrush(AppSettingMgr.m_ThemeColor);
+		return CreateSolidBrush(AppSettingMgr.m_AppThemeColor);
 	}
 	return hbr;
 }

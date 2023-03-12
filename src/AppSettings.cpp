@@ -102,8 +102,8 @@ void CAppSettings::ResetAllSettings()
 	m_bHideAllTargetFileSystem = FALSE;
 	m_bUseFolderMarginClassic = FALSE;
 	m_bEnableCaretBlink = FALSE;
-	m_bEnableMutilpleCursor = TRUE;
-	m_bReturnPreviousEditorState = TRUE;
+	m_bEnableMultipleCursor = TRUE;
+	m_bKeepPreviousEditorState = TRUE;
 	m_bEnableWindowSubsytemFlagForCAndCPP = FALSE;
 	m_bEnableWFlagCPP11 = TRUE;
 	m_bEnablePathNavigation = TRUE;
@@ -121,7 +121,7 @@ void CAppSettings::ResetAllSettings()
 	m_IndicatorStyle = EDITOR_INDICATOR_STYLE::FULL_BOX;
 
 	// auto save file interval
-	m_nIntervalMinutes = 9;
+	m_nIntervalAutoSaveFileMinutes = 9;
 
 	m_bUseInitialFilePickerPath = FALSE;
 	m_strInitialFilePickerPath = _T("C:\\");
@@ -157,7 +157,7 @@ void CAppSettings::ResetAllSettings()
 	m_ActiveTabColor = EDITOR_TAB_ACTIVE_COLOR::MDITAB_ACTIVE_COLOR_GRAY;
 	m_RenderIndicatorAction = RENDER_INDICATOR_ACTION::DOUBLE_CLICK_ACTION;
 	m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLUE;
-	m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
+	m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_WINDOWS_XP_NATIVE;
 	m_ApplicationLanguage = APPLICATION_LANGUAGE::LANGUAGE_ENGLISH;
 
@@ -212,9 +212,9 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddBOOL("HideAllTargetFileSystem", m_bHideAllTargetFileSystem);
 	jsonWriter.AddBOOL("UseFolderMarginClassic", m_bUseFolderMarginClassic);
 	jsonWriter.AddBOOL("EnableCaretBlink", m_bEnableCaretBlink);
-	jsonWriter.AddBOOL("EnableMutilpleCursor", m_bEnableMutilpleCursor);
+	jsonWriter.AddBOOL("EnableMultipleCursor", m_bEnableMultipleCursor);
 	jsonWriter.AddBOOL("UseInitialFilePickerPath", m_bUseInitialFilePickerPath);
-	jsonWriter.AddBOOL("ReturnPreviousEditorState", m_bReturnPreviousEditorState);;
+	jsonWriter.AddBOOL("KeepPreviousEditorState", m_bKeepPreviousEditorState);;
 	jsonWriter.AddBOOL("EnableWindowSubsytemFlagForCAndCPP", m_bEnableWindowSubsytemFlagForCAndCPP);
 	jsonWriter.AddBOOL("EnableWFlagCPP11", m_bEnableWFlagCPP11);
 	jsonWriter.AddBOOL("EnablePathNavigation", m_bEnablePathNavigation);
@@ -225,7 +225,7 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddBOOL("EnableAutoSearchWhenTyping", m_bEnableAutoSearchWhenTyping);
 	jsonWriter.AddBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonWriter.AddBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
-	jsonWriter.AddBOOL("m_bEnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
+	jsonWriter.AddBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LangguageSpellCheck", AppUtils::CStringToStd(m_strLangguageSpellCheck));
 	jsonWriter.AddValue("DockWindowFontName", AppUtils::CStringToStd(m_DockWindowFontSetting._font));
@@ -244,11 +244,11 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddInteger("FilePreviewSizeLimit", m_nFilePreviewSizeLimit);
 	jsonWriter.AddInteger("FolderMarginStyle", m_FolderMarginStyle);
 	jsonWriter.AddInteger("IndicatorStyle", m_IndicatorStyle);
-	jsonWriter.AddInteger("IntervalMinutes", m_nIntervalMinutes);
+	jsonWriter.AddInteger("IntervalAutoSaveFileMinutes", m_nIntervalAutoSaveFileMinutes);
 	jsonWriter.AddValue("CaretBlinkColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_CaretBlinkColor)));
 	jsonWriter.AddValue("ActiveTabColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_ActiveTabColor)));
 	jsonWriter.AddValue("IndicatorColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_IndicatorColor)));
-	jsonWriter.AddValue("ThemeColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_ThemeColor)));
+	jsonWriter.AddValue("ApplicationThemeColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_AppThemeColor)));
 	jsonWriter.AddInteger("ApplicationThemeLook", m_ApplicationThemeLook);
 	jsonWriter.AddInteger("ApplicationLanguage", m_ApplicationLanguage);
 	jsonWriter.AddInteger("RenderIndicatorAction", m_RenderIndicatorAction);
@@ -310,9 +310,9 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadBOOL("HideAllTargetFileSystem", m_bHideAllTargetFileSystem);
 	jsonReader.ReadBOOL("UseFolderMarginClassic", m_bUseFolderMarginClassic);
 	jsonReader.ReadBOOL("EnableCaretBlink", m_bEnableCaretBlink);
-	jsonReader.ReadBOOL("EnableMutilpleCursor", m_bEnableMutilpleCursor);
+	jsonReader.ReadBOOL("EnableMultipleCursor", m_bEnableMultipleCursor);
 	jsonReader.ReadBOOL("UseInitialFilePickerPath", m_bUseInitialFilePickerPath);
-	jsonReader.ReadBOOL("ReturnPreviousEditorState", m_bReturnPreviousEditorState);
+	jsonReader.ReadBOOL("KeepPreviousEditorState", m_bKeepPreviousEditorState);
 	jsonReader.ReadBOOL("EnableWindowSubsytemFlagForCAndCPP", m_bEnableWindowSubsytemFlagForCAndCPP);
 	jsonReader.ReadBOOL("EnableWFlagCPP11", m_bEnableWFlagCPP11);
 	jsonReader.ReadBOOL("EnablePathNavigation", m_bEnablePathNavigation);
@@ -323,7 +323,7 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadBOOL("EnableAutoSearchWhenTyping", m_bEnableAutoSearchWhenTyping);
 	jsonReader.ReadBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonReader.ReadBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
-	jsonReader.ReadBOOL("m_bEnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
+	jsonReader.ReadBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
 	jsonReader.ReadCString("LangguageSpellCheck", m_strLangguageSpellCheck);
@@ -342,11 +342,11 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadInteger("FilePreviewSizeLimit", m_nFilePreviewSizeLimit);
 	jsonReader.ReadInteger("FolderMarginStyle", (int&)m_FolderMarginStyle);
 	jsonReader.ReadInteger("IndicatorStyle", (int&)m_IndicatorStyle);
-	jsonReader.ReadInteger("IntervalMinutes", (int&)m_nIntervalMinutes);
+	jsonReader.ReadInteger("IntervalAutoSaveFileMinutes", (int&)m_nIntervalAutoSaveFileMinutes);
 	jsonReader.ReadColor("CaretBlinkColor", (int&)m_CaretBlinkColor);
 	jsonReader.ReadColor("ActiveTabColor", (int&)m_ActiveTabColor);
 	jsonReader.ReadColor("IndicatorColor", (int&)m_IndicatorColor);
-	jsonReader.ReadColor("ThemeColor", (int&)m_ThemeColor);
+	jsonReader.ReadColor("ApplicationThemeColor", (int&)m_AppThemeColor);
 	jsonReader.ReadInteger("ApplicationThemeLook", (int&)m_ApplicationThemeLook);
 	jsonReader.ReadInteger("ApplicationLanguage", (int&)m_ApplicationLanguage);
 	jsonReader.ReadInteger("RenderIndicatorAction", (int&)m_RenderIndicatorAction);

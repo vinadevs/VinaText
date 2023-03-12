@@ -24,10 +24,10 @@ protected:
 
 	// Attributes
 protected:
-	CWMPHost	m_wndMWP;
+	CWMPHost m_wndMWP;
 	FILETIME m_FileSystemTime = {};
-	BOOL m_bIsWatchFileProcessing = FALSE;
-	BOOL m_bDocumentReadOnly = FALSE;
+	BOOL     m_bIsWatchFileProcessing = FALSE;
+	BOOL     m_bDocumentReadOnly = FALSE;
 
 public:
 	virtual void UpdatePreviewFileContent();

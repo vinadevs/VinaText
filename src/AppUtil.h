@@ -160,10 +160,10 @@ void LOG_BUILD_MESSAGE_COLOR(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? 
 
 void LOG_BUILD_MESSAGE_FORMAT(const TCHAR * Fmt, ...);
 
-// only use when log 1 time, for mutil message use LOG_OUTPUT_MESSAGE
+// only use when log 1 time, for multi message use LOG_OUTPUT_MESSAGE
 void LOG_OUTPUT_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
-// only use when log 1 time, for mutil message use LOG_BUILD_MESSAGE
+// only use when log 1 time, for multi message use LOG_BUILD_MESSAGE
 void LOG_BUILD_MESSAGE_ACTIVE_PANE(LPCTSTR lpszMsg, COLORREF color = IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 // use for worker thread

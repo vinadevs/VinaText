@@ -168,17 +168,17 @@ void EditorLexerDark::Init_batch_Editor(CLanguageDatabase* pDatabase, CEditorCtr
 		auto rgb = EditorColorDark::g_rgb_Syntax_batch[i].rgb;
 		if (iItem == SCE_C_COMMENTLINE || iItem == SCE_C_COMMENTDOC || iItem == SCE_C_WORD2)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_C_COMMENT)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_batch_language);
@@ -273,23 +273,23 @@ void EditorLexerDark::Init_css_Editor(CLanguageDatabase* pDatabase, CEditorCtrl*
 		auto rgb = EditorColorDark::g_rgb_Syntax_css[i].rgb;
 		if (iItem == SCE_CSS_TAG || iItem == SCE_CSS_PSEUDOCLASS || iItem == SCE_CSS_OPERATOR || iItem == SCE_CSS_IMPORTANT)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_CSS_CLASS)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_CSS_IDENTIFIER2)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_css_language);
@@ -342,7 +342,7 @@ void EditorLexerDark::Init_html_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		/*if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
@@ -352,12 +352,12 @@ void EditorLexerDark::Init_html_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 			|| iItem == SCE_HPHP_OPERATOR || iItem == SCE_HPHP_DEFAULT
 			|| iItem == SCE_H_OTHER || iItem == SCE_H_XMLSTART)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_html_language);
@@ -378,7 +378,7 @@ void EditorLexerDark::Init_html_Editor_NoDB(CEditorCtrl* pEditorCtrl)
 		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
@@ -388,12 +388,12 @@ void EditorLexerDark::Init_html_Editor_NoDB(CEditorCtrl* pEditorCtrl)
 			|| iItem == SCE_HPHP_OPERATOR || iItem == SCE_HPHP_DEFAULT
 			|| iItem == SCE_H_OTHER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 }
@@ -488,22 +488,22 @@ void EditorLexerDark::Init_pascal_Editor(CLanguageDatabase* pDatabase, CEditorCt
 		auto rgb = EditorColorDark::g_rgb_Syntax_pascal[i].rgb;
 		if (iItem == SCE_PAS_WORD)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_PAS_STRING)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else if (iItem == SCE_PAS_PREPROCESSOR || iItem == SCE_PAS_PREPROCESSOR2)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_pascal_language);
@@ -557,17 +557,17 @@ void EditorLexerDark::Init_powershell_Editor(CLanguageDatabase* pDatabase, CEdit
 		if (iItem == SCE_C_WORD || iItem == SCE_C_PREPROCESSOR || iItem == SCE_C_OPERATOR ||
 			iItem == SCE_C_UUID || iItem == SCE_C_NUMBER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_C_COMMENT || iItem == SCE_C_COMMENTLINE || iItem == SCE_C_COMMENTDOC || iItem == SCE_C_WORD2)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_powershell_language);
@@ -588,23 +588,23 @@ void EditorLexerDark::Init_python_Editor(CLanguageDatabase* pDatabase, CEditorCt
 		auto rgb = EditorColorDark::g_rgb_Syntax_python[i].rgb;
 		if (iItem == SCE_P_WORD || iItem == SCE_P_WORD2 || iItem == SCE_P_OPERATOR)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		if (iItem == SCE_P_CLASSNAME || iItem == SCE_P_DEFNAME)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else if (iItem == SCE_P_STRING || iItem == SCE_P_CHARACTER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_python_language);
@@ -623,7 +623,7 @@ void EditorLexerDark::Init_python_Editor_NoDB(CEditorCtrl* pEditorCtrl)
 	{
 		auto iItem = EditorColorDark::g_rgb_Syntax_python_2[i].iItem;
 		auto rgb = EditorColorDark::g_rgb_Syntax_python_2[i].rgb;
-		pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+		pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 	}
 }
 
@@ -716,17 +716,17 @@ void EditorLexerDark::Init_vb_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* 
 		auto rgb = EditorColorDark::g_rgb_Syntax_vb[i].rgb;
 		if (iItem == SCE_C_COMMENTDOC)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_C_NUMBER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_vb_language);
@@ -778,7 +778,7 @@ void EditorLexerDark::Init_xml_Editor(CLanguageDatabase* pDatabase, CEditorCtrl*
 		auto rgb = EditorColorDark::g_rgb_Syntax_html[i].rgb;
 		/*if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
@@ -788,12 +788,12 @@ void EditorLexerDark::Init_xml_Editor(CLanguageDatabase* pDatabase, CEditorCtrl*
 			|| iItem == SCE_HPHP_OPERATOR || iItem == SCE_HPHP_DEFAULT
 			|| iItem == SCE_H_OTHER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_xml_language);
@@ -814,12 +814,12 @@ void EditorLexerDark::Init_json_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 		auto rgb = EditorColorDark::g_rgb_Syntax_json[i].rgb;
 		if (iItem == SCE_JSON_DEFAULT || iItem == SCE_JSON_ESCAPESEQUENCE)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_json_language);
@@ -872,17 +872,17 @@ void EditorLexerDark::Init_r_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* p
 		auto rgb = EditorColorDark::g_rgb_Syntax_r[i].rgb;
 		if (iItem == SCE_R_KWORD || iItem == SCE_R_BASEKWORD)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		if (iItem == SCE_R_STRING || iItem == SCE_R_STRING2)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_r_language);
@@ -903,17 +903,17 @@ void EditorLexerDark::Init_flexlicense_Editor(CLanguageDatabase* pDatabase, CEdi
 		auto rgb = EditorColorDark::g_rgb_Syntax_flexlicense[i].rgb;
 		if (iItem == SCE_P_WORD || iItem == SCE_P_WORD2 || iItem == SCE_P_OPERATOR)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
 		}
 		else if (iItem == SCE_P_STRING || iItem == SCE_P_CHARACTER)
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
 		}
 		else
 		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_ThemeColor);
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_flexlicense_language);

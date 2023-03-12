@@ -491,6 +491,7 @@ protected:
 	void CHAR_ADDED_PROCESSOR(SCNotification *pScinNotification);
 	void OpenFileLanguageConfig(const CString & strLexerName);
 	void AdjustEditorPosition(int cx, int cy);
+	void ResetMultipleSelectionsBuffer();
 
 	void UpdateDockPaneBreakpoint(int nLineNumber, BOOL bDeleteFromList, const CString & strPathName, const CString & strProcessName);
 	void UpdateDockPaneBookmark(int nLineNumber, BOOL bDeleteFromList, const CString& strPathName);
@@ -507,8 +508,9 @@ protected:
 	int m_nSpaceDelta = 0;
 	int m_nIndicatorPos = 0;
 	int m_nIndicatorCount = 0;
+	int m_nLatestCaretPosition = 0;
 	int m_nIncreaseSelectionSearchFlag = 0;
-	int m_nOriginalMutilCaretColumn = 0;
+	int m_nOriginalMultiCaretColumn = 0;
 	int m_nFirstVisualLineModified = 0;
 	int m_encodingUser = TF_INT;
 	CString m_czLexerFromFile;
@@ -542,7 +544,8 @@ protected:
 	UpdateWordsDataset    m_UpdateWordsDataset;
 	MatchedLineDataset    m_MatchedLineDataset;
 	CSpellChecker         m_SpellChecker;
-	std::vector<int>	  m_LineMutilpleCaretsBuffer;
+	std::vector<int>	  m_LineMultipleCaretsBuffer;
+	std::unordered_set<int> m_PositionMultipleCaretsBuffer;
 	std::unique_ptr<CVinaTextProgressBar> m_pBuildProgressBar = NULL;
 	VINATEXT_SUPPORTED_LANGUAGE m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT;
 

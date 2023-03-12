@@ -468,18 +468,6 @@
     <ClInclude Include="TemplateCreator.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="VinaTextSettingDlg.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingDlgCustomize.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingDlgToggle.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingDlgFileSystem.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
     <ClInclude Include="AppAboutDlg.h">
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClInclude>
@@ -898,18 +886,6 @@
     </ClCompile>
     <ClCompile Include="TemplateCreator.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="VinaTextSettingDlg.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgCustomize.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgToggle.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgFileSystem.cpp">
-      <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="AppAboutDlg.cpp">
       <Filter>Main Files\Main Skeleton\Application</Filter>

@@ -254,7 +254,7 @@ const char* AppUtils::WideCharToCharAsCodePage(const wchar_t * wcharStr2Convert,
 	if (NULL == wcharStr2Convert)
 		return NULL;
 
-	CMutilByteBuffer<char> multiByteStr;
+	CMultiByteBuffer<char> multiByteStr;
 	int lenMbcs = WideCharToMultiByte(codepage, 0, wcharStr2Convert, lenWc, NULL, 0, NULL, NULL);
 	if (lenMbcs > 0)
 	{

@@ -151,7 +151,7 @@ BOOL CFileExplorerDlg::OnInitDialog()
 void CFileExplorerDlg::UpdateUIVisual()
 {
 	m_FileExplorerCtrl.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
-	m_FileExplorerCtrl.SetBkColor(AppSettingMgr.m_ThemeColor);
+	m_FileExplorerCtrl.SetBkColor(AppSettingMgr.m_AppThemeColor);
 }
 
 #pragma warning(suppress: 26434)

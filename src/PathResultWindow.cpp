@@ -146,9 +146,9 @@ void CPathResultDlg::UpdateDlgFont()
 void CPathResultDlg::UpdateListCtrlVisual()
 {
 	m_wndResultList.SetFont(&m_Font);
-	m_wndResultList.SetBkColor(AppSettingMgr.m_ThemeColor);
+	m_wndResultList.SetBkColor(AppSettingMgr.m_AppThemeColor);
 	m_wndResultList.SetTextColor(IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
-	m_wndResultList.SetTextBkColor(AppSettingMgr.m_ThemeColor);
+	m_wndResultList.SetTextBkColor(AppSettingMgr.m_AppThemeColor);
 }
 
 void CPathResultDlg::DoDataExchange(CDataExchange* pDX)

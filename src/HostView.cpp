@@ -233,7 +233,7 @@ void CHostView::OnDraw(CDC * pDC)
 {
 	// draw background
 	CRect rect; GetClientRect(rect);
-	HBRUSH hBrush = ::CreateSolidBrush(AppSettingMgr.m_ThemeColor);
+	HBRUSH hBrush = ::CreateSolidBrush(AppSettingMgr.m_AppThemeColor);
 	::FillRect(pDC->m_hDC, rect, hBrush);
 	DeleteObject(hBrush);
 }

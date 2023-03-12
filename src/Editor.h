@@ -356,5 +356,5 @@ private:
 	EOLFormat             m_format = EOLFormat::Unknown_Format;
 	uptr_t				  m_DocumentID = 0;
 	// theme color
-	EditorThemeColorSet   m_ThemeColorSet;
+	EditorThemeColorSet   m_AppThemeColorSet;
 };
