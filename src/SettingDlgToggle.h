@@ -53,6 +53,7 @@ public:
 	BOOL m_bEnableCaretBlink;
 	BOOL m_bEnableDisplayBuildErrorOnEditor;
 	BOOL m_bEnableHightLightFolder;
+	BOOL m_bEnableMultipleCursor;
 	BOOL m_bEnableMutilpleCursor;
 	BOOL m_bEnablePathNavigation;
 	BOOL m_bEnablePreviewFile;

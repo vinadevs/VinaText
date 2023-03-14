@@ -324,14 +324,14 @@ BOOL CVinaTextApp::InitInstance()
 		m_bIsOpenInAdminMode = TRUE;
 		if (!pMainFrame->LoadMDIState(GetRegSectionPath()))
 		{
-			m_pEditorDocTemplate->OpenDocumentFile(NULL, FALSE, TRUE);
+			m_pEditorDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 		}
 	}
 	else if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew && cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW)
 	{
 		if (!pMainFrame->LoadMDIState(GetRegSectionPath()))
 		{
-			m_pEditorDocTemplate->OpenDocumentFile(NULL, FALSE, TRUE);
+			m_pEditorDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 		}
 		else
 		{
@@ -729,7 +729,7 @@ CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 		// Open media file
 		return m_pMediaDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
 	}
-	else if (PathUtils::IsOfficePptFile(lpszPathName))
+	/*else if (PathUtils::IsOfficePptFile(lpszPathName))
 	{
 		// Open office ppt
 		CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
@@ -758,11 +758,11 @@ CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 			AfxMessageBox(_T("[Host Error] Can not found Microsoft Word on this PC!")); return NULL;
 		}
 		return HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, lpszPathName, TRUE);
-	}
+	}*/
 	else
 	{
 		// Open text file
-		return m_pEditorDocTemplate->OpenDocumentFile(lpszPathName, TRUE, TRUE);
+		return m_pEditorDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
 	}
 }
 

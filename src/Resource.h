@@ -31,6 +31,12 @@
 #define IDD_BRACKET_OUTLINE             148
 #define IDD_DIALOG_QUICK_REPLACE        149
 #define IDD_APP_LOOK                    150
+#define IDD_OPTIONSPAGE1                151
+#define IDD_OPTIONSPAGE2                152
+#define IDD_OPTIONSPAGE3                153
+#define IDD_OPTIONSPAGE4                154
+#define IDD_OPTIONSPAGE5                155
+#define IDD_OPTIONSPAGE6                156
 #define IDB_OPTIONSIMAGES               171
 #define IDD_EDIT_WITH_X                 172
 #define IDC_X_INPUT                     173
@@ -339,7 +345,7 @@
 #define ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE 1152
 #define ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE 1153
 #define ID_DRAW_CARET_LINE_FRAME        1154
-#define ID_ENABLE_MUTILPLE_CURSOR       1155
+#define ID_ENABLE_MULTIPLE_CURSOR       1155
 #define ID_ENABLE_URL_HIGHLIGHT         1156
 #define ID_ACTIVE_TAB_COLOR_COMBO       1157
 #define ID_CARET_BLINK_COLOR_COMBO      1158

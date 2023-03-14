@@ -29,7 +29,7 @@ SettingDlgFileSystem::SettingDlgFileSystem(CWnd* pParent /*=NULL*/)
 	, m_strBinaryFileExtensionList(_T(""))
 	, m_nLineSpaceAbove(0)
 	, m_nLineSpaceBelow(0)
-	, m_nIntervalMinutes(0)
+	, m_nIntervalAutoSaveFileMinutes(0)
 	, m_nExplorerExpandLimitFileOpen(0)
 	, m_nExplorerExpandLimitLevel(0)
 	, m_nFilePreviewSizeLimit(0)
@@ -522,7 +522,7 @@ void SettingDlgFileSystem::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_strAntiVirusProgram = m_strAntiVirusProgram;
 		AppSettingMgr.m_nLineSpaceAbove = m_nLineSpaceAbove;
 		AppSettingMgr.m_nLineSpaceBelow = m_nLineSpaceBelow;
-		AppSettingMgr.m_nIntervalMinutes = m_nIntervalMinutes;
+		AppSettingMgr.m_nIntervalAutoSaveFileMinutes = m_nIntervalAutoSaveFileMinutes;
 		AppSettingMgr.m_nExplorerExpandLimitFileOpen = m_nExplorerExpandLimitFileOpen;
 		AppSettingMgr.m_nExplorerExpandLimitLevel = m_nExplorerExpandLimitLevel;
 		AppSettingMgr.m_nFilePreviewSizeLimit = m_nFilePreviewSizeLimit;
@@ -544,7 +544,7 @@ void SettingDlgFileSystem::UpdateGUISettings(BOOL bFromGUI)
 		m_strAntiVirusProgram = AppSettingMgr.m_strAntiVirusProgram;
 		m_nLineSpaceAbove = AppSettingMgr.m_nLineSpaceAbove;
 		m_nLineSpaceBelow = AppSettingMgr.m_nLineSpaceBelow;
-		m_nIntervalMinutes = AppSettingMgr.m_nIntervalMinutes;
+		m_nIntervalAutoSaveFileMinutes = AppSettingMgr.m_nIntervalAutoSaveFileMinutes;
 		m_nExplorerExpandLimitFileOpen = AppSettingMgr.m_nExplorerExpandLimitFileOpen;
 		m_nExplorerExpandLimitLevel = AppSettingMgr.m_nExplorerExpandLimitLevel;
 		m_nFilePreviewSizeLimit = AppSettingMgr.m_nFilePreviewSizeLimit;
@@ -569,7 +569,7 @@ void SettingDlgFileSystem::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_ANTI_VIRUS_PROGRAM_EDIT, m_strAntiVirusProgram);
 	DDX_Text(pDX, ID_LINE_SPACE_ABOVE_EDIT, m_nLineSpaceAbove);
 	DDX_Text(pDX, ID_LINE_SPACE_BELOW_EDIT, m_nLineSpaceBelow);
-	DDX_Text(pDX, ID_INTERVAL_MINUTES_EDIT, m_nIntervalMinutes);
+	DDX_Text(pDX, ID_INTERVAL_MINUTES_EDIT, m_nIntervalAutoSaveFileMinutes);
 	DDX_Text(pDX, ID_EXPLORER_EXPAND_LIMIT_FILE_OPEN_EDIT, m_nExplorerExpandLimitFileOpen);
 	DDX_Text(pDX, ID_EXPLORER_EXPAND_LIMIT_LEVEL_EDIT, m_nExplorerExpandLimitLevel);
 	DDX_Text(pDX, ID_FILE_PREVIEW_SIZE_LIMIT_EDIT, m_nFilePreviewSizeLimit);

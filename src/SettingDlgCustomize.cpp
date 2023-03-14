@@ -209,7 +209,7 @@ void SettingDlgCustomize::InitThemeColorCombobox()
 	m_ThemeColorCombo.AddString(_T("Sierra Blue Theme"));
 	m_ThemeColorCombo.AddString(_T("Monokai Theme"));
 	m_ThemeColorCombo.AddString(_T("Lighting Theme"));
-	switch (AppSettingMgr.m_ThemeColor)
+	switch (AppSettingMgr.m_AppThemeColor)
 	{
 	case EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE:
 		m_ThemeColorCombo.SetCurSel(0);
@@ -484,16 +484,16 @@ void SettingDlgCustomize::FromThemeColorCombobox()
 	switch (iSel)
 	{
 	case 0:
-		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
+		AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
 		break;
 	case 1:
-		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
+		AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
 		break;
 	case 2:
-		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
+		AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 		break;
 	default:
-		AppSettingMgr.m_ThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
+		AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
 		break;
 	}
 }

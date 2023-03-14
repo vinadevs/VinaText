@@ -474,12 +474,6 @@
     <ClInclude Include="UnicodeUtils.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadPool.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="SmartHandle.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Hpsutils.h">
       <Filter>Control UI\Editor\Editor</Filter>
     </ClInclude>
@@ -581,6 +575,18 @@
     </ClInclude>
     <ClInclude Include="EditorLexerLight.h">
       <Filter>Control UI\Editor\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="VinaTextSettingDlg.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingDlgCustomize.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingDlgFileSystem.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingDlgToggle.h">
+      <Filter>Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1006,18 @@
     </ClCompile>
     <ClCompile Include="EditorLexerLight.cpp">
       <Filter>Control UI\Editor\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="VinaTextSettingDlg.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingDlgCustomize.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingDlgFileSystem.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingDlgToggle.cpp">
+      <Filter>Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1296,7 +1296,9 @@ bool CFileExplorerCtrl::Open(_In_ HTREEITEM hItem, BOOL bOpenByDefaultApp /*= FA
 		if (!bOpenByDefaultApp && !PathUtils::IsDirectory(strFile) && !PathUtils::IsBinaryFile(strFile))
 		{
 			bSuccess = true;
-			if (PathUtils::IsOfficePptFile(strFile))
+			AppUtils::CreateDocumentFromFile(strFile);
+			SetFocus();
+			/*if (PathUtils::IsOfficePptFile(strFile))
 			{
 				CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
 				if (!PathFileExists(strMSPPTPath))
@@ -1327,7 +1329,7 @@ bool CFileExplorerCtrl::Open(_In_ HTREEITEM hItem, BOOL bOpenByDefaultApp /*= FA
 			{
 				AppUtils::CreateDocumentFromFile(strFile);
 				SetFocus();
-			}
+			}*/
 		}
 		else // Execute the default command for the selected item
 		{
@@ -5733,7 +5735,7 @@ void CFileExplorerCtrl::OnOpenAsRawFormat()
 			pDoc->SetPreviewMode(FALSE);
 			return;
 		}
-		AppUtils::GetVinaTextApp()->m_pEditorDocTemplate->OpenNewEditorDocument(strFile, TRUE, TRUE);
+		AppUtils::GetVinaTextApp()->m_pEditorDocTemplate->OpenNewDocument(strFile, TRUE, TRUE);
 		SetFocus();
 	}
 }

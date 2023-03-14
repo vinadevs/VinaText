@@ -55,9 +55,9 @@ CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAdd
 			pDocument->SetPathName(lpszPathName);
 			POSITION pos = pDocument->GetFirstViewPosition();
 			CView* pView = pDocument->GetNextView(pos);
-			ASSERT(pView);
+			ASSERT(pView); if (!pView) return NULL;
 			CFrameWnd* pFrame = pView->GetParentFrame();
-			ASSERT(pFrame);
+			ASSERT(pFrame); if (!pFrame) return NULL;
 			InitialUpdateFrame(pFrame, pDocument); // will call CView::OnInitialUpdate()
 			return pDocument;
 		}
@@ -84,9 +84,10 @@ CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAdd
 	}
 }
 
-CDocument * CMultiDocTemplateEx::OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)
+ CDocument * CMultiDocTemplateEx::OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)
 {
-	if (PathUtils::IsOfficePptFile(lpszPathName))
+	return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bAddToMRU, bMakeVisible);
+	/*if (PathUtils::IsOfficePptFile(lpszPathName))
 	{
 		// Open office ppt
 		CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
@@ -116,10 +117,5 @@ CDocument * CMultiDocTemplateEx::OpenNewDocument(LPCTSTR lpszPathName, BOOL bAdd
 		}
 		return HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, lpszPathName, TRUE);
 	}
-	else return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bAddToMRU, bMakeVisible);
-}
-
-CDocument * CMultiDocTemplateEx::OpenNewEditorDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)
-{
-	return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bAddToMRU, bMakeVisible);
-}
+	else return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bAddToMRU, bMakeVisible);*/
+} 

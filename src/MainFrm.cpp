@@ -30,10 +30,11 @@
 //#include "CustomizeUserTool.h"
 
 #include "SetBookmarkPathDlg.h"
-#include "VinaTextSettingDlg.h"
-
 #include "QuickSearchDialog.h"
 #include "BookMarkPathDlg.h"
+
+#include "VinaTextSettingDlg.h"
+
 #include "GuiUtils.h"
 
 #include "HostManager.h"
@@ -3093,19 +3094,8 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 
 void CMainFrame::OnVinaTextSettings()
 {
-	/*VinaTextSettingDlg dlg;
-	dlg.DoModal();*/
-	// use file setting temporary
-	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
-	if (PathFileExists(strJsonFilePath))
-	{
-		AppUtils::CreateDocumentFromFile(strJsonFilePath);
-		AfxMessageBox(_T("After changed settings, please restart application to apply it."), MB_ICONINFORMATION);
-	}
-	else
-	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strJsonFilePath);
-	}
+	VinaTextSettingDlg dlg;
+	dlg.DoModal();
 }
 
 void CMainFrame::OnToolsRemoveFolder()

@@ -60,7 +60,7 @@ private:
 
 	int m_nLineSpaceAbove;
 	int m_nLineSpaceBelow;
-	int m_nIntervalMinutes;
+	int m_nIntervalAutoSaveFileMinutes;
 	int m_nExplorerExpandLimitFileOpen;
 	int m_nExplorerExpandLimitLevel;
 	int m_nFilePreviewSizeLimit;

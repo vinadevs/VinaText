@@ -37,7 +37,7 @@ SettingDlgToggle::SettingDlgToggle(CWnd* pParent /*=NULL*/)
 	, m_bEnableCaretBlink(FALSE)
 	, m_bEnableDisplayBuildErrorOnEditor(FALSE)
 	, m_bEnableHightLightFolder(FALSE)
-	, m_bEnableMutilpleCursor(FALSE)
+	, m_bEnableMultipleCursor(FALSE)
 	, m_bEnablePathNavigation(FALSE)
 	, m_bEnablePreviewFile(FALSE)
 	, m_bEnableProcessIndentationTab(FALSE)
@@ -90,7 +90,7 @@ void SettingDlgToggle::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_ENABLE_CARET_BLINK, m_bEnableCaretBlink);
 	DDX_Check(pDX, ID_ENABLE_DISPLAY_BUILD_ERROR_ON_EDITOR, m_bEnableDisplayBuildErrorOnEditor);
 	DDX_Check(pDX, ID_ENABLE_HIGHT_LIGHT_FOLDER, m_bEnableHightLightFolder);
-	DDX_Check(pDX, ID_ENABLE_MUTILPLE_CURSOR, m_bEnableMutilpleCursor);
+	DDX_Check(pDX, ID_ENABLE_MULTIPLE_CURSOR, m_bEnableMultipleCursor);
 	DDX_Check(pDX, ID_ENABLE_PATH_NAVIGATION, m_bEnablePathNavigation);
 	DDX_Check(pDX, ID_ENABLE_PREVIEW_FILE, m_bEnablePreviewFile);
 	DDX_Check(pDX, ID_ENABLE_PROCESS_INDENTATION_TAB, m_bEnableProcessIndentationTab);
@@ -165,7 +165,7 @@ void SettingDlgToggle::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bEnableCaretBlink = m_bEnableCaretBlink;
 		AppSettingMgr.m_bEnableDisplayBuildErrorOnEditor = m_bEnableDisplayBuildErrorOnEditor;
 		AppSettingMgr.m_bEnableHightLightFolder = m_bEnableHightLightFolder;
-		AppSettingMgr.m_bEnableMutilpleCursor = m_bEnableMutilpleCursor;
+		AppSettingMgr.m_bEnableMultipleCursor = m_bEnableMultipleCursor;
 		AppSettingMgr.m_bEnablePathNavigation = m_bEnablePathNavigation;
 		AppSettingMgr.m_bEnablePreviewFile = m_bEnablePreviewFile;
 		AppSettingMgr.m_bEnableProcessIndentationTab = m_bEnableProcessIndentationTab;
@@ -176,7 +176,7 @@ void SettingDlgToggle::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bEnableWindowSubsytemFlagForCAndCPP = m_bEnableWindowSubsytemFlagForCAndCPP;
 		AppSettingMgr.m_bHideAllTargetFileSystem = m_bHideAllTargetFileSystem;
 		AppSettingMgr.m_bOpenWindowCmdWhenRunProgram = m_bOpenWindowCmdWhenRunProgram;
-		AppSettingMgr.m_bReturnPreviousEditorState = m_bReturnPreviousEditorState;
+		AppSettingMgr.m_bKeepPreviousEditorState = m_bReturnPreviousEditorState;
 		AppSettingMgr.m_bRevealExplorerWhenDlbClkFile = m_bRevealExplorerWhenDoubleClickOnTab;
 		AppSettingMgr.m_bRevealExplorerWhenSwitchFile = m_bRevealExplorerWhenSwitchTab;
 		AppSettingMgr.m_bSaveDataBookmarkWindow = m_bSaveDataBookmarkWindow;
@@ -209,7 +209,7 @@ void SettingDlgToggle::UpdateGUISettings(BOOL bFromGUI)
 		m_bEnableCaretBlink = AppSettingMgr.m_bEnableCaretBlink;
 		m_bEnableDisplayBuildErrorOnEditor = AppSettingMgr.m_bEnableDisplayBuildErrorOnEditor;
 		m_bEnableHightLightFolder = AppSettingMgr.m_bEnableHightLightFolder;
-		m_bEnableMutilpleCursor = AppSettingMgr.m_bEnableMutilpleCursor;
+		m_bEnableMultipleCursor = AppSettingMgr.m_bEnableMultipleCursor;
 		m_bEnablePathNavigation = AppSettingMgr.m_bEnablePathNavigation;
 		m_bEnablePreviewFile = AppSettingMgr.m_bEnablePreviewFile;
 		m_bEnableProcessIndentationTab = AppSettingMgr.m_bEnableProcessIndentationTab;
@@ -220,7 +220,7 @@ void SettingDlgToggle::UpdateGUISettings(BOOL bFromGUI)
 		m_bEnableWindowSubsytemFlagForCAndCPP = AppSettingMgr.m_bEnableWindowSubsytemFlagForCAndCPP;
 		m_bHideAllTargetFileSystem = AppSettingMgr.m_bHideAllTargetFileSystem;
 		m_bOpenWindowCmdWhenRunProgram = AppSettingMgr.m_bOpenWindowCmdWhenRunProgram;
-		m_bReturnPreviousEditorState = AppSettingMgr.m_bReturnPreviousEditorState;
+		m_bReturnPreviousEditorState = AppSettingMgr.m_bKeepPreviousEditorState;
 		m_bRevealExplorerWhenDoubleClickOnTab = AppSettingMgr.m_bRevealExplorerWhenDlbClkFile;
 		m_bRevealExplorerWhenSwitchTab = AppSettingMgr.m_bRevealExplorerWhenSwitchFile;
 		m_bSaveDataBookmarkWindow = AppSettingMgr.m_bSaveDataBookmarkWindow;

@@ -217,6 +217,9 @@
     <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="EditorLexerDark.h" />
     <ClInclude Include="EditorLexerLight.h" />
+    <ClInclude Include="SettingDlgCustomize.h" />
+    <ClInclude Include="SettingDlgFileSystem.h" />
+    <ClInclude Include="SettingDlgToggle.h" />
     <ClInclude Include="translator\PODictionary.h" />
     <ClInclude Include="translator\POHandler.h" />
     <ClInclude Include="uchardet\CharDistribution.h" />
@@ -241,6 +244,7 @@
     <ClInclude Include="uchardet\nsUTF8Prober.h" />
     <ClInclude Include="uchardet\prmem.h" />
     <ClInclude Include="uchardet\uchardet.h" />
+    <ClInclude Include="VinaTextSettingDlg.h" />
     <ClInclude Include="WindowsPrinter.h" />
     <ClInclude Include="CreateNewMultiplePath.h" />
     <ClInclude Include="Hpsutils.h" />
@@ -298,10 +302,8 @@
     <ClInclude Include="SaveFileWithPassWordDlg.h" />
     <ClInclude Include="TextResultWindow.h" />
     <ClInclude Include="ImageView.h" />
-    <ClInclude Include="SmartHandle.h" />
     <ClInclude Include="SpellChecker.h" />
     <ClInclude Include="TextProgressCtrl.h" />
-    <ClInclude Include="ThreadPool.h" />
     <ClInclude Include="UnicodeUtils.h" />
     <ClInclude Include="ViewBase.h" />
     <ClInclude Include="BookmarkWindow.h" />
@@ -363,6 +365,9 @@
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="EditorLexerDark.cpp" />
     <ClCompile Include="EditorLexerLight.cpp" />
+    <ClCompile Include="SettingDlgCustomize.cpp" />
+    <ClCompile Include="SettingDlgFileSystem.cpp" />
+    <ClCompile Include="SettingDlgToggle.cpp" />
     <ClCompile Include="translator\PODictionary.cpp" />
     <ClCompile Include="translator\POHandler.cpp" />
     <ClCompile Include="uchardet\CharDistribution.cpp" />
@@ -391,6 +396,7 @@
     <ClCompile Include="uchardet\nsUniversalDetector.cpp" />
     <ClCompile Include="uchardet\nsUTF8Prober.cpp" />
     <ClCompile Include="uchardet\uchardet.cpp" />
+    <ClCompile Include="VinaTextSettingDlg.cpp" />
     <ClCompile Include="WindowsPrinter.cpp" />
     <ClCompile Include="CreateNewMultiplePath.cpp" />
     <ClCompile Include="Hpslib.cpp" />

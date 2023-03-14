@@ -15,5 +15,4 @@ public:
 	virtual ~CMultiDocTemplateEx();
 	virtual CDocument* OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible);
 	CDocument* OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible);
-	CDocument* OpenNewEditorDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible);
 };
