@@ -20,4 +20,8 @@
 ..\Compilers\debugger.exe
 
 @@ auto complete:
-False True comments-start ContinueCase ContinueLoop Default Dim Global Local Const Do Until Enum Exit ExitLoop For To Step Next For In Next Func Return EndFunc If Then If ElseIf Else EndIf include-once include NoTrayIcon Null OnAutoItStartRegister pragma ReDim RequireAdmin Select Case EndSelect Static Switch Case EndSwitch Volatile While WEnd With EndWith 
+False True comments-start ContinueCase ContinueLoop Default Dim Global Local 
+Const Do Until Enum Exit ExitLoop For To Step Next For In Next Func Return 
+EndFunc If Then If ElseIf Else EndIf include-once include NoTrayIcon Null 
+OnAutoItStartRegister pragma ReDim RequireAdmin Select Case EndSelect Static 
+Switch Case EndSwitch Volatile While WEnd With EndWith 

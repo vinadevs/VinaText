@@ -216,3 +216,12 @@ enum PROCESS_WIN32_STATUS
 	PROCESS_STOPPED = 0,
 	PROCESS_RUNNING,
 };
+
+// Sort line options
+enum class SORT_LINE_OPT : unsigned int
+{
+	ASCENDING = 0,
+	DESCENDING,
+	FROMATOZ,
+	FROMZTOA,
+};

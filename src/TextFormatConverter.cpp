@@ -435,9 +435,9 @@ std::string decimal_encode(std::string const & s)
 	for (int i = 0; i < s.length(); i++)
 	{
 		if (i == s.length() - 1)
-			decimal += explorer_extra_string_format("%zd", (int)s[i]);
+			decimal += variadic_string_format("%zd", (int)s[i]);
 		else
-			decimal += explorer_extra_string_format("%zd", (int)s[i]) + " ";
+			decimal += variadic_string_format("%zd", (int)s[i]) + " ";
 	}
 	return decimal;
 }
@@ -492,9 +492,9 @@ std::string octa_encode(std::string const & s)
 	for (int i = 0; i < s.length(); i++)
 	{
 		if (i == s.length() - 1)
-			octa += explorer_extra_string_format("%zo", (int)s[i]);
+			octa += variadic_string_format("%zo", (int)s[i]);
 		else
-			octa += explorer_extra_string_format("%zo", (int)s[i]) + " ";
+			octa += variadic_string_format("%zo", (int)s[i]) + " ";
 	}
 	return octa;
 }

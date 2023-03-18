@@ -5214,9 +5214,28 @@ void CEditorView::OnOptionsJoinLineWithDemiliter()
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
 
-void CEditorView::SortLineByOptions(int sortOptions)
+void CEditorView::SortLineByOptions(SORT_LINE_OPT sortOptions)
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
+	auto fSortLines = [&](std::vector<CString>& vecLine) -> void {
+		if (sortOptions == SORT_LINE_OPT::ASCENDING)
+		{
+			std::sort(vecLine.begin(), vecLine.end(), CompareCStringAscending());
+		}
+		else if (sortOptions == SORT_LINE_OPT::DESCENDING)
+		{
+			std::sort(vecLine.begin(), vecLine.end(), CompareCStringDescending());
+		}
+		else if (sortOptions == SORT_LINE_OPT::FROMATOZ)
+		{
+			std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetAZ());
+		}
+		else if (sortOptions == SORT_LINE_OPT::FROMZTOA)
+		{
+			std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetZA());
+		}
+	};
+
 	CString stScript;
 	m_EditorCtrl.GetText(stScript);
 	if (!stScript.IsEmpty())
@@ -5227,7 +5246,6 @@ void CEditorView::SortLineByOptions(int sortOptions)
 			std::string line;
 			std::istringstream iss(AppUtils::CStringToStd(stScript));
 
-			CString strNewScripts;
 			std::vector<CString> vecLine;
 			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
@@ -5236,23 +5254,8 @@ void CEditorView::SortLineByOptions(int sortOptions)
 				vecLine.push_back(strLine);
 			}
 
-			if (sortOptions == 0)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAscending());
-			}
-			else if (sortOptions == 1)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringDescending());
-			}
-			else if (sortOptions == 2)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetAZ());
-			}
-			else if (sortOptions == 3)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetZA());
-			}
-
+			fSortLines(vecLine);
+			CString strNewScripts;
 			for (const auto& line : vecLine)
 			{
 				strNewScripts += line + m_EditorCtrl.GetEOLCString();
@@ -5268,7 +5271,6 @@ void CEditorView::SortLineByOptions(int sortOptions)
 			int StartLinePos = m_EditorCtrl.GetLineStartPosition(lLineStart);
 			int EndLinePos = m_EditorCtrl.GetLineEndPosition(lLineEnd);
 
-			CString strNewScripts;
 			std::vector<CString> vecLine;
 			for (int i = lLineStart; i <= lLineEnd; ++i)
 			{
@@ -5279,28 +5281,12 @@ void CEditorView::SortLineByOptions(int sortOptions)
 				vecLine.push_back(strCurLineText);
 			}
 
-			if (sortOptions == 0)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAscending());
-			}
-			else if (sortOptions == 1)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringDescending());
-			}
-			else if (sortOptions == 2)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetAZ());
-			}
-			else if (sortOptions == 3)
-			{
-				std::sort(vecLine.begin(), vecLine.end(), CompareCStringAlphabetZA());
-			}
-
+			fSortLines(vecLine);
+			CString strNewScripts;
 			for (const auto& line : vecLine)
 			{
 				strNewScripts += line + m_EditorCtrl.GetEOLCString();
 			}
-
 			m_EditorCtrl.SetStartSelection(StartLinePos);
 			m_EditorCtrl.SetEndSelection(EndLinePos);
 			m_EditorCtrl.ReplaceSelectionWithText(strNewScripts);
@@ -5311,22 +5297,22 @@ void CEditorView::SortLineByOptions(int sortOptions)
 
 void CEditorView::OnOptionsSortLineAscending()
 {
-	SortLineByOptions(0);
+	SortLineByOptions(SORT_LINE_OPT::ASCENDING);
 }
 
 void CEditorView::OnOptionsSortLineDescending()
 {
-	SortLineByOptions(1);
+	SortLineByOptions(SORT_LINE_OPT::DESCENDING);
 }
 
 void CEditorView::OnOptionsSortLineAZ()
 {
-	SortLineByOptions(2);
+	SortLineByOptions(SORT_LINE_OPT::FROMATOZ);
 }
 
 void CEditorView::OnOptionsSortLineZA()
 {
-	SortLineByOptions(3);
+	SortLineByOptions(SORT_LINE_OPT::FROMZTOA);
 }
 
 void CEditorView::OnOptionsMoveSelectedLineUp()
@@ -6412,90 +6398,6 @@ void CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOptio
 	GuiUtils::ForceRedrawCWnd(this);  // force tracking bar refresh...
 }
 
-void CEditorView::UpdateFunctionDocStringMapPython()
-{
-	// step search
-	auto fGetDocString = [&](const std::list<CString> listline, const CString& strFuntionName) -> CString
-	{
-		CString strDocString;
-		for (int i = 0; i < listline.size(); ++i)
-		{
-			CString str = *std::next(listline.begin(), i);
-			str.Trim();
-			if (str.Find(strFuntionName) != -1)
-			{
-				int posstep1 = i;
-				for (int j = posstep1; j < listline.size(); ++j)
-				{
-					CString str1 = *std::next(listline.begin(), j);
-					str1.Trim();
-					if (str1.Find(_T("\"\"\"")) != -1 && str1.Replace(_T("\""), _T("\"")) == 6)
-					{
-						str1.Replace(_T("\"\"\""), _T(""));
-						return str1;
-					}
-					else if (str1.Find(_T("\"\"\"")) != -1 && str1.Replace(_T("\""), _T("\"")) == 3)
-					{
-						int posstep2 = j;
-						for (int k = posstep2 + 1; k < listline.size(); ++k)
-						{
-							CString str2 = *std::next(listline.begin(), k);
-							str2.Trim();
-							if (str2.Find(_T("\"\"\"")) != -1 && str2.Replace(_T("\""), _T("\"")) == 3 &&
-								str2.Mid(0, 1) != _T("\""))
-							{
-								int possend = k;
-								for (int n = posstep2; n <= possend; ++n)
-								{
-									CString str3 = *std::next(listline.begin(), n);
-									if (n != possend)
-										strDocString += str3.Trim() + m_EditorCtrl.GetEOLCString();
-									else
-										strDocString += str3.Trim();
-								}
-								strDocString.Replace(_T("\"\"\""), _T(""));
-								return strDocString;
-							}
-						}
-					}
-				}
-			}
-		}
-		return strDocString;
-	};
-
-	m_mapFuncProtypeDocString.clear();
-	m_mapFuncDocString.clear();
-
-	CString strScript;
-	m_EditorCtrl.GetText(strScript);
-	if (strScript.IsEmpty()) return;
-
-	std::list<CString> listLine;
-	AppUtils::SplitCString(strScript, _T("\r"), listLine);
-	for (int i = 0; i < listLine.size(); ++i)
-	{
-		CString str = *std::next(listLine.begin(), i);
-		str.Trim();
-		int ncount1 = str.Replace(_T("("), _T("("));
-		int ncount2 = str.Replace(_T(")"), _T(")"));
-		int ncount3 = str.Replace(_T("def"), _T("def"));
-		int ncount4 = str.Replace(_T(":"), _T(":"));
-		if (ncount1 == 1 && ncount2 == 1 && ncount3 == 1 && ncount4 == 1
-			&& str.Find(_T("#")) == -1 && str.Find(_T("\"\"\"")) == -1)
-		{
-			int pos1 = str.Find(_T(" "));
-			int pos2 = str.Find(_T("("));
-			CString strFuntionName = str.Mid(pos1, pos2 - pos1);
-			strFuntionName.Trim();
-			if (strFuntionName.IsEmpty()) continue;
-			CString strDocString = fGetDocString(listLine, strFuntionName);
-			m_mapFuncDocString[strFuntionName] = strDocString;
-			m_mapFuncProtypeDocString[strFuntionName] = str;
-		}
-	}
-}
-
 // CEditorView diagnostics
 
 #ifdef _DEBUG
@@ -6689,8 +6591,8 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 							else
 							{
 								int nCurPosition = m_EditorCtrl.GetCurrentPosition();
-								int nWordStart = m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, nCurPosition, true);
-								int nWordEnd = m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, nWordStart, true);
+								int nWordStart = static_cast<int>(m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, nCurPosition, true));
+								int nWordEnd = static_cast<int>(m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, nWordStart, true));
 								if (nWordStart != nWordEnd && nWordStart == m_EditorCtrl.GetSelectionStartPosition() && nWordEnd == m_EditorCtrl.GetSelectionEndPosition()) {
 									CString strSelectedWord = m_EditorCtrl.GetSelectedText();
 									RenderIndicatorWordsAndCount(strSelectedWord);
@@ -7074,227 +6976,6 @@ void CEditorView::ProcessIndentationTab() // IMPORTANT FUNCTION!!!
 			m_EditorCtrl.GotoPosition(lcurPos + m_strTab.GetLength());
 		}
 		m_bActiveIndentationText = FALSE;
-	}
-}
-
-void CEditorView::ShowCallTipPython(CString strLine, CString strWord)
-{
-	if (strLine.Find(_T("#")) != -1 || strLine.Find(_T("def")) != -1) return;
-	if (strLine.Find(_T(".")) != -1)
-	{
-		if (strWord.IsEmpty()) return;
-		std::string str = AppUtils::CStringToStd(strWord);
-		if (std::all_of(str.begin(), str.end(), &::islower)) return;
-
-		CString strShow;
-		int index0 = strLine.Find(_T("."), 0);
-		int index1 = strLine.Find('(', 0);
-		CString strAPI = strLine.Mid(index0, index1 - index0);
-		strAPI.Replace('(', ' ');
-		strAPI.Replace(')', ' ');
-		strAPI.Trim();
-		std::map<CString, CString>::iterator iter;
-		iter = std::find_if(m_FuntionCalltipDataset.begin(), m_FuntionCalltipDataset.end(),
-			[&](const std::pair<CString, CString>& pairMap)
-		{
-			return (strAPI.CompareNoCase(pairMap.first) == 0);
-		});
-		if (iter != m_FuntionCalltipDataset.end())
-		{
-			strShow = iter->second;
-		}
-
-		if (!strShow.IsEmpty())
-		{
-			char* bufUtf8 = NULL;
-			CREATE_BUFFER_FROM_CSTRING(bufUtf8, strShow)
-				int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-			m_EditorCtrl.DoCommand(SCI_CALLTIPSHOW, pos, sptr_t(bufUtf8));
-			DELETE_POINTER_CPP_ARRAY(bufUtf8);
-		}
-	}
-	else
-	{
-		// performance issue !!!!!!!!!!!!!!
-		//ShowFuncProtypeDocPython(strLine);
-	}
-}
-
-void CEditorView::ShowFuncProtypeDocPython(CString strLine)
-{
-	strLine.Trim();
-	int ncount1 = strLine.Replace(_T("("), _T("("));
-	int ncount2 = strLine.Replace(_T(" "),CSTRING_SPACE);
-	if (ncount1 == 1 && ncount2 == 0)
-	{
-		CString strShow;
-		strLine.Replace('(', ' ');
-		strLine.Trim();
-		UpdateFunctionDocStringMapPython();
-		std::map<CString, CString>::iterator iter;
-		iter = m_mapFuncDocString.find(strLine);
-		if (iter != m_mapFuncDocString.end())
-		{
-			strShow += m_mapFuncProtypeDocString[iter->first];
-			if (!iter->second.IsEmpty())
-			{
-				strShow += m_EditorCtrl.GetEOLCString();
-				strShow += iter->second;
-			}
-		}
-
-		if (!strShow.IsEmpty())
-		{
-			char* bufUtf8 = NULL;
-			CREATE_BUFFER_FROM_CSTRING(bufUtf8, strShow)
-				int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-			m_EditorCtrl.DoCommand(SCI_CALLTIPSHOW, pos, sptr_t(bufUtf8));
-			DELETE_POINTER_CPP_ARRAY(bufUtf8);
-		}
-	}
-}
-
-void CEditorView::ShowIntellisensePython()
-{
-	char cline[10000];
-	int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-	int startpos = (int)m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, pos - 1);
-	int endpos = (int)m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, pos - 1);
-	cline[0] = '\0';
-	int line = (int)m_EditorCtrl.DoCommand(SCI_LINEFROMPOSITION, pos);
-	int nLen = (int)m_EditorCtrl.DoCommand(SCI_LINELENGTH, line);
-	m_EditorCtrl.DoCommand(SCI_GETLINE, line, (LPARAM)cline);
-	cline[nLen] = '\0';
-	CString strLine(cline);
-	strLine.Trim();
-	if (strLine.Find(_T("#")) != -1 || strLine.Find(_T("def")) != -1) return;
-	std::vector<std::string> vecstr =   AppUtils::SplitterStdString(AppUtils::CStringToStd(strLine), " ");
-	strLine = AppUtils::StdToCString(vecstr.back());
-	GetIntellisenseList(strLine, m_IntellisenseDataset);
-	if (m_IntellisenseDataset.size() > 0)
-	{
-		CString strCompleteWords;
-		strCompleteWords.Empty();
-		for (int i = 0; i < m_IntellisenseDataset.size(); ++i)
-		{
-			if (i != m_IntellisenseDataset.size() - 1)
-				strCompleteWords.Append(m_IntellisenseDataset[i] + _T("?0$"));
-			else
-				strCompleteWords.Append(m_IntellisenseDataset[i] + _T("?0"));
-		}
-		if (!strCompleteWords.IsEmpty())
-		{
-			char* bufUtf8 = NULL;
-			CREATE_BUFFER_FROM_CSTRING(bufUtf8, strCompleteWords)
-			m_EditorCtrl.DoCommand(SCI_AUTOCSHOW, 0, sptr_t(bufUtf8));
-			DELETE_POINTER_CPP_ARRAY(bufUtf8);
-		}
-	}
-}
-
-void CEditorView::UpdateFunctionDocStringMapCPP()
-{
-	m_mapFuncProtypeDocString.clear();
-	m_mapFuncDocString.clear();
-
-	CString strScript;
-	m_EditorCtrl.GetText(strScript);
-	if (strScript.IsEmpty()) return;
-
-	std::list<CString> listLine;
-	AppUtils::SplitCString(strScript, _T("\r"), listLine);
-	for (int i = 0; i < listLine.size(); ++i)
-	{
-		CString str = *std::next(listLine.begin(), i);
-		str.Trim();
-		int ncount1 = str.Replace(_T("("), _T("("));
-		int ncount2 = str.Replace(_T(")"), _T(")"));
-		int pos = AppUtils::FindFirstCharacterNotOf(str, _T(" \t/"));
-		if (ncount1 == 1 && ncount2 == 1 && pos == 0)
-		{
-			int pos1 = str.Find(_T(" "));
-			int pos2 = str.Find(_T("("));
-			CString strFuntionName = str.Mid(pos1, pos2 - pos1);
-			strFuntionName.Trim();
-			if (strFuntionName.IsEmpty()) continue;
-			m_mapFuncProtypeDocString[strFuntionName] = str;
-		}
-	}
-}
-
-void CEditorView::ShowCallTipCPP(CString strLine, CString strWord)
-{
-	ShowFuncProtypeDocCPP(strLine);
-}
-
-void CEditorView::ShowFuncProtypeDocCPP(CString strLine)
-{
-	strLine.Trim();
-	int ncount1 = strLine.Replace(_T("("), _T("("));
-	int ncount2 = strLine.Replace(_T(" "),CSTRING_SPACE);
-	if (ncount1 == 1 && ncount2 == 0)
-	{
-		CString strShow;
-		strLine.Replace('(', ' ');
-		strLine.Trim();
-		UpdateFunctionDocStringMapCPP();
-		std::map<CString, CString>::iterator iter;
-		iter = m_mapFuncProtypeDocString.find(strLine);
-		if (iter != m_mapFuncProtypeDocString.end())
-		{
-			if (!iter->second.IsEmpty())
-			{
-				strShow += iter->second.Trim();
-			}
-		}
-
-		if (!strShow.IsEmpty())
-		{
-			char* bufUtf8 = NULL;
-			CREATE_BUFFER_FROM_CSTRING(bufUtf8, strShow)
-				int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-			m_EditorCtrl.DoCommand(SCI_CALLTIPSHOW, pos, sptr_t(bufUtf8));
-			DELETE_POINTER_CPP_ARRAY(bufUtf8);
-		}
-	}
-}
-
-void CEditorView::ShowIntellisenseCPP()
-{
-	char cline[10000];
-	int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-	int startpos = (int)m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, pos - 1);
-	int endpos = (int)m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, pos - 1);
-	cline[0] = '\0';
-	int line = (int)m_EditorCtrl.DoCommand(SCI_LINEFROMPOSITION, pos);
-	int nLen = (int)m_EditorCtrl.DoCommand(SCI_LINELENGTH, line);
-	m_EditorCtrl.DoCommand(SCI_GETLINE, line, (LPARAM)cline);
-	cline[nLen] = '\0';
-	CString strLine(cline);
-	strLine.Trim();
-
-	std::vector<std::string> vecstr =   AppUtils::SplitterStdString(AppUtils::CStringToStd(strLine), " ");
-	strLine = AppUtils::StdToCString(vecstr.back());
-
-	GetIntellisenseList(strLine, m_IntellisenseDataset);
-	if (m_IntellisenseDataset.size() > 0)
-	{
-		CString strCompleteWords;
-		strCompleteWords.Empty();
-		for (int i = 0; i < m_IntellisenseDataset.size(); ++i)
-		{
-			if (i != m_IntellisenseDataset.size() - 1)
-				strCompleteWords.Append(m_IntellisenseDataset[i] + _T("$"));
-			else
-				strCompleteWords.Append(m_IntellisenseDataset[i]);
-		}
-		if (!strCompleteWords.IsEmpty())
-		{
-			char* bufUtf8 = NULL;
-			CREATE_BUFFER_FROM_CSTRING(bufUtf8, strCompleteWords)
-				m_EditorCtrl.DoCommand(SCI_AUTOCSHOW, 0, sptr_t(bufUtf8));
-			DELETE_POINTER_CPP_ARRAY(bufUtf8);
-		}
 	}
 }
 
@@ -10232,9 +9913,9 @@ void CEditorView::OnOptionsSplitSelectionIntoLines()
 		{
 			m_EditorCtrl.DoCommand(SCI_DROPSELECTIONN, 0, 0);
 		}
+		m_EditorCtrl.UpdateMainSelectionInCurrentView();
+		m_EditorCtrl.SetFocus();
 	}
-	m_EditorCtrl.UpdateMainSelectionInCurrentView();
-	m_EditorCtrl.SetFocus();
 }
 
 void CEditorView::OnOptionsSelectionAddPreviousLine()
@@ -10352,13 +10033,14 @@ void CEditorView::TextAlignment(CTextAlignment::Alignment option)
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			CStringArray arrLine;
-			stScript.Replace(_T("\n"), _T(""));
-			AppUtils::SplitCString(stScript, _T("\r"), arrLine);
+			std::vector<CString> listLine;
+			listLine.reserve(m_EditorCtrl.GetLineCount());
+			AppUtils::SplitCString(stScript, m_EditorCtrl.GetEOLCString(), listLine);
 			CTextAlignment textAlignment;
-			for (int i = 0; i < arrLine.GetSize(); ++i)
+			for (const auto& line : listLine)
 			{
-				CString strAlignedText = textAlignment.AlignText(arrLine[i], option);
+				CString strAlignedText = AppUtils::WStdToCString(textAlignment.AlignText(AppUtils::CStringToWStd(line), option,
+					AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())));
 				strNewScripts += strAlignedText + m_EditorCtrl.GetEOLCString();
 			}
 			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
@@ -10376,13 +10058,15 @@ void CEditorView::TextAlignment(CTextAlignment::Alignment option)
 			{
 				CString strCurLineText;
 				m_EditorCtrl.GetTextFromLine(i + 1, strCurLineText);
-				CString strAlignedText = textAlignment.AlignText(strCurLineText, option);
+				CString strAlignedText = AppUtils::WStdToCString(textAlignment.AlignText(AppUtils::CStringToWStd(strCurLineText), option,
+					AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())));
 				strNewScripts += strAlignedText + m_EditorCtrl.GetEOLCString();
 			}
 			m_EditorCtrl.SetStartSelection(StartLinePos);
 			m_EditorCtrl.SetEndSelection(EndLinePos);
 			m_EditorCtrl.ReplaceSelectionWithText(strNewScripts.Mid(0, strNewScripts.GetLength()));
 		}
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Line Alignment] Aligned line(s) with maximum length %d..."), AppSettingMgr.m_nPageAlignmentWidth);
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -10398,14 +10082,17 @@ void CEditorView::TextAlignmentNotKeepLine(CTextAlignment::Alignment option)
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			CString strAlignedText = textAlignment.AlignText(stScript, option);
+			CString strAlignedText = AppUtils::WStdToCString(textAlignment.AlignText(AppUtils::CStringToWStd(stScript), option,
+				AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())));
 			m_EditorCtrl.SetTextToEditor(strAlignedText);
 		}
 		else
 		{
-			CString strAlignedText = textAlignment.AlignText(stSelectedScript, option);
+			CString strAlignedText = AppUtils::WStdToCString(textAlignment.AlignText(AppUtils::CStringToWStd(stSelectedScript), option,
+				AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())));
 			m_EditorCtrl.ReplaceSelectionWithText(strAlignedText);
 		}
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [File Alignment] Aligned line(s) with maximum length %d..."), AppSettingMgr.m_nPageAlignmentWidth);
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }

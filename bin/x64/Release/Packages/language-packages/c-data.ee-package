@@ -21,6 +21,48 @@ https://sourceforge.net/projects/mingwbuilds/
 ..\Compilers\MinGW\MinGWx64\mingw64\bin\gdb.exe
 
 @@ auto complete:
-abort stdlib.h abs acos math.h asctime time.h asctime_r asin assert assert.h atan atan2 atexit atof atoi atol bsearch btowc stdio.h wchar.h calloc catclose6 nl_types.h catgets6 catopen6 ceil clearerr clock cos cosh ctime ctime64 ctime_r ctime64_r difftime difftime64 div erf erfc exit exp fabs fclose fdopen5 feof ferror fflush1 fgetc1 fgetpos1 fgets1 fgetwc6 fgetws6 fileno5 floor fmod fopen fprintf fputc1 fputs1 fputwc6 fputws6 fread free freopen frexp fscanf fseek1 fsetpos1 ftell1 fwide6 fwprintf6 fwrite fwscanf6 gamma getc1 getchar1 getenv gets getwc6 getwchar6 gmtime gmtime64 gmtime_r gmtime64_r hypot isalnum ctype.h isalpha isascii4 isblank iscntrl isdigit isgraph islower isprint ispunct isspace isupper iswalnum4 wctype.h iswalpha4 iswblank4 iswcntrl4 iswctype4 iswdigit4 iswgraph4 iswlower4 iswprint4 iswpunct4 iswspace4 iswupper4 iswxdigit4 isxdigit4 j0 j1 jn labs ldexp ldiv localeconv locale.h localtime localtime64 localtime_r localtime64_r log log10 longjmp setjmp.h malloc mblen mbrlen4 mbrtowc4 mbsinit4 mbsrtowcs4 mbstowcs mbtowc memchr string.h memcmp memcpy memmove memset mktime mktime64 modf nextafter nextafterl nexttoward nexttowardl nl_langinfo4 langinfo.h perror pow printf putc1 putchar1 putenv puts putwc6 putwchar6 qsort quantexpd32 quantexpd64 quantexpd128 quantized32 quantized64 quantized128 samequantumd32 samequantumd64 samequantumd128 raise signal.h rand rand_r realloc regcomp regex.h regerror regexec regfree remove rename rewind1 scanf setbuf setjmp setlocale setvbuf signal sin sinh snprintf sprintf sqrt srand sscanf strcasecmp strings.h strcat strchr strcmp strcoll strcpy strcspn strerror strfmon4 strftime strlen strncasecmp strncat strncmp strncpy strpbrk strptime4 strrchr strspn strstr strtod strtod32 strtod64 strtod128 strtof strtok strtok_r strtol strtold strtoul strxfrm swprintf swscanf system tan tanh time time64 tmpfile tmpnam toascii tolower toupper towctrans towlower4 towupper4 ungetc1 ungetwc6 va_arg stdarg.h va_copy va_end va_start vfprintf vfscanf vfwprintf6 vfwscanf vprintf vscanf vsprintf vsnprintf vsscanf vswprintf vswscanf vwprintf6 vwscanf wcrtomb4 wcscat wcschr wcscmp wcscoll4 wcscpy wcscspn wcsftime wcslen wcslocaleconv wcsncat wcsncmp wcsncpy wcspbrk wcsptime wcsrchr wcsrtombs4 wcsspn wcsstr wcstod wcstod32 wcstod64 wcstod128 wcstof wcstok wcstol wcstold wcstombs wcstoul wcsxfrm4 wctob wctomb wctrans wctype4 wcwidth wmemchr wmemcmp wmemcpy wmemmove wmemset wprintf6 wscanf6 y0 y1 yn if else switch case default break goto return for while do continue typedef sizeof offsetof alignof _Alignof _Generic _Static_assert and and_eq bitand bitor compl not not_eq or or_eq xor xor_eq NULL void struct union enum char short int long double float signed unsigned const static extern auto register volatile restrict _Atomic bool _Bool complex _Complex imaginary _Imaginary inline noreturn _Noreturn alignas _Alignas thread_local _Thread_local uint8_t uint16_t uint32_t uint64_t int8_t int16_t int32_t int64_t uint_least8_t uint_least16_t uint_least32_t uint_least64_t int_least8_t int_least16_t int_least32_t int_least64_t uint_fast8_t uint_fast16_t uint_fast32_t uint_fast64_t int_fast8_t int_fast16_t int_fast32_t int_fast64_t uintptr_t intptr_t uintmax_t intmax_t ptrdiff_t max_align_t div_t ldiv_t lldiv_t imaxdiv_t size_t time_t clock_t wchar_t char16_t char32_t sig_atomic_t FILE
-
-
+abort stdlib.h abs acos math.h asctime time.h asctime_r asin assert assert.h 
+atan atan2 atexit atof atoi atol bsearch btowc stdio.h wchar.h calloc 
+catclose6 nl_types.h catgets6 catopen6 ceil clearerr clock cos cosh ctime 
+ctime64 ctime_r ctime64_r difftime difftime64 div erf erfc exit exp fabs 
+fclose fdopen5 feof ferror fflush1 fgetc1 fgetpos1 fgets1 fgetwc6 fgetws6 
+fileno5 floor fmod fopen fprintf fputc1 fputs1 fputwc6 fputws6 fread free 
+freopen frexp fscanf fseek1 fsetpos1 ftell1 fwide6 fwprintf6 fwrite fwscanf6 
+gamma getc1 getchar1 getenv gets getwc6 getwchar6 gmtime gmtime64 gmtime_r 
+gmtime64_r hypot isalnum ctype.h isalpha isascii4 isblank iscntrl isdigit 
+isgraph islower isprint ispunct isspace isupper iswalnum4 wctype.h iswalpha4 
+iswblank4 iswcntrl4 iswctype4 iswdigit4 iswgraph4 iswlower4 iswprint4 
+iswpunct4 iswspace4 iswupper4 iswxdigit4 isxdigit4 j0 j1 jn labs ldexp ldiv 
+localeconv locale.h localtime localtime64 localtime_r localtime64_r log log10 
+longjmp setjmp.h malloc mblen mbrlen4 mbrtowc4 mbsinit4 mbsrtowcs4 mbstowcs 
+mbtowc memchr string.h memcmp memcpy memmove memset mktime mktime64 modf 
+nextafter nextafterl nexttoward nexttowardl nl_langinfo4 langinfo.h perror pow 
+printf putc1 putchar1 putenv puts putwc6 putwchar6 qsort quantexpd32 
+quantexpd64 quantexpd128 quantized32 quantized64 quantized128 samequantumd32 
+samequantumd64 samequantumd128 raise signal.h rand rand_r realloc regcomp 
+regex.h regerror regexec regfree remove rename rewind1 scanf setbuf setjmp 
+setlocale setvbuf signal sin sinh snprintf sprintf sqrt srand sscanf 
+strcasecmp strings.h strcat strchr strcmp strcoll strcpy strcspn strerror 
+strfmon4 strftime strlen strncasecmp strncat strncmp strncpy strpbrk strptime4 
+strrchr strspn strstr strtod strtod32 strtod64 strtod128 strtof strtok 
+strtok_r strtol strtold strtoul strxfrm swprintf swscanf system tan tanh time 
+time64 tmpfile tmpnam toascii tolower toupper towctrans towlower4 towupper4 
+ungetc1 ungetwc6 va_arg stdarg.h va_copy va_end va_start vfprintf vfscanf 
+vfwprintf6 vfwscanf vprintf vscanf vsprintf vsnprintf vsscanf vswprintf 
+vswscanf vwprintf6 vwscanf wcrtomb4 wcscat wcschr wcscmp wcscoll4 wcscpy 
+wcscspn wcsftime wcslen wcslocaleconv wcsncat wcsncmp wcsncpy wcspbrk wcsptime 
+wcsrchr wcsrtombs4 wcsspn wcsstr wcstod wcstod32 wcstod64 wcstod128 wcstof 
+wcstok wcstol wcstold wcstombs wcstoul wcsxfrm4 wctob wctomb wctrans wctype4 
+wcwidth wmemchr wmemcmp wmemcpy wmemmove wmemset wprintf6 wscanf6 y0 y1 yn if 
+else switch case default break goto return for while do continue typedef 
+sizeof offsetof alignof _Alignof _Generic _Static_assert and and_eq bitand 
+bitor compl not not_eq or or_eq xor xor_eq NULL void struct union enum char 
+short int long double float signed unsigned const static extern auto register 
+volatile restrict _Atomic bool _Bool complex _Complex imaginary _Imaginary 
+inline noreturn _Noreturn alignas _Alignas thread_local _Thread_local uint8_t 
+uint16_t uint32_t uint64_t int8_t int16_t int32_t int64_t uint_least8_t 
+uint_least16_t uint_least32_t uint_least64_t int_least8_t int_least16_t 
+int_least32_t int_least64_t uint_fast8_t uint_fast16_t uint_fast32_t 
+uint_fast64_t int_fast8_t int_fast16_t int_fast32_t int_fast64_t uintptr_t 
+intptr_t uintmax_t intmax_t ptrdiff_t max_align_t div_t ldiv_t lldiv_t 
+imaxdiv_t size_t time_t clock_t wchar_t char16_t char32_t sig_atomic_t FILE 

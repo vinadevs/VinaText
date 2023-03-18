@@ -15,12 +15,14 @@ https://www.rust-lang.org/tools/install
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-C:\Users\.cargo\bin\rustc.exe
+cargo\bin\rustc.exe
 
 @@ debugger path:
-C:\Users\.cargo\bin\rustc.exe
+cargo\bin\rustc.exe
 
 @@ auto complete:
-abstract as async become box break const continue crate do dyn else enum extern false final fn for if impl in let loop macro match mod move mut overrIDE priv pub ref return self static struct super trait true try type typeof unsafe unsized use virtual where while yield bool char f32 f64 i128 i16 i32 i64 i8 isize str u128 u16 u32 u64 u8 usize Self
-
-
+abstract as async become box break const continue crate do dyn else enum 
+extern false final fn for if impl in let loop macro match mod move mut 
+overrIDE priv pub ref return self static struct super trait true try type 
+typeof unsafe unsized use virtual where while yield bool char f32 f64 i128 i16 
+i32 i64 i8 isize str u128 u16 u32 u64 u8 usize Self 

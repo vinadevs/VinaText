@@ -11,7 +11,7 @@
 //////////////////////////////////
 // c++ 11 string buffer format
 
-template<typename ... Args> std::string explorer_extra_string_format(const std::string& format, Args ... args)
+template<typename ... Args> std::string variadic_string_format(const std::string& format, Args ... args)
 {
 	int size_s = std::snprintf(nullptr, 0, format.c_str(), args ...) + 1; // Extra space for '\0'
 	if (size_s <= 0) { throw std::runtime_error("Error during formatting string."); }
@@ -288,7 +288,7 @@ public:
 //////////////////////////////////
 // Text alignment
 
-typedef std::list<std::string> WordList;
+typedef std::list<std::wstring> WordList;
 
 class CTextAlignment
 {
@@ -304,7 +304,7 @@ public:
 		Justify
 	};
 
-	CString AlignText(const CString & text, Alignment align);
+	std::wstring AlignText(const std::wstring& text, Alignment align, const std::wstring& eol);
 private:
-	WordList SplitTextIntoWords(const std::string & text);
+	WordList SplitTextIntoWords(const std::wstring& text);
 };

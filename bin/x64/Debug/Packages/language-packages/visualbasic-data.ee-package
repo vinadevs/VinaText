@@ -22,5 +22,20 @@ https://dotnet.microsoft.com/en-us/download/dotnet-framework
 ..\Compilers\Microsoft.NET\Framework\v4.0.30319\vbc.exe
 
 @@ auto complete:
-addhandler addressof alias and andalso as boolean by byref byte byval call case catch cbool cbyte cchar cdate cdbl cdec char cint class clng cobj const continue csbyte cshort csng cstr ctype cuint culng cushort date decimal declare default delegate dim directcast do double each else elseif end endif enum erase error event exit false finally for friend function get gettype global gosub goto handles if implements imports in inherits integer interface is isnot let lib like long loop me mod module mustinherit mustoverrIDE mybase myclass namespace narrowing new next not nothing notinheritable notoverridable object of on operator option optional or orelse out overloads overridable overrIDEs paramarray partial private property protected public raiseevent readonly redim rem removehandler resume return sbyte select set shadows shared short single static step stop strict string structure sub synclock then throw to true try trycast typeof uinteger ulong ushort using variant wend when while wIDEning with withevents writeonly xor attribute begin currency implement load lset rset type unload aggregate ansi assembly async auto await binary compare custom distinct equals explicit from group into isfalse istrue iterator join key mid off order preserve skip take text unicode until where yield 
-
+addhandler addressof alias and andalso as boolean by byref byte byval call 
+case catch cbool cbyte cchar cdate cdbl cdec char cint class clng cobj const 
+continue csbyte cshort csng cstr ctype cuint culng cushort date decimal 
+declare default delegate dim directcast do double each else elseif end endif 
+enum erase error event exit false finally for friend function get gettype 
+global gosub goto handles if implements imports in inherits integer interface 
+is isnot let lib like long loop me mod module mustinherit mustoverrIDE mybase 
+myclass namespace narrowing new next not nothing notinheritable notoverridable 
+object of on operator option optional or orelse out overloads overridable 
+overrIDEs paramarray partial private property protected public raiseevent 
+readonly redim rem removehandler resume return sbyte select set shadows shared 
+short single static step stop strict string structure sub synclock then throw 
+to true try trycast typeof uinteger ulong ushort using variant wend when while 
+wIDEning with withevents writeonly xor attribute begin currency implement load 
+lset rset type unload aggregate ansi assembly async auto await binary compare 
+custom distinct equals explicit from group into isfalse istrue iterator join 
+key mid off order preserve skip take text unicode until where yield 

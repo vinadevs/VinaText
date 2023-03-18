@@ -347,38 +347,38 @@ namespace StringHelper
 //////////////////////////////////
 // Text alignment
 
-WordList CTextAlignment::SplitTextIntoWords(const std::string &text)
+WordList CTextAlignment::SplitTextIntoWords(const std::wstring &text)
 {
 	WordList words;
-	std::istringstream in(text);
-	std::copy(std::istream_iterator<std::string>(in), std::istream_iterator<std::string>(), std::back_inserter(words));
+	std::wistringstream  in(text);
+	std::copy(std::istream_iterator<std::wstring, wchar_t, std::char_traits<wchar_t>>(in),
+		std::istream_iterator<std::wstring, wchar_t, std::char_traits<wchar_t>>(), std::back_inserter(words));
 	return words;
 }
 
-CString CTextAlignment::AlignText(const CString &text, Alignment align)
+std::wstring CTextAlignment::AlignText(const std::wstring& text, Alignment align, const std::wstring& eol)
 {
-	std::stringstream m_OutputBuffer;
-	std::string stdText = AppUtils::CStringToStd(text);
-	WordList words = SplitTextIntoWords(stdText);
-	std::string line;
-	for (const std::string& word : words)
+	std::wstringstream m_OutputBuffer;
+	WordList words = SplitTextIntoWords(text);
+	std::wstring line;
+	for (const std::wstring& word : words)
 	{
 		if (line.size() + word.size() + 1 > AppSettingMgr.m_nPageAlignmentWidth)
 		{
 			// next word doesn't fit into the line.
 			if (align == Alignment::Center)
 			{
-				m_OutputBuffer << std::string((AppSettingMgr.m_nPageAlignmentWidth - line.size()) / 2, ' ') << line << "\r";
+				m_OutputBuffer << std::wstring((AppSettingMgr.m_nPageAlignmentWidth - line.size()) / 2, ' ') << line << eol;
 			}
 			else if (align == Alignment::Justify)
 			{
 				size_t pos = line.find_first_of(' ');
-				if (pos != std::string::npos)
+				if (pos != std::wstring::npos)
 				{
 					while (line.size() < AppSettingMgr.m_nPageAlignmentWidth)
 					{
 						pos = line.find_first_not_of(' ', pos);
-						line.insert(pos, " ");
+						line.insert(pos, L" ");
 						pos = line.find_first_of(' ', pos + 1);
 						if (pos == std::string::npos)
 						{
@@ -386,15 +386,15 @@ CString CTextAlignment::AlignText(const CString &text, Alignment align)
 						}
 					}
 				}
-				m_OutputBuffer << line << "\r";
+				m_OutputBuffer << line << eol;
 			}
 			else if (align == Alignment::Left)
 			{
-				m_OutputBuffer << line << "\r";
+				m_OutputBuffer << line << eol;
 			}
 			else if (align == Alignment::Right)
 			{
-				m_OutputBuffer << std::setw(AppSettingMgr.m_nPageAlignmentWidth) << std::right << line << "\r";
+				m_OutputBuffer << std::setw(AppSettingMgr.m_nPageAlignmentWidth) << std::right << line << eol;
 			}
 			line.clear();
 			line = word;
@@ -403,28 +403,28 @@ CString CTextAlignment::AlignText(const CString &text, Alignment align)
 		{
 			if (!line.empty())
 			{
-				line.append(" ");
+				line.append(L" ");
 			}
 			line.append(word);
 		}
 	}
 	if (align == Alignment::Center)
 	{
-		m_OutputBuffer << std::string((AppSettingMgr.m_nPageAlignmentWidth - line.size()) / 2, ' ') << line << "\r";
+		m_OutputBuffer << std::wstring((AppSettingMgr.m_nPageAlignmentWidth - line.size()) / 2, ' ') << line << eol;
 	}
 	else if (align == Alignment::Left)
 	{
-		m_OutputBuffer << line << "\r";
+		m_OutputBuffer << line << eol;
 	}
 	else if (align == Alignment::Right)
 	{
-		m_OutputBuffer << std::setw(AppSettingMgr.m_nPageAlignmentWidth) << std::right << line << "\r";
+		m_OutputBuffer << std::setw(AppSettingMgr.m_nPageAlignmentWidth) << std::right << line << eol;
 	}
 	else if (align == Alignment::Justify)
 	{
-		m_OutputBuffer << line << "\r";
+		m_OutputBuffer << line << eol;
 	}
-	return AppUtils::StdToCString(m_OutputBuffer.str()).Mid(0, static_cast<int>(m_OutputBuffer.str().size()) - 1);
+	return m_OutputBuffer.str().substr(0, m_OutputBuffer.str().size() - eol.length());
 }
 
 //////////////////////////////////

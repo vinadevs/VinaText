@@ -453,7 +453,7 @@ public:
 protected:
 
 	// general helpers
-	void SortLineByOptions(int sortOptions);
+	void SortLineByOptions(SORT_LINE_OPT sortOptions);
 	void TrimLine(int trimOption);
 	void GetAutoCompleteList(CString strWord, std::vector<CString>& listWord);
 	void GetIntellisenseList(CString strPreviousWord, std::vector<CString>& listMethod);
@@ -461,14 +461,6 @@ protected:
 	void ProcessIndentationTab();
 	void SelectAllOccurrences(const CString & strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE);
 	void ShowAutoCompleteByAddedWord(CString strWord);
-	void UpdateFunctionDocStringMapPython();
-	void ShowCallTipPython(CString strLine, CString strWord);
-	void ShowFuncProtypeDocPython(CString strLine);
-	void ShowIntellisensePython();
-	void UpdateFunctionDocStringMapCPP();
-	void ShowCallTipCPP(CString strLine, CString strWord);
-	void ShowFuncProtypeDocCPP(CString strLine);
-	void ShowIntellisenseCPP();
 	void ActiveDockWindow(DOCKABLE_PANE_TYPE type);
 	void Replace4SpacesByTab(BOOL bTabToSpace);
 	BOOL BlockComment(BLOCK_COMMENT_OPERATION blockCommentOperation);
