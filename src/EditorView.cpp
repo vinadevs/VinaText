@@ -2656,17 +2656,15 @@ int CEditorView::WatchFileSystemState()
 		if (nFileState & FILE_SYSTEM_STATE::FILE_DELETED)
 		{
 			CString strMsg;
-			strMsg.Format(_T("[System Warning] %s has been deleted from file system, do you want keep it on VinaText?"), strFile);
+			strMsg.Format(_T(R"([System Warning] %s has been deleted from file system, do you want keep it on VinaText?)"), strFile);
 			if (IDYES == AfxMessageBox(strMsg, MB_YESNO | MB_ICONWARNING))
 			{
-				if (m_EditorCtrl.SaveFile(strFile))
-				{
-					AppUtils::GetMainFrame()->ReOpenCurrentDocument(strFile);
-				}
+				pDoc->OnSaveDocument(strFile);
 			}
 			else 
 			{
 				AppUtils::CloseDeletedDocument(this, strFile);
+				return nFileState;
 			}
 		}
 		else
@@ -9865,9 +9863,7 @@ void CEditorView::OnOptionsChangeTextLexerNon()
 {
 	m_EditorCtrl.RemoveTextHightlight();
 	CEditorDoc *pDoc = GetEditorDocument();
-	ASSERT(pDoc);
-	if (!pDoc) return;
-	pDoc->OnFileSave();
+	ASSERT(pDoc); if (!pDoc) return; pDoc->OnFileSave();
 }
 
 void CEditorView::OnQuickFindAllInFile()

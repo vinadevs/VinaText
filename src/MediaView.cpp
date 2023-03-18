@@ -190,6 +190,7 @@ int CMediaView::WatchFileSystemState()
 		{
 			AfxMessageBoxFormat(MB_ICONWARNING | MB_OK, _T("[System Warning] %s has been deleted from file system by an external operation!"), strFile);
 			AppUtils::CloseDeletedDocument(this, strFile);
+			return nFileState;
 		}
 		else
 		{

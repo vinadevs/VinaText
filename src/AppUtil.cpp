@@ -1228,7 +1228,7 @@ void AppUtils::CloseDeletedDocument(CView * pCloseView, const CString & strFileD
 					CView* view = doc->GetNextView(p3);
 					if (view && view->GetParentFrame() && view == pCloseView)
 					{
-						view->GetParentFrame()->SendMessage(WM_CLOSE);
+						view->GetParentFrame()->PostMessage(WM_CLOSE);
 					}
 				}
 			}

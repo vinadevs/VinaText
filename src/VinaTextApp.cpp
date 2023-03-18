@@ -762,7 +762,7 @@ CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 	else
 	{
 		// Open text file
-		return m_pEditorDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
+		return m_pEditorDocTemplate->OpenDocumentFile(lpszPathName, TRUE, TRUE);
 	}
 }
 

@@ -17,10 +17,10 @@ https://www.python.org/downloads/
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-..\Compilers\Python39_64\python.exe
+C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python39_64\python.exe
 
 @@ debugger path:
-..\Compilers\Python39_64\python.exe
+C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python39_64\python.exe
 
 @@ auto complete:
 and as assert async await break class continue def del elif else except finally for

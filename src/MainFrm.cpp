@@ -3651,19 +3651,6 @@ CString CMainFrame::GetCurrentDocFolder()
 	return strFolderPath;
 }
 
-void CMainFrame::ReOpenCurrentDocument(const CString & strReplaceFile)
-{
-	// Close current doc
-	OnCloseDocument();
-	if (PathFileExists(strReplaceFile))
-	{
-		// Open new doc
-		AppUtils::CreateDocumentFromFile(strReplaceFile);
-		// Refresh explorer window
-		RevealInExplorerWindow(strReplaceFile);
-	}
-}
-
 void CMainFrame::OnCloseDocument()
 {
 	AppUtils::CloseMDIDocument(GetActiveFrame()->GetActiveDocument());

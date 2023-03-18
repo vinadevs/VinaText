@@ -92,7 +92,6 @@ public:
 	void RevealInExplorerWindow(const CString& strPath);
 	void ReactiveTabAfterFloatPane();
 	void PushTextToClipBoard(const CString & str);
-	void ReOpenCurrentDocument(const CString & strReplaceFile);
 	void ResizeQuickSearchDialog();
 	void QuickSearchDialogChangedActiveTab();
 	void CloseQuickSearchDialog();
