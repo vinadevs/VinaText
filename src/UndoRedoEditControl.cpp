@@ -274,11 +274,13 @@ CString CUndoRedoEditControl::GetSelectionText() const
 	return text.Mid(nStart, nEnd - nStart);
 }
 
-void CUndoRedoEditControl::SetFocusEx()
+void CUndoRedoEditControl::SetFocusEx(BOOL bSelectText)
 {
 	SetFocus();
 	SetSel(0, -1); // select all text and move cursor at the end
-	SetSel(-1); //  remove selection
+	if (!bSelectText) {
+		SetSel(-1); // remove selection
+	}
 }
 
 void CUndoRedoEditControl::ReplaceSel(LPCTSTR lpszNewText, BOOL bIsAllowUndo /*= FALSE*/)

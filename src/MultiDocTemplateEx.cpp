@@ -24,17 +24,27 @@ static char THIS_FILE[]=__FILE__;
 using namespace HostManager;
 
 CMultiDocTemplateEx::CMultiDocTemplateEx(UINT nIDResource, CRuntimeClass* pDocClass, CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass)
- : CMultiDocTemplate(nIDResource, pDocClass, pFrameClass, pViewClass)
-{
-}
-
-CMultiDocTemplateEx::~CMultiDocTemplateEx()
-{
-}
+ : CMultiDocTemplate(nIDResource, pDocClass, pFrameClass, pViewClass) {}
 
 // customize for recent file, preview with very first file
 CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)
 {
+	if (PathUtils::IsImageFile(lpszPathName))
+	{
+		// Open image file
+		return theApp.m_pImageDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
+	}
+	else if (PathUtils::IsPdfFile(lpszPathName))
+	{
+		// Open pdf file
+		return theApp.m_pPdfDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
+	}
+	else if (PathUtils::IsMediaFile(lpszPathName))
+	{
+		// Open media file
+		return theApp.m_pMediaDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
+	}
+	// Open text file
 	if (m_docList.GetCount() == 1)
 	{
 		CDocument* pDocument = (CDocument*)m_docList.GetHead();
@@ -62,26 +72,7 @@ CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAdd
 			return pDocument;
 		}
 	}
-	if (PathUtils::IsImageFile(lpszPathName))
-	{
-		// Open image file
-		return theApp.m_pImageDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
-	}
-	else if (PathUtils::IsPdfFile(lpszPathName))
-	{
-		// Open pdf file
-		return theApp.m_pPdfDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
-	}
-	else if (PathUtils::IsMediaFile(lpszPathName))
-	{
-		// Open media file
-		return theApp.m_pMediaDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
-	}
-	else
-	{
-		// Open text file
-		return theApp.m_pEditorDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
-	}
+	return theApp.m_pEditorDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
 }
 
  CDocument * CMultiDocTemplateEx::OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)

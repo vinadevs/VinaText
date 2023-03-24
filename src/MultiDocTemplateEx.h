@@ -12,7 +12,7 @@ class CMultiDocTemplateEx : public CMultiDocTemplate
 {
 public:
 	CMultiDocTemplateEx(UINT nIDResource, CRuntimeClass* pDocClass, CRuntimeClass* pFrameClass, CRuntimeClass* pViewClass);
-	virtual ~CMultiDocTemplateEx();
+	virtual ~CMultiDocTemplateEx() = default;
 	virtual CDocument* OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible);
 	CDocument* OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible);
 };

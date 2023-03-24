@@ -171,80 +171,6 @@ void CGotoDlg::OnGotoPoint()
 	}
 }
 
-void CGotoDlg::OnEnChangeEditLineNum()
-{
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
-	{
-		auto pEditor = pDoc->GetEditorCtrl();
-		if (pEditor)
-		{
-			auto fCheckLineNumber = [&](long n) -> BOOL
-			{
-				int nLineCnt = pEditor->GetLineCount();
-				if (n < 1 || n > nLineCnt) return FALSE;
-				return TRUE;
-			};
-
-			CString strLineNumber;
-			m_EditLine.GetWindowText(strLineNumber);
-			if (fCheckLineNumber(_wtol(strLineNumber)))
-			{
-				CButton* pButton = (CButton*)GetDlgItem(ID_EDITOR_LINE_GO);
-				if (pButton)
-				{
-					pButton->EnableWindow(TRUE);
-				}
-			}
-			else
-			{
-				CButton* pButton = (CButton*)GetDlgItem(ID_EDITOR_LINE_GO);
-				if (pButton)
-				{
-					pButton->EnableWindow(FALSE);
-				}
-			}
-		}
-	}
-}
-
-void CGotoDlg::OnEnChangeEditPositionNum()
-{
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
-	{
-		auto pEditor = pDoc->GetEditorCtrl();
-		if (pEditor)
-		{
-			auto fCheckLineNumber = [&](long n) -> BOOL
-			{
-				int nTextLength = pEditor->GetTextLength();
-				if (n < 0 || n > nTextLength) return FALSE;
-				return TRUE;
-			};
-
-			CString strTextLength;
-			m_EditPosition.GetWindowText(strTextLength);
-			if (fCheckLineNumber(_wtol(strTextLength)))
-			{
-				CButton* pButton = (CButton*)GetDlgItem(ID_EDITOR_POSITION_GO);
-				if (pButton)
-				{
-					pButton->EnableWindow(TRUE);
-				}
-			}
-			else
-			{
-				CButton* pButton = (CButton*)GetDlgItem(ID_EDITOR_POSITION_GO);
-				if (pButton)
-				{
-					pButton->EnableWindow(FALSE);
-				}
-			}
-		}
-	}
-}
-
 BOOL CGotoDlg::OnEraseBkgnd(CDC * pDC)
 {
 	CRect rect;
@@ -284,8 +210,6 @@ BEGIN_MESSAGE_MAP(CGotoDlg, CDialogEx)
 	ON_BN_CLICKED(ID_EDITOR_LINE_GO, OnGotoLine)
 	ON_BN_CLICKED(ID_EDITOR_POSITION_GO, OnGotoPosition)
 	ON_BN_CLICKED(ID_EDITOR_POINT_GO, OnGotoPoint)
-	ON_EN_CHANGE(IDC_LINE, OnEnChangeEditLineNum)
-	ON_EN_CHANGE(IDC_POSITION, OnEnChangeEditPositionNum)
 	ON_BN_CLICKED(ID_EDITOR_LINE_GO_PREVIOUS_PARAH, &CGotoDlg::OnBnClickedEditorLineGoPreviousParah)
 	ON_BN_CLICKED(ID_EDITOR_LINE_GO_NEXT_PARAH, &CGotoDlg::OnBnClickedEditorLineGoNextParah)
 	ON_BN_CLICKED(ID_EDITOR_LINE_GO_TO_CARET, &CGotoDlg::OnBnClickedEditorLineGoToCaret)

@@ -217,6 +217,7 @@
     <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="EditorLexerDark.h" />
     <ClInclude Include="EditorLexerLight.h" />
+    <ClInclude Include="QuickGotoLine.h" />
     <ClInclude Include="SettingDlgCustomize.h" />
     <ClInclude Include="SettingDlgFileSystem.h" />
     <ClInclude Include="SettingDlgToggle.h" />
@@ -365,6 +366,7 @@
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="EditorLexerDark.cpp" />
     <ClCompile Include="EditorLexerLight.cpp" />
+    <ClCompile Include="QuickGotoLine.cpp" />
     <ClCompile Include="SettingDlgCustomize.cpp" />
     <ClCompile Include="SettingDlgFileSystem.cpp" />
     <ClCompile Include="SettingDlgToggle.cpp" />

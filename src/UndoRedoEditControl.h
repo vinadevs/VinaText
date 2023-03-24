@@ -140,7 +140,7 @@ public:
 	bool IsSelectionEmpty() const;
 	int GetCursorPosition() const;
 	CString GetSelectionText() const;
-	void SetFocusEx();
+	void SetFocusEx(BOOL bSelectText = TRUE);
 
 	void ReplaceSel(LPCTSTR lpszNewText, BOOL bIsAllowUndo = FALSE);
 

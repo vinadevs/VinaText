@@ -42,6 +42,7 @@
 #include "InsertFromPositionXDlg.h"
 #include "InsertBetweenLines.h"
 #include "BookMarkPathDlg.h"
+#include "QuickGotoLine.h"
 
 #include "translator/POHandler.h"
 
@@ -3691,10 +3692,8 @@ void CEditorView::OnOptionsGotopos()
 
 void CEditorView::OnOptionGotoline()
 {
-	CMainFrame* pFrame = AppUtils::GetMainFrame();
-	if (!pFrame) return;
-	CString strCurLine = AppUtils::IntToCString(m_EditorCtrl.GetCurrentLine());
-	pFrame->InitSearchReplaceFromEditor(strCurLine, SEARCH_REPLACE_GOTO_DLG_TYPE::GOTO);
+	QuickGotoLine dlg;
+	dlg.DoModal();
 }
 
 void CEditorView::OnOptionSearch()

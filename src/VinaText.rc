@@ -406,6 +406,17 @@ BEGIN
             MENUITEM "Show Folding Map\tAlt+M",     ID_DOCUMENT_SHOW_FUNCTION_LIST
         END
         MENUITEM SEPARATOR
+        POPUP "Goto..."
+        BEGIN
+            MENUITEM "Goto Line\tCtrl+G",           ID_OPTIONS_GOTOLINE
+            MENUITEM "Goto Position",               ID_OPTIONS_GOTOPOS
+            MENUITEM SEPARATOR
+            MENUITEM "Goto Next Paragraph\tCtrl+]", ID_OPTIONS_GOTO_NEXT_PARAGRAPH
+            MENUITEM "Goto Previous Paragraph\tCtrl+[", ID_OPTIONS_GOTO_PREV_PARAGRAPH
+            MENUITEM SEPARATOR
+            MENUITEM "Goto To Caret\tMiddle Mouse", ID_EDIT_SCROLL_TO_CARET
+        END
+        MENUITEM SEPARATOR
         POPUP "Line Bookmark"
         BEGIN
             MENUITEM "Add New Bookmark\tF8",        ID_OPTIONS_ADD_BOOKMARK
@@ -453,7 +464,7 @@ BEGIN
     END
     POPUP "Selection"
     BEGIN
-        MENUITEM "All Text\tCtrl+A", ID_EDIT_SELECT_ALL
+        MENUITEM "All Text\tCtrl+A",            ID_EDIT_SELECT_ALL
         MENUITEM "All Sensitive Matched\tSelection+Ctrl+A", ID_EDIT_SELECT_ALL_SELECTION
         MENUITEM "All Insensitive Matched\tSelection+Ctrl+Shift+A", ID_EDIT_SELECT_ALL_SELECTION_NOT_MC_MW
         MENUITEM SEPARATOR
@@ -461,7 +472,7 @@ BEGIN
         MENUITEM "Use Column Mode\tAlt+Left Mouse Drag", ID_SELECTION_WITH_COLUMN_MODE
         MENUITEM "Split Selection Into Lines\tAlt+L", ID_SPLIT_SELECTION_INTO_LINES
         MENUITEM SEPARATOR
-        MENUITEM "Swap Two Selections", ID_EDIT_SWAP_TWO_SELECTIONS
+        MENUITEM "Swap Two Selections",         ID_EDIT_SWAP_TWO_SELECTIONS
         MENUITEM "Move Selected Line Up\tCtrl+Shift+Up", ID_EDIT_MOVE_SELECTED_LINE_UP
         MENUITEM "Move Selected Line Down\tCtrl+Shift+Down", ID_EDIT_MOVE_SELECTED_LINE_DOWN
         MENUITEM SEPARATOR
@@ -644,95 +655,95 @@ BEGIN
         END
     END
     POPUP "Explorer"
-        BEGIN
-            MENUITEM "New File Explorer Tab\tCtrl+Shift+E", ID_HOST_FILE_EXPLORER
-            MENUITEM "Add New Workspace...\tCtrl+Shift+O", ID_FILE_OPEN_FOLDER_TO_WORKSPACE
-            MENUITEM "Open Path Bookmark Table\tCtrl+Shift+B", ID_PATH_VINATEXT_BOOKMARK_TABLE
-            MENUITEM SEPARATOR
-            MENUITEM "Enable Auto Refresh", ID_TOOLS_AUTOREFRESH
-            MENUITEM "Enable Preview Mode", ID_TOOLS_PREVIEW_MODE
-            MENUITEM SEPARATOR
-            MENUITEM "Switch Focus To Active Tab\tCtrl+Shift+Q", ID_SWITCH_EPLORER_TO_ACTIVE_TAB
-            MENUITEM SEPARATOR
+    BEGIN
+        MENUITEM "New File Explorer Tab\tCtrl+Shift+E", ID_HOST_FILE_EXPLORER
+        MENUITEM "Add New Workspace...\tCtrl+Shift+O", ID_FILE_OPEN_FOLDER_TO_WORKSPACE
+        MENUITEM "Open Path Bookmark Table\tCtrl+Shift+B", ID_PATH_VINATEXT_BOOKMARK_TABLE
+        MENUITEM SEPARATOR
+        MENUITEM "Enable Auto Refresh",         ID_TOOLS_AUTOREFRESH
+        MENUITEM "Enable Preview Mode",         ID_TOOLS_PREVIEW_MODE
+        MENUITEM SEPARATOR
+        MENUITEM "Switch Focus To Active Tab\tCtrl+Shift+Q", ID_SWITCH_EPLORER_TO_ACTIVE_TAB
+        MENUITEM SEPARATOR
         POPUP "Tree Navigation"
         BEGIN
-            MENUITEM "Go Up", ID_TOOLS_UPONELEVEL
-            MENUITEM "Goto Previous Path", ID_TOOLS_BACK
-            MENUITEM "Goto Next Path", ID_TOOLS_FORWARD
-            MENUITEM "Go Back To Desktop", ID_TOOLS_BACK_TO_ORIGINAL
+            MENUITEM "Go Up",                       ID_TOOLS_UPONELEVEL
+            MENUITEM "Goto Previous Path",          ID_TOOLS_BACK
+            MENUITEM "Goto Next Path",              ID_TOOLS_FORWARD
+            MENUITEM "Go Back To Desktop",          ID_TOOLS_BACK_TO_ORIGINAL
         END
         MENUITEM SEPARATOR
         POPUP "Application Paths"
         BEGIN
-            MENUITEM "Installation Path", ID_PATH_VINATEXT
-            MENUITEM "App Data Path", ID_PATH_VINATEXT_APPDATA
-            MENUITEM "Temporary Path", ID_PATH_VINATEXT_TEMP
+            MENUITEM "Installation Path",           ID_PATH_VINATEXT
+            MENUITEM "App Data Path",               ID_PATH_VINATEXT_APPDATA
+            MENUITEM "Temporary Path",              ID_PATH_VINATEXT_TEMP
         END
         MENUITEM SEPARATOR
         POPUP "Configuration"
         BEGIN
             POPUP "Allow"
             BEGIN
-                MENUITEM "Allow Rename", ID_TOOLS_ALLOWRENAME
-                MENUITEM "Allow Open", ID_TOOLS_ALLOWOPEN
+                MENUITEM "Allow Rename",                ID_TOOLS_ALLOWRENAME
+                MENUITEM "Allow Open",                  ID_TOOLS_ALLOWOPEN
                 MENUITEM "Allow Create Folder And File", ID_TOOLS_ALLOWCREATEFOLDER
-                MENUITEM "Allow Properties", ID_TOOLS_ALLOWPROPERTIES
-                MENUITEM "Allow Delete", ID_TOOLS_ALLOWDELETE
-                MENUITEM "Allow Drag/Drop", ID_TOOLS_ALLOWDRAGDROP
+                MENUITEM "Allow Properties",            ID_TOOLS_ALLOWPROPERTIES
+                MENUITEM "Allow Delete",                ID_TOOLS_ALLOWDELETE
+                MENUITEM "Allow Drag/Drop",             ID_TOOLS_ALLOWDRAGDROP
             END
             MENUITEM SEPARATOR
             POPUP "Show"
             BEGIN
-                MENUITEM "Show Files", ID_TOOLS_SHOWFILES
-                MENUITEM "Show Rooted Folder", ID_TOOLS_SHOWROOTEDFOLDER
-                MENUITEM "Show Shared Folders", ID_TOOLS_SHOWSHAREDFOLDERS
-                MENUITEM "Show Drive Labels", ID_TOOLS_SHOWDRIVELABELS
-                MENUITEM "Show All Network Items", ID_TOOLS_SHOWALLNETWORKITEMS
-                MENUITEM "Show Only Network Printers", ID_TOOLS_SHOWNETWORKPRINTERS
-                MENUITEM "Show Only Network Shares", ID_TOOLS_SHOWNETWORKSHARES
+                MENUITEM "Show Files",                  ID_TOOLS_SHOWFILES
+                MENUITEM "Show Rooted Folder",          ID_TOOLS_SHOWROOTEDFOLDER
+                MENUITEM "Show Shared Folders",         ID_TOOLS_SHOWSHAREDFOLDERS
+                MENUITEM "Show Drive Labels",           ID_TOOLS_SHOWDRIVELABELS
+                MENUITEM "Show All Network Items",      ID_TOOLS_SHOWALLNETWORKITEMS
+                MENUITEM "Show Only Network Printers",  ID_TOOLS_SHOWNETWORKPRINTERS
+                MENUITEM "Show Only Network Shares",    ID_TOOLS_SHOWNETWORKSHARES
             END
             MENUITEM SEPARATOR
             POPUP "Hide Drives"
             BEGIN
-                MENUITEM "Hide Removable drives", ID_TOOLS_HIDEREMOVABLE
-                MENUITEM "Hide Fixed drives", ID_TOOLS_HIDEFIXED
-                MENUITEM "Hide Remote drives", ID_TOOLS_HIDEREMOTE
-                MENUITEM "Hide CDROM drives", ID_TOOLS_HIDECDROM
-                MENUITEM "Hide Ramdisk drives", ID_TOOLS_HIDERAMDISKS
+                MENUITEM "Hide Removable drives",       ID_TOOLS_HIDEREMOVABLE
+                MENUITEM "Hide Fixed drives",           ID_TOOLS_HIDEFIXED
+                MENUITEM "Hide Remote drives",          ID_TOOLS_HIDEREMOTE
+                MENUITEM "Hide CDROM drives",           ID_TOOLS_HIDECDROM
+                MENUITEM "Hide Ramdisk drives",         ID_TOOLS_HIDERAMDISKS
             END
             POPUP "Hide Files"
             BEGIN
-                MENUITEM "Hide Archived files", ID_TOOLS_HIDEARCHIVE
-                MENUITEM "Hide Compressed files", ID_TOOLS_HIDECOMPRESSED
-                MENUITEM "Hide Hidden files", ID_TOOLS_HIDEHIDDEN
-                MENUITEM "Hide System files", ID_TOOLS_HIDESYSTEM
-                MENUITEM "Hide Temporary files", ID_TOOLS_HIDETEMPORARY
-                MENUITEM "Hide Encrypted files", ID_TOOLS_HIDEENCRYPTED
-                MENUITEM "Hide Offline files", ID_TOOLS_HIDEOFFLINE
-                MENUITEM "Hide Read only files", ID_TOOLS_HIDEREADONLY
-                MENUITEM "Hide Reparse Point files", ID_TOOLS_HIDEREPARSEPOINT
-                MENUITEM "Hide Sparse Point files", ID_TOOLS_HIDESPARSE
+                MENUITEM "Hide Archived files",         ID_TOOLS_HIDEARCHIVE
+                MENUITEM "Hide Compressed files",       ID_TOOLS_HIDECOMPRESSED
+                MENUITEM "Hide Hidden files",           ID_TOOLS_HIDEHIDDEN
+                MENUITEM "Hide System files",           ID_TOOLS_HIDESYSTEM
+                MENUITEM "Hide Temporary files",        ID_TOOLS_HIDETEMPORARY
+                MENUITEM "Hide Encrypted files",        ID_TOOLS_HIDEENCRYPTED
+                MENUITEM "Hide Offline files",          ID_TOOLS_HIDEOFFLINE
+                MENUITEM "Hide Read only files",        ID_TOOLS_HIDEREADONLY
+                MENUITEM "Hide Reparse Point files",    ID_TOOLS_HIDEREPARSEPOINT
+                MENUITEM "Hide Sparse Point files",     ID_TOOLS_HIDESPARSE
             END
             POPUP "Hide Folders"
             BEGIN
-                MENUITEM "Hide Archived folders", ID_TOOLS_HIDEARCHIVE2
-                MENUITEM "Hide Compressed folders", ID_TOOLS_HIDECOMPRESSED2
-                MENUITEM "Hide Hidden folders", ID_TOOLS_HIDEHIDDEN2
-                MENUITEM "Hide System folders", ID_TOOLS_HIDESYSTEM2
-                MENUITEM "Hide Temporary folders", ID_TOOLS_HIDETEMPORARY2
-                MENUITEM "Hide Encrypted folders", ID_TOOLS_HIDEENCRYPTED2
-                MENUITEM "Hide Offline folders", ID_TOOLS_HIDEOFFLINE2
-                MENUITEM "Hide Read only folders", ID_TOOLS_HIDEREADONLY2
-                MENUITEM "Hide Reparse Point folders", ID_TOOLS_HIDEREPARSEPOINT2
-                MENUITEM "Hide Sparse Point folders", ID_TOOLS_HIDESPARSE2
+                MENUITEM "Hide Archived folders",       ID_TOOLS_HIDEARCHIVE2
+                MENUITEM "Hide Compressed folders",     ID_TOOLS_HIDECOMPRESSED2
+                MENUITEM "Hide Hidden folders",         ID_TOOLS_HIDEHIDDEN2
+                MENUITEM "Hide System folders",         ID_TOOLS_HIDESYSTEM2
+                MENUITEM "Hide Temporary folders",      ID_TOOLS_HIDETEMPORARY2
+                MENUITEM "Hide Encrypted folders",      ID_TOOLS_HIDEENCRYPTED2
+                MENUITEM "Hide Offline folders",        ID_TOOLS_HIDEOFFLINE2
+                MENUITEM "Hide Read only folders",      ID_TOOLS_HIDEREADONLY2
+                MENUITEM "Hide Reparse Point folders",  ID_TOOLS_HIDEREPARSEPOINT2
+                MENUITEM "Hide Sparse Point folders",   ID_TOOLS_HIDESPARSE2
             END
             POPUP "Hide Systems"
             BEGIN
-                MENUITEM "Hide Desktop", ID_TOOLS_HIDEDESKTOP
-                MENUITEM "Hide My Computer", ID_TOOLS_HIDEMYCOMPUTER
-                MENUITEM "Hide My Documents", ID_TOOLS_HIDEMYDOCUMENTS
-                MENUITEM "Hide Current User Folder", ID_TOOLS_HIDECURRENTUSERFOLDER
-                MENUITEM "Hide Network", ID_TOOLS_HIDENETWORK
+                MENUITEM "Hide Desktop",                ID_TOOLS_HIDEDESKTOP
+                MENUITEM "Hide My Computer",            ID_TOOLS_HIDEMYCOMPUTER
+                MENUITEM "Hide My Documents",           ID_TOOLS_HIDEMYDOCUMENTS
+                MENUITEM "Hide Current User Folder",    ID_TOOLS_HIDECURRENTUSERFOLDER
+                MENUITEM "Hide Network",                ID_TOOLS_HIDENETWORK
             END
         END
     END
@@ -1120,22 +1131,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Disable Edit Mode\tCtrl+J",   ID_DOCUMENT_SET_READ_ONLY
         MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",  ID_OPTIONS_WRAPLINE
-        POPUP "Search And Replace"
-        BEGIN
-            MENUITEM "Search\tCtrl+Shift+F",        ID_EDIT_FIND
-            MENUITEM "Replace\tCtrl+Shift+H",       ID_EDIT_REPLACE
-            MENUITEM "Show Folding Map\tAlt+M",     ID_DOCUMENT_SHOW_FUNCTION_LIST
-        END
-        POPUP "Goto"
-        BEGIN
-            MENUITEM "Goto Line\tCtrl+G",           ID_OPTIONS_GOTOLINE
-            MENUITEM "Goto Position",               ID_OPTIONS_GOTOPOS
-            MENUITEM SEPARATOR
-            MENUITEM "Goto Next Paragraph\tCtrl+]", ID_OPTIONS_GOTO_NEXT_PARAGRAPH
-            MENUITEM "Goto Previous Paragraph\tCtrl+[", ID_OPTIONS_GOTO_PREV_PARAGRAPH
-            MENUITEM SEPARATOR
-            MENUITEM "Goto To Caret\tMiddle Mouse", ID_EDIT_SCROLL_TO_CARET
-        END
         MENUITEM SEPARATOR
         POPUP "Folding Level"
         BEGIN
@@ -1242,7 +1237,7 @@ BEGIN
     BEGIN
         MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECT_ALL
         MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
-        MENUITEM "Copy Full Path\tCtrl+Shift+C",ID_EDIT_COPY_FULL_PATH
+        MENUITEM "Copy Full Path\tCtrl+Shift+C", ID_EDIT_COPY_FULL_PATH
         MENUITEM "Count Selection\tCtrl+R",     ID_EDIT_COUNT_SELECTION
         MENUITEM "Delete All\tCtrl+Delete",     ID_EDIT_CLEAR_ALL
         MENUITEM "Delete Rows\tDelete",         ID_EDIT_DELETE_FROM_LIST
@@ -1477,15 +1472,15 @@ STYLE DS_SETFONT | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     LTEXT           "Goto Position:",ID_EDITOR_GOTO_POSITION_STATIC,12,42,50,8
-    EDITTEXT        IDC_POSITION,85,40,71,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_POSITION,85,40,71,14,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "Goto Line:",ID_EDITOR_GOTO_LINE_STATIC,12,67,74,21
-    EDITTEXT        IDC_LINE,85,65,71,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_LINE,85,65,71,14,ES_AUTOHSCROLL | ES_NUMBER
     DEFPUSHBUTTON   "GO",ID_EDITOR_POSITION_GO,169,38,50,18
     DEFPUSHBUTTON   "GO",ID_EDITOR_LINE_GO,169,63,50,18
     LTEXT           "Goto Point          - X:",ID_EDITOR_GOTO_POINT_X_STATIC,12,17,68,8
-    EDITTEXT        ID_EDITOR_GOTO_POINT_X,85,14,24,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_EDITOR_GOTO_POINT_X,85,14,24,14,ES_AUTOHSCROLL | ES_NUMBER
     DEFPUSHBUTTON   "GO",ID_EDITOR_POINT_GO,169,12,50,18
-    EDITTEXT        ID_EDITOR_GOTO_POINT_Y,132,14,24,14,ES_AUTOHSCROLL
+    EDITTEXT        ID_EDITOR_GOTO_POINT_Y,132,14,24,14,ES_AUTOHSCROLL | ES_NUMBER
     LTEXT           "- Y:",ID_EDITOR_GOTO_POINT_Y_STATIC,116,17,12,8
     DEFPUSHBUTTON   "[<< Goto Previous Paragraph",ID_EDITOR_LINE_GO_PREVIOUS_PARAH,12,95,205,20
     DEFPUSHBUTTON   "Goto Next Paragraph >>]",ID_EDITOR_LINE_GO_NEXT_PARAH,12,122,205,20
@@ -1694,8 +1689,8 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,145,89,50,14
     LTEXT           "From X:",IDC_STATIC,23,18,26,8
     LTEXT           "To Y:",IDC_STATIC,24,43,18,8
-    EDITTEXT        IDC_EDIT_REMOVE_FROM_X,64,15,129,14,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_REMOVE_TO_Y,64,40,129,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_REMOVE_FROM_X,64,15,129,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_REMOVE_TO_Y,64,40,129,14,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Remove From Line End",IDC_CHECK_REMOVE_FROM_END_LINE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,69,132,10
 END
@@ -1720,7 +1715,7 @@ BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,145,89,50,14
     LTEXT           "Position X:",IDC_STATIC,16,18,34,8
     LTEXT           "Insert What:",IDC_STATIC,16,43,42,8
-    EDITTEXT        IDC_EDIT_INSERT_POSITION_X,64,15,129,14,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_INSERT_POSITION_X,64,15,129,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_INSERT_WHAT,64,40,129,14,ES_AUTOHSCROLL
     CONTROL         "Insert From Line End",IDC_CHECK_INSERT_FROM_END_LINE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,69,132,10
@@ -1785,8 +1780,8 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,253,135,87,10
     CONTROL         "Size file between (Byte):",IDC_CHECK_SERACH_FILE_SIZE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,157,96,10
-    EDITTEXT        IDC_EDIT_MIN_FILE_SIZE,139,155,94,15,ES_AUTOHSCROLL
-    EDITTEXT        IDC_EDIT_MAX_FILE_SIZE,253,154,94,15,ES_AUTOHSCROLL
+    EDITTEXT        IDC_EDIT_MIN_FILE_SIZE,139,155,94,15,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_MAX_FILE_SIZE,253,154,94,15,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Date modified between:",IDC_CHECK_DATE_MODIFIED_BETWEEN,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,202,87,10
     CONTROL         "",IDC_DATETIMEPICKER_START,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,139,200,94,15
@@ -2105,46 +2100,57 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,13,34,93,10
 END
 
-IDD_OPTIONSPAGE1 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE1 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_OPTIONSPAGE2 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE2 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Documents"
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_OPTIONSPAGE3 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE3 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_OPTIONSPAGE4 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE4 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "SCC Provider"
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_OPTIONSPAGE5 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE5 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "General"
 FONT 8, "MS Sans Serif"
 BEGIN
 END
 
-IDD_OPTIONSPAGE6 DIALOG  0, 0, 235, 182
+IDD_OPTIONSPAGE6 DIALOG 0, 0, 235, 182
 STYLE DS_SETFONT | WS_CHILD | WS_DISABLED | WS_CAPTION
 CAPTION "Tabs"
 FONT 8, "MS Sans Serif"
 BEGIN
+END
+
+IDD_DIALOG_GOTO_LINE DIALOGEX 0, 0, 169, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Goto Line"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "GO",IDOK,32,41,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,86,41,50,14
+    EDITTEXT        IDC_EDIT_GOTO_LINE_NUMBER,7,21,155,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Line Number:",IDC_STATIC_GOTO_LINE,7,8,155,8
 END
 
 
@@ -2245,6 +2251,10 @@ BEGIN
     END
 
     ID_DIALOG_BUILD_PANE, DIALOG
+    BEGIN
+    END
+
+    ID_DIALOG_MESSAGE_PANE, DIALOG
     BEGIN
     END
 
@@ -2411,6 +2421,26 @@ BEGIN
 
     IDD_CREATE_NEW_MULTIPLE, DIALOG
     BEGIN
+    END
+
+    IDD_OPTIONSPAGE1, DIALOG
+    BEGIN
+    END
+
+    IDD_OPTIONSPAGE2, DIALOG
+    BEGIN
+    END
+
+    IDD_OPTIONSPAGE4, DIALOG
+    BEGIN
+    END
+
+    IDD_DIALOG_GOTO_LINE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 162
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2583,6 +2613,11 @@ BEGIN
     0
 END
 
+IDD_DIALOG_GOTO_LINE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2638,7 +2673,7 @@ END
 // REGISTRY
 //
 
-IDR_VinaText            REGISTRY                "VinaText.rgs"
+IDR_VINATEXT            REGISTRY                "VinaText.rgs"
 
 
 /////////////////////////////////////////////////////////////////////////////

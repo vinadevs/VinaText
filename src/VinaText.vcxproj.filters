@@ -588,6 +588,9 @@
     <ClInclude Include="SettingDlgToggle.h">
       <Filter>Settings</Filter>
     </ClInclude>
+    <ClInclude Include="QuickGotoLine.h">
+      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1018,6 +1021,9 @@
     </ClCompile>
     <ClCompile Include="SettingDlgToggle.cpp">
       <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="QuickGotoLine.cpp">
+      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

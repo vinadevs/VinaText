@@ -44,8 +44,6 @@ protected:
 	afx_msg void OnGotoLine();
 	afx_msg void OnGotoPosition();
 	afx_msg void OnGotoPoint();
-	afx_msg void OnEnChangeEditLineNum();
-	afx_msg void OnEnChangeEditPositionNum();
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	afx_msg HBRUSH OnCtlColor(CDC * pDC, CWnd * pWnd, UINT nCtlColor);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
