@@ -768,25 +768,54 @@ BEGIN
         MENUITEM "Show All Dock Windows",       ID_SHOW_ALL_DOCKWINDOW
         MENUITEM "Clear All Dock Windows",      ID_CLEAN_UP_ALL_WINDOW
     END
-    POPUP "Run"
+    POPUP "Code"
     BEGIN
-        MENUITEM "Start Debugging\tF5",         ID_DEBUGGER_START
-        MENUITEM "Stop Debugging\tShift+F5",    ID_DEBUGGER_STOP
+        POPUP "Programing Language Setting..."
+        BEGIN
+            MENUITEM "Python", ID_LANGUAGE_FILE_CONFIG_PYTHON
+            MENUITEM "C++", ID_LANGUAGE_FILE_CONFIG_CPP
+            MENUITEM "C", ID_LANGUAGE_FILE_CONFIG_C
+            MENUITEM "C#", ID_LANGUAGE_FILE_CONFIG_CSHAPE
+            MENUITEM "JavaScript", ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
+            MENUITEM "Java", ID_LANGUAGE_FILE_CONFIG_JAVA
+            MENUITEM "Pascal", ID_LANGUAGE_FILE_CONFIG_PASCAL
+            MENUITEM "Assembly", ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
+            MENUITEM "Rust", ID_LANGUAGE_FILE_CONFIG_RUST
+            MENUITEM "Go Lang", ID_LANGUAGE_FILE_CONFIG_GO
+            MENUITEM "Batch", ID_LANGUAGE_FILE_CONFIG_BATCH
+            MENUITEM "PowerShell", ID_LANGUAGE_FILE_CONFIG_POWERSHELL
+            MENUITEM "HTML", ID_LANGUAGE_FILE_CONFIG_HTML
+            MENUITEM "PHP", ID_LANGUAGE_FILE_CONFIG_PHP
+            MENUITEM "Perl", ID_LANGUAGE_FILE_CONFIG_PERL
+            MENUITEM "SQL", ID_LANGUAGE_FILE_CONFIG_SQL
+            MENUITEM "Verilog", ID_LANGUAGE_FILE_CONFIG_VERILOG
+            MENUITEM "Ruby", ID_LANGUAGE_FILE_CONFIG_RUBY
+            MENUITEM "TCL", ID_LANGUAGE_FILE_CONFIG_TCL
+            MENUITEM "Auto IT", ID_LANGUAGE_FILE_CONFIG_AUTOIT
+            MENUITEM "Visual Basic", ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
+            MENUITEM "R", ID_LANGUAGE_FILE_CONFIG_R
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Step Into\tF11",              ID_DEBUGGER_STEPINTO
-        MENUITEM "Step Over\tF10",              ID_DEBUGGER_STEPOVER
-        MENUITEM "Step Out\tShift+F11",         ID_DEBUGGER_STEPOUT
-        MENUITEM SEPARATOR
-        MENUITEM "Dump Call Stack\tCtrl+Alt+C", ID_DEBUGGER_CALL_STACK
-        MENUITEM "Dump Variable Value\tF12",    ID_DEBUGGER_VARIABLE_VALUE
-        MENUITEM "Dump Variable Type\tShift+F12", ID_DEBUGGER_VARIABLE_TYPE
-        MENUITEM SEPARATOR
-        MENUITEM "Add New Breakpoint\tF9",      ID_OPTIONS_ADD_NEW_BREAKPOINT
-        MENUITEM "Remove Breakpoint\tF9",       ID_OPTIONS_DELETE_BREAKPOINT
-        MENUITEM "Remove All Breakpoints",      ID_OPTIONS_DELETE_ALL_BREAKPOINT
-        MENUITEM SEPARATOR
-        MENUITEM "Goto Next Breakpoint",        ID_OPTIONS_FIND_NEXT_BREAKPOINT
-        MENUITEM "Goto Previous Breakpoint",    ID_OPTIONS_FIND_PREV_BREAKPOINT
+        POPUP "Run And Debug..."
+        BEGIN
+            MENUITEM "Start Debugging\tF5",         ID_DEBUGGER_START
+            MENUITEM "Stop Debugging\tShift+F5",    ID_DEBUGGER_STOP
+            MENUITEM SEPARATOR
+            MENUITEM "Step Into\tF11",              ID_DEBUGGER_STEPINTO
+            MENUITEM "Step Over\tF10",              ID_DEBUGGER_STEPOVER
+            MENUITEM "Step Out\tShift+F11",         ID_DEBUGGER_STEPOUT
+            MENUITEM SEPARATOR
+            MENUITEM "Dump Call Stack\tCtrl+Alt+C", ID_DEBUGGER_CALL_STACK
+            MENUITEM "Dump Variable Value\tF12",    ID_DEBUGGER_VARIABLE_VALUE
+            MENUITEM "Dump Variable Type\tShift+F12", ID_DEBUGGER_VARIABLE_TYPE
+            MENUITEM SEPARATOR
+            MENUITEM "Add New Breakpoint\tF9",      ID_OPTIONS_ADD_NEW_BREAKPOINT
+            MENUITEM "Remove Breakpoint\tF9",       ID_OPTIONS_DELETE_BREAKPOINT
+            MENUITEM "Remove All Breakpoints",      ID_OPTIONS_DELETE_ALL_BREAKPOINT
+            MENUITEM SEPARATOR
+            MENUITEM "Goto Next Breakpoint",        ID_OPTIONS_FIND_NEXT_BREAKPOINT
+            MENUITEM "Goto Previous Breakpoint",    ID_OPTIONS_FIND_PREV_BREAKPOINT
+        END
         MENUITEM SEPARATOR
         MENUITEM "Generate File Build",         ID_DOCUMENT_GENERATE_BUILD_FILE
         MENUITEM "Clean Up Build Temporary",    ID_DOCUMENT_CLEAN_BUILD_FILE
@@ -904,32 +933,6 @@ BEGIN
             MENUITEM "Light",                       ID_APP_THEME_LIGHT
             MENUITEM "Monokai",                     ID_APP_THEME_MONOKAI
             MENUITEM "Sierra Blue",                 ID_APP_THEME_SIERRABLUE
-        END
-        MENUITEM SEPARATOR
-        POPUP "Language Config"
-        BEGIN
-            MENUITEM "Python",                      ID_LANGUAGE_FILE_CONFIG_PYTHON
-            MENUITEM "C++",                         ID_LANGUAGE_FILE_CONFIG_CPP
-            MENUITEM "C",                           ID_LANGUAGE_FILE_CONFIG_C
-            MENUITEM "C#",                          ID_LANGUAGE_FILE_CONFIG_CSHAPE
-            MENUITEM "JavaScript",                  ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
-            MENUITEM "Java",                        ID_LANGUAGE_FILE_CONFIG_JAVA
-            MENUITEM "Pascal",                      ID_LANGUAGE_FILE_CONFIG_PASCAL
-            MENUITEM "Assembly",                    ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
-            MENUITEM "Rust",                        ID_LANGUAGE_FILE_CONFIG_RUST
-            MENUITEM "Go Lang",                     ID_LANGUAGE_FILE_CONFIG_GO
-            MENUITEM "Batch",                       ID_LANGUAGE_FILE_CONFIG_BATCH
-            MENUITEM "PowerShell",                  ID_LANGUAGE_FILE_CONFIG_POWERSHELL
-            MENUITEM "HTML",                        ID_LANGUAGE_FILE_CONFIG_HTML
-            MENUITEM "PHP",                         ID_LANGUAGE_FILE_CONFIG_PHP
-            MENUITEM "Perl",                        ID_LANGUAGE_FILE_CONFIG_PERL
-            MENUITEM "SQL",                         ID_LANGUAGE_FILE_CONFIG_SQL
-            MENUITEM "Verilog",                     ID_LANGUAGE_FILE_CONFIG_VERILOG
-            MENUITEM "Ruby",                        ID_LANGUAGE_FILE_CONFIG_RUBY
-            MENUITEM "TCL",                         ID_LANGUAGE_FILE_CONFIG_TCL
-            MENUITEM "Auto IT",                     ID_LANGUAGE_FILE_CONFIG_AUTOIT
-            MENUITEM "Visual Basic",                ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
-            MENUITEM "R",                           ID_LANGUAGE_FILE_CONFIG_R
         END
         MENUITEM SEPARATOR
         MENUITEM "General Settings",            ID_VIEW_APP_SETTINGS
