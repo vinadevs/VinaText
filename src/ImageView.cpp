@@ -474,7 +474,6 @@ BOOL CImageView::PreTranslateMessage(MSG * pMsg)
 			OnOptionsZoomDown();
 		}
 		return TRUE;
-		break;
 	}
 	}
 	return CViewBase::PreTranslateMessage(pMsg);

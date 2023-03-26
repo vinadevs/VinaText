@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -66,9 +62,6 @@
     </Filter>
     <Filter Include="Control UI\Editor\Editor">
       <UniqueIdentifier>{ff64d318-f6e8-41c7-b736-5722c7bf1b57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Pdf">
-      <UniqueIdentifier>{fee1ec3a-acf8-4892-8f83-e5261350b89b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Control UI\MFC">
       <UniqueIdentifier>{682fa61b-d5f9-453c-a572-661e3054d5b3}</UniqueIdentifier>
@@ -136,6 +129,34 @@
     <Filter Include="Translator">
       <UniqueIdentifier>{829a21cd-0d13-4086-b2da-3f953465d27a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Control UI\PDFViewer">
+      <UniqueIdentifier>{fee1ec3a-acf8-4892-8f83-e5261350b89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\Arobat Reader">
+      <UniqueIdentifier>{096b44f4-d938-4f4d-b6d4-aa7afdc8a041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium">
+      <UniqueIdentifier>{4a9cd0f6-c0a2-4ac0-996e-4051298e5041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium\UXReaderLibrary">
+      <UniqueIdentifier>{006078ab-1898-4673-8996-5233a000dc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium\UXReaderToolbar">
+      <UniqueIdentifier>{004907fb-8207-4273-8199-938e1bb9bf2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium\UXReaderSupport">
+      <UniqueIdentifier>{e4dcb4c0-2367-4cf3-8154-add2153f44a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium\UXReaderView">
+      <UniqueIdentifier>{9ed041e1-09f6-4cc7-a5a9-20e33bd46804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Control UI\PDFViewer\PDFium\UXReaderInclude">
+      <UniqueIdentifier>{1ca7ce44-9444-4774-866f-af66e57455f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.md" />
@@ -145,10 +166,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="EditorDatabase.h">
       <Filter>Control UI\Editor\Database</Filter>
@@ -160,7 +181,7 @@
       <Filter>Dock Windows\File Explorer</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="ProgramStatusBarEx.h">
       <Filter>Dock Windows\Status Bar</Filter>
@@ -244,7 +265,7 @@
       <Filter>Control UI\Editor\File IO</Filter>
     </ClInclude>
     <ClInclude Include="EnumDef.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="SystemInfo.h">
       <Filter>Utils</Filter>
@@ -272,9 +293,6 @@
     </ClInclude>
     <ClInclude Include="EditorDataStructure.h">
       <Filter>Control UI\Editor\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomizeUserTool.h">
-      <Filter>Command Line</Filter>
     </ClInclude>
     <ClInclude Include="ImageDoc.h">
       <Filter>Main Files\Main Skeleton\Document</Filter>
@@ -387,11 +405,8 @@
     <ClInclude Include="FileBrowser.h">
       <Filter>Control UI\MFC</Filter>
     </ClInclude>
-    <ClInclude Include="AdobeAcrobatWrapper.h">
-      <Filter>Control UI\Pdf</Filter>
-    </ClInclude>
     <ClInclude Include="MacroDef.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="BookmarkWindow.h">
       <Filter>Dock Windows\Bookmark Window</Filter>
@@ -591,6 +606,84 @@
     <ClInclude Include="QuickGotoLine.h">
       <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
     </ClInclude>
+    <ClInclude Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.h">
+      <Filter>Control UI\PDFViewer\Arobat Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentView.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocument.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentPage.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentPane.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderBlank.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderBlankPane.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDataSource.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDebug.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderGlobals.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderLibrary.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderResource.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderSupport.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderStatusPane.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarEdit.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarItem.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarPane.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarText.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderAction.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDestination.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderGeometry.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderPageCache.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderSelection.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderTemplates.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\common.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderInclude</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -710,9 +803,6 @@
     <ClCompile Include="InsertBetweenLines.cpp">
       <Filter>Dialog UI</Filter>
     </ClCompile>
-    <ClCompile Include="CustomizeUserTool.cpp">
-      <Filter>Command Line</Filter>
-    </ClCompile>
     <ClCompile Include="ImageDoc.cpp">
       <Filter>Main Files\Main Skeleton\Document</Filter>
     </ClCompile>
@@ -732,9 +822,6 @@
       <Filter>Main Files\Main Skeleton\Frame UI</Filter>
     </ClCompile>
     <ClCompile Include="SingleInstanceApp.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="AppSettings.cpp">
@@ -821,9 +908,6 @@
     <ClCompile Include="FileBrowser.cpp">
       <Filter>Control UI\MFC</Filter>
     </ClCompile>
-    <ClCompile Include="AdobeAcrobatWrapper.cpp">
-      <Filter>Control UI\Pdf</Filter>
-    </ClCompile>
     <ClCompile Include="BookmarkWindow.cpp">
       <Filter>Dock Windows\Bookmark Window</Filter>
     </ClCompile>
@@ -855,7 +939,7 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="STLHelper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClCompile>
     <ClCompile Include="TextProgressCtrl.cpp">
       <Filter>Dock Windows\Status Bar</Filter>
@@ -1024,6 +1108,87 @@
     </ClCompile>
     <ClCompile Include="QuickGotoLine.cpp">
       <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.cpp">
+      <Filter>Control UI\PDFViewer\Arobat Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocument.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentView.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentPane.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentPage.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderBlank.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderBlankPane.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDataSource.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDebug.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderGlobals.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderLibrary.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderResource.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderSupport.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderStatusPane.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarEdit.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarItem.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarPane.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarText.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderAction.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDestination.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderGeometry.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderPageCache.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderSelection.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderTemplates.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\common.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderInclude</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Global Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

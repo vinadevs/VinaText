@@ -14,6 +14,9 @@
 #include "AppUtil.h"
 #include "AppSettings.h"
 
+#include "pdf/UXReader/UXReaderMainWindow.h"
+#include "pdf/UXReader/UXReaderDocument.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -22,10 +25,6 @@
 // CPdfView
 
 IMPLEMENT_DYNCREATE(CPdfView, CViewBase)
-
-CPdfView::~CPdfView()
-{
-}
 
 BEGIN_MESSAGE_MAP(CPdfView, CViewBase)
 	ON_WM_CREATE()
@@ -55,21 +54,61 @@ void CPdfView::Dump(CDumpContext& dc) const
 /////////////////////////////////////////////////////////////////////////////
 // CPdfView message handlers
 
+BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
+{
+	switch (pMsg->message)
+	{
+		case WM_MOUSEWHEEL:
+		{
+			if (m_DocumentView != nullptr) m_DocumentView->MouseWheelV(pMsg->wParam, pMsg->lParam);
+			return TRUE;
+		}
+		// add more messages ...
+	}
+	return CViewBase::PreTranslateMessage(pMsg);
+}
+
 void CPdfView::OnInitialUpdate()
 {
 	CViewBase::OnInitialUpdate();
 	CString strFilePDFPath = m_pDocument->GetPathName();
 	if (PathUtils::IsPdfFile(strFilePDFPath))
 	{
-		m_wndPdf.put_src(strFilePDFPath);
-		m_wndPdf.setShowToolbar(TRUE);
-		m_wndPdf.setShowScrollbars(TRUE);
+		DWORD style = WS_CHILD | WS_VISIBLE;
+		CRect dump(0, 0, 0, 0);
+		// try to open with Adode Acrobat Pdf
+		m_bIsArobatInstalled = m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL);
+		if (m_bIsArobatInstalled)
+		{
+			m_wndPdf.put_src(strFilePDFPath);
+			m_wndPdf.setShowToolbar(TRUE);
+			m_wndPdf.setShowScrollbars(TRUE);
+		}
+		else
+		{
+			const HCURSOR oldCursor = SetCursor(UXReader::UXReaderSupport::WaitCursor());
+			auto document = std::make_shared<UXReader::UXReaderDocument>(strFilePDFPath);
+			int errorCode = 0;
+			if (document->OpenWithPassword(nullptr, errorCode))
+			{
+				CRect rectClient;
+				GetClientRect(rectClient);
+				const int cx = 0; const int cy = 0;
+				const int cw = (rectClient.right - rectClient.left);
+				const int ch = (rectClient.bottom - rectClient.top);
+				m_DocumentView = std::make_unique<UXReader::UXReaderDocumentView>(document);
+				if (!m_DocumentView->Create(m_hWnd, cx, cy, cw, ch)) {
+					m_DocumentView = NULL;
+				}
+			}
+			SetCursor(oldCursor);
+		}
 		// check last write time point
 		UpdateFileLastWriteTime(strFilePDFPath);
 	}
 }
 
-void CPdfView::OnSetFocus(CWnd * pOldWnd)
+void CPdfView::OnSetFocus(CWnd* pOldWnd)
 {
 	CViewBase::OnSetFocus(pOldWnd);
 	if (!m_bIsWatchFileProcessing)
@@ -83,24 +122,17 @@ void CPdfView::UpdatePreviewFileContent()
 	OnInitialUpdate();
 }
 
-int CPdfView::OnCreate(LPCREATESTRUCT lpCreateStruct)
-{
-	if (CViewBase::OnCreate(lpCreateStruct) == -1)
-		return -1;
-	DWORD style = WS_CHILD | WS_VISIBLE;
-	CRect dump(0, 0, 0, 0);
-	if (!m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL))
-	{
-		AfxMessageBox(_T("Please install Adode Acrobat Pdf Reader!"));
-		return -1;
-	}
-	return 0;
-}
-
 void CPdfView::OnSize(UINT nType, int cx, int cy)
 {
 	CViewBase::OnSize(nType, cx, cy);
-	m_wndPdf.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOACTIVATE | SWP_NOZORDER);
+	if (m_bIsArobatInstalled)
+	{
+		m_wndPdf.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOACTIVATE | SWP_NOZORDER);
+	}
+	else
+	{
+		if (m_DocumentView) m_DocumentView->UpdateWH(cx, cy);
+	}
 }
 
 void CPdfView::OnDisableUpdate(CCmdUI* pCmdUI)
@@ -128,7 +160,7 @@ int CPdfView::WatchFileSystemState()
 	m_bIsWatchFileProcessing = TRUE;
 	int nFileState = 0;
 
-	CBaseDoc *pDoc = GetBaseDocument();
+	CBaseDoc* pDoc = GetBaseDocument();
 	ASSERT(pDoc);
 	if (!pDoc)
 	{

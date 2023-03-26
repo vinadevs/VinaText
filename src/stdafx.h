@@ -96,10 +96,13 @@
 #include <stdlib.h>
 #include <shlwapi.h>
 #include <wininet.h>
-
+#include <mutex>
 #include <gdiplus.h>
 #pragma comment(lib, "gdiplus.lib")
 #pragma comment(lib, "iphlpapi.lib")
+
+// Windows headers
+#include <WindowsX.h>
 
 // VinaText definitions...
 #include "EnumDef.h"
