@@ -25,7 +25,6 @@ using namespace UXReader;
 
 UXReader::UXReaderLibrary::UXReaderLibrary(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	OleInitialize(nullptr);
 
@@ -41,13 +40,11 @@ UXReader::UXReaderLibrary::UXReaderLibrary(void)
 
 UXReader::UXReaderLibrary::~UXReaderLibrary(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	Gdiplus::GdiplusShutdown(m_GdiPlusToken); m_GdiPlusToken = 0;
 
 	FPDF_DestroyLibrary(); UnRegisterWindowClasses(); OleUninitialize();
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 //
@@ -56,7 +53,6 @@ UXReader::UXReaderLibrary::~UXReaderLibrary(void)
 
 void UXReader::UXReaderLibrary::hModule(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	if ((hModule != nullptr) && (m_Module == nullptr))
 	{
@@ -66,7 +62,6 @@ void UXReader::UXReaderLibrary::hModule(const HMODULE hModule)
 
 void UXReader::UXReaderLibrary::Module(const HMODULE hModule)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderLibrary& Instance = UXReaderLibrary::Instance();
 
@@ -75,7 +70,6 @@ void UXReader::UXReaderLibrary::Module(const HMODULE hModule)
 
 HMODULE UXReader::UXReaderLibrary::hModule(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, m_Module);
 
 	if (m_Module == nullptr) // Default
 	{
@@ -84,14 +78,12 @@ HMODULE UXReader::UXReaderLibrary::hModule(void)
 		DoRegisterWindowClasses();
 	}
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, m_Module);
 
 	return m_Module;
 }
 
 HMODULE UXReader::UXReaderLibrary::Module(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderLibrary& Instance = UXReaderLibrary::Instance();
 
@@ -104,7 +96,6 @@ HMODULE UXReader::UXReaderLibrary::Module(void)
 
 void UXReader::UXReaderLibrary::DoRegisterWindowClasses(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, m_Module);
 
 	if (m_Module != nullptr)
 	{
@@ -124,7 +115,6 @@ void UXReader::UXReaderLibrary::DoRegisterWindowClasses(void)
 
 void UXReader::UXReaderLibrary::UnRegisterWindowClasses(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, m_Module);
 
 	if (m_Module != nullptr)
 	{

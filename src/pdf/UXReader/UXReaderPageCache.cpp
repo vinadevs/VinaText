@@ -17,23 +17,19 @@ using namespace UXReader;
 
 UXReader::UXReaderPageCache::UXReaderPageCache(const size_t limit)
 {
-	//DBLog(L"%S 0x%p %zu\n", __FUNCSIG__, this, limit);
 
 	if (limit > m_PageCacheSizeLimit) m_PageCacheSizeLimit = limit;
 }
 
 UXReader::UXReaderPageCache::~UXReaderPageCache(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	for (const auto& item : m_PageBitmapCache) DeleteObject(item.second);
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 void UXReader::UXReaderPageCache::RemovePageFromQueue(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	if (m_PageBitmapQueue.empty() == true) return;
 
@@ -45,7 +41,6 @@ void UXReader::UXReaderPageCache::RemovePageFromQueue(const int index)
 
 void UXReader::UXReaderPageCache::MovePageToBackOfQueue(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	if (m_PageBitmapQueue.empty() == true) return;
 
@@ -57,7 +52,6 @@ void UXReader::UXReaderPageCache::MovePageToBackOfQueue(const int index)
 
 void UXReader::UXReaderPageCache::PurgePageBitmap(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	if (m_PageBitmapCache.empty() == true) return;
 
@@ -65,7 +59,6 @@ void UXReader::UXReaderPageCache::PurgePageBitmap(const int index)
 
 	if (it != m_PageBitmapCache.end()) // Purge page bitmap
 	{
-		//DBLog(L"%S %i\n", __FUNCSIG__, it->first);
 
 		DeleteObject(it->second); m_PageBitmapCache.erase(it);
 
@@ -75,7 +68,6 @@ void UXReader::UXReaderPageCache::PurgePageBitmap(const int index)
 
 void UXReader::UXReaderPageCache::PurgePageBitmapCache(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (m_PageBitmapCache.empty() == true) return;
 
@@ -86,7 +78,6 @@ void UXReader::UXReaderPageCache::PurgePageBitmapCache(void)
 
 void UXReader::UXReaderPageCache::PrunePageBitmapCache(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (m_PageBitmapCache.empty() == true) return;
 
@@ -117,7 +108,6 @@ void UXReader::UXReaderPageCache::PrunePageBitmapCache(void)
 				pageCacheSize -= (bm.bmWidth * bm.bmHeight * 4);
 			}
 
-			//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 			PurgePageBitmap(index);
 		}
@@ -130,7 +120,6 @@ void UXReader::UXReaderPageCache::PrunePageBitmapCache(void)
 
 void UXReader::UXReaderPageCache::PurgeNotVisiblePages(const std::set<int>& visiblePages)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (m_PageBitmapCache.empty() == true) return;
 
@@ -140,7 +129,6 @@ void UXReader::UXReaderPageCache::PurgeNotVisiblePages(const std::set<int>& visi
 
 		if (it2 == visiblePages.end()) // Page is not visible
 		{
-			//DBLog(L"%S %i\n", __FUNCSIG__, it1->first);
 
 			RemovePageFromQueue(it1->first); DeleteObject(it1->second);
 
@@ -155,14 +143,12 @@ void UXReader::UXReaderPageCache::PurgeNotVisiblePages(const std::set<int>& visi
 
 void UXReader::UXReaderPageCache::CachePageBitmap(const int index, const HBITMAP hBitmap)
 {
-	//DBLog(L"%S %i 0x%p\n", __FUNCSIG__, index, hBitmap);
 
 	m_PageBitmapCache.emplace(index, hBitmap); m_PageBitmapQueue.push_back(index);
 }
 
 HBITMAP UXReader::UXReaderPageCache::CachedPageBitmap(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	HBITMAP hBitmap = nullptr; // Cached page bitmap
 

@@ -186,20 +186,6 @@ void CEditorDoc::ReloadPreviewDocument(const CString & strFilePath)
 	}
 }
 
-// CEditorDoc serialization
-
-void CEditorDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 void CEditorDoc::OnCloseDocument()
 {
 	CString strPathName = GetPathName();

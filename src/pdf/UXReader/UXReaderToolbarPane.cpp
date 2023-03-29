@@ -28,14 +28,12 @@ static wchar_t *const kWindowClassName = L"UXReaderToolbarPaneClass";
 
 UXReader::UXReaderToolbarPane::UXReaderToolbarPane(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	RegisterMessages();
 }
 
 UXReader::UXReaderToolbarPane::~UXReaderToolbarPane(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_NumberEditItem = nullptr; m_SearchEditItem = nullptr; m_SearchTextItem = nullptr;
 
@@ -45,12 +43,10 @@ UXReader::UXReaderToolbarPane::~UXReaderToolbarPane(void)
 
 	m_WindowHandle = nullptr; m_ParentWindow = nullptr;
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 ATOM UXReader::UXReaderToolbarPane::DoRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	WNDCLASSEXW wcex; RtlSecureZeroMemory(&wcex, sizeof(wcex));
 
@@ -68,7 +64,6 @@ ATOM UXReader::UXReaderToolbarPane::DoRegisterWindowClass(const HMODULE hModule)
 
 BOOL UXReader::UXReaderToolbarPane::UnRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	return UnregisterClassW(kWindowClassName, hModule);
 }
@@ -101,7 +96,6 @@ LRESULT UXReader::UXReaderToolbarPane::WindowProcedure(HWND hWnd, UINT message, 
 
 int UXReader::UXReaderToolbarPane::PaneHeight(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	if (m_PaneHeight == 0) // Determine pane height
 	{
@@ -113,7 +107,6 @@ int UXReader::UXReaderToolbarPane::PaneHeight(const HWND hWnd)
 
 bool UXReader::UXReaderToolbarPane::Create(const HWND hParent, const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S 0x%p %i %i %i %i\n", __FUNCSIG__, hParent, x, y, w, h);
 
 	const DWORD ws = (WS_CHILD | WS_VISIBLE | WS_CLIPCHILDREN); const DWORD es = (WS_EX_NOPARENTNOTIFY); // Window style
 
@@ -126,14 +119,12 @@ bool UXReader::UXReaderToolbarPane::Create(const HWND hParent, const int x, cons
 
 void UXReader::UXReaderToolbarPane::Destroy(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	DestroyWindow(m_WindowHandle);
 }
 
 void UXReader::UXReaderToolbarPane::UpdateXYWH(const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S %i %i %i %i\n", __FUNCSIG__, x, y, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, x, y, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOZORDER));
 
@@ -142,7 +133,6 @@ void UXReader::UXReaderToolbarPane::UpdateXYWH(const int x, const int y, const i
 
 void UXReader::UXReaderToolbarPane::UpdateWH(const int w, const int h)
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, 0, 0, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOMOVE | SWP_NOZORDER));
 
@@ -155,7 +145,6 @@ void UXReader::UXReaderToolbarPane::UpdateWH(const int w, const int h)
 
 void UXReader::UXReaderToolbarPane::RegisterMessages(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_MessageMap.emplace(WM_CREATE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowCreate(h, m, w, l); });
 	m_MessageMap.emplace(WM_SIZE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowSize(h, m, w, l); });
@@ -166,7 +155,6 @@ void UXReader::UXReaderToolbarPane::RegisterMessages(void)
 
 LRESULT UXReader::UXReaderToolbarPane::WindowCreate(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//CREATESTRUCTW *cs = reinterpret_cast<CREATESTRUCTW *>(lParam);
 
@@ -181,7 +169,6 @@ LRESULT UXReader::UXReaderToolbarPane::WindowCreate(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderToolbarPane::WindowSize(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//const int cw = LOWORD(lParam); const int ch = HIWORD(lParam);
 
@@ -190,14 +177,12 @@ LRESULT UXReader::UXReaderToolbarPane::WindowSize(HWND hWnd, UINT message, WPARA
 
 LRESULT UXReader::UXReaderToolbarPane::WindowErase(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	return 0;
 }
 
 LRESULT UXReader::UXReaderToolbarPane::WindowPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	PAINTSTRUCT ps {}; HDC hDC = BeginPaint(hWnd, &ps);
 
@@ -216,7 +201,6 @@ LRESULT UXReader::UXReaderToolbarPane::WindowPaint(HWND hWnd, UINT message, WPAR
 
 LRESULT UXReader::UXReaderToolbarPane::MenuContext(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	return 0;
 }
@@ -227,7 +211,6 @@ LRESULT UXReader::UXReaderToolbarPane::MenuContext(HWND hWnd, UINT message, WPAR
 
 void UXReader::UXReaderToolbarPane::AddToolbarItems(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	const int DPI = UXReaderSupport::DPI(hWnd);
 
@@ -266,49 +249,42 @@ void UXReader::UXReaderToolbarPane::AddToolbarItems(const HWND hWnd)
 
 UXReaderToolbarItem* UXReader::UXReaderToolbarPane::PageDecrementItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_PageDecrementItem.get();
 }
 
 UXReaderToolbarItem* UXReader::UXReaderToolbarPane::PageIncrementItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_PageIncrementItem.get();
 }
 
 UXReaderToolbarItem* UXReader::UXReaderToolbarPane::ZoomDecrementItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_ZoomDecrementItem.get();
 }
 
 UXReaderToolbarItem* UXReader::UXReaderToolbarPane::ZoomIncrementItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_ZoomIncrementItem.get();
 }
 
 UXReaderToolbarEdit* UXReader::UXReaderToolbarPane::SearchEditItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_SearchEditItem.get();
 }
 
 UXReaderToolbarText* UXReader::UXReaderToolbarPane::SearchTextItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_SearchTextItem.get();
 }
 
 UXReaderToolbarEdit* UXReader::UXReaderToolbarPane::NumberEditItem(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_NumberEditItem.get();
 }

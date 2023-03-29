@@ -17,10 +17,8 @@ using namespace UXReader;
 
 UXReader::UXReaderBlank::UXReaderBlank(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 UXReader::UXReaderBlank::~UXReaderBlank(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }

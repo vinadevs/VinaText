@@ -33,7 +33,6 @@ static bool textLinkLogging = false;
 
 UXReader::UXReaderDocumentPage::UXReaderDocumentPage(const int index, UXReaderDocument* document)
 {
-	//DBLog(L"%S 0x%p %i 0x%p\n", __FUNCSIG__, this, index, document.get());
 
 	m_PageIndex = NEGATORY; m_Rotation = NEGATORY;
 
@@ -52,7 +51,6 @@ UXReader::UXReaderDocumentPage::UXReaderDocumentPage(const int index, UXReaderDo
 
 UXReader::UXReaderDocumentPage::~UXReaderDocumentPage(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_PageLinks = nullptr; m_TextLinks = nullptr;
 
@@ -62,12 +60,10 @@ UXReader::UXReaderDocumentPage::~UXReaderDocumentPage(void)
 
 	m_pdfDocument = nullptr; m_Document = nullptr;
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 const FPDF_TEXTPAGE UXReader::UXReaderDocumentPage::TextPage(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (m_TextPage == nullptr) // Load on demand
 	{
@@ -79,7 +75,6 @@ const FPDF_TEXTPAGE UXReader::UXReaderDocumentPage::TextPage(void)
 
 void UXReader::UXReaderDocumentPage::TextPageClose(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (m_TextPage != nullptr) // Release page text
 	{
@@ -89,7 +84,6 @@ void UXReader::UXReaderDocumentPage::TextPageClose(void)
 
 bool UXReader::UXReaderDocumentPage::IsOpen(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_pdfPage != nullptr);
 }
@@ -100,7 +94,6 @@ bool UXReader::UXReaderDocumentPage::IsOpen(void) const
 
 const HBITMAP UXReader::UXReaderDocumentPage::PageThumb(const HDC hDC, const int size) const
 {
-	//DBLog(L"%S 0x%p %i\n", __FUNCSIG__, hDC, size);
 
 	const double ws = (double(size) / m_PageSize.w);
 	const double hs = (double(size) / m_PageSize.h);
@@ -112,7 +105,6 @@ const HBITMAP UXReader::UXReaderDocumentPage::PageThumb(const HDC hDC, const int
 
 const HBITMAP UXReader::UXReaderDocumentPage::PageBitmap(const HDC hDC, const double scale) const
 {
-	//DBLog(L"%S 0x%p %g\n", __FUNCSIG__, hDC, scale);
 
 	HBITMAP pageBitmap = nullptr; // Page bitmap
 
@@ -153,7 +145,6 @@ const HBITMAP UXReader::UXReaderDocumentPage::PageBitmap(const HDC hDC, const do
 
 void UXReader::UXReaderDocumentPage::DrawPageArea(const FPDF_BITMAP pdfBitmap, const UXRect& pageArea, const double scale) const
 {
-	//DBLog(L"%S 0x%p %g\n", __FUNCSIG__, pdfBitmap, scale);
 
 	UXReaderSupport& support = UXReaderSupport::Instance();
 	{
@@ -180,7 +171,6 @@ void UXReader::UXReaderDocumentPage::DrawPageArea(const FPDF_BITMAP pdfBitmap, c
 
 void UXReader::UXReaderDocumentPage::DrawOverPage(const HDC hDC, const UXRect& pageArea, const double scale) const
 {
-	//DBLog(L"%S 0x%p %g\n", __FUNCSIG__, hDC, scale);
 
 	UXReaderSupport& support = UXReaderSupport::Instance();
 	{
@@ -253,7 +243,6 @@ void UXReader::UXReaderDocumentPage::DrawOverPage(const HDC hDC, const UXRect& p
 
 bool UXReader::UXReaderDocumentPage::ExtractPageLinks(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	int linkIndex = 0; FPDF_LINK link = nullptr;
 
@@ -443,7 +432,6 @@ bool UXReader::UXReaderDocumentPage::ExtractPageLinks(void)
 
 bool UXReader::UXReaderDocumentPage::ExtractTextLinks(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_TextLinks = std::make_unique<std::vector<UXReaderAction>>();
 
@@ -514,7 +502,6 @@ bool UXReader::UXReaderDocumentPage::ExtractTextLinks(void)
 
 bool UXReader::UXReaderDocumentPage::ExtractLinks(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	bool redraw = false;
 
@@ -538,7 +525,6 @@ bool UXReader::UXReaderDocumentPage::ExtractLinks(void)
 
 const UXReaderAction* UXReader::UXReaderDocumentPage::ActionForPoint(const UXPoint& point)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderAction* action = nullptr;
 
@@ -563,7 +549,6 @@ const UXReaderAction* UXReader::UXReaderDocumentPage::ActionForPoint(const UXPoi
 
 std::wstring UXReader::UXReaderDocumentPage::ActionTooltip(const UXReaderAction* action)
 {
-	//DBLog(L"%S %p\n", __FUNCSIG__, linkInfo);
 
 	std::wstring text;
 
@@ -604,7 +589,6 @@ std::wstring UXReader::UXReaderDocumentPage::ActionTooltip(const UXReaderAction*
 
 int UXReader::UXReaderDocumentPage::SearchPage(const std::wstring& term, const int options, int& counter)
 {
-	//DBLog(L"%S '%s', %i %i\n", __FUNCSIG__, term, options, counter);
 
 	std::vector<UXReaderSelection> selections;
 
@@ -662,7 +646,6 @@ int UXReader::UXReaderDocumentPage::SearchPage(const std::wstring& term, const i
 
 void UXReader::UXReaderDocumentPage::ClearSearch(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_SearchSelections.clear();
 }

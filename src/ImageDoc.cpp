@@ -74,20 +74,6 @@ BOOL CImageDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	return FALSE;
 }
 
-// CImageDoc serialization
-
-void CImageDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 CImageView* CImageDoc::GetImageView() const
 {
 	POSITION pos = GetFirstViewPosition();

@@ -27,7 +27,6 @@ void UXReader::UXRect::printxy(void) const
 
 UXRect UXReader::ConvertToPageFromView(const UXRect& rect, const UXPageSize& size, const int r)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXRect result(rect);
 
@@ -70,7 +69,6 @@ UXRect UXReader::ConvertToPageFromView(const UXRect& rect, const UXPageSize& siz
 
 UXPoint UXReader::ConvertToPageFromView(const UXPoint& point, const UXPageSize& size, const int r)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXPoint result(point);
 
@@ -113,7 +111,6 @@ UXPoint UXReader::ConvertToPageFromView(const UXPoint& point, const UXPageSize& 
 
 UXRect UXReader::ConvertToViewFromPage(const UXRect& rect, const UXPageSize& size, const int r)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXRect result(rect);
 
@@ -156,7 +153,6 @@ UXRect UXReader::ConvertToViewFromPage(const UXRect& rect, const UXPageSize& siz
 
 UXPoint UXReader::ConvertToViewFromPage(const UXPoint& point, const UXPageSize& size, const int r)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXPoint result(point);
 
@@ -199,7 +195,6 @@ UXPoint UXReader::ConvertToViewFromPage(const UXPoint& point, const UXPageSize& 
 
 void UXReader::ConvertToViewFromPage(bool bX, bool bY, float& x, float& y, const UXPageSize& size, const int r)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (bX || bY)
 	{

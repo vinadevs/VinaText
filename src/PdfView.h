@@ -44,7 +44,7 @@ protected:
 
 	// Implementation
 protected:
-	virtual ~CPdfView() = default;
+	virtual ~CPdfView() { m_DocumentView = nullptr; };
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

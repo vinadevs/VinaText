@@ -78,10 +78,16 @@ void CMediaView::OnInitialUpdate()
 	CString strFileMediaPath = m_pDocument->GetPathName();
 	if (PathUtils::IsMediaFile(strFileMediaPath))
 	{
+		auto startMeasureTime = OSUtils::StartBenchmark();
 		if (!m_wndMWP.OpenMediaFile(ATL::CComBSTR(strFileMediaPath)))
 		{
 			AfxMessageBox(_T("[Media Error] Can not open this file!"));
 			return;
+		}
+		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		{
+			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFileMediaPath);
+			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);
 		}
 		// check last write time point
 		UpdateFileLastWriteTime(strFileMediaPath);

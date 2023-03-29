@@ -45,20 +45,6 @@ BOOL CHostDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return CBaseDoc::OnOpenDocument(lpszPathName);
 }
 
-// CHostDoc serialization
-
-void CHostDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 CHostView* CHostDoc::GetHostView() const
 {
 	POSITION pos = GetFirstViewPosition();

@@ -21,7 +21,6 @@ protected: // create from serialization only
 	// Overrides
 public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
-	virtual void Serialize(CArchive& ar);
 	CPdfView * GetPdfView() const;
 	void ReloadPreviewDocument(const CString& strFilePath);
 

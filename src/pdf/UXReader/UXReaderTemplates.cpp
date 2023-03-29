@@ -17,7 +17,6 @@ using namespace UXReader;
 
 UXReader::UXReaderTemplates::UXReaderTemplates(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	UXRectZ<double> rect(4.0, 4.0, 32.0, 32.0);
 
@@ -30,5 +29,4 @@ UXReader::UXReaderTemplates::UXReaderTemplates(void)
 
 UXReader::UXReaderTemplates::~UXReaderTemplates(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }

@@ -669,9 +669,6 @@
     <ClInclude Include="pdf\UXReader\UXReaderGeometry.h">
       <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
     </ClInclude>
-    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h">
-      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
-    </ClInclude>
     <ClInclude Include="pdf\UXReader\UXReaderPageCache.h">
       <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
     </ClInclude>
@@ -683,6 +680,9 @@
     </ClInclude>
     <ClInclude Include="pdf\UXReader\common.h">
       <Filter>Control UI\PDFViewer\PDFium\UXReaderInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.h">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1172,9 +1172,6 @@
     <ClCompile Include="pdf\UXReader\UXReaderGeometry.cpp">
       <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
     </ClCompile>
-    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp">
-      <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
-    </ClCompile>
     <ClCompile Include="pdf\UXReader\UXReaderPageCache.cpp">
       <Filter>Control UI\PDFViewer\PDFium\UXReaderSupport</Filter>
     </ClCompile>
@@ -1189,6 +1186,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Global Header</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.cpp">
+      <Filter>Control UI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -26,25 +26,21 @@ static wchar_t *const kWindowClassName = L"UXReaderToolbarEditClass";
 
 UXReader::UXReaderToolbarEdit::UXReaderToolbarEdit(EditOptions_t options)
 {
-	//DBLog(L"%S 0x%p %i\n", __FUNCSIG__, this, id);
 
 	m_EditOptions = options; m_ItemID = std::get<0>(options); RegisterMessages();
 }
 
 UXReader::UXReaderToolbarEdit::~UXReaderToolbarEdit(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_EditControl = nullptr; m_TooltipPane = nullptr;
 
 	m_WindowHandle = nullptr; m_ParentWindow = nullptr;
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 ATOM UXReader::UXReaderToolbarEdit::DoRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	WNDCLASSEXW wcex; RtlSecureZeroMemory(&wcex, sizeof(wcex));
 
@@ -62,7 +58,6 @@ ATOM UXReader::UXReaderToolbarEdit::DoRegisterWindowClass(const HMODULE hModule)
 
 BOOL UXReader::UXReaderToolbarEdit::UnRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	return UnregisterClassW(kWindowClassName, hModule);
 }
@@ -95,7 +90,6 @@ LRESULT UXReader::UXReaderToolbarEdit::WindowProcedure(HWND hWnd, UINT message, 
 
 bool UXReader::UXReaderToolbarEdit::Create(const HWND hParent, const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S 0x%p %i %i %i %i\n", __FUNCSIG__, hParent, x, y, w, h);
 
 	const DWORD ws = (WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_CLIPCHILDREN); const DWORD es = (WS_EX_NOPARENTNOTIFY); // Window style
 
@@ -108,14 +102,12 @@ bool UXReader::UXReaderToolbarEdit::Create(const HWND hParent, const int x, cons
 
 void UXReader::UXReaderToolbarEdit::Destroy(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	DestroyWindow(m_WindowHandle);
 }
 
 void UXReader::UXReaderToolbarEdit::UpdateXYWH(const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S %i %i %i %i\n", __FUNCSIG__, x, y, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, x, y, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOZORDER));
 
@@ -124,7 +116,6 @@ void UXReader::UXReaderToolbarEdit::UpdateXYWH(const int x, const int y, const i
 
 void UXReader::UXReaderToolbarEdit::UpdateWH(const int w, const int h)
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, 0, 0, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOMOVE | SWP_NOZORDER));
 
@@ -137,7 +128,6 @@ void UXReader::UXReaderToolbarEdit::UpdateWH(const int w, const int h)
 
 void UXReader::UXReaderToolbarEdit::RegisterMessages(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_MessageMap.emplace(WM_CREATE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowCreate(h, m, w, l); });
 	m_MessageMap.emplace(WM_SIZE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowSize(h, m, w, l); });
@@ -148,7 +138,6 @@ void UXReader::UXReaderToolbarEdit::RegisterMessages(void)
 
 LRESULT UXReader::UXReaderToolbarEdit::WindowCreate(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//CREATESTRUCTW *cs = reinterpret_cast<CREATESTRUCTW *>(lParam);
 
@@ -159,7 +148,6 @@ LRESULT UXReader::UXReaderToolbarEdit::WindowCreate(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderToolbarEdit::WindowSize(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//const int cw = LOWORD(lParam); const int ch = HIWORD(lParam);
 
@@ -168,14 +156,12 @@ LRESULT UXReader::UXReaderToolbarEdit::WindowSize(HWND hWnd, UINT message, WPARA
 
 LRESULT UXReader::UXReaderToolbarEdit::WindowErase(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	return 0;
 }
 
 LRESULT UXReader::UXReaderToolbarEdit::WindowPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	PAINTSTRUCT ps {}; HDC hDC = BeginPaint(hWnd, &ps);
 
@@ -202,7 +188,6 @@ LRESULT UXReader::UXReaderToolbarEdit::WindowPaint(HWND hWnd, UINT message, WPAR
 
 LRESULT UXReader::UXReaderToolbarEdit::WindowCommand(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	const WORD control = LOWORD(wParam);
 
@@ -240,7 +225,6 @@ LRESULT UXReader::UXReaderToolbarEdit::WindowCommand(HWND hWnd, UINT message, WP
 
 void UXReader::UXReaderToolbarEdit::CreateEditControl(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	RECT rect; GetClientRect(hWnd, &rect); //const int cx = 0; const int cy = 0;
 	const int cw = (rect.right - rect.left); const int ch = (rect.bottom - rect.top);
@@ -338,7 +322,6 @@ LRESULT CALLBACK UXReader::UXReaderToolbarEdit::EditSubclass(HWND hWnd, UINT mes
 
 void UXReader::UXReaderToolbarEdit::AddItemTooltip(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	const HMODULE hModule = UXReaderSupport::Module();
 
@@ -357,7 +340,6 @@ void UXReader::UXReaderToolbarEdit::AddItemTooltip(const HWND hWnd)
 
 SIZE UXReader::UXReaderToolbarEdit::TextSize(const std::wstring& text) const
 {
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, text.data());
 
 	SIZE size {0, 0}; const HWND hWnd = m_WindowHandle;
 
@@ -382,42 +364,36 @@ SIZE UXReader::UXReaderToolbarEdit::TextSize(const std::wstring& text) const
 
 void UXReader::UXReaderToolbarEdit::EnterSelect(std::function<void(int)> enterSelect)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, enterSelect);
 
 	fn_EnterSelect = enterSelect;
 }
 
 void UXReader::UXReaderToolbarEdit::TextChanged(std::function<void(int)> textChanged)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, textChanged);
 
 	fn_TextChanged = textChanged;
 }
 
 void UXReader::UXReaderToolbarEdit::ChangeFocus(std::function<void(int)> changeFocus)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, textChanged);
 
 	fn_ChangeFocus = changeFocus;
 }
 
 void UXReader::UXReaderToolbarEdit::ClearEditText(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	SetWindowTextW(m_EditControl, L""); SetFocus(m_EditControl);
 }
 
 int UXReader::UXReaderToolbarEdit::EditTextLength(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return GetWindowTextLengthW(m_EditControl);
 }
 
 std::wstring UXReader::UXReaderToolbarEdit::EditText(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	wchar_t temp[512]; RtlSecureZeroMemory(temp, sizeof(temp));
 
@@ -428,7 +404,6 @@ std::wstring UXReader::UXReaderToolbarEdit::EditText(void) const
 
 void UXReader::UXReaderToolbarEdit::EditText(const std::wstring& text) const
 {
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, text.data());
 
 	const SIZE size = TextSize(text);
 
@@ -442,7 +417,6 @@ void UXReader::UXReaderToolbarEdit::EditText(const std::wstring& text) const
 
 void UXReader::UXReaderToolbarEdit::GiveEditFocus(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	SendMessageW(m_EditControl, EM_SETSEL, 0, -1);
 
@@ -451,14 +425,12 @@ void UXReader::UXReaderToolbarEdit::GiveEditFocus(void) const
 
 bool UXReader::UXReaderToolbarEdit::CanGiveEditFocus(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_EditControl != nullptr);
 }
 
 void UXReader::UXReaderToolbarEdit::Enable(const bool enable)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, enable);
 
 	const HWND hWnd = m_WindowHandle;
 

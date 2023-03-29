@@ -374,7 +374,6 @@ public:
   afx_msg void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
   afx_msg void OnDestroy();
   afx_msg void OnCreateFolder();
-  afx_msg void OnCreateNewProjectTemplate();
   afx_msg void OnCreateNewMutiple();
   afx_msg void OnOpenInChrome();
   afx_msg void OnOpenInEdge();

@@ -30,32 +30,27 @@ static wchar_t *const kWindowClassName = L"UXReaderMainWindowClass";
 
 UXReaderMainWindow::UXReaderMainWindow(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	RegisterMessages();
 }
 
 UXReaderMainWindow::~UXReaderMainWindow(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	if (m_Accelerators != nullptr) DestroyAcceleratorTable(m_Accelerators); m_Accelerators = nullptr;
 
 	m_DocumentView = nullptr; m_WindowHandle = nullptr; m_WindowMenu = nullptr;
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 wchar_t *const UXReaderMainWindow::WindowClassName(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return kWindowClassName;
 }
 
 ATOM UXReaderMainWindow::DoRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	WNDCLASSEXW wcex; RtlSecureZeroMemory(&wcex, sizeof(wcex));
 
@@ -74,7 +69,6 @@ ATOM UXReaderMainWindow::DoRegisterWindowClass(const HMODULE hModule)
 
 BOOL UXReaderMainWindow::UnRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	return UnregisterClassW(kWindowClassName, hModule);
 }
@@ -107,7 +101,6 @@ LRESULT UXReaderMainWindow::WindowProcedure(HWND hWnd, UINT message, WPARAM wPar
 
 bool UXReaderMainWindow::Create(const wchar_t *pCmdLine, const int nCmdShow)
 {
-	//DBLog(L"%S '%s' (%i)\n", __FUNCSIG__, pCmdLine, nCmdShow);
 
 	bool status = false; // Create result status
 
@@ -122,7 +115,6 @@ bool UXReaderMainWindow::Create(const wchar_t *pCmdLine, const int nCmdShow)
 		RECT workArea; SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
 		const int dw = (workArea.right - workArea.left); const int dh = (workArea.bottom - workArea.top);
 		int ww = 0; int wh = 0; const int wi = ((MulDiv(windowBorderInset, uis, 100) >> 1) << 1);
-		//DBLog(L"%S %i x %i\n", __FUNCSIG__, dw, dh);
 
 		if (dw >= dh) // Landscape display
 		{
@@ -151,7 +143,6 @@ bool UXReaderMainWindow::Create(const wchar_t *pCmdLine, const int nCmdShow)
 
 HACCEL UXReaderMainWindow::MainAccelerators(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	#define FNONE 0x00
 
@@ -217,7 +208,6 @@ HACCEL UXReaderMainWindow::MainAccelerators(void) const
 
 HMENU UXReader::UXReaderMainWindow::MainWindowMenu(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const HMENU hList = CreatePopupMenu();
 	AppendMenuW(hList, MF_GRAYED, UXM_CLEAR_RECENT, L"&Clear Recent");
@@ -280,7 +270,6 @@ HMENU UXReader::UXReaderMainWindow::MainWindowMenu(void) const
 
 HMENU UXReader::UXReaderMainWindow::MainContextMenu(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const HMENU hMenu = CreatePopupMenu();
 
@@ -293,7 +282,6 @@ HMENU UXReader::UXReaderMainWindow::MainContextMenu(void) const
 
 bool UXReaderMainWindow::PreTranslateMessage(MSG *pMsg) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, pMsg);
 
 	if (pMsg->hwnd == m_WindowHandle) // UXReaderMainWindow message
 	{
@@ -316,7 +304,6 @@ bool UXReaderMainWindow::PreTranslateMessage(MSG *pMsg) const
 
 void UXReaderMainWindow::RegisterMessages(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_MessageMap.emplace(WM_CREATE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowCreate(h, m, w, l); });
 	m_MessageMap.emplace(WM_SIZE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowSize(h, m, w, l); });
@@ -336,7 +323,6 @@ void UXReaderMainWindow::RegisterMessages(void)
 
 LRESULT UXReaderMainWindow::WindowCreate(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//CREATESTRUCTW *cs = reinterpret_cast<CREATESTRUCTW *>(lParam);
 
@@ -349,7 +335,6 @@ LRESULT UXReaderMainWindow::WindowCreate(HWND hWnd, UINT message, WPARAM wParam,
 
 LRESULT UXReaderMainWindow::WindowSize(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	const int cw = LOWORD(lParam); const int ch = HIWORD(lParam);
 
@@ -363,7 +348,6 @@ LRESULT UXReaderMainWindow::WindowSize(HWND hWnd, UINT message, WPARAM wParam, L
 
 LRESULT UXReaderMainWindow::WindowMinMax(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	MINMAXINFO *minMaxInfo = reinterpret_cast<MINMAXINFO *>(lParam);
 	minMaxInfo->ptMinTrackSize = {m_MinimumWindowSize, m_MinimumWindowSize};
@@ -373,14 +357,12 @@ LRESULT UXReaderMainWindow::WindowMinMax(HWND hWnd, UINT message, WPARAM wParam,
 
 LRESULT UXReaderMainWindow::WindowErase(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	return 0;
 }
 
 LRESULT UXReaderMainWindow::WindowPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	PAINTSTRUCT ps {}; HDC hDC = BeginPaint(hWnd, &ps);
 
@@ -400,7 +382,6 @@ LRESULT UXReaderMainWindow::WindowPaint(HWND hWnd, UINT message, WPARAM wParam, 
 
 LRESULT UXReaderMainWindow::WindowClose(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	DestroyWindow(hWnd);
 
@@ -409,7 +390,6 @@ LRESULT UXReaderMainWindow::WindowClose(HWND hWnd, UINT message, WPARAM wParam, 
 
 LRESULT UXReaderMainWindow::WindowDestroy(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	PostQuitMessage(0);
 
@@ -418,7 +398,6 @@ LRESULT UXReaderMainWindow::WindowDestroy(HWND hWnd, UINT message, WPARAM wParam
 
 LRESULT UXReaderMainWindow::CopyData(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	const COPYDATASTRUCT *cds = reinterpret_cast<COPYDATASTRUCT *>(lParam);
 
@@ -432,7 +411,6 @@ LRESULT UXReaderMainWindow::CopyData(HWND hWnd, UINT message, WPARAM wParam, LPA
 
 LRESULT UXReaderMainWindow::MenuInit(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if (HIWORD(lParam) == FALSE)
 	{
@@ -670,7 +648,6 @@ LRESULT UXReaderMainWindow::MenuInit(HWND hWnd, UINT message, WPARAM wParam, LPA
 
 LRESULT UXReaderMainWindow::MenuContext(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	const int px = GET_X_LPARAM(lParam); const int py = GET_Y_LPARAM(lParam);
 
@@ -689,7 +666,6 @@ LRESULT UXReaderMainWindow::MenuContext(HWND hWnd, UINT message, WPARAM wParam, 
 
 LRESULT UXReaderMainWindow::WindowCommand(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	switch (LOWORD(wParam)) // WM_COMMAND
 	{
@@ -909,7 +885,6 @@ LRESULT UXReaderMainWindow::WindowCommand(HWND hWnd, UINT message, WPARAM wParam
 
 LRESULT UXReader::UXReaderMainWindow::MouseActivate(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if (GetFocus() != hWnd) SetFocus(hWnd);
 
@@ -918,7 +893,6 @@ LRESULT UXReader::UXReaderMainWindow::MouseActivate(HWND hWnd, UINT message, WPA
 
 LRESULT UXReaderMainWindow::MouseWheelV(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if (m_DocumentView != nullptr) m_DocumentView->MouseWheelV(wParam, lParam);
 
@@ -927,7 +901,6 @@ LRESULT UXReaderMainWindow::MouseWheelV(HWND hWnd, UINT message, WPARAM wParam, 
 
 LRESULT UXReaderMainWindow::MouseWheelH(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if (m_DocumentView != nullptr) m_DocumentView->MouseWheelH(wParam, lParam);
 
@@ -940,7 +913,6 @@ LRESULT UXReaderMainWindow::MouseWheelH(HWND hWnd, UINT message, WPARAM wParam, 
 
 void UXReaderMainWindow::ShowOpenFileDialog(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	wchar_t file[MAX_PATH]; RtlSecureZeroMemory(file, sizeof(file));
 	wchar_t path[MAX_PATH]; RtlSecureZeroMemory(path, sizeof(path));
@@ -955,7 +927,6 @@ void UXReaderMainWindow::ShowOpenFileDialog(const HWND hWnd)
 
 void UXReaderMainWindow::OpenDocumentFile(const wchar_t *filePath)
 {
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, filePath);
 
 	if (const HDC hDC = GetDC(m_WindowHandle))
 	{
@@ -987,7 +958,6 @@ void UXReaderMainWindow::OpenDocumentFile(const wchar_t *filePath)
 
 void UXReader::UXReaderMainWindow::UpdateWindowTitle(const wchar_t *text)
 {
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, text);
 
 	SetWindowTextW(m_WindowHandle, text);
 }
@@ -998,63 +968,54 @@ void UXReader::UXReaderMainWindow::UpdateWindowTitle(const wchar_t *text)
 
 void UXReaderMainWindow::OpenDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanOpenDocument()) ShowOpenFileDialog(m_WindowHandle);
 }
 
 bool UXReader::UXReaderMainWindow::CanOpenDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView == nullptr);
 }
 
 void UXReader::UXReaderMainWindow::ClearRecentFileList(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanClearRecentFileList()) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanClearRecentFileList(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
 
 void UXReader::UXReaderMainWindow::OpenRecentFile(const int index)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanOpenRecentFile(index)) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanOpenRecentFile(const int index)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
 
 void UXReader::UXReaderMainWindow::CloseAllDocuments(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanCloseAllDocuments()) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanCloseAllDocuments(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
 
 void UXReaderMainWindow::CloseDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanCloseDocument()) { m_DocumentView->Destroy(); m_DocumentView = nullptr; }
 
@@ -1063,49 +1024,42 @@ void UXReaderMainWindow::CloseDocument(void)
 
 bool UXReader::UXReaderMainWindow::CanCloseDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView != nullptr);
 }
 
 void UXReader::UXReaderMainWindow::ActiveTabIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanActiveTabIncrement()) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanActiveTabIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
 
 void UXReader::UXReaderMainWindow::ActiveTabDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanActiveTabDecrement()) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanActiveTabDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
 
 void UXReader::UXReaderMainWindow::ShowAbout(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanShowAbout()) {}
 }
 
 bool UXReader::UXReaderMainWindow::CanShowAbout(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return false;
 }
@@ -1116,462 +1070,396 @@ bool UXReader::UXReaderMainWindow::CanShowAbout(void)
 
 void UXReader::UXReaderMainWindow::ShowInformation(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanShowInformation()) m_DocumentView->ShowInformation();
 }
 
 bool UXReader::UXReaderMainWindow::CanShowInformation(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanShowInformation() : false);
 }
 
 void UXReader::UXReaderMainWindow::PrintDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPrintDocument()) m_DocumentView->PrintDocument();
 }
 
 bool UXReader::UXReaderMainWindow::CanPrintDocument(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPrintDocument() : false);
 }
 
 void UXReader::UXReaderMainWindow::CopyDocumentText(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanCopyDocumentText()) m_DocumentView->CopyDocumentText();
 }
 
 bool UXReader::UXReaderMainWindow::CanCopyDocumentText(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanCopyDocumentText() : false);
 }
 
 void UXReader::UXReaderMainWindow::SelectAllDocumentText(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanSelectAllDocumentText()) m_DocumentView->SelectAllDocumentText();
 }
 
 bool UXReader::UXReaderMainWindow::CanSelectAllDocumentText(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanSelectAllDocumentText() : false);
 }
 
 void UXReader::UXReaderMainWindow::SearchTextFocus(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanSearchTextFocus()) m_DocumentView->SearchTextFocus();
 }
 
 bool UXReader::UXReaderMainWindow::CanSearchTextFocus(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanSearchTextFocus() : false);
 }
 
 void UXReader::UXReaderMainWindow::SearchHitIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanSearchHitIncrement()) m_DocumentView->SearchHitIncrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanSearchHitIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanSearchHitIncrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::SearchHitDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanSearchHitDecrement()) m_DocumentView->SearchHitDecrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanSearchHitDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanSearchHitDecrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::FindTextSelection(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanFindTextSelection()) m_DocumentView->FindTextSelection();
 }
 
 bool UXReader::UXReaderMainWindow::CanFindTextSelection(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanFindTextSelection() : false);
 }
 
 void UXReader::UXReaderMainWindow::GotoTextSelection(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanGotoTextSelection()) m_DocumentView->GotoTextSelection();
 }
 
 bool UXReader::UXReaderMainWindow::CanGotoTextSelection(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanGotoTextSelection() : false);
 }
 
 void UXReader::UXReaderMainWindow::HideDocumentSidebar(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanHideDocumentSidebar()) m_DocumentView->HideDocumentSidebar();
 }
 
 bool UXReader::UXReaderMainWindow::CanHideDocumentSidebar(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanHideDocumentSidebar() : false);
 }
 
 void UXReader::UXReaderMainWindow::ShowDocumentOutline(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanShowDocumentOutline()) m_DocumentView->ShowDocumentOutline();
 }
 
 bool UXReader::UXReaderMainWindow::CanShowDocumentOutline(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanShowDocumentOutline() : false);
 }
 
 void UXReader::UXReaderMainWindow::ShowDocumentThumbs(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanShowDocumentThumbs()) m_DocumentView->ShowDocumentThumbs();
 }
 
 bool UXReader::UXReaderMainWindow::CanShowDocumentThumbs(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanShowDocumentThumbs() : false);
 }
 
 void UXReader::UXReaderMainWindow::ZoomIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanZoomIncrement()) m_DocumentView->ZoomIncrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanZoomIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanZoomIncrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::ZoomDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanZoomDecrement()) m_DocumentView->ZoomDecrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanZoomDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanZoomDecrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::ZoomFitWidth(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanZoomFitWidth()) m_DocumentView->ZoomFitWidth();
 }
 
 bool UXReader::UXReaderMainWindow::CanZoomFitWidth(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanZoomFitWidth() : false);
 }
 
 void UXReader::UXReaderMainWindow::ZoomOneToOne(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanZoomOneToOne()) m_DocumentView->ZoomOneToOne();
 }
 
 bool UXReader::UXReaderMainWindow::CanZoomOneToOne(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanZoomOneToOne() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageNumberFocus(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNumberFocus()) m_DocumentView->PageNumberFocus();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageNumberFocus(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageNumberFocus() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageNumberIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNumberIncrement()) m_DocumentView->PageNumberIncrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageNumberIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageNumberIncrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageNumberDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNumberDecrement()) m_DocumentView->PageNumberDecrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageNumberDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageNumberDecrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageNavigateIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNavigateIncrement()) m_DocumentView->PageNavigateIncrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageNavigateIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageNavigateIncrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageNavigateDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNavigateDecrement()) m_DocumentView->PageNavigateDecrement();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageNavigateDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageNavigateDecrement() : false);
 }
 
 void UXReader::UXReaderMainWindow::LineScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanLineScrollIncrementY()) m_DocumentView->LineScrollIncrementY();
 }
 
 bool UXReader::UXReaderMainWindow::CanLineScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanLineScrollIncrementY() : false);
 }
 
 void UXReader::UXReaderMainWindow::LineScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanLineScrollDecrementY()) m_DocumentView->LineScrollDecrementY();
 }
 
 bool UXReader::UXReaderMainWindow::CanLineScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanLineScrollDecrementY() : false);
 }
 
 void UXReader::UXReaderMainWindow::LineScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanLineScrollIncrementX()) m_DocumentView->LineScrollIncrementX();
 }
 
 bool UXReader::UXReaderMainWindow::CanLineScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanLineScrollIncrementX() : false);
 }
 
 void UXReader::UXReaderMainWindow::LineScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanLineScrollDecrementX()) m_DocumentView->LineScrollDecrementX();
 }
 
 bool UXReader::UXReaderMainWindow::CanLineScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanLineScrollDecrementX() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageScrollIncrementY()) m_DocumentView->PageScrollIncrementY();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageScrollIncrementY() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageScrollDecrementY()) m_DocumentView->PageScrollDecrementY();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageScrollDecrementY() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageScrollIncrementX()) m_DocumentView->PageScrollIncrementX();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageScrollIncrementX() : false);
 }
 
 void UXReader::UXReaderMainWindow::PageScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageScrollDecrementX()) m_DocumentView->PageScrollDecrementX();
 }
 
 bool UXReader::UXReaderMainWindow::CanPageScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanPageScrollDecrementX() : false);
 }
 
 void UXReader::UXReaderMainWindow::GotoMinimumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanGotoMinimumDocumentY()) m_DocumentView->GotoMinimumDocumentY();
 }
 
 bool UXReader::UXReaderMainWindow::CanGotoMinimumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanGotoMinimumDocumentY() : false);
 }
 
 void UXReader::UXReaderMainWindow::GotoMaximumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanGotoMaximumDocumentY()) m_DocumentView->GotoMaximumDocumentY();
 }
 
 bool UXReader::UXReaderMainWindow::CanGotoMaximumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanGotoMaximumDocumentY() : false);
 }
 
 void UXReader::UXReaderMainWindow::GotoMinimumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanGotoMinimumDocumentX()) m_DocumentView->GotoMinimumDocumentX();
 }
 
 bool UXReader::UXReaderMainWindow::CanGotoMinimumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanGotoMinimumDocumentX() : false);
 }
 
 void UXReader::UXReaderMainWindow::GotoMaximumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanGotoMaximumDocumentX()) m_DocumentView->GotoMaximumDocumentX();
 }
 
 bool UXReader::UXReaderMainWindow::CanGotoMaximumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_DocumentView ? m_DocumentView->CanGotoMaximumDocumentX() : false);
 }

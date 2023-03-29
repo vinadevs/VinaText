@@ -22,7 +22,6 @@ protected: // create from serialization only
 public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
-	virtual void Serialize(CArchive& ar);
 	CImageView * GetImageView() const;
 	void ReloadPreviewDocument(const CString& strFilePath);
 	void SetSaveDocumentPath(const CString & strSaveDocumentPath);

@@ -1083,7 +1083,6 @@ void WMDump(void)
 void DBHex(const void *data, const size_t size)
 {
 #ifdef _DEBUG // Log hex dump
-	//DBLog(L"%S 0x%p %i\n", __FUNCSIG__, data, size);
 
 	if ((data != nullptr) && (size > 0)) // Hex dump data size
 	{

@@ -18,7 +18,6 @@ using namespace UXReader;
 
 UXReader::UXReaderAction::UXReaderAction(const std::string& URI, const UXRect& rectangle)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_Type = UXReaderActionType::URI;
 
@@ -29,7 +28,6 @@ UXReader::UXReaderAction::UXReaderAction(const std::string& URI, const UXRect& r
 
 UXReader::UXReaderAction::UXReaderAction(const UXReaderDestination& destination, const UXRect& rectangle)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_Type = UXReaderActionType::Goto;
 
@@ -40,7 +38,6 @@ UXReader::UXReaderAction::UXReaderAction(const UXReaderDestination& destination,
 
 UXReader::UXReaderAction::UXReaderAction(const UXReaderDestination& destination, const std::wstring& URI, const UXRect& rectangle)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_Type = UXReaderActionType::RemoteGoto;
 
@@ -51,7 +48,6 @@ UXReader::UXReaderAction::UXReaderAction(const UXReaderDestination& destination,
 
 UXReader::UXReaderAction::UXReaderAction(const std::wstring& URI, const UXRect& rectangle)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_Type = UXReaderActionType::Launch;
 
@@ -60,7 +56,6 @@ UXReader::UXReaderAction::UXReaderAction(const std::wstring& URI, const UXRect& 
 
 UXReader::UXReaderAction::UXReaderAction(const std::wstring& URI, const std::vector<UXRect>& rectangles)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_Type = UXReaderActionType::Link;
 
@@ -69,40 +64,34 @@ UXReader::UXReaderAction::UXReaderAction(const std::wstring& URI, const std::vec
 
 UXReader::UXReaderAction::~UXReaderAction(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 UXReaderActionType UXReader::UXReaderAction::Type(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_Type;
 }
 
 const UXReaderDestination* UXReader::UXReaderAction::Destination(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_Destination.get();
 }
 
 const std::vector<UXRect>& UXReader::UXReaderAction::Rectangles(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_Rectangles;
 }
 
 const std::wstring& UXReader::UXReaderAction::URI(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_URI;
 }
 
 bool UXReader::UXReaderAction::Contains(const UXPoint& point) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	for (const UXRect& rectangle : m_Rectangles) // O(n)
 	{
@@ -114,7 +103,6 @@ bool UXReader::UXReaderAction::Contains(const UXPoint& point) const
 
 void UXReader::UXReaderAction::Description(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	switch (m_Type)
 	{

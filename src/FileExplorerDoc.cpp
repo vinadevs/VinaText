@@ -53,21 +53,6 @@ BOOL CFileExplorerDoc::OnNewDocument()
 	return TRUE;
 }
 
-// CFileExplorerDoc serialization
-
-void CFileExplorerDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
-
 // CFileExplorerDoc diagnostics
 
 #ifdef _DEBUG

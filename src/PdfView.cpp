@@ -58,9 +58,42 @@ BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
 {
 	switch (pMsg->message)
 	{
+		case WM_KEYDOWN:
+		{
+			switch (pMsg->wParam)
+			{
+				case 'G':
+				{
+					if ((GetKeyState(VK_CONTROL) & 0x8000))
+					{
+						return TRUE;
+					}
+				}
+				break;
+				case 'F':
+				{
+					if ((GetKeyState(VK_CONTROL) & 0x8000))
+					{
+						return TRUE;
+					}
+				}
+				break;
+				case VK_SPACE:
+				{
+					return TRUE;
+				}
+				break;
+			}
+			break;
+		}
 		case WM_MOUSEWHEEL:
 		{
 			if (m_DocumentView != nullptr) m_DocumentView->MouseWheelV(pMsg->wParam, pMsg->lParam);
+			return TRUE;
+		}
+		case WM_MOUSEHWHEEL:
+		{
+			if (m_DocumentView != nullptr) m_DocumentView->MouseWheelH(pMsg->wParam, pMsg->lParam);
 			return TRUE;
 		}
 		// add more messages ...
@@ -68,23 +101,35 @@ BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
 	return CViewBase::PreTranslateMessage(pMsg);
 }
 
+static CString PDFErrorString[] = {
+	_T("no error."),
+	_T("unknown error."),
+	_T("file not found or could not be opened."),
+	_T("file not in PDF format or corrupted."),
+	_T("password required or incorrect password."),
+	_T("unsupported security scheme."),
+	_T("page not found or content error."),
+	_T("the requested operation cannot be completed due to a license restrictions.")
+};
+
 void CPdfView::OnInitialUpdate()
 {
 	CViewBase::OnInitialUpdate();
 	CString strFilePDFPath = m_pDocument->GetPathName();
 	if (PathUtils::IsPdfFile(strFilePDFPath))
 	{
-		DWORD style = WS_CHILD | WS_VISIBLE;
-		CRect dump(0, 0, 0, 0);
-		// try to open with Adode Acrobat Pdf
-		m_bIsArobatInstalled = m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL);
-		if (m_bIsArobatInstalled)
-		{
-			m_wndPdf.put_src(strFilePDFPath);
-			m_wndPdf.setShowToolbar(TRUE);
-			m_wndPdf.setShowScrollbars(TRUE);
-		}
-		else
+		auto startMeasureTime = OSUtils::StartBenchmark();
+		//DWORD style = WS_CHILD | WS_VISIBLE;
+		//CRect dump(0, 0, 0, 0);
+		//// try to open with Adode Acrobat Pdf first
+		//m_bIsArobatInstalled = m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL);
+		//if (m_bIsArobatInstalled)
+		//{
+		//	m_wndPdf.put_src(strFilePDFPath);
+		//	m_wndPdf.setShowToolbar(TRUE);
+		//	m_wndPdf.setShowScrollbars(TRUE);
+		//}
+		//else // if Adode Acrobat is not available then we use PDFium
 		{
 			const HCURSOR oldCursor = SetCursor(UXReader::UXReaderSupport::WaitCursor());
 			auto document = std::make_shared<UXReader::UXReaderDocument>(strFilePDFPath);
@@ -101,7 +146,15 @@ void CPdfView::OnInitialUpdate()
 					m_DocumentView = NULL;
 				}
 			}
+			else {
+				AfxMessageBoxFormat(MB_ICONWARNING, _T("PDF Error: %s"), PDFErrorString[errorCode]);
+			}
 			SetCursor(oldCursor);
+		}
+		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		{
+			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFilePDFPath);
+			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);
 		}
 		// check last write time point
 		UpdateFileLastWriteTime(strFilePDFPath);

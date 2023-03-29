@@ -18,7 +18,6 @@ using namespace UXReader;
 
 UXReader::UXReaderSupport::UXReaderSupport(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	m_WaitCursor = LoadCursor(nullptr, IDC_WAIT);
 	m_ArrowCursor = LoadCursor(nullptr, IDC_ARROW);
@@ -38,7 +37,6 @@ UXReader::UXReaderSupport::UXReaderSupport(void)
 
 UXReader::UXReaderSupport::~UXReaderSupport(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	if (m_PaneSeparatorLineBrush != nullptr)
 	{
@@ -92,12 +90,10 @@ UXReader::UXReaderSupport::~UXReaderSupport(void)
 
 	if (m_SystemFont != nullptr) DeleteObject(m_SystemFont);
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 HMODULE UXReader::UXReaderSupport::Module(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return UXReaderLibrary::Module();
 }
@@ -108,14 +104,12 @@ HMODULE UXReader::UXReaderSupport::Module(void)
 
 int UXReader::UXReaderSupport::UIS(const int dpi)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, dpi);
 
 	return MulDiv(100, dpi, 96);
 }
 
 int UXReader::UXReaderSupport::DPI(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	int dpi = 96; // Default DPI
 
@@ -135,7 +129,6 @@ int UXReader::UXReaderSupport::DPI(const HWND hWnd)
 
 std::wstring UXReader::UXReaderSupport::UTF16(const std::string &utf8)
 {
-	//DBLog(L"%S '%S'\n", __FUNCSIG__, utf8.data());
 
 	std::wstring utf16;
 
@@ -147,14 +140,12 @@ std::wstring UXReader::UXReaderSupport::UTF16(const std::string &utf8)
 		}
 	}
 
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, utf16.data());
 
 	return utf16;
 }
 
 std::string UXReader::UXReaderSupport::UTF8(const std::wstring& utf16)
 {
-	//DBLog(L"%S '%s'\n", __FUNCSIG__, utf16.data());
 
 	std::string utf8;
 
@@ -166,7 +157,6 @@ std::string UXReader::UXReaderSupport::UTF8(const std::wstring& utf16)
 		}
 	}
 
-	//DBLog(L"%S '%S'\n", __FUNCSIG__, utf8.data());
 
 	return utf8;
 }
@@ -177,7 +167,6 @@ std::string UXReader::UXReaderSupport::UTF8(const std::wstring& utf16)
 
 HBRUSH UXReader::UXReaderSupport::PaneSeparatorLineBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -186,7 +175,6 @@ HBRUSH UXReader::UXReaderSupport::PaneSeparatorLineBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::TestPaneBackgroundBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -195,7 +183,6 @@ HBRUSH UXReader::UXReaderSupport::TestPaneBackgroundBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::StatusPaneBackgroundBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -204,7 +191,6 @@ HBRUSH UXReader::UXReaderSupport::StatusPaneBackgroundBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::ToolbarPaneBackgroundBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -213,7 +199,6 @@ HBRUSH UXReader::UXReaderSupport::ToolbarPaneBackgroundBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::ToolbarItemHighlightBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -222,7 +207,6 @@ HBRUSH UXReader::UXReaderSupport::ToolbarItemHighlightBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::ToolbarItemSelectedBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -231,7 +215,6 @@ HBRUSH UXReader::UXReaderSupport::ToolbarItemSelectedBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::DocumentBackgroundBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -240,7 +223,6 @@ HBRUSH UXReader::UXReaderSupport::DocumentBackgroundBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::EditControlFillBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -249,7 +231,6 @@ HBRUSH UXReader::UXReaderSupport::EditControlFillBrush(void)
 
 HBRUSH UXReader::UXReaderSupport::EditControlLineBrush(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -262,7 +243,6 @@ HBRUSH UXReader::UXReaderSupport::EditControlLineBrush(void)
 
 HCURSOR UXReader::UXReaderSupport::WaitCursor(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -271,7 +251,6 @@ HCURSOR UXReader::UXReaderSupport::WaitCursor(void)
 
 HCURSOR UXReader::UXReaderSupport::ArrowCursor(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -280,7 +259,6 @@ HCURSOR UXReader::UXReaderSupport::ArrowCursor(void)
 
 HCURSOR UXReader::UXReaderSupport::PointCursor(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -289,7 +267,6 @@ HCURSOR UXReader::UXReaderSupport::PointCursor(void)
 
 HCURSOR UXReader::UXReaderSupport::BusyCursor(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 
@@ -302,7 +279,6 @@ HCURSOR UXReader::UXReaderSupport::BusyCursor(void)
 
 HGDIOBJ UXReader::UXReaderSupport::GetSystemFont(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	const int fontSize = 9; const int PPI = 72;
 
@@ -324,7 +300,6 @@ HGDIOBJ UXReader::UXReaderSupport::GetSystemFont(const HWND hWnd)
 
 HGDIOBJ UXReader::UXReaderSupport::SystemFont(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	UXReaderSupport& Instance = UXReaderSupport::Instance();
 

@@ -317,7 +317,6 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "File"
     BEGIN
-        MENUITEM "New Template...\tCtrl+Shift+P", ID_CREATE_TEMPLATE_PROJECT
         MENUITEM "New File\tCtrl+N",            ID_FILE_NEW
         MENUITEM SEPARATOR
         MENUITEM "Open File\tCtrl+O",           ID_FILE_OPEN
@@ -393,7 +392,27 @@ BEGIN
         MENUITEM "Undo For All Files",          ID_EDIT_UNDO_ALL_FILE
         MENUITEM "Redo For All Files",          ID_EDIT_REDO_ALL_FILE
         MENUITEM SEPARATOR
-        MENUITEM "Large File Edit Mode",        ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM "Enable Large File Edit Mode", ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM SEPARATOR
+        POPUP "Folding Level"
+        BEGIN
+        POPUP "Toggle As Level"
+        BEGIN
+            MENUITEM "Level 1", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
+            MENUITEM "Level 2", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
+            MENUITEM "Level 3", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
+            MENUITEM "Level 4", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
+            MENUITEM "Level 5", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
+            MENUITEM "Level 6", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
+            MENUITEM "Level 7", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
+            MENUITEM "Level 8", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
+            MENUITEM "Level 9", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
+        END
+        MENUITEM "Fold All\tCtrl+Shift+M", ID_DOCUMENT_COLLAPSE_BRACKETS
+        MENUITEM "Unfold All\tCtrl+Shift+M", ID_DOCUMENT_EXPAND_BRACKETS
+        MENUITEM SEPARATOR
+        MENUITEM "At Current Line\tCtrl+M", ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
+        END
         MENUITEM SEPARATOR
         POPUP "Search And Replace"
         BEGIN
@@ -417,6 +436,29 @@ BEGIN
             MENUITEM "Goto To Caret\tMiddle Mouse", ID_EDIT_SCROLL_TO_CARET
         END
         MENUITEM SEPARATOR
+        POPUP "Text Highlight Style"
+        BEGIN
+            MENUITEM "Style C++", ID_DOCUMENT_TEXT_LEXER_CPP
+            MENUITEM "Style Python", ID_DOCUMENT_TEXT_LEXER_PYTHON
+            MENUITEM "Style HTML/XML", ID_DOCUMENT_TEXT_LEXER_HTML_XML
+            MENUITEM SEPARATOR
+            MENUITEM "Remove Current Style", ID_DOCUMENT_TEXT_LEXER_NON
+        END
+        MENUITEM SEPARATOR
+        POPUP "Auto Complete Word"
+        BEGIN
+            MENUITEM "Auto Show List Word\tAlt+A", ID_TOGGLE_AUTO_COMPLETE
+            MENUITEM "Show List Word\tCtrl+Space", ID_SHOW_COMPLETIONS
+            MENUITEM SEPARATOR
+            MENUITEM "Add Dataset From File", ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
+            MENUITEM "Add Dataset From Folder", ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
+            MENUITEM SEPARATOR
+            MENUITEM "Using Vietnamese Dataset", ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
+            MENUITEM "Using English Dataset", ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
+            MENUITEM SEPARATOR
+            MENUITEM "Clear All Datasets", ID_DOCUMENT_CLEAR_AC_DATASET
+        END
+        MENUITEM SEPARATOR
         POPUP "Line Bookmark"
         BEGIN
             MENUITEM "Add New Bookmark\tF8",        ID_OPTIONS_ADD_BOOKMARK
@@ -437,12 +479,6 @@ BEGIN
             MENUITEM "Enable Sync. Scrolling",      ID_EDIT_SYNC_SCROLL_VIEW
         END
         MENUITEM SEPARATOR
-        POPUP "Scrolling View"
-        BEGIN
-            MENUITEM "Line Up\tCtrl+Up",            ID_EDIT_LINEUP
-            MENUITEM "Line Down\tCtrl+Down",        ID_EDIT_LINEDOWN
-        END
-        MENUITEM SEPARATOR
         POPUP "Margin Bar Look"
         BEGIN
             MENUITEM "Show Line Number Margin",     ID_OPTIONS_VIEW_LINENUMBERS
@@ -450,7 +486,7 @@ BEGIN
             MENUITEM "Show Folding Margin",         ID_OPTIONS_FOLD_MARGIN
         END
         MENUITEM SEPARATOR
-        POPUP "Toggle Render"
+        POPUP "Toggle Render Mode"
         BEGIN
             MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",  ID_OPTIONS_WRAPLINE
             MENUITEM "Long Line Checker",           ID_DISPLAY_LONG_LINE_CHECKER
@@ -458,7 +494,7 @@ BEGIN
             MENUITEM "Whitespace And Tab Hint",     ID_DOCUMENT_DISPLAY_WHITE_SPACE
             MENUITEM "Tab Indentation Hint",        ID_DISPLAY_TAB_INDENT
             MENUITEM "Right To Left Document\tCtrl+Shift+R", ID_CHANGE_TEXT_BIDIRECTIONAL
-            MENUITEM "Hide Lines",                  ID_DOCUMENT_HIDE_LINES
+            MENUITEM "Hide Selected Line(s)",                  ID_DOCUMENT_HIDE_LINES
             MENUITEM "All Hidden Characters\tCtrl+Q", ID_EDIT_SHOW_ALL_CHARACTOR
         END
     END
@@ -770,7 +806,9 @@ BEGIN
     END
     POPUP "Code"
     BEGIN
-        POPUP "Programing Language Setting..."
+        MENUITEM "New File Template\tCtrl+Shift+P", ID_CREATE_TEMPLATE_PROJECT
+        MENUITEM SEPARATOR
+        POPUP "Programing Language Setting(s)"
         BEGIN
             MENUITEM "Python", ID_LANGUAGE_FILE_CONFIG_PYTHON
             MENUITEM "C++", ID_LANGUAGE_FILE_CONFIG_CPP
@@ -821,6 +859,12 @@ BEGIN
         MENUITEM "Clean Up Build Temporary",    ID_DOCUMENT_CLEAN_BUILD_FILE
         MENUITEM SEPARATOR
         MENUITEM "Show Error Annotation Hint",  ID_OPTIONS_SHOW_ERROR
+        MENUITEM SEPARATOR
+        POPUP "Package Manager(s)"
+        BEGIN
+            MENUITEM "NodeJS Package Manager (npm)", ID_TOOL_NODEJS_NPM_WINDOW
+            MENUITEM "Python Package Manager (pip3)", ID_TOOL_PYTHON_PIP_WINDOW
+        END
     END
     POPUP "Terminal"
     BEGIN
@@ -838,22 +882,19 @@ BEGIN
         MENUITEM "Open PowerShell Terminal",    ID_MDI_TAB_OPEN_POWERSHELL
         MENUITEM "Open Git Bash Terminal",      ID_MDI_TAB_OPEN_GITBASH
         MENUITEM "Open WSL Terminal",           ID_MDI_TAB_OPEN_WSL
-        MENUITEM SEPARATOR
-        MENUITEM "Python Package Manager (pip3)", ID_TOOL_PYTHON_PIP_WINDOW
-        MENUITEM "NodeJS Package Manager (npm)", ID_TOOL_NODEJS_NPM_WINDOW
     END
     POPUP "Image"
     BEGIN
         MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tCtrl+Down",         ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tCtrl+Up",            ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",          ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",             ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
-        MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
+        MENUITEM "Rotate Left 90*\tCtrl+Left",   ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
-        MENUITEM "Rotate Flip\tCtrl+D",         ID_IMAGE_FLIP
-        MENUITEM "Rotate Mirror\tCtrl+M",       ID_IMAGE_MIRROR
+        MENUITEM "Rotate Flip\tCtrl+D",          ID_IMAGE_FLIP
+        MENUITEM "Rotate Mirror\tCtrl+M",        ID_IMAGE_MIRROR
         MENUITEM SEPARATOR
         POPUP "Bitmap Effects"
         BEGIN
@@ -883,16 +924,40 @@ BEGIN
         MENUITEM "Fast Forward\tRight Arrow",   ID_VIDEO_NEXT_FRAME
         MENUITEM "Fast Reverse\tLeft Arrow",    ID_VIDEO_PREVIOUS_FRAME
     END
+    POPUP "Pdf"
+    BEGIN
+        MENUITEM "Information\tSpace", ID_PDF_DOCUMENT_INFO
+        MENUITEM "Print\tSpace", ID_PDF_PRINT_DOCUMENT
+        MENUITEM "Copy\tSpace", ID_PDF_COPY_TEXT
+        MENUITEM "Select All\tSpace", ID_PDF_SELECT_ALL
+        MENUITEM "Find...\tCtrl+F", ID_PDF_FIND_TEXT
+        MENUITEM "Find Next\tCtrl+N", ID_PDF_FIND_INCREMENT
+        MENUITEM "Find Previous\tCtrl+M", ID_PDF_FIND_DECREMENT
+        MENUITEM "Find &Selection\tCtrl+E", ID_PDF_FIND_SELECTION
+        MENUITEM "Goto Selection\tCtrl+J", ID_PDF_GOTO_SELECTION
+        MENUITEM "Table of Contents\tCtrl+3", ID_PDF_SHOW_OUTLINE
+        MENUITEM "Goto Page...\tCtrl+G", ID_PDF_GOTO_PAGE
+        MENUITEM "Page Up\tPgUp", ID_PDF_PAGING_DECREMENT_Y
+        MENUITEM "Page Down\tPgDn", ID_PDF_PAGING_INCREMENT_Y
+        MENUITEM "First Page\tHome", ID_PDF_MINIMUM_DOCUMENT_Y
+        MENUITEM "Last Page\tEnd", ID_PDF_MAXIMUM_DOCUMENT_Y
+        MENUITEM "Step Forward\tCtrl+5", ID_PDF_STEP_INCREMENT
+        MENUITEM "Step Back\tCtrl+6", ID_PDF_STEP_DECREMENT
+        MENUITEM "Zoom In\tSpace", ID_PDF_ZOOM_INCREMENT
+        MENUITEM "Zoom Out\tSpace", ID_PDF_ZOOM_DECREMENT
+        MENUITEM "Zoom Fit Width\tSpace", ID_PDF_ZOOM_FIT_WIDTH
+        MENUITEM "Zoom Actual\tSpace", ID_PDF_ZOOM_ONE_TO_ONE
+    END
     POPUP "Tools"
     BEGIN
-        POPUP "Host Application"
+        POPUP "Window Application(s)"
         BEGIN
-            MENUITEM "New Microsoft Paint",         ID_HOST_MS_PAINT
+            MENUITEM "Microsoft Paint",             ID_HOST_MS_PAINT
         END
         POPUP "Quick Window Shortcuts"
         BEGIN
             MENUITEM "All Control Panel Items",     ID_SHORTCUT_CONTROL_PANEL
-            MENUITEM "Environmental Variables PATH", ID_SHORTCUT_ENVIRONMENT_PATH
+            MENUITEM "Environmental Variables PATH",ID_SHORTCUT_ENVIRONMENT_PATH
             MENUITEM "Window32 Host Location",      ID_SHORTCUT_WINDOW_HOST_FOLDER
         END
         POPUP "Print Message Output"
@@ -965,9 +1030,8 @@ BEGIN
         BEGIN
             MENUITEM "New File\tCtrl+N",            ID_TREEFILECTRL_CREATEFILE
             MENUITEM "New Folder\tCtrl+M",          ID_TREEFILECTRL_CREATEFOLDER
-            MENUITEM "New Template\tCtrl+Shift+P",  ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT
             MENUITEM SEPARATOR
-            MENUITEM "New Multiple...",             ID_TREEFILECTRL_CREATE_MULTIPLE
+            MENUITEM "New Multiple Files...",       ID_TREEFILECTRL_CREATE_MULTIPLE
         END
         POPUP "Get Path String"
         BEGIN
@@ -1053,6 +1117,11 @@ BEGIN
             MENUITEM "Close All Right",             ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
             MENUITEM "Close All Unchanged",         ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
             MENUITEM "Close All BUT This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
+            MENUITEM SEPARATOR
+            MENUITEM "Close All Text File",         ID_TEXT_CLOSE_ALL
+            MENUITEM "Close All Image File",        ID_IMAGE_CLOSE_ALL
+            MENUITEM "Close All Video File",        ID_VIDEO_CLOSE_ALL
+            MENUITEM "Close All Pdf File",          ID_PDF_CLOSE_ALL
         END
         MENUITEM SEPARATOR
         MENUITEM "New File\tCtrl+N",            ID_MDI_TAB_NEW_FILE
@@ -1135,48 +1204,6 @@ BEGIN
         MENUITEM "Disable Edit Mode\tCtrl+J",   ID_DOCUMENT_SET_READ_ONLY
         MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",  ID_OPTIONS_WRAPLINE
         MENUITEM SEPARATOR
-        POPUP "Folding Level"
-        BEGIN
-            MENUITEM "Fold All\tCtrl+Shift+M",      ID_DOCUMENT_COLLAPSE_BRACKETS
-            MENUITEM "Unfold All\tCtrl+Shift+M",    ID_DOCUMENT_EXPAND_BRACKETS
-            MENUITEM SEPARATOR
-            MENUITEM "At Current Line\tCtrl+M",     ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
-            MENUITEM SEPARATOR
-            POPUP "Toggle As Level"
-            BEGIN
-                MENUITEM "Level 1",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
-                MENUITEM "Level 2",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
-                MENUITEM "Level 3",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
-                MENUITEM "Level 4",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
-                MENUITEM "Level 5",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
-                MENUITEM "Level 6",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
-                MENUITEM "Level 7",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
-                MENUITEM "Level 8",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
-                MENUITEM "Level 9",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
-            END
-        END
-        POPUP "Text Highlight"
-        BEGIN
-            MENUITEM "Style C++",                   ID_DOCUMENT_TEXT_LEXER_CPP
-            MENUITEM "Style Python",                ID_DOCUMENT_TEXT_LEXER_PYTHON
-            MENUITEM "Style HTML/XML",              ID_DOCUMENT_TEXT_LEXER_HTML_XML
-            MENUITEM SEPARATOR
-            MENUITEM "Remove Current Style",        ID_DOCUMENT_TEXT_LEXER_NON
-        END
-        POPUP "Auto Complete"
-        BEGIN
-            MENUITEM "Auto Show Complete\tAlt+A",   ID_TOGGLE_AUTO_COMPLETE
-            MENUITEM "Show Completions\tCtrl+Space", ID_SHOW_COMPLETIONS
-            MENUITEM SEPARATOR
-            MENUITEM "Add Dataset From File",       ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
-            MENUITEM "Add Dataset From Folder",     ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
-            MENUITEM SEPARATOR
-            MENUITEM "Using Vietnamese Dataset",    ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
-            MENUITEM "Using English Dataset",       ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
-            MENUITEM SEPARATOR
-            MENUITEM "Clear All Datasets",          ID_DOCUMENT_CLEAR_AC_DATASET
-        END
-        MENUITEM SEPARATOR
         POPUP "Translate"
         BEGIN
             MENUITEM "Translate Selected Text\tF1", ID_DOCUMENT_TRANSLATE
@@ -1205,8 +1232,8 @@ BEGIN
         MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tCtrl+Down",         ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tCtrl+Up",            ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",         ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",            ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
         MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
@@ -1437,8 +1464,6 @@ BEGIN
     VK_TAB,         ID_DECREASE_TAB_INDENTATION, VIRTKEY, SHIFT
     VK_UP,          ID_EDIT_MOVE_SELECTED_LINE_UP, VIRTKEY, SHIFT, CONTROL
     VK_DOWN,        ID_EDIT_MOVE_SELECTED_LINE_DOWN, VIRTKEY, SHIFT, CONTROL
-    VK_UP,          ID_EDIT_LINEUP,         VIRTKEY, CONTROL
-    VK_DOWN,        ID_EDIT_LINEDOWN,       VIRTKEY, CONTROL
     "J",            ID_DOCUMENT_FORMAT_FILE, VIRTKEY, SHIFT, CONTROL
     "J",            ID_DOCUMENT_SET_READ_ONLY, VIRTKEY, CONTROL
     "T",            ID_LINE_TRANSPOSE,      VIRTKEY, CONTROL
@@ -1739,7 +1764,7 @@ END
 
 IDD_DIALOG_PROJECT_TEMPLATE DIALOGEX 0, 0, 401, 119
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "File Template Creator"
+CAPTION "Programing File Template Creator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Create",IDOK,250,96,63,17
@@ -2725,8 +2750,6 @@ BEGIN
     ID_OPTIONS_DELETE_ALL_BREAKPOINT 
                             "Remove All Breakpoints\\Remove All Breakpoints"
     ID_INDICATOR_INS        "  INSERT  "
-    ID_TOOL_PYTHON_PIP_WINDOW 
-                            ".\\python.exe -m pip install -t Lib\\site-packages -U <package>"
 END
 
 STRINGTABLE
@@ -2800,11 +2823,6 @@ STRINGTABLE
 BEGIN
     ID_EDIT_STOP_PROGRAM    "Stop Window Debugger\nStop Window Debugger"
     ID_EDITOR_UNCOMMENT     "Uncomment Line or Block\nUnComment"
-END
-
-STRINGTABLE
-BEGIN
-    ID_TOOL_NODEJS_NPM_WINDOW "npm install --prefix <package>"
 END
 
 STRINGTABLE

@@ -39,14 +39,12 @@ static wchar_t *const kWindowClassName = L"UXReaderDocumentPaneClass";
 
 UXReader::UXReaderDocumentPane::UXReaderDocumentPane(const std::shared_ptr<UXReaderDocument>& document)
 {
-	//DBLog(L"%S 0x%p 0x%p\n", __FUNCSIG__, this, document.get());
 
 	m_Document = document; m_CurrentPage = NEGATORY; RegisterMessages();
 }
 
 UXReader::UXReaderDocumentPane::~UXReaderDocumentPane(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	SetCursor(UXReaderSupport::WaitCursor());
 
@@ -56,12 +54,10 @@ UXReader::UXReaderDocumentPane::~UXReaderDocumentPane(void)
 
 	m_WindowHandle = nullptr; m_ParentWindow = nullptr;
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 ATOM UXReader::UXReaderDocumentPane::DoRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	WNDCLASSEXW wcex; RtlSecureZeroMemory(&wcex, sizeof(wcex));
 
@@ -79,7 +75,6 @@ ATOM UXReader::UXReaderDocumentPane::DoRegisterWindowClass(const HMODULE hModule
 
 BOOL UXReader::UXReaderDocumentPane::UnRegisterWindowClass(const HMODULE hModule)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hModule);
 
 	return UnregisterClassW(kWindowClassName, hModule);
 }
@@ -112,7 +107,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowProcedure(HWND hWnd, UINT message,
 
 bool UXReader::UXReaderDocumentPane::Create(const HWND hParent, const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S 0x%p %i %i %i %i\n", __FUNCSIG__, hParent, x, y, w, h);
 
 	if ((m_Document == nullptr) || (m_Document->IsOpen() == false)) return false;
 
@@ -127,16 +121,13 @@ bool UXReader::UXReaderDocumentPane::Create(const HWND hParent, const int x, con
 
 void UXReader::UXReaderDocumentPane::Destroy(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	DestroyWindow(m_WindowHandle);
 
-	//DBLog(L"%S\n", __FUNCSIG__);
 }
 
 void UXReader::UXReaderDocumentPane::UpdateXYWH(const int x, const int y, const int w, const int h)
 {
-	//DBLog(L"%S %i %i %i %i\n", __FUNCSIG__, x, y, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, x, y, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOZORDER));
 
@@ -145,7 +136,6 @@ void UXReader::UXReaderDocumentPane::UpdateXYWH(const int x, const int y, const 
 
 void UXReader::UXReaderDocumentPane::UpdateWH(const int w, const int h)
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, w, h);
 
 	SetWindowPos(m_WindowHandle, nullptr, 0, 0, w, h, (SWP_NOACTIVATE | SWP_NOREDRAW | SWP_NOMOVE | SWP_NOZORDER));
 
@@ -154,49 +144,42 @@ void UXReader::UXReaderDocumentPane::UpdateWH(const int w, const int h)
 
 void UXReader::UXReaderDocumentPane::ViewPortChanged(std::function<void(void)> viewPortChanged)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, viewPortChanged);
 
 	fn_ViewPortChanged = viewPortChanged;
 }
 
 void UXReader::UXReaderDocumentPane::VisiblePagesChanged(std::function<void(void)> visiblePagesChanged)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, visiblePagesChanged);
 
 	fn_VisiblePagesChanged = visiblePagesChanged;
 }
 
 void UXReader::UXReaderDocumentPane::CurrentPageChanged(std::function<void(void)> currentPageChanged)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, currentPageChanged);
 
 	fn_CurrentPageChanged = currentPageChanged;
 }
 
 void UXReader::UXReaderDocumentPane::SearchFinished(std::function<void(bool, int)> searchFinished)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, searchFinished);
 
 	fn_SearchFinished = searchFinished;
 }
 
 void UXReader::UXReaderDocumentPane::SearchProgress(std::function<void(int, int)> searchProgress)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, searchProgress);
 
 	fn_SearchProgress = searchProgress;
 }
 
 const std::set<int>& UXReader::UXReaderDocumentPane::VisiblePages(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_VisiblePages;
 }
 
 int UXReader::UXReaderDocumentPane::CurrentPage(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return m_CurrentPage;
 }
@@ -207,7 +190,6 @@ int UXReader::UXReaderDocumentPane::CurrentPage(void) const
 
 void UXReader::UXReaderDocumentPane::RegisterMessages(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_MessageMap.emplace(WM_CREATE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowCreate(h, m, w, l); });
 	m_MessageMap.emplace(WM_SIZE, [this](HWND h, UINT m, WPARAM w, LPARAM l) { return this->WindowSize(h, m, w, l); });
@@ -226,7 +208,6 @@ void UXReader::UXReaderDocumentPane::RegisterMessages(void)
 
 LRESULT UXReader::UXReaderDocumentPane::WindowCreate(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//CREATESTRUCTW *cs = reinterpret_cast<CREATESTRUCTW *>(lParam);
 
@@ -249,7 +230,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowCreate(HWND hWnd, UINT message, WP
 
 LRESULT UXReader::UXReaderDocumentPane::WindowSize(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//const int cw = LOWORD(lParam); const int ch = HIWORD(lParam);
 
@@ -260,14 +240,12 @@ LRESULT UXReader::UXReaderDocumentPane::WindowSize(HWND hWnd, UINT message, WPAR
 
 LRESULT UXReader::UXReaderDocumentPane::WindowErase(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	return 0;
 }
 
 LRESULT UXReader::UXReaderDocumentPane::WindowPaint(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	PAINTSTRUCT ps {}; HDC hDC = BeginPaint(hWnd, &ps);
 
@@ -280,7 +258,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowPaint(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderDocumentPane::WindowScrollV(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	switch (LOWORD(wParam))
 	{
@@ -304,7 +281,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowScrollV(HWND hWnd, UINT message, W
 
 LRESULT UXReader::UXReaderDocumentPane::WindowScrollH(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	switch (LOWORD(wParam))
 	{
@@ -328,7 +304,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowScrollH(HWND hWnd, UINT message, W
 
 LRESULT UXReader::UXReaderDocumentPane::WindowNotify(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if (NMTTDISPINFOW *ttdi = reinterpret_cast<NMTTDISPINFOW *>(lParam))
 	{
@@ -340,7 +315,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowNotify(HWND hWnd, UINT message, WP
 
 LRESULT UXReader::UXReaderDocumentPane::WindowTimer(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	KillTimer(hWnd, wParam);
 
@@ -357,7 +331,6 @@ LRESULT UXReader::UXReaderDocumentPane::WindowTimer(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderDocumentPane::MenuContext(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//m_Document->HexDump();
 
@@ -366,7 +339,6 @@ LRESULT UXReader::UXReaderDocumentPane::MenuContext(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderDocumentPane::MouseCursor(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	if ((HWND(wParam) == hWnd) && (LOWORD(lParam) == HTCLIENT))
 	{
@@ -378,7 +350,6 @@ LRESULT UXReader::UXReaderDocumentPane::MouseCursor(HWND hWnd, UINT message, WPA
 
 LRESULT UXReader::UXReaderDocumentPane::MouseMove(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//const int mouseX = GET_X_LPARAM(lParam); const int mouseY = GET_Y_LPARAM(lParam);
 
@@ -387,7 +358,6 @@ LRESULT UXReader::UXReaderDocumentPane::MouseMove(HWND hWnd, UINT message, WPARA
 
 LRESULT UXReader::UXReaderDocumentPane::MouseDown(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	//const int mouseX = GET_X_LPARAM(lParam); const int mouseY = GET_Y_LPARAM(lParam);
 
@@ -396,7 +366,6 @@ LRESULT UXReader::UXReaderDocumentPane::MouseDown(HWND hWnd, UINT message, WPARA
 
 LRESULT UXReader::UXReaderDocumentPane::MouseLift(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p 0x%p\n", __FUNCSIG__, hWnd, wParam, lParam);
 
 	const int mouseX = GET_X_LPARAM(lParam); const int mouseY = GET_Y_LPARAM(lParam);
 
@@ -407,7 +376,6 @@ LRESULT UXReader::UXReaderDocumentPane::MouseLift(HWND hWnd, UINT message, WPARA
 
 void UXReader::UXReaderDocumentPane::MouseWheelV(const WPARAM wParam, const LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p\n", __FUNCSIG__, wParam, lParam);
 
 	if (IsWindowEnabled(m_WindowHandle))
 	{
@@ -433,7 +401,6 @@ void UXReader::UXReaderDocumentPane::MouseWheelV(const WPARAM wParam, const LPAR
 
 void UXReader::UXReaderDocumentPane::MouseWheelH(const WPARAM wParam, const LPARAM lParam)
 {
-	//DBLog(L"%S 0x%p 0x%p\n", __FUNCSIG__, wParam, lParam);
 
 	if (IsWindowEnabled(m_WindowHandle))
 	{
@@ -450,7 +417,6 @@ void UXReader::UXReaderDocumentPane::MouseWheelH(const WPARAM wParam, const LPAR
 
 void UXReader::UXReaderDocumentPane::UpdateClientRect(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	RECT rect; GetClientRect(hWnd, &rect);
 	m_ClientRectH = (rect.bottom - rect.top);
@@ -471,7 +437,6 @@ void UXReader::UXReaderDocumentPane::UpdateClientRect(const HWND hWnd)
 
 void UXReader::UXReaderDocumentPane::CreateScrollBars(const HWND hWnd) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	ShowScrollBar(hWnd, SB_BOTH, TRUE);
 
@@ -486,7 +451,6 @@ void UXReader::UXReaderDocumentPane::CreateScrollBars(const HWND hWnd) const
 
 void UXReader::UXReaderDocumentPane::UpdateScrollBars(const HWND hWnd) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	SCROLLINFO si_v; RtlSecureZeroMemory(&si_v, sizeof(si_v));
 	si_v.cbSize = sizeof(si_v); si_v.fMask = (SIF_ALL | SIF_DISABLENOSCROLL);
@@ -503,7 +467,6 @@ void UXReader::UXReaderDocumentPane::UpdateScrollBars(const HWND hWnd) const
 
 void UXReader::UXReaderDocumentPane::ResizeScrollBars(const HWND hWnd) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	SCROLLINFO si_v; RtlSecureZeroMemory(&si_v, sizeof(si_v));
 	si_v.cbSize = sizeof(si_v); si_v.fMask = (SIF_POS | SIF_PAGE | SIF_DISABLENOSCROLL);
@@ -518,7 +481,6 @@ void UXReader::UXReaderDocumentPane::ResizeScrollBars(const HWND hWnd) const
 
 void UXReader::UXReaderDocumentPane::UpdateScrollBarY(const HWND hWnd) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	SCROLLINFO si_v; RtlSecureZeroMemory(&si_v, sizeof(si_v));
 	si_v.cbSize = sizeof(si_v); si_v.fMask = (SIF_POS | SIF_DISABLENOSCROLL);
@@ -528,7 +490,6 @@ void UXReader::UXReaderDocumentPane::UpdateScrollBarY(const HWND hWnd) const
 
 void UXReader::UXReaderDocumentPane::UpdateScrollBarX(const HWND hWnd) const
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	SCROLLINFO si_h; RtlSecureZeroMemory(&si_h, sizeof(si_h));
 	si_h.cbSize = sizeof(si_h); si_h.fMask = (SIF_POS | SIF_DISABLENOSCROLL);
@@ -542,14 +503,12 @@ void UXReader::UXReaderDocumentPane::UpdateScrollBarX(const HWND hWnd) const
 
 void UXReader::UXReaderDocumentPane::RedrawPaneContent(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	InvalidateRect(m_WindowHandle, nullptr, FALSE);
 }
 
 void UXReader::UXReaderDocumentPane::ViewPortDidChange(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	InvalidateRect(m_WindowHandle, nullptr, FALSE);
 
@@ -558,7 +517,6 @@ void UXReader::UXReaderDocumentPane::ViewPortDidChange(void) const
 
 void UXReader::UXReaderDocumentPane::UpdateViewPortX(double viewPortX)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, viewPortX);
 
 	if (viewPortX < m_ViewPortMinimumX) viewPortX = m_ViewPortMinimumX; else if (viewPortX > m_ViewPortMaximumX) viewPortX = m_ViewPortMaximumX;
 
@@ -567,7 +525,6 @@ void UXReader::UXReaderDocumentPane::UpdateViewPortX(double viewPortX)
 
 void UXReader::UXReaderDocumentPane::UpdateViewPortY(double viewPortY)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, viewPortY);
 
 	if (viewPortY < m_ViewPortMinimumY) viewPortY = m_ViewPortMinimumY; else if (viewPortY > m_ViewPortMaximumY) viewPortY = m_ViewPortMaximumY;
 
@@ -576,7 +533,6 @@ void UXReader::UXReaderDocumentPane::UpdateViewPortY(double viewPortY)
 
 void UXReader::UXReaderDocumentPane::UpdateViewPortXY(double viewPortX, double viewPortY)
 {
-	//DBLog(L"%S %g %g\n", __FUNCSIG__, viewPortX, viewPortY);
 
 	bool viewPortChanged = false; // View port changed
 
@@ -591,7 +547,6 @@ void UXReader::UXReaderDocumentPane::UpdateViewPortXY(double viewPortX, double v
 
 void UXReader::UXReaderDocumentPane::CenterViewPort(const UXPoint& point)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const double viewPortX = (point.x - (m_ViewPortW * 0.5));
 	const double viewPortY = (point.y - (m_ViewPortH * 0.5));
@@ -601,7 +556,6 @@ void UXReader::UXReaderDocumentPane::CenterViewPort(const UXPoint& point)
 
 void UXReader::UXReaderDocumentPane::GotoRectOnPage(const int index, const UXRect& rect)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	const UXRect& pageFrame = m_PageFrames.at(index);
 
@@ -614,7 +568,6 @@ void UXReader::UXReaderDocumentPane::GotoRectOnPage(const int index, const UXRec
 
 double UXReader::UXReaderDocumentPane::LimitScrollFactor(double value) const
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, value);
 
 	if (value < 0.005) value = 0.005; else if (value > 0.995) value = 0.995;
 
@@ -623,7 +576,6 @@ double UXReader::UXReaderDocumentPane::LimitScrollFactor(double value) const
 
 void UXReader::UXReaderDocumentPane::ViewPortScrollDecrementY(double factor)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, factor);
 
 	if (CanViewPortScrollDecrementY() == true)
 	{
@@ -637,14 +589,12 @@ void UXReader::UXReaderDocumentPane::ViewPortScrollDecrementY(double factor)
 
 bool UXReader::UXReaderDocumentPane::CanViewPortScrollDecrementY(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ViewPortY > m_ViewPortMinimumY);
 }
 
 void UXReader::UXReaderDocumentPane::ViewPortScrollIncrementY(double factor)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, factor);
 
 	if (CanViewPortScrollIncrementY() == true)
 	{
@@ -658,14 +608,12 @@ void UXReader::UXReaderDocumentPane::ViewPortScrollIncrementY(double factor)
 
 bool UXReader::UXReaderDocumentPane::CanViewPortScrollIncrementY(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ViewPortY < m_ViewPortMaximumY);
 }
 
 void UXReader::UXReaderDocumentPane::ViewPortScrollDecrementX(double factor)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, factor);
 
 	if (CanViewPortScrollDecrementX() == true)
 	{
@@ -679,14 +627,12 @@ void UXReader::UXReaderDocumentPane::ViewPortScrollDecrementX(double factor)
 
 bool UXReader::UXReaderDocumentPane::CanViewPortScrollDecrementX(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ViewPortX > m_ViewPortMinimumX);
 }
 
 void UXReader::UXReaderDocumentPane::ViewPortScrollIncrementX(double factor)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, factor);
 
 	if (CanViewPortScrollIncrementX() == true)
 	{
@@ -700,7 +646,6 @@ void UXReader::UXReaderDocumentPane::ViewPortScrollIncrementX(double factor)
 
 bool UXReader::UXReaderDocumentPane::CanViewPortScrollIncrementX(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ViewPortX < m_ViewPortMaximumX);
 }
@@ -711,112 +656,96 @@ bool UXReader::UXReaderDocumentPane::CanViewPortScrollIncrementX(void) const
 
 void UXReader::UXReaderDocumentPane::LineScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementY()) ViewPortScrollDecrementY(lineScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::LineScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementY()) ViewPortScrollIncrementY(lineScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::LineScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementX()) ViewPortScrollDecrementX(lineScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::LineScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementX()) ViewPortScrollIncrementX(lineScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementY()) ViewPortScrollDecrementY(wheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementY()) ViewPortScrollIncrementY(wheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementX()) ViewPortScrollDecrementX(wheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementX()) ViewPortScrollIncrementX(wheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::PageScrollDecrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementY()) ViewPortScrollDecrementY(pageScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::PageScrollIncrementY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementY()) ViewPortScrollIncrementY(pageScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::PageScrollDecrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementX()) ViewPortScrollDecrementX(pageScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::PageScrollIncrementX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementX()) ViewPortScrollIncrementX(pageScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::GotoMaximumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementY()) UpdateViewPortY(m_ViewPortMaximumY);
 }
 
 void UXReader::UXReaderDocumentPane::GotoMinimumDocumentY(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementY()) UpdateViewPortY(m_ViewPortMinimumY);
 }
 
 void UXReader::UXReaderDocumentPane::GotoMaximumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollIncrementX()) UpdateViewPortX(m_ViewPortMaximumX);
 }
 
 void UXReader::UXReaderDocumentPane::GotoMinimumDocumentX(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanViewPortScrollDecrementX()) UpdateViewPortX(m_ViewPortMinimumX);
 }
@@ -827,7 +756,6 @@ void UXReader::UXReaderDocumentPane::GotoMinimumDocumentX(void)
 
 void UXReader::UXReaderDocumentPane::GotoDocumentPage(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	if (CanGotoDocumentPage(index) == true)
 	{
@@ -839,42 +767,36 @@ void UXReader::UXReaderDocumentPane::GotoDocumentPage(const int index)
 
 bool UXReader::UXReaderDocumentPane::CanGotoDocumentPage(const int index)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, index);
 
 	return m_Document->IsValidPageIndex(index);
 }
 
 void UXReader::UXReaderDocumentPane::PageNumberDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNumberDecrement()) GotoDocumentPage(m_CurrentPage - 1);
 }
 
 bool UXReader::UXReaderDocumentPane::CanPageNumberDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_CurrentPage > m_Document->MinimumPage());
 }
 
 void UXReader::UXReaderDocumentPane::PageNumberIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	if (CanPageNumberIncrement()) GotoDocumentPage(m_CurrentPage + 1);
 }
 
 bool UXReader::UXReaderDocumentPane::CanPageNumberIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_CurrentPage < m_Document->MaximumPage());
 }
 
 void UXReader::UXReaderDocumentPane::GotoAction(const UXReaderAction *action)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, action);
 
 	if (const UXReaderDestination* destination = action->Destination())
 	{
@@ -895,7 +817,6 @@ void UXReader::UXReaderDocumentPane::GotoAction(const UXReaderAction *action)
 
 double UXReader::UXReaderDocumentPane::LimitZoomScale(double value)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, value);
 
 	if (value < 0.1) value = 1.0;
 	else if (value > m_ZoomMaximumScale) value = m_ZoomMaximumScale;
@@ -906,7 +827,6 @@ double UXReader::UXReaderDocumentPane::LimitZoomScale(double value)
 
 void UXReader::UXReaderDocumentPane::SetInitialZoomScale(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	RECT rect; GetClientRect(hWnd, &rect);
 
@@ -919,7 +839,6 @@ void UXReader::UXReaderDocumentPane::SetInitialZoomScale(const HWND hWnd)
 
 bool UXReader::UXReaderDocumentPane::UpdateZoomScale(double scale)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, scale);
 
 	bool status = false; // Updated
 
@@ -960,35 +879,30 @@ bool UXReader::UXReaderDocumentPane::UpdateZoomScale(double scale)
 
 void UXReader::UXReaderDocumentPane::ZoomDecrement(const double amount)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, amount);
 
 	if (CanZoomDecrement()) UpdateZoomScale(m_ZoomScale / amount);
 }
 
 bool UXReader::UXReaderDocumentPane::CanZoomDecrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ZoomScale > m_ZoomMinimumScale);
 }
 
 void UXReader::UXReaderDocumentPane::ZoomIncrement(const double amount)
 {
-	//DBLog(L"%S %g\n", __FUNCSIG__, amount);
 
 	if (CanZoomIncrement()) UpdateZoomScale(m_ZoomScale * amount);
 }
 
 bool UXReader::UXReaderDocumentPane::CanZoomIncrement(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return (m_ZoomScale < m_ZoomMaximumScale);
 }
 
 void UXReader::UXReaderDocumentPane::ZoomFitWidth(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const int gap = MulDiv(2, m_UIS, 100); // Page side gap
 
@@ -997,7 +911,6 @@ void UXReader::UXReaderDocumentPane::ZoomFitWidth(void)
 
 bool UXReader::UXReaderDocumentPane::CanZoomFitWidth(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const int gap = MulDiv(2, m_UIS, 100); // Page side gap
 
@@ -1006,7 +919,6 @@ bool UXReader::UXReaderDocumentPane::CanZoomFitWidth(void)
 
 void UXReader::UXReaderDocumentPane::ZoomOneToOne(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const double one = MulDiv(1, m_UIS, 100);
 
@@ -1015,7 +927,6 @@ void UXReader::UXReaderDocumentPane::ZoomOneToOne(void)
 
 bool UXReader::UXReaderDocumentPane::CanZoomOneToOne(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const double one = MulDiv(1, m_UIS, 100);
 
@@ -1024,14 +935,12 @@ bool UXReader::UXReaderDocumentPane::CanZoomOneToOne(void)
 
 bool UXReader::UXReaderDocumentPane::ZoomScale(const int percent)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, percent);
 
 	return UpdateZoomScale(MulDiv(percent, m_UIS, 100) / 100.0);
 }
 
 int UXReader::UXReaderDocumentPane::ZoomScale(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	return MulDiv(int(m_ZoomScale * 100.0), m_UIS, 100);
 }
@@ -1042,7 +951,6 @@ int UXReader::UXReaderDocumentPane::ZoomScale(void) const
 
 void UXReader::UXReaderDocumentPane::LayoutPages(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	const double space = 1.0;
 
@@ -1081,20 +989,17 @@ void UXReader::UXReaderDocumentPane::LayoutPages(const HWND hWnd)
 
 bool UXReader::UXReaderDocumentPane::UsePageBitmaps(void) const
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	const double lesser = ((m_CanvasW < m_CanvasH) ? m_CanvasW : m_CanvasH);
 
 	const int points = int(lesser * m_ZoomScale); const bool use = (points <= useBitmapsLimit);
 
-	//DBLog(L"%S %i\n", __FUNCSIG__, use);
 
 	return use;
 }
 
 void UXReader::UXReaderDocumentPane::DirectPaint(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	//UpdateScrollBarY(hWnd);
 
@@ -1106,7 +1011,6 @@ void UXReader::UXReaderDocumentPane::DirectPaint(const HWND hWnd)
 
 void UXReader::UXReaderDocumentPane::HandlePaint(const HWND hWnd, const HDC hDC)
 {
-	//DBLog(L"%S 0x%p 0x%p\n", __FUNCSIG__, hWnd, hDC);
 
 	KillTimer(hWnd, paintTimerTick);
 
@@ -1173,7 +1077,6 @@ void UXReader::UXReaderDocumentPane::HandlePaint(const HWND hWnd, const HDC hDC)
 
 void UXReader::UXReaderDocumentPane::HandlePageChanges(int currentPage, const std::set<int>& visiblePages)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	bool currentPageChanged = false;
 	bool visiblePagesChanged = false;
@@ -1208,7 +1111,6 @@ void UXReader::UXReaderDocumentPane::HandlePageChanges(int currentPage, const st
 
 void UXReader::UXReaderDocumentPane::DrawPage(const HDC hDC, const int index, const UXRect& pageArea, const UXRect& clientArea)
 {
-	//DBLog(L"%S 0x%p %i\n", __FUNCSIG__, hDC, index);
 
 	if (const auto documentPage = m_Document->DocumentPage(index))
 	{
@@ -1283,7 +1185,6 @@ void UXReader::UXReaderDocumentPane::DrawPage(const HDC hDC, const int index, co
 
 void UXReader::UXReaderDocumentPane::PostPaintTimeout(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	bool redraw = false;
 
@@ -1306,7 +1207,6 @@ void UXReader::UXReaderDocumentPane::PostPaintTimeout(const HWND hWnd)
 
 void UXReader::UXReaderDocumentPane::AddPaneToolTip(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	const DWORD ws = (WS_POPUP | TTS_NOPREFIX); const DWORD es = (WS_EX_TOPMOST);
 
@@ -1323,7 +1223,6 @@ void UXReader::UXReaderDocumentPane::AddPaneToolTip(const HWND hWnd)
 
 void UXReader::UXReaderDocumentPane::SetMouseCursorShape(const HWND hWnd)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, hWnd);
 
 	POINT cursorXY; GetCursorPos(&cursorXY); MapWindowPoints(GetDesktopWindow(), hWnd, &cursorXY, 1);
 
@@ -1334,7 +1233,6 @@ void UXReader::UXReaderDocumentPane::SetMouseCursorShape(const HWND hWnd)
 
 UXPoint UXReader::UXReaderDocumentPane::MouseToViewPort(const int x, const int y) const
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, x, y);
 
 	UXPoint point; // View port coordinates
 
@@ -1352,7 +1250,6 @@ UXPoint UXReader::UXReaderDocumentPane::MouseToViewPort(const int x, const int y
 
 UXPoint UXReader::UXReaderDocumentPane::PageAreaPoint(const int index, const UXPoint& point) const
 {
-	//DBLog(L"%S %i {%g, %g}\n", __FUNCSIG__, index, point.x, point.y);
 
 	const UXRect& pageFrame = m_PageFrames.at(index);
 
@@ -1361,7 +1258,6 @@ UXPoint UXReader::UXReaderDocumentPane::PageAreaPoint(const int index, const UXP
 
 int UXReader::UXReaderDocumentPane::PageUnderPoint(const UXPoint& point) const
 {
-	//DBLog(L"%S {%g, %g}\n", __FUNCSIG__, point.x, point.y);
 
 	int index = NEGATORY; // Page under point
 
@@ -1380,7 +1276,6 @@ int UXReader::UXReaderDocumentPane::PageUnderPoint(const UXPoint& point) const
 
 bool UXReader::UXReaderDocumentPane::IsMouseOverLink(const int x, const int y)
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, x, y);
 
 	bool status = false; // Result status
 
@@ -1414,7 +1309,6 @@ bool UXReader::UXReaderDocumentPane::IsMouseOverLink(const int x, const int y)
 
 bool UXReader::UXReaderDocumentPane::MouseClicked(const int x, const int y)
 {
-	//DBLog(L"%S %i %i\n", __FUNCSIG__, x, y);
 
 	bool status = false; // Result status
 
@@ -1457,7 +1351,6 @@ bool UXReader::UXReaderDocumentPane::MouseClicked(const int x, const int y)
 
 void UXReader::UXReaderDocumentPane::CancelSearch(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_CancelSearch = true;
 
@@ -1468,7 +1361,6 @@ void UXReader::UXReaderDocumentPane::CancelSearch(void)
 
 void UXReader::UXReaderDocumentPane::ClearSearch(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_Document->EnumerateCachedPages([](int index, const std::shared_ptr<UXReaderDocumentPage>& documentPage)
 	{
@@ -1478,7 +1370,6 @@ void UXReader::UXReaderDocumentPane::ClearSearch(void)
 
 void UXReader::UXReaderDocumentPane::StartSearch(const std::wstring& term, const int options)
 {
-	//DBLog(L"%S '%s', %i\n", __FUNCSIG__, term.data(), options);
 
 	CancelSearch(); ClearSearch(); m_SearchTerm = term;
 
@@ -1498,7 +1389,6 @@ void UXReader::UXReaderDocumentPane::StartSearch(const std::wstring& term, const
 
 void UXReader::UXReaderDocumentPane::SearchDocument(const int options)
 {
-	//DBLog(L"%S %i\n", __FUNCSIG__, options);
 
 	int found = 0; const int pageCount = m_Document->PageCount();
 

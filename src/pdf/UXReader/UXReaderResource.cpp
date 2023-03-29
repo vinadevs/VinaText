@@ -17,25 +17,21 @@ using namespace UXReader;
 
 UXReader::UXReaderResource::UXReaderResource(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	PopulateStrings(); PopulateIconData();
 }
 
 UXReader::UXReaderResource::~UXReaderResource(void)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 
 	for (const auto& item : m_Icons) DeleteObject(item.second);
 
 	m_IconData.clear(); m_Icons.clear(); m_Strings.clear();
 
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, this);
 }
 
 const wchar_t *UXReader::UXReaderResource::String(const int id)
 {
-	//DBLog(L"%S 0x%p\n", __FUNCSIG__, id);
 
 	const wchar_t *string = nullptr;
 
@@ -53,7 +49,6 @@ const wchar_t *UXReader::UXReaderResource::String(const int id)
 
 const HBITMAP UXReader::UXReaderResource::Icon(const HDC hDC, const int id, const int w, const int h)
 {
-	//DBLog(L"%S 0x%p %i %i\n", __FUNCSIG__, id, w, h);
 
 	HBITMAP hBitmap = nullptr;
 
@@ -6442,7 +6437,6 @@ static uint8_t PageIncrementIcon[] =
 
 void UXReader::UXReaderResource::PopulateStrings(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_Strings[UX_DOCUMENT_VIEW] = L"Document View";
 
@@ -6453,13 +6447,12 @@ void UXReader::UXReaderResource::PopulateStrings(void)
 	m_Strings[UX_ZOOM_INCREMENT] = L"Zoom In";
 	m_Strings[UX_ZOOM_FIT_WIDTH] = L"Zoom Fit";
 
-	m_Strings[UX_SEARCH_EDIT_FIELD] = L"Search Document";
-	m_Strings[UX_NUMBER_EDIT_FIELD] = L"Page Number";
+	m_Strings[UX_SEARCH_EDIT_FIELD] = L"Search What";
+	m_Strings[UX_NUMBER_EDIT_FIELD] = L"Goto Page Number";
 }
 
 void UXReader::UXReaderResource::PopulateIconData(void)
 {
-	//DBLog(L"%S\n", __FUNCSIG__);
 
 	m_IconData[UX_DOCUMENT_VIEW] = {DocumentViewIcon, sizeof(DocumentViewIcon)};
 
@@ -6473,7 +6466,6 @@ void UXReader::UXReaderResource::PopulateIconData(void)
 
 HBITMAP UXReader::UXReaderResource::CreateIcon(const HDC hDC, const int id, const int w, const int h)
 {
-	//DBLog(L"%S 0x%p %i %i\n", __FUNCSIG__, id, w, h);
 
 	HBITMAP hBitmap = nullptr;
 
@@ -6493,7 +6485,6 @@ HBITMAP UXReader::UXReaderResource::CreateIcon(const HDC hDC, const int id, cons
 
 HBITMAP UXReader::UXReaderResource::RenderIcon(const HDC hDC, const int w, const int h, const uint8_t* data, const size_t size)
 {
-	//DBLog(L"%S %i %i 0x%p %zu\n", __FUNCSIG__, w, h, data, size);
 
 	HBITMAP hBitmap = nullptr;
 

@@ -50,10 +50,8 @@
 #include <vector>
 #include <set>
 #include <algorithm>
-#include <string>
 #include <unordered_map>
 #include <unordered_set>
-#include <algorithm>
 #include <list>
 #include <math.h>
 #include <fstream>
@@ -66,14 +64,11 @@
 #include <locale>
 #include <codecvt>
 #include <string>
-#include <string>
-#include <fstream>
+#include <array>
 #include <io.h>
 #include <iostream>
 #include <cctype>
 #include <memory>
-#include <array>
-#include <vector>
 #include <atomic>
 #include <windows.h> 
 #include <tchar.h>
@@ -88,8 +83,6 @@
 #include <Iphlpapi.h>
 #include <Assert.h>
 #include <stdexcept>
-#include <locale.h>
-#include <io.h>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <inttypes.h>
