@@ -198,17 +198,17 @@ void CPdfView::OnInitialUpdate()
 	if (PathUtils::IsPdfFile(strFilePDFPath))
 	{
 		auto startMeasureTime = OSUtils::StartBenchmark();
-		//DWORD style = WS_CHILD | WS_VISIBLE;
-		//CRect dump(0, 0, 0, 0);
-		//// try to open with Adode Acrobat Pdf first
-		//m_bIsArobatInstalled = m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL);
-		//if (m_bIsArobatInstalled)
-		//{
-		//	m_wndPdf.put_src(strFilePDFPath);
-		//	m_wndPdf.setShowToolbar(TRUE);
-		//	m_wndPdf.setShowScrollbars(TRUE);
-		//}
-		//else // if Adode Acrobat is not available then we use PDFium
+		DWORD style = WS_CHILD | WS_VISIBLE;
+		CRect dump(0, 0, 0, 0);
+		// try to open with Adode Acrobat Pdf first
+		m_bIsArobatInstalled = m_wndPdf.Create(_T("AcrobatWnd"), style, dump, this, IDC_PDFCTRL);
+		if (m_bIsArobatInstalled)
+		{
+			m_wndPdf.put_src(strFilePDFPath);
+			m_wndPdf.setShowToolbar(TRUE);
+			m_wndPdf.setShowScrollbars(TRUE);
+		}
+		else // if Adode Acrobat is not available then we use PDFium
 		{
 			const HCURSOR oldCursor = SetCursor(UXReader::UXReaderSupport::WaitCursor());
 			auto document = std::make_shared<UXReader::UXReaderDocument>(strFilePDFPath);

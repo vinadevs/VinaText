@@ -395,7 +395,6 @@
     <ClCompile Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.cpp" />
     <ClCompile Include="pdf\UXReader\common.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderAction.cpp" />
-    <ClCompile Include="pdf\UXReader\UXReaderBlank.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderBlankPane.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDataSource.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDebug.cpp" />

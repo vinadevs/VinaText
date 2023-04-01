@@ -1127,9 +1127,6 @@
     <ClCompile Include="pdf\UXReader\UXReaderDocumentPage.cpp">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClCompile>
-    <ClCompile Include="pdf\UXReader\UXReaderBlank.cpp">
-      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
-    </ClCompile>
     <ClCompile Include="pdf\UXReader\UXReaderBlankPane.cpp">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
     </ClCompile>

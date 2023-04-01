@@ -14,8 +14,8 @@ namespace UXReader
 		private: // Variables
 
 		public: // Methods
-			UXReaderBlank(void);
-			~UXReaderBlank(void);
+			UXReaderBlank(void) {};
+			~UXReaderBlank(void) {};
 
 			UXReaderBlank(const UXReaderBlank&) = delete;
 			UXReaderBlank& operator=(const UXReaderBlank&) = delete;
