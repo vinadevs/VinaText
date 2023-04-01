@@ -66,6 +66,7 @@
 #define ID_PANE_FILE_RESULT_WINDOW      198
 #define IDR_GOOGLE_CHROME_DOC           199
 #define IDR_MOZILLA_FIREFOX_DOC         200
+#define IDR_SYSTEM_INFO_VIEWER          201
 #define IDS_EDIT_MENU                   306
 #define ID_EDITOR_EDIT_CTRL             307
 #define ID_EDITOR_SHOW_TRACKING_BAR     308
@@ -1032,49 +1033,35 @@
 #define ID_TREEFILECTRL_NEW_FILE_EXPLORER_TAB 36432
 #define ID_DISPLAY_LONG_LINE_CHECKER    36433
 #define ID_TREEFILECTRL_OPEN_BY_AS_RAW_FORMAT 36434
-#define ID_VIDEO_PLAY                   36435
-#define ID_VIDEO_PAUSE                  36436
-#define ID_VIDEO_STOP                   36437
-#define ID_VIDEO_VOLUME_UP              36438
-#define ID_VIDEO_VOLUME_DOWN            36439
-#define ID_VIDEO_NEXT_FRAME             36440
-#define ID_VIDEO_PREVIOUS_FRAME         36441
+#define ID_MEDIA_PLAY                   36435
+#define ID_MEDIA_PAUSE                  36436
+#define ID_MEDIA_STOP                   36437
+#define ID_MEDIA_VOLUME_UP              36438
+#define ID_MEDIA_VOLUME_DOWN            36439
+#define ID_MEDIA_NEXT_FRAME             36440
+#define ID_MEDIA_PREVIOUS_FRAME         36441
 #define ID_APP_THEME_LIGHT              36442
 #define ID_APP_THEME_MONOKAI            36443
 #define ID_APP_THEME_SIERRABLUE         36444
 #define ID_SELECTION_TO_WORD_LEFT       36445
-#define ID_PDF_DOCUMENT_INFO            36446
-#define ID_PDF_PRINT_DOCUMENT           36447
-#define ID_PDF_COPY_TEXT                36448
-#define ID_PDF_SELECT_ALL               36449
-#define ID_PDF_FIND_TEXT                36450
-#define ID_PDF_FIND_INCREMENT           36451
-#define ID_PDF_FIND_DECREMENT           36452
-#define ID_PDF_FIND_SELECTION           36453
-#define ID_PDF_GOTO_SELECTION           36454
-#define ID_PDF_SHOW_OUTLINE             36455
-#define ID_PDF_CLOSE_ALL				36456
-#define ID_PDF_GOTO_PAGE                36457
-#define ID_PDF_PAGING_DECREMENT_Y       36458
-#define ID_PDF_PAGING_INCREMENT_Y       36459
-#define ID_PDF_MINIMUM_DOCUMENT_Y       36460
-#define ID_PDF_MAXIMUM_DOCUMENT_Y       36461
-#define ID_PDF_STEP_INCREMENT           36462
-#define ID_PDF_STEP_DECREMENT           36463
-#define ID_PDF_ZOOM_INCREMENT           36464
-#define ID_PDF_ZOOM_DECREMENT           36465
-#define ID_PDF_ZOOM_FIT_WIDTH           36466
-#define ID_PDF_ZOOM_ONE_TO_ONE          36467
-#define ID_TEXT_CLOSE_ALL				36468
-#define ID_VIDEO_CLOSE_ALL				36469
-#define ID_IMAGE_CLOSE_ALL				36470
+#define ID_PDF_FIND_TEXT                36446
+#define ID_PDF_GOTO_PAGE				36447
+#define ID_PDF_PAGING_DECREMENT			36449
+#define ID_PDF_PAGING_INCREMENT			36450
+#define ID_PDF_MINIMUM_DOCUMENT			36451
+#define ID_PDF_MAXIMUM_DOCUMENT			36452
+#define ID_PDF_ZOOM_INCREMENT           36453
+#define ID_PDF_ZOOM_DECREMENT           36454
+#define ID_PDF_ZOOM_FIT_WIDTH           36455
+#define ID_PDF_ZOOM_ONE_TO_ONE          36456
+#define ID_HOST_SYSTEM_INFORMATION      36457
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        533
-#define _APS_NEXT_COMMAND_VALUE         36471
+#define _APS_NEXT_COMMAND_VALUE         36458
 #define _APS_NEXT_CONTROL_VALUE         1235
 #define _APS_NEXT_SYMED_VALUE           321
 #endif

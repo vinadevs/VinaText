@@ -342,7 +342,7 @@ BOOL CVinaTextApp::InitInstance()
 		}
 		else
 		{
-			if (AppUtils::GetDocumentCount() == 0)
+			if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 0)
 			{
 				OnFileNewEditor();
 			}

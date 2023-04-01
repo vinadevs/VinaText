@@ -6447,8 +6447,8 @@ void UXReader::UXReaderResource::PopulateStrings(void)
 	m_Strings[UX_ZOOM_INCREMENT] = L"Zoom In";
 	m_Strings[UX_ZOOM_FIT_WIDTH] = L"Zoom Fit";
 
-	m_Strings[UX_SEARCH_EDIT_FIELD] = L"Search What";
-	m_Strings[UX_NUMBER_EDIT_FIELD] = L"Goto Page Number";
+	m_Strings[UX_SEARCH_EDIT_FIELD] = L"Search What...";
+	m_Strings[UX_NUMBER_EDIT_FIELD] = L"Goto Page Number...";
 }
 
 void UXReader::UXReaderResource::PopulateIconData(void)

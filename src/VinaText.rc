@@ -103,15 +103,17 @@ IDR_MSEXCEL_DOC         ICON                    "..\\res\\msexcel.ico"
 
 IDR_MSWORD_DOC          ICON                    "..\\res\\msword.ico"
 
-IDR_EDITOR_DOC_READ_ONLY ICON                    "..\\res\\docreadonly.ico"
+IDR_SYSTEM_INFO_VIEWER  ICON                    "..\\res\\systeminfo.ico"
 
-IDR_FILE_EXPLORER_WINDOW ICON                    "..\\res\\explorerwindow.ico"
+IDR_EDITOR_DOC_READ_ONLY ICON                   "..\\res\\docreadonly.ico"
+
+IDR_FILE_EXPLORER_WINDOW ICON                   "..\\res\\explorerwindow.ico"
 
 IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
 
 IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
 
-IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
+IDR_SEARCH_RESULT_WINDOW ICON                   "..\\res\\searchresultwindow.ico"
 
 IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
 
@@ -348,14 +350,7 @@ BEGIN
         END
         MENUITEM SEPARATOR
         MENUITEM "Close File\tCtrl+W",          ID_MDI_TAB_CLOSE
-        POPUP "Close All"
-        BEGIN
-            MENUITEM "Close All Tabs\tCtrl+Alt+F4", ID_MDI_TAB_CLOSE_ALL_DOC
-            MENUITEM "Close All Left Tabs",         ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
-            MENUITEM "Close All Right Tabs",        ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
-            MENUITEM "Close All Unchangeds",        ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
-            MENUITEM "Close All BUT This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
-        END
+        MENUITEM "Close All\tCtrl+Alt+F4",      ID_MDI_TAB_CLOSE_ALL_DOC
         MENUITEM SEPARATOR
         POPUP "Security..."
         BEGIN
@@ -528,20 +523,9 @@ BEGIN
     END
     POPUP "Text"
     BEGIN
-        POPUP "Comment"
-        BEGIN
-            MENUITEM "Add Comment\tCtrl+Shift+C",   ID_EDITOR_COMMENT
-            MENUITEM "Remove Comment\tCtrl+Shift+X", ID_EDITOR_UNCOMMENT
-            MENUITEM SEPARATOR
-            MENUITEM "Block Comment\tCtrl+K",       ID_EDITOR_BLOCK_COMMENT
-            MENUITEM "Block Uncomment\tCtrl+Shift+K", ID_EDITOR_BLOCK_UNCOMMENT
-            MENUITEM SEPARATOR
-            MENUITEM "Toggle Comment\tAlt+K",       ID_EDITOR_TOGGLE_COMMENT
-        END
-        MENUITEM SEPARATOR
         POPUP "Convert"
         BEGIN
-            POPUP "Case"
+            POPUP "Text Case"
             BEGIN
                 MENUITEM "To Upper Case\tCtrl+Shift+U", ID_DOCUMENT_TO_UPPER_CASE
                 MENUITEM "To Lower Case\tCtrl+U",       ID_DOCUMENT_TO_LOWER_CASE
@@ -670,7 +654,6 @@ BEGIN
                 MENUITEM "Center",                      ID_EDIT_ALIGN_CENTER_MOT_KEEP_LINE
                 MENUITEM "Justify",                     ID_EDIT_ALIGN_JUSTIFY_MOT_KEEP_LINE
             END
-            MENUITEM "Format File\tCtrl+Shift+J",   ID_DOCUMENT_FORMAT_FILE
         END
         MENUITEM SEPARATOR
         POPUP "Miscellaneous"
@@ -855,10 +838,25 @@ BEGIN
             MENUITEM "Goto Previous Breakpoint",    ID_OPTIONS_FIND_PREV_BREAKPOINT
         END
         MENUITEM SEPARATOR
-        MENUITEM "Generate File Build",         ID_DOCUMENT_GENERATE_BUILD_FILE
-        MENUITEM "Clean Up Build Temporary",    ID_DOCUMENT_CLEAN_BUILD_FILE
+        POPUP "Build..."
+        BEGIN
+            MENUITEM "Generate Build Configuration", ID_DOCUMENT_GENERATE_BUILD_FILE
+            MENUITEM "Clean Up Build Temporary", ID_DOCUMENT_CLEAN_BUILD_FILE
+            MENUITEM "Show Error Annotation Hint", ID_OPTIONS_SHOW_ERROR
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Show Error Annotation Hint",  ID_OPTIONS_SHOW_ERROR
+        POPUP "Comment Code"
+        BEGIN
+            MENUITEM "Add Comment\tCtrl+Shift+C", ID_EDITOR_COMMENT
+            MENUITEM "Remove Comment\tCtrl+Shift+X", ID_EDITOR_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Block Comment\tCtrl+K", ID_EDITOR_BLOCK_COMMENT
+            MENUITEM "Block Uncomment\tCtrl+Shift+K", ID_EDITOR_BLOCK_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Toggle Comment\tAlt+K", ID_EDITOR_TOGGLE_COMMENT
+        END
+        MENUITEM SEPARATOR
+        MENUITEM "Format Document\tCtrl+Shift+J", ID_DOCUMENT_FORMAT_FILE
         MENUITEM SEPARATOR
         POPUP "Package Manager(s)"
         BEGIN
@@ -885,11 +883,11 @@ BEGIN
     END
     POPUP "Image"
     BEGIN
-        MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
+        MENUITEM "Edit With Microsoft Paint",    ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tKeyDown",          ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tKeyUp",             ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",            ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",               ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
         MENUITEM "Rotate Left 90*\tCtrl+Left",   ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
@@ -916,43 +914,37 @@ BEGIN
     END
     POPUP "Media"
     BEGIN
-        MENUITEM "Play\tSpace",                 ID_VIDEO_PLAY
-        MENUITEM "Pause\tSpace",                ID_VIDEO_PAUSE
-        MENUITEM "Stop\tCtrl+Space",            ID_VIDEO_STOP
-        MENUITEM "Adjust Volume Up\tMouse Wheel Up", ID_VIDEO_VOLUME_UP
-        MENUITEM "Adjust Volume Down\tMouse Wheel Down", ID_VIDEO_VOLUME_DOWN
-        MENUITEM "Fast Forward\tRight Arrow",   ID_VIDEO_NEXT_FRAME
-        MENUITEM "Fast Reverse\tLeft Arrow",    ID_VIDEO_PREVIOUS_FRAME
+        MENUITEM "Play\tSpace",                 ID_MEDIA_PLAY
+        MENUITEM "Pause\tSpace",                ID_MEDIA_PAUSE
+        MENUITEM "Stop\tCtrl+Space",            ID_MEDIA_STOP
+        MENUITEM SEPARATOR
+        MENUITEM "Adjust Volume Up\tMouse Wheel Up", ID_MEDIA_VOLUME_UP
+        MENUITEM "Adjust Volume Down\tMouse Wheel Down", ID_MEDIA_VOLUME_DOWN
+        MENUITEM SEPARATOR
+        MENUITEM "Fast Forward\tRight Arrow",   ID_MEDIA_NEXT_FRAME
+        MENUITEM "Fast Reverse\tLeft Arrow",    ID_MEDIA_PREVIOUS_FRAME
     END
     POPUP "Pdf"
     BEGIN
-        MENUITEM "Information\tSpace", ID_PDF_DOCUMENT_INFO
-        MENUITEM "Print\tSpace", ID_PDF_PRINT_DOCUMENT
-        MENUITEM "Copy\tSpace", ID_PDF_COPY_TEXT
-        MENUITEM "Select All\tSpace", ID_PDF_SELECT_ALL
-        MENUITEM "Find...\tCtrl+F", ID_PDF_FIND_TEXT
-        MENUITEM "Find Next\tCtrl+N", ID_PDF_FIND_INCREMENT
-        MENUITEM "Find Previous\tCtrl+M", ID_PDF_FIND_DECREMENT
-        MENUITEM "Find &Selection\tCtrl+E", ID_PDF_FIND_SELECTION
-        MENUITEM "Goto Selection\tCtrl+J", ID_PDF_GOTO_SELECTION
-        MENUITEM "Table of Contents\tCtrl+3", ID_PDF_SHOW_OUTLINE
-        MENUITEM "Goto Page...\tCtrl+G", ID_PDF_GOTO_PAGE
-        MENUITEM "Page Up\tPgUp", ID_PDF_PAGING_DECREMENT_Y
-        MENUITEM "Page Down\tPgDn", ID_PDF_PAGING_INCREMENT_Y
-        MENUITEM "First Page\tHome", ID_PDF_MINIMUM_DOCUMENT_Y
-        MENUITEM "Last Page\tEnd", ID_PDF_MAXIMUM_DOCUMENT_Y
-        MENUITEM "Step Forward\tCtrl+5", ID_PDF_STEP_INCREMENT
-        MENUITEM "Step Back\tCtrl+6", ID_PDF_STEP_DECREMENT
-        MENUITEM "Zoom In\tSpace", ID_PDF_ZOOM_INCREMENT
-        MENUITEM "Zoom Out\tSpace", ID_PDF_ZOOM_DECREMENT
-        MENUITEM "Zoom Fit Width\tSpace", ID_PDF_ZOOM_FIT_WIDTH
-        MENUITEM "Zoom Actual\tSpace", ID_PDF_ZOOM_ONE_TO_ONE
+        MENUITEM "Find...\tCtrl+F",             ID_PDF_FIND_TEXT
+        MENUITEM "Goto Page Number...\tCtrl+G", ID_PDF_GOTO_PAGE
+        MENUITEM SEPARATOR
+        MENUITEM "Page Up\tPgUp",               ID_PDF_PAGING_DECREMENT
+        MENUITEM "Page Down\tPgDn",             ID_PDF_PAGING_INCREMENT
+        MENUITEM "First Page\tHome",            ID_PDF_MINIMUM_DOCUMENT
+        MENUITEM "Last Page\tEnd",              ID_PDF_MAXIMUM_DOCUMENT
+        MENUITEM SEPARATOR
+        MENUITEM "Zoom In\tCtrl+ScrollUp",      ID_PDF_ZOOM_INCREMENT
+        MENUITEM "Zoom Out\tCtrl+ScrollDown",   ID_PDF_ZOOM_DECREMENT
+        MENUITEM "Zoom Fit Width\tCtrl+J",      ID_PDF_ZOOM_FIT_WIDTH
+        MENUITEM "Zoom Actual\tCtrl+K",         ID_PDF_ZOOM_ONE_TO_ONE
     END
     POPUP "Tools"
     BEGIN
-        POPUP "Window Application(s)"
+        POPUP "Application(s)"
         BEGIN
             MENUITEM "Microsoft Paint",             ID_HOST_MS_PAINT
+            MENUITEM "System Information Viewer",   ID_HOST_SYSTEM_INFORMATION
         END
         POPUP "Quick Window Shortcuts"
         BEGIN
@@ -981,8 +973,8 @@ BEGIN
     END
     POPUP "Window"
     BEGIN
-        MENUITEM "Full Screen Mode\tAlt+F11",   ID_EDITOR_FULL_SCREEN_MODE
-        MENUITEM "Split Current View\tCtrl+F1", ID_WINDOW_NEW
+        MENUITEM "Full Screen Mode\tAlt+F11",    ID_EDITOR_FULL_SCREEN_MODE
+        MENUITEM "Split Current View\tCtrl+F1",  ID_WINDOW_NEW
         MENUITEM SEPARATOR
         MENUITEM "Switch To Next Tab\tCtrl+Tab", ID_MDI_SWITCH_TO_NEXT_TAB
         MENUITEM "Switch To Previous Tab\tCtrl+Shift+Tab", ID_MDI_SWITCH_TO_PREVIOUS_TAB
@@ -995,9 +987,9 @@ BEGIN
     BEGIN
         POPUP "Application Theme"
         BEGIN
-            MENUITEM "Light",                       ID_APP_THEME_LIGHT
-            MENUITEM "Monokai",                     ID_APP_THEME_MONOKAI
-            MENUITEM "Sierra Blue",                 ID_APP_THEME_SIERRABLUE
+            MENUITEM "Light",                   ID_APP_THEME_LIGHT
+            MENUITEM "Monokai",                 ID_APP_THEME_MONOKAI
+            MENUITEM "Sierra Blue",             ID_APP_THEME_SIERRABLUE
         END
         MENUITEM SEPARATOR
         MENUITEM "General Settings",            ID_VIEW_APP_SETTINGS
@@ -1116,12 +1108,7 @@ BEGIN
             MENUITEM "Close All Left",              ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
             MENUITEM "Close All Right",             ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
             MENUITEM "Close All Unchanged",         ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
-            MENUITEM "Close All BUT This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
-            MENUITEM SEPARATOR
-            MENUITEM "Close All Text File",         ID_TEXT_CLOSE_ALL
-            MENUITEM "Close All Image File",        ID_IMAGE_CLOSE_ALL
-            MENUITEM "Close All Video File",        ID_VIDEO_CLOSE_ALL
-            MENUITEM "Close All Pdf File",          ID_PDF_CLOSE_ALL
+            MENUITEM "Close All But This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
         END
         MENUITEM SEPARATOR
         MENUITEM "New File\tCtrl+N",            ID_MDI_TAB_NEW_FILE

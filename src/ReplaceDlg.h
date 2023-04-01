@@ -48,7 +48,7 @@ public:
 protected:
 	BOOL	m_bMatchcase;
 	BOOL	m_bMatchwords;
-	BOOL	m_bMacthregex;
+	BOOL	m_bMatchregex;
 	BOOL	m_bAppendResult;
 	BOOL	m_bShowFileNameOnly;
 	BOOL	m_bExcludeSubFolder;

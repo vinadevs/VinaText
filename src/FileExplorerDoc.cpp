@@ -44,12 +44,7 @@ CFileExplorerDoc::~CFileExplorerDoc()
 
 BOOL CFileExplorerDoc::OnNewDocument()
 {
-	if (!CBaseDoc::OnNewDocument())
-		return FALSE;
-
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
-
+	if (!CBaseDoc::OnNewDocument()) return FALSE;
 	return TRUE;
 }
 

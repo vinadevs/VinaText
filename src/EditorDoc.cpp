@@ -189,7 +189,7 @@ void CEditorDoc::ReloadPreviewDocument(const CString & strFilePath)
 void CEditorDoc::OnCloseDocument()
 {
 	CString strPathName = GetPathName();
-	if (AppUtils::GetDocumentCount() == 1 && strPathName.IsEmpty() && !IsModified())
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1 && strPathName.IsEmpty() && !IsModified())
 	{
 		AppSettingMgr.RemoveDocumentUndefTitle(GetTitle());
 		SetTitle(AppSettingMgr.CreateDocumentUndefTitle());

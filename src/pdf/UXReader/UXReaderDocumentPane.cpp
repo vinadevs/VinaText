@@ -27,8 +27,8 @@ constexpr int paintTimerTock = 300;
 constexpr int cachePagesLimit = 16;
 constexpr int useBitmapsLimit = 3072;
 
-constexpr double lineScrollFactor = 0.01;
-constexpr double wheelScrollFactor = 0.05;
+constexpr double lineScrollFactor = 0.08;
+constexpr double wheelScrollFactor = 0.08;
 constexpr double pageScrollFactor = 0.95;
 
 static wchar_t *const kWindowClassName = L"UXReaderDocumentPaneClass";

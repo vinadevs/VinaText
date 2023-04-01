@@ -30,10 +30,29 @@ BEGIN_MESSAGE_MAP(CPdfView, CViewBase)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_SETFOCUS()
+
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT, OnDisableUpdate)
+	
+	ON_COMMAND(ID_PDF_FIND_TEXT, OnFindTextPdf)
+	ON_COMMAND(ID_PDF_GOTO_PAGE, OnGotoPagePdf)
+	ON_COMMAND(ID_PDF_PAGING_DECREMENT, OnPageUpPdf)
+	ON_COMMAND(ID_PDF_PAGING_INCREMENT, OnPageDownPdf)
+	ON_COMMAND(ID_PDF_MINIMUM_DOCUMENT, OnFirstPagePdf)
+	ON_COMMAND(ID_PDF_MAXIMUM_DOCUMENT, OnLastPagePagePdf)
+	ON_COMMAND(ID_PDF_ZOOM_INCREMENT, OnZoomInPdf)
+	ON_COMMAND(ID_PDF_ZOOM_DECREMENT, OnZoomOutPdf)
+	ON_COMMAND(ID_PDF_ZOOM_FIT_WIDTH, OnZoomFitPdf)
+	ON_COMMAND(ID_PDF_ZOOM_ONE_TO_ONE, OnZoomActualPdf)
+
+	ON_UPDATE_COMMAND_UI(ID_PDF_PAGING_DECREMENT, OnUpdatePageUpPdf)
+	ON_UPDATE_COMMAND_UI(ID_PDF_PAGING_INCREMENT, OnUpdatePageDownPdf)
+	ON_UPDATE_COMMAND_UI(ID_PDF_ZOOM_FIT_WIDTH, OnUpdateZoomFitPdf)
+	ON_UPDATE_COMMAND_UI(ID_PDF_ZOOM_ONE_TO_ONE, OnUpdateZoomActualPdf)
+	ON_UPDATE_COMMAND_UI(ID_PDF_MINIMUM_DOCUMENT, OnUpdateFirstPagePdf)
+	ON_UPDATE_COMMAND_UI(ID_PDF_MAXIMUM_DOCUMENT, OnUpdateLastPagePdf)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -62,10 +81,51 @@ BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
 		{
 			switch (pMsg->wParam)
 			{
+				case VK_PRIOR:
+				{
+					OnPageUpPdf();
+					return TRUE;
+				}
+				case VK_NEXT:
+				{
+					OnPageDownPdf();
+					return TRUE;
+				}
+				case VK_HOME:
+				{
+					OnFirstPagePdf();
+					return TRUE;
+				}
+				case VK_END:
+				{
+					OnLastPagePagePdf();
+					return TRUE;
+				}
+				case VK_UP:
+				{
+					OnScrollUpPdf();
+					return TRUE;
+				}
+				case VK_DOWN:
+				{
+					OnScrollDownPdf();
+					return TRUE;
+				}
+				case VK_LEFT:
+				{
+					OnScrollLeftPdf();
+					return TRUE;
+				}
+				case VK_RIGHT:
+				{
+					OnScrollRightPdf();
+					return TRUE;
+				}
 				case 'G':
 				{
 					if ((GetKeyState(VK_CONTROL) & 0x8000))
 					{
+						OnGotoPagePdf();
 						return TRUE;
 					}
 				}
@@ -74,6 +134,25 @@ BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
 				{
 					if ((GetKeyState(VK_CONTROL) & 0x8000))
 					{
+						OnFindTextPdf();
+						return TRUE;
+					}
+				}
+				break;
+				case 'J':
+				{
+					if ((GetKeyState(VK_CONTROL) & 0x8000))
+					{
+						OnZoomFitPdf();
+						return TRUE;
+					}
+				}
+				break;
+				case 'K':
+				{
+					if ((GetKeyState(VK_CONTROL) & 0x8000))
+					{
+						OnZoomActualPdf();
 						return TRUE;
 					}
 				}
@@ -191,6 +270,120 @@ void CPdfView::OnSize(UINT nType, int cx, int cy)
 void CPdfView::OnDisableUpdate(CCmdUI* pCmdUI)
 {
 	pCmdUI->Enable(FALSE);
+}
+
+void CPdfView::OnFindTextPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanSearchTextFocus())
+		m_DocumentView->SearchTextFocus();
+}
+
+void CPdfView::OnGotoPagePdf()
+{
+	if (m_DocumentView && m_DocumentView->CanPageNumberFocus())
+		m_DocumentView->PageNumberFocus();
+}
+
+void CPdfView::OnPageUpPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanPageScrollDecrementY())
+		m_DocumentView->PageScrollDecrementY();
+}
+
+void CPdfView::OnPageDownPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanPageScrollIncrementY())
+		m_DocumentView->PageScrollIncrementY();
+}
+
+void CPdfView::OnFirstPagePdf()
+{
+	if (m_DocumentView && m_DocumentView->CanGotoMinimumDocumentY())
+		m_DocumentView->GotoMinimumDocumentY();
+}
+
+void CPdfView::OnLastPagePagePdf()
+{
+	if (m_DocumentView && m_DocumentView->CanGotoMaximumDocumentY())
+		m_DocumentView->GotoMaximumDocumentY();
+}
+
+void CPdfView::OnZoomInPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanZoomIncrement())
+		m_DocumentView->ZoomIncrement();
+}
+
+void CPdfView::OnZoomOutPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanZoomDecrement())
+		m_DocumentView->ZoomDecrement();
+}
+
+void CPdfView::OnZoomFitPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanZoomFitWidth())
+		m_DocumentView->ZoomFitWidth();
+}
+
+void CPdfView::OnZoomActualPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanZoomOneToOne())
+		m_DocumentView->ZoomOneToOne();
+}
+
+void CPdfView::OnScrollUpPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanLineScrollDecrementY())
+		m_DocumentView->LineScrollDecrementY();
+}
+
+void CPdfView::OnScrollDownPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanLineScrollIncrementY())
+		m_DocumentView->LineScrollIncrementY();
+}
+
+void CPdfView::OnScrollLeftPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanLineScrollDecrementX())
+		m_DocumentView->LineScrollDecrementX();
+}
+
+void CPdfView::OnScrollRightPdf()
+{
+	if (m_DocumentView && m_DocumentView->CanLineScrollIncrementX())
+		m_DocumentView->LineScrollIncrementX();
+}
+
+void CPdfView::OnUpdatePageUpPdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanPageScrollDecrementY());
+}
+
+void CPdfView::OnUpdatePageDownPdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanPageScrollIncrementY());
+}
+
+void CPdfView::OnUpdateZoomFitPdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanZoomFitWidth());
+}
+
+void CPdfView::OnUpdateZoomActualPdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanZoomOneToOne());
+}
+
+void CPdfView::OnUpdateFirstPagePdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanGotoMinimumDocumentY());
+}
+
+void CPdfView::OnUpdateLastPagePdf(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_DocumentView && m_DocumentView->CanGotoMaximumDocumentY());
 }
 
 void CPdfView::UpdateFileLastWriteTime(const CString& strFilePath)

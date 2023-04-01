@@ -51,6 +51,20 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 			L"MSPaintApp",
 			bOpenFileMode);
 	}
+	else if (appType == HOST_APP_TYPE::SYSTEM_INFO_VIEWER)
+	{
+		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
+			L"System Information Viewer",
+			strAppPathToHost,
+			strAppArguments,
+			TRUE,
+			TRUE,
+			IDR_SYSTEM_INFO_VIEWER,
+			HOST_METHOD::USE_FINDWINDOWS,
+			500,
+			L"#32770",
+			bOpenFileMode);
+	}
 	else if (appType == HOST_APP_TYPE::MS_OFFICE_EXCEL)
 	{
 		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(

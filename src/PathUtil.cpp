@@ -327,7 +327,7 @@ CString PathUtils::GetAbsolutePath(const CString& strPath)
 CString PathUtils::GetDataBaseFileFilter()
 {
 	CString strDatabaseFilter;
-	CString strFileFilterPath = PathUtils::GetVinaTextPackagePath() + _T("all-file-extension.dat");
+	CString strFileFilterPath = PathUtils::GetVinaTextPackagePath() + _T("data-packages\\all-file-extension.dat");
 	if (PathFileExists(strFileFilterPath))
 	{
 		CString strFileContent;

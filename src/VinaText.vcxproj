@@ -213,6 +213,7 @@
     <ClInclude Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.h" />
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
+    <ClInclude Include="ComboboxRegexHelper.h" />
     <ClInclude Include="EditorCommonDef.h" />
     <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="EditorLexerDark.h" />
@@ -388,6 +389,7 @@
     <ClCompile Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.cpp" />
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
+    <ClCompile Include="ComboboxRegexHelper.cpp" />
     <ClCompile Include="EditorLexerDark.cpp" />
     <ClCompile Include="EditorLexerLight.cpp" />
     <ClCompile Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.cpp" />

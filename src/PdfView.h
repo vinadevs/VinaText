@@ -52,5 +52,28 @@ protected:
 	afx_msg void OnSetFocus(CWnd * pOldWnd);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnDisableUpdate(CCmdUI* pCmdUI);
+
+	afx_msg void OnFindTextPdf();
+	afx_msg void OnGotoPagePdf();
+	afx_msg void OnPageUpPdf();
+	afx_msg void OnPageDownPdf();
+	afx_msg void OnFirstPagePdf();
+	afx_msg void OnLastPagePagePdf();
+	afx_msg void OnZoomInPdf();
+	afx_msg void OnZoomOutPdf();
+	afx_msg void OnZoomFitPdf();
+	afx_msg void OnZoomActualPdf();
+	afx_msg void OnScrollUpPdf();
+	afx_msg void OnScrollDownPdf();
+	afx_msg void OnScrollLeftPdf();
+	afx_msg void OnScrollRightPdf();
+
+	afx_msg void OnUpdatePageUpPdf(CCmdUI* pCmdUI);
+	afx_msg void OnUpdatePageDownPdf(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateZoomFitPdf(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateZoomActualPdf(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateFirstPagePdf(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateLastPagePdf(CCmdUI* pCmdUI);
+
 	DECLARE_MESSAGE_MAP()
 };

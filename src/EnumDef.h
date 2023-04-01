@@ -208,6 +208,7 @@ enum DOCUMENT_TYPE
 	DOC_MEDIA = 3,
 	DOC_HOST = 4,
 	DOC_EXPLORER = 5,
+	DOC_ALL = 6,
 };
 
 // MDI document type

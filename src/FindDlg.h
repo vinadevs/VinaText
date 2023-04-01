@@ -58,7 +58,7 @@ protected:
 	CString		m_strFileFilter;
 	CString		m_strSpecificPath;
 	BOOL	m_bMatchcase;
-	BOOL	m_bMacthregex;
+	BOOL	m_bMatchregex;
 	BOOL	m_bMatchwords;
 	BOOL	m_bAppendResult;
 	BOOL	m_bShowFileNameOnly;
