@@ -121,10 +121,8 @@ public:
 protected:  // control bar embedded members
 	int					m_iCurrentTabCount = 0;
 	BOOL				m_bIsClosingVinaText = FALSE;
-
 	CFont				m_Font;
 	CMenu				m_MainMenu;
-	//CMFCMenuBar       m_wndMenuBar;
 	CMainFrameToolBar   m_wndToolBar;
 	CMFCStatusBar       m_wndStatusBar;
 	CMFCToolBarImages   m_UserImages;
@@ -303,6 +301,7 @@ public:
 	afx_msg void OnHostGoogleChrome();
 	afx_msg void OnHostMozillaFirefox();
 	afx_msg void OnHostMSPaint();
+	afx_msg void OnHostSystemInformation();
 	afx_msg void OnHostFileExplorer();
 	afx_msg void OnHostMSPowerpoint();
 	afx_msg void OnHostMSExcel();
@@ -315,9 +314,8 @@ public:
 	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnCopyData(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnCompilerNotifyDebugLinePointer(WPARAM wParam, LPARAM lParam);
-
 	// from MDI tab menu
-	void OnCloseDocument();
+	afx_msg void OnCloseDocument();
 	afx_msg void OnCloseAllDocument();
 	afx_msg void OnCloseAllDocumentLeft();
 	afx_msg void OnCloseAllDocumentRight();
@@ -356,12 +354,6 @@ public:
 	afx_msg void OnMDITabOpenInChrome();
 	afx_msg void OnMDITabOpenInEdge();
 	afx_msg void OnMDITabOpenInFireFox();
-	afx_msg void OnUpdateReLoadDocument(CCmdUI * pCmdUI);
-	afx_msg void OnUpdateOpenFileEplorer(CCmdUI * pCmdUI);
-	afx_msg void OnUpdateOpenCMDAppendFile(CCmdUI * pCmdUI);
-	afx_msg void OnUpdateOpenCMDAppendFilePath(CCmdUI * pCmdUI);
-	afx_msg void OnUpdateOpenContainerFolder(CCmdUI * pCmdUI);
-	afx_msg void OnUpdateBookmarkFile(CCmdUI * pCmdUI);
 	afx_msg void OnCloseAllDocumentUnmodified();
 	afx_msg void OnDeleteFile();
 	afx_msg void OnDocumentBookMark();
@@ -375,6 +367,12 @@ public:
 	afx_msg void OnUpdatePrintFileNow(CCmdUI * pCmdUI);
 	afx_msg void OnUpdatePrintFileSetupDlg(CCmdUI * pCmdUI);
 	afx_msg void OnUpdatePrintPageSetupDlg(CCmdUI * pCmdUI);
+	afx_msg void OnUpdateReLoadDocument(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOpenFileEplorer(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOpenCMDAppendFile(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOpenCMDAppendFilePath(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOpenContainerFolder(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateBookmarkFile(CCmdUI* pCmdUI);
 
 	DECLARE_MESSAGE_MAP()
 protected:

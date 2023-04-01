@@ -78,6 +78,7 @@ namespace AppUtils
 	BOOL MDIActiveFrame();
 	BOOL SetActiveDocument(CDocument* pDoc);
 	void CloseAllPreviewDocument(PREVIEW_TYPE type);
+	void CloseAllDocument();
 	CDocument * GetNextPreviewDocument(PREVIEW_TYPE type);
 	CDocument * GetExistedDocument(CString strFile);
 	CDocument * GetDocumentFromTitle(const CString & strTitleDocument);;
@@ -88,7 +89,6 @@ namespace AppUtils
 	void CloseDocumentByFilePath(CString strFile);
 	void CloseDocumentByTitle(const CString& strTitle);
 	void CloseDeletedDocument(CView * pCloseView, const CString& strFileDeleted);
-	void CloseAllDocument();
 	void CloseAllDocumentUnmodified();
 	void CloseAllDocumentLeft(CView * pActiveView);
 	void CloseAllDocumentRight(CView * pActiveView);
@@ -103,7 +103,6 @@ namespace AppUtils
 	void ResizeAllViews();
 	void SyncActionAllEditorDocuments(std::function<void(CEditorDoc* pDoc)> pFunctor, CEditorDoc* pExcludeDoc = NULL);
 	BOOL IsDocumentExisted(CString strFile);
-	int GetDocumentCount();
 	int GetDocumentTypeCount(DOCUMENT_TYPE type);
 	void CheckLastOpenDocument();
 	void UpdateModifiedDocumentTitle(CDocument * pDoc, BOOL bAddMarker = TRUE);

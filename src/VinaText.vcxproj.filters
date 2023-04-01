@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -34,65 +30,17 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{0ae4e775-a92e-4b42-93e5-d85752b89132}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Control UI">
-      <UniqueIdentifier>{a48283b4-f48c-4b36-ab0c-2b6ba146c0a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor">
-      <UniqueIdentifier>{16923a8a-e684-4c83-b437-ecaafc787669}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor\Lexer">
-      <UniqueIdentifier>{a5675bf3-1762-4788-be61-cba50724ceec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor\Database">
-      <UniqueIdentifier>{4baf008d-85a1-455a-8e89-1c4aeb664aad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dialog UI">
-      <UniqueIdentifier>{0a2c8c20-7e31-4787-b440-9bdffb60295b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Main Files\Main Skeleton\View">
       <UniqueIdentifier>{19c2479f-3620-455d-9173-11dad29517a3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Main Files\Main Skeleton\Document">
       <UniqueIdentifier>{2e090b98-6424-418e-951c-b1add0c4ff88}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Control UI\Media">
-      <UniqueIdentifier>{6841431f-4302-46fa-87c5-583b19ebec87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Image Processing">
-      <UniqueIdentifier>{9717897b-7dfa-40a9-8686-11f328b1eafa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor\File IO">
-      <UniqueIdentifier>{64a6ed2e-61ef-429f-a049-401baac8abfd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor\Editor">
-      <UniqueIdentifier>{ff64d318-f6e8-41c7-b736-5722c7bf1b57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Pdf">
-      <UniqueIdentifier>{fee1ec3a-acf8-4892-8f83-e5261350b89b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\MFC">
-      <UniqueIdentifier>{682fa61b-d5f9-453c-a572-661e3054d5b3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dock Windows">
       <UniqueIdentifier>{03c4fb31-945f-4a82-b583-9b05cf57c455}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dock Windows\File Explorer">
-      <UniqueIdentifier>{b10a43e8-bfae-4e0e-8814-85b766178e7e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Status Bar">
-      <UniqueIdentifier>{c76a9d50-01d6-420c-8e9f-371f8eb09e82}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dock Windows\Base">
       <UniqueIdentifier>{85f6c840-d114-4d43-b82e-b26fb1f6563b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Find And Replace Window">
-      <UniqueIdentifier>{15225a90-3811-426a-a2e6-03d7892453e1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Find And Replace Window\Quick Search">
-      <UniqueIdentifier>{16402714-dbb6-4e52-a45a-4d0ecc732b7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Build Window">
-      <UniqueIdentifier>{60ec5d1d-8a97-4a9a-a553-f04d8d81d798}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dock Windows\Message Window">
       <UniqueIdentifier>{209a2acb-dd8d-4a5f-86af-93e0d1533a13}</UniqueIdentifier>
@@ -103,85 +51,164 @@
     <Filter Include="SearchEngine">
       <UniqueIdentifier>{b29494b1-57ba-4c04-ae28-a7bc77f99561}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dock Windows\Build Window\Compiler">
-      <UniqueIdentifier>{7a855b76-ea45-49d3-b364-bb7991ec919c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Build Window\Debugger">
-      <UniqueIdentifier>{330984e3-3355-4270-8f45-4aa07f42a9b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Build Window\IPC">
-      <UniqueIdentifier>{9cade6f1-a34f-49f1-9d77-2528d8112060}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Search Text Result">
-      <UniqueIdentifier>{f90441f1-ad8c-4dde-8b26-3655b388e4f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dock Windows\Search Path Result">
-      <UniqueIdentifier>{fe92f101-f211-4be6-b1a5-3b86d3e5be96}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dock Windows\Breakpoint Window">
       <UniqueIdentifier>{9331b459-6bee-49f4-a92e-f9e2576b785a}</UniqueIdentifier>
     </Filter>
     <Filter Include="TinyXml">
       <UniqueIdentifier>{cce40058-a43d-4b6f-a47c-65c576b2e89c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Control UI\Editor\Printer">
-      <UniqueIdentifier>{79cc2e56-c4c6-4d9f-9f92-4ff3f36e7008}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Dialog UI\Base">
-      <UniqueIdentifier>{d045fb26-f0bc-4af3-9593-2637b08499b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Control UI\Editor\Unicode Mozilla">
-      <UniqueIdentifier>{75c16abb-e43e-47b3-a674-ecc66100084d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Translator">
       <UniqueIdentifier>{829a21cd-0d13-4086-b2da-3f953465d27a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Internet">
+      <UniqueIdentifier>{c0442832-41fc-46d5-b521-2e1cbab29cbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Windows Printer">
+      <UniqueIdentifier>{79cc2e56-c4c6-4d9f-9f92-4ff3f36e7008}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog GUI">
+      <UniqueIdentifier>{0a2c8c20-7e31-4787-b440-9bdffb60295b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dialog GUI\Base">
+      <UniqueIdentifier>{d045fb26-f0bc-4af3-9593-2637b08499b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI">
+      <UniqueIdentifier>{a48283b4-f48c-4b36-ab0c-2b6ba146c0a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor">
+      <UniqueIdentifier>{16923a8a-e684-4c83-b437-ecaafc787669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\Lexer">
+      <UniqueIdentifier>{a5675bf3-1762-4788-be61-cba50724ceec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\Database">
+      <UniqueIdentifier>{4baf008d-85a1-455a-8e89-1c4aeb664aad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\File IO">
+      <UniqueIdentifier>{64a6ed2e-61ef-429f-a049-401baac8abfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\Editor">
+      <UniqueIdentifier>{ff64d318-f6e8-41c7-b736-5722c7bf1b57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\Unicode Mozilla">
+      <UniqueIdentifier>{75c16abb-e43e-47b3-a674-ecc66100084d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Editor\Template File">
+      <UniqueIdentifier>{5abc48d1-0450-49d0-af70-003625629d26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Media">
+      <UniqueIdentifier>{6841431f-4302-46fa-87c5-583b19ebec87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Image Processing">
+      <UniqueIdentifier>{9717897b-7dfa-40a9-8686-11f328b1eafa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\MFC GUI">
+      <UniqueIdentifier>{682fa61b-d5f9-453c-a572-661e3054d5b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer">
+      <UniqueIdentifier>{fee1ec3a-acf8-4892-8f83-e5261350b89b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\Arobat Reader">
+      <UniqueIdentifier>{096b44f4-d938-4f4d-b6d4-aa7afdc8a041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium">
+      <UniqueIdentifier>{4a9cd0f6-c0a2-4ac0-996e-4051298e5041}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium\UXReaderLibrary">
+      <UniqueIdentifier>{006078ab-1898-4673-8996-5233a000dc2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium\UXReaderToolbar">
+      <UniqueIdentifier>{004907fb-8207-4273-8199-938e1bb9bf2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium\UXReaderSupport">
+      <UniqueIdentifier>{e4dcb4c0-2367-4cf3-8154-add2153f44a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium\UXReaderView">
+      <UniqueIdentifier>{9ed041e1-09f6-4cc7-a5a9-20e33bd46804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\PDFViewer\PDFium\UXReaderInclude">
+      <UniqueIdentifier>{1ca7ce44-9444-4774-866f-af66e57455f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\File Explorer Window">
+      <UniqueIdentifier>{b10a43e8-bfae-4e0e-8814-85b766178e7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Search Path Result Window">
+      <UniqueIdentifier>{fe92f101-f211-4be6-b1a5-3b86d3e5be96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Search Text Result Window">
+      <UniqueIdentifier>{f90441f1-ad8c-4dde-8b26-3655b388e4f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Status Bar Window">
+      <UniqueIdentifier>{c76a9d50-01d6-420c-8e9f-371f8eb09e82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Build Debug Window">
+      <UniqueIdentifier>{60ec5d1d-8a97-4a9a-a553-f04d8d81d798}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Build Debug Window\Compiler">
+      <UniqueIdentifier>{7a855b76-ea45-49d3-b364-bb7991ec919c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Build Debug Window\Debugger">
+      <UniqueIdentifier>{330984e3-3355-4270-8f45-4aa07f42a9b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Build Debug Window\IPC">
+      <UniqueIdentifier>{9cade6f1-a34f-49f1-9d77-2528d8112060}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Search And Replace Window">
+      <UniqueIdentifier>{15225a90-3811-426a-a2e6-03d7892453e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dock Windows\Search And Replace Window\Quick Search">
+      <UniqueIdentifier>{16402714-dbb6-4e52-a45a-4d0ecc732b7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.md" />
     <Text Include="uchardet\README.TXT">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="EditorDatabase.h">
-      <Filter>Control UI\Editor\Database</Filter>
+      <Filter>Component GUI\Editor\Database</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerCtrl.h">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerDlg.h">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="ProgramStatusBarEx.h">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="FindDlg.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="ReplaceDlg.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="GotoDlg.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="SearchAndReplaceDlg.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="SearchEngine.h">
       <Filter>SearchEngine</Filter>
     </ClInclude>
     <ClInclude Include="ShellContextMenu.h">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClInclude>
     <ClInclude Include="tinyXml\tinystr.h">
       <Filter>TinyXml</Filter>
@@ -199,57 +226,54 @@
       <Filter>Dock Windows\Message Window</Filter>
     </ClInclude>
     <ClInclude Include="BuildWindow.h">
-      <Filter>Dock Windows\Build Window</Filter>
+      <Filter>Dock Windows\Build Debug Window</Filter>
     </ClInclude>
     <ClInclude Include="StringHelper.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="SetDeleteFileByExtDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="SetBookmarkPathDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="SelectedPathDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="RemoveFromXToYDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="FilenameFilterDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="EditWithXDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="BookMarkPathDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="RemoveAfterBeforeWordDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="InsertFromPositionXDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="InsertAfterWordInLineDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="BracketOutLineDlg.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="RAIIUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Cryptography.h">
-      <Filter>Control UI\Editor\File IO</Filter>
+      <Filter>Component GUI\Editor\File IO</Filter>
     </ClInclude>
     <ClInclude Include="EnumDef.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="SystemInfo.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WebHandler.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="CodePageMFC.h">
@@ -259,22 +283,19 @@
       <Filter>Code Page</Filter>
     </ClInclude>
     <ClInclude Include="Compiler.h">
-      <Filter>Dock Windows\Build Window\Compiler</Filter>
+      <Filter>Dock Windows\Build Debug Window\Compiler</Filter>
     </ClInclude>
     <ClInclude Include="FileUtil.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="LexerParser.h">
-      <Filter>Control UI\Editor\Lexer</Filter>
+      <Filter>Component GUI\Editor\Lexer</Filter>
     </ClInclude>
     <ClInclude Include="InsertBetweenLines.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="EditorDataStructure.h">
-      <Filter>Control UI\Editor\Database</Filter>
-    </ClInclude>
-    <ClInclude Include="CustomizeUserTool.h">
-      <Filter>Command Line</Filter>
+      <Filter>Component GUI\Editor\Database</Filter>
     </ClInclude>
     <ClInclude Include="ImageDoc.h">
       <Filter>Main Files\Main Skeleton\Document</Filter>
@@ -304,7 +325,7 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="GammaDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="MultiDocTemplateEx.h">
       <Filter>Main Files\Main Skeleton\Application</Filter>
@@ -316,7 +337,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="MisspelledReplaceWithDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="EditorView.h">
       <Filter>Main Files\Main Skeleton\View</Filter>
@@ -331,37 +352,37 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="QuickSearchDialog.h">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClInclude>
     <ClInclude Include="QuickSearch.h">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClInclude>
     <ClInclude Include="QuickReplace.h">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClInclude>
     <ClInclude Include="SaveFileWithPassWordDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="ReopenFileWithPasswordDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="CWMPEventDispatch.h">
-      <Filter>Control UI\Media</Filter>
+      <Filter>Component GUI\Media</Filter>
     </ClInclude>
     <ClInclude Include="CWMPHost.h">
-      <Filter>Control UI\Media</Filter>
+      <Filter>Component GUI\Media</Filter>
     </ClInclude>
     <ClInclude Include="GifHandler.h">
-      <Filter>Control UI\Image Processing</Filter>
+      <Filter>Component GUI\Image Processing</Filter>
     </ClInclude>
     <ClInclude Include="Editor.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="NamedPipe.h">
       <Filter>Command Line</Filter>
     </ClInclude>
     <ClInclude Include="Memdc.h">
-      <Filter>Control UI\Image Processing</Filter>
+      <Filter>Component GUI\Image Processing</Filter>
     </ClInclude>
     <ClInclude Include="MediaDoc.h">
       <Filter>Main Files\Main Skeleton\Document</Filter>
@@ -373,37 +394,34 @@
       <Filter>Main Files\Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="ComboboxMultiLine.h">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="ScrollHelper.h">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="TreeHelper.h">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="UndoRedoEditControl.h">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="FileBrowser.h">
-      <Filter>Control UI\MFC</Filter>
-    </ClInclude>
-    <ClInclude Include="AdobeAcrobatWrapper.h">
-      <Filter>Control UI\Pdf</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="MacroDef.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClInclude>
     <ClInclude Include="BookmarkWindow.h">
       <Filter>Dock Windows\Bookmark Window</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerWindow.h">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClInclude>
     <ClInclude Include="SearchAndReplaceWindow.h">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="ProjectTempateCreatorDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="GuiUtils.h">
       <Filter>Utils</Filter>
@@ -424,31 +442,31 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="TextProgressCtrl.h">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="CMemDC.h">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="FindReplaceTextWorker.h">
       <Filter>SearchEngine</Filter>
     </ClInclude>
     <ClInclude Include="Debugger.h">
-      <Filter>Dock Windows\Build Window\Debugger</Filter>
+      <Filter>Dock Windows\Build Debug Window\Debugger</Filter>
     </ClInclude>
     <ClInclude Include="MultiThreadWorker.h">
-      <Filter>Dock Windows\Build Window\IPC</Filter>
+      <Filter>Dock Windows\Build Debug Window\IPC</Filter>
     </ClInclude>
     <ClInclude Include="FindPathWorker.h">
       <Filter>SearchEngine</Filter>
     </ClInclude>
     <ClInclude Include="SearchNavigatePathDlg.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="PathResultWindow.h">
-      <Filter>Dock Windows\Search Path Result</Filter>
+      <Filter>Dock Windows\Search Path Result Window</Filter>
     </ClInclude>
     <ClInclude Include="VinaTextProgressBar.h">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerView.h">
       <Filter>Main Files\Main Skeleton\View</Filter>
@@ -457,103 +475,100 @@
       <Filter>Main Files\Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="TextResultWindow.h">
-      <Filter>Dock Windows\Search Text Result</Filter>
+      <Filter>Dock Windows\Search Text Result Window</Filter>
     </ClInclude>
     <ClInclude Include="TextFormatConverter.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="BreakpointWindow.h">
       <Filter>Dock Windows\Breakpoint Window</Filter>
-    </ClInclude>
-    <ClInclude Include="TemplateCreator.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="AppAboutDlg.h">
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="UnicodeUtils.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="Hpsutils.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="TextFile.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="WindowsPrinter.h">
-      <Filter>Control UI\Editor\Printer</Filter>
+      <Filter>Windows Printer</Filter>
     </ClInclude>
     <ClInclude Include="CreateNewMultiplePath.h">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="DialogBase.h">
-      <Filter>Dialog UI\Base</Filter>
+      <Filter>Dialog GUI\Base</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\CharDistribution.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\JpCntx.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsBig5Prober.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsCharSetProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsCodingStateMachine.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nscore.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsEscCharsetProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsEUCJPProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsEUCKRProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsEUCTWProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsGB2312Prober.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsHebrewProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsLatin1Prober.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsMBCSGroupProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsPkgInt.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsSBCharSetProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsSBCSGroupProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsSJISProber.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsUniversalDetector.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\nsUTF8Prober.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\prmem.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="uchardet\uchardet.h">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
     <ClInclude Include="translator\POHandler.h">
       <Filter>Translator</Filter>
@@ -562,19 +577,19 @@
       <Filter>Translator</Filter>
     </ClInclude>
     <ClInclude Include="EditorCommonDef.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="EditorColorLight.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="EditorColorDark.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="EditorLexerDark.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="EditorLexerLight.h">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
     <ClInclude Include="VinaTextSettingDlg.h">
       <Filter>Settings</Filter>
@@ -589,39 +604,126 @@
       <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="QuickGotoLine.h">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.h">
+      <Filter>Component GUI\PDFViewer\Arobat Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentView.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocument.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentPage.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDocumentPane.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderBlank.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderBlankPane.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDataSource.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDebug.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderGlobals.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderLibrary.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderResource.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderSupport.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderStatusPane.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarEdit.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarItem.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarPane.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderToolbarText.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderAction.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderDestination.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderGeometry.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderPageCache.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderSelection.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\UXReaderTemplates.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClInclude>
+    <ClInclude Include="pdf\UXReader\common.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderInclude</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.h">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClInclude>
+    <ClInclude Include="WebHandler.h">
+      <Filter>Internet</Filter>
+    </ClInclude>
+    <ClInclude Include="TemplateCreator.h">
+      <Filter>Component GUI\Editor\Template File</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboboxRegexHelper.h">
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
-      <Filter>Control UI\Editor\Database</Filter>
+      <Filter>Component GUI\Editor\Database</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerCtrl.cpp">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerDlg.cpp">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClCompile>
     <ClCompile Include="ProgramStatusBarEx.cpp">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClCompile>
     <ClCompile Include="FindDlg.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="ReplaceDlg.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="DockPaneBase.cpp">
       <Filter>Dock Windows\Base</Filter>
     </ClCompile>
     <ClCompile Include="GotoDlg.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="SearchAndReplaceDlg.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="ShellContextMenu.cpp">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClCompile>
     <ClCompile Include="tinyXml\tinystr.cpp">
       <Filter>TinyXml</Filter>
@@ -642,54 +744,51 @@
       <Filter>Dock Windows\Message Window</Filter>
     </ClCompile>
     <ClCompile Include="BuildWindow.cpp">
-      <Filter>Dock Windows\Build Window</Filter>
+      <Filter>Dock Windows\Build Debug Window</Filter>
     </ClCompile>
     <ClCompile Include="StringHelper.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="SetDeleteFileByExtDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="SetBookmarkPathDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="SelectedPathDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="RemoveFromXToYDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="FilenameFilterDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="EditWithXDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="RemoveAfterBeforeWordDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="BookMarkPathDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="InsertFromPositionXDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="InsertAfterWordInLineDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="BracketOutLineDlg.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="RAIIUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Cryptography.cpp">
-      <Filter>Control UI\Editor\File IO</Filter>
+      <Filter>Component GUI\Editor\File IO</Filter>
     </ClCompile>
     <ClCompile Include="SystemInfo.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="WebHandler.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="CodePageMFC.cpp">
@@ -699,19 +798,16 @@
       <Filter>Code Page</Filter>
     </ClCompile>
     <ClCompile Include="Compiler.cpp">
-      <Filter>Dock Windows\Build Window\Compiler</Filter>
+      <Filter>Dock Windows\Build Debug Window\Compiler</Filter>
     </ClCompile>
     <ClCompile Include="FileUtil.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="LexerParser.cpp">
-      <Filter>Control UI\Editor\Lexer</Filter>
+      <Filter>Component GUI\Editor\Lexer</Filter>
     </ClCompile>
     <ClCompile Include="InsertBetweenLines.cpp">
-      <Filter>Dialog UI</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomizeUserTool.cpp">
-      <Filter>Command Line</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="ImageDoc.cpp">
       <Filter>Main Files\Main Skeleton\Document</Filter>
@@ -734,9 +830,6 @@
     <ClCompile Include="SingleInstanceApp.cpp">
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
-    </ClCompile>
     <ClCompile Include="AppSettings.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
@@ -744,7 +837,7 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="GammaDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="MultiDocTemplateEx.cpp">
       <Filter>Main Files\Main Skeleton\Application</Filter>
@@ -756,7 +849,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="MisspelledReplaceWithDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="EditorView.cpp">
       <Filter>Main Files\Main Skeleton\View</Filter>
@@ -771,31 +864,31 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="QuickSearchDialog.cpp">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClCompile>
     <ClCompile Include="QuickSearch.cpp">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClCompile>
     <ClCompile Include="QuickReplace.cpp">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClCompile>
     <ClCompile Include="ReopenFileWithPasswordDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="SaveFileWithPassWordDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="CWMPEventDispatch.cpp">
-      <Filter>Control UI\Media</Filter>
+      <Filter>Component GUI\Media</Filter>
     </ClCompile>
     <ClCompile Include="CWMPHost.cpp">
-      <Filter>Control UI\Media</Filter>
+      <Filter>Component GUI\Media</Filter>
     </ClCompile>
     <ClCompile Include="GifHandler.cpp">
-      <Filter>Control UI\Image Processing</Filter>
+      <Filter>Component GUI\Image Processing</Filter>
     </ClCompile>
     <ClCompile Include="Editor.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="MediaDoc.cpp">
       <Filter>Main Files\Main Skeleton\Document</Filter>
@@ -807,34 +900,31 @@
       <Filter>Main Files\Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="ComboboxMultiLine.cpp">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="ScrollHelper.cpp">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="TreeHelper.cpp">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="UndoRedoEditControl.cpp">
-      <Filter>Control UI\MFC</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="FileBrowser.cpp">
-      <Filter>Control UI\MFC</Filter>
-    </ClCompile>
-    <ClCompile Include="AdobeAcrobatWrapper.cpp">
-      <Filter>Control UI\Pdf</Filter>
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="BookmarkWindow.cpp">
       <Filter>Dock Windows\Bookmark Window</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerWindow.cpp">
-      <Filter>Dock Windows\File Explorer</Filter>
+      <Filter>Dock Windows\File Explorer Window</Filter>
     </ClCompile>
     <ClCompile Include="SearchAndReplaceWindow.cpp">
-      <Filter>Dock Windows\Find And Replace Window</Filter>
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="ProjectTempateCreatorDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="GuiUtils.cpp">
       <Filter>Utils</Filter>
@@ -855,145 +945,142 @@
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="STLHelper.h">
-      <Filter>Header Files</Filter>
+      <Filter>Global Header</Filter>
     </ClCompile>
     <ClCompile Include="TextProgressCtrl.cpp">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClCompile>
     <ClCompile Include="FindReplaceTextWorker.cpp">
       <Filter>SearchEngine</Filter>
     </ClCompile>
     <ClCompile Include="Debugger.cpp">
-      <Filter>Dock Windows\Build Window\Debugger</Filter>
+      <Filter>Dock Windows\Build Debug Window\Debugger</Filter>
     </ClCompile>
     <ClCompile Include="MultiThreadWorker.cpp">
-      <Filter>Dock Windows\Build Window\IPC</Filter>
+      <Filter>Dock Windows\Build Debug Window\IPC</Filter>
     </ClCompile>
     <ClCompile Include="FindPathWorker.cpp">
       <Filter>SearchEngine</Filter>
     </ClCompile>
     <ClCompile Include="SearchNavigatePathDlg.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="PathResultWindow.cpp">
-      <Filter>Dock Windows\Search Path Result</Filter>
+      <Filter>Dock Windows\Search Path Result Window</Filter>
     </ClCompile>
     <ClCompile Include="VinaTextProgressBar.cpp">
-      <Filter>Dock Windows\Status Bar</Filter>
+      <Filter>Dock Windows\Status Bar Window</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerDoc.cpp">
       <Filter>Main Files\Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="TextResultWindow.cpp">
-      <Filter>Dock Windows\Search Text Result</Filter>
+      <Filter>Dock Windows\Search Text Result Window</Filter>
     </ClCompile>
     <ClCompile Include="TextFormatConverter.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="BreakpointWindow.cpp">
       <Filter>Dock Windows\Breakpoint Window</Filter>
-    </ClCompile>
-    <ClCompile Include="TemplateCreator.cpp">
-      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="AppAboutDlg.cpp">
       <Filter>Main Files\Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="UnicodeUtils.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="Hpslib.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="TextFile.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="WindowsPrinter.cpp">
-      <Filter>Control UI\Editor\Printer</Filter>
+      <Filter>Windows Printer</Filter>
     </ClCompile>
     <ClCompile Include="CreateNewMultiplePath.cpp">
-      <Filter>Dialog UI</Filter>
+      <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="DialogBase.cpp">
-      <Filter>Dialog UI\Base</Filter>
+      <Filter>Dialog GUI\Base</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\CharDistribution.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\JpCntx.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangBulgarianModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangCyrillicModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangGreekModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangHebrewModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangHungarianModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\LangThaiModel.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsBig5Prober.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsCharSetProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsEscCharsetProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsEscSM.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsEUCJPProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsEUCKRProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsEUCTWProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsGB2312Prober.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsHebrewProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsLatin1Prober.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsMBCSGroupProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsMBCSSM.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsSBCharSetProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsSBCSGroupProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsSJISProber.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsUniversalDetector.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\nsUTF8Prober.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="uchardet\uchardet.cpp">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
     <ClCompile Include="translator\POHandler.cpp">
       <Filter>Translator</Filter>
@@ -1005,10 +1092,10 @@
       <Filter>Main Files\Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="EditorLexerDark.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="EditorLexerLight.cpp">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="VinaTextSettingDlg.cpp">
       <Filter>Settings</Filter>
@@ -1023,7 +1110,94 @@
       <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="QuickGotoLine.cpp">
-      <Filter>Dock Windows\Find And Replace Window\Quick Search</Filter>
+      <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.cpp">
+      <Filter>Component GUI\PDFViewer\Arobat Reader</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocument.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentView.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentPane.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDocumentPage.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderBlankPane.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDataSource.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDebug.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderGlobals.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderLibrary.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderResource.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderSupport.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderStatusPane.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarEdit.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarItem.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarPane.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderToolbarText.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderToolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderAction.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderDestination.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderGeometry.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderPageCache.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderSelection.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\UXReaderTemplates.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderSupport</Filter>
+    </ClCompile>
+    <ClCompile Include="pdf\UXReader\common.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderInclude</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Global Header</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.cpp">
+      <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
+    </ClCompile>
+    <ClCompile Include="WebHandler.cpp">
+      <Filter>Internet</Filter>
+    </ClCompile>
+    <ClCompile Include="TemplateCreator.cpp">
+      <Filter>Component GUI\Editor\Template File</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboboxRegexHelper.cpp">
+      <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1335,22 +1509,22 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Hpslib.hr">
-      <Filter>Control UI\Editor\Editor</Filter>
+      <Filter>Component GUI\Editor\Editor</Filter>
     </None>
     <None Include="uchardet\Big5Freq.tab">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </None>
     <None Include="uchardet\EUCKRFreq.tab">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </None>
     <None Include="uchardet\EUCTWFreq.tab">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </None>
     <None Include="uchardet\GB2312Freq.tab">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </None>
     <None Include="uchardet\JISFreq.tab">
-      <Filter>Control UI\Editor\Unicode Mozilla</Filter>
+      <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </None>
     <None Include="VinaText.aps" />
     <None Include="res\VinaText.rc2">

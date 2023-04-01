@@ -872,7 +872,7 @@ CString AppUtils::GetFileFormatDescription(const CString & strFileExt)
 	CString strFileDescription = _T("Normal File");
 	if (AppUtils::GetVinaTextApp()->m_FileDescriptionData.empty())
 	{
-		CString strFilePath = PathUtils::GetVinaTextPackagePath() + _T("\\file-format-description.dat");
+		CString strFilePath = PathUtils::GetVinaTextPackagePath() + _T("data-packages\\file-format-description.dat");
 		if (PathFileExists(strFilePath))
 		{
 			CString strFileContent;
@@ -1857,19 +1857,59 @@ BOOL AppUtils::IsDocumentExisted(CString strFile)
 	return FALSE;
 }
 
-int AppUtils::GetDocumentCount()
-{
-	return static_cast<int>(GetAllDocuments().size());
-}
-
 int AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE type)
 {
-	return static_cast<int>(GetAllDocumentTypes(type).size());
+	int nCount = 0;
+	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
+	while (posTemplate)
+	{
+		CDocTemplate* doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
+		if (doctempl)
+		{
+			POSITION posDoc = doctempl->GetFirstDocPosition();
+			while (posDoc)
+			{
+				CDocument* pDocTarget = doctempl->GetNextDoc(posDoc);
+				if (pDocTarget)
+				{
+					if (type == DOCUMENT_TYPE::DOC_ALL)
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_EDITOR && pDocTarget->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_IMAGE && pDocTarget->IsKindOf(RUNTIME_CLASS(CImageDoc)))
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_PDF && pDocTarget->IsKindOf(RUNTIME_CLASS(CPdfDoc)))
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_MEDIA && pDocTarget->IsKindOf(RUNTIME_CLASS(CMediaDoc)))
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_HOST && pDocTarget->IsKindOf(RUNTIME_CLASS(CHostDoc)))
+					{
+						nCount++;
+					}
+					else if (type == DOCUMENT_TYPE::DOC_EXPLORER && pDocTarget->IsKindOf(RUNTIME_CLASS(CFileExplorerDoc)))
+					{
+						nCount++;
+					}
+				}
+			}
+		}
+	}
+	return nCount;
 }
 
 void AppUtils::CheckLastOpenDocument()
 {
-	if (GetDocumentCount() == 0) {
+	if (GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 0) {
 		const CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 		ASSERT(pFrame); if (!pFrame) return;
 		if (!pFrame->IsClosingVinaText() && !GetVinaTextApp()->m_bIsReloadDocument) {

@@ -45,20 +45,6 @@ BOOL CPdfDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return CBaseDoc::OnOpenDocument(lpszPathName);
 }
 
-// CPdfDoc serialization
-
-void CPdfDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 CPdfView* CPdfDoc::GetPdfView() const
 {
 	POSITION pos = GetFirstViewPosition();

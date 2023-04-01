@@ -186,24 +186,10 @@ void CEditorDoc::ReloadPreviewDocument(const CString & strFilePath)
 	}
 }
 
-// CEditorDoc serialization
-
-void CEditorDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 void CEditorDoc::OnCloseDocument()
 {
 	CString strPathName = GetPathName();
-	if (AppUtils::GetDocumentCount() == 1 && strPathName.IsEmpty() && !IsModified())
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1 && strPathName.IsEmpty() && !IsModified())
 	{
 		AppSettingMgr.RemoveDocumentUndefTitle(GetTitle());
 		SetTitle(AppSettingMgr.CreateDocumentUndefTitle());

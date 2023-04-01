@@ -66,6 +66,7 @@
 #define ID_PANE_FILE_RESULT_WINDOW      198
 #define IDR_GOOGLE_CHROME_DOC           199
 #define IDR_MOZILLA_FIREFOX_DOC         200
+#define IDR_SYSTEM_INFO_VIEWER          201
 #define IDS_EDIT_MENU                   306
 #define ID_EDITOR_EDIT_CTRL             307
 #define ID_EDITOR_SHOW_TRACKING_BAR     308
@@ -775,7 +776,6 @@
 #define ID_DOCUMENT_GENERATE_BUILD_FILE 36166
 #define ID_TREEFILECTRL_GET_FULL_FILE_PATH_DOUBLE_QUOTE 36167
 #define ID_MDI_TAB_GET_FULL_FILE_PATH_DOUBLE_QUOTE 36168
-#define ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT 36169
 #define ID_DOCUMENT_TEXT_LEXER_CPP      36170
 #define ID_DOCUMENT_TEXT_LEXER_PYTHON   36171
 #define ID_EDIT_ALIGN_LEFT              36172
@@ -1020,8 +1020,6 @@
 #define ID_EDIT_UNDO_ALL_FILE           36417
 #define ID_EDIT_REDO_ALL_FILE           36418
 #define ID_EDIT_SCROLL_TO_CARET         36419
-#define ID_EDIT_LINEUP                  36420
-#define ID_EDIT_LINEDOWN                36421
 #define ID_SELECTION_TO_WORD_RIGHT      36422
 #define ID_SELECTION_TO_PART_LEFT       36423
 #define ID_SELECTION_TO_PART_RIGHT      36424
@@ -1035,24 +1033,35 @@
 #define ID_TREEFILECTRL_NEW_FILE_EXPLORER_TAB 36432
 #define ID_DISPLAY_LONG_LINE_CHECKER    36433
 #define ID_TREEFILECTRL_OPEN_BY_AS_RAW_FORMAT 36434
-#define ID_VIDEO_PLAY                   36435
-#define ID_VIDEO_PAUSE                  36436
-#define ID_VIDEO_STOP                   36437
-#define ID_VIDEO_VOLUME_UP              36438
-#define ID_VIDEO_VOLUME_DOWN            36439
-#define ID_VIDEO_NEXT_FRAME             36440
-#define ID_VIDEO_PREVIOUS_FRAME         36441
+#define ID_MEDIA_PLAY                   36435
+#define ID_MEDIA_PAUSE                  36436
+#define ID_MEDIA_STOP                   36437
+#define ID_MEDIA_VOLUME_UP              36438
+#define ID_MEDIA_VOLUME_DOWN            36439
+#define ID_MEDIA_NEXT_FRAME             36440
+#define ID_MEDIA_PREVIOUS_FRAME         36441
 #define ID_APP_THEME_LIGHT              36442
 #define ID_APP_THEME_MONOKAI            36443
 #define ID_APP_THEME_SIERRABLUE         36444
 #define ID_SELECTION_TO_WORD_LEFT       36445
+#define ID_PDF_FIND_TEXT                36446
+#define ID_PDF_GOTO_PAGE				36447
+#define ID_PDF_PAGING_DECREMENT			36449
+#define ID_PDF_PAGING_INCREMENT			36450
+#define ID_PDF_MINIMUM_DOCUMENT			36451
+#define ID_PDF_MAXIMUM_DOCUMENT			36452
+#define ID_PDF_ZOOM_INCREMENT           36453
+#define ID_PDF_ZOOM_DECREMENT           36454
+#define ID_PDF_ZOOM_FIT_WIDTH           36455
+#define ID_PDF_ZOOM_ONE_TO_ONE          36456
+#define ID_HOST_SYSTEM_INFORMATION      36457
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        533
-#define _APS_NEXT_COMMAND_VALUE         36446
+#define _APS_NEXT_COMMAND_VALUE         36458
 #define _APS_NEXT_CONTROL_VALUE         1235
 #define _APS_NEXT_SYMED_VALUE           321
 #endif

@@ -135,10 +135,11 @@ void CImageView::OnInitialUpdate()
 			{
 				BYTE *buffer = new BYTE[bufsize];
 				DWORD temp = 0;
-				ReadFile(hFile, buffer, bufsize, &temp, 0);
-				// Convert buffer to IStream    
-				m_ImageStream.Attach(SHCreateMemStream(buffer, bufsize));
-				m_pLoadImage = Bitmap::FromStream(m_ImageStream); // need to free m_pLoadImage
+				if (ReadFile(hFile, buffer, bufsize, &temp, 0)) {
+					// Convert buffer to IStream    
+					m_ImageStream.Attach(SHCreateMemStream(buffer, bufsize));
+					m_pLoadImage = Bitmap::FromStream(m_ImageStream); // need to free m_pLoadImage
+				}
 				DELETE_POINTER_CPP_ARRAY(buffer);
 			}
 			CloseHandle(hFile);
@@ -436,20 +437,14 @@ BOOL CImageView::PreTranslateMessage(MSG * pMsg)
 				break;
 				case VK_DOWN:
 				{
-					if ((GetKeyState(VK_CONTROL) & 0x8000))
-					{
-						OnOptionsZoomDown();
-						return TRUE;
-					}
+					OnOptionsZoomDown();
+					return TRUE;
 				}
 				break;
 				case VK_UP:
 				{
-					if ((GetKeyState(VK_CONTROL) & 0x8000))
-					{
-						OnOptionsZoomUp();
-						return TRUE;
-					}
+					OnOptionsZoomUp();
+					return TRUE;
 				}
 				break;
 				case VK_SPACE:
@@ -474,7 +469,6 @@ BOOL CImageView::PreTranslateMessage(MSG * pMsg)
 			OnOptionsZoomDown();
 		}
 		return TRUE;
-		break;
 	}
 	}
 	return CViewBase::PreTranslateMessage(pMsg);

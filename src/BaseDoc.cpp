@@ -59,11 +59,7 @@ void CBaseDoc::OnCloseDocument() // not for CEditorDoc
 
 BOOL CBaseDoc::OnNewDocument()
 {
-	if (!CDocument::OnNewDocument())
-		return FALSE;
-
-	// TODO: add reinitialization code here
-	//(SDI documents will reuse this document)
+	if (!CDocument::OnNewDocument()) return FALSE;
 	return TRUE;
 }
 

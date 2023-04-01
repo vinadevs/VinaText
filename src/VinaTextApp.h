@@ -85,6 +85,7 @@ public:
 	BOOL m_bIsReloadByPreviewMode = FALSE;
 	HINSTANCE  m_hDllEdtior = NULL;
 	HINSTANCE  m_hDllLexer = NULL;
+	HINSTANCE  m_hDllRichEdit = NULL;
 	HWND m_hLatestHostWND = NULL; // latest host window handle
 	HostManager::STHostAppInfo m_STHostAppInfo;
 	CString m_strFileExplorerNavigatePath;

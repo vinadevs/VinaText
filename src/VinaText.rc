@@ -103,15 +103,17 @@ IDR_MSEXCEL_DOC         ICON                    "..\\res\\msexcel.ico"
 
 IDR_MSWORD_DOC          ICON                    "..\\res\\msword.ico"
 
-IDR_EDITOR_DOC_READ_ONLY ICON                    "..\\res\\docreadonly.ico"
+IDR_SYSTEM_INFO_VIEWER  ICON                    "..\\res\\systeminfo.ico"
 
-IDR_FILE_EXPLORER_WINDOW ICON                    "..\\res\\explorerwindow.ico"
+IDR_EDITOR_DOC_READ_ONLY ICON                   "..\\res\\docreadonly.ico"
+
+IDR_FILE_EXPLORER_WINDOW ICON                   "..\\res\\explorerwindow.ico"
 
 IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
 
 IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
 
-IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
+IDR_SEARCH_RESULT_WINDOW ICON                   "..\\res\\searchresultwindow.ico"
 
 IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
 
@@ -317,7 +319,6 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "File"
     BEGIN
-        MENUITEM "New Template...\tCtrl+Shift+P", ID_CREATE_TEMPLATE_PROJECT
         MENUITEM "New File\tCtrl+N",            ID_FILE_NEW
         MENUITEM SEPARATOR
         MENUITEM "Open File\tCtrl+O",           ID_FILE_OPEN
@@ -349,14 +350,7 @@ BEGIN
         END
         MENUITEM SEPARATOR
         MENUITEM "Close File\tCtrl+W",          ID_MDI_TAB_CLOSE
-        POPUP "Close All"
-        BEGIN
-            MENUITEM "Close All Tabs\tCtrl+Alt+F4", ID_MDI_TAB_CLOSE_ALL_DOC
-            MENUITEM "Close All Left Tabs",         ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
-            MENUITEM "Close All Right Tabs",        ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
-            MENUITEM "Close All Unchangeds",        ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
-            MENUITEM "Close All BUT This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
-        END
+        MENUITEM "Close All\tCtrl+Alt+F4",      ID_MDI_TAB_CLOSE_ALL_DOC
         MENUITEM SEPARATOR
         POPUP "Security..."
         BEGIN
@@ -393,7 +387,27 @@ BEGIN
         MENUITEM "Undo For All Files",          ID_EDIT_UNDO_ALL_FILE
         MENUITEM "Redo For All Files",          ID_EDIT_REDO_ALL_FILE
         MENUITEM SEPARATOR
-        MENUITEM "Large File Edit Mode",        ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM "Enable Large File Edit Mode", ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM SEPARATOR
+        POPUP "Folding Level"
+        BEGIN
+        POPUP "Toggle As Level"
+        BEGIN
+            MENUITEM "Level 1", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
+            MENUITEM "Level 2", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
+            MENUITEM "Level 3", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
+            MENUITEM "Level 4", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
+            MENUITEM "Level 5", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
+            MENUITEM "Level 6", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
+            MENUITEM "Level 7", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
+            MENUITEM "Level 8", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
+            MENUITEM "Level 9", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
+        END
+        MENUITEM "Fold All\tCtrl+Shift+M", ID_DOCUMENT_COLLAPSE_BRACKETS
+        MENUITEM "Unfold All\tCtrl+Shift+M", ID_DOCUMENT_EXPAND_BRACKETS
+        MENUITEM SEPARATOR
+        MENUITEM "At Current Line\tCtrl+M", ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
+        END
         MENUITEM SEPARATOR
         POPUP "Search And Replace"
         BEGIN
@@ -417,6 +431,29 @@ BEGIN
             MENUITEM "Goto To Caret\tMiddle Mouse", ID_EDIT_SCROLL_TO_CARET
         END
         MENUITEM SEPARATOR
+        POPUP "Text Highlight Style"
+        BEGIN
+            MENUITEM "Style C++", ID_DOCUMENT_TEXT_LEXER_CPP
+            MENUITEM "Style Python", ID_DOCUMENT_TEXT_LEXER_PYTHON
+            MENUITEM "Style HTML/XML", ID_DOCUMENT_TEXT_LEXER_HTML_XML
+            MENUITEM SEPARATOR
+            MENUITEM "Remove Current Style", ID_DOCUMENT_TEXT_LEXER_NON
+        END
+        MENUITEM SEPARATOR
+        POPUP "Auto Complete Word"
+        BEGIN
+            MENUITEM "Auto Show List Word\tAlt+A", ID_TOGGLE_AUTO_COMPLETE
+            MENUITEM "Show List Word\tCtrl+Space", ID_SHOW_COMPLETIONS
+            MENUITEM SEPARATOR
+            MENUITEM "Add Dataset From File", ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
+            MENUITEM "Add Dataset From Folder", ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
+            MENUITEM SEPARATOR
+            MENUITEM "Using Vietnamese Dataset", ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
+            MENUITEM "Using English Dataset", ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
+            MENUITEM SEPARATOR
+            MENUITEM "Clear All Datasets", ID_DOCUMENT_CLEAR_AC_DATASET
+        END
+        MENUITEM SEPARATOR
         POPUP "Line Bookmark"
         BEGIN
             MENUITEM "Add New Bookmark\tF8",        ID_OPTIONS_ADD_BOOKMARK
@@ -437,12 +474,6 @@ BEGIN
             MENUITEM "Enable Sync. Scrolling",      ID_EDIT_SYNC_SCROLL_VIEW
         END
         MENUITEM SEPARATOR
-        POPUP "Scrolling View"
-        BEGIN
-            MENUITEM "Line Up\tCtrl+Up",            ID_EDIT_LINEUP
-            MENUITEM "Line Down\tCtrl+Down",        ID_EDIT_LINEDOWN
-        END
-        MENUITEM SEPARATOR
         POPUP "Margin Bar Look"
         BEGIN
             MENUITEM "Show Line Number Margin",     ID_OPTIONS_VIEW_LINENUMBERS
@@ -450,7 +481,7 @@ BEGIN
             MENUITEM "Show Folding Margin",         ID_OPTIONS_FOLD_MARGIN
         END
         MENUITEM SEPARATOR
-        POPUP "Toggle Render"
+        POPUP "Toggle Render Mode"
         BEGIN
             MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",  ID_OPTIONS_WRAPLINE
             MENUITEM "Long Line Checker",           ID_DISPLAY_LONG_LINE_CHECKER
@@ -458,7 +489,7 @@ BEGIN
             MENUITEM "Whitespace And Tab Hint",     ID_DOCUMENT_DISPLAY_WHITE_SPACE
             MENUITEM "Tab Indentation Hint",        ID_DISPLAY_TAB_INDENT
             MENUITEM "Right To Left Document\tCtrl+Shift+R", ID_CHANGE_TEXT_BIDIRECTIONAL
-            MENUITEM "Hide Lines",                  ID_DOCUMENT_HIDE_LINES
+            MENUITEM "Hide Selected Line(s)",                  ID_DOCUMENT_HIDE_LINES
             MENUITEM "All Hidden Characters\tCtrl+Q", ID_EDIT_SHOW_ALL_CHARACTOR
         END
     END
@@ -492,20 +523,9 @@ BEGIN
     END
     POPUP "Text"
     BEGIN
-        POPUP "Comment"
-        BEGIN
-            MENUITEM "Add Comment\tCtrl+Shift+C",   ID_EDITOR_COMMENT
-            MENUITEM "Remove Comment\tCtrl+Shift+X", ID_EDITOR_UNCOMMENT
-            MENUITEM SEPARATOR
-            MENUITEM "Block Comment\tCtrl+K",       ID_EDITOR_BLOCK_COMMENT
-            MENUITEM "Block Uncomment\tCtrl+Shift+K", ID_EDITOR_BLOCK_UNCOMMENT
-            MENUITEM SEPARATOR
-            MENUITEM "Toggle Comment\tAlt+K",       ID_EDITOR_TOGGLE_COMMENT
-        END
-        MENUITEM SEPARATOR
         POPUP "Convert"
         BEGIN
-            POPUP "Case"
+            POPUP "Text Case"
             BEGIN
                 MENUITEM "To Upper Case\tCtrl+Shift+U", ID_DOCUMENT_TO_UPPER_CASE
                 MENUITEM "To Lower Case\tCtrl+U",       ID_DOCUMENT_TO_LOWER_CASE
@@ -634,7 +654,6 @@ BEGIN
                 MENUITEM "Center",                      ID_EDIT_ALIGN_CENTER_MOT_KEEP_LINE
                 MENUITEM "Justify",                     ID_EDIT_ALIGN_JUSTIFY_MOT_KEEP_LINE
             END
-            MENUITEM "Format File\tCtrl+Shift+J",   ID_DOCUMENT_FORMAT_FILE
         END
         MENUITEM SEPARATOR
         POPUP "Miscellaneous"
@@ -768,30 +787,82 @@ BEGIN
         MENUITEM "Show All Dock Windows",       ID_SHOW_ALL_DOCKWINDOW
         MENUITEM "Clear All Dock Windows",      ID_CLEAN_UP_ALL_WINDOW
     END
-    POPUP "Run"
+    POPUP "Code"
     BEGIN
-        MENUITEM "Start Debugging\tF5",         ID_DEBUGGER_START
-        MENUITEM "Stop Debugging\tShift+F5",    ID_DEBUGGER_STOP
+        MENUITEM "New File Template\tCtrl+Shift+P", ID_CREATE_TEMPLATE_PROJECT
         MENUITEM SEPARATOR
-        MENUITEM "Step Into\tF11",              ID_DEBUGGER_STEPINTO
-        MENUITEM "Step Over\tF10",              ID_DEBUGGER_STEPOVER
-        MENUITEM "Step Out\tShift+F11",         ID_DEBUGGER_STEPOUT
+        POPUP "Programing Language Setting(s)"
+        BEGIN
+            MENUITEM "Python", ID_LANGUAGE_FILE_CONFIG_PYTHON
+            MENUITEM "C++", ID_LANGUAGE_FILE_CONFIG_CPP
+            MENUITEM "C", ID_LANGUAGE_FILE_CONFIG_C
+            MENUITEM "C#", ID_LANGUAGE_FILE_CONFIG_CSHAPE
+            MENUITEM "JavaScript", ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
+            MENUITEM "Java", ID_LANGUAGE_FILE_CONFIG_JAVA
+            MENUITEM "Pascal", ID_LANGUAGE_FILE_CONFIG_PASCAL
+            MENUITEM "Assembly", ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
+            MENUITEM "Rust", ID_LANGUAGE_FILE_CONFIG_RUST
+            MENUITEM "Go Lang", ID_LANGUAGE_FILE_CONFIG_GO
+            MENUITEM "Batch", ID_LANGUAGE_FILE_CONFIG_BATCH
+            MENUITEM "PowerShell", ID_LANGUAGE_FILE_CONFIG_POWERSHELL
+            MENUITEM "HTML", ID_LANGUAGE_FILE_CONFIG_HTML
+            MENUITEM "PHP", ID_LANGUAGE_FILE_CONFIG_PHP
+            MENUITEM "Perl", ID_LANGUAGE_FILE_CONFIG_PERL
+            MENUITEM "SQL", ID_LANGUAGE_FILE_CONFIG_SQL
+            MENUITEM "Verilog", ID_LANGUAGE_FILE_CONFIG_VERILOG
+            MENUITEM "Ruby", ID_LANGUAGE_FILE_CONFIG_RUBY
+            MENUITEM "TCL", ID_LANGUAGE_FILE_CONFIG_TCL
+            MENUITEM "Auto IT", ID_LANGUAGE_FILE_CONFIG_AUTOIT
+            MENUITEM "Visual Basic", ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
+            MENUITEM "R", ID_LANGUAGE_FILE_CONFIG_R
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Dump Call Stack\tCtrl+Alt+C", ID_DEBUGGER_CALL_STACK
-        MENUITEM "Dump Variable Value\tF12",    ID_DEBUGGER_VARIABLE_VALUE
-        MENUITEM "Dump Variable Type\tShift+F12", ID_DEBUGGER_VARIABLE_TYPE
+        POPUP "Run And Debug..."
+        BEGIN
+            MENUITEM "Start Debugging\tF5",         ID_DEBUGGER_START
+            MENUITEM "Stop Debugging\tShift+F5",    ID_DEBUGGER_STOP
+            MENUITEM SEPARATOR
+            MENUITEM "Step Into\tF11",              ID_DEBUGGER_STEPINTO
+            MENUITEM "Step Over\tF10",              ID_DEBUGGER_STEPOVER
+            MENUITEM "Step Out\tShift+F11",         ID_DEBUGGER_STEPOUT
+            MENUITEM SEPARATOR
+            MENUITEM "Dump Call Stack\tCtrl+Alt+C", ID_DEBUGGER_CALL_STACK
+            MENUITEM "Dump Variable Value\tF12",    ID_DEBUGGER_VARIABLE_VALUE
+            MENUITEM "Dump Variable Type\tShift+F12", ID_DEBUGGER_VARIABLE_TYPE
+            MENUITEM SEPARATOR
+            MENUITEM "Add New Breakpoint\tF9",      ID_OPTIONS_ADD_NEW_BREAKPOINT
+            MENUITEM "Remove Breakpoint\tF9",       ID_OPTIONS_DELETE_BREAKPOINT
+            MENUITEM "Remove All Breakpoints",      ID_OPTIONS_DELETE_ALL_BREAKPOINT
+            MENUITEM SEPARATOR
+            MENUITEM "Goto Next Breakpoint",        ID_OPTIONS_FIND_NEXT_BREAKPOINT
+            MENUITEM "Goto Previous Breakpoint",    ID_OPTIONS_FIND_PREV_BREAKPOINT
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Add New Breakpoint\tF9",      ID_OPTIONS_ADD_NEW_BREAKPOINT
-        MENUITEM "Remove Breakpoint\tF9",       ID_OPTIONS_DELETE_BREAKPOINT
-        MENUITEM "Remove All Breakpoints",      ID_OPTIONS_DELETE_ALL_BREAKPOINT
+        POPUP "Build..."
+        BEGIN
+            MENUITEM "Generate Build Configuration", ID_DOCUMENT_GENERATE_BUILD_FILE
+            MENUITEM "Clean Up Build Temporary", ID_DOCUMENT_CLEAN_BUILD_FILE
+            MENUITEM "Show Error Annotation Hint", ID_OPTIONS_SHOW_ERROR
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Goto Next Breakpoint",        ID_OPTIONS_FIND_NEXT_BREAKPOINT
-        MENUITEM "Goto Previous Breakpoint",    ID_OPTIONS_FIND_PREV_BREAKPOINT
+        POPUP "Comment Code"
+        BEGIN
+            MENUITEM "Add Comment\tCtrl+Shift+C", ID_EDITOR_COMMENT
+            MENUITEM "Remove Comment\tCtrl+Shift+X", ID_EDITOR_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Block Comment\tCtrl+K", ID_EDITOR_BLOCK_COMMENT
+            MENUITEM "Block Uncomment\tCtrl+Shift+K", ID_EDITOR_BLOCK_UNCOMMENT
+            MENUITEM SEPARATOR
+            MENUITEM "Toggle Comment\tAlt+K", ID_EDITOR_TOGGLE_COMMENT
+        END
         MENUITEM SEPARATOR
-        MENUITEM "Generate File Build",         ID_DOCUMENT_GENERATE_BUILD_FILE
-        MENUITEM "Clean Up Build Temporary",    ID_DOCUMENT_CLEAN_BUILD_FILE
+        MENUITEM "Format Document\tCtrl+Shift+J", ID_DOCUMENT_FORMAT_FILE
         MENUITEM SEPARATOR
-        MENUITEM "Show Error Annotation Hint",  ID_OPTIONS_SHOW_ERROR
+        POPUP "Package Manager(s)"
+        BEGIN
+            MENUITEM "NodeJS Package Manager (npm)", ID_TOOL_NODEJS_NPM_WINDOW
+            MENUITEM "Python Package Manager (pip3)", ID_TOOL_PYTHON_PIP_WINDOW
+        END
     END
     POPUP "Terminal"
     BEGIN
@@ -809,22 +880,19 @@ BEGIN
         MENUITEM "Open PowerShell Terminal",    ID_MDI_TAB_OPEN_POWERSHELL
         MENUITEM "Open Git Bash Terminal",      ID_MDI_TAB_OPEN_GITBASH
         MENUITEM "Open WSL Terminal",           ID_MDI_TAB_OPEN_WSL
-        MENUITEM SEPARATOR
-        MENUITEM "Python Package Manager (pip3)", ID_TOOL_PYTHON_PIP_WINDOW
-        MENUITEM "NodeJS Package Manager (npm)", ID_TOOL_NODEJS_NPM_WINDOW
     END
     POPUP "Image"
     BEGIN
-        MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
+        MENUITEM "Edit With Microsoft Paint",    ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tCtrl+Down",         ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tCtrl+Up",            ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",            ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",               ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
-        MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
+        MENUITEM "Rotate Left 90*\tCtrl+Left",   ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
-        MENUITEM "Rotate Flip\tCtrl+D",         ID_IMAGE_FLIP
-        MENUITEM "Rotate Mirror\tCtrl+M",       ID_IMAGE_MIRROR
+        MENUITEM "Rotate Flip\tCtrl+D",          ID_IMAGE_FLIP
+        MENUITEM "Rotate Mirror\tCtrl+M",        ID_IMAGE_MIRROR
         MENUITEM SEPARATOR
         POPUP "Bitmap Effects"
         BEGIN
@@ -846,24 +914,42 @@ BEGIN
     END
     POPUP "Media"
     BEGIN
-        MENUITEM "Play\tSpace",                 ID_VIDEO_PLAY
-        MENUITEM "Pause\tSpace",                ID_VIDEO_PAUSE
-        MENUITEM "Stop\tCtrl+Space",            ID_VIDEO_STOP
-        MENUITEM "Adjust Volume Up\tMouse Wheel Up", ID_VIDEO_VOLUME_UP
-        MENUITEM "Adjust Volume Down\tMouse Wheel Down", ID_VIDEO_VOLUME_DOWN
-        MENUITEM "Fast Forward\tRight Arrow",   ID_VIDEO_NEXT_FRAME
-        MENUITEM "Fast Reverse\tLeft Arrow",    ID_VIDEO_PREVIOUS_FRAME
+        MENUITEM "Play\tSpace",                 ID_MEDIA_PLAY
+        MENUITEM "Pause\tSpace",                ID_MEDIA_PAUSE
+        MENUITEM "Stop\tCtrl+Space",            ID_MEDIA_STOP
+        MENUITEM SEPARATOR
+        MENUITEM "Adjust Volume Up\tMouse Wheel Up", ID_MEDIA_VOLUME_UP
+        MENUITEM "Adjust Volume Down\tMouse Wheel Down", ID_MEDIA_VOLUME_DOWN
+        MENUITEM SEPARATOR
+        MENUITEM "Fast Forward\tRight Arrow",   ID_MEDIA_NEXT_FRAME
+        MENUITEM "Fast Reverse\tLeft Arrow",    ID_MEDIA_PREVIOUS_FRAME
+    END
+    POPUP "Pdf"
+    BEGIN
+        MENUITEM "Find...\tCtrl+F",             ID_PDF_FIND_TEXT
+        MENUITEM "Goto Page Number...\tCtrl+G", ID_PDF_GOTO_PAGE
+        MENUITEM SEPARATOR
+        MENUITEM "Page Up\tPgUp",               ID_PDF_PAGING_DECREMENT
+        MENUITEM "Page Down\tPgDn",             ID_PDF_PAGING_INCREMENT
+        MENUITEM "First Page\tHome",            ID_PDF_MINIMUM_DOCUMENT
+        MENUITEM "Last Page\tEnd",              ID_PDF_MAXIMUM_DOCUMENT
+        MENUITEM SEPARATOR
+        MENUITEM "Zoom In\tCtrl+ScrollUp",      ID_PDF_ZOOM_INCREMENT
+        MENUITEM "Zoom Out\tCtrl+ScrollDown",   ID_PDF_ZOOM_DECREMENT
+        MENUITEM "Zoom Fit Width\tCtrl+J",      ID_PDF_ZOOM_FIT_WIDTH
+        MENUITEM "Zoom Actual\tCtrl+K",         ID_PDF_ZOOM_ONE_TO_ONE
     END
     POPUP "Tools"
     BEGIN
-        POPUP "Host Application"
+        POPUP "Application(s)"
         BEGIN
-            MENUITEM "New Microsoft Paint",         ID_HOST_MS_PAINT
+            MENUITEM "Microsoft Paint",             ID_HOST_MS_PAINT
+            MENUITEM "System Information Viewer",   ID_HOST_SYSTEM_INFORMATION
         END
         POPUP "Quick Window Shortcuts"
         BEGIN
             MENUITEM "All Control Panel Items",     ID_SHORTCUT_CONTROL_PANEL
-            MENUITEM "Environmental Variables PATH", ID_SHORTCUT_ENVIRONMENT_PATH
+            MENUITEM "Environmental Variables PATH",ID_SHORTCUT_ENVIRONMENT_PATH
             MENUITEM "Window32 Host Location",      ID_SHORTCUT_WINDOW_HOST_FOLDER
         END
         POPUP "Print Message Output"
@@ -887,8 +973,8 @@ BEGIN
     END
     POPUP "Window"
     BEGIN
-        MENUITEM "Full Screen Mode\tAlt+F11",   ID_EDITOR_FULL_SCREEN_MODE
-        MENUITEM "Split Current View\tCtrl+F1", ID_WINDOW_NEW
+        MENUITEM "Full Screen Mode\tAlt+F11",    ID_EDITOR_FULL_SCREEN_MODE
+        MENUITEM "Split Current View\tCtrl+F1",  ID_WINDOW_NEW
         MENUITEM SEPARATOR
         MENUITEM "Switch To Next Tab\tCtrl+Tab", ID_MDI_SWITCH_TO_NEXT_TAB
         MENUITEM "Switch To Previous Tab\tCtrl+Shift+Tab", ID_MDI_SWITCH_TO_PREVIOUS_TAB
@@ -901,35 +987,9 @@ BEGIN
     BEGIN
         POPUP "Application Theme"
         BEGIN
-            MENUITEM "Light",                       ID_APP_THEME_LIGHT
-            MENUITEM "Monokai",                     ID_APP_THEME_MONOKAI
-            MENUITEM "Sierra Blue",                 ID_APP_THEME_SIERRABLUE
-        END
-        MENUITEM SEPARATOR
-        POPUP "Language Config"
-        BEGIN
-            MENUITEM "Python",                      ID_LANGUAGE_FILE_CONFIG_PYTHON
-            MENUITEM "C++",                         ID_LANGUAGE_FILE_CONFIG_CPP
-            MENUITEM "C",                           ID_LANGUAGE_FILE_CONFIG_C
-            MENUITEM "C#",                          ID_LANGUAGE_FILE_CONFIG_CSHAPE
-            MENUITEM "JavaScript",                  ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
-            MENUITEM "Java",                        ID_LANGUAGE_FILE_CONFIG_JAVA
-            MENUITEM "Pascal",                      ID_LANGUAGE_FILE_CONFIG_PASCAL
-            MENUITEM "Assembly",                    ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
-            MENUITEM "Rust",                        ID_LANGUAGE_FILE_CONFIG_RUST
-            MENUITEM "Go Lang",                     ID_LANGUAGE_FILE_CONFIG_GO
-            MENUITEM "Batch",                       ID_LANGUAGE_FILE_CONFIG_BATCH
-            MENUITEM "PowerShell",                  ID_LANGUAGE_FILE_CONFIG_POWERSHELL
-            MENUITEM "HTML",                        ID_LANGUAGE_FILE_CONFIG_HTML
-            MENUITEM "PHP",                         ID_LANGUAGE_FILE_CONFIG_PHP
-            MENUITEM "Perl",                        ID_LANGUAGE_FILE_CONFIG_PERL
-            MENUITEM "SQL",                         ID_LANGUAGE_FILE_CONFIG_SQL
-            MENUITEM "Verilog",                     ID_LANGUAGE_FILE_CONFIG_VERILOG
-            MENUITEM "Ruby",                        ID_LANGUAGE_FILE_CONFIG_RUBY
-            MENUITEM "TCL",                         ID_LANGUAGE_FILE_CONFIG_TCL
-            MENUITEM "Auto IT",                     ID_LANGUAGE_FILE_CONFIG_AUTOIT
-            MENUITEM "Visual Basic",                ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
-            MENUITEM "R",                           ID_LANGUAGE_FILE_CONFIG_R
+            MENUITEM "Light",                   ID_APP_THEME_LIGHT
+            MENUITEM "Monokai",                 ID_APP_THEME_MONOKAI
+            MENUITEM "Sierra Blue",             ID_APP_THEME_SIERRABLUE
         END
         MENUITEM SEPARATOR
         MENUITEM "General Settings",            ID_VIEW_APP_SETTINGS
@@ -962,9 +1022,8 @@ BEGIN
         BEGIN
             MENUITEM "New File\tCtrl+N",            ID_TREEFILECTRL_CREATEFILE
             MENUITEM "New Folder\tCtrl+M",          ID_TREEFILECTRL_CREATEFOLDER
-            MENUITEM "New Template\tCtrl+Shift+P",  ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT
             MENUITEM SEPARATOR
-            MENUITEM "New Multiple...",             ID_TREEFILECTRL_CREATE_MULTIPLE
+            MENUITEM "New Multiple Files...",       ID_TREEFILECTRL_CREATE_MULTIPLE
         END
         POPUP "Get Path String"
         BEGIN
@@ -1049,7 +1108,7 @@ BEGIN
             MENUITEM "Close All Left",              ID_MDI_TAB_CLOSE_ALL_DOC_LEFT
             MENUITEM "Close All Right",             ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT
             MENUITEM "Close All Unchanged",         ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE
-            MENUITEM "Close All BUT This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
+            MENUITEM "Close All But This",          ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS
         END
         MENUITEM SEPARATOR
         MENUITEM "New File\tCtrl+N",            ID_MDI_TAB_NEW_FILE
@@ -1132,48 +1191,6 @@ BEGIN
         MENUITEM "Disable Edit Mode\tCtrl+J",   ID_DOCUMENT_SET_READ_ONLY
         MENUITEM "Word Wrap Mode\tCtrl+Alt+Z",  ID_OPTIONS_WRAPLINE
         MENUITEM SEPARATOR
-        POPUP "Folding Level"
-        BEGIN
-            MENUITEM "Fold All\tCtrl+Shift+M",      ID_DOCUMENT_COLLAPSE_BRACKETS
-            MENUITEM "Unfold All\tCtrl+Shift+M",    ID_DOCUMENT_EXPAND_BRACKETS
-            MENUITEM SEPARATOR
-            MENUITEM "At Current Line\tCtrl+M",     ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
-            MENUITEM SEPARATOR
-            POPUP "Toggle As Level"
-            BEGIN
-                MENUITEM "Level 1",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
-                MENUITEM "Level 2",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
-                MENUITEM "Level 3",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
-                MENUITEM "Level 4",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
-                MENUITEM "Level 5",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
-                MENUITEM "Level 6",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
-                MENUITEM "Level 7",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
-                MENUITEM "Level 8",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
-                MENUITEM "Level 9",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
-            END
-        END
-        POPUP "Text Highlight"
-        BEGIN
-            MENUITEM "Style C++",                   ID_DOCUMENT_TEXT_LEXER_CPP
-            MENUITEM "Style Python",                ID_DOCUMENT_TEXT_LEXER_PYTHON
-            MENUITEM "Style HTML/XML",              ID_DOCUMENT_TEXT_LEXER_HTML_XML
-            MENUITEM SEPARATOR
-            MENUITEM "Remove Current Style",        ID_DOCUMENT_TEXT_LEXER_NON
-        END
-        POPUP "Auto Complete"
-        BEGIN
-            MENUITEM "Auto Show Complete\tAlt+A",   ID_TOGGLE_AUTO_COMPLETE
-            MENUITEM "Show Completions\tCtrl+Space", ID_SHOW_COMPLETIONS
-            MENUITEM SEPARATOR
-            MENUITEM "Add Dataset From File",       ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
-            MENUITEM "Add Dataset From Folder",     ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
-            MENUITEM SEPARATOR
-            MENUITEM "Using Vietnamese Dataset",    ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
-            MENUITEM "Using English Dataset",       ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
-            MENUITEM SEPARATOR
-            MENUITEM "Clear All Datasets",          ID_DOCUMENT_CLEAR_AC_DATASET
-        END
-        MENUITEM SEPARATOR
         POPUP "Translate"
         BEGIN
             MENUITEM "Translate Selected Text\tF1", ID_DOCUMENT_TRANSLATE
@@ -1202,8 +1219,8 @@ BEGIN
         MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tCtrl+Down",         ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tCtrl+Up",            ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",         ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",            ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
         MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
@@ -1434,8 +1451,6 @@ BEGIN
     VK_TAB,         ID_DECREASE_TAB_INDENTATION, VIRTKEY, SHIFT
     VK_UP,          ID_EDIT_MOVE_SELECTED_LINE_UP, VIRTKEY, SHIFT, CONTROL
     VK_DOWN,        ID_EDIT_MOVE_SELECTED_LINE_DOWN, VIRTKEY, SHIFT, CONTROL
-    VK_UP,          ID_EDIT_LINEUP,         VIRTKEY, CONTROL
-    VK_DOWN,        ID_EDIT_LINEDOWN,       VIRTKEY, CONTROL
     "J",            ID_DOCUMENT_FORMAT_FILE, VIRTKEY, SHIFT, CONTROL
     "J",            ID_DOCUMENT_SET_READ_ONLY, VIRTKEY, CONTROL
     "T",            ID_LINE_TRANSPOSE,      VIRTKEY, CONTROL
@@ -1736,7 +1751,7 @@ END
 
 IDD_DIALOG_PROJECT_TEMPLATE DIALOGEX 0, 0, 401, 119
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "File Template Creator"
+CAPTION "Programing File Template Creator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Create",IDOK,250,96,63,17
@@ -2722,8 +2737,6 @@ BEGIN
     ID_OPTIONS_DELETE_ALL_BREAKPOINT 
                             "Remove All Breakpoints\\Remove All Breakpoints"
     ID_INDICATOR_INS        "  INSERT  "
-    ID_TOOL_PYTHON_PIP_WINDOW 
-                            ".\\python.exe -m pip install -t Lib\\site-packages -U <package>"
 END
 
 STRINGTABLE
@@ -2797,11 +2810,6 @@ STRINGTABLE
 BEGIN
     ID_EDIT_STOP_PROGRAM    "Stop Window Debugger\nStop Window Debugger"
     ID_EDITOR_UNCOMMENT     "Uncomment Line or Block\nUnComment"
-END
-
-STRINGTABLE
-BEGIN
-    ID_TOOL_NODEJS_NPM_WINDOW "npm install --prefix <package>"
 END
 
 STRINGTABLE

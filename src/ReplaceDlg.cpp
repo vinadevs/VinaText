@@ -14,6 +14,7 @@
 #include "EditorDoc.h"
 #include "Editor.h"
 #include "ScrollHelper.h"
+#include "ComboboxRegexHelper.h"
 #include "EditorView.h"
 #include "VinaTextProgressBar.h"
 #include "MultiThreadWorker.h"
@@ -31,7 +32,7 @@ CFindAndReplaceDlg::CFindAndReplaceDlg(CWnd* pParent /*=NULL*/)
 {
 	m_bMatchcase = FALSE;
 	m_bMatchwords = FALSE;
-	m_bMacthregex = FALSE;
+	m_bMatchregex = FALSE;
 	m_bAppendResult = FALSE;
 	m_bShowFileNameOnly = FALSE;
 	m_bExcludeSubFolder = FALSE;
@@ -162,7 +163,7 @@ void CFindAndReplaceDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, ID_EDITOR_REPLACE_PATH_SPECIFIC_EDIT, m_EditSpecialPath);
 	DDX_Check(pDX, ID_EDITOR_REPLACE_DLG_MATCHCASE_CHECKBOX, m_bMatchcase);
 	DDX_Check(pDX, ID_EDITOR_REPLACE_DLG_WRAPAROUND_CHECKBOX, m_bMatchwords);
-	DDX_Check(pDX, ID_EDITOR_REPLACE_DLG_REGEX_CHECKBOX, m_bMacthregex);
+	DDX_Check(pDX, ID_EDITOR_REPLACE_DLG_REGEX_CHECKBOX, m_bMatchregex);
 	DDX_Check(pDX, ID_EDITOR_REPLACE_CHECK_APPEND_SEACH_RESULT, m_bAppendResult);
 	DDX_Check(pDX, ID_EDITOR_REPLACE_CHECK_SHOW_FILE_NAME, m_bShowFileNameOnly);
 	DDX_Check(pDX, ID_EDITOR_REPLACE_CHECK_EXCLUDE_SUB_FOLDER, m_bExcludeSubFolder);
@@ -322,7 +323,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_WORD;
 	if (m_bMatchcase)
 		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_CASE;
-	if (m_bMacthregex)
+	if (m_bMatchregex)
 		nSearchOptions |= VinaTextSearchEngine::OPTIONS::REGEX;
 
 	if (strSearchWhat.IsEmpty())
@@ -640,7 +641,7 @@ BOOL CFindAndReplaceDlg::OnEraseBkgnd(CDC * pDC)
 void CFindAndReplaceDlg::OnClickCheckBoxRegex()
 {
 	UpdateData(TRUE);
-	if (m_bMacthregex)
+	if (m_bMatchregex)
 	{
 		GetDlgItem(ID_EDITOR_REPLACE_REGEX_COMBO)->EnableWindow(TRUE);
 		OnCbnSelchangeRegexPattern();
@@ -803,35 +804,7 @@ void CFindAndReplaceDlg::InitComboReplaceScope()
 
 void CFindAndReplaceDlg::InitComboRegexPattern()
 {
-	m_combRegexPattern.ResetContent();
-	m_combRegexPattern.AddString(_T("Match any character one time"));
-	m_combRegexPattern.AddString(_T("Match any character zero or more times (wildcard *)"));
-	m_combRegexPattern.AddString(_T("Match any character one or more times (wildcard ?)"));
-	m_combRegexPattern.AddString(_T("Match any single character in the set 'abc'"));
-	m_combRegexPattern.AddString(_T("Match any single character not in the set 'abc'"));
-	m_combRegexPattern.AddString(_T("Match any single character in range a to f"));
-	m_combRegexPattern.AddString(_T("Match any word character"));
-	m_combRegexPattern.AddString(_T("Match any decimal digit"));
-	m_combRegexPattern.AddString(_T("Match any whitespace character"));
-	m_combRegexPattern.AddString(_T("Match any character zero or one time"));
-	m_combRegexPattern.AddString(_T("Match any character zero or more times"));
-	m_combRegexPattern.AddString(_T("Match any character one or more times"));
-	m_combRegexPattern.AddString(_T("Match three consecutive decimal digits"));
-	m_combRegexPattern.AddString(_T("Match at beginning or end of word"));
-	m_combRegexPattern.AddString(_T("Match at beginning of line"));
-	m_combRegexPattern.AddString(_T("Match a line break"));
-	m_combRegexPattern.AddString(_T("Match at end of line"));
-	m_combRegexPattern.AddString(_T("Capture and impicitily number the subexpression 'dog|cat'"));
-	m_combRegexPattern.AddString(_T("Backreference the first captured subexpression"));
-	m_combRegexPattern.AddString(_T("Capture subexpression 'dog|cat' and name it 'pet'"));
-	m_combRegexPattern.AddString(_T("Backreference the captured subexpression named 'pet'"));
-	m_combRegexPattern.AddString(_T("Space or Tab"));
-	m_combRegexPattern.AddString(_T("Match any numeric character"));
-	m_combRegexPattern.AddString(_T("C/C++ identifier"));
-	m_combRegexPattern.AddString(_T("Quoted string"));
-	m_combRegexPattern.AddString(_T("Match a hexadecimal number"));
-	m_combRegexPattern.AddString(_T("Match integer and decimals"));
-	m_combRegexPattern.SetCurSel(0);
+	ComboboxRegexHelper::PopulateRegexFields(m_combRegexPattern);
 }
 
 void CFindAndReplaceDlg::OnCbnSelchangeSearchScope()
@@ -861,115 +834,8 @@ void CFindAndReplaceDlg::OnCbnSelchangeSearchScope()
 
 void CFindAndReplaceDlg::OnCbnSelchangeRegexPattern()
 {
-	int iSel = m_combRegexPattern.GetCurSel();
-	if (iSel == 0)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("."));
-	}
-	else if (iSel == 1)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T(".*"));
-	}
-	else if (iSel == 2)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T(".+"));
-	}
-	else if (iSel == 3)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("[abc]"));
-	}
-	else if (iSel == 4)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("^[abc]"));
-	}
-	else if (iSel == 5)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("[a-f]"));
-	}
-	else if (iSel == 6)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\w"));
-	}
-	else if (iSel == 7)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\d"));
-	}
-	else if (iSel == 8)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("[^\\S\\r\\n]"));
-	}
-	else if (iSel == 9)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("be?"));
-	}
-	else if (iSel == 10)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("be*"));
-	}
-	else if (iSel == 11)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("be+"));
-	}
-	else if (iSel == 12)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\d{3}"));
-	}
-	else if (iSel == 13)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\b"));
-	}
-	else if (iSel == 14)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("^"));
-	}
-	else if (iSel == 15)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\r?\\n"));
-	}
-	else if (iSel == 16)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("(?=\r?$)"));
-	}
-	else if (iSel == 17)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("(dog|cat)"));
-	}
-	else if (iSel == 18)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\1"));
-	}
-	else if (iSel == 19)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("(?<pet>dog|cat)"));
-	}
-	else if (iSel == 20)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\k<pet>"));
-	}
-	else if (iSel == 21)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("[\\t]"));
-	}
-	else if (iSel == 22)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\d"));
-	}
-	else if (iSel == 23)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\b(_\\w+|[\\w-[0-9_]]\\w*)\\b"));
-	}
-	else if (iSel == 24)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("((\\\".+?\\\")|('.+?'))"));
-	}
-	else if (iSel == 25)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\b(_\\w+|[\\w-[0-9_]]\\w*)\\b"));
-	}
-	else if (iSel == 26)
-	{
-		m_comboSearchWhat.SetWindowTextW(_T("\\b[0-9]*\\.*[0-9]+\\b"));
-	}
+	ComboboxRegexHelper::SetSearchFields(m_comboSearchWhat, m_combRegexPattern);
+	OnSearchEditChange();
 }
 
 void CFindAndReplaceDlg::OnFilterEditChange()
@@ -1017,7 +883,7 @@ void CFindAndReplaceDlg::UpdateSearchOptions()
 		m_nSearchOptions |= SCFIND_WHOLEWORD;
 	if (m_bMatchcase)
 		m_nSearchOptions |= SCFIND_MATCHCASE;
-	if (m_bMacthregex)
+	if (m_bMatchregex)
 		m_nSearchOptions |= SCFIND_REGEXP;
 }
 
@@ -1044,7 +910,7 @@ SycnFindReplaceSettings CFindAndReplaceDlg::GetSycnFindReplaceSettings()
 	dataSync._strSpecificPath = m_strSpecificPath;
 	dataSync._bAppendResult = m_bAppendResult;
 	dataSync._bExcludeSubFolder = m_bExcludeSubFolder;
-	dataSync._bMacthregex = m_bMacthregex;
+	dataSync._bMacthregex = m_bMatchregex;
 	dataSync._bMatchcase = m_bMatchcase;
 	dataSync._bMatchwords = m_bMatchwords;
 	dataSync._bShowFileNameOnly = m_bShowFileNameOnly;
@@ -1065,7 +931,7 @@ void CFindAndReplaceDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings
 	m_strSpecificPath = settings._strSpecificPath;
 	m_bAppendResult = settings._bAppendResult;
 	m_bExcludeSubFolder = settings._bExcludeSubFolder;
-	m_bMacthregex = settings._bMacthregex;
+	m_bMatchregex = settings._bMacthregex;
 	m_bMatchcase = settings._bMatchcase;
 	m_bMatchwords = settings._bMatchwords;
 	m_bShowFileNameOnly = settings._bShowFileNameOnly;
@@ -1079,6 +945,7 @@ void CFindAndReplaceDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings
 		EnableButtons(TRUE);
 	}
 	UpdateData(FALSE);
+	OnClickCheckBoxRegex();
 }
 
 void CFindAndReplaceDlg::UpdateUIVisual()

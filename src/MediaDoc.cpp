@@ -45,20 +45,6 @@ BOOL CMediaDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	return CBaseDoc::OnOpenDocument(lpszPathName);
 }
 
-// CMediaDoc serialization
-
-void CMediaDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 CMediaView* CMediaDoc::GetMediaView() const
 {
 	POSITION pos = GetFirstViewPosition();

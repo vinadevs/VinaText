@@ -44,29 +44,9 @@ CFileExplorerDoc::~CFileExplorerDoc()
 
 BOOL CFileExplorerDoc::OnNewDocument()
 {
-	if (!CBaseDoc::OnNewDocument())
-		return FALSE;
-
-	// TODO: add reinitialization code here
-	// (SDI documents will reuse this document)
-
+	if (!CBaseDoc::OnNewDocument()) return FALSE;
 	return TRUE;
 }
-
-// CFileExplorerDoc serialization
-
-void CFileExplorerDoc::Serialize(CArchive& ar)
-{
-	if (ar.IsStoring())
-	{
-		// TODO: add storing code here
-	}
-	else
-	{
-		// TODO: add loading code here
-	}
-}
-
 
 // CFileExplorerDoc diagnostics
 

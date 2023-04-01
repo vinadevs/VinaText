@@ -326,8 +326,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_TOOLS_CONVERT_TEXT_FROM_BINARY, OnOptionsDecodeFromBinary)
 	ON_COMMAND(ID_TOOLS_CONVERT_TEXT_FROM_OCTA, OnOptionsDecodeFromOcta)
 	ON_COMMAND(ID_EDIT_SCROLL_TO_CARET, OnOptionsScrollToCaret)
-	ON_COMMAND(ID_EDIT_LINEUP, OnOptionsLineUp)
-	ON_COMMAND(ID_EDIT_LINEDOWN, OnOptionsLineDown)
 
 	// from debug menu
 	ON_COMMAND(ID_DEBUGGER_START, OnStartDebugger)
@@ -7030,7 +7028,7 @@ CString CEditorView::TranlateText(CString strSelectedText, int nLineEnd)
 {
 	if (strSelectedText.IsEmpty())
 	{
-		strSelectedText = _T("[Translate Error] Selection is empty!");
+		strSelectedText = _T("[Translate Error] Text selection is empty.");
 		m_EditorCtrl.SetLineCenterDisplay(nLineEnd);
 		m_EditorCtrl.SetAnnotationText(strSelectedText, nLineEnd);
 		return strSelectedText;
@@ -8621,16 +8619,6 @@ void CEditorView::OnOptionsScrollToCaret()
 	m_EditorCtrl.SetLineCenterDisplay(m_EditorCtrl.GetCurrentLine());
 }
 
-void CEditorView::OnOptionsLineUp()
-{
-	m_EditorCtrl.DoCommand(SCI_LINEUP);
-}
-
-void CEditorView::OnOptionsLineDown()
-{
-	m_EditorCtrl.DoCommand(SCI_LINEDOWN);
-}
-
 void CEditorView::OnUpdateOptionsSyncVerticalScrolling(CCmdUI * pCmdUI)
 {
 	pCmdUI->SetCheck(AppSettingMgr.m_bEnableSynchronizeScrolling);
@@ -9553,7 +9541,7 @@ void CEditorView::OnQuickFindAllInFile()
 	CString strSelectedWord = m_EditorCtrl.GetSelectedText();
 	if (strSelectedWord.IsEmpty())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Quick Search All] Selection is empty..."), BasicColors::orange);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Quick Search All] Text selection is empty..."), BasicColors::orange);
 		return;
 	}
 	pFrame->SearchAllOnFileFromEditor(m_EditorCtrl.GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
@@ -9592,7 +9580,7 @@ void CEditorView::OnToolCreateMd5()
 	CString strSelectedText = m_EditorCtrl.GetSelectedText();
 	if (strSelectedText.IsEmpty())
 	{
-		AfxMessageBox(_T("[Generator Error] Selection is empty!"));
+		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
 		return;
 	}
 	CString strConvertedText = AppUtils::WStdToCString(md5_digest(AppUtils::CStringToStd(strSelectedText)));
@@ -9605,7 +9593,7 @@ void CEditorView::OnToolCreateCRC()
 	CString strSelectedText = m_EditorCtrl.GetSelectedText();
 	if (strSelectedText.IsEmpty())
 	{
-		AfxMessageBox(_T("[Generator Error] Selection is empty!"));
+		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
 		return;
 	}
 	CString strConvertedText = AppUtils::IntToCString(crc32_generate(AppUtils::CStringToStd(strSelectedText)));
@@ -9618,7 +9606,7 @@ void CEditorView::OnToolCreateSha256()
 	CString strSelectedText = m_EditorCtrl.GetSelectedText();
 	if (strSelectedText.IsEmpty())
 	{
-		AfxMessageBox(_T("[Generator Error] Selection is empty!"));
+		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
 		return;
 	}
 	CString strConvertedText = AppUtils::WStdToCString(sha256_hash(AppUtils::CStringToStd(strSelectedText)));
@@ -9631,7 +9619,7 @@ void CEditorView::OnToolCreateSha1()
 	CString strSelectedText = m_EditorCtrl.GetSelectedText();
 	if (strSelectedText.IsEmpty())
 	{
-		AfxMessageBox(_T("[Generator Error] Selection is empty!"));
+		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
 		return;
 	}
 	CString strConvertedText = AppUtils::StdToCString(sha1_hash(AppUtils::CStringToStd(strSelectedText)));
@@ -9651,7 +9639,7 @@ void CEditorView::OnOptionsUrlEscapse()
 	CString strSelectedText = m_EditorCtrl.GetSelectedText();
 	if (strSelectedText.IsEmpty())
 	{
-		AfxMessageBox(_T("[Generator Error] Selection is empty!"));
+		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
 		return;
 	}
 	std::string strEncoded = CWebHandler::EncodeStringForCurl(AppUtils::CStringToStd(strSelectedText));

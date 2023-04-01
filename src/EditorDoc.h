@@ -34,7 +34,6 @@ public:
 public:
 	virtual BOOL OnOpenDocument(LPCTSTR lpszPathName);
 	virtual BOOL OnSaveDocument(LPCTSTR lpszPathName);
-	virtual void Serialize(CArchive& ar);
 	virtual void OnCloseDocument();
 
 	// custom save as dialog...

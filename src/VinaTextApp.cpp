@@ -40,6 +40,8 @@
 
 #include "translator/POHandler.h"
 
+#include "pdf/UXReader/UXReaderLibrary.h"
+
 // COM/ATL
 #include <initguid.h>
 #include "VinaText_i.c"
@@ -167,7 +169,6 @@ CVinaTextApp theApp;
 
 BOOL CVinaTextApp::InitInstance()
 {
-//TODO: call AfxInitRichEdit2() to initialize richedit2 library.
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfoEx cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -227,11 +228,13 @@ BOOL CVinaTextApp::InitInstance()
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
 
+	// VinaText Application Settings
 	if (!AppSettingMgr.LoadSetting())
 	{
 		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Warning] Load previous application settings failed..."));
 	}
 	AppTranslator.InitFromSetting();
+	// VinaText Application Settings
 
 	CWinAppEx::InitInstance();
 
@@ -280,15 +283,15 @@ BOOL CVinaTextApp::InitInstance()
 	}
 	//###########################################################################################################//
 
+	//####### DLL Loading Start ##################################################################//
 	// Load RichEdit functionality
-	HMODULE hModule = LoadLibrary(_T("RichEd20.dll"));
-	if (hModule == NULL)
+	m_hDllRichEdit = LoadLibrary(_T("RichEd20.dll"));
+	if (m_hDllRichEdit == NULL)
 	{
 		// RichEd20.dll does not exist or an error occurred loading it, display msg and exit
 		MessageBox(NULL, _T("[Missing Dll] This program requires file RichEd20.dll"), _T("Error"), MB_OK | MB_ICONERROR);
 		return 0;
 	}
-
 	// Load custom editor library
 	m_hDllEdtior = PathUtils::LoadEditorDll();
 	if (m_hDllEdtior == NULL)
@@ -296,12 +299,16 @@ BOOL CVinaTextApp::InitInstance()
 		AfxMessageBox(_T("[Error] VinaTextEditor.dll not loaded. Please try to re-install VinaText!"));
 		return FALSE;
 	}
+	// Load custom lexer library
 	m_hDllLexer = PathUtils::LoadLexerDll();
 	if (m_hDllLexer == NULL)
 	{
 		AfxMessageBox(_T("[Error] VinaTextLexer.dll not loaded. Please try to re-install VinaText!"));
 		return FALSE;
 	}
+	// Load pdf library
+	UXReader::UXReaderLibrary::Module(m_hInstance);
+	//######## DLL Loading End, Must be unloaded in ExitInstance() ###############################//
 
 	EnableLoadWindowPlacement(FALSE);
 
@@ -335,7 +342,7 @@ BOOL CVinaTextApp::InitInstance()
 		}
 		else
 		{
-			if (AppUtils::GetDocumentCount() == 0)
+			if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 0)
 			{
 				OnFileNewEditor();
 			}
@@ -378,7 +385,7 @@ int CVinaTextApp::ExitInstance()
 	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
 
-	// unload scintilla dll
+	// unload dlls
 	if (m_hDllEdtior != NULL)
 	{
 		FreeLibrary(m_hDllEdtior);
@@ -386,6 +393,10 @@ int CVinaTextApp::ExitInstance()
 	if (m_hDllLexer != NULL)
 	{
 		FreeLibrary(m_hDllLexer);
+	}
+	if (m_hDllRichEdit != NULL)
+	{
+		FreeLibrary(m_hDllRichEdit);
 	}
 
 	// end: shutdown GDI+

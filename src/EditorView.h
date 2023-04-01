@@ -366,8 +366,6 @@ public:
 	afx_msg void OnOptionsZoomResetView();
 	afx_msg void OnOptionsEnableSyncScrolling();
 	afx_msg void OnOptionsScrollToCaret();
-	afx_msg void OnOptionsLineUp();
-	afx_msg void OnOptionsLineDown();
 	afx_msg void OnUpdateOptionsSyncVerticalScrolling(CCmdUI * pCmdUI);
 	afx_msg void OnAddAutoCompleteFromFile();
 	afx_msg void OnAddAutoCompleteFromFolder();

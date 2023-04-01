@@ -37,21 +37,22 @@ BEGIN_MESSAGE_MAP(CMediaView, CViewBase)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
 	ON_WM_SETFOCUS()
+
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_SETUP, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT, OnDisableUpdate)
 
-	ON_COMMAND(ID_VIDEO_PLAY, OnPlayVideo)
-	ON_COMMAND(ID_VIDEO_PAUSE, OnPauseVideo)
-	ON_COMMAND(ID_VIDEO_STOP, OnStopVideo)
-	ON_COMMAND(ID_VIDEO_VOLUME_UP, OnVolumeUp)
-	ON_COMMAND(ID_VIDEO_VOLUME_DOWN, OnVolumeDown)
-	ON_COMMAND(ID_VIDEO_NEXT_FRAME, OnNextFrame)
-	ON_COMMAND(ID_VIDEO_PREVIOUS_FRAME, OnPreviousFrame)
-	ON_UPDATE_COMMAND_UI(ID_VIDEO_PLAY, OnUpdatePlayVideo)
-	ON_UPDATE_COMMAND_UI(ID_VIDEO_PAUSE, OnUpdatePauseVideo)
+	ON_COMMAND(ID_MEDIA_PLAY, OnPlayVideo)
+	ON_COMMAND(ID_MEDIA_PAUSE, OnPauseVideo)
+	ON_COMMAND(ID_MEDIA_STOP, OnStopVideo)
+	ON_COMMAND(ID_MEDIA_VOLUME_UP, OnVolumeUp)
+	ON_COMMAND(ID_MEDIA_VOLUME_DOWN, OnVolumeDown)
+	ON_COMMAND(ID_MEDIA_NEXT_FRAME, OnNextFrame)
+	ON_COMMAND(ID_MEDIA_PREVIOUS_FRAME, OnPreviousFrame)
+	ON_UPDATE_COMMAND_UI(ID_MEDIA_PLAY, OnUpdatePlayVideo)
+	ON_UPDATE_COMMAND_UI(ID_MEDIA_PAUSE, OnUpdatePauseVideo)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -78,10 +79,16 @@ void CMediaView::OnInitialUpdate()
 	CString strFileMediaPath = m_pDocument->GetPathName();
 	if (PathUtils::IsMediaFile(strFileMediaPath))
 	{
+		auto startMeasureTime = OSUtils::StartBenchmark();
 		if (!m_wndMWP.OpenMediaFile(ATL::CComBSTR(strFileMediaPath)))
 		{
 			AfxMessageBox(_T("[Media Error] Can not open this file!"));
 			return;
+		}
+		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		{
+			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFileMediaPath);
+			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);
 		}
 		// check last write time point
 		UpdateFileLastWriteTime(strFileMediaPath);

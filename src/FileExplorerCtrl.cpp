@@ -33,7 +33,6 @@
 #include "SetBookmarkPathDlg.h"
 #include "BookMarkPathDlg.h"
 #include "SetDeleteFileByExtDlg.h"
-#include "ProjectTempateCreatorDlg.h"
 #include "SelectedPathDlg.h"
 #include "FilenameFilterDlg.h"
 #include "CreateNewMultiplePath.h"
@@ -162,7 +161,6 @@ BEGIN_MESSAGE_MAP(CFileExplorerCtrl, FILETREECTRL_BASE_CLASS) //NOLINT(modernize
 	ON_COMMAND(ID_TREEFILECTRL_DELETE, &CFileExplorerCtrl::OnDelete)
 	ON_UPDATE_COMMAND_UI(ID_TREEFILECTRL_DELETE, &CFileExplorerCtrl::OnUpdateDelete)
 	ON_COMMAND(ID_TREEFILECTRL_CREATEFOLDER, &CFileExplorerCtrl::OnCreateFolder)
-	ON_COMMAND(ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT, &CFileExplorerCtrl::OnCreateNewProjectTemplate)
 	ON_COMMAND(ID_TREEFILECTRL_CREATE_MULTIPLE, &CFileExplorerCtrl::OnCreateNewMutiple)
 	ON_COMMAND(ID_TREEFILECTRL_EXPAND_ALL, &CFileExplorerCtrl::OnExpandAll)
 	ON_COMMAND(ID_TREEFILECTRL_COLLAPSE_ALL, &CFileExplorerCtrl::OnCollapseAll)
@@ -1822,21 +1820,6 @@ void CFileExplorerCtrl::OnCreateFolder()
 
 }
 
-void CFileExplorerCtrl::OnCreateNewProjectTemplate()
-{
-	CString strFilePath = GetSelectedPath();
-	if (PathFileExists(strFilePath))
-	{
-		CString strFolderPath = strFilePath;
-		if (!PathUtils::IsDirectory(strFilePath))
-		{
-			strFolderPath = PathUtils::GetContainerPath(strFilePath);
-		}
-		CProjectTempateCreator dlg(strFolderPath);
-		dlg.DoModal();
-	}
-}
-
 void CFileExplorerCtrl::OnCreateNewMutiple()
 {
 	CCreateNewMultiplePathDlg dlg;
@@ -1901,7 +1884,6 @@ void CFileExplorerCtrl::OnContextMenu(CWnd*, CPoint point)
 			{
 				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATEFILE, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATEFOLDER, MF_BYCOMMAND);
-				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT, MF_BYCOMMAND);
 			}
 
 			//Allow creation of a folder if the selected item is itself a directory/folder
@@ -1964,7 +1946,6 @@ void CFileExplorerCtrl::OnContextMenu(CWnd*, CPoint point)
 			{
 				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATEFILE, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATEFOLDER, MF_BYCOMMAND);
-				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATE_TEMPLATE_PROJECT, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_TREEFILECTRL_SETROOTFOLDER, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_TREEFILECTRL_SETSELECTEDPATH, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_TREEFILECTRL_ADD_NEW_FOLDER, MF_BYCOMMAND);
@@ -3808,11 +3789,7 @@ BOOL CFileExplorerCtrl::PreTranslateMessage(MSG* pMsg)
 	//Hitting the Ctrl + P key combination shows the properties sheet 
 	else if (pMsg->message == WM_KEYDOWN && pMsg->wParam == 'P')
 	{
-		if (GetKeyState(VK_SHIFT) & 0x8000 && GetKeyState(VK_CONTROL) & 0x8000)
-		{
-			OnCreateNewProjectTemplate();
-		}
-		else if ((GetKeyState(VK_CONTROL) & 0x8000))
+		if ((GetKeyState(VK_CONTROL) & 0x8000))
 		{
 			OnProperties();
 		}

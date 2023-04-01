@@ -230,6 +230,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_HOST_CHROME, &CMainFrame::OnHostGoogleChrome)
 	ON_COMMAND(ID_HOST_FIREFOX, &CMainFrame::OnHostMozillaFirefox)
 	ON_COMMAND(ID_HOST_MS_PAINT, &CMainFrame::OnHostMSPaint)
+	ON_COMMAND(ID_HOST_SYSTEM_INFORMATION, &CMainFrame::OnHostSystemInformation)
 	ON_COMMAND(ID_HOST_FILE_EXPLORER, &CMainFrame::OnHostFileExplorer)
 	ON_COMMAND(ID_HOST_MS_PPT, &CMainFrame::OnHostMSPowerpoint)
 	ON_COMMAND(ID_HOST_MS_EXCEL, &CMainFrame::OnHostMSExcel)
@@ -464,14 +465,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mdiTabParams.m_bEnableTabSwap = TRUE;
 	EnableMDITabbedGroups(TRUE, mdiTabParams);
 
-	//if (!m_wndMenuBar.Create(this))
-	//{
-	//	TRACE0("Failed to create menubar\n");
-	//	return -1;      // fail to create
-	//}
-
-	//m_wndMenuBar.SetPaneStyle(m_wndMenuBar.GetPaneStyle() | CBRS_SIZE_DYNAMIC | CBRS_TOOLTIPS | CBRS_FLYBY);
-	
 	VERIFY(m_MainMenu.LoadMenu(IDR_MAINFRAME)); // load main menu bar
 	AppTranslator.ToNativeContextMenu(&m_MainMenu); // translate to native language
 	SetMenu(&m_MainMenu); // set back to mainframe
@@ -570,7 +563,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	}
 
 	// TODO: Delete these five lines if you don't want the toolbar and menubar to be dockable
-	//DockPane(&m_wndMenuBar);
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	DockPane(&m_wndToolBar);
 	ShowPane(&m_wndToolBar, TRUE, FALSE, TRUE);
@@ -2463,7 +2455,7 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 				pPopup->DeleteMenu(ID_MDI_TAB_FILE_COPY, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_MDI_TAB_MOVE_NEW_WINDOW, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_MDI_TAB_BOOKMARK_FILE, MF_BYCOMMAND);
-				if (AppUtils::GetDocumentCount() == 1)
+				if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
 				{
 					pPopup->RemoveMenu(1, MF_BYPOSITION);
 					pPopup->RemoveMenu(7, MF_BYPOSITION);
@@ -2487,7 +2479,7 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 				}
 			}
 
-			if (AppUtils::GetDocumentCount() == 1)
+			if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
 			{
 				pPopup->RemoveMenu(1, MF_BYPOSITION);
 				if (pActiveDoc->IsKindOf(RUNTIME_CLASS(CFileExplorerDoc)))
@@ -2526,7 +2518,7 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 			{
 				pPopup->DeleteMenu(ID_MDI_TABBED_DOCUMENT, MF_BYCOMMAND);
 			}
-			if (AppUtils::GetDocumentCount() == 1)
+			if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
 			{
 				pPopup->DeleteMenu(ID_MDI_TAB_CLOSE_ALL_DOC_BUT_THIS, MF_BYCOMMAND);
 				pPopup->DeleteMenu(ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE, MF_BYCOMMAND);
@@ -3977,7 +3969,7 @@ void CMainFrame::OnCopyDocument()
 
 void CMainFrame::OnNewVerticalTabGroup()
 {
-	if (AppUtils::GetDocumentCount() > 1)
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) > 1)
 	{
 		BOOL bVertical = TRUE; // true for vertical split
 		MDITabNewGroup(bVertical);
@@ -3988,7 +3980,7 @@ void CMainFrame::OnNewVerticalTabGroup()
 
 void CMainFrame::OnNewHorizontalTabGroup()
 {
-	if (AppUtils::GetDocumentCount() > 1)
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) > 1)
 	{
 		BOOL bVertical = FALSE; // false for horizontal split
 		MDITabNewGroup(bVertical);
@@ -4319,6 +4311,11 @@ void CMainFrame::OnHostMozillaFirefox()
 void CMainFrame::OnHostMSPaint()
 {
 	HostApplicaton(HOST_APP_TYPE::MS_PAINT, L"mspaint.exe");
+}
+
+void CMainFrame::OnHostSystemInformation()
+{
+	HostApplicaton(HOST_APP_TYPE::SYSTEM_INFO_VIEWER, L"msinfo32.exe");
 }
 
 void CMainFrame::OnHostFileExplorer()
