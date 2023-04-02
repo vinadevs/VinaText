@@ -47,7 +47,15 @@ BOOL CGotoDlg::PreTranslateMessage(MSG * pMsg)
 			{
 				pActiveDoc->GetEditorCtrl()->SetFocus();
 			}
-			return true;
+			return TRUE;
+		}
+		else if (pMsg->wParam == VK_RETURN)
+		{
+			if (pMsg->hwnd == m_EditLine.GetSafeHwnd())
+				OnGotoLine();
+			else if (pMsg->hwnd == m_EditPosition.GetSafeHwnd())
+				OnGotoPosition();
+			return TRUE;
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);

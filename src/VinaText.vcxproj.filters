@@ -681,7 +681,7 @@
     <ClInclude Include="pdf\UXReader\common.h">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderInclude</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.h">
+    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClInclude>
     <ClInclude Include="WebHandler.h">
@@ -1187,7 +1187,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Global Header</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.cpp">
+    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClCompile>
     <ClCompile Include="WebHandler.cpp">

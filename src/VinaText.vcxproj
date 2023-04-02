@@ -210,7 +210,6 @@
     <Text Include="uchardet\README.TXT" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.h" />
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
@@ -230,6 +229,7 @@
     <ClInclude Include="pdf\UXReader\UXReaderDocumentPage.h" />
     <ClInclude Include="pdf\UXReader\UXReaderDocumentPane.h" />
     <ClInclude Include="pdf\UXReader\UXReaderDocumentView.h" />
+    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h" />
     <ClInclude Include="pdf\UXReader\UXReaderGeometry.h" />
     <ClInclude Include="pdf\UXReader\UXReaderGlobals.h" />
     <ClInclude Include="pdf\UXReader\UXReaderLibrary.h" />
@@ -386,7 +386,6 @@
     <ClInclude Include="UndoRedoEditControl.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\VCSamples-master\VC2010Samples\MFC\Visual C++ 2008 Feature Pack\VisualStudioDemo\UXReader\UXReaderMainWindow.cpp" />
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
@@ -403,6 +402,7 @@
     <ClCompile Include="pdf\UXReader\UXReaderDocumentPage.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDocumentPane.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDocumentView.cpp" />
+    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderGeometry.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderGlobals.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderLibrary.cpp" />
