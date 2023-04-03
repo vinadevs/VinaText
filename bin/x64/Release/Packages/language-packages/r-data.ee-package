@@ -1,0 +1,23 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext R settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below R website to install R Compiler for windows:
+- After installion, please change below path settings to your installed R paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\compiler.exe
+
+@@ debugger path:
+..\Compilers\debugger.exe
+
+@@ auto complete:
+if else while repeat for function in next break TRUE FALSE NULL Inf NaN NA NA_integer NA_real NA_complex_ NA_character_ 

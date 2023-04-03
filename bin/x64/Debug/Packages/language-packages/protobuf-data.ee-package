@@ -1,0 +1,13 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Protobuf settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ auto complete:
+for while if else switch case do class struct returns service rpc const 
+message string int32 uint32 int64 uint64 sint32 enum option true false to max 
+min repeated import bool sint64 bytes 

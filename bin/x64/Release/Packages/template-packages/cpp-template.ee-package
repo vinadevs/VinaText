@@ -1,0 +1,61 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext C++ File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+/*******************************************************************************
+* Title                 :   file desciption
+* Filename              :   file.cpp
+* Author                :   ABC
+* Email                	:   abcxyz@gmail.com
+* Origin Date           :   02/02/2022
+* Version               :   1.0.0
+* Compiler              :   g++
+* Target                :   x64
+* Notes                 :   None
+*******************************************************************************/
+
+#include <stdio.h>
+#include <iostream>
+
+using namespace std;
+ 
+/* function implementation */
+void myFunction() {
+  cout << "Hello from my function!" ;
+}
+ 
+int main () {
+
+   /* calling a function */
+   myFunction();
+
+   return 0;
+}
+
+@@ only main file template:
+/*******************************************************************************
+* Title                 :   file desciption
+* Filename              :   file.cpp
+* Author                :   ABC
+* Email                	:   abcxyz@gmail.com
+* Origin Date           :   02/02/2022
+* Version               :   1.0.0
+* Compiler              :   g++
+* Target                :   x64
+* Notes                 :   None
+*******************************************************************************/
+
+#include <stdio.h>
+ 
+int main () {
+
+   /* to do */
+ 
+   return 0;
+}

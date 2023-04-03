@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Java File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+// Desciption            :   file desciption
+// Filename              :   file.java
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+public class Main {
+  static void myFunction() {
+    System.out.println("Hello World!");
+  }
+
+  public static void main(String[] args) {
+    myFunction();
+  }
+}
+
+@@ only main file template:
+// Desciption            :   file desciption
+// Filename              :   file.java
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+public class Main {
+  public static void main(String[] args) {
+    // to do
+  }
+}

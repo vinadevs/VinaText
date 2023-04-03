@@ -1,0 +1,28 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Java settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to download Java Development Kit (JDK) for windows:
+https://www.oracle.com/java/technologies/downloads/
+- After installion, please change below path settings to your installed JDK paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\jdk-15.0.1\bin\javac.exe
+
+@@ debugger path:
+..\Compilers\jdk-15.0.1\bin\jdb.exe
+
+@@ auto complete:
+instanceof assert if else switch case default break goto return for while do 
+continue new throw throws try catch finally this super extends implements 
+import true false null package transient strictfp void char short int long 
+double float const static volatile byte boolean class interface native private 
+protected public final abstract synchronized enum 

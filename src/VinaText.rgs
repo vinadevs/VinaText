@@ -1,0 +1,110 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}
+HKCR
+{
+	NoRemove AppID
+	{
+		'%APPID%' = s 'VinaText'
+				'VinaText.EXE'
+				{
+			val AppID = s '%APPID%'
+		}
+	}
+}

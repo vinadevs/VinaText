@@ -1,0 +1,105 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext C++ settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to download MinGW Compiler for windows:
+https://sourceforge.net/projects/mingwbuilds/
+- After installion, please change below path settings to your installed MinGW paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\MinGW\MinGWx64\mingw64\bin\g++.exe
+
+@@ debugger path:
+..\MinGW\MinGWx64\mingw64\bin\gdb.exe
+
+@@ auto complete:
+std alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept 
+auto bitand bitor bool break case catch char char8_t char16_t char32_t class 
+compl concept const consteval constexpr constinit const_cast continue co_await 
+co_return co_yield decltype default delete do double dynamic_cast else enum 
+explicit export extern false float for friend goto if inline int long mutable 
+namespace new noexcept not not_eq nullptr operator or or_eq private protected 
+public reflexpr register reinterpret_cast requires return short signed sizeof 
+static static_assert static_cast struct switch synchronized template this 
+thread_local throw true try typedef typeid typename union unsigned using 
+virtual void volatile wchar_t while xor xor_eq elif endif ifdef ifndef define 
+undef include line error pragma defined __has_include __has_cpp_attribute 
+import module _Pragma restrict _Alignas _Alignof _Atomic _Bool _Complex 
+_Decimal128 _Decimal32 _Decimal64 _Generic _Imaginary _Noreturn _Static_assert 
+_Thread_local __has_c_attribute fortran cassert assert.h cctype ctype.h cerrno 
+errno.h cfenv fenv.h cfloat float.h cinttypes inttypes.h ciso646 iso646.h 
+climits limits.h clocale locale.h cmath csetjmp setjmp.h csignal signal.h 
+cstdarg stdarg.h cstdbool stdbool.h cstddef stddef.h cstdint stdint.h cstdio 
+stdio.h cstdlib stdlib.h cstring string.h ctgmath tgmath.h ctime time.h cuchar 
+uchar.h cwchar wchar.h cwctype wctype.h array bitset deque forward_list list 
+map queue set stack unordered_map unordered_set vector atomic 
+condition_variable future mutex thread algorithm chrono Time library codecvt 
+complex exception functional initializer_list iterator limits locale memory 
+numeric random ratio regex stdexcept string system_error tuple typeindex 
+typeinfo type_traits utility valarray at begin cbegin cend clear count crbegin 
+crend emplace emplace_hint empty end equal_range erase find get_allocator 
+insert key_comp lower_bound max_size rbegin rend size swap upper_bound 
+value_comp back data fill front assign emplace_back emplace_front pop_back 
+pop_front push_back push_front resize shrink_to_fit before_begin cbefore_begin 
+emplace_after erase_after insert_after merge remove remove_if reverse sort 
+splice_after unique splice pop push top finally __asm __asume __based __box 
+__cdecl __declspec __delegate delegate depreciated dllexport dllimport event 
+__event __except __fastcall __finally __forceinline __int8 __int16 __int32 
+__int64 __int128 __interface interface __leave naked noinline __noop noreturn 
+nothrow novtable NULL safecast __stdcall __try __unaligned uuid __uuidof 
+__virtual_inheritance u16string u32string wstring stod stof stoi stol stold 
+stoll stoul stoull to_string to_wstring npos append capacity compare copy 
+c_str find_first_not_of find_first_of find_last_not_of find_last_of length 
+replace reserve rfind substr basic_ios fpos ios ios_base io_errc streamoff 
+streampos streamsize wios wstreampos boolalpha dec defaultfloat fixed hex 
+hexfloat internal left noboolalpha noshowbase noshowpoint noshowpos noskipws 
+nounitbuf nouppercase oct right scientific showbase showpoint showpos skipws 
+unitbuf gcount get getline ignore peek putback read readsome seekg sync tellg 
+unget multiset multimap bucket bucket_count bucket_size hash_function key_eq 
+load_factor max_bucket_count max_load_factor rehash fstream iomanip iosfwd 
+iostream istream ostream sstream streambuf basic_filebuf basic_fstream 
+basic_ifstream basic_ofstream filebuf ifstream ofstream wfilebuf wfstream 
+wifstream wofstream cerr cin clog cout wcerr wcin wclog wcout sentry close 
+is_open open rdbuf in out binary ate app trunc basic_istringstream 
+basic_ostringstream basic_stringbuf basic_stringstream istringstream 
+ostringstream stringbuf stringstream wistringstream wostringstream wstringbuf 
+wstringstream abort abs acos math.h asctime asctime_r asin assert atan atan2 
+atexit atof atoi atol bsearch btowc calloc catclose6 nl_types.h catgets6 
+catopen6 ceil clearerr clock cos cosh ctime64 ctime_r ctime64_r difftime 
+difftime64 div erf erfc exit exp fabs fclose fdopen5 feof ferror fflush1 
+fgetc1 fgetpos1 fgets1 fgetwc6 fgetws6 fileno5 floor fmod fopen fprintf fputc1 
+fputs1 fputwc6 fputws6 fread free freopen frexp fscanf fseek1 fsetpos1 ftell1 
+fwide6 fwprintf6 fwrite fwscanf6 gamma getc1 getchar1 getenv gets getwc6 
+getwchar6 gmtime gmtime64 gmtime_r gmtime64_r hypot isalnum isalpha isascii4 
+isblank iscntrl isdigit isgraph islower isprint ispunct isspace isupper 
+iswalnum4 iswalpha4 iswblank4 iswcntrl4 iswctype4 iswdigit4 iswgraph4 
+iswlower4 iswprint4 iswpunct4 iswspace4 iswupper4 iswxdigit4 isxdigit4 j0 j1 
+jn labs ldexp ldiv localeconv localtime localtime64 localtime_r localtime64_r 
+log log10 longjmp malloc mblen mbrlen4 mbrtowc4 mbsinit4 mbsrtowcs4 mbstowcs 
+mbtowc memchr memcmp memcpy memmove memset mktime mktime64 modf nextafter 
+nextafterl nexttoward nexttowardl nl_langinfo4 langinfo.h perror pow printf 
+putc1 putchar1 putenv puts putwc6 putwchar6 qsort quantexpd32 quantexpd64 
+quantexpd128 quantized32 quantized64 quantized128 samequantumd32 
+samequantumd64 samequantumd128 raise rand rand_r realloc regcomp regex.h 
+regerror regexec regfree rename rewind1 scanf setbuf setjmp setlocale setvbuf 
+signal sin sinh snprintf sprintf sqrt srand sscanf strcasecmp strings.h strcat 
+strchr strcmp strcoll strcpy strcspn strerror strfmon4 strftime strlen 
+strncasecmp strncat strncmp strncpy strpbrk strptime4 strrchr strspn strstr 
+strtod strtod32 strtod64 strtod128 strtof strtok strtok_r strtol strtold 
+strtoul strxfrm swprintf swscanf system tan tanh time time64 tmpfile tmpnam 
+toascii tolower toupper towctrans towlower4 towupper4 ungetc1 ungetwc6 va_arg 
+va_copy va_end va_start vfprintf vfscanf vfwprintf6 vfwscanf vprintf vscanf 
+vsprintf vsnprintf vsscanf vswprintf vswscanf vwprintf6 vwscanf wcrtomb4 
+wcscat wcschr wcscmp wcscoll4 wcscpy wcscspn wcsftime wcslen wcslocaleconv 
+wcsncat wcsncmp wcsncpy wcspbrk wcsptime wcsrchr wcsrtombs4 wcsspn wcsstr 
+wcstod wcstod32 wcstod64 wcstod128 wcstof wcstok wcstol wcstold wcstombs 
+wcstoul wcsxfrm4 wctob wctomb wctrans wctype4 wcwidth wmemchr wmemcmp wmemcpy 
+wmemmove wmemset wprintf6 wscanf6 y0 y1 yn first second argv argc 

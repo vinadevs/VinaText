@@ -1,0 +1,61 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext C File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+/*******************************************************************************
+* Title                 :   file desciption
+* Filename              :   file.c
+* Author                :   ABC
+* Email                 :   abcxyz@gmail.com
+* Origin Date           :   02/02/2022
+* Version               :   1.0.0
+* Compiler              :   gcc
+* Target                :   x64
+* Notes                 :   None
+*******************************************************************************/
+
+#include <stdio.h>
+ 
+/* function declaration */
+void my_function();
+ 
+int main () {
+
+   /* calling a function */
+   my_function();
+ 
+   return 0;
+}
+ 
+/* function implementation */
+void my_function() {
+   printf( "Hello from my function!" );
+}
+
+@@ only main file template:
+/*******************************************************************************
+* Title                 :   file desciption
+* Filename              :   file.c
+* Author                :   ABC
+* Email                	:   abcxyz@gmail.com
+* Origin Date           :   02/02/2022
+* Version               :   1.0.0
+* Compiler              :   gcc
+* Target                :   x64
+* Notes                 :   None
+*******************************************************************************/
+
+#include <stdio.h>
+ 
+int main () {
+
+   /* to do */
+ 
+   return 0;
+}

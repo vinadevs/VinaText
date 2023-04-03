@@ -1,0 +1,45 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Golang File Templates
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ function file template:
+// Desciption            :   file desciption
+// Filename              :   file.go
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+package main
+
+import "fmt"
+
+// SimpleFunction prints a message
+func MyFunction() {
+	fmt.Println("Hello World")
+}
+
+func main() {
+	MyFunction()
+}
+
+@@ only main file template:
+// Desciption            :   file desciption
+// Filename              :   file.go
+// Author                :   ABC
+// Email                 :   abcxyz@gmail.com
+// Date           		 :   02/02/2022
+// Version               :   1.0.0
+
+package main
+
+import "fmt"
+
+func main() {
+	// to do
+}

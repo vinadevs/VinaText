@@ -1,0 +1,31 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Pascal settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below website to download Pascal Compiler for windows:
+https://www.freepascal.org/
+- After installion, please change below path settings to your installed Pascal paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\Pascal\bin\i386-win32\fpc.exe
+
+@@ debugger path:
+..\Compilers\Pascal\bin\i386-win32\fpc.exe
+
+@@ auto complete:
+and array asm begin case cdecl class const constructor default destructor div 
+do downto else end end. except exit exports external far file finalization 
+finally for function goto if implementation in index inherited initialization 
+inline interface label library message mod near nil not object of on or out 
+overload overrIDE packed pascal private procedure program property protected 
+public published raise read record register repeat resourcestring safecall set 
+shl shr stdcall stored string then threadvar to try type unit until uses var 
+virtual while with write xor 

@@ -1,0 +1,27 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext AutoIT settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- Please go to below AutoIT website to install AutoIT Compiler for windows:
+- After installion, please change below path settings to your installed AutoIT paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\compiler.exe
+
+@@ debugger path:
+..\Compilers\debugger.exe
+
+@@ auto complete:
+False True comments-start ContinueCase ContinueLoop Default Dim Global Local 
+Const Do Until Enum Exit ExitLoop For To Step Next For In Next Func Return 
+EndFunc If Then If ElseIf Else EndIf include-once include NoTrayIcon Null 
+OnAutoItStartRegister pragma ReDim RequireAdmin Select Case EndSelect Static 
+Switch Case EndSwitch Volatile While WEnd With EndWith 

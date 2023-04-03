@@ -1,0 +1,33 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext C-Shape settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This source code can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+- If you have already installed Visual Studio you can skip next download step.
+- Please go to below website to download Dotnet Compiler for windows:
+https://dotnet.microsoft.com/en-us/download/dotnet-framework
+- After installion, please change below path settings to your installed Dotnet paths.
+- You can also add more key words to auto complete word list.
+- After editing this file, please reload (F4) your code file to active settings.
+
+@@ compiler path:
+..\Compilers\Microsoft.NET\Framework\v4.0.30319\csc.exe
+
+@@ debugger path:
+..\Compilers\debugger.exe
+
+@@ auto complete:
+abstract add alias as ascending async await base break case catch checked 
+continue default delegate descending do dynamic else event explicit extern 
+false finally fixed for foreach from get global goto group if implicit in 
+interface internal into is join let lock namespace new null object operator 
+orderby out overrIDE params partial private protected public readonly ref 
+remove return sealed select set sizeof stackalloc switch this throw true try 
+typeof unchecked unsafe using value virtual where while yield bool byte char 
+class const decimal double enum float int long sbyte short static string 
+struct uint ulong ushort var void 
