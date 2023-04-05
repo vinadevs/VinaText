@@ -1,3 +1,9 @@
+//   script.js file  ---------------------------------------------//
+//   Copyright nagakura1998 4-5-2023.
+//   Distributed under Vinatext.
+//   Software License, Version 1.0. 
+// ----------------------------------------------------------------
+
 'use strict';
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');

@@ -1,5 +1,8 @@
-/* The page is NOT responsive. You can implement responsiveness yourself if you wanna have some fun 😃 */
-
+/*  style.css file  ---------------------------------------------//
+    Copyright nagakura1998 4-5-2023.
+    Distributed under Vinatext.
+    Software License, Version 1.0. 
+----------------------------------------------------------------- */
 :root {
   --color-primary: #5ec576;
   --color-secondary: #ffcb03;
