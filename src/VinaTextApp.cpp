@@ -155,7 +155,7 @@ CVinaTextApp::CVinaTextApp()
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("Vinatools.VinaText.1.0"));
+	SetAppID(_T("Vinadevs.VinaText.1.0"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
@@ -259,7 +259,7 @@ BOOL CVinaTextApp::InitInstance()
 	// Change the registry key under which our settings are stored
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
-	SetRegistryKey(_T("VinaText-Vinatools\\Settings"));
+	SetRegistryKey(_T("VinaText-Vinadevs\\Settings"));
 	LoadStdProfileSettings(AppSettingMgr.m_nRecentFileLimit); // Load standard INI file options (including MRU)
 	ASSERT(m_pRecentFileList);
 	m_pRecentFileList->m_nMaxDisplayLength = MAX_PATH; // display full path
@@ -582,12 +582,12 @@ void CVinaTextApp::OnHelpAppAbout()
 
 void CVinaTextApp::OnHelpKeyboardShortcutsReference()
 {
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://www.VinaText.com/shortcuts"), _T(""), _T(""), SW_MAXIMIZE);
+	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/#section--3"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnHelpDocumentation()
 {
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://www.VinaText.com/tips"), _T(""), _T(""), SW_MAXIMIZE);
+	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/#section--2"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnHelpFacebook()
@@ -607,12 +607,12 @@ void CVinaTextApp::OnHelpReportIssue()
 
 void CVinaTextApp::OnHelpReleaseNotes()
 {
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://www.VinaText.com/release-notes"), _T(""), _T(""), SW_MAXIMIZE);
+	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnHelpCheckForUpdate()
 {
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://www.VinaText.com/release-notes"), _T(""), _T(""), SW_MAXIMIZE);
+	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnUpdateSaveFileCryptography(CCmdUI * pCmdUI)

@@ -155,7 +155,6 @@ void CFindDlg::InitSearchReplaceFromEditor(const CString& strSearchWhat, BOOL bS
 		m_comboSearchWhat.SetFocus();
 	else
 		m_comboSearchWhat.SetFocusEx();
-	m_comboSearchScope.SetCurSel(0);
 	OnCbnSelchangeSearchScope();
 	SaveSearchString(strSearchWhat);
 	if (strSearchWhat.IsEmpty())

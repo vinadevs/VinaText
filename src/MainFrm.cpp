@@ -1845,21 +1845,21 @@ void CMainFrame::OnVinaTextThemeLight()
 {
 	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to light."), MB_ICONINFORMATION);
+	AfxMessageBox(_T("Theme changed to Light."), MB_ICONINFORMATION);
 }
 
 void CMainFrame::OnVinaTextThemeMonokai()
 {
 	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
 	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to monokai."), MB_ICONINFORMATION);
+	AfxMessageBox(_T("Theme changed to Monokai."), MB_ICONINFORMATION);
 }
 
 void CMainFrame::OnVinaTextThemeSierraBlue()
 {
 	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
 	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to sierra blue."), MB_ICONINFORMATION);
+	AfxMessageBox(_T("Theme changed to Sierra Blue."), MB_ICONINFORMATION);
 }
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)

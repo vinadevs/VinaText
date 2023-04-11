@@ -567,7 +567,7 @@ BOOL CMessagePaneDlg::OnInitDialog()
 	m_wndOutput.SetBackgroundColor(FALSE, AppSettingMgr.m_AppThemeColor);
 	m_wndOutput.LimitText(0xfffffff);
 	m_wndOutput.m_bEnableLineWrap = FALSE;
-	AddLogMessage(_T("> Thank you for using VinaText, copyright(C) www.VinaText.com\n"),
+	AddLogMessage(_T("> Thank you for using VinaText, copyright(C) www.vinatext.dev\n"),
 		IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 	UpdateData(FALSE);

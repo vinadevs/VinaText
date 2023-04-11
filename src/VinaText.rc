@@ -1467,11 +1467,11 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,23,28,20,20
-    LTEXT           "VinaText is a free software for text editor and more...",IDC_STATIC,64,14,155,22,SS_NOPREFIX
+    LTEXT           "An opensource text editor software",IDC_STATIC,64,14,155,22,SS_NOPREFIX
     DEFPUSHBUTTON   "Got it!",IDOK,93,92,55,19,WS_GROUP
-    CONTROL         "https://VinaText.com",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,71,91,12
+    CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,71,91,12
     LTEXT           "Home Page:",IDC_STATIC,64,72,40,8
-    LTEXT           "Release Version: 1.0.9",IDC_STATIC,64,37,125,8
+    LTEXT           "Release Version: 1.0",IDC_STATIC,64,37,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,54,100,8
 END
 
@@ -2191,14 +2191,14 @@ BEGIN
     BEGIN
         BLOCK "040904B0"
         BEGIN
-            VALUE "CompanyName", "Vinatools"
+            VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.0.0.1"
+            VALUE "FileVersion", "1.0"
             VALUE "InternalName", "VinaText.exe"
-            VALUE "LegalCopyright", "Vinatools.  All rights reserved."
+            VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.0.0.1"
+            VALUE "ProductVersion", "1.0"
         END
     END
     BLOCK "VarFileInfo"
