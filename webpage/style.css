@@ -112,10 +112,6 @@ img {
   transition: filter 0.5s;
 }
 
-.lazy-img {
-  filter: blur(20px);
-}
-
 /* NAVIGATION */
 .nav {
   display: flex;
@@ -506,23 +502,6 @@ h4 {
 
 .section__title--screenshots {
   margin-bottom: 4rem;
-}
-
-/* DOWNLOAD */
-.section--download {
-  background-color: #37383d;
-  border-top: none;
-  border-bottom: 1px solid #444;
-  text-align: center;
-  padding: 10rem 3rem;
-}
-
-
-.section--download .btn {
-  font-size: 1.9rem;
-  padding: 2rem 5rem;
-  text-decoration: none;
-  color: #000;
 }
 
 /* COOKIE MESSAGE */
