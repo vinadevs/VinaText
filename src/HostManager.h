@@ -23,6 +23,7 @@ namespace HostManager
 		FIREFOX_BROWSER,
 		FILE_EXPLORER,
 		SYSTEM_INFO_VIEWER,
+		TERMINAL_WSL,
 	};
 
 	enum HOST_METHOD : unsigned int

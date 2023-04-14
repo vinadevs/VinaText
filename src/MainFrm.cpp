@@ -222,8 +222,9 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_SHORTCUT_CONTROL_PANEL, &CMainFrame::OnToolsControlPanel)
 	ON_COMMAND(ID_SHORTCUT_ENVIRONMENT_PATH, &CMainFrame::OnToolsOpenEnvPath)
 	ON_COMMAND(ID_SHORTCUT_WINDOW_HOST_FOLDER, &CMainFrame::OnToolsOpenHost)
-	ON_COMMAND(ID_OPEN_NEW_CMD_WINDOW, &CMainFrame::OnTerminalOpenNewCMDWindow)
-	ON_COMMAND(ID_OPEN_NEW_POWERSHELL_WINDOW, &CMainFrame::OnTerminalOpenNewPowerShellWindow)
+	ON_COMMAND(ID_OPEN_NEW_CMD_TAB, &CMainFrame::OnTerminalOpenNewCMDWindow)
+	ON_COMMAND(ID_OPEN_NEW_POWERSHELL_TAB, &CMainFrame::OnTerminalOpenNewPowerShellWindow)
+	ON_COMMAND(ID_OPEN_NEW_WSL_TAB, &CMainFrame::OnTerminalOpenNewWSLWindow)
 	ON_COMMAND(ID_FILE_SEND_MAIL, &CMainFrame::OnFileSendMailEx)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SEND_MAIL, &CMainFrame::OnUpdateFileSendMailEx)
 	ON_COMMAND(ID_HOST_MS_EDGE, &CMainFrame::OnHostMSEdge)
@@ -4276,6 +4277,12 @@ void CMainFrame::OnTerminalOpenNewPowerShellWindow()
 {
 	SetCurrentDirectoryTerminal();
 	HostApplicaton(HOST_APP_TYPE::TERMINAL_POWERSHELL, L"powershell.exe");
+}
+
+void CMainFrame::OnTerminalOpenNewWSLWindow()
+{
+	SetCurrentDirectoryTerminal();
+	HostApplicaton(HOST_APP_TYPE::TERMINAL_WSL, L"wsl.exe");
 }
 
 void CMainFrame::OnHostMSEdge()

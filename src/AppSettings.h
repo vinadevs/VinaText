@@ -112,8 +112,8 @@ struct DialogFontSetting
 struct EditorFontSetting
 {
 	CString _font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
-	int _nEditorTextFontSize = 11;
-	int _nEditorLineNumberFontSize = 11;
+	int _nEditorTextFontSize = 12;
+	int _nEditorLineNumberFontSize = 12;
 	BOOL _bEnableBoldFont = FALSE;
 	BOOL _bEnableItalicFont = FALSE;
 	BOOL _bEnableUnderlineFont = FALSE;

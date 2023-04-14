@@ -28,16 +28,10 @@ protected:
 	HWND m_hWWND = NULL; // window handle
 	DWORD m_dwThreadId = 0;
 
-	BOOL m_bIsWatchFileProcessing = FALSE;
-	BOOL m_bDocumentReadOnly = FALSE;
-	FILETIME m_FileSystemTime = {};
-
 	// Overrides
 public:
 	virtual void OnInitialUpdate();
 	virtual void OnDraw(CDC* pDC);
-	int WatchFileSystemState();
-	void UpdateFileLastWriteTime(const CString& strFilePath);
 
 	int CheckThreadID(HWND hwnd);
 

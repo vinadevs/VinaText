@@ -33,7 +33,6 @@ CHostView::~CHostView()
 BEGIN_MESSAGE_MAP(CHostView, CView)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
-	ON_WM_SETFOCUS()
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SAVE_AS, OnDisableUpdate)
 	ON_UPDATE_COMMAND_UI(ID_FILE_PRINT_PREVIEW, OnDisableUpdate)
@@ -97,12 +96,10 @@ void CHostView::OnInitialUpdate()
 			}
 			AppUtils::GetVinaTextApp()->m_hLatestHostWND = m_hWWND; // for global control
 			LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Host Application] Create host document for %s successfuly..."), strAppName);
-			// check last write time point
-			UpdateFileLastWriteTime(strAppArguments);
 		}
 		else // no child window for our process
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Host Error] Create host document for %s failed!"), strAppName);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Host Error] Create host document for %s failed. Please check if this application was installed on your PC!"), strAppName);
 		}
 	}
 	else
@@ -161,7 +158,7 @@ HANDLE CHostView::CreateWin32ProcessWithHWND(const CString& strAppPathToHost, co
 		{
 			if (!AssignProcessToJobObject(m_hJob, processInfo.hProcess))
 			{
-				AfxMessageBox(_T("[Host Error] Assign application process to host job failed!"));
+				LOG_OUTPUT_MESSAGE_COLOR(_T("[Host Error] Assign application process to host job failed!"));
 				return NULL;
 			}
 		}
@@ -236,101 +233,6 @@ void CHostView::OnDraw(CDC * pDC)
 	HBRUSH hBrush = ::CreateSolidBrush(AppSettingMgr.m_AppThemeColor);
 	::FillRect(pDC->m_hDC, rect, hBrush);
 	DeleteObject(hBrush);
-}
-
-int CHostView::WatchFileSystemState()
-{
-	m_bIsWatchFileProcessing = TRUE;
-	int nFileState = 0;
-
-	ASSERT(m_pDocument);
-	if (!m_pDocument)
-	{
-		m_bIsWatchFileProcessing = FALSE;
-		return nFileState | FILE_SYSTEM_STATE::FILE_UNCHANGED;
-	}
-
-	WIN32_FILE_ATTRIBUTE_DATA attributes;
-	CString strFile = m_pDocument->GetPathName();
-	if (strFile.IsEmpty() || PathFileExists(strFile))
-	{
-		m_bIsWatchFileProcessing = FALSE;
-		return nFileState | FILE_SYSTEM_STATE::FILE_UNCHANGED;
-	}
-
-	if (!PathFileExists(strFile))
-	{
-		nFileState |= FILE_SYSTEM_STATE::FILE_DELETED;
-	}
-	else if (GetFileAttributesEx(strFile, GetFileExInfoStandard, &attributes) != 0)
-	{
-		BOOL bReadOnly = attributes.dwFileAttributes & FILE_ATTRIBUTE_READONLY;
-
-		if (bReadOnly != m_bDocumentReadOnly)
-		{
-			m_bDocumentReadOnly = bReadOnly;
-			nFileState |= FILE_SYSTEM_STATE::FILE_CHANGED_READONLY;
-		}
-
-		if (CompareFileTime(&m_FileSystemTime, &attributes.ftLastWriteTime) != 0)
-		{
-			m_FileSystemTime = attributes.ftLastWriteTime;
-			nFileState |= FILE_SYSTEM_STATE::FILE_CONTENT_MODIFIED;
-		}
-	}
-
-	if (nFileState != 0) // reload file...
-	{
-		if (nFileState & FILE_SYSTEM_STATE::FILE_DELETED)
-		{
-			AfxMessageBoxFormat(MB_ICONWARNING | MB_OK, _T("[System Warning] %s has been deleted from file system by an external operation!"), strFile);
-			AppUtils::CloseDeletedDocument(this, strFile);
-		}
-		else
-		{
-			if (nFileState & FILE_SYSTEM_STATE::FILE_CHANGED_READONLY)
-			{
-				CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
-				if (AppSettingMgr.m_bDisplayMessageBoxForFileChange)
-				{
-					AfxMessageBox(_T("[System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed read only state..."));
-				}
-				else
-				{
-					LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [System Warning] At ") + strCurrentTime + _T(", ") + strFile + _T(" has changed read only state..."), BasicColors::orange);
-				}
-			}
-			if (nFileState & FILE_SYSTEM_STATE::FILE_CONTENT_MODIFIED)
-			{
-			}
-		}
-	}
-	m_bIsWatchFileProcessing = FALSE;
-	return nFileState;
-}
-
-void CHostView::UpdateFileLastWriteTime(const CString & strFilePath)
-{
-	if (strFilePath.IsEmpty() || !PathFileExists(strFilePath)) return;
-	FILETIME timeStamp = {};
-	WIN32_FILE_ATTRIBUTE_DATA attributes;
-	if (GetFileAttributesEx(strFilePath, GetFileExInfoStandard, &attributes) != 0)
-	{
-		timeStamp = attributes.ftLastWriteTime;
-	}
-	if (CompareFileTime(&m_FileSystemTime, &timeStamp) != 0)
-	{
-		m_FileSystemTime = timeStamp;
-	}
-}
-
-void CHostView::OnSetFocus(CWnd * pOldWnd)
-{
-	CView::OnSetFocus(pOldWnd);
-	if (!m_bIsWatchFileProcessing)
-	{
-		WatchFileSystemState(); // when view is actived, check file status also...
-	}
 }
 
 int CHostView::OnCreate(LPCREATESTRUCT lpCreateStruct)

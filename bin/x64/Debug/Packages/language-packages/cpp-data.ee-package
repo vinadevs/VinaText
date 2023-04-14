@@ -9,16 +9,16 @@
 
 @@ configuration guide:
 - Please go to below website to download MinGW Compiler for windows:
-https://sourceforge.net/projects/mingwbuilds/
+https://sourceforge.net/projects/mingw-w64/files/
 - After installion, please change below path settings to your installed MinGW paths.
 - You can also add more key words to auto complete word list.
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-..\MinGW\MinGWx64\mingw64\bin\g++.exe
+C:\Users\tranp\Downloads\mingw64\bin\g++.exe
 
 @@ debugger path:
-..\MinGW\MinGWx64\mingw64\bin\gdb.exe
+C:\Users\tranp\Downloads\mingw64\bin\gdb.exe
 
 @@ auto complete:
 std alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept 

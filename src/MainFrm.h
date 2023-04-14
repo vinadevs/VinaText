@@ -297,6 +297,7 @@ public:
 	afx_msg void OnUpdateFileSendMailEx(CCmdUI * pCmdUI);
 	afx_msg void OnTerminalOpenNewCMDWindow();
 	afx_msg void OnTerminalOpenNewPowerShellWindow();
+	afx_msg void OnTerminalOpenNewWSLWindow();
 	afx_msg void OnHostMSEdge();
 	afx_msg void OnHostGoogleChrome();
 	afx_msg void OnHostMozillaFirefox();

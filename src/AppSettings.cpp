@@ -149,8 +149,8 @@ void CAppSettings::ResetAllSettings()
 	m_EditorFontSetting._bEnableBoldFont = FALSE;
 	m_EditorFontSetting._bEnableItalicFont = FALSE;
 	m_EditorFontSetting._bEnableUnderlineFont = FALSE;
-	m_EditorFontSetting._nEditorTextFontSize = 11;
-	m_EditorFontSetting._nEditorLineNumberFontSize = 10;
+	m_EditorFontSetting._nEditorTextFontSize = 12;
+	m_EditorFontSetting._nEditorLineNumberFontSize = 12;
 
 	// ui
 	m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_YELLOW;

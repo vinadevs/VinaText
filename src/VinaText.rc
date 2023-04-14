@@ -866,8 +866,9 @@ BEGIN
     END
     POPUP "Terminal"
     BEGIN
-        MENUITEM "New CMD Terminal Tab",        ID_OPEN_NEW_CMD_WINDOW
-        MENUITEM "New PowerShell Terminal Tab\tCtrl+Alt+T", ID_OPEN_NEW_POWERSHELL_WINDOW
+        MENUITEM "New CMD Terminal Tab",        ID_OPEN_NEW_CMD_TAB
+        MENUITEM "New PowerShell Terminal Tab\tCtrl+Alt+T", ID_OPEN_NEW_POWERSHELL_TAB
+        MENUITEM "New WSL Terminal Tab",        ID_OPEN_NEW_WSL_TAB
         MENUITEM SEPARATOR
         MENUITEM "Run Active File",             ID_RUN_ACTIVE_FILE
         MENUITEM "Run Selected Text",           ID_RUN_SELECTED_TEXT
@@ -1050,8 +1051,9 @@ BEGIN
         END
         POPUP "Open Terminal"
         BEGIN
-            MENUITEM "New CMD Terminal Tab",        ID_TREEFILECTRL_OPEN_NEW_CMD_WINDOW
-            MENUITEM "New Power Shell Terminal Tab\tCtrl+Alt+T", ID_TREEFILECTRL_OPEN_NEW_POWERSHELL_WINDOW
+            MENUITEM "New CMD Terminal Tab",        ID_TREEFILECTRL_OPEN_NEW_CMD_TAB
+            MENUITEM "New Power Shell Terminal Tab\tCtrl+Alt+T", ID_TREEFILECTRL_OPEN_NEW_POWERSHELL_TAB
+            MENUITEM "New WSL Terminal Tab",        ID_TREEFILECTRL_OPEN_NEW_WSL_TAB
             MENUITEM SEPARATOR
             MENUITEM "Run Selected Path",           ID_TREEFILECTRL_RUN_ACTIVE_FILE
             MENUITEM SEPARATOR
@@ -1411,7 +1413,7 @@ BEGIN
     "H",            ID_EDIT_REPLACE,        VIRTKEY, SHIFT, CONTROL
     "H",            ID_QUICK_REPLACE,       VIRTKEY, CONTROL
     "T",            ID_FILE_OPEN_CLOSED_RECENT, VIRTKEY, SHIFT, CONTROL
-    "T",            ID_OPEN_NEW_POWERSHELL_WINDOW, VIRTKEY, CONTROL, ALT
+    "T",            ID_OPEN_NEW_POWERSHELL_TAB, VIRTKEY, CONTROL, ALT
     "O",            ID_FILE_OPEN_FOLDER_TO_WORKSPACE, VIRTKEY, SHIFT, CONTROL
     VK_F11,         ID_EDITOR_FULL_SCREEN_MODE, VIRTKEY, ALT
     "C",            ID_EDITOR_COMMENT,      VIRTKEY, SHIFT, CONTROL

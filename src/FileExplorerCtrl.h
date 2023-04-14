@@ -351,8 +351,9 @@ public:
   afx_msg void OnGetName();
   afx_msg void OnTerminalRunActiveFile();
   afx_msg void OnUpdateTerminalRunActiveFile(CCmdUI* pCmdUI);
-  afx_msg void OnTerminalOpenNewCMDWindow();
-  afx_msg void OnTerminalOpenNewPowerShellWindow();
+  afx_msg void OnTerminalOpenNewCMDTab();
+  afx_msg void OnTerminalOpenNewPowerShellTab();
+  afx_msg void OnTerminalOpenNewWSLTab();
   afx_msg void OnOpenCMDHere();
   afx_msg void OnOpenWSLHere();
   afx_msg void OnOpenCMDAppendFileHere();

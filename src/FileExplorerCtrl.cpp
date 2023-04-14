@@ -180,8 +180,9 @@ BEGIN_MESSAGE_MAP(CFileExplorerCtrl, FILETREECTRL_BASE_CLASS) //NOLINT(modernize
 	ON_COMMAND(ID_TREEFILECTRL_GET_FULL_FILE_PATH_FORWARD_SLASH, &CFileExplorerCtrl::OnGetFullPathForwardSlash)
 	ON_COMMAND(ID_TREEFILECTRL_GET_FOLDER_PATH, &CFileExplorerCtrl::OnGetContainerPath)
 	ON_COMMAND(ID_TREEFILECTRL_GET_FILE_NAME, &CFileExplorerCtrl::OnGetName)
-	ON_COMMAND(ID_TREEFILECTRL_OPEN_NEW_CMD_WINDOW, &CFileExplorerCtrl::OnTerminalOpenNewCMDWindow)
-	ON_COMMAND(ID_TREEFILECTRL_OPEN_NEW_POWERSHELL_WINDOW, &CFileExplorerCtrl::OnTerminalOpenNewPowerShellWindow)
+	ON_COMMAND(ID_TREEFILECTRL_OPEN_NEW_CMD_TAB, &CFileExplorerCtrl::OnTerminalOpenNewCMDTab)
+	ON_COMMAND(ID_TREEFILECTRL_OPEN_NEW_POWERSHELL_TAB, &CFileExplorerCtrl::OnTerminalOpenNewPowerShellTab)
+	ON_COMMAND(ID_TREEFILECTRL_OPEN_NEW_WSL_TAB, &CFileExplorerCtrl::OnTerminalOpenNewWSLTab)
 	ON_COMMAND(ID_TREEFILECTRL_RUN_ACTIVE_FILE, &CFileExplorerCtrl::OnTerminalRunActiveFile)
 	ON_UPDATE_COMMAND_UI(ID_TREEFILECTRL_RUN_ACTIVE_FILE, &CFileExplorerCtrl::OnUpdateTerminalRunActiveFile)
 	ON_COMMAND(ID_TREEFILECTRL_OPEN_CMD, &CFileExplorerCtrl::OnOpenCMDHere)
@@ -2565,7 +2566,7 @@ void CFileExplorerCtrl::OnUpdateTerminalRunActiveFile(CCmdUI * pCmdUI)
 	}
 }
 
-void CFileExplorerCtrl::OnTerminalOpenNewCMDWindow()
+void CFileExplorerCtrl::OnTerminalOpenNewCMDTab()
 {
 	HTREEITEM hItem = GetSelectedItem();
 	if (hItem)
@@ -2594,7 +2595,7 @@ void CFileExplorerCtrl::OnTerminalOpenNewCMDWindow()
 	}
 }
 
-void CFileExplorerCtrl::OnTerminalOpenNewPowerShellWindow()
+void CFileExplorerCtrl::OnTerminalOpenNewPowerShellTab()
 {
 	HTREEITEM hItem = GetSelectedItem();
 	if (hItem)
@@ -2623,6 +2624,34 @@ void CFileExplorerCtrl::OnTerminalOpenNewPowerShellWindow()
 	}
 }
 
+void CFileExplorerCtrl::OnTerminalOpenNewWSLTab()
+{
+	HTREEITEM hItem = GetSelectedItem();
+	if (hItem)
+	{
+		CString sPath(ItemToPath(hItem));
+		if (!PathUtils::IsDirectory(sPath))
+		{
+			CString strContainerPath = PathUtils::GetContainerPath(sPath);
+			if (!PathFileExists(strContainerPath)) return;
+			SetCurrentDirectoryW(strContainerPath);
+		}
+		else
+		{
+			SetCurrentDirectoryW(sPath);
+		}
+		HostApplicaton(HOST_APP_TYPE::TERMINAL_WSL, L"wsl.exe");
+		if (!PathUtils::IsDirectory(sPath))
+		{
+			Sleep(500);
+			// clipboard process...
+			CString strClipBoardText = GetClipboardPlainText();
+			OpenClipBoard(PathUtils::GetLastLevelPath(sPath));
+			OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+			OpenClipBoard(strClipBoardText);
+		}
+	}
+}
 
 void CFileExplorerCtrl::OnOpenCMDHere()
 {
@@ -3966,7 +3995,7 @@ BOOL CFileExplorerCtrl::PreTranslateMessage(MSG* pMsg)
 	{
 		if (GetKeyState(VK_CONTROL) & 0x8000 && GetKeyState(VK_MENU) & 0x8000)
 		{
-			OnTerminalOpenNewCMDWindow();
+			OnTerminalOpenNewCMDTab();
 		}
 		return TRUE;
 	}

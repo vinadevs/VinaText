@@ -135,6 +135,20 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 			NULL,
 			bOpenFileMode);
 	}
+	else if (appType == HOST_APP_TYPE::TERMINAL_WSL)
+	{
+	return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
+		L"Terminal WSL",
+		strAppPathToHost,
+		strAppArguments,
+		TRUE,
+		TRUE,
+		IDR_TERMINAL_DOC,
+		HOST_METHOD::USE_ENUMWINDOWS,
+		500,
+		NULL,
+		bOpenFileMode);
+	}
 	else if (appType == HOST_APP_TYPE::CHROME_BROWSER)
 	{
 		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(

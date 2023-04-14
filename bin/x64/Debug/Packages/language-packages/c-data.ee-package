@@ -9,16 +9,16 @@
 
 @@ configuration guide:
 - Please go to below website to download MinGW Compiler for windows:
-https://sourceforge.net/projects/mingwbuilds/
+https://sourceforge.net/projects/mingw-w64/files/
 - After installion, please change below path settings to your installed MinGW paths.
 - You can also add more key words to auto complete word list.
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-..\Compilers\MinGW\MinGWx64\mingw64\bin\gcc.exe
+..\Compilers\mingw64\bin\gcc.exe
 
 @@ debugger path:
-..\Compilers\MinGW\MinGWx64\mingw64\bin\gdb.exe
+..\Compilers\mingw64\bin\gdb.exe
 
 @@ auto complete:
 abort stdlib.h abs acos math.h asctime time.h asctime_r asin assert assert.h 
