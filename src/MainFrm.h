@@ -24,6 +24,8 @@
 #include "FindDlg.h"
 #include "ReplaceDlg.h"
 
+#include "UserExtension.h"
+
 #define AUTO_SAVE_DOCUMENT_TIMER	WM_APP+307
 #define START_SAVE_DOCUMENT_TIMER	WM_APP+308
 #define UMW_SET_COLOR_ACTIVE_TAB_MDI WM_APP+309
@@ -33,8 +35,6 @@
 class CEditorDoc;
 class CBookMarkPathDlg;
 class CQuickSearchDialog;
-
-typedef std::set<CEditorDoc*> ListDebuggerDocument;
 
 ///////////////////////////// TOOLBARS //////////////////////////////////////////////////
 
@@ -134,9 +134,10 @@ protected:  // control bar embedded members
 	CBookmarkWindow		  m_wndBookmarkWindow;
 	CPathResultWindow     m_wndPathResultWindow;
 	CBreakpointWindow	  m_wndBreakpointWindow;
-	ListDebuggerDocument  m_DebuggerDocList;
 	CBookMarkPathDlg*     m_pBookMarkPathDlg = NULL;
 	CQuickSearchDialog*   m_pQuickSearchDialog = NULL;
+	std::set<CEditorDoc*> m_DebuggerDocList;
+	CUserExtension        m_UserExtension;
 
 // Generated message map functions
 public:
@@ -148,7 +149,6 @@ public:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnTimer(UINT_PTR nIDEvent);
 	afx_msg void OnWindowManager();
-	afx_msg void OnViewCustomize();
 	afx_msg void OnHighLightMDIActiveTab();
 	afx_msg void OnUpdateIconReadOnlyTab();
 	afx_msg void OnUpdateIconAllReadOnlyTab();
@@ -290,29 +290,17 @@ public:
 	afx_msg void OnToolsOpenFolderVinaText();
 	afx_msg void OnToolsOpenFolderTemp();
 	afx_msg void OnToolsOpenFolderAppData();
-	afx_msg void OnToolsControlPanel();
-	afx_msg void OnToolsOpenEnvPath();
-	afx_msg void OnToolsOpenHost();
 	afx_msg void OnFileSendMailEx();
 	afx_msg void OnUpdateFileSendMailEx(CCmdUI * pCmdUI);
 	afx_msg void OnTerminalOpenNewCMDWindow();
 	afx_msg void OnTerminalOpenNewPowerShellWindow();
 	afx_msg void OnTerminalOpenNewWSLWindow();
-	afx_msg void OnHostMSEdge();
-	afx_msg void OnHostGoogleChrome();
-	afx_msg void OnHostMozillaFirefox();
-	afx_msg void OnHostMSPaint();
-	afx_msg void OnHostSystemInformation();
 	afx_msg void OnHostFileExplorer();
-	afx_msg void OnHostMSPowerpoint();
-	afx_msg void OnHostMSExcel();
-	afx_msg void OnHostMSWord();
 	afx_msg void OnToolPythonPipWindow();
 	afx_msg void OnToolNodeJSNPMWindow();
 	afx_msg void OnUpdateExplorerSelectedFilePath(CCmdUI * pCmdUI);
 	afx_msg LRESULT OnGetTabToolTip(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnToolbarCreateNew(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnCopyData(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnCompilerNotifyDebugLinePointer(WPARAM wParam, LPARAM lParam);
 	// from MDI tab menu
@@ -374,6 +362,9 @@ public:
 	afx_msg void OnUpdateOpenCMDAppendFilePath(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOpenContainerFolder(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateBookmarkFile(CCmdUI* pCmdUI);
+	afx_msg void OnUserExtensions();
+	afx_msg void OnExtensionRefreshList();
+	afx_msg void OnUserExtension(UINT nIDExtension);
 
 	DECLARE_MESSAGE_MAP()
 protected:
@@ -389,5 +380,5 @@ protected:
 	BOOL CreateDockingBars();
 	void EnableAutoSaveDocument();
 	void FinalizeWorkerThread();
-	void UPDATE_EDITOR_UI_FOR_DEBUGGER(CEditorDoc * pEditorDoc, DWORD lPointerLine);
+	void UpdateEditorUiForDebugger(CEditorDoc * pEditorDoc, DWORD lPointerLine);
 };

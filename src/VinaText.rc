@@ -89,21 +89,7 @@ IDR_FILE_EXPLORER_DOC   ICON                    "..\\res\\fileexplorer.ico"
 
 IDR_TERMINAL_DOC        ICON                    "..\\res\\terminal.ico"
 
-IDR_MSEDGE_DOC          ICON                    "..\\res\\msinternet.ico"
-
-IDR_GOOGLE_CHROME_DOC   ICON                    "..\\res\\googlechrome.ico"
-
-IDR_MOZILLA_FIREFOX_DOC ICON                    "..\\res\\mozillafirefox.ico"
-
 IDR_MSPAINT_DOC         ICON                    "..\\res\\mspaint.ico"
-
-IDR_MSPPT_DOC           ICON                    "..\\res\\msppt.ico"
-
-IDR_MSEXCEL_DOC         ICON                    "..\\res\\msexcel.ico"
-
-IDR_MSWORD_DOC          ICON                    "..\\res\\msword.ico"
-
-IDR_SYSTEM_INFO_VIEWER  ICON                    "..\\res\\systeminfo.ico"
 
 IDR_EDITOR_DOC_READ_ONLY ICON                   "..\\res\\docreadonly.ico"
 
@@ -692,7 +678,7 @@ BEGIN
             MENUITEM "Go Back To Desktop",          ID_TOOLS_BACK_TO_ORIGINAL
         END
         MENUITEM SEPARATOR
-        POPUP "Application Paths"
+        POPUP "VinaText Paths"
         BEGIN
             MENUITEM "Installation Path",           ID_PATH_VINATEXT
             MENUITEM "App Data Path",               ID_PATH_VINATEXT_APPDATA
@@ -768,8 +754,8 @@ BEGIN
     END
     POPUP "View"
     BEGIN
-        MENUITEM "Explorer Window",             ID_PANE_FILE_EXPLORER
-        MENUITEM "Search Text Window",          ID_PANE_SEARCH_AND_REPLACE_WINDOW
+        MENUITEM "Explorer Window\tCtrl+Shift+Q",    ID_PANE_FILE_EXPLORER
+        MENUITEM "Search Text Window\tCtrl+Shift+F", ID_PANE_SEARCH_AND_REPLACE_WINDOW
         MENUITEM SEPARATOR
         MENUITEM "Message Window",              ID_PANE_OUTPUT_WINDOW
         MENUITEM "Debug Window",                ID_PANE_BUILD_WINDOW
@@ -942,17 +928,6 @@ BEGIN
     END
     POPUP "Tools"
     BEGIN
-        POPUP "Application(s)"
-        BEGIN
-            MENUITEM "Microsoft Paint",             ID_HOST_MS_PAINT
-            MENUITEM "System Information Viewer",   ID_HOST_SYSTEM_INFORMATION
-        END
-        POPUP "Quick Window Shortcuts"
-        BEGIN
-            MENUITEM "All Control Panel Items",     ID_SHORTCUT_CONTROL_PANEL
-            MENUITEM "Environmental Variables PATH",ID_SHORTCUT_ENVIRONMENT_PATH
-            MENUITEM "Window32 Host Location",      ID_SHORTCUT_WINDOW_HOST_FOLDER
-        END
         POPUP "Print Message Output"
         BEGIN
             MENUITEM "Print System Information",    ID_TOOL_GET_SYSTEM_INFO
@@ -971,6 +946,15 @@ BEGIN
             MENUITEM "Generate Time-Date String",   ID_TOOL_CREATE_TIMEDATE
             MENUITEM "Generate Url Escape String",  ID_DOCUMENT_URL_ESCAPSE
         END
+    END
+    POPUP "Extensions"
+    BEGIN
+        POPUP "Manage Extensions..."
+        BEGIN
+            MENUITEM "User Extensions", ID_EXTENSION_CONFIGURATION
+            MENUITEM "Refesh List", ID_EXTENSION_REFESH_LIST
+        END
+        MENUITEM SEPARATOR
     END
     POPUP "Window"
     BEGIN
@@ -1002,7 +986,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Report An Issue",             ID_VINATEXT_REPORT_ISSUE
         MENUITEM "Release Notes...",            ID_VINATEXT_RELEASE_NOTE
-        MENUITEM "Check For Updates",           ID_VINATEXT_CHECK_FOR_UPDATE
         MENUITEM SEPARATOR
         MENUITEM "About VinaText",              ID_APP_ABOUT
     END
@@ -1350,32 +1333,6 @@ BEGIN
     END
 END
 
-IDR_MENU_ARGS MENU
-BEGIN
-    POPUP "_DUMMY_"
-    BEGIN
-        MENUITEM "Line Number",                 ID_MENU_ITEM1
-        MENUITEM "Current Position",            ID_MENU_ITEM2
-        MENUITEM "Full File Path",              ID_MENU_ITEM3
-        MENUITEM "File Name",                   ID_MENU_ITEM4
-        MENUITEM "File Extension",              ID_MENU_ITEM5
-        MENUITEM "File Directory",              ID_MENU_ITEM6
-        MENUITEM "Selected Text",               ID_MENU_ITEM7
-        MENUITEM "All Text",                    ID_MENU_ITEM8
-    END
-END
-
-IDR_MENU_DIRS MENU
-BEGIN
-    POPUP "DUMMY"
-    BEGIN
-        MENUITEM "File Directory",              ID_MENU_DIR1
-        MENUITEM "Windows Directory",           ID_MENU_DIR2
-        MENUITEM "System Directory",            ID_MENU_DIR3
-    END
-END
-
-
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
@@ -1435,6 +1392,7 @@ BEGIN
     VK_F9,          ID_OPTIONS_ADD_NEW_BREAKPOINT, VIRTKEY 
     VK_NUMPAD1,     ID_MDI_TAB_NEW_VERTICAL_TAB, VIRTKEY, CONTROL
     VK_NUMPAD2,     ID_MDI_TAB_NEW_HORIZONTAL_TAB, VIRTKEY, CONTROL
+    VK_F1,          ID_DOCUMENT_TRANSLATE,  VIRTKEY
     VK_F1,          ID_WINDOW_NEW,          VIRTKEY, CONTROL
     VK_F2,          ID_MDI_TAB_RENAME,      VIRTKEY 
     VK_TAB,         ID_MDI_SWITCH_TO_NEXT_TAB, VIRTKEY, CONTROL
@@ -2098,7 +2056,7 @@ BEGIN
     LTEXT           "Binary File Extension List:",IDC_STATIC,315,217,82,8
     COMBOBOX        ID_LANGUAGE_TRANSLATE_TO_COMBO,141,214,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_LANGUAGE_TRANSLATE_FROM_COMBO,141,191,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_LANGGUAGE_SPELL_CHECK_COMBO,141,167,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_LANGUAGE_SPELL_CHECK_COMBO,141,167,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,411,215,126,14,ES_AUTOHSCROLL
     LTEXT           "Long Line Maximum:",IDC_STATIC,332,72,65,8
     EDITTEXT        ID_LONG_LINE_MAXIMUM_EDIT,411,70,126,14,ES_AUTOHSCROLL
@@ -3001,34 +2959,8 @@ BEGIN
     AFX_IDS_PREVIEW_CLOSE   "Close print preview mode\nCancel Preview"
 END
 
-STRINGTABLE
-BEGIN
-    IDS_TOOLBAR_STANDARD    "Top Main Toolbar"
-    IDS_TOOLBAR_CUSTOMIZE   "Customize Toolbar and Menu"
-END
-
-STRINGTABLE
-BEGIN
-    ID_MENU_ITEM1           "$(LINE_NUMBER)"
-    ID_MENU_ITEM2           "$(POSITION)"
-    ID_MENU_ITEM3           "$(FILE_PATH)"
-END
-
-STRINGTABLE
-BEGIN
-    ID_MENU_ITEM4           "$(FILE_NAME)"
-    ID_MENU_ITEM5           "$(FILE_EXT)"
-    ID_MENU_ITEM6           "$(FILE_DIR)"
-    ID_MENU_ITEM7           "$(SELECTED_TEXT)"
-    ID_MENU_ITEM8           "$(ALL_TEXT)"
-    ID_MENU_DIR1            "$(INIT_FILE_DIR)"
-    ID_MENU_DIR2            "$(INIT_WINDOW_DIR)"
-    ID_MENU_DIR3            "$(INIT_SYSTEM_DIR)"
-END
-
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
-
 
 
 #ifndef APSTUDIO_INVOKED

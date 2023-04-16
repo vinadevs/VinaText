@@ -32,7 +32,6 @@
 #include "SingleInstanceApp.h"
 #include "ProjectTempateCreatorDlg.h"
 #include "CodePageMFCDlg.h"
-#include "CustomizeUserTool.h"
 #include "RecentCloseFileManager.h"
 #include "SaveFileWithPassWordDlg.h"
 #include "ReopenFileWithPasswordDlg.h"
@@ -133,7 +132,6 @@ BEGIN_MESSAGE_MAP(CVinaTextApp, CWinAppEx)
 	ON_COMMAND(ID_VINATEXT_TWITTER, &CVinaTextApp::OnHelpTwitter)
 	ON_COMMAND(ID_VINATEXT_REPORT_ISSUE, &CVinaTextApp::OnHelpReportIssue)
 	ON_COMMAND(ID_VINATEXT_RELEASE_NOTE, &CVinaTextApp::OnHelpReleaseNotes)
-	ON_COMMAND(ID_VINATEXT_CHECK_FOR_UPDATE, &CVinaTextApp::OnHelpCheckForUpdate)
 	ON_COMMAND(ID_KEYBOARD_SHORTCUTS_REFERENCE, &CVinaTextApp::OnHelpKeyboardShortcutsReference)
 	ON_COMMAND(ID_APP_ABOUT, &CVinaTextApp::OnHelpAppAbout)
 
@@ -268,7 +266,6 @@ BOOL CVinaTextApp::InitInstance()
 	InitContextMenuManager();
 	InitKeyboardManager();
 	InitTooltipManager();
-	//EnableUserTools(ID_TOOLS_ENTRY, ID_USER_TOOL1, ID_USER_TOOL15, RUNTIME_CLASS(CCustomizeUserTool), IDR_MENU_ARGS, IDR_MENU_DIRS);
 
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
@@ -606,11 +603,6 @@ void CVinaTextApp::OnHelpReportIssue()
 }
 
 void CVinaTextApp::OnHelpReleaseNotes()
-{
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/"), _T(""), _T(""), SW_MAXIMIZE);
-}
-
-void CVinaTextApp::OnHelpCheckForUpdate()
 {
 	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/"), _T(""), _T(""), SW_MAXIMIZE);
 }

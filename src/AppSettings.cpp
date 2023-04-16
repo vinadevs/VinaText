@@ -134,7 +134,7 @@ void CAppSettings::ResetAllSettings()
 	m_strLanguageTranslateTo = _T("vi");
 
 	// spell checker
-	m_strLangguageSpellCheck = _T("en-us");
+	m_strLanguageSpellCheck = _T("en-us");
 
 	m_DockWindowFontSetting._font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
 	m_DockWindowFontSetting._lfHeight = 14;
@@ -227,7 +227,7 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
 	jsonWriter.AddBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
-	jsonWriter.AddValue("LangguageSpellCheck", AppUtils::CStringToStd(m_strLangguageSpellCheck));
+	jsonWriter.AddValue("LanguageSpellCheck", AppUtils::CStringToStd(m_strLanguageSpellCheck));
 	jsonWriter.AddValue("DockWindowFontName", AppUtils::CStringToStd(m_DockWindowFontSetting._font));
 	jsonWriter.AddValue("BinaryFileExtensionList", AppUtils::CStringToStd(m_strBinaryFileExtensionList));
 	jsonWriter.AddInteger("DockWindowFontHeight", m_DockWindowFontSetting._lfHeight);
@@ -326,7 +326,7 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
-	jsonReader.ReadCString("LangguageSpellCheck", m_strLangguageSpellCheck);
+	jsonReader.ReadCString("LanguageSpellCheck", m_strLanguageSpellCheck);
 	jsonReader.ReadCString("DockWindowFontName", m_DockWindowFontSetting._font);
 	jsonReader.ReadInteger("DockWindowFontHeight", m_DockWindowFontSetting._lfHeight);
 	jsonReader.ReadInteger("DockWindowFontWeight", m_DockWindowFontSetting._lfWeight);

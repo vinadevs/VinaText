@@ -4,7 +4,7 @@
 // -----------------------------------------------------------------------
 // This is a part of Vinatext Project
 // Copyright(C) www.vinatext.com - vinadevs
-// This source code can be used, distributed or modified under MIT license
+// This file can be used, distributed or modified under MIT license
 //////////////////////////////////////////////////////////////////////////
 
 @@ configuration guide:
@@ -15,10 +15,10 @@ https://sourceforge.net/projects/mingw-w64/files/
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-C:\Users\tranp\Downloads\mingw64\bin\g++.exe
+..\Compilers\mingw64\bin\g++.exe
 
 @@ debugger path:
-C:\Users\tranp\Downloads\mingw64\bin\gdb.exe
+..\Compilers\mingw64\\bin\gdb.exe
 
 @@ auto complete:
 std alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept 

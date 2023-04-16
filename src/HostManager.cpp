@@ -23,20 +23,6 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 		else 
 			AppUtils::CloseMDIDocument(pExistedDoc);
 	}
-	if (appType == HOST_APP_TYPE::MS_EDGE)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Microsoft Edge",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_MSEDGE_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"Chrome_WidgetWin_1",
-			bOpenFileMode);
-	}
 	else if (appType == HOST_APP_TYPE::MS_PAINT)
 	{
 		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
@@ -49,62 +35,6 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 			HOST_METHOD::USE_FINDWINDOWS,
 			500,
 			L"MSPaintApp",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::SYSTEM_INFO_VIEWER)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"System Information Viewer",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			TRUE,
-			IDR_SYSTEM_INFO_VIEWER,
-			HOST_METHOD::USE_FINDWINDOWS,
-			500,
-			L"#32770",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::MS_OFFICE_EXCEL)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Microsoft Excel",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_MSEXCEL_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"XLMAIN",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::MS_OFFICE_PPT)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Microsoft Powerpoint",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_MSPPT_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"PPTFrameClass",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::MS_OFFICE_WORD)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Microsoft Word",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_MSWORD_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"OpusApp",
 			bOpenFileMode);
 	}
 	else if (appType == HOST_APP_TYPE::TERMINAL_CMD)
@@ -148,34 +78,6 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 		500,
 		NULL,
 		bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::CHROME_BROWSER)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Google Chrome",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_GOOGLE_CHROME_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"Chrome_WidgetWin_1",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::FIREFOX_BROWSER)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Mozilla Firefox",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			FALSE,
-			IDR_MOZILLA_FIREFOX_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			2000,
-			L"MozillaWindowClass",
-			bOpenFileMode);
 	}
 	else if (appType == HOST_APP_TYPE::FILE_EXPLORER)
 	{

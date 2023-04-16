@@ -163,6 +163,9 @@
     <Filter Include="Dock Windows\Search And Replace Window\Quick Search">
       <UniqueIdentifier>{16402714-dbb6-4e52-a45a-4d0ecc732b7f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="User Extension">
+      <UniqueIdentifier>{0e7ec8e3-8bfe-4ecd-89fa-f6899935ca38}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.md" />
@@ -693,6 +696,9 @@
     <ClInclude Include="ComboboxRegexHelper.h">
       <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
+    <ClInclude Include="UserExtension.h">
+      <Filter>User Extension</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1198,6 +1204,9 @@
     </ClCompile>
     <ClCompile Include="ComboboxRegexHelper.cpp">
       <Filter>Dock Windows\Search And Replace Window</Filter>
+    </ClCompile>
+    <ClCompile Include="UserExtension.cpp">
+      <Filter>User Extension</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

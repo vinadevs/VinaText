@@ -213,6 +213,7 @@
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
+    <ClInclude Include="UserExtension.h" />
     <ClInclude Include="EditorCommonDef.h" />
     <ClInclude Include="EditorColorLight.h" />
     <ClInclude Include="EditorLexerDark.h" />
@@ -389,6 +390,7 @@
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
+    <ClCompile Include="UserExtension.cpp" />
     <ClCompile Include="EditorLexerDark.cpp" />
     <ClCompile Include="EditorLexerLight.cpp" />
     <ClCompile Include="pdf\ArobatActiveX\AdobeAcrobatWrapper.cpp" />

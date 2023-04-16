@@ -10,7 +10,6 @@
 #include "VinaTextApp.h"
 #include "MainFrm.h"
 #include "ChildFrm.h"
-
 #include "EditorDoc.h"
 #include "EditorView.h"
 #include "ImageDoc.h"
@@ -23,25 +22,17 @@
 #include "HostView.h"
 #include "FileExplorerDoc.h"
 #include "FileExplorerView.h"
-
 #include "AppSettings.h"
 #include "MultiThreadWorker.h"
 #include "Debugger.h"
-//#include "CustomizeUserTool.h"
-
 #include "SetBookmarkPathDlg.h"
 #include "QuickSearchDialog.h"
 #include "BookMarkPathDlg.h"
-
 #include "VinaTextSettingDlg.h"
-
 #include "GuiUtils.h"
-
 #include "HostManager.h"
 #include "SystemInfo.h"
-
 #include "WindowsPrinter.h"
-
 #include "translator/POHandler.h"
 
 // CMainFrame
@@ -49,10 +40,6 @@
 #pragma warning(disable: 4996 4127)
 
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
-
-//const int  iMaxUserToolbars = 10;
-//const UINT uiFirstUserToolBarId = AFX_IDW_CONTROLBAR_FIRST + 40;
-//const UINT uiLastUserToolBarId = uiFirstUserToolBarId + iMaxUserToolbars - 1;
 
 static UINT g_Statusbar_Indicators[] =
 {
@@ -104,8 +91,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_PANE_BREAKPOINT_WINDOW, &CMainFrame::OnViewBreakpointPane)
 	ON_UPDATE_COMMAND_UI(ID_PANE_BREAKPOINT_WINDOW, &CMainFrame::OnUpdateViewBreakpointPane)
 	ON_COMMAND(ID_WINDOW_MANAGER, &CMainFrame::OnWindowManager)
-	ON_COMMAND(ID_VIEW_CUSTOMIZE, &CMainFrame::OnViewCustomize)
-	//ON_REGISTERED_MESSAGE(AFX_WM_CREATETOOLBAR, &CMainFrame::OnToolbarCreateNew)
 	ON_COMMAND(ID_TOOLS_ALLOWCREATEFOLDER, &CMainFrame::OnToolsAllowCreateFolder)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_ALLOWCREATEFOLDER, &CMainFrame::OnUpdateToolsAllowCreateFolder)
 	ON_COMMAND(ID_TOOLS_ALLOWDELETE, &CMainFrame::OnToolsAllowDelete)
@@ -219,23 +204,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_PATH_VINATEXT, &CMainFrame::OnToolsOpenFolderVinaText)
 	ON_COMMAND(ID_PATH_VINATEXT_TEMP, &CMainFrame::OnToolsOpenFolderTemp)
 	ON_COMMAND(ID_PATH_VINATEXT_APPDATA, &CMainFrame::OnToolsOpenFolderAppData)
-	ON_COMMAND(ID_SHORTCUT_CONTROL_PANEL, &CMainFrame::OnToolsControlPanel)
-	ON_COMMAND(ID_SHORTCUT_ENVIRONMENT_PATH, &CMainFrame::OnToolsOpenEnvPath)
-	ON_COMMAND(ID_SHORTCUT_WINDOW_HOST_FOLDER, &CMainFrame::OnToolsOpenHost)
 	ON_COMMAND(ID_OPEN_NEW_CMD_TAB, &CMainFrame::OnTerminalOpenNewCMDWindow)
 	ON_COMMAND(ID_OPEN_NEW_POWERSHELL_TAB, &CMainFrame::OnTerminalOpenNewPowerShellWindow)
 	ON_COMMAND(ID_OPEN_NEW_WSL_TAB, &CMainFrame::OnTerminalOpenNewWSLWindow)
 	ON_COMMAND(ID_FILE_SEND_MAIL, &CMainFrame::OnFileSendMailEx)
 	ON_UPDATE_COMMAND_UI(ID_FILE_SEND_MAIL, &CMainFrame::OnUpdateFileSendMailEx)
-	ON_COMMAND(ID_HOST_MS_EDGE, &CMainFrame::OnHostMSEdge)
-	ON_COMMAND(ID_HOST_CHROME, &CMainFrame::OnHostGoogleChrome)
-	ON_COMMAND(ID_HOST_FIREFOX, &CMainFrame::OnHostMozillaFirefox)
-	ON_COMMAND(ID_HOST_MS_PAINT, &CMainFrame::OnHostMSPaint)
-	ON_COMMAND(ID_HOST_SYSTEM_INFORMATION, &CMainFrame::OnHostSystemInformation)
 	ON_COMMAND(ID_HOST_FILE_EXPLORER, &CMainFrame::OnHostFileExplorer)
-	ON_COMMAND(ID_HOST_MS_PPT, &CMainFrame::OnHostMSPowerpoint)
-	ON_COMMAND(ID_HOST_MS_EXCEL, &CMainFrame::OnHostMSExcel)
-	ON_COMMAND(ID_HOST_MS_WORD, &CMainFrame::OnHostMSWord)
 	ON_COMMAND(ID_TOOL_PYTHON_PIP_WINDOW, &CMainFrame::OnToolPythonPipWindow)
 	ON_COMMAND(ID_TOOL_NODEJS_NPM_WINDOW, &CMainFrame::OnToolNodeJSNPMWindow)
 	ON_COMMAND(ID_TOOL_GET_SYSTEM_INFO, &CMainFrame::OnOptionsGetSystemInformation)
@@ -306,6 +280,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_PRINT_FILE_NOW, &CMainFrame::OnUpdatePrintFileNow)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_PRINT_SETUP_DLG, &CMainFrame::OnUpdatePrintFileSetupDlg)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_PRINT_PAGE_DLG, &CMainFrame::OnUpdatePrintPageSetupDlg)
+
+	// Extensions
+	ON_COMMAND(ID_EXTENSION_CONFIGURATION, &CMainFrame::OnUserExtensions)
+	ON_COMMAND(ID_EXTENSION_REFESH_LIST, &CMainFrame::OnExtensionRefreshList)
+	ON_COMMAND_RANGE(USER_EXTENSION_ID_1, USER_EXTENSION_ID_30, &CMainFrame::OnUserExtension)
+
 END_MESSAGE_MAP()
 
 // CMainFrame construction/destruction
@@ -466,9 +446,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	mdiTabParams.m_bEnableTabSwap = TRUE;
 	EnableMDITabbedGroups(TRUE, mdiTabParams);
 
+	// top main menu
 	VERIFY(m_MainMenu.LoadMenu(IDR_MAINFRAME)); // load main menu bar
 	AppTranslator.ToNativeContextMenu(&m_MainMenu); // translate to native language
 	SetMenu(&m_MainMenu); // set back to mainframe
+	m_UserExtension.LoadMenuUserExtensions(&m_MainMenu); // load user defined extensions
 
 	// prevent the menu bar from taking the focus on activation
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
@@ -479,16 +461,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("Failed to create toolbar\n");
 		return -1;      // fail to create
 	}
-
-	CString strToolBarName;
-	bNameValid = strToolBarName.LoadString(IDS_TOOLBAR_STANDARD);
-	ASSERT(bNameValid);
-	m_wndToolBar.SetWindowText(strToolBarName);
-
-	CString strCustomize;
-	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
-	ASSERT(bNameValid);
-	m_wndToolBar.EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
 
 	// Create status bar:
 	if (!m_wndStatusBar.Create(this) || !m_wndStatusBar.SetIndicators(g_Statusbar_Indicators, sizeof(g_Statusbar_Indicators) / sizeof(UINT)))
@@ -547,12 +519,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// Enable enhanced windows management dialog
 	EnableWindowsDialog(ID_WINDOW_MANAGER, ID_WINDOW_MANAGER, TRUE);
-
-	// Enable toolbar and docking window menu replacement
-	EnablePaneMenu(TRUE, ID_VIEW_CUSTOMIZE, strCustomize, ID_VIEW_TOOLBAR);
-
-	// Allow user-defined toolbars operations:
-	//InitUserToolbars(NULL, uiFirstUserToolBarId, uiLastUserToolBarId);
 
 	// Enable quick (Alt+drag) toolbar customization
 	CMFCToolBar::EnableQuickCustomization();
@@ -810,39 +776,12 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 void CMainFrame::OnWindowManager()
 {
-	ShowWindowsDialog();
-}
-
-void CMainFrame::OnViewCustomize()
-{
-	CMFCToolBarsCustomizeDialog* pDlgCust = new CMFCToolBarsCustomizeDialog(this, TRUE /* scan menus */);
-	pDlgCust->EnableUserDefinedToolbars();
-	pDlgCust->Create();
+	CMDIFrameWndEx::ShowWindowsDialog();
 }
 
 void CMainFrame::OnFullScreeenMode()
 {
 	CMDIFrameWndEx::ShowFullScreen();
-}
-
-LRESULT CMainFrame::OnToolbarCreateNew(WPARAM wp, LPARAM lp)
-{
-	LRESULT lres = CMDIFrameWndEx::OnToolbarCreateNew(wp, lp);
-	if (lres == 0)
-	{
-		return 0;
-	}
-
-	CMFCToolBar* pUserToolbar = (CMFCToolBar*)lres;
-	ASSERT_VALID(pUserToolbar);
-
-	BOOL bNameValid;
-	CString strCustomize;
-	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
-	ASSERT(bNameValid);
-
-	pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
-	return lres;
 }
 
 LRESULT CMainFrame::OnCopyData(WPARAM wParam, LPARAM lParam)
@@ -1051,81 +990,6 @@ BOOL CMainFrame::LoadFrame(UINT nIDResource, DWORD dwDefaultStyle, CWnd* pParent
 	{
 		return FALSE;
 	}
-
-	// add some tools for example....
-	/*CUserToolsManager* pUserToolsManager = theApp.GetUserToolsManager();
-	if (pUserToolsManager != NULL && pUserToolsManager->GetUserTools().IsEmpty())
-	{
-		CCustomizeUserTool* pTool1 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool1)
-		{
-			pTool1->m_strLabel = _T("Resource Manager");
-			pTool1->SetCommand(_T("perfmon.exe"));
-		}
-
-		CCustomizeUserTool* pTool2 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool2)
-		{
-			pTool2->m_strLabel = _T("System Cleanup Manager");
-			pTool2->SetCommand(_T("cleanmgr.exe"));
-		}
-
-		CCustomizeUserTool* pTool3 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool3)
-		{
-			pTool3->m_strLabel = _T("Task Scheduler");
-			pTool3->SetCommand(_T("taskschd.msc"));
-		}
-
-		CCustomizeUserTool* pTool4 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool4)
-		{
-			pTool4->m_strLabel = _T("Character Map");
-			pTool4->SetCommand(_T("charmap.exe"));
-		}
-
-		CCustomizeUserTool* pTool5 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool5)
-		{
-			pTool5->m_strLabel = _T("System Information");
-			pTool5->SetCommand(_T("msinfo32.exe"));
-		}
-
-		CCustomizeUserTool* pTool6 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool6)
-		{
-			pTool6->m_strLabel = _T("Computer Manager");
-			pTool6->SetCommand(_T("compmgmt.msc"));
-		}
-
-		CCustomizeUserTool* pTool7 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool7)
-		{
-			pTool7->m_strLabel = _T("User Action Recorder");
-			pTool7->SetCommand(_T("psr.exe"));
-		}
-
-		CCustomizeUserTool* pTool8 = (CCustomizeUserTool*)pUserToolsManager->CreateNewTool();
-		if (pTool8)
-		{
-			pTool8->m_strLabel = _T("Window Registry Editor");
-			pTool8->SetCommand(_T("regedit.exe"));
-		}
-	}*/
-	// enable customization button for all user toolbars
-	BOOL bNameValid;
-	CString strCustomize;
-	bNameValid = strCustomize.LoadString(IDS_TOOLBAR_CUSTOMIZE);
-	ASSERT(bNameValid);
-	//for (int i = 0; i < iMaxUserToolbars; i++)
-	//{
-	//	CMFCToolBar* pUserToolbar = GetUserToolBarByIndex(i);
-	//	if (pUserToolbar != NULL)
-	//	{
-	//		pUserToolbar->EnableCustomizeButton(TRUE, ID_VIEW_CUSTOMIZE, strCustomize);
-	//	}
-	//}
-	// explicitly restore toolbar state
 	m_wndToolBar.RestoreOriginalState();
 	return TRUE;
 }
@@ -3232,21 +3096,6 @@ void CMainFrame::OnToolsOpenFolderAppData()
 	RevealInExplorerWindow(strAppDataFolderPath);
 }
 
-void CMainFrame::OnToolsControlPanel()
-{
-	OSUtils::CreateWin32Process(_T("Control Panel"));
-}
-
-void CMainFrame::OnToolsOpenEnvPath()
-{
-	OSUtils::CreateWin32Process(_T("rundll32 sysdm.cpl,EditEnvironmentVariables"));
-}
-
-void CMainFrame::OnToolsOpenHost()
-{
-	PathUtils::OpenFileSystem(_T("C:\\Windows\\System32\\drivers\\etc"));
-}
-
 void CMainFrame::FinalizeWorkerThread()
 {
 	ThreadWorkerMgr.FinalizeThreadWorker();
@@ -3534,7 +3383,7 @@ unsigned int CMainFrame::GetQuickSearchOption()
 	return 0;
 }
 
-void CMainFrame::UPDATE_EDITOR_UI_FOR_DEBUGGER(CEditorDoc* pEditorDoc, DWORD lPointerLine)
+void CMainFrame::UpdateEditorUiForDebugger(CEditorDoc* pEditorDoc, DWORD lPointerLine)
 {
 	if (pEditorDoc)
 	{
@@ -3603,12 +3452,12 @@ LRESULT CMainFrame::OnCompilerNotifyDebugLinePointer(WPARAM wParam, LPARAM lPara
 		{
 			AppUtils::CreateDocumentFromFile(szFileName);
 			auto pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-			UPDATE_EDITOR_UI_FOR_DEBUGGER(pEditorDoc, lPointerLine);
+			UpdateEditorUiForDebugger(pEditorDoc, lPointerLine);
 		}
 		else if (AppUtils::SetActiveDocument(pOpenedDoc))
 		{
 			auto pEditorDoc = dynamic_cast<CEditorDoc*>(pOpenedDoc);
-			UPDATE_EDITOR_UI_FOR_DEBUGGER(pEditorDoc, lPointerLine);
+			UpdateEditorUiForDebugger(pEditorDoc, lPointerLine);
 		}
 	}
 	return 0L;
@@ -4285,80 +4134,10 @@ void CMainFrame::OnTerminalOpenNewWSLWindow()
 	HostApplicaton(HOST_APP_TYPE::TERMINAL_WSL, L"wsl.exe");
 }
 
-void CMainFrame::OnHostMSEdge()
-{
-	CString strMSEdgePath = L"C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe";
-	if (!PathFileExists(strMSEdgePath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found Microsoft Edge on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::MS_EDGE, strMSEdgePath);
-}
-
-void CMainFrame::OnHostGoogleChrome()
-{
-	CString strChromePath = OSUtils::GetRegistryAppPath(L"chrome.exe");
-	if (!PathFileExists(strChromePath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found Google Chrome on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::CHROME_BROWSER, strChromePath);
-}
-
-void CMainFrame::OnHostMozillaFirefox()
-{
-	CString strFileFoxPath = OSUtils::GetRegistryAppPath(L"chrome.exe");
-	if (!PathFileExists(strFileFoxPath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found FireFox on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::FIREFOX_BROWSER, strFileFoxPath);
-}
-
-void CMainFrame::OnHostMSPaint()
-{
-	HostApplicaton(HOST_APP_TYPE::MS_PAINT, L"mspaint.exe");
-}
-
-void CMainFrame::OnHostSystemInformation()
-{
-	HostApplicaton(HOST_APP_TYPE::SYSTEM_INFO_VIEWER, L"msinfo32.exe");
-}
-
 void CMainFrame::OnHostFileExplorer()
 {
 	CString strNavigatePath = GetCurrentDocFolder();
 	HostApplicaton(HOST_APP_TYPE::FILE_EXPLORER, _T(""), strNavigatePath);
-}
-
-void CMainFrame::OnHostMSPowerpoint()
-{
-	CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
-	if (!PathFileExists(strMSPPTPath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found Microsoft Powerpoint on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::MS_OFFICE_PPT, strMSPPTPath, L"/B");
-}
-
-void CMainFrame::OnHostMSExcel()
-{
-	CString strMSExcelPath = OSUtils::GetRegistryAppPath(L"EXCEL.EXE");
-	if (!PathFileExists(strMSExcelPath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found Microsoft Excel on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::MS_OFFICE_EXCEL, strMSExcelPath, L"/s");
-}
-
-void CMainFrame::OnHostMSWord()
-{
-	CString strMSWordPath = OSUtils::GetRegistryAppPath(L"WINWORD.EXE");
-	if (!PathFileExists(strMSWordPath))
-	{
-		AfxMessageBox(_T("[Host Error] Can not found Microsoft Word on this PC!")); return;
-	}
-	HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, L"/s");
 }
 
 void CMainFrame::OnToolPythonPipWindow()
@@ -4621,4 +4400,22 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE)
 		strTTText = Native_Language("Close File");
 	return TRUE;
+}
+
+///////////////////////////// USER EXTENSIONS //////////////////////////////////////////////////
+
+void CMainFrame::OnUserExtensions()
+{
+	m_UserExtension.OpenConfigFile();
+}
+
+void CMainFrame::OnExtensionRefreshList()
+{
+	m_UserExtension.LoadMenuUserExtensions(&m_MainMenu, TRUE);
+	AfxMessageBox(_T("Extension list refreshed."), MB_ICONINFORMATION);
+}
+
+void CMainFrame::OnUserExtension(UINT nIDExtension)
+{
+	m_UserExtension.InvokeCommand(nIDExtension);
 }

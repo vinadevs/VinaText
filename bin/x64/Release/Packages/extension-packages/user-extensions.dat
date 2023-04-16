@@ -1,0 +1,41 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext user extension settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.com - vinadevs
+// This file can be used, distributed or modified under MIT license
+//////////////////////////////////////////////////////////////////////////
+
+@@ configuration guide:
+
+- You can use below variables for setup new sub menu.
+After edited, apply changes by Extensions > Manage Extensions... > Refresh List
+
++ For general:
+$(VAR_FILE_PATH) : use file path
+$(VAR_FILE_NAME) : use file name
+$(VAR_FILE_EXT) : use file extension
+$(VAR_FILE_DIR) : use file directory
+
++ For editor:
+$(VAR_EDIT_LINE_NUMBER) : a line number in editor
+$(VAR_EDIT_POSITION) : a position number in editor
+$(VAR_EDIT_SELECTED_TEXT) : selected text in editor
+$(VAR_EDIT_ALL_TEXT) : all text in editor
+
++ Extension configuration:
+Extension_Name: sub menu name (required)
+Extension_CMD: full command line to execute, all paths need to be stayed in double quote (required)
+Extension_Run_From_Directory: where the CMD run from (default is C:\windows\)
+Extension_Keep_Console: Yes/No, keep console window after execution or not (required)
+
+@@ user defined extension list:
+
+EXTENSION_BEGIN-------------------------------------------
+
+	Extension_Name: System Infomation
+	Extension_CMD: msinfo32.exe
+    Extension_Keep_Console: No
+
+EXTENSION_END---------------------------------------------

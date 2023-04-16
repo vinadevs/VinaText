@@ -198,7 +198,7 @@ public:
 
 	// paths
 	CString m_strInitialFilePickerPath = _T("C:\\");
-	CString m_strLangguageSpellCheck = _T("en-us");
+	CString m_strLanguageSpellCheck = _T("en-us");
 	CString m_strNodeJSFolderPath = _T("C:\\");
 	CString m_strPythonFolderPath = _T("C:\\");
 	CString m_strGitWindowFolderPath = _T("C:\\Program Files\\Git");

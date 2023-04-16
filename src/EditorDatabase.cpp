@@ -51,11 +51,6 @@ void CLanguageDatabase::SetDebuggerPath(const CString & str)
 	m_steDebuggerPath = str;
 }
 
-void CLanguageDatabase::SetSnipppetCode(const CString & str)
-{
-	m_strSnipppetCode = str;
-}
-
 CString CLanguageDatabase::GetLanguageName() const
 {
 	return m_strLanguageName;
@@ -94,9 +89,4 @@ CString CLanguageDatabase::GetCompilerPath() const
 CString CLanguageDatabase::GetDebuggerPath() const
 {
 	return m_steDebuggerPath;
-}
-
-CString CLanguageDatabase::GetSnipppetCode() const
-{
-	return m_strSnipppetCode;
 }

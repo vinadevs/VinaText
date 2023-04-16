@@ -58,7 +58,7 @@ protected:
 	afx_msg void OnVolumeDown() { m_wndMWP.VolumeDown(); };
 	afx_msg void OnNextFrame() { m_wndMWP.NextFrame(); };
 	afx_msg void OnPreviousFrame() { m_wndMWP.Stop(); };
-	afx_msg void OnUpdatePlayVideo(CCmdUI* pCmdUI) { pCmdUI->Enable(!m_wndMWP.IsPlaying()); };
-	afx_msg void OnUpdatePauseVideo(CCmdUI* pCmdUI) { pCmdUI->Enable(m_wndMWP.IsPlaying()); };
+	afx_msg void OnUpdatePlayVideo(CCmdUI* pCmdUI) { pCmdUI->Enable(~static_cast<BOOL>(m_wndMWP.IsPlaying())); };
+	afx_msg void OnUpdatePauseVideo(CCmdUI* pCmdUI) { pCmdUI->Enable(~static_cast<BOOL>(m_wndMWP.IsPlaying())); };
 	DECLARE_MESSAGE_MAP()
 };

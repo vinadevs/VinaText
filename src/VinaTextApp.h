@@ -58,7 +58,6 @@ public:
 	afx_msg void OnHelpTwitter();
 	afx_msg void OnHelpReportIssue();
 	afx_msg void OnHelpReleaseNotes();
-	afx_msg void OnHelpCheckForUpdate();
 	afx_msg void OnHelpKeyboardShortcutsReference();
 
 	// encoding...

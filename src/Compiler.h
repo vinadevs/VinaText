@@ -95,26 +95,26 @@ namespace VinaTextCompiler
 };
 
 // below implementations will be used in EditorView Only!
-#define START_VINATEXT_COMPILER(LANGGUAGE_ENUM) \
+#define START_VINATEXT_COMPILER(LANGUAGE_ENUM) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
-	VinaTextCompiler::START_COMPILER(LANGGUAGE_ENUM, pDoc);
+	VinaTextCompiler::START_COMPILER(LANGUAGE_ENUM, pDoc);
 
-#define START_VINATEXT_GDB_DEBUGGER(LANGGUAGE_ENUM) \
+#define START_VINATEXT_GDB_DEBUGGER(LANGUAGE_ENUM) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
-	VinaTextCompiler::START_GDB_DEBUGGER(LANGGUAGE_ENUM, pDoc);
+	VinaTextCompiler::START_GDB_DEBUGGER(LANGUAGE_ENUM, pDoc);
 
-#define START_VINATEXT_GDB_CMD(LANGGUAGE_ENUM) \
+#define START_VINATEXT_GDB_CMD(LANGUAGE_ENUM) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
-	VinaTextCompiler::START_GDB_CMD(LANGGUAGE_ENUM, pDoc);
+	VinaTextCompiler::START_GDB_CMD(LANGUAGE_ENUM, pDoc);
 
-#define START_VINATEXT_START_EXE_LOADER(LANGGUAGE_ENUM) \
+#define START_VINATEXT_START_EXE_LOADER(LANGUAGE_ENUM) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
-	VinaTextCompiler::START_EXE_LOADER(LANGGUAGE_ENUM, pDoc);
+	VinaTextCompiler::START_EXE_LOADER(LANGUAGE_ENUM, pDoc);
 
 #define START_VINATEXT_START_EXE_CMD(BUILD_INFO) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
 	VinaTextCompiler::START_EXE_CMD(BUILD_INFO);
 
-#define START_VINATEXT_START_JAVA_LOADER(LANGGUAGE_ENUM, CMD) \
+#define START_VINATEXT_START_JAVA_LOADER(LANGUAGE_ENUM, CMD) \
 	CEditorDoc *pDoc = GetEditorDocument(); ASSERT(pDoc); if (!pDoc) return; \
-	VinaTextCompiler::START_JAVA_LOADER(LANGGUAGE_ENUM, pDoc, CMD);
+	VinaTextCompiler::START_JAVA_LOADER(LANGUAGE_ENUM, pDoc, CMD);

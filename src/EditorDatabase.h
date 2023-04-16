@@ -24,7 +24,6 @@ public:
 	void SetLanguageAutoComplete(const CString& str);
 	void SetCompilerPath(const CString& str);
 	void SetDebuggerPath(const CString& str);
-	void SetSnipppetCode(const CString& str);
 
 	CString GetLanguageName() const;
 	CString GetLanguageExtension() const;
@@ -34,7 +33,6 @@ public:
 	CString GetLanguageKeyWords() const;
 	CString GetCompilerPath() const;
 	CString GetDebuggerPath() const;
-	CString GetSnipppetCode() const;
 
 private:
 	CString m_strLanguageName;
@@ -45,5 +43,4 @@ private:
 	CString m_strKeyWords;
 	CString m_strCompilerPath;
 	CString m_steDebuggerPath;
-	CString m_strSnipppetCode;
 };

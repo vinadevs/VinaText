@@ -479,11 +479,9 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase* pDatabase)
 		BOOL bStartReadCompilerPathSession = FALSE;
 		BOOL bStartReadDebuggerPathSession = FALSE;
 		BOOL bStartReadAutoCompleteSession = FALSE;
-		//BOOL bStartReadSnippetCodeSession = FALSE;
 		CString strCompilerPath;
 		CString strDebuggerPath;
 		CString strAutoCompletes;
-		//CString strSnippetCode;
 		while (stdFile.ReadString(strLine))
 		{
 			if (strLine.IsEmpty()) continue;
@@ -497,7 +495,6 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase* pDatabase)
 				bStartReadCompilerPathSession = FALSE;
 				bStartReadDebuggerPathSession = TRUE;
 				bStartReadAutoCompleteSession = FALSE;
-				//bStartReadSnippetCodeSession = FALSE;
 				continue;
 			}
 			else if (strLine.Find(_T("@@ auto complete:")) != -1)
@@ -505,17 +502,8 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase* pDatabase)
 				bStartReadDebuggerPathSession = FALSE;
 				bStartReadAutoCompleteSession = TRUE;
 				bStartReadCompilerPathSession = FALSE;
-				//bStartReadSnippetCodeSession = FALSE;
 				continue;
 			}
-			/*else if (strLine.Find(_T("@@ snippet codes:")) != -1)
-			{
-				bStartReadDebuggerPathSession = FALSE;
-				bStartReadAutoCompleteSession = FALSE;
-				bStartReadCompilerPathSession = FALSE;
-				bStartReadSnippetCodeSession = TRUE;
-				continue;
-			}*/
 
 			if (bStartReadCompilerPathSession)
 			{
@@ -529,15 +517,10 @@ void CEditorCtrl::LoadExternalSettings(CLanguageDatabase* pDatabase)
 			{
 				strAutoCompletes += CSTRING_SPACE + strLine.Trim();
 			}
-			/*else if (bStartReadSnippetCodeSession)
-			{
-				strSnippetCode += strLine.Trim();
-			}*/
 		}
 		pDatabase->SetLanguageAutoComplete(strAutoCompletes);
 		pDatabase->SetCompilerPath(strCompilerPath);
 		pDatabase->SetDebuggerPath(strDebuggerPath);
-		//pDatabase->SetSnipppetCode(strSnippetCode);
 	}
 	stdFile.Close();
 }

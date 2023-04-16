@@ -576,7 +576,7 @@ void SettingDlgFileSystem::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_RECENT_FILE_LIMIT_EDIT, m_nRecentFileLimit);
 	DDX_Text(pDX, ID_BINARY_FILE_EXTENSION_LIST, m_strBinaryFileExtensionList);
 	DDX_Control(pDX, ID_BINARY_FILE_EXTENSION_LIST, m_EditBinaryFileExtensionList);
-	DDX_Control(pDX, ID_LANGGUAGE_SPELL_CHECK_COMBO, m_LanguageSpellCheckCombo);
+	DDX_Control(pDX, ID_LANGUAGE_SPELL_CHECK_COMBO, m_LanguageSpellCheckCombo);
 	DDX_Control(pDX, ID_LANGUAGE_TRANSLATE_FROM_COMBO, m_LanguageTranslateFromCombo);
 	DDX_Control(pDX, ID_LANGUAGE_TRANSLATE_TO_COMBO, m_LanguageTranslateToCombo);
 	DDX_Text(pDX, ID_LONG_LINE_MAXIMUM_EDIT, m_nLongLineMaximum);

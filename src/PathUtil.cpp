@@ -303,6 +303,13 @@ CString PathUtils::GetLanguageTemplateFilePath(VINATEXT_SUPPORTED_LANGUAGE langu
 	return strLanguageTemplateFilePath;
 }
 
+CString PathUtils::GetUserExtensionPath()
+{
+	CString strPath = GetVinaTextPackagePath();
+	strPath.Append(_T("extension-packages\\user-extensions.dat"));
+	return strPath;
+}
+
 CString PathUtils::GetVinaTextPackagePath()
 {
 	CString strPath = GetVinaTextPath();
@@ -312,16 +319,16 @@ CString PathUtils::GetVinaTextPackagePath()
 
 CString PathUtils::GetVinaTextPOPath()
 {
-	CString strPath = GetVinaTextPath();
-	strPath.Append(_T("Packages\\localization-packages\\"));
+	CString strPath = GetVinaTextPackagePath();
+	strPath.Append(_T("\\localization-packages\\"));
 	return strPath;
 }
 
 CString PathUtils::GetAbsolutePath(const CString& strPath)
 {
-	TCHAR szFullPath[_MAX_PATH];
-	_wfullpath(szFullPath, strPath, _MAX_PATH);
-	return CString(szFullPath);
+	TCHAR path[_MAX_PATH];
+	_wfullpath(path, strPath, _MAX_PATH);
+	return CString(path);
 }
 
 CString PathUtils::GetDataBaseFileFilter()
@@ -353,27 +360,16 @@ CString PathUtils::GetDataBaseFileFilter()
 
 CString PathUtils::GetWindowSystemPath()
 {
-	TCHAR windir[MAX_PATH];
-	GetWindowsDirectory(windir, MAX_PATH);
-	return CString(windir);
+	TCHAR path[MAX_PATH];
+	GetWindowsDirectory(path, MAX_PATH);
+	return CString(path);
 }
 
 CString PathUtils::GetProgramFilePath()
 {
-	TCHAR pf[MAX_PATH];
-	SHGetSpecialFolderPath(
-		0,
-		pf,
-		CSIDL_PROGRAM_FILES,
-		FALSE);
-	return CString(pf);
-}
-
-CString PathUtils::GetVinaTextCompilerPath()
-{
-	CString strPath = GetVinaTextPath();
-	strPath.Append(_T("Compilers\\"));
-	return strPath;
+	TCHAR path[MAX_PATH];
+	SHGetSpecialFolderPath(0, path, CSIDL_PROGRAM_FILES, FALSE);
+	return CString(path);
 }
 
 CString PathUtils::GetFileExtention(const CString& strFile)

@@ -8394,16 +8394,16 @@ void CEditorView::OnOptionsEditSpellChecker()
 {
 	if (!m_bEnableSpellChecker)
 	{
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Started spell checker for languague %s..."), AppSettingMgr.m_strLangguageSpellCheck);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Started spell checker for languague %s..."), AppSettingMgr.m_strLanguageSpellCheck);
 		m_bEnableSpellChecker = TRUE;
-		m_SpellChecker.Initilize(&m_EditorCtrl, AppUtils::CStringToWStd(AppSettingMgr.m_strLangguageSpellCheck), m_LangKeywordDataset);
+		m_SpellChecker.Initilize(&m_EditorCtrl, AppUtils::CStringToWStd(AppSettingMgr.m_strLanguageSpellCheck), m_LangKeywordDataset);
 		// start check
 		KillTimer(START_SPELL_CHECKER_TIMER);
 		SetTimer(START_SPELL_CHECKER_TIMER, SPELL_CHECKER_INTERVAL, NULL);
 	}
 	else
 	{
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Stopped spell checker for languague %s..."), AppSettingMgr.m_strLangguageSpellCheck);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Stopped spell checker for languague %s..."), AppSettingMgr.m_strLanguageSpellCheck);
 		m_bEnableSpellChecker = FALSE;
 		m_SpellChecker.Finalize();
 		// stop check
@@ -10162,17 +10162,16 @@ void CEditorView::OnOptionsSwapTwoSelections()
 	}
 }
 
-void CEditorView::OpenFileLanguageConfig(const CString& m_czLexerFromFile)
+void CEditorView::OpenFileLanguageConfig(const CString& czLexerName)
 {
-	CString m_strCurrentDocLanguageNameSettingFilePath = PathUtils::GetLanguageSettingFilePath(m_czLexerFromFile);
-	if (PathFileExists(m_strCurrentDocLanguageNameSettingFilePath))
+	CString languageSettingPath = PathUtils::GetLanguageSettingFilePath(czLexerName);
+	if (PathFileExists(languageSettingPath))
 	{
-		AppUtils::CreateDocumentFromFile(m_strCurrentDocLanguageNameSettingFilePath);
-		//AfxMessageBox(_T("After change your configuration, please reload (F4) the programing language file (.cpp, .py,...) to update new settings!"), MB_ICONINFORMATION);
+		AppUtils::CreateDocumentFromFile(languageSettingPath);
 	}
 	else
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), m_strCurrentDocLanguageNameSettingFilePath);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), languageSettingPath);
 	}
 }
 

@@ -22,10 +22,10 @@ namespace PathUtils
 	CString	GetVinaTextAppDataPath();
 	CString GetLanguageSettingFilePath(const CString & strLanguageName);
 	CString GetLanguageTemplateFilePath(VINATEXT_SUPPORTED_LANGUAGE language);
+	CString	GetUserExtensionPath();
 	CString	GetVinaTextPackagePath();
 	CString	GetVinaTextPOPath();
 	CString GetAbsolutePath(const CString & strPath);
-	CString	GetVinaTextCompilerPath();
 	CString GetDataBaseFileFilter();
 	CString	GetWindowSystemPath();
 	CString	GetProgramFilePath();
