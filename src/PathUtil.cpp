@@ -419,7 +419,7 @@ void PathUtils::DeleteFilesInFolderPermanently(const CString& strFolder, const C
 {
 	if (!PathFileExists(strFolder))
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!"), strFolder);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!"), strFolder);
 		return;
 	}
 	CString csFileName, csFile;
@@ -443,7 +443,7 @@ void PathUtils::DeleteFilesInFolder(HWND hParentHWND, const CString& strFolder, 
 {
 	if (!PathFileExists(strFolder))
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!"), strFolder);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!"), strFolder);
 		return;
 	}
 	CString csFileName, csFile;

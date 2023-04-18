@@ -1297,38 +1297,6 @@ bool CFileExplorerCtrl::Open(_In_ HTREEITEM hItem, BOOL bOpenByDefaultApp /*= FA
 			bSuccess = true;
 			AppUtils::CreateDocumentFromFile(strFile);
 			SetFocus();
-			/*if (PathUtils::IsOfficePptFile(strFile))
-			{
-				CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
-				if (!PathFileExists(strMSPPTPath))
-				{
-					AfxMessageBox(_T("[Host Error] Can not found Microsoft Powerpoint on this PC!")); return false;
-				}
-				HostApplicaton(HOST_APP_TYPE::MS_OFFICE_PPT, strMSPPTPath, strFile, TRUE);
-			}
-			else if (PathUtils::IsOfficeExcelFile(strFile))
-			{
-				CString strMSExcelPath = OSUtils::GetRegistryAppPath(L"EXCEL.EXE");
-				if (!PathFileExists(strMSExcelPath))
-				{
-					AfxMessageBox(_T("[Host Error] Can not found Microsoft Excel on this PC!")); return false;
-				}
-				HostApplicaton(HOST_APP_TYPE::MS_OFFICE_EXCEL, strMSExcelPath, strFile, TRUE);
-			}
-			else if (PathUtils::IsOfficeWordFile(strFile))
-			{
-				CString strMSWordPath = OSUtils::GetRegistryAppPath(L"WINWORD.EXE");
-				if (!PathFileExists(strMSWordPath))
-				{
-					AfxMessageBox(_T("[Host Error] Can not found Microsoft Word on this PC!")); return false;
-				}
-				HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, strFile, TRUE);
-			}
-			else
-			{
-				AppUtils::CreateDocumentFromFile(strFile);
-				SetFocus();
-			}*/
 		}
 		else // Execute the default command for the selected item
 		{
@@ -2803,7 +2771,7 @@ void CFileExplorerCtrl::OnOpenGitBashHere()
 		if (FALSE == PathFileExists(strGitBash))
 		{
 			CString strMsg;
-			strMsg.Format(_T("[Path Error] %s does not exist...\n"), strGitBash);
+			strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strGitBash);
 			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		}
 		CString sPath(ItemToPath(hItem));
@@ -2867,7 +2835,7 @@ void CFileExplorerCtrl::OnOptionsEditListAllFile()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Path Error] %s does not exist.");
+		CString strMessage = _T("> [From Explorer Window] [Path Error] \"%s\" does not exist.");
 		strMessage.Format(strMessage, strPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
@@ -2895,7 +2863,7 @@ void CFileExplorerCtrl::OnOptionsEditListAllFolder()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Path Error] %s does not exist.");
+		CString strMessage = _T("> [From Explorer Window] [Path Error] \"%s\" does not exist.");
 		strMessage.Format(strMessage, strPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}

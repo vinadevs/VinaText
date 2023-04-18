@@ -419,7 +419,7 @@ void OSUtils::UseAdministrationHandler()
 		}
 		else
 		{
-			CString strMsg; strMsg.Format(_T("[Path Error] %s does not exist...\n"), strPathVinaTextExe);
+			CString strMsg; strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strPathVinaTextExe);
 			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		}
 	}

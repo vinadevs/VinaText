@@ -43,7 +43,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 	if (FALSE == PathFileExists(strFilePath))
 	{
 		CString strMsg;
-		strMsg.Format(_T("> [Path Error] %s does not exist...\n"), strFilePath);
+		strMsg.Format(_T("> [Path Error] \"%s\" does not exist...\n"), strFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -57,12 +57,16 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 	}
 
 	CString strCompilerPath = pLangDatabase->GetCompilerPath();
+	if (PathIsRelative(strCompilerPath)) // compiler will not accept relative path
+	{
+		strCompilerPath = PathUtils::GetVinaTextPath() + strCompilerPath;
+	}
 	if (!PathFileExists(strCompilerPath)
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_HTML
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_POWERSHELL
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_BATCH)
 	{
-		CString strMsg; strMsg.Format(_T("[Path Error] Compiler path does not exist, please setup path in [Prefrerence > Language Prefrerence] and reopen current file to active it!\n"), strCompilerPath);
+		CString strMsg; strMsg.Format(_T("[Path Error] Compiler path \"%s\" does not exist, please setup path in [Code > Programing Language Setting(s)] and reopen current file to active it!\n"), strCompilerPath);
 		AfxMessageBox(strMsg);
 		return;
 	}
@@ -196,10 +200,14 @@ void VinaTextCompiler::START_GDB_CMD(VINATEXT_SUPPORTED_LANGUAGE docLanguage, CE
 	if (VinaTextDebugger.HaveBreakPoints(docLanguage, pView->m_BuildSessionInfo._strFilePath)) // debug mode
 	{
 		CString strGdbDebugger = pLangDatabase->GetDebuggerPath();
+		if (PathIsRelative(strGdbDebugger)) // compiler will not accept relative path
+		{
+			strGdbDebugger = PathUtils::GetVinaTextPath() + strGdbDebugger;
+		}
 		if (!PathFileExists(strGdbDebugger))
 		{
 			CString strMsg;
-			strMsg.Format(_T("> [Debugger Error] %s does not exist...\n"), strGdbDebugger);
+			strMsg.Format(_T("> [Debugger Error] \"%s\" does not exist...\n"), strGdbDebugger);
 			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			return;
 		}
@@ -230,10 +238,14 @@ void VinaTextCompiler::START_GDB_DEBUGGER(VINATEXT_SUPPORTED_LANGUAGE docLanguag
 	if (VinaTextDebugger.HaveBreakPoints(docLanguage, pView->m_BuildSessionInfo._strFilePath)) // debug mode
 	{
 		CString strGdbDebugger = pLangDatabase->GetDebuggerPath();
+		if (PathIsRelative(strGdbDebugger)) // compiler will not accept relative path
+		{
+			strGdbDebugger = PathUtils::GetVinaTextPath() + strGdbDebugger;
+		}
 		if (!PathFileExists(strGdbDebugger))
 		{
 			CString strMsg;
-			strMsg.Format(_T("> [Debugger Error] %s does not exist...\n"), strGdbDebugger);
+			strMsg.Format(_T("> [Debugger Error] \"%s\" does not exist...\n"), strGdbDebugger);
 			LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			return;
 		}
@@ -326,11 +338,6 @@ void VinaTextCompiler::BuildCPP(CMainFrame* pFrame, CEditorView* pView, const CS
 	taskBuild.pWndFrame = pFrame;
 	taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-
-	//if (PathFileExists(strBuildConfigPath))
-	//{
-	//	::DeleteFile(strBuildConfigPath);
-	//}
 
 	if (!PathFileExists(strBuildConfigPath) && AppSettingMgr.m_bAutoGenBuildConfigFile)
 	{
@@ -545,11 +552,6 @@ void VinaTextCompiler::BuildC(CMainFrame* pFrame, CEditorView* pView, const CStr
 	taskBuild.pWndFrame = pFrame;
 	taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-
-	//if (PathFileExists(strBuildConfigPath))
-	//{
-	//	::DeleteFile(strBuildConfigPath);
-	//}
 
 	if (!PathFileExists(strBuildConfigPath) && AppSettingMgr.m_bAutoGenBuildConfigFile)
 	{
@@ -798,7 +800,7 @@ void VinaTextCompiler::BuildJavaScript(CMainFrame * pFrame, CEditorView * pView,
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -861,7 +863,7 @@ void VinaTextCompiler::BuildPython(CMainFrame * pFrame, CEditorView * pView, con
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -1158,7 +1160,7 @@ void VinaTextCompiler::BuildGo(CMainFrame * pFrame, CEditorView * pView, const C
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}

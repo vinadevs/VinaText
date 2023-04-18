@@ -24,7 +24,7 @@ void CUserExtension::OpenConfigFile()
 	}
 	else
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), extensionPath);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), extensionPath);
 	}
 }
 
@@ -140,7 +140,7 @@ void CUserExtension::InvokeCommand(UINT nIDExtension)
 				}
 				else // general
 				{
-					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Extension Error] %s does not exist!"), pDoc->GetPathName());
+					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Extension Error] \"%s\" does not exist!"), pDoc->GetPathName());
 					return;
 				}
 			}

@@ -3710,7 +3710,7 @@ void CMainFrame::OnOpenGitBashHere()
 	if (FALSE == PathFileExists(strGitBash))
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist, please install git...\n"), strGitBash);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist, please install git...\n"), strGitBash);
 		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 	}
 	SetCurrentDirectoryTerminal();
@@ -3868,7 +3868,7 @@ void CMainFrame::OnMDITabMoveToNewVinaText()
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist...\n"), strPathVinaTextExe);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strPathVinaTextExe);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 	}
 }
@@ -4029,7 +4029,7 @@ void CMainFrame::OnDeleteFile()
 	CString strFileToDelete = pDoc->GetPathName();
 	if (!PathFileExists(strFileToDelete))
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path %s does not exist!"), strFileToDelete);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path \"%s\" does not exist!"), strFileToDelete);
 		return;
 	}
 	if (IDYES == AfxMessageBoxFormat(MB_YESNO | MB_ICONWARNING, _T("Are you sure want to delete file %s?"), pDoc->GetTitle()))
@@ -4150,7 +4150,7 @@ void CMainFrame::OnToolPythonPipWindow()
 	if (FALSE == PathFileExists(AppSettingMgr.m_strPythonFolderPath))
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Pip Path Error] %s does not exist...\n"), AppSettingMgr.m_strPythonFolderPath);
+		strMsg.Format(_T("[Pip Path Error] \"%s\" does not exist...\n"), AppSettingMgr.m_strPythonFolderPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		return;
 	}
@@ -4174,7 +4174,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 	if (FALSE == PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))
 	{
 		CString strMsg;
-		strMsg.Format(_T("[NodeJS Path Error] %s does not exist...\n"), AppSettingMgr.m_strNodeJSFolderPath);
+		strMsg.Format(_T("[NodeJS Path Error] \"%s\" does not exist...\n"), AppSettingMgr.m_strNodeJSFolderPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		return;
 	}

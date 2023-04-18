@@ -304,15 +304,15 @@ BOOL AppUtils::StringIsDigits(const std::wstring &str)
 	return TRUE;
 }
 
-BOOL AppUtils::StringIsInteger(const std::string &str)
+BOOL AppUtils::StringIsInteger(const std::wstring &str)
 {
 	if (str.empty() || ((!isdigit(str[0])) && (str[0] != '-') && (str[0] != '+'))) return FALSE;
-	char * p;
-	strtol(str.c_str(), &p, 10);
+	wchar_t * p;
+	wcstol(str.c_str(), &p, 10);
 	return (*p == 0);
 };
 
-BOOL AppUtils::StringIsFloat(const std::string & str) 
+BOOL AppUtils::StringIsFloat(const std::wstring & str) 
 {
 	if (StringIsInteger(str))
 	{
@@ -657,11 +657,11 @@ CString AppUtils::RemoveJunkFromCString(const CString & strString)
 	return str;
 }
 
-void AppUtils::ToTitleCase(std::string& str)
+void AppUtils::ToTitleCase(std::wstring& str)
 {
 	bool active = true;
 
-	for (int i = 0; str[i] != '\0'; i++)
+	for (int i = 0; str[i] != L'\0'; i++)
 	{
 		if (std::isalpha((unsigned char)str[i]))
 		{
@@ -682,11 +682,11 @@ void AppUtils::ToTitleCase(std::string& str)
 	}
 }
 
-void AppUtils::ToInvertCase(std::string & str)
+void AppUtils::ToInvertCase(std::wstring & str)
 {
-	for (int i = 0; str[i] != '\0'; i++)
+	for (int i = 0; str[i] != L'\0'; i++)
 	{
-		char c = str[i];
+		wchar_t c = str[i];
 		if (std::isupper(str[i]))
 		{
 			str[i] = std::tolower(str[i]);
@@ -698,12 +698,12 @@ void AppUtils::ToInvertCase(std::string & str)
 	}
 }
 
-void AppUtils::ToRandomCase(std::string & str)
+void AppUtils::ToRandomCase(std::wstring & str)
 {
 	bool bToggle = rand() % 2 == 0 ? true : false;
-	for (int i = 0; str[i] != '\0'; i++)
+	for (int i = 0; str[i] != L'\0'; i++)
 	{
-		char c = str[i];
+		wchar_t c = str[i];
 		if (bToggle)
 		{
 			if (i % 2 == 0)
@@ -1979,46 +1979,46 @@ void AppUtils::ReplaceAllInWStdString(std::wstring & str, const std::wstring & f
 	}
 }
 
-std::string AppUtils::RemDuplicateWordInStdString(const std::string& str)
+std::wstring AppUtils::RemoveDuplicateWordInString(const std::wstring& str)
 {
 	// Used to split string around spaces.
-	std::stringstream ss(str);
+	std::wstringstream ss(str);
 	// To store individual visited words
-	std::unordered_set<std::string> hash_tab;
+	std::unordered_set<std::wstring> hash_tab;
 	// Traverse through all words in the string
-	std::string line;
+	std::wstring line;
 	do
 	{
-		std::string word;
+		std::wstring word;
 		ss >> word;
 		// check if current word already exist,if not then insert
 		while (hash_tab.find(word) == hash_tab.end())
 		{
-			line += word + " ";
+			line += word + L" ";
 			hash_tab.insert(word);
 		}
 	} while (ss);
 	return line;
 }
 
-std::string AppUtils::RemDuplicateMatchCaseWordInStdString(const std::string & str)
+std::wstring AppUtils::RemoveDuplicateMatchCaseWordInString(const std::wstring & str)
 {
 	// Used to split string around spaces.
-	std::stringstream ss(str);
+	std::wstringstream ss(str);
 	// To store individual visited words
-	std::unordered_set<std::string> hash_tab;
+	std::unordered_set<std::wstring> hash_tab;
 	// Traverse through all words in the string
-	std::string line;
+	std::wstring line;
 	do
 	{
-		std::string word;
+		std::wstring word;
 		ss >> word;
 		// check if current word already exist,if not then insert
-		std::string wordCase = word;
+		std::wstring wordCase = word;
 		boost::to_lower(wordCase);
 		while (hash_tab.find(word) == hash_tab.end() && hash_tab.find(wordCase) == hash_tab.end())
 		{
-			line += word + " ";
+			line += word + L" ";
 			hash_tab.insert(word);
 		}
 	} while (ss);

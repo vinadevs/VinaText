@@ -732,36 +732,6 @@ CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 		// Open media file
 		return m_pMediaDocTemplate->OpenNewDocument(lpszPathName, TRUE, TRUE);
 	}
-	/*else if (PathUtils::IsOfficePptFile(lpszPathName))
-	{
-		// Open office ppt
-		CString strMSPPTPath = OSUtils::GetRegistryAppPath(L"POWERPNT.EXE");
-		if (!PathFileExists(strMSPPTPath))
-		{
-			AfxMessageBox(_T("[Host Error] Can not found Microsoft Powerpoint on this PC!")); return NULL;
-		}
-		return HostApplicaton(HOST_APP_TYPE::MS_OFFICE_PPT, strMSPPTPath, lpszPathName, TRUE);
-	}
-	else if (PathUtils::IsOfficeExcelFile(lpszPathName))
-	{
-		// Open office excel
-		CString strMSExcelPath = OSUtils::GetRegistryAppPath(L"EXCEL.EXE");
-		if (!PathFileExists(strMSExcelPath))
-		{
-			AfxMessageBox(_T("[Host Error] Can not found Microsoft Excel on this PC!")); return NULL;
-		}
-		return HostApplicaton(HOST_APP_TYPE::MS_OFFICE_EXCEL, strMSExcelPath, lpszPathName, TRUE);
-	}
-	else if (PathUtils::IsOfficeWordFile(lpszPathName))
-	{
-		// Open office word
-		CString strMSWordPath = OSUtils::GetRegistryAppPath(L"WINWORD.EXE");
-		if (!PathFileExists(strMSWordPath))
-		{
-			AfxMessageBox(_T("[Host Error] Can not found Microsoft Word on this PC!")); return NULL;
-		}
-		return HostApplicaton(HOST_APP_TYPE::MS_OFFICE_WORD, strMSWordPath, lpszPathName, TRUE);
-	}*/
 	else
 	{
 		// Open text file

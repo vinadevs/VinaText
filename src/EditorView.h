@@ -143,8 +143,6 @@ public:
 	afx_msg void OnOptionGotoline();
 	afx_msg void OnOptionSearch();
 	afx_msg void OnOptionReplace();
-	afx_msg void OnOptionsForeground();
-	afx_msg void OnOptionsBackground();
 	afx_msg void OnOptionsWrapLine();
 	afx_msg void OnUpdateOptionsWrapLine(CCmdUI* pCmdUI);
 	afx_msg void OnOptionsLongLineChecker();

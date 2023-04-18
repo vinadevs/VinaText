@@ -260,7 +260,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpen()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		if (PathUtils::IsDirectory(strSelectedPath))
@@ -326,7 +326,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkRevealInExplorer()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -350,7 +350,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkCopyPath()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		if (OpenClipboard())
@@ -382,7 +382,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenCmd()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		if (PathUtils::IsDirectory(strSelectedPath))
@@ -421,7 +421,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenContainer()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		CString strFolderParent = PathUtils::GetContainerPath(strSelectedPath);
@@ -455,7 +455,7 @@ void CBookMarkPathDlg::OnBnClickedBookmarkCopyClipboard()
 		CString strSelectedPath = m_listPath.GetItemText(selectedRow, 0);
 		if (!PathFileExists(strSelectedPath))
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), strSelectedPath);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), strSelectedPath);
 			return;
 		}
 		GuiUtils::PushFileObjectToClipboard(strSelectedPath);

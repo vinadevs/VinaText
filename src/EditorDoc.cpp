@@ -80,7 +80,7 @@ BOOL CEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 		if (AppSettingMgr.m_bWarningForFileNotExist)
 		{
-			CString strMessage = _T("[Path Error] File %s does not exist. Do you want to create it?");
+			CString strMessage = _T("[Path Error] File \"%s\" does not exist. Do you want to create it?");
 			strMessage.Format(strMessage, lpszPathName);
 			if (IDYES == AfxMessageBox(strMessage, MB_YESNO | MB_ICONWARNING))
 			{
@@ -146,27 +146,12 @@ BOOL CEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 CEditorView* CEditorDoc::GetEditorView() const
 {
 	POSITION pos = GetFirstViewPosition();
-	CEditorView* pView = (CEditorView*)GetNextView(pos);
-	if (pView)
-	{
-		return pView;
-	}
-	else
-	{
-		//ASSERT(pView);
-		return NULL;
-	}
+	return dynamic_cast<CEditorView*>(GetNextView(pos));
 }
 
 CEditorCtrl* CEditorDoc::GetEditorCtrl() const
 {
-	CEditorView* pView = GetEditorView();
-	ASSERT(pView);
-	if (!pView) return NULL;
-	CEditorCtrl* pEditor = pView->GetEditorCtrl();
-	if (pEditor) return pEditor;
-	ASSERT(pEditor);
-	return NULL;
+	return GetEditorView()->GetEditorCtrl();
 }
 
 void CEditorDoc::SetSaveDocumentPath(const CString& strSaveDocumentPath)

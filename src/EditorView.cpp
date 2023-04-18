@@ -180,8 +180,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_UPDATE_COMMAND_UI(ID_TOGGLE_AUTO_COMPLETE, OnUpdateOptionsToggleAutoComplete)
 	ON_COMMAND(ID_EDIT_FIND, OnOptionSearch)
 	ON_COMMAND(ID_EDIT_REPLACE, OnOptionReplace)
-	ON_COMMAND(ID_OPTIONS_FOREGROUND, OnOptionsForeground)
-	ON_COMMAND(ID_OPTIONS_BACKGROUND, OnOptionsBackground)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_OVR, OnUpdateInsert)
 	ON_COMMAND(ID_TOGGLE_INSERT, OnOptionsToggleInsert)
 	ON_COMMAND(ID_OPTIONS_FOLD_MARGIN, OnOptionsFoldMargin)
@@ -640,7 +638,12 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 					OnStartDebugger();
 					break;
 				case 'D':
-					if ((GetKeyState(VK_CONTROL) & 0x8000))
+					if ((GetKeyState(VK_CONTROL) & 0x8000) && (GetKeyState(VK_SHIFT) & 0x8000))
+					{
+						OnOptionsDuplicateSelection();
+						return TRUE;
+					}
+					else if ((GetKeyState(VK_CONTROL) & 0x8000))
 					{
 						OnOptionsIncreaseSelectionToWord();
 						return TRUE;
@@ -1252,15 +1255,6 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 				m_EditorCtrl.InsertText(_T("]"), lcurPos);
 			}
 		}
-		//else if (pScinNotification->ch == '"')
-		//{
-		//	int lcurPos = m_EditorCtrl.GetCurrentPosition();
-		//	int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-		//	if (m_EditorCtrl.GetWordFromPosition(lcurPos - 1).IsEmpty() && nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
-		//	{
-		//		m_EditorCtrl.InsertText(_T("\""), lcurPos);
-		//	}
-		//}
 		else if (pScinNotification->ch == '(')
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
@@ -1271,59 +1265,6 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 			}
 		}
 	}
-
-#if 0
-	else if (pScinNotification->ch == ')')
-	{
-		m_EditorCtrl.DoCommand(SCI_CALLTIPCANCEL);
-	}
-	else if (pScinNotification->ch == '(')
-	{
-		int lcurPos = m_EditorCtrl.GetCurrentPosition();
-		m_EditorCtrl.InsertText(_T(")"), lcurPos, TRUE);
-
-		char wordbuffer[100000], linebuffer[10000];
-		int pos = (int)m_EditorCtrl.DoCommand(SCI_GETCURRENTPOS);
-		int startpos = (int)m_EditorCtrl.DoCommand(SCI_WORDSTARTPOSITION, pos - 1);
-		int endpos = (int)m_EditorCtrl.DoCommand(SCI_WORDENDPOSITION, pos - 1);
-		linebuffer[0] = '\0';
-		int line = (int)m_EditorCtrl.DoCommand(SCI_LINEFROMPOSITION, pos);
-		int nLen = (int)m_EditorCtrl.DoCommand(SCI_LINELENGTH, line);
-		m_EditorCtrl.DoCommand(SCI_GETLINE, line, (LPARAM)linebuffer);
-		linebuffer[nLen] = '\0';
-		CString strLine(linebuffer);
-		strLine.Trim();
-
-		Sci_TextRange tr;
-		tr.chrg.cpMin = startpos;
-		tr.chrg.cpMax = endpos;
-		tr.lpstrText = wordbuffer;
-		m_EditorCtrl.DoCommand(SCI_GETTEXTRANGE, 0, sptr_t(&tr));
-		CString strWord(wordbuffer);
-		strWord.Replace('(', ' ');
-		strWord.Trim();
-
-		if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
-		{
-			ShowCallTipPython(strLine, strWord);
-		}
-		else if (m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT)
-		{
-			ShowCallTipCPP(strLine, strWord);
-		}
-	}
-	else if (pScinNotification->ch == '.')
-	{
-		if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
-		{
-			ShowIntellisensePython();
-		}
-		else if (m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT)
-		{
-			ShowIntellisenseCPP();
-		}
-	}
-#endif
 }
 
 void CEditorView::OnTimer(UINT_PTR nIDEvent)
@@ -3708,25 +3649,6 @@ void CEditorView::OnOptionReplace()
 	pFrame->InitSearchReplaceFromEditor(m_EditorCtrl.GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
 }
 
-void CEditorView::OnOptionsForeground()
-{
-	CColorDialog dlg;
-	if (dlg.DoModal() == IDOK)
-	{
-		m_EditorCtrl.SelectAll();
-		m_EditorCtrl.SetForeground(m_EditorCtrl.GetCurrentStyle(), dlg.GetColor());
-	}
-}
-
-void CEditorView::OnOptionsBackground()
-{
-	CColorDialog dlg;
-	if (dlg.DoModal() == IDOK)
-	{
-		m_EditorCtrl.SetBackground(m_EditorCtrl.GetCurrentStyle(), dlg.GetColor());
-	}
-}
-
 void CEditorView::OnOptionsWrapLine()
 {
 	m_EditorCtrl.EnableTextWrappingMode(!m_EditorCtrl.IsEditorInWrapMode());
@@ -3835,16 +3757,16 @@ void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			typedef std::map<std::string, int> line_record;
+			typedef std::map<std::wstring, int> line_record;
 			line_record lines;
 			int line_number = 1;
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				AppUtils::ReplaceAllInStdString(line, "\n", "");
-				AppUtils::ReplaceAllInStdString(line, "\r", "");
+				AppUtils::ReplaceAllInWStdString(line, L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(line, L"\r", L"");
 				line_record::iterator existing = lines.find(line);
 				if (existing != lines.end()) // if it was already in the map
 				{
@@ -3882,7 +3804,7 @@ void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()
 			CString strNewScripts;
 			for (int i = 0; i < sortable_lines.size(); i++)
 			{
-				strNewScripts += AppUtils::StdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
+				strNewScripts += AppUtils::WStdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
 			}
 			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
 		}
@@ -3895,7 +3817,7 @@ void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()
 			int StartLinePos = m_EditorCtrl.GetLineStartPosition(lLineStart);
 			int EndLinePos = m_EditorCtrl.GetLineEndPosition(lLineEnd);
 
-			typedef std::map<std::string, int> line_record;
+			typedef std::map<std::wstring, int> line_record;
 			line_record lines;
 			int line_number = 1;
 
@@ -3903,16 +3825,16 @@ void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()
 			{
 				CString strCurLineText;
 				m_EditorCtrl.GetTextFromLine(i + 1, strCurLineText);
-				AppUtils::ReplaceAllInStdString(AppUtils::CStringToStd(strCurLineText), "\n", "");
-				AppUtils::ReplaceAllInStdString(AppUtils::CStringToStd(strCurLineText), "\r", "");
-				line_record::iterator existing = lines.find(AppUtils::CStringToStd(strCurLineText));
+				AppUtils::ReplaceAllInWStdString(AppUtils::CStringToWStd(strCurLineText), L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(AppUtils::CStringToWStd(strCurLineText), L"\r", L"");
+				line_record::iterator existing = lines.find(AppUtils::CStringToWStd(strCurLineText));
 				if (existing != lines.end()) // if it was already in the map
 				{
 					existing->second = -1;    // indicate that it's duplicated
 				}
 				else
 				{
-					lines.insert(std::make_pair(AppUtils::CStringToStd(strCurLineText), line_number)); // otherwise, add it to map
+					lines.insert(std::make_pair(AppUtils::CStringToWStd(strCurLineText), line_number)); // otherwise, add it to map
 				}
 				++line_number;
 			}
@@ -3942,7 +3864,7 @@ void CEditorView::OnOptionsRemoveDuplicateLineNotKeep()
 			CString strNewScripts;
 			for (int i = 0; i < sortable_lines.size(); i++)
 			{
-				strNewScripts += AppUtils::StdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
+				strNewScripts += AppUtils::WStdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
 			}
 
 			m_EditorCtrl.SetStartSelection(StartLinePos);
@@ -3963,16 +3885,16 @@ void CEditorView::OnOptionsRemoveDuplicateLine()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			typedef std::map<std::string, int> line_record;
+			typedef std::map<std::wstring, int> line_record;
 			line_record lines;
 			int line_number = 1;
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				AppUtils::ReplaceAllInStdString(line, "\n", "");
-				AppUtils::ReplaceAllInStdString(line, "\r", "");
+				AppUtils::ReplaceAllInWStdString(line, L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(line, L"\r", L"");
 				line_record::iterator existing = lines.find(line);
 				if (existing == lines.end()) // if it was already in the map
 				{
@@ -4006,7 +3928,7 @@ void CEditorView::OnOptionsRemoveDuplicateLine()
 			CString strNewScripts;
 			for (int i = 0; i < sortable_lines.size(); i++)
 			{
-				strNewScripts += AppUtils::StdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
+				strNewScripts += AppUtils::WStdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
 			}
 			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
 		}
@@ -4019,7 +3941,7 @@ void CEditorView::OnOptionsRemoveDuplicateLine()
 			int StartLinePos = m_EditorCtrl.GetLineStartPosition(lLineStart);
 			int EndLinePos = m_EditorCtrl.GetLineEndPosition(lLineEnd);
 
-			typedef std::map<std::string, int> line_record;
+			typedef std::map<std::wstring, int> line_record;
 			line_record lines;
 			int line_number = 1;
 
@@ -4027,12 +3949,12 @@ void CEditorView::OnOptionsRemoveDuplicateLine()
 			{
 				CString strCurLineText;
 				m_EditorCtrl.GetTextFromLine(i + 1, strCurLineText);
-				AppUtils::ReplaceAllInStdString(AppUtils::CStringToStd(strCurLineText), "\n", "");
-				AppUtils::ReplaceAllInStdString(AppUtils::CStringToStd(strCurLineText), "\r", "");
-				line_record::iterator existing = lines.find(AppUtils::CStringToStd(strCurLineText));
+				AppUtils::ReplaceAllInWStdString(AppUtils::CStringToWStd(strCurLineText), L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(AppUtils::CStringToWStd(strCurLineText), L"\r", L"");
+				line_record::iterator existing = lines.find(AppUtils::CStringToWStd(strCurLineText));
 				if (existing == lines.end()) // if it was already in the map
 				{
-					lines.insert(std::make_pair(AppUtils::CStringToStd(strCurLineText), line_number)); // otherwise, add it to map
+					lines.insert(std::make_pair(AppUtils::CStringToWStd(strCurLineText), line_number)); // otherwise, add it to map
 				}
 				++line_number;
 			}
@@ -4062,7 +3984,7 @@ void CEditorView::OnOptionsRemoveDuplicateLine()
 			CString strNewScripts;
 			for (int i = 0; i < sortable_lines.size(); i++)
 			{
-				strNewScripts += AppUtils::StdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
+				strNewScripts += AppUtils::WStdToCString(sortable_lines[i]->first) + m_EditorCtrl.GetEOLCString();
 			}
 
 			m_EditorCtrl.SetStartSelection(StartLinePos);
@@ -4083,19 +4005,19 @@ void CEditorView::OnOptionsRemoveDuplicateWordInLine()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 			CString strNewScripts;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				CString strLine = AppUtils::StdToCString(line);
+				CString strLine = AppUtils::WStdToCString(line);
 				strLine.Replace(_T("\n"), _T(""));
 				CString strTemp = strLine;
 				if (!strTemp.Trim().IsEmpty())
 				{
-					std::string newLine = AppUtils::RemDuplicateWordInStdString(line);
-					strNewScripts += AppUtils::StdToCString(newLine).Trim() + m_EditorCtrl.GetEOLCString();
+					std::wstring newLine = AppUtils::RemoveDuplicateWordInString(line);
+					strNewScripts += AppUtils::WStdToCString(newLine).Trim() + m_EditorCtrl.GetEOLCString();
 				}
 			}
 
@@ -4118,8 +4040,8 @@ void CEditorView::OnOptionsRemoveDuplicateWordInLine()
 				CString strTemp = strCurLineText;
 				if (!strTemp.Trim().IsEmpty())
 				{
-					std::string newLine = AppUtils::RemDuplicateWordInStdString(AppUtils::CStringToStd(strCurLineText));
-					strNewScripts += AppUtils::StdToCString(newLine).Trim() + m_EditorCtrl.GetEOLCString();
+					std::wstring newLine = AppUtils::RemoveDuplicateWordInString(AppUtils::CStringToWStd(strCurLineText));
+					strNewScripts += AppUtils::WStdToCString(newLine).Trim() + m_EditorCtrl.GetEOLCString();
 				}
 			}
 
@@ -4142,21 +4064,21 @@ void CEditorView::OnOptionsRemoveDuplicateWord()
 		if (stSelectedScript.IsEmpty())
 		{
 			CStringArray arrLine;
-			std::vector<std::string> vecOutString;
-			std::unordered_set<std::string> hash_tab;
+			std::vector<std::wstring> vecOutString;
+			std::unordered_set<std::wstring> hash_tab;
 			AppUtils::SplitCString(stScript, m_EditorCtrl.GetEOLCString(), arrLine);
 			for (int i = 0; i < arrLine.GetSize(); ++i)
 			{
-				std::vector<std::string> vecCString =   AppUtils::SplitterStdString(AppUtils::CStringToStd(arrLine[i]), " ");
-				std::string line = "";
+				std::vector<std::wstring> vecCString = AppUtils::SplitterWStdString(AppUtils::CStringToWStd(arrLine[i]), L" ");
+				std::wstring line = L"";
 				for (auto const& str : vecCString)
 				{
-					std::string wordCase = str;
+					std::wstring wordCase = str;
 					boost::to_lower(wordCase);
 					while (hash_tab.find(str) == hash_tab.end()
 						&& hash_tab.find(wordCase) == hash_tab.end())
 					{
-						line += str + " ";
+						line += str + L" ";
 						hash_tab.insert(str);
 					}
 				}
@@ -4167,8 +4089,8 @@ void CEditorView::OnOptionsRemoveDuplicateWord()
 					vecOutString.push_back(line);
 				}
 			}
-			std::string strSTD = StringHelper::JoinStdString<std::string>("\n", vecOutString);
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
+			std::wstring strSTD = StringHelper::JoinStdString<std::wstring>(L"\n", vecOutString);
+			m_EditorCtrl.SetTextToEditor(AppUtils::WStdToCString(strSTD));
 		}
 		else
 		{
@@ -4180,22 +4102,22 @@ void CEditorView::OnOptionsRemoveDuplicateWord()
 			int EndLinePos = m_EditorCtrl.GetLineEndPosition(lLineEnd);
 
 			CString strNewScripts;
-			std::vector<std::string> vecOutString;
-			std::unordered_set<std::string> hash_tab;
+			std::vector<std::wstring> vecOutString;
+			std::unordered_set<std::wstring> hash_tab;
 			for (int i = lLineStart; i <= lLineEnd; ++i)
 			{
 				CString strCurLineText;
 				m_EditorCtrl.GetTextFromLine(i + 1, strCurLineText);
-				std::vector<std::string> vecCString =   AppUtils::SplitterStdString(AppUtils::CStringToStd(strCurLineText), " ");
-				std::string line = "";
+				std::vector<std::wstring> vecCString = AppUtils::SplitterWStdString(AppUtils::CStringToWStd(strCurLineText), L" ");
+				std::wstring line = L"";
 				for (auto const& str : vecCString)
 				{
-					std::string wordCase = str;
+					std::wstring wordCase = str;
 					boost::to_lower(wordCase);
 					while (hash_tab.find(str) == hash_tab.end()
 						&& hash_tab.find(wordCase) == hash_tab.end())
 					{
-						line += str + " ";
+						line += str + L" ";
 						hash_tab.insert(str);
 					}
 				}
@@ -4206,8 +4128,8 @@ void CEditorView::OnOptionsRemoveDuplicateWord()
 					vecOutString.push_back(line);
 				}
 			}
-			std::string strSTD = StringHelper::JoinStdString<std::string>("\n", vecOutString);
-			strNewScripts = AppUtils::StdToCString(strSTD);
+			std::wstring strSTD = StringHelper::JoinStdString<std::wstring>(L"\n", vecOutString);
+			strNewScripts = AppUtils::WStdToCString(strSTD);
 			m_EditorCtrl.SetStartSelection(StartLinePos);
 			m_EditorCtrl.SetEndSelection(EndLinePos);
 			m_EditorCtrl.ReplaceSelectionWithText(strNewScripts);
@@ -4227,18 +4149,18 @@ void CEditorView::OnOptionsRemoveDuplicateMatchCaseWord()
 		if (stSelectedScript.IsEmpty())
 		{
 			CStringArray arrLine;
-			std::vector<std::string> vecOutString;
-			std::unordered_set<std::string> hash_tab;
+			std::vector<std::wstring> vecOutString;
+			std::unordered_set<std::wstring> hash_tab;
 			AppUtils::SplitCString(stScript, m_EditorCtrl.GetEOLCString(), arrLine);
 			for (int i = 0; i < arrLine.GetSize(); ++i)
 			{
-				std::vector<std::string> vecCString =   AppUtils::SplitterStdString(AppUtils::CStringToStd(arrLine[i]), " ");
-				std::string line = "";
+				std::vector<std::wstring> vecCString = AppUtils::SplitterWStdString(AppUtils::CStringToWStd(arrLine[i]), L" ");
+				std::wstring line = L"";
 				for (auto const& str : vecCString)
 				{
 					while (hash_tab.find(str) == hash_tab.end())
 					{
-						line += str + " ";
+						line += str + L" ";
 						hash_tab.insert(str);
 					}
 				}
@@ -4249,8 +4171,8 @@ void CEditorView::OnOptionsRemoveDuplicateMatchCaseWord()
 					vecOutString.push_back(line);
 				}
 			}
-			std::string strSTD = StringHelper::JoinStdString<std::string>("\n", vecOutString);
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
+			std::wstring strSTD = StringHelper::JoinStdString<std::wstring>(L"\n", vecOutString);
+			m_EditorCtrl.SetTextToEditor(AppUtils::WStdToCString(strSTD));
 		}
 		else
 		{
@@ -4262,19 +4184,19 @@ void CEditorView::OnOptionsRemoveDuplicateMatchCaseWord()
 			int EndLinePos = m_EditorCtrl.GetLineEndPosition(lLineEnd);
 
 			CString strNewScripts;
-			std::vector<std::string> vecOutString;
-			std::unordered_set<std::string> hash_tab;
+			std::vector<std::wstring> vecOutString;
+			std::unordered_set<std::wstring> hash_tab;
 			for (int i = lLineStart; i <= lLineEnd; ++i)
 			{
 				CString strCurLineText;
 				m_EditorCtrl.GetTextFromLine(i + 1, strCurLineText);
-				std::vector<std::string> vecCString =   AppUtils::SplitterStdString(AppUtils::CStringToStd(strCurLineText), " ");
-				std::string line = "";
+				std::vector<std::wstring> vecCString = AppUtils::SplitterWStdString(AppUtils::CStringToWStd(strCurLineText), L" ");
+				std::wstring line = L"";
 				for (auto const& str : vecCString)
 				{
 					while (hash_tab.find(str) == hash_tab.end())
 					{
-						line += str + " ";
+						line += str + L" ";
 						hash_tab.insert(str);
 					}
 				}
@@ -4285,8 +4207,8 @@ void CEditorView::OnOptionsRemoveDuplicateMatchCaseWord()
 					vecOutString.push_back(line);
 				}
 			}
-			std::string strSTD = StringHelper::JoinStdString<std::string>("\n", vecOutString);
-			strNewScripts = AppUtils::StdToCString(strSTD);
+			std::wstring strSTD = StringHelper::JoinStdString<std::wstring>(L"\n", vecOutString);
+			strNewScripts = AppUtils::WStdToCString(strSTD);
 			m_EditorCtrl.SetStartSelection(StartLinePos);
 			m_EditorCtrl.SetEndSelection(EndLinePos);
 			m_EditorCtrl.ReplaceSelectionWithText(strNewScripts);
@@ -4305,13 +4227,13 @@ void CEditorView::OnOptionsRemoveEmptyLine()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 			CString strNewScripts;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				CString strLine = AppUtils::StdToCString(line);
+				CString strLine = AppUtils::WStdToCString(line);
 				strLine.Replace(_T("\n"), _T(""));
 				CString strTemp = strLine;
 				if (!strTemp.Trim().IsEmpty())
@@ -4387,13 +4309,13 @@ void CEditorView::OnOptionsRemoveLineContainX()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (fChecker(strLine) == FALSE)
 					{
@@ -4468,13 +4390,13 @@ void CEditorView::OnOptionsRemoveLineNotContainX()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (fChecker(strLine))
 					{
@@ -4809,11 +4731,11 @@ void CEditorView::OnOptionsInsertXAtBeginLine()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += dlg.m_sXInput + strLine + m_EditorCtrl.GetEOLCString();
 				}
@@ -4859,11 +4781,11 @@ void CEditorView::OnOptionsInsertXAtEndLine()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += strLine + dlg.m_sXInput + m_EditorCtrl.GetEOLCString();
 				}
@@ -4911,11 +4833,11 @@ void CEditorView::OnOptionsInsertEndLineNumberIndex()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += strLine + AppUtils::IntToCString(nIndex) + m_EditorCtrl.GetEOLCString();
 					nIndex++;
@@ -4965,11 +4887,11 @@ void CEditorView::OnOptionsInsertLineNumberIndex()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += AppUtils::IntToCString(nIndex) + _T(" - ") + strLine + m_EditorCtrl.GetEOLCString();
 					nIndex++;
@@ -5026,11 +4948,11 @@ void CEditorView::OnOptionsInsertLineAlphabetIndex()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += CString(static_cast<char>(nIndexChar)) + _T(" - ") + strLine + m_EditorCtrl.GetEOLCString();
 					nIndexChar++;
@@ -5086,11 +5008,11 @@ void CEditorView::OnOptionsInsertLineRomanIndex()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					strNewScripts += AppUtils::DecimalToRomanNumerals(nIndex) + _T(" - ") + strLine + m_EditorCtrl.GetEOLCString();
 					nIndex++;
@@ -5172,11 +5094,11 @@ void CEditorView::OnOptionsJoinLineWithDemiliter()
 			if (stSelectedScript.IsEmpty())
 			{
 				CString strNewScripts;
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					CString strTemp = strLine;
 					if (strTemp.Trim().IsEmpty()) continue;
@@ -5240,13 +5162,13 @@ void CEditorView::SortLineByOptions(SORT_LINE_OPT sortOptions)
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				CString strLine = AppUtils::StdToCString(line);
+				CString strLine = AppUtils::WStdToCString(line);
 				strLine.Replace(_T("\n"), _T(""));
 				vecLine.push_back(strLine);
 			}
@@ -5326,104 +5248,22 @@ void CEditorView::OnOptionsMoveSelectedLineDown()
 
 void CEditorView::OnOptionsToUpperCase()
 {
-	if (m_EditorCtrl.GetSelectionNumber() > SINGLE_SELECTION)
-	{
-		CMultipleSelectionKeeper msKeeper(&m_EditorCtrl);
-		m_EditorCtrl.DoCommand(SCI_UPPERCASE);
-		return;
-	}
-
-	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
-	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			stScript.MakeUpper();
-			m_EditorCtrl.SetTextToEditor(stScript);
-		}
-		else
-		{
-			stSelectedScript.MakeUpper();
-			m_EditorCtrl.ReplaceSelectionWithText(stSelectedScript);
-		}
-	}
-	RESTORE_VISIBLE_EDITOR_STATE_EDIT
+	m_EditorCtrl.DoCommand(SCI_UPPERCASE);
 }
 
 void CEditorView::OnOptionsToLowerCase()
 {
-	if (m_EditorCtrl.GetSelectionNumber() > SINGLE_SELECTION)
-	{
-		CMultipleSelectionKeeper msKeeper(&m_EditorCtrl);
-		m_EditorCtrl.DoCommand(SCI_LOWERCASE);
-		return;
-	}
-
-	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
-	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			stScript.MakeLower();
-			m_EditorCtrl.SetTextToEditor(stScript);
-		}
-		else
-		{
-			stSelectedScript.MakeLower();
-			m_EditorCtrl.ReplaceSelectionWithText(stSelectedScript);
-		}
-	}
-	RESTORE_VISIBLE_EDITOR_STATE_EDIT
+	m_EditorCtrl.DoCommand(SCI_LOWERCASE);
 }
 
 void CEditorView::OnOptionsToReverseText()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				strLine.Replace(_T("\n"), _T(""));
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& line : vecLine)
-			{
-				CString strReversedLine = line;
-				strReversedLine.MakeReverse();
-				if (line != vecLine.back())
-				{
-					strNewScripts += strReversedLine + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					strNewScripts += strReversedLine;
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			stSelectedScript.MakeReverse();
-			m_EditorCtrl.ReplaceSelectionWithText(stSelectedScript);
-		}
+		stSelectedScript.MakeReverse();
+		m_EditorCtrl.ReplaceSelectionWithText(stSelectedScript);
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5431,52 +5271,12 @@ void CEditorView::OnOptionsToReverseText()
 void CEditorView::OnOptionsToCamelCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& strCurLineText : vecLine)
-			{
-				std::string strSTD = AppUtils::CStringToStd(strCurLineText);
-				int nPos = AppUtils::FindFirstCharacterNotOf(strCurLineText, _T(" \t"));
-				if (nPos < 0)
-				{
-					strNewScripts += strCurLineText + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					AppUtils::ToTitleCase(strSTD);
-					std::string strTemp = strSTD.substr(nPos);
-					AppUtils::ReplaceAllInStdString(strTemp, " ", "");
-					strSTD = strSTD.substr(0, nPos) + strTemp;
-					std::string strFirstChar(1, strSTD[nPos]);
-					boost::to_lower(strFirstChar);
-					std::string strSentenceCase = strSTD.replace(nPos, 1, strFirstChar);
-					strNewScripts += AppUtils::StdToCString(strSentenceCase) + m_EditorCtrl.GetEOLCString();
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ToTitleCase(strSTD);
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ToTitleCase(strSTD);
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5484,55 +5284,18 @@ void CEditorView::OnOptionsToCamelCase()
 void CEditorView::OnOptionsToPascalCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-		CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+    CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
+		int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
+		if (nPos >= 0)
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& strCurLineText : vecLine)
-			{
-				std::string strSTD = AppUtils::CStringToStd(strCurLineText);
-				int nPos = AppUtils::FindFirstCharacterNotOf(strCurLineText, _T(" \t"));
-				if (nPos < 0)
-				{
-					strNewScripts += strCurLineText + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					AppUtils::ToTitleCase(strSTD);
-					std::string strTemp = strSTD.substr(nPos);
-					AppUtils::ReplaceAllInStdString(strTemp, " ", "");
-					strSTD = strSTD.substr(0, nPos) + strTemp;
-					strNewScripts += AppUtils::StdToCString(strSTD) + m_EditorCtrl.GetEOLCString();
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
-			if (nPos >= 0)
-			{
-				std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-				AppUtils::ToTitleCase(strSTD);
-				std::string strTemp = strSTD.substr(nPos);
-				AppUtils::ReplaceAllInStdString(strTemp, " ", "");
-				strSTD = strSTD.substr(0, nPos) + strTemp;
-				m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-			}
+			std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+			AppUtils::ToTitleCase(strSTD);
+			std::wstring strTemp = strSTD.substr(nPos);
+			AppUtils::ReplaceAllInWStdString(strTemp, L" ", L"");
+			strSTD = strSTD.substr(0, nPos) + strTemp;
+			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 		}
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
@@ -5541,25 +5304,13 @@ void CEditorView::OnOptionsToPascalCase()
 void CEditorView::OnOptionsToLowerSnakeCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			boost::to_lower(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			boost::to_lower(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		boost::to_lower(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"_");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5567,25 +5318,13 @@ void CEditorView::OnOptionsToLowerSnakeCase()
 void CEditorView::OnOptionsToUpperSnakeCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			boost::to_upper(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			boost::to_upper(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		boost::to_upper(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"_");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5593,25 +5332,13 @@ void CEditorView::OnOptionsToUpperSnakeCase()
 void CEditorView::OnOptionsToPascalSnakeCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+    CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			AppUtils::ToTitleCase(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ToTitleCase(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "_");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ToTitleCase(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"_");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5619,25 +5346,13 @@ void CEditorView::OnOptionsToPascalSnakeCase()
 void CEditorView::OnOptionsToPascalKebabCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			AppUtils::ToTitleCase(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ToTitleCase(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ToTitleCase(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"-");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5645,25 +5360,13 @@ void CEditorView::OnOptionsToPascalKebabCase()
 void CEditorView::OnOptionsToLowerKebabCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			boost::to_lower(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			boost::to_lower(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		boost::to_lower(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"-");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5671,25 +5374,13 @@ void CEditorView::OnOptionsToLowerKebabCase()
 void CEditorView::OnOptionsToUpperKebabCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			boost::to_upper(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			boost::to_upper(strSTD);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", "-");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		boost::to_upper(strSTD);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L"_");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5697,23 +5388,12 @@ void CEditorView::OnOptionsToUpperKebabCase()
 void CEditorView::OnOptionsToTitleUpperCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			AppUtils::ToTitleCase(strSTD);
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ToTitleCase(strSTD);
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ToTitleCase(strSTD);
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5721,23 +5401,12 @@ void CEditorView::OnOptionsToTitleUpperCase()
 void CEditorView::OnOptionsToDotCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", ".");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ReplaceAllInStdString(strSTD, " ", ".");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ReplaceAllInWStdString(strSTD, L" ", L".");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5745,55 +5414,18 @@ void CEditorView::OnOptionsToDotCase()
 void CEditorView::OnOptionsToSentenceCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
+		if (nPos >= 0)
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& strCurLineText : vecLine)
-			{
-				std::string strSTD = AppUtils::CStringToStd(strCurLineText);
-				int nPos = AppUtils::FindFirstCharacterNotOf(strCurLineText, _T(" \t"));
-				if (nPos < 0)
-				{
-					strNewScripts += strCurLineText + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					boost::to_lower(strSTD);
-					std::string strFirstChar(1, strSTD[nPos]);
-					boost::to_upper(strFirstChar);
-					std::string strSentenceCase = strSTD.replace(nPos, 1, strFirstChar);
-					strNewScripts += AppUtils::StdToCString(strSentenceCase) + m_EditorCtrl.GetEOLCString();
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
-			if (nPos >= 0)
-			{
-				boost::to_lower(strSTD);
-				std::string strFirstChar(1, strSTD[nPos]);
-				boost::to_upper(strFirstChar);
-				std::string strSentenceCase = strSTD.replace(nPos, 1, strFirstChar);
-				m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSentenceCase));
-			}
+			boost::to_lower(strSTD);
+			std::wstring strFirstChar(1, strSTD[nPos]);
+			boost::to_upper(strFirstChar);
+			std::wstring strSentenceCase = strSTD.replace(nPos, 1, strFirstChar);
+			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSentenceCase));
 		}
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
@@ -5802,23 +5434,12 @@ void CEditorView::OnOptionsToSentenceCase()
 void CEditorView::OnOptionsPascalCaseToSplitCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			std::string strNewString = VinaTextSearchEngine::replace_word_regex(strSTD.c_str(), "(\\B[A-Z])", " $1");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strNewString));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			std::string strNewString = VinaTextSearchEngine::replace_word_regex(strSTD.c_str(), "(\\B[A-Z])", " $1");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strNewString));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		std::wstring strNewString = VinaTextSearchEngine::replace_word_regex(strSTD.c_str(), L"(\\B[A-Z])", L" $1");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strNewString));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5847,23 +5468,12 @@ void CEditorView::OnOptionsEOLToCR()
 void CEditorView::OnOptionsSnakeCaseToSplitCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
-		{
-			std::string strSTD = AppUtils::CStringToStd(stScript);
-			AppUtils::ReplaceAllInStdString(strSTD, "_", " ");
-			m_EditorCtrl.SetTextToEditor(AppUtils::StdToCString(strSTD));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			AppUtils::ReplaceAllInStdString(strSTD, "_", " ");
-			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-		}
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		AppUtils::ReplaceAllInWStdString(strSTD, L"_", L" ");
+		m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
@@ -5879,11 +5489,11 @@ void CEditorView::TrimLine(int trimOption)
 		if (stSelectedScript.IsEmpty())
 		{
 			CString strNewScripts;
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+			std::wstring line;
+			std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+			while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 			{
-				CString strLine = AppUtils::StdToCString(line);
+				CString strLine = AppUtils::WStdToCString(line);
 				strLine.Replace(_T("\n"), _T(""));
 				if (trimOption == 1)
 				{
@@ -5998,9 +5608,9 @@ void CEditorView::OnEditCountDuplicateWords()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			std::stringstream input(AppUtils::CStringToStd(stScript));
-			std::map<std::string, unsigned int> word_data;
-			std::string word;
+			std::wstringstream input(AppUtils::CStringToWStd(stScript));
+			std::map<std::wstring, unsigned int> word_data;
+			std::wstring word;
 			while (input >> word)
 			{
 				if (word_data.find(word) != word_data.end())
@@ -6012,11 +5622,11 @@ void CEditorView::OnEditCountDuplicateWords()
 					word_data[word] = 1;
 				}
 			}
-			std::map<std::string, unsigned int>::iterator iter;
+			std::map<std::wstring, unsigned int>::iterator iter;
 			for (iter = word_data.begin(); iter != word_data.end(); ++iter)
 			{
-				std::string strLine = iter->first + " (" + std::to_string(iter->second) +  ")\n";
-				strMsg += AppUtils::StdToCString(strLine);
+				std::wstring strLine = iter->first + L" (" + std::to_wstring(iter->second) +  L")\n";
+				strMsg += AppUtils::WStdToCString(strLine);
 			}
 			CString strStatistics;
 			strStatistics.Format(_T("> [Count statistics] Total %d unique word(s) saperated by space in current file.\n\n"), static_cast<int>(word_data.size()));
@@ -6026,9 +5636,9 @@ void CEditorView::OnEditCountDuplicateWords()
 		}
 		else
 		{
-			std::stringstream input(AppUtils::CStringToStd(stSelectedScript));
-			std::map<std::string, unsigned int> word_data;
-			std::string word;
+			std::wstringstream input(AppUtils::CStringToWStd(stSelectedScript));
+			std::map<std::wstring, unsigned int> word_data;
+			std::wstring word;
 			while (input >> word)
 			{
 				if (word_data.find(word) != word_data.end())
@@ -6040,11 +5650,11 @@ void CEditorView::OnEditCountDuplicateWords()
 					word_data[word] = 1;
 				}
 			}
-			std::map<std::string, unsigned int>::iterator iter;
+			std::map<std::wstring, unsigned int>::iterator iter;
 			for (iter = word_data.begin(); iter != word_data.end(); ++iter)
 			{
-				std::string strLine = iter->first + " (" + std::to_string(iter->second) + ")\n";
-				strMsg += AppUtils::StdToCString(strLine);
+				std::wstring strLine = iter->first + L" (" + std::to_wstring(iter->second) + L")\n";
+				strMsg += AppUtils::WStdToCString(strLine);
 			}
 			CString strStatistics;
 			strStatistics.Format(_T("> [Count statistics] Total %d unique word(s) saperated by space in selection.\n"), static_cast<int>(word_data.size()));
@@ -6073,16 +5683,16 @@ void CEditorView::OnEditCountDuplicateLines()
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 		if (stSelectedScript.IsEmpty())
 		{
-			std::stringstream input(AppUtils::CStringToStd(stScript));
-			std::string line;
-			typedef std::multimap<std::string, unsigned int> line_record;
+			std::wstringstream input(AppUtils::CStringToWStd(stScript));
+			std::wstring line;
+			typedef std::multimap<std::wstring, unsigned int> line_record;
 			line_record lines;
 			line_record duplicatelines;
 			unsigned int line_number = 1;
 			while (std::getline(input, line))
 			{
-				AppUtils::ReplaceAllInStdString(line, "\n", "");
-				AppUtils::ReplaceAllInStdString(line, "\r", "");
+				AppUtils::ReplaceAllInWStdString(line, L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(line, L"\r", L"");
 				line_record::iterator existing = lines.find(line);
 				if (existing == lines.end()) // if it was already in the map
 				{
@@ -6098,11 +5708,11 @@ void CEditorView::OnEditCountDuplicateLines()
 				}
 				++line_number;
 			}
-			std::map<std::string, unsigned int>::iterator iter;
+			std::map<std::wstring, unsigned int>::iterator iter;
 			for (iter = duplicatelines.begin(); iter != duplicatelines.end(); ++iter)
 			{
-				std::string strLine = iter->first + " , Line : " + std::to_string(iter->second) + "\n";
-				strMsg += AppUtils::StdToCString(strLine);
+				std::wstring strLine = iter->first + L" , Line : " + std::to_wstring(iter->second) + L"\n";
+				strMsg += AppUtils::WStdToCString(strLine);
 			}
 			CString strStatistics;
 			strStatistics.Format(_T("> [Line statistics] Total %d duplicate line(s) in current file.\n\n"), static_cast<int>(duplicatelines.size()));
@@ -6112,16 +5722,16 @@ void CEditorView::OnEditCountDuplicateLines()
 		}
 		else
 		{
-			std::stringstream input(AppUtils::CStringToStd(stSelectedScript));
-			std::string line;
-			typedef std::multimap<std::string, unsigned int> line_record;
+			std::wstringstream input(AppUtils::CStringToWStd(stSelectedScript));
+			std::wstring line;
+			typedef std::multimap<std::wstring, unsigned int> line_record;
 			line_record lines;
 			line_record duplicatelines;
 			unsigned int line_number = 1;
 			while (std::getline(input, line))
 			{
-				AppUtils::ReplaceAllInStdString(line, "\n", "");
-				AppUtils::ReplaceAllInStdString(line, "\r", "");
+				AppUtils::ReplaceAllInWStdString(line, L"\n", L"");
+				AppUtils::ReplaceAllInWStdString(line, L"\r", L"");
 				line_record::iterator existing = lines.find(line);
 				if (existing == lines.end()) // if it was already in the map
 				{
@@ -6137,11 +5747,11 @@ void CEditorView::OnEditCountDuplicateLines()
 				}
 				++line_number;
 			}
-			std::map<std::string, unsigned int>::iterator iter;
+			std::map<std::wstring, unsigned int>::iterator iter;
 			for (iter = duplicatelines.begin(); iter != duplicatelines.end(); ++iter)
 			{
-				std::string strLine = iter->first + " , Line : " + std::to_string(iter->second) + "\n";
-				strMsg += AppUtils::StdToCString(strLine);
+				std::wstring strLine = iter->first + L" , Line : " + std::to_wstring(iter->second) + L"\n";
+				strMsg += AppUtils::WStdToCString(strLine);
 			}
 			CString strStatistics;
 			strStatistics.Format(_T("> [Line statistics] Total %d duplicate line(s) in current file.\n"), static_cast<int>(duplicatelines.size()));
@@ -7222,7 +6832,7 @@ void CEditorView::OnDocumentFormatFile()
 	if (FALSE == PathFileExists(strFilePath))
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist...\n"), strFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strFilePath);
 		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -7238,7 +6848,7 @@ void CEditorView::OnDocumentFormatFile()
 		if (FALSE == PathFileExists(strFolderPath))
 		{
 			CString strMsg;
-			strMsg.Format(_T("> [Path Error] %s does not exist, this file need NodeJS for formatting. Please be sure to install it on your computer...\n"), strFolderPath);
+			strMsg.Format(_T("> [Path Error] \"%s\" does not exist, this file need NodeJS for formatting. Please be sure to install it on your computer...\n"), strFolderPath);
 			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 			AfxMessageBox(strMsg);
 			return;
@@ -7269,9 +6879,9 @@ void CEditorView::OnDocumentFormatFile()
 		if (FALSE == PathFileExists(strAutopep8Path))
 		{
 			CString strMsg;
-			strMsg.Format(_T("> [Path Error] %s does not exist, this file need autopep8 for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
+			strMsg.Format(_T("> [Path Error] \"%s\" does not exist, this file need autopep8 for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
 			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error]  %s does not exist, this file need autopep8 program for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error]  \"%s\" does not exist, this file need autopep8 program for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
 			return;
 		}
 		SetCurrentDirectoryW(PathUtils::GetContainerPath(strAutopep8Path));
@@ -7923,7 +7533,7 @@ void CEditorView::RunExeAfterCompile()
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -7949,7 +7559,7 @@ void CEditorView::RunGDBDebuggerAfterCompile()
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -7976,7 +7586,7 @@ void CEditorView::RunJavaExeAfterCompile(const CString& strCommandLine)
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("[Path Error] %s does not exist!\nPlease check class name and file name are matched or not..."), m_BuildSessionInfo._strExeFilePath);
+		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\nPlease check class name and file name are matched or not..."), m_BuildSessionInfo._strExeFilePath);
 		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 		return;
 	}
@@ -8046,7 +7656,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 				if (FALSE == PathFileExists(m_BuildSessionInfo._strJavaVMPath))
 				{
 					CString strMsg;
-					strMsg.Format(_T("[Path Error] %s does not exist...\n"), m_BuildSessionInfo._strJavaVMPath);
+					strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), m_BuildSessionInfo._strJavaVMPath);
 					LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
 					return 1L;
 				}
@@ -8340,7 +7950,7 @@ void CEditorView::OnAddAutoCompleteVietnameseDataset()
 	}
 	else
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist."), strDataSetPath);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist."), strDataSetPath);
 	}
 }
 
@@ -8361,7 +7971,7 @@ void CEditorView::OnAddAutoCompleteEnglishDataset()
 	}
 	else
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist."), strDataSetPath);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist."), strDataSetPath);
 	}
 }
 
@@ -8662,13 +8272,13 @@ void CEditorView::OnEditRemoveFromXToYLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (dlg.m_bRemoveFromEndLine)
 					{
@@ -8752,13 +8362,13 @@ void CEditorView::OnOptionsRemoveFromCharXToYInLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (dlg.m_bRemoveFromEndLine)
 					{
@@ -8845,13 +8455,13 @@ void CEditorView::OnEditRemoveBeforWordLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					int posBefore = strLine.Find(dlg.m_strWord);
 					if (posBefore != -1)
@@ -8921,13 +8531,13 @@ void CEditorView::OnEditRemoveAfterWordLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					int posAfter = strLine.Find(dlg.m_strWord);
 					if (posAfter != -1)
@@ -8997,13 +8607,13 @@ void CEditorView::OnEditInsertAfterWordLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					int posAfter = strLine.Find(dlg.m_strWord);
 					if (posAfter != -1)
@@ -9076,11 +8686,11 @@ void CEditorView::OnEditInsertBetweenLines()
 				{
 					strNewScripts += dlg.m_strInsertWhat + m_EditorCtrl.GetEOLCString();
 				}
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (iss.eof())
 					{
@@ -9197,13 +8807,13 @@ void CEditorView::OnEditInsertBeforeWordLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					int posBefore = strLine.Find(dlg.m_strWord);
 					if (posBefore != -1)
@@ -9280,13 +8890,13 @@ void CEditorView::OnEditInsertAtPositionLine()
 			CString stSelectedScript = m_EditorCtrl.GetSelectedText();
 			if (stSelectedScript.IsEmpty())
 			{
-				std::string line;
-				std::istringstream iss(AppUtils::CStringToStd(stScript));
+				std::wstring line;
+				std::wistringstream iss(AppUtils::CStringToWStd(stScript));
 
 				CString strNewScripts;
-				while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
+				while (std::getline(iss, line, AppUtils::CStringToWStd(m_EditorCtrl.GetEOLCString())[0]))
 				{
-					CString strLine = AppUtils::StdToCString(line);
+					CString strLine = AppUtils::WStdToCString(line);
 					strLine.Replace(_T("\n"), _T(""));
 					if (dlg.m_bInsertFromLineEnd)
 					{
@@ -9350,49 +8960,15 @@ void CEditorView::OnEditInsertAtPositionLine()
 void CEditorView::OnEditConvertToInvertCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
+		if (nPos >= 0)
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& strCurLineText : vecLine)
-			{
-				std::string strSTD = AppUtils::CStringToStd(strCurLineText);
-				int nPos = AppUtils::FindFirstCharacterNotOf(strCurLineText, _T(" \t"));
-				if (nPos < 0)
-				{
-					strNewScripts += strCurLineText + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					AppUtils::ToInvertCase(strSTD);
-					strNewScripts += AppUtils::StdToCString(strSTD) + m_EditorCtrl.GetEOLCString();
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
-			if (nPos >= 0)
-			{
-				AppUtils::ToInvertCase(strSTD);
-				m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-			}
+			AppUtils::ToInvertCase(strSTD);
+			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 		}
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
@@ -9401,49 +8977,15 @@ void CEditorView::OnEditConvertToInvertCase()
 void CEditorView::OnEditConvertToRandomCase()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
-	CString stScript;
-	m_EditorCtrl.GetText(stScript);
-	if (!stScript.IsEmpty())
+	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
+	if (!stSelectedScript.IsEmpty())
 	{
-		CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-		if (stSelectedScript.IsEmpty())
+		std::wstring strSTD = AppUtils::CStringToWStd(stSelectedScript);
+		int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
+		if (nPos >= 0)
 		{
-			std::string line;
-			std::istringstream iss(AppUtils::CStringToStd(stScript));
-
-			CString strNewScripts;
-			std::vector<CString> vecLine;
-			while (std::getline(iss, line, AppUtils::CStringToStd(m_EditorCtrl.GetEOLCString())[0]))
-			{
-				CString strLine = AppUtils::StdToCString(line);
-				vecLine.push_back(strLine);
-			}
-
-			for (const auto& strCurLineText : vecLine)
-			{
-				std::string strSTD = AppUtils::CStringToStd(strCurLineText);
-				int nPos = AppUtils::FindFirstCharacterNotOf(strCurLineText, _T(" \t"));
-				if (nPos < 0)
-				{
-					strNewScripts += strCurLineText + m_EditorCtrl.GetEOLCString();
-				}
-				else
-				{
-					AppUtils::ToRandomCase(strSTD);
-					strNewScripts += AppUtils::StdToCString(strSTD) + m_EditorCtrl.GetEOLCString();
-				}
-			}
-			m_EditorCtrl.SetTextToEditor(strNewScripts.Mid(0, strNewScripts.GetLength()));
-		}
-		else
-		{
-			std::string strSTD = AppUtils::CStringToStd(stSelectedScript);
-			int nPos = AppUtils::FindFirstCharacterNotOf(stSelectedScript, _T(" \t"));
-			if (nPos >= 0)
-			{
-				AppUtils::ToRandomCase(strSTD);
-				m_EditorCtrl.ReplaceSelectionWithText(AppUtils::StdToCString(strSTD));
-			}
+			AppUtils::ToRandomCase(strSTD);
+			m_EditorCtrl.ReplaceSelectionWithText(AppUtils::WStdToCString(strSTD));
 		}
 	}
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
@@ -10171,7 +9713,7 @@ void CEditorView::OpenFileLanguageConfig(const CString& czLexerName)
 	}
 	else
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] %s does not exist!\n"), languageSettingPath);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), languageSettingPath);
 	}
 }
 
