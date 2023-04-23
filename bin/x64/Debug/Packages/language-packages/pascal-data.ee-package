@@ -13,12 +13,13 @@ https://www.freepascal.org/
 - After installion, please change below path settings to your installed Pascal paths.
 - You can also add more key words to auto complete word list.
 - After editing this file, please reload (F4) your code file to active settings.
+- IMPORTANT NOTE: dont use "crt" unit from Borland Pascal / Turbo Pascal in Free Pascal code.
 
 @@ compiler path:
-..\Compilers\Pascal\bin\i386-win32\fpc.exe
+..\Compilers\fpc.exe
 
 @@ debugger path:
-..\Compilers\Pascal\bin\i386-win32\fpc.exe
+..\Compilers\gdb.exe
 
 @@ auto complete:
 and array asm begin case cdecl class const constructor default destructor div 

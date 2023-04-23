@@ -250,6 +250,10 @@ CString PathUtils::GetLanguageSettingFilePath(const CString& strLanguageName)
 	{
 		strLanguageSettingFilePath = PathUtils::GetVinaTextPackagePath() + _T("language-packages\\autoit-data.ee-package");
 	}
+	else if (strLanguageName == _T("freebasic"))
+	{
+	strLanguageSettingFilePath = PathUtils::GetVinaTextPackagePath() + _T("language-packages\\freebasic-data.ee-package");
+	}
 	return strLanguageSettingFilePath;
 }
 

@@ -25,7 +25,8 @@ void CVinaTextDebugger::AddBreakPointData(VINATEXT_SUPPORTED_LANGUAGE language, 
 				PuskCommandLineToQueue(strCommand);
 			}
 			else if (language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-				|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+				|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+				|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 			{
 				CString strCommand = CMD_ADD_BREAKPOINT_GDB + strFileName + _T(":") + AppUtils::LongToCString(lineNumber);
 				PuskCommandLineToQueue(strCommand);
@@ -67,7 +68,8 @@ void CVinaTextDebugger::RemoveBreakPointDataInLine(VINATEXT_SUPPORTED_LANGUAGE l
 			PuskCommandLineToQueue(strCommand);
 		}
 		else if (language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			CString strCommand = CMD_DELETE_BREAKPOINT_GDB + strFileName + _T(":") + AppUtils::LongToCString(lineNumber);
 			PuskCommandLineToQueue(strCommand);
@@ -111,12 +113,14 @@ void CVinaTextDebugger::RemoveBreakPointDataInFile(const CString & strFileName)
 			}
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			for (auto const& breakpoint : m_BreakPointDebuggerDataList) // set static breakpoints!
 			{
 				if ((breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 					&& breakpoint._fileName.CompareNoCase(strFileName) == 0)
 				{
 					CString strCommand = CMD_DELETE_BREAKPOINT_GDB + breakpoint._fileName + _T(":") + AppUtils::LongToCString(breakpoint._lineNumber);
@@ -177,12 +181,14 @@ void CVinaTextDebugger::RemoveAllBreakPointDataInLanguage(VINATEXT_SUPPORTED_LAN
 			}
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			for (auto const& breakpoint : m_BreakPointDebuggerDataList) // set static breakpoints!
 			{
 				if (breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+					|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 				{
 					CString strCommand = CMD_DELETE_BREAKPOINT_GDB + breakpoint._fileName + _T(":") + AppUtils::LongToCString(breakpoint._lineNumber);
 					PuskCommandLineToQueue(strCommand);
@@ -260,12 +266,14 @@ void CVinaTextDebugger::RegisterInitialBreakPoints()
 		PuskCommandLineToQueue(CMD_CONTINUE_PDB);
 	}
 	else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-		|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+		|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+		|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 	{
 		for (auto const& breakpoint : m_BreakPointDebuggerDataList)
 		{
 			if (breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-				|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+				|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+				|| breakpoint._language == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 			{
 				CString strCommand = CMD_ADD_BREAKPOINT_GDB + breakpoint._fileName + _T(":") + AppUtils::LongToCString(breakpoint._lineNumber);
 				PuskCommandLineToQueue(strCommand);
@@ -350,7 +358,8 @@ void CVinaTextDebugger::StepOver()
 			PuskCommandLineToQueue(CMD_STEP_OVER_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_STEP_OVER_GDB);
 		}
@@ -379,7 +388,8 @@ void CVinaTextDebugger::StepInto()
 			PuskCommandLineToQueue(CMD_STEP_INTO_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_STEP_INTO_GDB);
 			PuskCommandLineToQueue(CMD_CURRENT_FRAME_GDB); // where we are!
@@ -409,7 +419,8 @@ void CVinaTextDebugger::StepOut()
 			PuskCommandLineToQueue(CMD_STEP_OUT_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_STEP_OUT_GDB);
 			PuskCommandLineToQueue(CMD_CURRENT_FRAME_GDB); // where we are!
@@ -440,7 +451,8 @@ void CVinaTextDebugger::Restart()
 			PuskCommandLineToQueue(CMD_CONTINUE_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_RUN_GDB);
 		}
@@ -471,7 +483,8 @@ void CVinaTextDebugger::ShowCallStack()
 			PuskCommandLineToQueue(CMD_CALL_STACK_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_CALL_STACK_GDB);
 		}
@@ -500,7 +513,8 @@ void CVinaTextDebugger::Continue()
 			PuskCommandLineToQueue(CMD_CONTINUE_PDB);
 		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+			|| m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 		{
 			PuskCommandLineToQueue(CMD_CONTINUE_GDB);
 		}
@@ -542,6 +556,12 @@ void CVinaTextDebugger::WatchVariableType(const CString & strVariable)
 			CString strCommand = CMD_PRINT_VARS_TYPE_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}
+		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
+		{
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Pascal Object Type] : ") + strVariable, BasicColors::light_orange);
+			CString strCommand = CMD_PRINT_VARS_TYPE_GDB + strVariable;
+			PuskCommandLineToQueue(strCommand);
+		}
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT)
 		{
 			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch JavaScript Object Type] : NodeJS debugger has not supported view object type yet..."), BasicColors::light_orange);
@@ -578,6 +598,12 @@ void CVinaTextDebugger::WatchVariableValue(const CString & strVariable)
 		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
 		{
 			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch C Object Value] : ") + strVariable, BasicColors::light_orange);
+			CString strCommand = CMD_PRINT_GDB + strVariable;
+			PuskCommandLineToQueue(strCommand);
+		}
+		else if (m_currentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
+		{
+			LOG_BUILD_MESSAGE_COLOR(_T(">>> [Watch Pascal Object Value] : ") + strVariable, BasicColors::light_orange);
 			CString strCommand = CMD_PRINT_GDB + strVariable;
 			PuskCommandLineToQueue(strCommand);
 		}

@@ -137,7 +137,7 @@ public:
 	void ShowErrorLineOnEditor();
 
 protected:
-	BOOL IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebugger, BOOL& bDisableOutputLog, BOOL& bIsNonObjectVariable);
+	BOOL IsDebuggerMessage(CString& strMessage, BOOL& bStopDebugger, BOOL& bDisableOutputLog, BOOL& bIsNonObjectVariable);
 	void RecordUserInput(const CString & strCommand);
 
 protected:

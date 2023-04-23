@@ -11,30 +11,11 @@
     <Filter Include="Command Line">
       <UniqueIdentifier>{64cf5b61-68b4-4d93-a4af-f23b6eb8feb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Main Files\Main Skeleton">
-      <UniqueIdentifier>{bd6216e8-f41f-45f1-80fd-b5557e78aff0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Code Page">
       <UniqueIdentifier>{8c07723e-86fb-4a6d-9d20-b1c9320bf513}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main Files\Main Skeleton\Frame UI">
-      <UniqueIdentifier>{68cb65cc-c254-4dc8-9119-a6a06905e986}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main Files\Main Skeleton\Application">
-      <UniqueIdentifier>{8f68210f-22a8-4942-9d0a-f30623454036}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{0ae4e775-a92e-4b42-93e5-d85752b89132}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main Files\Main Skeleton\View">
-      <UniqueIdentifier>{19c2479f-3620-455d-9173-11dad29517a3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Main Files\Main Skeleton\Document">
-      <UniqueIdentifier>{2e090b98-6424-418e-951c-b1add0c4ff88}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dock Windows">
       <UniqueIdentifier>{03c4fb31-945f-4a82-b583-9b05cf57c455}</UniqueIdentifier>
@@ -47,9 +28,6 @@
     </Filter>
     <Filter Include="Dock Windows\Bookmark Window">
       <UniqueIdentifier>{2eed5c06-c16e-41e5-b61c-8c5d0abb18e4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="SearchEngine">
-      <UniqueIdentifier>{b29494b1-57ba-4c04-ae28-a7bc77f99561}</UniqueIdentifier>
     </Filter>
     <Filter Include="Dock Windows\Breakpoint Window">
       <UniqueIdentifier>{9331b459-6bee-49f4-a92e-f9e2576b785a}</UniqueIdentifier>
@@ -166,6 +144,24 @@
     <Filter Include="User Extension">
       <UniqueIdentifier>{0e7ec8e3-8bfe-4ecd-89fa-f6899935ca38}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main Skeleton">
+      <UniqueIdentifier>{bd6216e8-f41f-45f1-80fd-b5557e78aff0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Skeleton\Frame UI">
+      <UniqueIdentifier>{68cb65cc-c254-4dc8-9119-a6a06905e986}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Skeleton\Application">
+      <UniqueIdentifier>{8f68210f-22a8-4942-9d0a-f30623454036}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Skeleton\View">
+      <UniqueIdentifier>{19c2479f-3620-455d-9173-11dad29517a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main Skeleton\Document">
+      <UniqueIdentifier>{2e090b98-6424-418e-951c-b1add0c4ff88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Search Engine">
+      <UniqueIdentifier>{b29494b1-57ba-4c04-ae28-a7bc77f99561}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.md" />
@@ -208,7 +204,7 @@
       <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClInclude>
     <ClInclude Include="SearchEngine.h">
-      <Filter>SearchEngine</Filter>
+      <Filter>Search Engine</Filter>
     </ClInclude>
     <ClInclude Include="ShellContextMenu.h">
       <Filter>Dock Windows\File Explorer Window</Filter>
@@ -301,37 +297,37 @@
       <Filter>Component GUI\Editor\Database</Filter>
     </ClInclude>
     <ClInclude Include="ImageDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="EditorDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="PdfDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="BaseDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="ChildFrm.h">
-      <Filter>Main Files\Main Skeleton\Frame UI</Filter>
+      <Filter>Main Skeleton\Frame UI</Filter>
     </ClInclude>
     <ClInclude Include="MainFrm.h">
-      <Filter>Main Files\Main Skeleton\Frame UI</Filter>
+      <Filter>Main Skeleton\Frame UI</Filter>
     </ClInclude>
     <ClInclude Include="SingleInstanceApp.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="AppSettings.h">
       <Filter>Settings</Filter>
     </ClInclude>
     <ClInclude Include="VinaTextApp.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="GammaDlg.h">
       <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="MultiDocTemplateEx.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="AppUtil.h">
       <Filter>Utils</Filter>
@@ -343,16 +339,16 @@
       <Filter>Dialog GUI</Filter>
     </ClInclude>
     <ClInclude Include="EditorView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="ImageView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="PdfView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="RecentCloseFileManager.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="QuickSearchDialog.h">
       <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
@@ -388,13 +384,13 @@
       <Filter>Component GUI\Image Processing</Filter>
     </ClInclude>
     <ClInclude Include="MediaDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="MediaView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="ViewBase.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="ComboboxMultiLine.h">
       <Filter>Component GUI\MFC GUI</Filter>
@@ -430,10 +426,10 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="HostDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="HostView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="PathUtil.h">
       <Filter>Utils</Filter>
@@ -442,7 +438,7 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="HostManager.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="TextProgressCtrl.h">
       <Filter>Dock Windows\Status Bar Window</Filter>
@@ -451,7 +447,7 @@
       <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="FindReplaceTextWorker.h">
-      <Filter>SearchEngine</Filter>
+      <Filter>Search Engine</Filter>
     </ClInclude>
     <ClInclude Include="Debugger.h">
       <Filter>Dock Windows\Build Debug Window\Debugger</Filter>
@@ -460,7 +456,7 @@
       <Filter>Dock Windows\Build Debug Window\IPC</Filter>
     </ClInclude>
     <ClInclude Include="FindPathWorker.h">
-      <Filter>SearchEngine</Filter>
+      <Filter>Search Engine</Filter>
     </ClInclude>
     <ClInclude Include="SearchNavigatePathDlg.h">
       <Filter>Dialog GUI</Filter>
@@ -472,10 +468,10 @@
       <Filter>Dock Windows\Status Bar Window</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerView.h">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClInclude>
     <ClInclude Include="FileExplorerDoc.h">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
     <ClInclude Include="TextResultWindow.h">
       <Filter>Dock Windows\Search Text Result Window</Filter>
@@ -487,7 +483,7 @@
       <Filter>Dock Windows\Breakpoint Window</Filter>
     </ClInclude>
     <ClInclude Include="AppAboutDlg.h">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
     <ClInclude Include="UnicodeUtils.h">
       <Filter>Component GUI\Editor\Editor</Filter>
@@ -597,15 +593,6 @@
     <ClInclude Include="VinaTextSettingDlg.h">
       <Filter>Settings</Filter>
     </ClInclude>
-    <ClInclude Include="SettingDlgCustomize.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingDlgFileSystem.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
-    <ClInclude Include="SettingDlgToggle.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
     <ClInclude Include="QuickGotoLine.h">
       <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
     </ClInclude>
@@ -698,6 +685,18 @@
     </ClInclude>
     <ClInclude Include="UserExtension.h">
       <Filter>User Extension</Filter>
+    </ClInclude>
+    <ClInclude Include="ProgrammingSettingDlg.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneralSettingDlg.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplorerSettingDlg.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorSettingDlg.h">
+      <Filter>Settings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -816,37 +815,37 @@
       <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="ImageDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="EditorDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="PdfDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="BaseDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="ChildFrm.cpp">
-      <Filter>Main Files\Main Skeleton\Frame UI</Filter>
+      <Filter>Main Skeleton\Frame UI</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
-      <Filter>Main Files\Main Skeleton\Frame UI</Filter>
+      <Filter>Main Skeleton\Frame UI</Filter>
     </ClCompile>
     <ClCompile Include="SingleInstanceApp.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="AppSettings.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="VinaTextApp.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="GammaDlg.cpp">
       <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="MultiDocTemplateEx.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="AppUtil.cpp">
       <Filter>Utils</Filter>
@@ -858,16 +857,16 @@
       <Filter>Dialog GUI</Filter>
     </ClCompile>
     <ClCompile Include="EditorView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="ImageView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="PdfView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="RecentCloseFileManager.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="QuickSearchDialog.cpp">
       <Filter>Dock Windows\Search And Replace Window\Quick Search</Filter>
@@ -897,13 +896,13 @@
       <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="MediaDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="MediaView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="ViewBase.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="ComboboxMultiLine.cpp">
       <Filter>Component GUI\MFC GUI</Filter>
@@ -936,10 +935,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="HostDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="HostView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="PathUtil.cpp">
       <Filter>Utils</Filter>
@@ -948,7 +947,7 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="HostManager.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="STLHelper.h">
       <Filter>Global Header</Filter>
@@ -957,7 +956,7 @@
       <Filter>Dock Windows\Status Bar Window</Filter>
     </ClCompile>
     <ClCompile Include="FindReplaceTextWorker.cpp">
-      <Filter>SearchEngine</Filter>
+      <Filter>Search Engine</Filter>
     </ClCompile>
     <ClCompile Include="Debugger.cpp">
       <Filter>Dock Windows\Build Debug Window\Debugger</Filter>
@@ -966,7 +965,7 @@
       <Filter>Dock Windows\Build Debug Window\IPC</Filter>
     </ClCompile>
     <ClCompile Include="FindPathWorker.cpp">
-      <Filter>SearchEngine</Filter>
+      <Filter>Search Engine</Filter>
     </ClCompile>
     <ClCompile Include="SearchNavigatePathDlg.cpp">
       <Filter>Dialog GUI</Filter>
@@ -978,7 +977,7 @@
       <Filter>Dock Windows\Status Bar Window</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerDoc.cpp">
-      <Filter>Main Files\Main Skeleton\Document</Filter>
+      <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
     <ClCompile Include="TextResultWindow.cpp">
       <Filter>Dock Windows\Search Text Result Window</Filter>
@@ -990,7 +989,7 @@
       <Filter>Dock Windows\Breakpoint Window</Filter>
     </ClCompile>
     <ClCompile Include="AppAboutDlg.cpp">
-      <Filter>Main Files\Main Skeleton\Application</Filter>
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
     <ClCompile Include="UnicodeUtils.cpp">
       <Filter>Component GUI\Editor\Editor</Filter>
@@ -1095,7 +1094,7 @@
       <Filter>Translator</Filter>
     </ClCompile>
     <ClCompile Include="FileExplorerView.cpp">
-      <Filter>Main Files\Main Skeleton\View</Filter>
+      <Filter>Main Skeleton\View</Filter>
     </ClCompile>
     <ClCompile Include="EditorLexerDark.cpp">
       <Filter>Component GUI\Editor\Editor</Filter>
@@ -1104,15 +1103,6 @@
       <Filter>Component GUI\Editor\Editor</Filter>
     </ClCompile>
     <ClCompile Include="VinaTextSettingDlg.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgCustomize.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgFileSystem.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="SettingDlgToggle.cpp">
       <Filter>Settings</Filter>
     </ClCompile>
     <ClCompile Include="QuickGotoLine.cpp">
@@ -1190,9 +1180,6 @@
     <ClCompile Include="pdf\UXReader\common.cpp">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderInclude</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Global Header</Filter>
-    </ClCompile>
     <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp">
       <Filter>Component GUI\PDFViewer\PDFium\UXReaderView</Filter>
     </ClCompile>
@@ -1207,6 +1194,21 @@
     </ClCompile>
     <ClCompile Include="UserExtension.cpp">
       <Filter>User Extension</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorSettingDlg.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplorerSettingDlg.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneralSettingDlg.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="ProgrammingSettingDlg.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Global Header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

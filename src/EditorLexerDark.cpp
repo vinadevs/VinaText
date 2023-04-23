@@ -89,6 +89,8 @@ void EditorLexerDark::LoadLexer(CLanguageDatabase* pDatabase,
 		Init_resource_Editor(pDatabase, pEditorCtrl);
 	else if (czLexer == "autoit")
 		Init_autoit_Editor(pDatabase, pEditorCtrl);
+	else if (czLexer == "freebasic")
+		Init_freebasic_Editor(pDatabase, pEditorCtrl);
 	else
 		Init_text_Editor(pEditorCtrl);
 }
@@ -921,6 +923,8 @@ void EditorLexerDark::Init_flexlicense_Editor(CLanguageDatabase* pDatabase, CEdi
 	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_flexlicense_commentline);
 	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_flexlicense_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_flexlicense_commentEnd);
+	CString strKeywords = AppUtils::StdToCString(EditorColorDark::g_resource_KeyWords);
+	pDatabase->SetLanguageAutoComplete(strKeywords);
 }
 
 void EditorLexerDark::Init_resource_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
@@ -953,8 +957,38 @@ void EditorLexerDark::Init_autoit_Editor(CLanguageDatabase* pDatabase, CEditorCt
 	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_autoit_commentline);
 	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_autoit_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_autoit_commentEnd);
-	CString strKeywords = AppUtils::StdToCString(EditorColorDark::g_autoit_KeyWords);
-	pDatabase->SetLanguageAutoComplete(strKeywords);
+	pEditorCtrl->LoadExternalSettings(pDatabase);
+}
+
+void EditorLexerDark::Init_freebasic_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
+{
+	pEditorCtrl->SetLexer("freebasic");
+	pEditorCtrl->SetKeywords(EditorColorDark::g_freebasic_KeyWords);
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_freebasic[i].iItem != -1; i++)
+	{
+		auto iItem = EditorColorDark::g_rgb_Syntax_freebasic[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_freebasic[i].rgb;
+		if (iItem == SCE_C_COMMENTDOC)
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
+		}
+		else if (iItem == SCE_C_NUMBER)
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
+		}
+		else
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+		}
+	}
+	pDatabase->SetLanguageName(EditorColorDark::g_str_freebasic_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_freebasic_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_freebasic_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_freebasic_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_freebasic_commentEnd);
+	pEditorCtrl->LoadExternalSettings(pDatabase);
 }
 
 void EditorLexerDark::Init_text_Editor(CEditorCtrl* pEditorCtrl)

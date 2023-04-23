@@ -91,15 +91,15 @@ IDR_TERMINAL_DOC        ICON                    "..\\res\\terminal.ico"
 
 IDR_MSPAINT_DOC         ICON                    "..\\res\\mspaint.ico"
 
-IDR_EDITOR_DOC_READ_ONLY ICON                   "..\\res\\docreadonly.ico"
+IDR_EDITOR_DOC_READ_ONLY ICON                    "..\\res\\docreadonly.ico"
 
-IDR_FILE_EXPLORER_WINDOW ICON                   "..\\res\\explorerwindow.ico"
+IDR_FILE_EXPLORER_WINDOW ICON                    "..\\res\\explorerwindow.ico"
 
 IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
 
 IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
 
-IDR_SEARCH_RESULT_WINDOW ICON                   "..\\res\\searchresultwindow.ico"
+IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
 
 IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
 
@@ -377,22 +377,22 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Folding Level"
         BEGIN
-        POPUP "Toggle As Level"
-        BEGIN
-            MENUITEM "Level 1", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
-            MENUITEM "Level 2", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
-            MENUITEM "Level 3", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
-            MENUITEM "Level 4", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
-            MENUITEM "Level 5", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
-            MENUITEM "Level 6", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
-            MENUITEM "Level 7", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
-            MENUITEM "Level 8", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
-            MENUITEM "Level 9", ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
-        END
-        MENUITEM "Fold All\tCtrl+Shift+M", ID_DOCUMENT_COLLAPSE_BRACKETS
-        MENUITEM "Unfold All\tCtrl+Shift+M", ID_DOCUMENT_EXPAND_BRACKETS
-        MENUITEM SEPARATOR
-        MENUITEM "At Current Line\tCtrl+M", ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
+            POPUP "Toggle As Level"
+            BEGIN
+                MENUITEM "Level 1",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_1
+                MENUITEM "Level 2",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_2
+                MENUITEM "Level 3",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_3
+                MENUITEM "Level 4",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_4
+                MENUITEM "Level 5",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_5
+                MENUITEM "Level 6",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_6
+                MENUITEM "Level 7",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_7
+                MENUITEM "Level 8",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_8
+                MENUITEM "Level 9",                     ID_DOCUMENT_TOGGLE_BRACKETS_LEVEL_9
+            END
+            MENUITEM "Fold All\tCtrl+Shift+M",      ID_DOCUMENT_COLLAPSE_BRACKETS
+            MENUITEM "Unfold All\tCtrl+Shift+M",    ID_DOCUMENT_EXPAND_BRACKETS
+            MENUITEM SEPARATOR
+            MENUITEM "At Current Line\tCtrl+M",     ID_DOCUMENT_TOGGLE_CURRENT_BRACKET
         END
         MENUITEM SEPARATOR
         POPUP "Search And Replace"
@@ -419,25 +419,25 @@ BEGIN
         MENUITEM SEPARATOR
         POPUP "Text Highlight Style"
         BEGIN
-            MENUITEM "Style C++", ID_DOCUMENT_TEXT_LEXER_CPP
-            MENUITEM "Style Python", ID_DOCUMENT_TEXT_LEXER_PYTHON
-            MENUITEM "Style HTML/XML", ID_DOCUMENT_TEXT_LEXER_HTML_XML
+            MENUITEM "Style C++",                   ID_DOCUMENT_TEXT_LEXER_CPP
+            MENUITEM "Style Python",                ID_DOCUMENT_TEXT_LEXER_PYTHON
+            MENUITEM "Style HTML/XML",              ID_DOCUMENT_TEXT_LEXER_HTML_XML
             MENUITEM SEPARATOR
-            MENUITEM "Remove Current Style", ID_DOCUMENT_TEXT_LEXER_NON
+            MENUITEM "Remove Current Style",        ID_DOCUMENT_TEXT_LEXER_NON
         END
         MENUITEM SEPARATOR
         POPUP "Auto Complete Word"
         BEGIN
-            MENUITEM "Auto Show List Word\tAlt+A", ID_TOGGLE_AUTO_COMPLETE
-            MENUITEM "Show List Word\tCtrl+Space", ID_SHOW_COMPLETIONS
+            MENUITEM "Auto Show List Word\tAlt+A",  ID_TOGGLE_AUTO_COMPLETE
+            MENUITEM "Show List Word\tCtrl+Space",  ID_SHOW_COMPLETIONS
             MENUITEM SEPARATOR
-            MENUITEM "Add Dataset From File", ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
-            MENUITEM "Add Dataset From Folder", ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
+            MENUITEM "Add Dataset From File",       ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE
+            MENUITEM "Add Dataset From Folder",     ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER
             MENUITEM SEPARATOR
-            MENUITEM "Using Vietnamese Dataset", ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
-            MENUITEM "Using English Dataset", ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
+            MENUITEM "Using Vietnamese Dataset",    ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE
+            MENUITEM "Using English Dataset",       ID_DOCUMENT_ADD_AC_DATASET_ENGLISH
             MENUITEM SEPARATOR
-            MENUITEM "Clear All Datasets", ID_DOCUMENT_CLEAR_AC_DATASET
+            MENUITEM "Clear All Datasets",          ID_DOCUMENT_CLEAR_AC_DATASET
         END
         MENUITEM SEPARATOR
         POPUP "Line Bookmark"
@@ -475,7 +475,7 @@ BEGIN
             MENUITEM "Whitespace And Tab Hint",     ID_DOCUMENT_DISPLAY_WHITE_SPACE
             MENUITEM "Tab Indentation Hint",        ID_DISPLAY_TAB_INDENT
             MENUITEM "Right To Left Document\tCtrl+Shift+R", ID_CHANGE_TEXT_BIDIRECTIONAL
-            MENUITEM "Hide Selected Line(s)",                  ID_DOCUMENT_HIDE_LINES
+            MENUITEM "Hide Selected Line(s)",       ID_DOCUMENT_HIDE_LINES
             MENUITEM "All Hidden Characters\tCtrl+Q", ID_EDIT_SHOW_ALL_CHARACTOR
         END
     END
@@ -754,7 +754,7 @@ BEGIN
     END
     POPUP "View"
     BEGIN
-        MENUITEM "Explorer Window\tCtrl+Shift+Q",    ID_PANE_FILE_EXPLORER
+        MENUITEM "Explorer Window\tCtrl+Shift+Q", ID_PANE_FILE_EXPLORER
         MENUITEM "Search Text Window\tCtrl+Shift+F", ID_PANE_SEARCH_AND_REPLACE_WINDOW
         MENUITEM SEPARATOR
         MENUITEM "Message Window",              ID_PANE_OUTPUT_WINDOW
@@ -777,30 +777,31 @@ BEGIN
     BEGIN
         MENUITEM "New File Template\tCtrl+Shift+P", ID_CREATE_TEMPLATE_PROJECT
         MENUITEM SEPARATOR
-        POPUP "Programing Language Setting(s)"
+        POPUP "Programming Language Setting(s)"
         BEGIN
-            MENUITEM "Python", ID_LANGUAGE_FILE_CONFIG_PYTHON
-            MENUITEM "C++", ID_LANGUAGE_FILE_CONFIG_CPP
-            MENUITEM "C", ID_LANGUAGE_FILE_CONFIG_C
-            MENUITEM "C#", ID_LANGUAGE_FILE_CONFIG_CSHAPE
-            MENUITEM "JavaScript", ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
-            MENUITEM "Java", ID_LANGUAGE_FILE_CONFIG_JAVA
-            MENUITEM "Pascal", ID_LANGUAGE_FILE_CONFIG_PASCAL
-            MENUITEM "Assembly", ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
-            MENUITEM "Rust", ID_LANGUAGE_FILE_CONFIG_RUST
-            MENUITEM "Go Lang", ID_LANGUAGE_FILE_CONFIG_GO
-            MENUITEM "Batch", ID_LANGUAGE_FILE_CONFIG_BATCH
-            MENUITEM "PowerShell", ID_LANGUAGE_FILE_CONFIG_POWERSHELL
-            MENUITEM "HTML", ID_LANGUAGE_FILE_CONFIG_HTML
-            MENUITEM "PHP", ID_LANGUAGE_FILE_CONFIG_PHP
-            MENUITEM "Perl", ID_LANGUAGE_FILE_CONFIG_PERL
-            MENUITEM "SQL", ID_LANGUAGE_FILE_CONFIG_SQL
-            MENUITEM "Verilog", ID_LANGUAGE_FILE_CONFIG_VERILOG
-            MENUITEM "Ruby", ID_LANGUAGE_FILE_CONFIG_RUBY
-            MENUITEM "TCL", ID_LANGUAGE_FILE_CONFIG_TCL
-            MENUITEM "Auto IT", ID_LANGUAGE_FILE_CONFIG_AUTOIT
-            MENUITEM "Visual Basic", ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
-            MENUITEM "R", ID_LANGUAGE_FILE_CONFIG_R
+            MENUITEM "Python",                      ID_LANGUAGE_FILE_CONFIG_PYTHON
+            MENUITEM "C++",                         ID_LANGUAGE_FILE_CONFIG_CPP
+            MENUITEM "C",                           ID_LANGUAGE_FILE_CONFIG_C
+            MENUITEM "C#",                          ID_LANGUAGE_FILE_CONFIG_CSHAPE
+            MENUITEM "JavaScript",                  ID_LANGUAGE_FILE_CONFIG_JAVASCRIPT
+            MENUITEM "Java",                        ID_LANGUAGE_FILE_CONFIG_JAVA
+            MENUITEM "Pascal",                      ID_LANGUAGE_FILE_CONFIG_PASCAL
+            MENUITEM "Assembly",                    ID_LANGUAGE_FILE_CONFIG_ASSEMBLY
+            MENUITEM "Rust",                        ID_LANGUAGE_FILE_CONFIG_RUST
+            MENUITEM "GoLang",                      ID_LANGUAGE_FILE_CONFIG_GO
+            MENUITEM "Batch",                       ID_LANGUAGE_FILE_CONFIG_BATCH
+            MENUITEM "PowerShell",                  ID_LANGUAGE_FILE_CONFIG_POWERSHELL
+            MENUITEM "HTML",                        ID_LANGUAGE_FILE_CONFIG_HTML
+            MENUITEM "PHP",                         ID_LANGUAGE_FILE_CONFIG_PHP
+            MENUITEM "Perl",                        ID_LANGUAGE_FILE_CONFIG_PERL
+            MENUITEM "SQL",                         ID_LANGUAGE_FILE_CONFIG_SQL
+            MENUITEM "Verilog",                     ID_LANGUAGE_FILE_CONFIG_VERILOG
+            MENUITEM "Ruby",                        ID_LANGUAGE_FILE_CONFIG_RUBY
+            MENUITEM "TCL",                         ID_LANGUAGE_FILE_CONFIG_TCL
+            MENUITEM "AutoIT",                      ID_LANGUAGE_FILE_CONFIG_AUTOIT
+            MENUITEM "VisualBasic",                 ID_LANGUAGE_FILE_CONFIG_VISUALBASIC
+            MENUITEM "FreeBASIC",                   ID_LANGUAGE_FILE_CONFIG_FREEBASIC
+            MENUITEM "R",                           ID_LANGUAGE_FILE_CONFIG_R
         END
         MENUITEM SEPARATOR
         POPUP "Run And Debug..."
@@ -827,19 +828,19 @@ BEGIN
         POPUP "Build..."
         BEGIN
             MENUITEM "Generate Build Configuration", ID_DOCUMENT_GENERATE_BUILD_FILE
-            MENUITEM "Clean Up Build Temporary", ID_DOCUMENT_CLEAN_BUILD_FILE
-            MENUITEM "Show Error Annotation Hint", ID_OPTIONS_SHOW_ERROR
+            MENUITEM "Cleanup Build Temporary File", ID_DOCUMENT_CLEAN_BUILD_FILE
+            MENUITEM "Show Error Annotation Hint",  ID_OPTIONS_SHOW_ERROR
         END
         MENUITEM SEPARATOR
         POPUP "Comment Code"
         BEGIN
-            MENUITEM "Add Comment\tCtrl+Shift+C", ID_EDITOR_COMMENT
+            MENUITEM "Add Comment\tCtrl+Shift+C",   ID_EDITOR_COMMENT
             MENUITEM "Remove Comment\tCtrl+Shift+X", ID_EDITOR_UNCOMMENT
             MENUITEM SEPARATOR
-            MENUITEM "Block Comment\tCtrl+K", ID_EDITOR_BLOCK_COMMENT
+            MENUITEM "Block Comment\tCtrl+K",       ID_EDITOR_BLOCK_COMMENT
             MENUITEM "Block Uncomment\tCtrl+Shift+K", ID_EDITOR_BLOCK_UNCOMMENT
             MENUITEM SEPARATOR
-            MENUITEM "Toggle Comment\tAlt+K", ID_EDITOR_TOGGLE_COMMENT
+            MENUITEM "Toggle Comment\tAlt+K",       ID_EDITOR_TOGGLE_COMMENT
         END
         MENUITEM SEPARATOR
         MENUITEM "Format Document\tCtrl+Shift+J", ID_DOCUMENT_FORMAT_FILE
@@ -870,16 +871,16 @@ BEGIN
     END
     POPUP "Image"
     BEGIN
-        MENUITEM "Edit With Microsoft Paint",    ID_IMAGE_EDIT_WIH_MSPAINT
+        MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tKeyDown",            ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tKeyUp",               ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",           ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",              ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
-        MENUITEM "Rotate Left 90*\tCtrl+Left",   ID_IMAGE_LEFT_ROTATE
+        MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
-        MENUITEM "Rotate Flip\tCtrl+D",          ID_IMAGE_FLIP
-        MENUITEM "Rotate Mirror\tCtrl+M",        ID_IMAGE_MIRROR
+        MENUITEM "Rotate Flip\tCtrl+D",         ID_IMAGE_FLIP
+        MENUITEM "Rotate Mirror\tCtrl+M",       ID_IMAGE_MIRROR
         MENUITEM SEPARATOR
         POPUP "Bitmap Effects"
         BEGIN
@@ -951,15 +952,15 @@ BEGIN
     BEGIN
         POPUP "Manage Extensions..."
         BEGIN
-            MENUITEM "User Extensions", ID_EXTENSION_CONFIGURATION
-            MENUITEM "Refesh List", ID_EXTENSION_REFESH_LIST
+            MENUITEM "User Extensions",             ID_EXTENSION_CONFIGURATION
+            MENUITEM "Refesh List",                 ID_EXTENSION_REFESH_LIST
         END
         MENUITEM SEPARATOR
     END
     POPUP "Window"
     BEGIN
-        MENUITEM "Full Screen Mode\tAlt+F11",    ID_EDITOR_FULL_SCREEN_MODE
-        MENUITEM "Split Current View\tCtrl+F1",  ID_WINDOW_NEW
+        MENUITEM "Full Screen Mode\tAlt+F11",   ID_EDITOR_FULL_SCREEN_MODE
+        MENUITEM "Split Current View\tCtrl+F1", ID_WINDOW_NEW
         MENUITEM SEPARATOR
         MENUITEM "Switch To Next Tab\tCtrl+Tab", ID_MDI_SWITCH_TO_NEXT_TAB
         MENUITEM "Switch To Previous Tab\tCtrl+Shift+Tab", ID_MDI_SWITCH_TO_PREVIOUS_TAB
@@ -972,9 +973,9 @@ BEGIN
     BEGIN
         POPUP "Application Theme"
         BEGIN
-            MENUITEM "Light",                   ID_APP_THEME_LIGHT
-            MENUITEM "Monokai",                 ID_APP_THEME_MONOKAI
-            MENUITEM "Sierra Blue",             ID_APP_THEME_SIERRABLUE
+            MENUITEM "Light",                       ID_APP_THEME_LIGHT
+            MENUITEM "Monokai",                     ID_APP_THEME_MONOKAI
+            MENUITEM "Sierra Blue",                 ID_APP_THEME_SIERRABLUE
         END
         MENUITEM SEPARATOR
         MENUITEM "General Settings",            ID_VIEW_APP_SETTINGS
@@ -1204,8 +1205,8 @@ BEGIN
         MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
-        MENUITEM "Zoom Out\tKeyDown",         ID_IMAGE_ZOOM_OUT
-        MENUITEM "Zoom In\tKeyUp",            ID_IMAGE_ZOOM_IN
+        MENUITEM "Zoom Out\tKeyDown",           ID_IMAGE_ZOOM_OUT
+        MENUITEM "Zoom In\tKeyUp",              ID_IMAGE_ZOOM_IN
         MENUITEM SEPARATOR
         MENUITEM "Rotate Left 90*\tCtrl+Left",  ID_IMAGE_LEFT_ROTATE
         MENUITEM "Rotate Right 90*\tCtrl+Right", ID_IMAGE_RIGHT_ROTATE
@@ -1333,6 +1334,7 @@ BEGIN
     END
 END
 
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Accelerator
@@ -1392,7 +1394,7 @@ BEGIN
     VK_F9,          ID_OPTIONS_ADD_NEW_BREAKPOINT, VIRTKEY 
     VK_NUMPAD1,     ID_MDI_TAB_NEW_VERTICAL_TAB, VIRTKEY, CONTROL
     VK_NUMPAD2,     ID_MDI_TAB_NEW_HORIZONTAL_TAB, VIRTKEY, CONTROL
-    VK_F1,          ID_DOCUMENT_TRANSLATE,  VIRTKEY
+    VK_F1,          ID_DOCUMENT_TRANSLATE,  VIRTKEY 
     VK_F1,          ID_WINDOW_NEW,          VIRTKEY, CONTROL
     VK_F2,          ID_MDI_TAB_RENAME,      VIRTKEY 
     VK_TAB,         ID_MDI_SWITCH_TO_NEXT_TAB, VIRTKEY, CONTROL
@@ -1407,17 +1409,19 @@ END
 // Dialog
 //
 
-IDD_ABOUTBOX DIALOGEX 0, 0, 239, 121
+IDD_ABOUTBOX DIALOGEX 0, 0, 261, 151
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,23,28,20,20
-    LTEXT           "An opensource text editor software",IDC_STATIC,64,14,155,22,SS_NOPREFIX
-    DEFPUSHBUTTON   "Got it!",IDOK,93,92,55,19,WS_GROUP
-    CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,71,91,12
-    LTEXT           "Home Page:",IDC_STATIC,64,72,40,8
-    LTEXT           "Release Version: 1.0",IDC_STATIC,64,37,125,8
-    LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,54,100,8
+    ICON            IDR_MAINFRAME,IDC_STATIC,23,28,21,20
+    LTEXT           "An opensource text editor and file viewer software",IDC_STATIC,64,14,180,22,SS_NOPREFIX
+    DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
+    CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
+    LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
+    LTEXT           "Release Version: 1.2",IDC_STATIC,64,32,125,8
+    LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
+    LTEXT           "Commit Hash: abcxyz",IDC_STATIC,63,67,168,8
+    LTEXT           "Release Date: 23/04/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1696,7 +1700,7 @@ END
 
 IDD_DIALOG_PROJECT_TEMPLATE DIALOGEX 0, 0, 401, 119
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Programing File Template Creator"
+CAPTION "Programming File Template Creator"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Create",IDOK,250,96,63,17
@@ -1869,182 +1873,15 @@ BEGIN
     CONTROL         "Show Password",IDC_CHECK_SHOW_PASSWORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,38,66,10
 END
 
-IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 593, 318
+IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 557, 500
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VinaText Preference"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,264,295,58,18
-    PUSHBUTTON      "Cancel",IDCANCEL,335,295,58,18
-    DEFPUSHBUTTON   "Apply",IDC_APPLY,193,295,58,18
-    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,6,5,579,284,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
-END
-
-IDD_DIALOG_SETTING_TOGGLE DIALOGEX 0, 0, 572, 291
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    CONTROL         "Add Host Path To Recent List",ID_ADD_HOST_PATH_TO_RECENT_LIST,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,18,109,10
-    CONTROL         "Allow Open File Has Error Build",ID_ALLOW_OPEN_FILE_HAS_ERROR_BUILD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,36,113,10
-    CONTROL         "Ask Before Terminate Program",ID_ASK_BEFORE_TERMINATE_PROGRAM,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,54,113,10
-    CONTROL         "Auto Complete Ignore Case",ID_AUTO_COMPLETE_IGNORE_CASE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,72,105,10
-    CONTROL         "Auto Complete Ignore Numbers",ID_AUTO_COMPLETE_IGNORE_NUMBERS,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,90,117,10
-    CONTROL         "Auto Save Document When Build",ID_AUTO_SAVE_DOCUMENT_WHENBUILD,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,108,119,10
-    CONTROL         "Check File Size Before Open",ID_CHECK_FILE_SIZE_BEFORE_OPEN,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,126,105,10
-    CONTROL         "Detect File Change From Out Side",ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,144,124,10
-    CONTROL         "Display Message Box For File Change",ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,162,135,10
-    CONTROL         "Draw Caret Line Frame",ID_DRAW_CARET_LINE_FRAME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,180,89,10
-    CONTROL         "Draw Folding Line Under Line Style",ID_DRAW_FOLDING_LINE_UNDER_LINE_STYLE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,18,126,10
-    CONTROL         "Editor Enable Bold Font",ID_EDITOR_ENABLE_BOLD_FONT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,180,90,10
-    CONTROL         "Enable Auto Complete",ID_ENABLE_AUTO_COMPLETE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,36,87,10
-    CONTROL         "Enable Auto Search When Typing",ID_ENABLE_AUTO_SEARCH_WHEN_TYPING,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,54,123,10
-    CONTROL         "Enable Caret Blink",ID_ENABLE_CARET_BLINK,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,72,73,10
-    CONTROL         "Enable Display Build Error On Editor",ID_ENABLE_DISPLAY_BUILD_ERROR_ON_EDITOR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,90,129,10
-    CONTROL         "Enable Hight Light Folder",ID_ENABLE_HIGHT_LIGHT_FOLDER,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,108,95,10
-    CONTROL         "Enable Multiple Cursor",ID_ENABLE_MULTIPLE_CURSOR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,126,87,10
-    CONTROL         "Enable Path Navigation",ID_ENABLE_PATH_NAVIGATION,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,144,90,10
-    CONTROL         "Enable Preview File",ID_ENABLE_PREVIEW_FILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,161,77,10
-    CONTROL         "Enable Process Indentation Tab",ID_ENABLE_PROCESS_INDENTATION_TAB,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,233,117,10
-    CONTROL         "Enable Synchronize Scrolling",ID_ENABLE_SYNCHRONIZE_SCROLLING,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,233,106,10
-    CONTROL         "Enable Url Highlight",ID_ENABLE_URL_HIGHLIGHT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,18,77,10
-    CONTROL         "Enable W-Flag For CPP 11",ID_ENABLE_WFLAG_CPP11,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,34,97,10
-    CONTROL         "Enable Warning Flag For C And CPP",ID_ENABLE_WARNING_FLAG_FOR_C_AND_CPP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,50,130,10
-    CONTROL         "Enable Window Subsystem Flag For C And CPP",ID_ENABLE_WINDOW_SUBSYTEM_FLAG_FOR_C_AND_CPP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,66,162,10
-    CONTROL         "Hide All Target File System",ID_HIDE_ALL_TARGET_FILE_SYSTEM,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,82,101,10
-    CONTROL         "Open Window CMD When Run Program",ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,99,141,10
-    CONTROL         "Return Previous Editor State",ID_RETURN_PREVIOUS_EDITOR_STATE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,116,107,10
-    CONTROL         "Reveal Explorer When Double Click On Tab",ID_REVEAL_EXPLORER_WHEN_DLB_CLK_FILE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,133,153,10
-    CONTROL         "Reveal Explorer When Switch Tab",ID_REVEAL_EXPLORER_WHEN_SWITCH_FILE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,150,124,10
-    CONTROL         "Save Data Bookmark Window",ID_SAVE_DATA_BOOKMARK_WINDOW,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,166,109,10
-    CONTROL         "Show Tracking Bar",ID_SHOW_TRACKING_BAR,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,183,75,10
-    CONTROL         "Use Folder Margin Classic",ID_USE_FOLDER_MARGIN_CLASSIC,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,200,97,10
-    CONTROL         "Use Initial File Picker Path",ID_ALLOW_USE_INITIAL_FILE_PICKER_PATH,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,217,97,10
-    CONTROL         "Use Win10 Explorer Style",ID_USE_WIN10_EXPLORER_STYLE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,198,97,10
-    CONTROL         "Warning For File Not Exist",ID_WARNING_FOR_FILE_NOT_EXIST,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,216,99,10
-    CONTROL         "Editor Enable Italic Font",ID_EDITOR_ENABLE_ITALIC_FONT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,198,92,10
-    CONTROL         "Editor Enable Underline Font",ID_EDITOR_ENABLE_UNDERLINE_FONT,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,212,215,107,10
-    CONTROL         "Ask Before Replace In Files",ID_ASK_BEFORE_REPLACE_IN_FILES,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,389,233,103,10
-    CONTROL         "Enable Auto Detect Code Page",ID_ENABLE_AUTO_DETECT_CODE_PAGE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,33,250,115,10
-END
-
-IDD_DIALOG_SETTING_CUSTOMIZE DIALOGEX 0, 0, 572, 291
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    COMBOBOX        ID_ACTIVE_TAB_COLOR_COMBO,119,20,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Active Tab Color:",IDC_STATIC,51,22,56,8
-    LTEXT           "Caret Blink Color:",IDC_STATIC,51,48,56,8
-    COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,119,46,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Dialog Font Height:",IDC_STATIC,45,74,62,8
-    LTEXT           "Dialog Font Name:",IDC_STATIC,47,98,60,8
-    LTEXT           "Dialog Font Weight:",IDC_STATIC,43,124,64,8
-    LTEXT           "Dock Window Font Height:",IDC_STATIC,21,149,86,8
-    LTEXT           "Dock Window Font Name:",IDC_STATIC,24,174,83,8
-    LTEXT           "Dock Window Font Weight:",IDC_STATIC,19,201,88,8
-    EDITTEXT        ID_DIALOG_FONT_HEIGHT_EDIT,119,72,138,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Select Font",ID_DIALOG_FONT_NAME_BUTTON,119,96,138,14
-    LTEXT           "Editor Line Number Font Size:",IDC_STATIC,294,20,95,8
-    LTEXT           "Editor Text Font Size:",IDC_STATIC,319,45,70,8
-    EDITTEXT        ID_DOCK_WINDOW_FONT_HEIGHT_EDIT,119,147,138,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "Select Font",ID_DOCK_WINDOW_FONT_NAME_BUTTON,119,171,138,14
-    EDITTEXT        ID_EDITOR_TEXT_FONT_SIZE_EDIT,399,42,138,12,ES_AUTOHSCROLL
-    EDITTEXT        ID_EDITOR_LINE_NUMBER_FONT_SIZE_EDIT,399,18,138,12,ES_AUTOHSCROLL
-    LTEXT           "Folder Margin Style:",IDC_STATIC,324,67,65,8
-    LTEXT           "Duplicate Word Indicator Color:",IDC_STATIC,287,89,102,8
-    LTEXT           "Duplicate Word Indicator Style:",IDC_STATIC,288,112,101,8
-    COMBOBOX        ID_INDICATOR_COLOR_COMBO,399,87,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_INDICATOR_STYLE_COMBO,399,110,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Page Alignment Width:",IDC_STATIC,315,180,74,8
-    LTEXT           "Render Indicator Action:",IDC_STATIC,309,201,80,8
-    LTEXT           "Application Theme Color:",IDC_STATIC,309,135,80,8
-    EDITTEXT        ID_PAGE_ALIGNMENT_WIDTH_EDIT,399,179,138,12,ES_AUTOHSCROLL
-    COMBOBOX        ID_THEME_COLOR_COMBO,399,133,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,399,201,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_FOLDER_MARGIN_STYLE_COMBO,399,64,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Editor Font Name:",IDC_STATIC,48,224,59,8
-    PUSHBUTTON      "Select Font",ID_EDITOR_FONT_NAME_BUTTON,119,222,138,14
-    LTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,296,224,93,8
-    COMBOBOX        ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO,399,224,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_DIALOG_FONT_WEIGHT_COMBO,119,122,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_DOCK_WINDOW_FONT_WEIGHT_COMBO,119,198,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Application Theme Look:",IDC_STATIC,311,158,78,8
-    COMBOBOX        ID_THEME_LOOK_COMBO,399,156,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-END
-
-IDD_DIALOG_SETTING_FILE_SYSTEM DIALOGEX 0, 0, 572, 291
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
-FONT 8, "MS Shell Dlg", 400, 0, 0x1
-BEGIN
-    LTEXT           "Line Space Above:",IDC_STATIC,337,24,60,8
-    LTEXT           "Line Space Below:",IDC_STATIC,339,48,58,8
-    LTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,23,49,104,8
-    LTEXT           "Python Interpreter Folder Path:",IDC_STATIC,27,73,100,8
-    LTEXT           "Recent File Limitation:",IDC_STATIC,326,193,71,8
-    EDITTEXT        ID_LINE_SPACE_ABOVE_EDIT,411,22,126,14,ES_AUTOHSCROLL
-    EDITTEXT        ID_NODE_JS_FOLDER_PATH_EDIT,141,47,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    EDITTEXT        ID_PYTHON_FOLDER_PATH_EDIT,141,71,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    EDITTEXT        ID_LINE_SPACE_BELOW_EDIT,411,46,126,14,ES_AUTOHSCROLL
-    EDITTEXT        ID_RECENT_FILE_LIMIT_EDIT,411,191,126,14,ES_AUTOHSCROLL
-    LTEXT           "Initial File Picker Path:",IDC_STATIC,56,26,71,8
-    LTEXT           "Auto Save Interval Minutes:",IDC_STATIC,306,95,91,8
-    LTEXT           "Language Spell Check:",IDC_STATIC,54,168,73,8
-    LTEXT           "Language Translate To:",IDC_STATIC,50,216,77,8
-    LTEXT           "Language Translate From:",IDC_STATIC,42,192,85,8
-    EDITTEXT        ID_INITIAL_FILE_PICKER_PATH_EDIT,141,23,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    EDITTEXT        ID_INTERVAL_MINUTES_EDIT,411,93,126,14,ES_AUTOHSCROLL
-    LTEXT           "Explorer Expand Limit File Open:",IDC_STATIC,293,119,104,8
-    LTEXT           "Explorer Expand Limit Level:",IDC_STATIC,306,145,91,8
-    LTEXT           "File Preview Size Limitation:",IDC_STATIC,309,169,88,8
-    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_FILE_OPEN_EDIT,411,117,126,14,ES_AUTOHSCROLL
-    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_LEVEL_EDIT,411,142,126,14,ES_AUTOHSCROLL
-    EDITTEXT        ID_FILE_PREVIEW_SIZE_LIMIT_EDIT,411,166,126,14,ES_AUTOHSCROLL
-    LTEXT           "Git Window Folder Path:",IDC_STATIC,49,97,78,8
-    EDITTEXT        ID_GIT_WINDOW_FOLDER_PATH_EDIT,141,95,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    EDITTEXT        ID_ANTI_VIRUS_ARGUMENT_EDIT,141,143,126,14,ES_AUTOHSCROLL
-    LTEXT           "Anti Virus Argument:",IDC_STATIC,60,145,67,8
-    LTEXT           "Anti Virus Program:",IDC_STATIC,65,121,62,8
-    EDITTEXT        ID_ANTI_VIRUS_PROGRAM_EDIT,141,119,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    LTEXT           "Binary File Extension List:",IDC_STATIC,315,217,82,8
-    COMBOBOX        ID_LANGUAGE_TRANSLATE_TO_COMBO,141,214,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_LANGUAGE_TRANSLATE_FROM_COMBO,141,191,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    COMBOBOX        ID_LANGUAGE_SPELL_CHECK_COMBO,141,167,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,411,215,126,14,ES_AUTOHSCROLL
-    LTEXT           "Long Line Maximum:",IDC_STATIC,332,72,65,8
-    EDITTEXT        ID_LONG_LINE_MAXIMUM_EDIT,411,70,126,14,ES_AUTOHSCROLL
+    DEFPUSHBUTTON   "OK",IDOK,246,477,58,18
+    PUSHBUTTON      "Cancel",IDCANCEL,316,477,58,18
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,174,477,58,18
+    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,7,5,539,468,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
 END
 
 IDD_CREATE_NEW_MULTIPLE DIALOGEX 0, 0, 293, 51
@@ -2113,6 +1950,191 @@ BEGIN
     LTEXT           "Line Number:",IDC_STATIC_GOTO_LINE,7,8,155,8
 END
 
+IDD_DIALOG_SETTING_GENERAL DIALOGEX 0, 0, 551, 426
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    COMBOBOX        ID_ACTIVE_TAB_COLOR_COMBO,146,26,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Active Document Tab Color:",IDC_STATIC,37,28,90,8
+    LTEXT           "Application Theme Color:",IDC_STATIC,47,51,80,8
+    COMBOBOX        ID_THEME_COLOR_COMBO,146,49,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Application Theme Look:",IDC_STATIC,49,74,78,8
+    COMBOBOX        ID_THEME_LOOK_COMBO,146,72,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Dialog Text Font Height:",IDC_STATIC,48,98,79,8
+    LTEXT           "Dialog Text Font Name:",IDC_STATIC,51,121,76,8
+    LTEXT           "Dialog Text Font Weight:",IDC_STATIC,46,144,81,8
+    LTEXT           "Dock Window Text Font Height:",IDC_STATIC,25,168,102,8
+    LTEXT           "Dock Window Text Font Name:",IDC_STATIC,27,191,100,8
+    LTEXT           "Dock Window Text Font Weight:",IDC_STATIC,23,215,104,8
+    EDITTEXT        ID_DIALOG_FONT_HEIGHT_EDIT,146,96,138,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "Select Font",ID_DIALOG_FONT_NAME_BUTTON,146,119,138,14
+    EDITTEXT        ID_DOCK_WINDOW_FONT_HEIGHT_EDIT,146,166,138,12,ES_AUTOHSCROLL | ES_NUMBER
+    PUSHBUTTON      "Select Font",ID_DOCK_WINDOW_FONT_NAME_BUTTON,146,188,138,14
+    COMBOBOX        ID_DIALOG_FONT_WEIGHT_COMBO,146,143,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_DOCK_WINDOW_FONT_WEIGHT_COMBO,146,213,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Initial File Browser Path:",IDC_STATIC,49,264,78,8
+    EDITTEXT        ID_INITIAL_FILE_PICKER_PATH_EDIT,146,262,138,12,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    CONTROL         "Show Warning Dialog For Files Not Exist",ID_WARNING_FOR_FILE_NOT_EXIST,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,61,143,10
+    CONTROL         "Show Right Side Tracking Bar",ID_SHOW_TRACKING_BAR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,37,109,10
+    CONTROL         "Use Initial File Browser Path",ID_ALLOW_USE_INITIAL_FILE_PICKER_PATH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,85,105,10
+    CONTROL         "Save Data From Bookmark Window",ID_SAVE_DATA_BOOKMARK_WINDOW,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,109,127,10
+    CONTROL         "Detect File Change Events From Out Side",ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,133,148,10
+    CONTROL         "Check Large File Size Before Open",ID_CHECK_FILE_SIZE_BEFORE_OPEN,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,157,125,10
+    CONTROL         "Display Warning Dialog For File Change Events",ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,181,165,10
+    LTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,34,240,93,8
+    COMBOBOX        ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO,146,238,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Saved Recent Files Limitation:",IDC_STATIC,31,287,96,8
+    EDITTEXT        ID_RECENT_FILE_LIMIT_EDIT,146,285,138,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Binary File Extension List:",IDC_STATIC,45,310,82,8
+    EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,146,308,138,12,ES_AUTOHSCROLL
+    GROUPBOX        "Customize Settings",IDC_STATIC,14,10,289,333
+    GROUPBOX        "Toggle Settings",IDC_STATIC,317,10,201,332
+END
+
+IDD_DIALOG_SETTING_EXPLORER DIALOGEX 0, 0, 536, 428
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Enable Path Navigation (Search Path Dialog)",ID_ENABLE_PATH_NAVIGATION,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,111,157,10
+    CONTROL         "Enable Preview File Mode",ID_ENABLE_PREVIEW_FILE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,135,97,10
+    CONTROL         "Hide All File Systems",ID_HIDE_ALL_TARGET_FILE_SYSTEM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,39,81,10
+    CONTROL         "Reveal Explorer When Double Click On Tab",ID_REVEAL_EXPLORER_WHEN_DLB_CLK_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,159,153,10
+    CONTROL         "Reveal Path On Explorer When Switch Tab",ID_REVEAL_EXPLORER_WHEN_SWITCH_FILE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,87,152,10
+    CONTROL         "Use Win10 Explorer Tree Style",ID_USE_WIN10_EXPLORER_STYLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,63,113,10
+    LTEXT           "Explorer Expand File Limitation:",IDC_STATIC,261,87,101,8
+    LTEXT           "Explorer Expand Level Limitation:",IDC_STATIC,255,111,107,8
+    LTEXT           "File Preview Size Limitation:",IDC_STATIC,274,136,88,8
+    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_FILE_OPEN_EDIT,376,85,126,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_LEVEL_EDIT,376,109,126,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        ID_FILE_PREVIEW_SIZE_LIMIT_EDIT,376,134,126,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        ID_ANTI_VIRUS_ARGUMENT_EDIT,376,59,126,14,ES_AUTOHSCROLL
+    LTEXT           "Anti Virus Program Argument:",IDC_STATIC,266,61,96,8
+    LTEXT           "Anti Virus Program Path:",IDC_STATIC,283,37,79,8
+    EDITTEXT        ID_ANTI_VIRUS_PROGRAM_EDIT,376,35,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    GROUPBOX        "Explorer Toggle Settings",IDC_STATIC,20,11,197,183
+    GROUPBOX        "Other Settings",IDC_STATIC,238,11,278,182
+END
+
+IDD_DIALOG_SETTING_PROGRAMMING DIALOGEX 0, 0, 533, 338
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Allow Open Files Have Build Error",ID_ALLOW_OPEN_FILE_HAS_ERROR_BUILD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,40,121,10
+    CONTROL         "Ask User Before Terminate Running Program",ID_ASK_BEFORE_TERMINATE_PROGRAM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,63,158,10
+    CONTROL         "Auto Save Current File When Build Code",ID_AUTO_SAVE_DOCUMENT_WHENBUILD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,109,142,10
+    CONTROL         "Display Build Error Annotations On Editor",ID_ENABLE_DISPLAY_BUILD_ERROR_ON_EDITOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,86,146,10
+    CONTROL         "Enable Compiler W-Flag (C/C++ Settings)",ID_ENABLE_WFLAG_CPP11,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,132,147,10
+    CONTROL         "Enable Warning Flag (C/C++ Settings)",ID_ENABLE_WARNING_FLAG_FOR_C_AND_CPP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,155,139,10
+    CONTROL         "Enable Window Subsystem Flag (C/C++ Settings)",ID_ENABLE_WINDOW_SUBSYTEM_FLAG_FOR_C_AND_CPP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,178,162,10
+    CONTROL         "Open New CMD Window When Launching Program",ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,201,177,10
+    LTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,261,37,110,8
+    LTEXT           "Python Interpreter Folder Path:",IDC_STATIC,269,62,102,8
+    EDITTEXT        ID_NODE_JS_FOLDER_PATH_EDIT,381,36,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    EDITTEXT        ID_PYTHON_FOLDER_PATH_EDIT,381,60,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    LTEXT           "Git Window Folder Path:",IDC_STATIC,284,86,87,8
+    EDITTEXT        ID_GIT_WINDOW_FOLDER_PATH_EDIT,381,84,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
+    GROUPBOX        "Package Management Settings",IDC_STATIC,247,12,269,120
+    GROUPBOX        "Programming Settings",IDC_STATIC,19,12,216,226
+END
+
+IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 532, 453
+STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "Auto Complete Word Ignore Case",ID_AUTO_COMPLETE_IGNORE_CASE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,117,124,10
+    CONTROL         "Auto Complete Word Ignore Numbers",ID_AUTO_COMPLETE_IGNORE_NUMBERS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,139,136,10
+    CONTROL         "Use Caret Line Frame Style",ID_DRAW_CARET_LINE_FRAME,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,423,103,10
+    CONTROL         "Draw Folding Line With Under Line Style",ID_DRAW_FOLDING_LINE_UNDER_LINE_STYLE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,29,148,10
+    CONTROL         "Use Bold Font For Text",ID_EDITOR_ENABLE_BOLD_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,337,89,10
+    CONTROL         "Enable Auto Complete Word When Typing",ID_ENABLE_AUTO_COMPLETE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,51,150,10
+    CONTROL         "Enable Auto Search Word When Typing (Ctrl+F)",ID_ENABLE_AUTO_SEARCH_WHEN_TYPING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,73,189,10
+    CONTROL         "Enable Blink Mode For Cursor",ID_ENABLE_CARET_BLINK,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,95,109,10
+    CONTROL         "Highlight Folder On Margin Bar",ID_ENABLE_HIGHT_LIGHT_FOLDER,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,205,113,10
+    CONTROL         "Enable Multiple Cursors Edit Mode",ID_ENABLE_MULTIPLE_CURSOR,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,227,128,10
+    CONTROL         "Auto Process Indentation Tab",ID_ENABLE_PROCESS_INDENTATION_TAB,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,161,111,10
+    CONTROL         "Turn ON Synchronize Scrolling Views",ID_ENABLE_SYNCHRONIZE_SCROLLING,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,402,131,10
+    CONTROL         "Allow Url Web Link Highlight",ID_ENABLE_URL_HIGHLIGHT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,293,103,10
+    CONTROL         "Keep Previous Editor State When Reopen App",ID_RETURN_PREVIOUS_EDITOR_STATE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,315,163,10
+    CONTROL         "Use Folder Margin With Classic Style",ID_USE_FOLDER_MARGIN_CLASSIC,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,249,140,10
+    CONTROL         "Use Italic Font For Text",ID_EDITOR_ENABLE_ITALIC_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,359,91,10
+    CONTROL         "Use Underline Font For Text",ID_EDITOR_ENABLE_UNDERLINE_FONT,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,381,106,10
+    CONTROL         "Ask User Before Replace In Files",ID_ASK_BEFORE_REPLACE_IN_FILES,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,271,119,10
+    CONTROL         "Auto Detect Code Page When Open File",ID_ENABLE_AUTO_DETECT_CODE_PAGE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,183,144,10
+    LTEXT           "Language Spell Check:",IDC_STATIC,290,335,73,8
+    LTEXT           "Selected Text Translate To:",IDC_STATIC,273,383,90,8
+    LTEXT           "Selected Text Translate From:",IDC_STATIC,265,360,98,8
+    COMBOBOX        ID_LANGUAGE_TRANSLATE_TO_COMBO,380,381,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_LANGUAGE_TRANSLATE_FROM_COMBO,380,358,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_LANGUAGE_SPELL_CHECK_COMBO,380,334,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Line Space Above:",IDC_STATIC,303,26,60,8
+    LTEXT           "Line Space Below:",IDC_STATIC,305,50,58,8
+    EDITTEXT        ID_LINE_SPACE_ABOVE_EDIT,380,24,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        ID_LINE_SPACE_BELOW_EDIT,380,47,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Long Line Maximum:",IDC_STATIC,298,74,65,8
+    EDITTEXT        ID_LONG_LINE_MAXIMUM_EDIT,380,71,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Auto Save Interval Minutes:",IDC_STATIC,272,312,91,8
+    EDITTEXT        ID_INTERVAL_MINUTES_EDIT,380,310,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Editor Text Font Name:",IDC_STATIC,287,145,76,8
+    PUSHBUTTON      "Select Font",ID_EDITOR_FONT_NAME_BUTTON,380,143,126,12
+    LTEXT           "Editor Line Number Font Size:",IDC_STATIC,268,99,95,8
+    LTEXT           "Editor Text Font Size:",IDC_STATIC,293,123,70,8
+    EDITTEXT        ID_EDITOR_TEXT_FONT_SIZE_EDIT,380,119,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        ID_EDITOR_LINE_NUMBER_FONT_SIZE_EDIT,380,95,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "Editor Folder Margin Bar Style:",IDC_STATIC,265,169,98,8
+    LTEXT           "Duplicate Word Indicator Color:",IDC_STATIC,261,193,102,8
+    LTEXT           "Duplicate Word Indicator Style:",IDC_STATIC,262,217,101,8
+    COMBOBOX        ID_INDICATOR_COLOR_COMBO,380,190,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_INDICATOR_STYLE_COMBO,380,214,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_FOLDER_MARGIN_STYLE_COMBO,380,166,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Maximum Page Alignment Width:",IDC_STATIC,258,264,105,8
+    LTEXT           "Render Word Indicator Event:",IDC_STATIC,265,288,98,8
+    EDITTEXT        ID_PAGE_ALIGNMENT_WIDTH_EDIT,380,262,126,12,ES_AUTOHSCROLL | ES_NUMBER
+    COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,380,286,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Caret Editor (Cursor) Color:",IDC_STATIC,273,241,90,8
+    COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,380,238,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,431
+    GROUPBOX        "Customize Settings",IDC_STATIC,238,11,282,431
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2164,7 +2186,7 @@ BEGIN
     IDD_ABOUTBOX, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 232
+        RIGHTMARGIN, 254
         TOPMARGIN, 7
     END
 
@@ -2350,33 +2372,9 @@ BEGIN
     IDD_DIALOG_APP_SETTINGS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 585
+        RIGHTMARGIN, 546
         TOPMARGIN, 7
-        BOTTOMMARGIN, 314
-    END
-
-    IDD_DIALOG_SETTING_TOGGLE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 565
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 283
-    END
-
-    IDD_DIALOG_SETTING_CUSTOMIZE, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 565
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 284
-    END
-
-    IDD_DIALOG_SETTING_FILE_SYSTEM, DIALOG
-    BEGIN
-        LEFTMARGIN, 7
-        RIGHTMARGIN, 565
-        TOPMARGIN, 7
-        BOTTOMMARGIN, 284
+        BOTTOMMARGIN, 494
     END
 
     IDD_CREATE_NEW_MULTIPLE, DIALOG
@@ -2401,6 +2399,31 @@ BEGIN
         RIGHTMARGIN, 162
         TOPMARGIN, 7
         BOTTOMMARGIN, 55
+    END
+
+    IDD_DIALOG_SETTING_GENERAL, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 544
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 419
+    END
+
+    IDD_DIALOG_SETTING_EXPLORER, DIALOG
+    BEGIN
+        RIGHTMARGIN, 516
+        BOTTOMMARGIN, 418
+    END
+
+    IDD_DIALOG_SETTING_PROGRAMMING, DIALOG
+    BEGIN
+        BOTTOMMARGIN, 315
+    END
+
+    IDD_DIALOG_SETTING_EDITOR, DIALOG
+    BEGIN
+        RIGHTMARGIN, 521
+        BOTTOMMARGIN, 451
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2553,27 +2576,32 @@ BEGIN
     0
 END
 
-IDD_DIALOG_SETTING_TOGGLE AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-IDD_DIALOG_SETTING_CUSTOMIZE AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
-IDD_DIALOG_SETTING_FILE_SYSTEM AFX_DIALOG_LAYOUT
-BEGIN
-    0
-END
-
 IDD_CREATE_NEW_MULTIPLE AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
 
 IDD_DIALOG_GOTO_LINE AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_GENERAL AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_EXPLORER AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_PROGRAMMING AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SETTING_EDITOR AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
@@ -2946,6 +2974,7 @@ END
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
+
 
 
 #ifndef APSTUDIO_INVOKED

@@ -957,7 +957,7 @@ BOOL CFindAndReplaceDlg::AskBeforeContinueReplace(const CString& strWhereToRepla
 {
 	if (!AppSettingMgr.m_bAskBeforeReplaceInFiles) return TRUE;
 	CString strMsg;
-	strMsg.Format(_T("[Caution] Application will replace text of file(s) in [%s], do you want to continue?"), strWhereToReplace);
+	strMsg.Format(_T("[Warning] Application will replace text of file(s) in [%s], do you want to continue?"), strWhereToReplace);
 	if (IDYES == AfxMessageBox(strMsg, MB_YESNO | MB_ICONWARNING))
 	{
 		return TRUE;

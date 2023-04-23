@@ -47,15 +47,17 @@ BOOL VinaTextSettingDlg::OnInitDialog()
 	GetClientRect(&m_SaveRect);
 
 	m_pImglist = new CImageList();
-	m_pImglist->Create(16, 16, ILC_COLOR32 | ILC_MASK, 0, 3);
+	m_pImglist->Create(16, 16, ILC_COLOR32 | ILC_MASK, 0, 4);
+	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_EDITOR_DOC));
 	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_SETTING_TAB));
-	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_SETTING_TAB));
-	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_SETTING_TAB));
+	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_BRACKETS_OUTLINE));
+	m_pImglist->Add(AfxGetApp()->LoadIcon(IDR_FILE_EXPLORER_DOC));
 	m_CTabCtrl.SetImageList(m_pImglist);
 
-	m_CTabCtrl.InsertItem(0, _T("           Toggle Setting                 "), 0);
-	m_CTabCtrl.InsertItem(1, _T("           Customization Setting                "), 1);
-	m_CTabCtrl.InsertItem(2, _T("           File System Setting                "), 2);
+	m_CTabCtrl.InsertItem(0, _T("   Editor Settings   "), 0);
+	m_CTabCtrl.InsertItem(1, _T("   General Settings   "), 1);
+	m_CTabCtrl.InsertItem(2, _T("   Programming Settings   "), 2);
+	m_CTabCtrl.InsertItem(3, _T("   Explorer Settings   "), 3);
 
 	m_pFont = new CFont();
 	m_pFont->CreatePointFont(100, _T("Tahoma"));
@@ -64,21 +66,22 @@ BOOL VinaTextSettingDlg::OnInitDialog()
 	CRect rect;
 	m_CTabCtrl.GetClientRect(&rect);
 
-	// setting dialog A
-	m_SettingDlgToggle.Create(IDD_DIALOG_SETTING_TOGGLE, &m_CTabCtrl);
-	m_SettingDlgToggle.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-	m_SettingDlgToggle.ShowWindow(SW_SHOW);
-	m_pCurrentTabShow = &m_SettingDlgToggle;
+	m_EditorSettingDlg.Create(IDD_DIALOG_SETTING_EDITOR, &m_CTabCtrl);
+	m_EditorSettingDlg.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+	m_EditorSettingDlg.ShowWindow(SW_SHOW);
+	m_pCurrentTabShow = &m_EditorSettingDlg;
 
-	// setting dialog B
-	m_SettingDlgCustomize.Create(IDD_DIALOG_SETTING_CUSTOMIZE, &m_CTabCtrl);
-	m_SettingDlgCustomize.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-	m_SettingDlgCustomize.ShowWindow(SW_HIDE);
+	m_GeneralSettingDlg.Create(IDD_DIALOG_SETTING_GENERAL, &m_CTabCtrl);
+	m_GeneralSettingDlg.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+	m_GeneralSettingDlg.ShowWindow(SW_HIDE);
 
-	// setting dialog C
-	m_SettingDlgFileSystem.Create(IDD_DIALOG_SETTING_FILE_SYSTEM, &m_CTabCtrl);
-	m_SettingDlgFileSystem.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
-	m_SettingDlgFileSystem.ShowWindow(SW_HIDE);
+	m_ProgrammingSettingDlg.Create(IDD_DIALOG_SETTING_PROGRAMMING, &m_CTabCtrl);
+	m_ProgrammingSettingDlg.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+	m_ProgrammingSettingDlg.ShowWindow(SW_HIDE);
+
+	m_ExplorerSettingDlg.Create(IDD_DIALOG_SETTING_EXPLORER, &m_CTabCtrl);
+	m_ExplorerSettingDlg.SetWindowPos(NULL, 0, 23, rect.Width(), rect.Height(), SWP_SHOWWINDOW | SWP_NOZORDER);
+	m_ExplorerSettingDlg.ShowWindow(SW_HIDE);
 
 	UpdateData(FALSE);
 	//attemted an unsupported operation
@@ -99,9 +102,10 @@ void VinaTextSettingDlg::UpdateSettings()
 {
 	CWaitCursor wait;
 	// get latest settings
-	m_SettingDlgToggle.UpdateGUISettings(TRUE);
-	m_SettingDlgCustomize.UpdateGUISettings(TRUE);
-	m_SettingDlgFileSystem.UpdateGUISettings(TRUE);
+	m_GeneralSettingDlg.UpdateGUISettings(TRUE);
+	m_EditorSettingDlg.UpdateGUISettings(TRUE);
+	m_ProgrammingSettingDlg.UpdateGUISettings(TRUE);
+	m_ExplorerSettingDlg.UpdateGUISettings(TRUE);
 	// reflect new changes
 	UpdateApplicationLook();
 	AppUtils::UpdateSettingsForVinatext();
@@ -111,8 +115,8 @@ void VinaTextSettingDlg::OnBnClickedApply()
 {
 	// TODO: Add your control notification handler code here
 	UpdateSettings();
-	AfxMessageBox(_T("New settings updated!"), MB_ICONINFORMATION);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [Application Setting] New settings updated..."));
+	AfxMessageBox(_T("VinaText settings updated!"), MB_ICONINFORMATION);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [VinaText Setting] New settings updated..."));
 }
 
 void VinaTextSettingDlg::OnBnClickedOk()
@@ -120,8 +124,8 @@ void VinaTextSettingDlg::OnBnClickedOk()
 	// TODO: Add your control notification handler code here
 	CDialogEx::OnOK();
 	UpdateSettings();
-	AfxMessageBox(_T("New settings updated!"), MB_ICONINFORMATION);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [Application Setting] New settings updated..."));
+	AfxMessageBox(_T("VinaText settings updated!"), MB_ICONINFORMATION);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [VinaText Setting] New settings updated..."));
 }
 
 void VinaTextSettingDlg::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)
@@ -138,25 +142,28 @@ void VinaTextSettingDlg::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)
 	switch (tabIndex)
 	{
 	case 0:
-		m_uiActiveTab = TABACTIVE::SETTINGS_TAB_A;
-		m_SettingDlgToggle.ShowWindow(SW_SHOW);
-		m_SettingDlgToggle.UpdateData(FALSE);
-		m_SettingDlgToggle.SetFocus();
-		m_pCurrentTabShow = &m_SettingDlgToggle;
+		m_EditorSettingDlg.ShowWindow(SW_SHOW);
+		m_EditorSettingDlg.UpdateData(FALSE);
+		m_EditorSettingDlg.SetFocus();
+		m_pCurrentTabShow = &m_EditorSettingDlg;
 		break;
 	case 1:
-		m_uiActiveTab = TABACTIVE::SETTINGS_TAB_B;
-		m_SettingDlgCustomize.ShowWindow(SW_SHOW);
-		m_SettingDlgCustomize.UpdateData(FALSE);
-		m_SettingDlgCustomize.SetFocus();
-		m_pCurrentTabShow = &m_SettingDlgCustomize;
+		m_GeneralSettingDlg.ShowWindow(SW_SHOW);
+		m_GeneralSettingDlg.UpdateData(FALSE);
+		m_GeneralSettingDlg.SetFocus();
+		m_pCurrentTabShow = &m_GeneralSettingDlg;
 		break;
 	case 2:
-		m_uiActiveTab = TABACTIVE::SETTINGS_TAB_C;
-		m_SettingDlgFileSystem.ShowWindow(SW_SHOW);
-		m_SettingDlgFileSystem.UpdateData(FALSE);
-		m_SettingDlgFileSystem.SetFocus();
-		m_pCurrentTabShow = &m_SettingDlgFileSystem;
+		m_ProgrammingSettingDlg.ShowWindow(SW_SHOW);
+		m_ProgrammingSettingDlg.UpdateData(FALSE);
+		m_ProgrammingSettingDlg.SetFocus();
+		m_pCurrentTabShow = &m_ProgrammingSettingDlg;
+		break;
+	case 3:
+		m_ExplorerSettingDlg.ShowWindow(SW_SHOW);
+		m_ExplorerSettingDlg.UpdateData(FALSE);
+		m_ExplorerSettingDlg.SetFocus();
+		m_pCurrentTabShow = &m_ExplorerSettingDlg;
 		break;
 	}
 	*pResult = 0;

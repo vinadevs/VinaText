@@ -68,13 +68,13 @@ namespace EditorLanguageDef
 	static CString arrLangExtensions[] =
 	{
 		_T("py|pyw"),				     // SCLEX_PYTHON
-		_T("cpp|cxx|h|hh|hpp|hxx"),      // SCLEX_CPP
+		_T("cpp|cxx|h|hh|hpp|hxx|cc"),      // SCLEX_CPP
 		_T("ada|ads|adb"),               // SCLEX_ADA
 		_T("asm"),                       // SCLEX_ASM
 		_T("iss"),                       // SCLEX_INNOSETUP
 		_T("sh"),                        // SCLEX_BASH
 		_T("bat|cmd|nt"),                // SCLEX_BATCH
-		_T("c|cc"),					          // SCLEX_C
+		_T("c"),					          // SCLEX_C
 		_T("cmake"),				          // SCLEX_CMAKE
 		_T("cs"),					                  // SCLEX_CS
 		_T("css"),                                    // SCLEX_CSS
@@ -94,7 +94,7 @@ namespace EditorLanguageDef
 		_T("rs"),                                     // SCLEX_RUST
 		_T("sql|spec|body|sps|spb|sf|sp"),            // SCLEX_SQL
 		_T("tcl"),                                    // SCLEX_TCL
-		_T("vb|vbs|bas|frm|cls|ctl|pag|dsr|dob"),     // SCLEX_VB
+		_T("vb|vbs|frm|cls|ctl|pag|dsr|dob"),     // SCLEX_VB
 		_T("v|sv|vh|svh"),							  //SCLEX_VERILOG
 		_T("vhd|vhdl"),								  //SCLEX_VHDL
 		_T("xml|gcl|xsl|svg|xul|xsd|dtd|xslt|axl"),   // SCLEX_XML
@@ -104,8 +104,9 @@ namespace EditorLanguageDef
 		_T("proto"),								 //  SCLEX_CPP
 		_T("r"),                                     //  SCLEX_R
 		_T("lic"),                                   //  SCLEX_PYTHON
-		_T("rc"),                                     // SCLEX_CPP
-		_T("au3"),                                    // SCLEX_CPP
+		_T("rc"),                                    // SCLEX_CPP
+		_T("au3"),                                   // SCLEX_CPP
+		_T("bas"),									 // SCLEX_VB
 		0,
 	};
 
@@ -153,6 +154,7 @@ namespace EditorLanguageDef
 		"FLEXlm",
 		"Resource",
 		"autoit",
+		"freebasic",
 		"plaintext",
 		0,
 	};

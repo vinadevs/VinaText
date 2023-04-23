@@ -28,7 +28,7 @@
 #define CMD_PRINT_VARS_TYPE_PDB _T("type(")
 
 // GDB
-#define ENABLE_CPP_DEBUGGER _T("\" -g \"")
+#define ENABLE_GDB_DEBUGGER _T("\" -g \"")
 #define CMD_ADD_BREAKPOINT_GDB _T("break ")
 #define CMD_CONTINUE_GDB _T("continue")
 #define CMD_STEP_INTO_GDB _T("step")

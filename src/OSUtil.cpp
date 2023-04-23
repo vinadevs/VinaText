@@ -99,7 +99,7 @@ BOOL OSUtils::CreateWin32Process(CString strCmdLine)
 	{
 		DWORD nCode = ::GetLastError();
 		TRACE("CreateProcess Failed code: %d\n", nCode);
-		LOG_OUTPUT_MESSAGE_COLOR(_T("> Failed system command line: ") + strCmdLine, BasicColors::orange);
+		LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] failed run: ") + strCmdLine, BasicColors::orange);
 		return FALSE;
 	}
 	DELETE_WIN32_HANDLE(pi.hProcess);

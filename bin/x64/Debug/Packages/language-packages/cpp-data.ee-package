@@ -18,7 +18,7 @@ https://sourceforge.net/projects/mingw-w64/files/
 ..\Compilers\mingw64\bin\g++.exe
 
 @@ debugger path:
-..\Compilers\mingw64\\bin\gdb.exe
+..\Compilers\mingw64\bin\gdb.exe
 
 @@ auto complete:
 std alignas alignof and and_eq asm atomic_cancel atomic_commit atomic_noexcept 

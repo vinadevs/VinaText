@@ -9,9 +9,10 @@
 #pragma once
 
 #include "afxcmn.h"
-#include "SettingDlgToggle.h"
-#include "SettingDlgCustomize.h"
-#include "SettingDlgFileSystem.h"
+#include "ProgrammingSettingDlg.h"
+#include "GeneralSettingDlg.h"
+#include "EditorSettingDlg.h"
+#include "ExplorerSettingDlg.h"
 
 // VinaTextSettingDlg dialog
 
@@ -25,13 +26,6 @@ public:
 
 // Dialog Data
 	enum { IDD = IDD_DIALOG_APP_SETTINGS };
-
-	enum class TABACTIVE : unsigned int
-	{
-		SETTINGS_TAB_A = 0,
-		SETTINGS_TAB_B = 1,
-		SETTINGS_TAB_C = 1,
-	};
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
@@ -48,11 +42,13 @@ protected:
 	CImageList *m_pImglist;
 	CFont *m_pFont;
 	CWnd* m_pCurrentTabShow;
-	TABACTIVE m_uiActiveTab;
-	SettingDlgToggle m_SettingDlgToggle;
-	SettingDlgCustomize m_SettingDlgCustomize;
-	SettingDlgFileSystem m_SettingDlgFileSystem;
 	CTabCtrl m_CTabCtrl;
+
+	// tab dialogs
+	ExplorerSettingDlg m_ExplorerSettingDlg;
+	EditorSettingDlg m_EditorSettingDlg;
+	GeneralSettingDlg m_GeneralSettingDlg;
+	ProgrammingSettingDlg m_ProgrammingSettingDlg;
 
 	// Apllication Look
 	BOOL m_bShowAtStartup = FALSE;

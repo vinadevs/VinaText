@@ -2764,16 +2764,15 @@ void CFileExplorerCtrl::OnOpenPowerShellHere()
 
 void CFileExplorerCtrl::OnOpenGitBashHere()
 {
+	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
+	if (FALSE == PathFileExists(strGitBash))
+	{
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
+		return;
+	}
 	HTREEITEM hItem = GetSelectedItem();
 	if (hItem)
 	{
-		CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
-		if (FALSE == PathFileExists(strGitBash))
-		{
-			CString strMsg;
-			strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strGitBash);
-			LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
-		}
 		CString sPath(ItemToPath(hItem));
 		if (!PathFileExists(sPath)) return;
 		if (PathUtils::IsDirectory(sPath))

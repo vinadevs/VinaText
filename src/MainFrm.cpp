@@ -3709,9 +3709,8 @@ void CMainFrame::OnOpenGitBashHere()
 	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
 	if (FALSE == PathFileExists(strGitBash))
 	{
-		CString strMsg;
-		strMsg.Format(_T("[Path Error] \"%s\" does not exist, please install git...\n"), strGitBash);
-		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
+		return;
 	}
 	SetCurrentDirectoryTerminal();
 	CString strCommandLine = _T("start \"\" \"") + strGitBash + _T("\"") + _T(" --login");
@@ -4159,7 +4158,7 @@ void CMainFrame::OnToolPythonPipWindow()
 	Sleep(500);
 	// clipboard process...
 	CString strClipBoardText = GetClipboardPlainText();
-	PushTextToClipBoard(_T(".\\python.exe -m pip install -t Lib\\site-packages -U <package-name>"));
+	PushTextToClipBoard(_T(".\\python(ver).exe -m pip install -t Lib\\site-packages -U <package-name>"));
 	OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
 	PushTextToClipBoard(strClipBoardText);
 }

@@ -213,6 +213,10 @@
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
+    <ClInclude Include="EditorSettingDlg.h" />
+    <ClInclude Include="ExplorerSettingDlg.h" />
+    <ClInclude Include="GeneralSettingDlg.h" />
+    <ClInclude Include="ProgrammingSettingDlg.h" />
     <ClInclude Include="UserExtension.h" />
     <ClInclude Include="EditorCommonDef.h" />
     <ClInclude Include="EditorColorLight.h" />
@@ -245,9 +249,6 @@
     <ClInclude Include="pdf\UXReader\UXReaderToolbarPane.h" />
     <ClInclude Include="pdf\UXReader\UXReaderToolbarText.h" />
     <ClInclude Include="QuickGotoLine.h" />
-    <ClInclude Include="SettingDlgCustomize.h" />
-    <ClInclude Include="SettingDlgFileSystem.h" />
-    <ClInclude Include="SettingDlgToggle.h" />
     <ClInclude Include="translator\PODictionary.h" />
     <ClInclude Include="translator\POHandler.h" />
     <ClInclude Include="uchardet\CharDistribution.h" />
@@ -390,6 +391,16 @@
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
+    <ClCompile Include="EditorSettingDlg.cpp" />
+    <ClCompile Include="ExplorerSettingDlg.cpp" />
+    <ClCompile Include="GeneralSettingDlg.cpp" />
+    <ClCompile Include="ProgrammingSettingDlg.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="UserExtension.cpp" />
     <ClCompile Include="EditorLexerDark.cpp" />
     <ClCompile Include="EditorLexerLight.cpp" />
@@ -419,9 +430,6 @@
     <ClCompile Include="pdf\UXReader\UXReaderToolbarPane.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderToolbarText.cpp" />
     <ClCompile Include="QuickGotoLine.cpp" />
-    <ClCompile Include="SettingDlgCustomize.cpp" />
-    <ClCompile Include="SettingDlgFileSystem.cpp" />
-    <ClCompile Include="SettingDlgToggle.cpp" />
     <ClCompile Include="translator\PODictionary.cpp" />
     <ClCompile Include="translator\POHandler.cpp" />
     <ClCompile Include="uchardet\CharDistribution.cpp" />
@@ -547,12 +555,6 @@
     <ClCompile Include="ScrollHelper.cpp" />
     <ClCompile Include="SetBookmarkPathDlg.cpp" />
     <ClCompile Include="SelectedPathDlg.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="ProgramStatusBarEx.cpp" />
     <ClCompile Include="StringHelper.cpp" />
     <ClCompile Include="tinyXml\tinystr.cpp" />

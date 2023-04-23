@@ -1117,10 +1117,10 @@ namespace EditorColorLight
 	{ SCE_PAS_HEXNUMBER,			number },
 	{ SCE_PAS_WORD,				keyword },
 	{ SCE_PAS_STRING,				string },
-	{ SCE_PAS_STRINGEOL,				yellow },
-	{ SCE_PAS_CHARACTER,				yellow },
+	{ SCE_PAS_STRINGEOL,				red },
+	{ SCE_PAS_CHARACTER,				red },
 	{ SCE_PAS_OPERATOR,    builtin },
-	{ SCE_PAS_ASM,				red },
+	{ SCE_PAS_ASM,				light_orange },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -1438,7 +1438,7 @@ namespace EditorColorLight
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
-	//---- vb Language
+	//---- visual basic Language
 	//----------------------------------------------------------------------------
 	// language
 	static CString g_str_vb_language = _T("vb");
@@ -2070,5 +2070,57 @@ namespace EditorColorLight
 	{ SCE_C_USERLITERAL,				keyword },
 	{ SCE_C_TASKMARKER,				keyword },
 	{ SCE_C_ESCAPESEQUENCE,				keyword },
+	{ -1,						0 } };
+
+	//----------------------------------------------------------------------------
+	//---- freebasic Language
+	//----------------------------------------------------------------------------
+	// language
+	static CString g_str_freebasic_language = _T("freebasic");
+	// extentions
+	static CString g_str_freebasic_extention = _T("bas");
+	// comment line
+	static CString g_str_freebasic_commentline = _T("'");
+	// comment start
+	static CString g_str_freebasic_commentStart = _T("/'");
+	// comment end
+	static CString g_str_freebasic_commentEnd = _T("'/");
+	// keywords
+	static const char* g_freebasic_KeyWords =
+		"abs access acos alias allocate append as asc asin asm atan2 atn base beep bin binary bload bsave byref byval call callocate case cdecl chain chdir chr circle clear close cls color com command common condbroadcast condcreate conddestroy condsignal condwait cons constructor continue cos csrlin curdir cvd cvi cvl cvlongint cvs cvshort data date dateadd datediff datepart dateserial datevalue day deallocate declare delete destructor dim dir do draw dylibfree dylibload dylibsymbol dynamic else elseif encoding end enum environ eof erase erfn erl ermn err error escape exec exepath exit exp explicit export extends extern field fileattr filecopy filedatetime fileexists filelen fix flip for format frac fre freefile function get getjoystick getkey getmouse gosub goto hex hour if iif imageconvertrow imagecreate imagedestroy imageinfo import inkey inp input instr instrrev int is isdate kill lang lbound lcase left len lib line loc local locate lock lof log loop lpos lprint lpt lset ltrim mid minute mkd mkdir mki mkl mklongint mks mkshort month monthname multikey mutexcreate mutexdestroy mutexlock mutexunlock naked name namespace next new nogosub nokeyword now oct on open operator option out output overload paint palette pascal pcopy peek pipe pmap point poke pos preserve preset print private property protected pset public put random randomize read reallocate redim reset restore resume return right rmdir rnd rset rtrim run scope screen screencontrol screencopy screenevent screenglproc screeninfo screenlist screenlock screenptr screenres screenset screensync screenunlock scrn second seek select setdate setenviron setmouse settime sgn shell sin sizeof sleep space spc sqr stdcall step stick str strig sub swap system tab tan then this threadcreate threadwait time timer timeserial timevalue to trim type typeof ubound ucase union unlock until using val valint vallng valuint valulng var view wait wbin wchr weekday weekdayname wend whex while width window windowtitle winput with woct write wspace wstr year "
+		"any byte cast cbyte cdbl cint clng clngint const cptr cshort csign csng cubyte cuint culng culngint cunsg cushort defbyte defdbl defint deflng deflongint defshort defsng defstr defubyte defuint defulongint defushort double integer long longint object pointer procptr ptr sadd shared short single static string strptr ubyte uinteger ulong ulongint unsigned ushort varptr wstring zstring "
+		"add alpha and andalso custom eqv false imp let mod not null or orelse shl shr trans true xor "
+		"assert assertwarn bit bitset bitreset defined hibyte hiword lobyte loword rgb rgba va_first va_arg va_next pragma debug ";
+	    
+	// color text
+	static SScintillaColors g_rgb_Syntax_freebasic[] =
+	{ { SCE_C_DEFAULT,		builtin },
+	{ SCE_C_COMMENT,		comment },
+	{ SCE_C_COMMENTLINE,			number },
+	{ SCE_C_COMMENTDOC,				keyword },
+	{ SCE_C_NUMBER,				string },
+	{ SCE_C_WORD,			comment },
+	{ SCE_C_STRING,				orange },
+	{ SCE_C_CHARACTER,			editorTextColor },
+	{ SCE_C_UUID,		instance },
+	{ SCE_C_PREPROCESSOR,				comment },
+	{ SCE_C_OPERATOR,				builtin },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
+	{ SCE_C_STRINGEOL,    red },
+	{ SCE_C_VERBATIM,				yellow },
+	{ SCE_C_REGEX,				yellow },
+	{ SCE_C_COMMENTLINEDOC,				comment },
+	{ SCE_C_WORD2,				orange },
+	{ SCE_C_COMMENTDOCKEYWORD,				comment },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				comment },
+	{ SCE_C_GLOBALCLASS,				magenta },
+	{ SCE_C_STRINGRAW,				comment },
+	{ SCE_C_TRIPLEVERBATIM,				comment },
+	{ SCE_C_HASHQUOTEDSTRING,				comment },
+	{ SCE_C_PREPROCESSORCOMMENT,				comment },
+	{ SCE_C_PREPROCESSORCOMMENTDOC,				yellow },
+	{ SCE_C_USERLITERAL,				comment },
+	{ SCE_C_TASKMARKER,				comment },
+	{ SCE_C_ESCAPESEQUENCE,				comment },
 	{ -1,						0 } };
 }

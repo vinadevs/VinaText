@@ -309,6 +309,7 @@ public:
 	afx_msg void OnExecuteAutoIT();
 	afx_msg void OnExecuteRust();
 	afx_msg void OnExecuteR();
+	afx_msg void OnExecuteFreeBasic();
 
 	// from document menu
 	afx_msg void OnDocumentShowSystemMenu();
@@ -397,7 +398,8 @@ public:
 	afx_msg void OnOpenFileLanguageConfigAutoIT();
 	afx_msg void OnOpenFileLanguageConfigR();
 	afx_msg void OnOpenFileLanguageConfigRust();
-	afx_msg void OnOpenFileLanguageConfigVB();
+	afx_msg void OnOpenFileLanguageConfigVisualBasic();
+	afx_msg void OnOpenFileLanguageConfigFreeBasic();
 
 	// from terminal
 	afx_msg void OnTerminalRunSelectedText();

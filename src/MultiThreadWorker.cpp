@@ -94,7 +94,7 @@ void CEditorThreadCompiler::CreateWorkerThread(TaskItem task)
 void CEditorThreadCompiler::WriteUserInputToPipe(CString strUserInput)
 {
 	SYNC_WAIT_UNTIL_OBJECT_BECAME_FALSE(g_bIsIOBusy)
-		g_bIsIOBusy = TRUE;
+	g_bIsIOBusy = TRUE;
 	DWORD dwWritten = 0;
 	char strPass[256];
 	strcpy_s(strPass, CStringA(strUserInput).GetString());

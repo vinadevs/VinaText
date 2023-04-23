@@ -66,7 +66,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_POWERSHELL
 		&& docLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_BATCH)
 	{
-		CString strMsg; strMsg.Format(_T("[Path Error] Compiler path \"%s\" does not exist, please setup path in [Code > Programing Language Setting(s)] and reopen current file to active it!\n"), strCompilerPath);
+		CString strMsg; strMsg.Format(_T("[Path Error] Compiler path \"%s\" does not exist, please setup path in [Code > Programming Language Setting(s)] and reopen current file to active it!\n"), strCompilerPath);
 		AfxMessageBox(strMsg);
 		return;
 	}
@@ -162,9 +162,13 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 	{
 		BuildR(pFrame, pView, strFilePath, strCompilerPath);
 	}
+	else if (docLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC)
+	{
+		BuildFreeBasic(pFrame, pView, strFilePath, strCompilerPath);
+	}
 }
 
-//  VinaText USE GDB TO DEBUG BELOW PROGRAMING LANGUAGES
+//  VinaText USE GDB TO DEBUG BELOW PROGRAMMING LANGUAGES
 //  GDB supports the following languages(in alphabetical order):
 //	Ada
 //	Assembly
@@ -178,6 +182,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 //	Modula - 2
 //	Pascal
 //	Rust
+//  FreeBasic
 
 void VinaTextCompiler::START_GDB_CMD(VINATEXT_SUPPORTED_LANGUAGE docLanguage, CEditorDoc * pDoc)
 {
@@ -276,6 +281,7 @@ void VinaTextCompiler::START_EXE_CMD(const BuildSessionInfo & Info)
 	OSUtils::RunSystemCMD(strFullCmd);
 }
 
+// compiled languages like C/C++/Pascal/FreeBasic,... need a loader to run exe file after building
 void VinaTextCompiler::START_EXE_LOADER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, CEditorDoc * pDoc)
 {
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -751,58 +757,48 @@ void VinaTextCompiler::BuildJavaScript(CMainFrame * pFrame, CEditorView * pView,
 	pView->m_BuildSessionInfo._strExeFilePath = strFilePath;
 	pView->m_BuildSessionInfo._strExeFolderPath = PathUtils::GetContainerPath(strFilePath);
 
-	if (PathFileExists(pView->m_BuildSessionInfo._strExeFilePath) && PathFileExists(pView->m_BuildSessionInfo._strExeFolderPath))
+	if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
 	{
-		if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT, strFilePath)) // debug mode
 		{
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT, strFilePath)) // debug mode
-			{
-				pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + ENABLE_NODEJS_DEBUGGER + strFilePath + _T("\"");
-				START_CMD(pView->m_BuildSessionInfo);
-				pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Javascript"), TRUE);
-				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			}
-			else // normal mode
-			{
-				pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
-				START_CMD(pView->m_BuildSessionInfo);
-				pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Javascript"));
-				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			}
-		}
-		else
-		{
-			CEditorThreadCompiler::TaskItem taskBuild;
-			taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT;
-			taskBuild.pWndGUI = pView;
-			taskBuild.pWndFrame = pFrame;
-			taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
-			taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT, strFilePath)) // debug mode
-			{
-				taskBuild.processType = CEditorThreadCompiler::PROCESS_TYPE::DEBUGGING_TYPE;
-				taskBuild.strCommandLine = _T("\"") + strCompilerPath + ENABLE_NODEJS_DEBUGGER + strFilePath + _T("\"");
-				VinaTextDebugger.SetCurrentDocLanguage(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT);
-				VinaTextDebugger.RegisterInitialBreakPoints();
-				pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Javascript"), TRUE);
-			}
-			else // normal mode
-			{
-				taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
-				pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Javascript"));
-			}
+			pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + ENABLE_NODEJS_DEBUGGER + strFilePath + _T("\"");
+			START_CMD(pView->m_BuildSessionInfo);
+			pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Javascript"), TRUE);
 			LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
-			ThreadWorkerMgr.CreateWorkerThread(taskBuild);
+		}
+		else // normal mode
+		{
+			pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+			START_CMD(pView->m_BuildSessionInfo);
+			pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Javascript"));
+			LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
 		}
 	}
 	else
 	{
-		CString strMsg;
-		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
-		return;
+		CEditorThreadCompiler::TaskItem taskBuild;
+		taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT;
+		taskBuild.pWndGUI = pView;
+		taskBuild.pWndFrame = pFrame;
+		taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
+		taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
+
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT, strFilePath)) // debug mode
+		{
+			taskBuild.processType = CEditorThreadCompiler::PROCESS_TYPE::DEBUGGING_TYPE;
+			taskBuild.strCommandLine = _T("\"") + strCompilerPath + ENABLE_NODEJS_DEBUGGER + strFilePath + _T("\"");
+			VinaTextDebugger.SetCurrentDocLanguage(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT);
+			VinaTextDebugger.RegisterInitialBreakPoints();
+			pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Javascript"), TRUE);
+		}
+		else // normal mode
+		{
+			taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+			pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Javascript"));
+		}
+		LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
+		pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
+		ThreadWorkerMgr.CreateWorkerThread(taskBuild);
 	}
 }
 
@@ -814,58 +810,48 @@ void VinaTextCompiler::BuildPython(CMainFrame * pFrame, CEditorView * pView, con
 	pView->m_BuildSessionInfo._strExeFilePath = strFilePath;
 	pView->m_BuildSessionInfo._strExeFolderPath = PathUtils::GetContainerPath(strFilePath);
 
-	if (PathFileExists(pView->m_BuildSessionInfo._strExeFilePath) && PathFileExists(pView->m_BuildSessionInfo._strExeFolderPath))
+	if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
 	{
-		if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON, strFilePath)) // debug mode
 		{
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON, strFilePath)) // debug mode
-			{
-				pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + ENABLE_PYTHON_DEBUGGER + strFilePath + _T("\"");
-				START_CMD(pView->m_BuildSessionInfo);
-				pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Python"), TRUE);
-				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			}
-			else // normal mode
-			{
-				pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
-				START_CMD(pView->m_BuildSessionInfo);
-				pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Python"));
-				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			}
-		}
-		else
-		{
-			CEditorThreadCompiler::TaskItem taskBuild;
-			taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON;
-			taskBuild.pWndGUI = pView;
-			taskBuild.pWndFrame = pFrame;
-			taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
-			taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON, strFilePath)) // debug mode
-			{
-				taskBuild.processType = CEditorThreadCompiler::PROCESS_TYPE::DEBUGGING_TYPE;
-				taskBuild.strCommandLine = _T("\"") + strCompilerPath + ENABLE_PYTHON_DEBUGGER + strFilePath + _T("\"");
-				VinaTextDebugger.SetCurrentDocLanguage(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON);
-				VinaTextDebugger.RegisterInitialBreakPoints();
-				pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Python"), TRUE);
-			}
-			else // normal mode
-			{
-				taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
-				pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Python"));
-			}
+			pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + ENABLE_PYTHON_DEBUGGER + strFilePath + _T("\"");
+			START_CMD(pView->m_BuildSessionInfo);
+			pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Python"), TRUE);
 			LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
-			ThreadWorkerMgr.CreateWorkerThread(taskBuild);
+		}
+		else // normal mode
+		{
+			pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+			START_CMD(pView->m_BuildSessionInfo);
+			pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Python"));
+			LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
 		}
 	}
 	else
 	{
-		CString strMsg;
-		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
-		return;
+		CEditorThreadCompiler::TaskItem taskBuild;
+		taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON;
+		taskBuild.pWndGUI = pView;
+		taskBuild.pWndFrame = pFrame;
+		taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
+		taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
+
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON, strFilePath)) // debug mode
+		{
+			taskBuild.processType = CEditorThreadCompiler::PROCESS_TYPE::DEBUGGING_TYPE;
+			taskBuild.strCommandLine = _T("\"") + strCompilerPath + ENABLE_PYTHON_DEBUGGER + strFilePath + _T("\"");
+			VinaTextDebugger.SetCurrentDocLanguage(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON);
+			VinaTextDebugger.RegisterInitialBreakPoints();
+			pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Python"), TRUE);
+		}
+		else // normal mode
+		{
+			taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+			pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Python"));
+		}
+		LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
+		pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
+		ThreadWorkerMgr.CreateWorkerThread(taskBuild);
 	}
 }
 
@@ -951,7 +937,7 @@ void VinaTextCompiler::BuildPascal(CMainFrame * pFrame, CEditorView * pView, con
 	}
 	else
 	{
-		AfxMessageBox(_T("[Format Error] Pascal file extension must be .pp or .pas!"));
+		AfxMessageBox(_T("[File Format Error] Pascal file extension must be [.pp] or [.pas]!"));
 		return;
 	}
 	pView->m_BuildSessionInfo._strExeFileName = PathUtils::GetFilenameFromPath(pView->m_BuildSessionInfo._strExeFilePath);
@@ -966,10 +952,22 @@ void VinaTextCompiler::BuildPascal(CMainFrame * pFrame, CEditorView * pView, con
 	taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL;
 	taskBuild.pWndGUI = pView;
 	taskBuild.pWndFrame = pFrame;
-	taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
 	taskBuild.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-	pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Pascal"));
+	if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL, strFilePath)) // debug mode
+	{
+		// fpc.exe -g main.pas
+		taskBuild.processType = CEditorThreadCompiler::PROCESS_TYPE::DEBUGGING_TYPE;
+		taskBuild.strCommandLine = _T("\"") + strCompilerPath + ENABLE_GDB_DEBUGGER + strFilePath + _T("\"");
+		VinaTextDebugger.SetCurrentDocLanguage(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL);
+		VinaTextDebugger.RegisterInitialBreakPoints();
+		pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Pascal"), TRUE);
+	}
+	else // normal mode // fpc.exe main.pas
+	{
+		taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+		pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Pascal"));
+	}
 	pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 	ThreadWorkerMgr.CreateWorkerThread(taskBuild);
 }
@@ -1067,7 +1065,7 @@ void VinaTextCompiler::BuildVisualBasic(CMainFrame * pFrame, CEditorView * pView
 	}
 	else
 	{
-		AfxMessageBox(_T("[Format Error] VisualBasic file extension must be .vb or .vbs!"));
+		AfxMessageBox(_T("[File Format Error] VisualBasic file extension must be [.vb] or [.vbs]!"));
 		return;
 	}
 	pView->m_BuildSessionInfo._strExeFileName = PathUtils::GetFilenameFromPath(pView->m_BuildSessionInfo._strExeFilePath);
@@ -1085,7 +1083,7 @@ void VinaTextCompiler::BuildVisualBasic(CMainFrame * pFrame, CEditorView * pView
 	taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" -out:\"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\" \"") + strFilePath + _T("\"");
 	taskBuild.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-	pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("Visual Basic"));
+	pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("VisualBasic"));
 	pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 	ThreadWorkerMgr.CreateWorkerThread(taskBuild);
 }
@@ -1119,50 +1117,40 @@ void VinaTextCompiler::BuildGo(CMainFrame * pFrame, CEditorView * pView, const C
 	pView->m_BuildSessionInfo._strExeFilePath = strFilePath;
 	pView->m_BuildSessionInfo._strExeFolderPath = PathUtils::GetContainerPath(strFilePath);
 
-	if (PathFileExists(pView->m_BuildSessionInfo._strExeFilePath) && PathFileExists(pView->m_BuildSessionInfo._strExeFolderPath))
+	if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
 	{
-		if (AppSettingMgr.m_bOpenWindowCmdWhenRunProgram)
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_GOLANG, strFilePath)) // debug mode
 		{
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_GOLANG, strFilePath)) // debug mode
-			{
-			}
-			else // normal mode
-			{
-				pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
-				START_CMD(pView->m_BuildSessionInfo);
-				pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Go Lang"));
-				LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			}
 		}
-		else
+		else // normal mode
 		{
-			CEditorThreadCompiler::TaskItem task;
-			task.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_GOLANG;
-			task.pWndGUI = pView;
-			task.pWndFrame = pFrame;
-			task.strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
-			task.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
-			task.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
-
-			if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON, strFilePath)) // debug mode
-			{
-			}
-			else // normal mode
-			{
-				task.strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
-				pView->LOG_BUILD_INFO_MESSAGE(task.strCommandLine, _T("Go Lang"));
-			}
+			pView->m_BuildSessionInfo._strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
+			START_CMD(pView->m_BuildSessionInfo);
+			pView->LOG_BUILD_INFO_MESSAGE(pView->m_BuildSessionInfo._strCommandLine, _T("Go Lang"));
 			LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
-			pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
-			ThreadWorkerMgr.CreateWorkerThread(task);
 		}
 	}
 	else
 	{
-		CString strMsg;
-		strMsg.Format(_T("[Path Error] \"%s\" does not exist!\n"), pView->m_BuildSessionInfo._strExeFilePath);
-		LOG_BUILD_MESSAGE_COLOR(strMsg, BasicColors::orange);
-		return;
+		CEditorThreadCompiler::TaskItem task;
+		task.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_GOLANG;
+		task.pWndGUI = pView;
+		task.pWndFrame = pFrame;
+		task.strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
+		task.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
+		task.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
+
+		if (VinaTextDebugger.HaveBreakPoints(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_GOLANG, strFilePath)) // debug mode
+		{
+		}
+		else // normal mode
+		{
+			task.strCommandLine = _T("\"") + strCompilerPath + _T("\" run \"") + pView->m_BuildSessionInfo._strExeFilePath + _T("\"");
+			pView->LOG_BUILD_INFO_MESSAGE(task.strCommandLine, _T("Go Lang"));
+		}
+		LOG_BUILD_MESSAGE_COLOR(_T("[ RUN .................................................................................."));
+		pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
+		ThreadWorkerMgr.CreateWorkerThread(task);
 	}
 }
 
@@ -1343,4 +1331,39 @@ void VinaTextCompiler::BuildR(CMainFrame * pFrame, CEditorView * pView, const CS
 	pView->LOG_BUILD_INFO_MESSAGE(task.strCommandLine, _T("R"));
 	pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
 	ThreadWorkerMgr.CreateWorkerThread(task);
+}
+
+//////////////////////////////////////////////////////////////////////////
+// BuildFreeBasic
+
+void VinaTextCompiler::BuildFreeBasic(CMainFrame* pFrame, CEditorView* pView, const CString& strFilePath, const CString& strCompilerPath)
+{
+	pView->m_BuildSessionInfo._strExeFilePath = strFilePath;
+	if (strFilePath.Find(_T(".bas")) != -1)
+	{
+		pView->m_BuildSessionInfo._strExeFilePath.Replace(_T(".bas"), _T(".exe"));
+	}
+	else
+	{
+		AfxMessageBox(_T("[File Format Error] FreeBasic file extension must be [.bas]!"));
+		return;
+	}
+	pView->m_BuildSessionInfo._strExeFileName = PathUtils::GetFilenameFromPath(pView->m_BuildSessionInfo._strExeFilePath);
+	if (pView->m_BuildSessionInfo._strExeFilePath.Find(_T(".exe")) != -1)
+	{
+		OSUtils::KillProcessByName(pView->m_BuildSessionInfo._strExeFileName);
+		::DeleteFile(pView->m_BuildSessionInfo._strExeFilePath);
+	}
+	pView->m_BuildSessionInfo._strExeFolderPath = PathUtils::GetContainerPath(strFilePath);
+	//	fbc File.bas
+	CEditorThreadCompiler::TaskItem taskBuild;
+	taskBuild.currentLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC;
+	taskBuild.pWndGUI = pView;
+	taskBuild.pWndFrame = pFrame;
+	taskBuild.strCommandLine = _T("\"") + strCompilerPath + _T("\" \"") + strFilePath + _T("\"");
+	taskBuild.strRunFromDirectory = pView->m_BuildSessionInfo._strExeFolderPath;
+	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
+	pView->LOG_BUILD_INFO_MESSAGE(taskBuild.strCommandLine, _T("FreeBASIC"));
+	pView->m_BuildSessionInfo._BuildMeasureTime = OSUtils::StartBenchmark();
+	ThreadWorkerMgr.CreateWorkerThread(taskBuild);
 }

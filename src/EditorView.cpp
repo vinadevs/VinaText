@@ -453,7 +453,8 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_AUTOIT, OnOpenFileLanguageConfigAutoIT)
 	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_R, OnOpenFileLanguageConfigR)
 	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_RUST, OnOpenFileLanguageConfigRust)
-	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_VISUALBASIC, OnOpenFileLanguageConfigVB)
+	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_VISUALBASIC, OnOpenFileLanguageConfigVisualBasic)
+	ON_COMMAND(ID_LANGUAGE_FILE_CONFIG_FREEBASIC, OnOpenFileLanguageConfigFreeBasic)
 
 END_MESSAGE_MAP()
 
@@ -1173,6 +1174,11 @@ CString CEditorView::DetectCurrentDocLanguage()
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FLEXLM;
 		m_strCurrentDocLanguageName = _T("FLEXlm");
 	}
+	else if (m_czLexerFromFile == "freebasic")
+	{
+		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC;
+		m_strCurrentDocLanguageName = _T("FreeBASIC");
+	}
 	else
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT;
@@ -1207,9 +1213,9 @@ void CEditorView::LOG_BUILD_INFO_MESSAGE(const CString& strCMD, const CString& m
 	CString strPathName = m_pDocument->GetPathName();
 	CString strFileName = PathUtils::GetFilenameFromPath(strPathName);
 	CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
-	CString strConfiguration = bDebugMode ? _T("debug mode") : _T("release mode");
-	CString strTitleBuild = _T(">------ VinaText build started: Project: %s | Configuration: %s for window x64 ------");
-	strTitleBuild.Format(strTitleBuild, strFileNameNoExt, strConfiguration);
+	CString strBuildMode= bDebugMode ? _T("debug mode") : _T("release mode");
+	CString strTitleBuild = _T(">------ VinaText build started: Project: %s | Configuration: %s for Windows platform ------");
+	strTitleBuild.Format(strTitleBuild, strFileNameNoExt, strBuildMode);
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
 	LOG_BUILD_MESSAGE_COLOR(strTitleBuild, IS_LIGHT_THEME? BasicColors::black : BasicColors::light_orange);
 	LOG_BUILD_MESSAGE_COLOR(_T("[SystemTime] ") + strCurrentTime, IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
@@ -6896,14 +6902,22 @@ void CEditorView::OnUpdateDocumentFormatFile(CCmdUI * pCmdUI)
 	CEditorDoc *pDoc = GetEditorDocument();
 	ASSERT(pDoc);
 	if (!pDoc) return;
-	if (m_EditorCtrl.IsReadOnlyEditor()
-		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT)
+	if (!m_EditorCtrl.IsReadOnlyEditor()
+		&& (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CSHAPE
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVASCRIPT
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JSON
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_HTML
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_XML
+		|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON))
 	{
-		pCmdUI->Enable(FALSE);
+		pCmdUI->Enable(TRUE);
 	}
 	else
 	{
-		pCmdUI->Enable(TRUE);
+		pCmdUI->Enable(FALSE);
 	}
 }
 
@@ -7141,6 +7155,11 @@ void CEditorView::OnExecuteRuby()
 	START_VINATEXT_COMPILER(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_RUBY);
 }
 
+void CEditorView::OnExecuteFreeBasic()
+{
+	START_VINATEXT_COMPILER(VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC);
+}
+
 void CEditorView::OnStartDebugger()
 {
 	if (!ThreadWorkerMgr.IsRunning())
@@ -7233,12 +7252,16 @@ void CEditorView::OnStartDebugger()
 		{
 			OnExecuteR();
 		}
+		else if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC)
+		{
+			OnExecuteFreeBasic();
+		}
 		else
 		{
 			CMainFrame* pFrame = AppUtils::GetMainFrame();
 			if (!pFrame) return;
 			pFrame->ClearDataOnDockPane(DOCKABLE_PANE_TYPE::BUILD_PANE);
-			LOG_BUILD_MESSAGE_COLOR(_T("[Compiler Error] Current file format have not defined build configuration yet..."), BasicColors::orange);
+			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Compiler Error] Current file format has not defined build configuration yet, please set it in [Code > Programming Language Setting(s)]..."), BasicColors::orange);
 			return;
 		}
 	}
@@ -7248,22 +7271,14 @@ void CEditorView::OnStartDebugger()
 	}
 	else
 	{
-		AfxMessageBox(_T("[Caution] Program was already launching!"));
+		AfxMessageBoxFormat(MB_ICONINFORMATION, _T("Your program was already running!"));
 	}
 }
 
 void CEditorView::OnUpdateStartDebugger(CCmdUI * pCmdUI)
 {
-	if (m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TEXT &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_XML &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_INNOSETTUP &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JSON &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CSS &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PROTOBUF &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_MATLAB &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_TCL &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FLEXLM &&
-		m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_AUTOIT)
+	if (!ThreadWorkerMgr.IsRunning()
+		|| ThreadWorkerMgr.IsDebuggerRunning())
 	{
 		pCmdUI->Enable(TRUE);
 	}
@@ -7434,7 +7449,7 @@ void CEditorView::OnGenerateBuildFile()
 	if (m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
 		&& m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP)
 	{
-		AfxMessageBox(_T("This feature support C and C++ programing language only!"), MB_ICONINFORMATION);
+		AfxMessageBox(_T("This feature support C and C++ programming language only!"), MB_ICONINFORMATION);
 		return;
 	}
 	CEditorDoc *pDoc = GetEditorDocument();
@@ -7549,11 +7564,7 @@ void CEditorView::RunGDBDebuggerAfterCompile()
 		}
 		else
 		{
-			if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C)
-			{
-				START_VINATEXT_GDB_DEBUGGER(m_CurrentDocLanguage);
-			}
+			START_VINATEXT_GDB_DEBUGGER(m_CurrentDocLanguage);
 		}
 	}
 	else
@@ -7641,7 +7652,8 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CSHAPE
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_RUST
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_ASSEMBLY
-				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_VISUALBASIC)
+				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_VISUALBASIC
+				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC)
 			{
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initialize loader for execution..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
@@ -7773,9 +7785,7 @@ LRESULT CEditorView::OnCompilerNotifyDebugExitCode(WPARAM wParam, LPARAM lParam)
 		{
 			if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
 				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
-				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL
-				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_RUST
-				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_ASSEMBLY)
+				|| m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
 			{
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Build process for debugger succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Initiating debugger..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
@@ -9834,9 +9844,14 @@ void CEditorView::OnOpenFileLanguageConfigRust()
 	OpenFileLanguageConfig(_T("rust"));
 }
 
-void CEditorView::OnOpenFileLanguageConfigVB()
+void CEditorView::OnOpenFileLanguageConfigVisualBasic()
 {
 	OpenFileLanguageConfig(_T("vb"));
+}
+
+void CEditorView::OnOpenFileLanguageConfigFreeBasic()
+{
+	OpenFileLanguageConfig(_T("freebasic"));
 }
 
 void CEditorView::OnOpenFileLanguageConfigPython()

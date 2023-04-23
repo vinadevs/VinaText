@@ -704,7 +704,7 @@ void CRichEditCtrlBuild::CompilerMessageLineParser(CString & strLine, CString & 
 		strFilePath = strLine.Mid(0, nPos0).Trim();
 		strLine = _T(">") + strLine.Mid(nPos3 + 2) + _T(" at line ") + strLineNumber;
 	}
-	// PASCAL ERROR LINE ///////////////////////////
+	// PASCAL .PP ERROR LINE ///////////////////////////
 	// test.pp(3,1) Fatal: Syntax error, ";" expected but "BEGIN" found
 	else if (strLine.Find(_T(".pp(")) != -1 && strLine.Find(_T(") Fatal: ")) != -1 || strLine.Find(_T(") Error: ")) != -1) // Pascal error line...
 	{
@@ -723,7 +723,7 @@ void CRichEditCtrlBuild::CompilerMessageLineParser(CString & strLine, CString & 
 			strLine = _T("> ") + strLine.Mid(nPos3 + 2) + _T(" at line ") + strLineNumber;
 		}
 	}
-	// PASCAL ERROR LINE ///////////////////////////
+	// PASCAL .PAS ERROR LINE ///////////////////////////
 	// test.pas(3,1) Fatal: Syntax error, ";" expected but "BEGIN" found
 	else if (strLine.Find(_T(".pas(")) != -1 && strLine.Find(_T(") Fatal: ")) != -1 || strLine.Find(_T(") Error: ")) != -1) // Pascal error line...
 	{
@@ -990,12 +990,12 @@ void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF color)
 	if (ThreadWorkerMgr.IsDebuggerRunning())
 	{
 		m_lPointerLine = 0;
-		BOOL bRestartDebugger = FALSE;
+		BOOL bStopDebugger = FALSE;
 		BOOL bIsNonObjectVariable = FALSE;
-		if (IsDebuggerMessage(strMessage, bRestartDebugger, bDisableOutputLog, bIsNonObjectVariable))
+		if (IsDebuggerMessage(strMessage, bStopDebugger, bDisableOutputLog, bIsNonObjectVariable))
 		{
 			// ask mainframe to update editor margin UI debugger pointers...
-			if (m_lPointerLine > 0 && PathFileExists(m_strFileName) && bRestartDebugger == FALSE)
+			if (m_lPointerLine > 0 && PathFileExists(m_strFileName) && bStopDebugger == FALSE)
 			{
 				LPCTSTR szFileName = m_strFileName;
 				ThreadWorkerMgr.GetCurrentTask().pWndFrame->SendNotifyMessage(
@@ -1016,7 +1016,7 @@ void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF color)
 				}
 			}
 
-			if (bRestartDebugger)
+			if (bStopDebugger || strMessage.Find(_T("Program exited with code")) != -1)
 			{
 				OnStopDebugger();
 			}
@@ -1030,9 +1030,8 @@ void CBuildPaneDlg::AddLogMessage(CString strMessage, COLORREF color)
 				strMessage.Replace(_T("debug> "), _T("")); // remove useless text
 			}
 		}
-
 		// run debugger command lines
-		if (strMessage.Find(_T(": warning: ")) == -1) // ignore warning message, do not run debugger command!
+		if (strMessage.Find(_T(": warning: ")) == -1 && strMessage.Find(_T("Free Pascal Compiler version")) == -1) // ignore these message, do not run debugger command!
 		{
 			VinaTextDebugger.RunNextCommandLine();
 		}
@@ -1117,9 +1116,35 @@ static int g_the_first_nodejs_debugger_message = 0;
 
 // THIS IS MAIN DEBUGGING PARSER, EVERYTHING RECEIVED FROM DEBUGGER WILL BE PROCESSED HERE, SO BE CAREFULLY!!
 
-BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebugger, BOOL& bDisableOutputLog, BOOL& bIsNonObjectVariable)
+BOOL CBuildPaneDlg::IsDebuggerMessage(CString& strMessage, BOOL& bStopDebugger, BOOL& bDisableOutputLog, BOOL& bIsNonObjectVariable)
 {
-	if (strMessage.Find(_T(" breakpoint at file ")) != -1) // from app message!
+	auto fParseStepOverMessage = [&](const CString& strMessage) -> void {
+		CStringArray arrLine;
+		AppUtils::SplitCString(strMessage, _T("\n"), arrLine);
+		for (int i = 0; i < arrLine.GetSize(); ++i)
+		{
+			if (arrLine[i].IsEmpty()) continue;
+			if (isdigit(arrLine[i][0]))
+			{
+				CString strTempMessage = arrLine[i];
+				int i = 0;
+				for (; i < strTempMessage.GetLength(); i++)
+				{
+					if (isalpha(strTempMessage[i])) break;
+				}
+				//get the first chars, which are digits
+				strTempMessage = strTempMessage.Mid(0, i).Trim();
+				// convert the text to an integer
+				if (!strTempMessage.IsEmpty())
+				{
+					m_lPointerLine = AppUtils::CStringToInt(strTempMessage);
+					break;
+				}
+			}
+		}
+	};
+
+	if (strMessage.Find(_T(" breakpoint at file ")) != -1 || strMessage.Find(_T("Free Pascal Compiler version")) != -1) // from non debugger messages!
 	{
 		return FALSE;
 	}
@@ -1149,7 +1174,7 @@ BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebu
 
 			if ((strMessage.Find(_T("Restarting ")) != -1 && strMessage.Find(_T(" with arguments:")) != -1) || strMessage.Find(_T("The program finished and will be restarted")) != -1) // restart Python debugger!
 			{
-				bIsRestartDebugger = TRUE;
+				bStopDebugger = TRUE;
 			}
 
 			if (strMessage.Find(_T("*** TypeError: vars() argument must have __dict__ attribute")) != -1) // can not watch a non-object variable
@@ -1216,39 +1241,25 @@ BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebu
 			}
 			else // step over processing
 			{
-				// For atoi, the input string has to start with a digit, so lets search for the first digit
-				CString strTempMessage = strMessage;
-				int i = 0;
-				for (; i < strTempMessage.GetLength(); i++)
-				{ 
-					if (isalpha(strTempMessage[i])) break;
-				}
-				//get the first chars, which are digits
-				strTempMessage = strTempMessage.Mid(0, i).Trim();
-				// convert the text to an integer
-				if (!strTempMessage.IsEmpty())
-				{
-					m_lPointerLine = AppUtils::CStringToInt(strTempMessage);
-				}
+				fParseStepOverMessage(strMessage);
 			}
 		}
-
 		//(gdb)Continuing.
 		//	[Inferior 1 (process 18852) exited normally]
 		//(gdb) (gdb) No stack.
-		bIsRestartDebugger = FALSE;
+		bStopDebugger = FALSE;
 		if (strMessage.Find(_T("[Inferior ")) != -1 && strMessage.Find(_T(" (process ")) != -1
 			&& strMessage.Find(_T("\n(gdb) ")) != -1 && strMessage.Find(_T("]")) != -1) // process exit normally, end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("Continuing.")) != -1 && m_lPointerLine == 0) // user use continue command, if there is no any next breakpoint then end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("The program is not being run.")) != -1) // process exit normally, end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("[Thread ")) != -1) // remove spare info...
 		{
@@ -1303,39 +1314,26 @@ BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebu
 			}
 			else // step over processing , NOT STABLE ONE NEED TO IMPROVE THIS BLOCK CODE!!
 			{
-				// For atoi, the input string has to start with a digit, so lets search for the first digit
-				CString strTempMessage = strMessage;
-				int i = 0;
-				for (; i < strTempMessage.GetLength(); i++)
-				{
-					if (isalpha(strTempMessage[i])) break;
-				}
-				//get the first chars, which are digits
-				strTempMessage = strTempMessage.Mid(0, i).Trim();
-				// convert the text to an integer
-				if (!strTempMessage.IsEmpty())
-				{
-					m_lPointerLine = AppUtils::CStringToInt(strTempMessage);
-				}
+				fParseStepOverMessage(strMessage);
 			}
 		}
 
 		//(gdb)Continuing.
 		//	[Inferior 1 (process 18852) exited normally]
 		//(gdb) (gdb) No stack.
-		bIsRestartDebugger = FALSE;
+		bStopDebugger = FALSE;
 		if (strMessage.Find(_T("[Inferior ")) != -1 && strMessage.Find(_T(" (process ")) != -1
 			&& strMessage.Find(_T("\n(gdb) ")) != -1 && strMessage.Find(_T("]")) != -1) // process exit normally, end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("Continuing.")) != -1 && m_lPointerLine == 0) // user use continue command, if there is no any next breakpoint then end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("The program is not being run.")) != -1) // process exit normally, end debugger!
 		{
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		if (strMessage.Find(_T("[Thread ")) != -1) // remove spare info...
 		{
@@ -1389,7 +1387,7 @@ BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebu
 				g_the_first_nodejs_debugger_message = 0;
 				strMessage += _T("[WARNING] There are maybe errors on javascript source files, so debugger can not launch successfully.\nPlease try to run again with non-debug mode...");
 			}
-			bIsRestartDebugger = TRUE;
+			bStopDebugger = TRUE;
 		}
 		else if (VinaTextDebugger.GetCurrentCommandLine() == CMD_CALL_STACK_NODEJS)
 		{
@@ -1399,6 +1397,73 @@ BOOL CBuildPaneDlg::IsDebuggerMessage(CString & strMessage, BOOL& bIsRestartDebu
 				strMessage = _T("\n________________ CALL STACK JAVACRIPT ________________________________\n")
 					+ strMessage + _T("\n____________________________________________________________________\n");
 			}
+		}
+		return TRUE;
+	}
+	else if (VinaTextDebugger.GetCurrentDocLanguage() == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PASCAL)
+	{
+		if (strMessage.Find(_T("GNU gdb (GDB) ")) != -1) // ignore GDB header
+		{
+			bDisableOutputLog = TRUE;
+			return TRUE;
+		}
+		else if (strMessage.Find(_T("(gdb)")) != -1)
+		{
+			if (strMessage.Find(_T(" at ")) != -1 && (strMessage.Find(_T(".pp")) != -1)) // pascal frame, breakpoint message!
+			{
+				//Breakpoint 1, main() at D :/FPC/3.2.2/demo/text/hello.pp:11
+				CStringArray arrLine;
+				AppUtils::SplitCString(strMessage, _T("\n"), arrLine);
+				for (int i = 0; i < arrLine.GetSize(); ++i)
+				{
+					if (arrLine[i].IsEmpty()) continue;
+					int pos1 = arrLine[i].Find(_T(" at "));
+					int pos2 = arrLine[i].Find(_T(".pp:"));
+					if (pos1 != -1 && pos2 != -1)
+					{
+						m_strFileName = arrLine[i].Mid(pos1 + 4, pos2 - pos1 - 1).Trim();
+						CString strLineNumber = arrLine[i].Mid(pos2 + 4).Trim();
+						m_lPointerLine = AppUtils::CStringToLong(strLineNumber);
+						break;
+					}
+				}
+				if (VinaTextDebugger.GetCurrentCommandLine() == CMD_CALL_STACK_GDB)
+				{
+					if (strMessage.Find(_T("#0")) != -1) // pascal call stack message!
+					{
+						bDisableOutputLog = FALSE;
+						strMessage = _T("\n_____ CALL STACK & LOCAL VARIABLE INFORMATION PASCAL __________________\n")
+							+ strMessage + _T("\n_______________________________________________________________________\n");
+					}
+				}
+
+			}
+			else // step over processing , NOT STABLE ONE NEED TO IMPROVE THIS BLOCK CODE!!
+			{
+				fParseStepOverMessage(strMessage);
+			}
+		}
+		//(gdb)Continuing.
+		//	[Inferior 1 (process 18852) exited normally]
+		//(gdb) (gdb) No stack.
+		bStopDebugger = FALSE;
+		if (strMessage.Find(_T("[Inferior ")) != -1 && strMessage.Find(_T(" (process ")) != -1
+			&& strMessage.Find(_T("\n(gdb) ")) != -1 && strMessage.Find(_T("]")) != -1) // process exit normally, end debugger!
+		{
+			bStopDebugger = TRUE;
+		}
+		if (strMessage.Find(_T("Continuing.")) != -1 && m_lPointerLine == 0) // user use continue command, if there is no any next breakpoint then end debugger!
+		{
+			bStopDebugger = TRUE;
+		}
+		if (strMessage.Find(_T("The program is not being run.")) != -1) // process exit normally, end debugger!
+		{
+			bStopDebugger = TRUE;
+		}
+		if (strMessage.Find(_T("[Thread ")) != -1) // remove spare info...
+		{
+			strMessage = strMessage.Mid(0, strMessage.Find(_T("[Thread ")));
+			return TRUE;
 		}
 		return TRUE;
 	}
