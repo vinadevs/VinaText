@@ -60,13 +60,13 @@ protected:
 	CComboBox	m_combRegexPattern;
 	CString		m_strFileFilter;
 	CString		m_strSpecificPath;
-	std::unique_ptr<CScrollHelper> m_pScrollHelper;
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{nullptr};
 	CMFCEditBrowseCtrl m_EditSpecialPath;
 	CUndoRedoEditControl m_EditFilter;
 	int m_nSearchOptions = 0;
 
 	// background replace
-	std::unique_ptr<CVinaTextProgressBar> m_pReplaceProgressBar;
+	std::unique_ptr<CVinaTextProgressBar> m_pReplaceProgressBar{nullptr};
 	static UINT ReplaceBackgroundThreadProc(LPVOID pParam);
 	HANDLE m_hThreadReplaceBackground = NULL;
 

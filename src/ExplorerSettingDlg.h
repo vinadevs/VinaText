@@ -9,6 +9,8 @@
 #pragma once
 #include "afxdialogex.h"
 
+class CScrollHelper;
+
 class ExplorerSettingBrowse : public CMFCEditBrowseCtrl
 {
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -22,7 +24,7 @@ class ExplorerSettingDlg : public CDialogEx
 
 public:
 	ExplorerSettingDlg(CWnd* pParent = nullptr);   // standard constructor
-	virtual ~ExplorerSettingDlg() {};
+	virtual ~ExplorerSettingDlg();
 
 	enum { IDD = IDD_DIALOG_SETTING_EXPLORER };
 
@@ -41,6 +43,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	BOOL m_bEnablePathNavigation {FALSE};
 	BOOL m_bEnablePreviewFile{ FALSE };
@@ -52,6 +58,8 @@ protected:
 	int m_nExplorerExpandLimitFileOpen{ 0 };
 	int m_nExplorerExpandLimitLevel{ 0 };
 	int m_nFilePreviewSizeLimit{ 0 };
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 
 	CString m_strAntiVirusArgument;
 	CString m_strAntiVirusProgram;

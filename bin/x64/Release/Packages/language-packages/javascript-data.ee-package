@@ -17,10 +17,10 @@ https://nodejs.org/en/
 - After editing this file, please reload (F4) your code file to active settings.
 
 @@ compiler path:
-..\Compilers\compiler.exe
+..\Compilers\node.exe
 
 @@ debugger path:
-..\Compilers\compiler.exe
+..\Compilers\node.exe
 
 @@ auto complete:
 abstract arguments await boolean break byte case catch char class const 

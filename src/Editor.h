@@ -90,8 +90,7 @@ public:
 	BOOL IsTextSelected();
 	void GotoPosition(int lPos);
 	void GotoPointXY(int lX, int lY);
-	void SetLineNumberWidth();
-	int GetLineNumberWidth();
+	int GetLineNumberWidth(int nLineOnScreen);
 	int GetLinenumberChars();
 	void IndentAll();
 	BOOL IsBraceCharacter(int nCharValue);

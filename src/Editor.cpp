@@ -150,7 +150,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 
 	SetTabSettings(m_tabSpace);
 
-	SetLineNumberWidth();
+	SetDisplayLinenumbers(TRUE);
+
 	SetColorForStyle(STYLE_LINENUMBER,
 		m_AppThemeColorSet._lineNumberColor,
 		m_AppThemeColorSet._editorMarginBarColor,
@@ -1191,41 +1192,30 @@ void CEditorCtrl::GotoPointXY(int lX, int lY)
 	GotoPosition(lPos);
 }
 
-void CEditorCtrl::SetLineNumberWidth()
+int CEditorCtrl::GetLineNumberWidth(int nLineOnScreen)
 {
-	SetDisplayLinenumbers(TRUE);
-}
-
-int CEditorCtrl::GetLineNumberWidth()
-{
-	// get number of chars needed to display highest linenumber
-	int nChars = GetLinenumberChars();
-	// get width of character '9' in pixels
-	char czNine1[2] = "9";
-	LRESULT lWidth1 = DoCommand(SCI_TEXTWIDTH, STYLE_LINENUMBER, reinterpret_cast<LPARAM>(czNine1));
-	char czNine2[3] = "99";
-	LRESULT lWidth2 = DoCommand(SCI_TEXTWIDTH, STYLE_LINENUMBER, reinterpret_cast<LPARAM>(czNine2));
-
-	LRESULT lWidthTarget = 0;
-	if (GetLineCount() < 10)
-	{
-		lWidthTarget = lWidth2;
-	}
-	else if (GetLineCount() > 9 && GetLineCount() < 100)
-	{
-		nChars -= 1;
-		lWidthTarget = lWidth2;
-	}
-	else if (GetLineCount() > 99 && GetLineCount() < 1000)
-	{
-		nChars -= 2;
-		lWidthTarget = lWidth2;
-	}
+	LRESULT lrFirstVisibleLineVis = DoCommand(SCI_GETFIRSTVISIBLELINE);
+	LRESULT lrLastVisibleLineVis = nLineOnScreen + lrFirstVisibleLineVis + 1;
+	LRESULT lrLastVisibleLineDoc = DoCommand(SCI_DOCLINEFROMVISIBLE, lrLastVisibleLineVis);
+	int lineNumberDigits = 0;
+	if (lrLastVisibleLineDoc < 10) lrLastVisibleLineDoc = 1;
+	else if (lrLastVisibleLineDoc < 100) lineNumberDigits = 2;
+	else if (lrLastVisibleLineDoc < 1000) lineNumberDigits = 3;
+	else if (lrLastVisibleLineDoc < 10000) lineNumberDigits = 4;
+	else if (lrLastVisibleLineDoc < 100000) lineNumberDigits = 5;
+	else if (lrLastVisibleLineDoc < 1000000) lineNumberDigits = 6;
 	else
 	{
-		lWidthTarget = lWidth1;
+		lineNumberDigits = 7;
+		lrLastVisibleLineDoc /= 1000000;
+		while (lrLastVisibleLineDoc)
+		{
+			lrLastVisibleLineDoc /= 10;
+			++lineNumberDigits;
+		}
 	}
-	return nChars * (int)(lWidthTarget);
+	lineNumberDigits = lineNumberDigits < 3 ? 3 : lineNumberDigits;
+	return 8 + lineNumberDigits * static_cast<int>(DoCommand(SCI_TEXTWIDTH, STYLE_LINENUMBER, reinterpret_cast<LPARAM>("8")));
 }
 
 int CEditorCtrl::GetLinenumberChars()
@@ -1991,16 +1981,17 @@ BOOL CEditorCtrl::SearchBackward(const CString& strText)
 void CEditorCtrl::SetDisplayLinenumbers(BOOL bFlag)
 {
 	m_bLinenumbers = bFlag;
-	// if display is turned off we set margin 0 to 0
-	if (!bFlag)
+	if (!bFlag) // if display is turned off we set margin 0 to 0
 	{
 		DoCommand(SCI_SETMARGINWIDTHN, 0, 0);
 	}
-	// if display is turned on we set margin 0 to the calculated width
-	else
+	else // if display is turned on we set margin 0 to the calculated width
 	{
-		int nWidth = GetLineNumberWidth();
-		DoCommand(SCI_SETMARGINWIDTHN, 0, nWidth);
+		int nLineOnScreen = static_cast<int>(DoCommand(SCI_LINESONSCREEN));
+		if (nLineOnScreen)
+		{
+			DoCommand(SCI_SETMARGINWIDTHN, 0, GetLineNumberWidth(nLineOnScreen));
+		}
 	}
 }
 
@@ -4680,7 +4671,7 @@ void CEditorCtrl::ShowHideFoldingMargin(int nPosMouseX)
 		else
 		{
 			int nMask = static_cast<int>(DoCommand(SCI_GETMARGINMASKN, SC_SETMARGINTYPE_FOLDING));
-			nMask = nPosMouseX <= 0 || nPosMouseX > VINATEXT_MARGINWIDTH * 2 + GetLineNumberWidth() ? (nMask & ~SC_MASK_FOLDERS) : (nMask | SC_MASK_FOLDERS);
+			nMask = nPosMouseX <= 0 || nPosMouseX > VINATEXT_MARGINWIDTH * 2 + GetLineNumberWidth(static_cast<int>(DoCommand(SCI_LINESONSCREEN)) ? (nMask & ~SC_MASK_FOLDERS) : (nMask | SC_MASK_FOLDERS));
 			DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, nMask);
 		}
 	}

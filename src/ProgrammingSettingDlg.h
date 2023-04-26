@@ -9,6 +9,8 @@
 #pragma once
 #include "afxdialogex.h"
 
+class CScrollHelper;
+
 class ProgrammingSettingBrowse : public CMFCEditBrowseCtrl
 {
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -22,7 +24,7 @@ class ProgrammingSettingDlg : public CDialogEx
 
 public:
 	ProgrammingSettingDlg(CWnd* pParent = nullptr);   // standard constructor
-	virtual ~ProgrammingSettingDlg() {};
+	virtual ~ProgrammingSettingDlg();
 
 	enum { IDD = IDD_DIALOG_SETTING_PROGRAMMING };
 
@@ -38,6 +40,10 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	BOOL m_bAllowOpenFileHasErrorBuild{ FALSE };
 	BOOL m_bAskBeforeTerminateProgram{ FALSE };
@@ -46,6 +52,8 @@ protected:
 	BOOL m_bEnableWarningFlagForCAndCPP{ FALSE };
 	BOOL m_bEnableWindowSubsytemFlagForCAndCPP{ FALSE };
 	BOOL m_bOpenWindowCmdWhenRunProgram{ FALSE };
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{nullptr};
 
 	CString m_strNodeJSFolderPath;
 	ProgrammingSettingBrowse m_EditNodeJSFolderPath;

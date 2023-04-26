@@ -31,7 +31,7 @@ public:
 	void UpdateUIVisual();
 
 protected:
-	std::unique_ptr<CScrollHelper> m_pScrollHelper;
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{nullptr};
 	CUndoRedoEditControl m_EditPosition;
 	CUndoRedoEditControl m_EditLine;
 	CUndoRedoEditControl m_EditPointX;

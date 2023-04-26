@@ -6075,6 +6075,8 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		{
 		case SCN_PAINTED:
 		{
+			// update dynamic line number width
+			m_EditorCtrl.SetDisplayLinenumbers(TRUE);
 			// return previous state
 			if (!m_bAlreadyRestoreState)
 			{
@@ -6315,10 +6317,6 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 				}
 				AppUtils::UpdateModifiedDocumentTitle(m_pDocument);
 			}
-			if (pScinNotification->linesAdded)
-			{
-				m_EditorCtrl.SetLineNumberWidth();
-			}
 			if (m_bEnableSpellChecker && (iModType & (SC_MOD_DELETETEXT | SC_MOD_INSERTTEXT)) != 0)
 			{
 				KillTimer(START_SPELL_CHECKER_TIMER);
@@ -6386,7 +6384,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		break;
 		case SCN_ZOOM:
 		{
-			m_EditorCtrl.SetLineNumberWidth();
+			m_EditorCtrl.SetDisplayLinenumbers(TRUE);
 		}
 		break;
 		}

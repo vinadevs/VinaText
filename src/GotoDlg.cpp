@@ -32,9 +32,7 @@ CGotoDlg::CGotoDlg(CWnd* pParent /*=NULL*/)
 	m_pScrollHelper->SetDisplaySize(200, 560);
 }
 
-CGotoDlg::~CGotoDlg()
-{
-}
+CGotoDlg::~CGotoDlg() {}
 
 BOOL CGotoDlg::PreTranslateMessage(MSG * pMsg)
 {

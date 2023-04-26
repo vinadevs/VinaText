@@ -40,9 +40,7 @@ CFindDlg::CFindDlg(CWnd* pParent /*=NULL*/)
 	m_pScrollHelper->SetDisplaySize(200, 560);
 }
 
-CFindDlg::~CFindDlg()
-{
-}
+CFindDlg::~CFindDlg() {}
 
 UINT CFindDlg::FindBackgroundThreadProc(LPVOID pParam)
 {

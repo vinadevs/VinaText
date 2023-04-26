@@ -7,14 +7,20 @@
 #include "AppSettings.h"
 #include "AppUtil.h"
 #include "PathUtil.h"
+#include "ScrollHelper.h"
 
 // ProgrammingSettingDlg dialog
 
 IMPLEMENT_DYNAMIC(ProgrammingSettingDlg, CDialogEx)
 
 ProgrammingSettingDlg::ProgrammingSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_PROGRAMMING, pParent) {}
+	: CDialogEx(IDD_DIALOG_SETTING_PROGRAMMING, pParent) {
+	m_pScrollHelper = std::make_unique<CScrollHelper>();
+	m_pScrollHelper->AttachWnd(this);
+	m_pScrollHelper->SetDisplaySize(0, 800);
+}
 
+ProgrammingSettingDlg::~ProgrammingSettingDlg() {}
 
 void ProgrammingSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 {
@@ -120,7 +126,37 @@ void ProgrammingSettingDlg::OnDropFiles(HDROP hDropInfo)
 
 BEGIN_MESSAGE_MAP(ProgrammingSettingDlg, CDialogEx)
 	ON_WM_DROPFILES()
+	ON_WM_HSCROLL()
+	ON_WM_VSCROLL()
+	ON_WM_MOUSEWHEEL()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
+
+// for scrolling //////////////////////////////////////////////////////////////
+
+void ProgrammingSettingDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void ProgrammingSettingDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+BOOL ProgrammingSettingDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	BOOL wasScrolled = m_pScrollHelper->OnMouseWheel(nFlags, zDelta, pt);
+
+	return wasScrolled;
+}
+
+void ProgrammingSettingDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	m_pScrollHelper->OnSize(nType, cx, cy);
+}
 
 ///////////////////////////////////////////////////////////////////
 

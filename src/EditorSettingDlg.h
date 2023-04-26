@@ -9,6 +9,8 @@
 #pragma once
 #include "afxdialogex.h"
 
+class CScrollHelper;
+
 // EditorSettingDlg dialog
 
 class EditorSettingDlg : public CDialogEx
@@ -17,7 +19,7 @@ class EditorSettingDlg : public CDialogEx
 
 public:
 	EditorSettingDlg(CWnd* pParent = nullptr);   // standard constructor
-	virtual ~EditorSettingDlg() {};
+	virtual ~EditorSettingDlg();
 
 	enum { IDD = IDD_DIALOG_SETTING_EDITOR };
 
@@ -31,8 +33,11 @@ protected:
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 
 	DECLARE_MESSAGE_MAP()
-
 	afx_msg void OnBnClickedEditorFontNameButton();
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	void InitLanguageSpellCheckCombo();
 	void InitLanguageTranslateFromCombo();
@@ -87,4 +92,6 @@ protected:
 	int m_nEditorLineNumberFontSize{ 0 };
 	int m_nEditorTextFontSize{ 0 };
 	int m_nPageAlignmentWidth{ 0 };
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

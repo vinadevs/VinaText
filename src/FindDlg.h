@@ -63,11 +63,11 @@ protected:
 	BOOL	m_bAppendResult;
 	BOOL	m_bShowFileNameOnly;
 	BOOL	m_bExcludeSubFolder;
-	std::unique_ptr<CScrollHelper> m_pScrollHelper;
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{nullptr};
 	int m_nSearchOptions = 0;
 
 	// background search
-	std::unique_ptr<CVinaTextProgressBar> m_pFindProgressBar;
+	std::unique_ptr<CVinaTextProgressBar> m_pFindProgressBar{nullptr};
 	static UINT FindBackgroundThreadProc(LPVOID pParam);
 	HANDLE m_hThreadFindBackground = NULL;
 

@@ -9,6 +9,8 @@
 #pragma once
 #include "afxdialogex.h"
 
+class CScrollHelper;
+
 class GeneralSettingBrowse : public CMFCEditBrowseCtrl
 {
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
@@ -22,7 +24,7 @@ class GeneralSettingDlg : public CDialogEx
 
 public:
 	GeneralSettingDlg(CWnd* pParent = nullptr);   // standard constructor
-	virtual ~GeneralSettingDlg() {};
+	virtual ~GeneralSettingDlg();
 
 	enum { IDD = IDD_DIALOG_SETTING_GENERAL };
 
@@ -54,6 +56,10 @@ protected:
 	afx_msg void OnBnClickedDockWindowFontNameButton();
 	afx_msg void OnBnClickedDialogFontNameButton();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnSize(UINT nType, int cx, int cy);
 
 	CComboBox m_ActiveTabColorCombo;
 	CComboBox m_ThemeColorCombo;
@@ -73,6 +79,8 @@ protected:
 	BOOL m_bDetectFileChangeFromOutSide{ FALSE };
 	BOOL m_bCheckFileSizeBeforeOpen{ FALSE };
 	BOOL m_bDisplayMessageBoxForFileChange{ FALSE };
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 
 	CString m_strBinaryFileExtensionList;
 	CString m_strInitialFilePickerPath;

@@ -99,7 +99,7 @@ IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
 
 IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
 
-IDR_SEARCH_RESULT_WINDOW ICON                   "..\\res\\searchresultwindow.ico"
+IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
 
 IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
 
@@ -127,11 +127,11 @@ IDR_SETTING_TAB         ICON                    "..\\res\\settingtab.ico"
 // Cursor
 //
 
-IDR_TREEFILECTRL_DROPCOPY CURSOR                "..\\res\\tfdropcopy.cur"
+IDR_TREEFILECTRL_DROPCOPY CURSOR                  "..\\res\\tfdropcopy.cur"
 
-IDR_TREEFILECTRL_NO_DROPCOPY CURSOR             "..\\res\\tfnodropcopy.cur"
+IDR_TREEFILECTRL_NO_DROPCOPY CURSOR                  "..\\res\\tfnodropcopy.cur"
 
-IDR_TREEFILECTRL_NO_DROPMOVE CURSOR             "..\\res\\tfnodropmove.cur"
+IDR_TREEFILECTRL_NO_DROPMOVE CURSOR                  "..\\res\\tfnodropmove.cur"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,7 @@ BEGIN
     BUTTON      ID_MDI_TAB_CLOSE
 END
 
-IDR_MAINFRAME_24 TOOLBAR  16, 16
+IDR_MAINFRAME_24 TOOLBAR 16, 16
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
@@ -253,7 +253,7 @@ BEGIN
     BUTTON      ID_MDI_TAB_CLOSE
 END
 
-IDR_TOOLBAR_DEBUGGER_24 TOOLBAR  16, 15
+IDR_TOOLBAR_DEBUGGER_24 TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_DEBUGGER_START
     BUTTON      ID_DEBUGGER_STOP
@@ -271,7 +271,7 @@ BEGIN
     BUTTON      ID_OPTIONS_DELETE_ALL_BREAKPOINT
 END
 
-IDR_EXPLORER_TOOLBAR_24 TOOLBAR  16, 15
+IDR_EXPLORER_TOOLBAR_24 TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_EXPLORER_TB_GO_BACK
     BUTTON      ID_EXPLORER_TB_GO_FORWARD
@@ -1409,10 +1409,10 @@ BEGIN
     DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.3",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.5",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 2a6a8f630080bc6848721cc201",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 23/04/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 5d16866b49d8b6682de1948",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 26/04/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1864,15 +1864,15 @@ BEGIN
     CONTROL         "Show Password",IDC_CHECK_SHOW_PASSWORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,38,66,10
 END
 
-IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 557, 500
+IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 573, 314
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VinaText Preference"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,246,477,58,18
-    PUSHBUTTON      "Cancel",IDCANCEL,316,477,58,18
-    DEFPUSHBUTTON   "Apply",IDC_APPLY,174,477,58,18
-    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,7,5,539,468,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "OK",IDOK,252,290,58,18
+    PUSHBUTTON      "Cancel",IDCANCEL,322,290,58,18
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,180,290,58,18
+    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,7,5,555,280,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
 END
 
 IDD_CREATE_NEW_MULTIPLE DIALOGEX 0, 0, 293, 51
@@ -2035,7 +2035,7 @@ BEGIN
     CONTROL         "Enable Warning Flag (C/C++ Settings)",ID_ENABLE_WARNING_FLAG_FOR_C_AND_CPP,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,155,139,10
     CONTROL         "Enable Window Subsystem Flag (C/C++ Settings)",ID_ENABLE_WINDOW_SUBSYTEM_FLAG_FOR_C_AND_CPP,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,178,162,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,178,172,10
     CONTROL         "Open New CMD Window When Launching Program",ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,201,177,10
     LTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,261,37,110,8
@@ -2048,7 +2048,7 @@ BEGIN
     GROUPBOX        "Programming Settings",IDC_STATIC,19,12,216,226
 END
 
-IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 532, 453
+IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 543, 453
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -2151,12 +2151,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.3"
+            VALUE "FileVersion", "1.5"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.3"
+            VALUE "ProductVersion", "1.5"
         END
     END
     BLOCK "VarFileInfo"
@@ -2363,9 +2363,9 @@ BEGIN
     IDD_DIALOG_APP_SETTINGS, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 546
+        RIGHTMARGIN, 562
         TOPMARGIN, 7
-        BOTTOMMARGIN, 494
+        BOTTOMMARGIN, 308
     END
 
     IDD_CREATE_NEW_MULTIPLE, DIALOG
@@ -2413,7 +2413,7 @@ BEGIN
 
     IDD_DIALOG_SETTING_EDITOR, DIALOG
     BEGIN
-        RIGHTMARGIN, 521
+        RIGHTMARGIN, 532
         BOTTOMMARGIN, 451
     END
 END
@@ -2984,3 +2984,4 @@ LANGUAGE 9, 1
 1 TYPELIB "VinaText.tlb"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
+

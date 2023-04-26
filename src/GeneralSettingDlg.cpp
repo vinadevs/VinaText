@@ -13,6 +13,7 @@
 #include "AppSettings.h"
 #include "AppUtil.h"
 #include "PathUtil.h"
+#include "ScrollHelper.h"
 
 // GeneralSettingDlg dialog
 
@@ -21,8 +22,13 @@ constexpr int DEFAULT_LFWEIGHT = 10;
 IMPLEMENT_DYNAMIC(GeneralSettingDlg, CDialogEx)
 
 GeneralSettingDlg::GeneralSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent) {}
+	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent) {
+	m_pScrollHelper = std::make_unique<CScrollHelper>();
+	m_pScrollHelper->AttachWnd(this);
+	m_pScrollHelper->SetDisplaySize(0, 800);
+}
 
+GeneralSettingDlg::~GeneralSettingDlg() {}
 
 void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 {
@@ -463,9 +469,39 @@ void GeneralSettingDlg::FromDialogComboboxLimitSaveCombobox()
 
 BEGIN_MESSAGE_MAP(GeneralSettingDlg, CDialogEx)
 	ON_WM_DROPFILES()
+	ON_WM_HSCROLL()
+	ON_WM_VSCROLL()
+	ON_WM_MOUSEWHEEL()
+	ON_WM_SIZE()
 	ON_BN_CLICKED(ID_DOCK_WINDOW_FONT_NAME_BUTTON, &GeneralSettingDlg::OnBnClickedDockWindowFontNameButton)
 	ON_BN_CLICKED(ID_DIALOG_FONT_NAME_BUTTON, &GeneralSettingDlg::OnBnClickedDialogFontNameButton)
 END_MESSAGE_MAP()
+
+// for scrolling //////////////////////////////////////////////////////////////
+
+void GeneralSettingDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void GeneralSettingDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+BOOL GeneralSettingDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	BOOL wasScrolled = m_pScrollHelper->OnMouseWheel(nFlags, zDelta, pt);
+
+	return wasScrolled;
+}
+
+void GeneralSettingDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	m_pScrollHelper->OnSize(nType, cx, cy);
+}
 
 void GeneralSettingDlg::OnDropFiles(HDROP hDropInfo)
 {

@@ -15,8 +15,6 @@
 /////////////////////////////////////////////////////////////////////////////
 // CBracketOutLineDlg 
 
-class CScrollHelper;
-
 class CBracketOutLineDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CBracketOutLineDlg)

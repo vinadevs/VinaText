@@ -11,13 +11,20 @@
 #include "afxdialogex.h"
 #include "EditorSettingDlg.h"
 #include "AppSettings.h"
+#include "ScrollHelper.h"
 
 // EditorSettingDlg dialog
 
 IMPLEMENT_DYNAMIC(EditorSettingDlg, CDialogEx)
 
 EditorSettingDlg::EditorSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_EDITOR, pParent) {}
+	: CDialogEx(IDD_DIALOG_SETTING_EDITOR, pParent) {
+	m_pScrollHelper = std::make_unique<CScrollHelper>();
+	m_pScrollHelper->AttachWnd(this);
+	m_pScrollHelper->SetDisplaySize(0, 800);
+}
+
+EditorSettingDlg::~EditorSettingDlg() {}
 
 void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 {
@@ -841,7 +848,37 @@ void EditorSettingDlg::FromRenderIndicatorActionCombobox()
 
 BEGIN_MESSAGE_MAP(EditorSettingDlg, CDialogEx)
 	ON_BN_CLICKED(ID_EDITOR_FONT_NAME_BUTTON, &EditorSettingDlg::OnBnClickedEditorFontNameButton)
+	ON_WM_HSCROLL()
+	ON_WM_VSCROLL()
+	ON_WM_MOUSEWHEEL()
+	ON_WM_SIZE()
 END_MESSAGE_MAP()
+
+// for scrolling //////////////////////////////////////////////////////////////
+
+void EditorSettingDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnHScroll(nSBCode, nPos, pScrollBar);
+}
+
+void EditorSettingDlg::OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
+{
+	m_pScrollHelper->OnVScroll(nSBCode, nPos, pScrollBar);
+}
+
+BOOL EditorSettingDlg::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
+{
+	BOOL wasScrolled = m_pScrollHelper->OnMouseWheel(nFlags, zDelta, pt);
+
+	return wasScrolled;
+}
+
+void EditorSettingDlg::OnSize(UINT nType, int cx, int cy)
+{
+	CDialogEx::OnSize(nType, cx, cy);
+
+	m_pScrollHelper->OnSize(nType, cx, cy);
+}
 
 void EditorSettingDlg::OnBnClickedEditorFontNameButton()
 {

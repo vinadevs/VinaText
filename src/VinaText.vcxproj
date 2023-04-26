@@ -587,6 +587,7 @@
     <Image Include="..\res\fileexplorer.ico" />
     <Image Include="..\res\fileresultwindow.ico" />
     <Image Include="..\res\Folder.bmp" />
+    <Image Include="..\res\functionmap.bmp" />
     <Image Include="..\res\googlechrome.ico" />
     <Image Include="..\res\goto.ico" />
     <Image Include="..\res\host.ico" />

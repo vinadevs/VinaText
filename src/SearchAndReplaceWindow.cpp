@@ -19,13 +19,9 @@ BEGIN_MESSAGE_MAP(CSearchAndReplaceWindow, CDockPaneBase)
 	ON_MESSAGE(UMW_DOCK_PANE_UPDATE, &CSearchAndReplaceWindow::OnDockPaneUpdate)
 END_MESSAGE_MAP()
 
-CSearchAndReplaceWindow::CSearchAndReplaceWindow()
-{
-}
+CSearchAndReplaceWindow::CSearchAndReplaceWindow() {}
 
-CSearchAndReplaceWindow::~CSearchAndReplaceWindow()
-{
-}
+CSearchAndReplaceWindow::~CSearchAndReplaceWindow() {}
 
 void CSearchAndReplaceWindow::InitSearchReplaceFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType)
 {

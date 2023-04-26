@@ -13,7 +13,6 @@
 #include "PathUtil.h"
 #include "EditorDoc.h"
 #include "Editor.h"
-#include "ScrollHelper.h"
 #include "AppSettings.h"
 
 #ifdef _DEBUG
@@ -38,9 +37,7 @@ CBracketOutLineDlg::CBracketOutLineDlg(CWnd* pParent /*=NULL*/)
 	m_Font.CreateFontIndirect(&lf);
 }
 
-CBracketOutLineDlg::~CBracketOutLineDlg()
-{
-}
+CBracketOutLineDlg::~CBracketOutLineDlg() {}
 
 void CBracketOutLineDlg::UpdateFoldingMap(int nFoldingLevel)
 {

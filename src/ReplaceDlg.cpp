@@ -42,9 +42,7 @@ CFindAndReplaceDlg::CFindAndReplaceDlg(CWnd* pParent /*=NULL*/)
 	m_pScrollHelper->SetDisplaySize(200, 560);
 }
 
-CFindAndReplaceDlg::~CFindAndReplaceDlg()
-{
-}
+CFindAndReplaceDlg::~CFindAndReplaceDlg() {}
 
 BOOL CFindAndReplaceDlg::PreTranslateMessage(MSG * pMsg)
 {
