@@ -62,6 +62,8 @@ BEGIN_MESSAGE_MAP(CFileExplorerDlg, CDialogEx)
 	ON_COMMAND(ID_EXPLORER_TB_GO_FORWARD, &CFileExplorerDlg::OnGoForward)
 	ON_COMMAND(ID_EXPLORER_TB_REFRESH, &CFileExplorerDlg::OnRefresh)
 	ON_COMMAND(ID_EXPLORER_TB_SEARCH_FILE, &CFileExplorerDlg::OnSearch)
+	ON_COMMAND(ID_EXPLORER_TB_GOTO_PATH, &CFileExplorerDlg::OnGoto)
+	ON_COMMAND(ID_EXPLORER_TB_GET_PATH_STRING, &CFileExplorerDlg::OnGetPath)
 	ON_COMMAND(ID_EXPLORER_TB_BACK_TO_DESKTOP, &CFileExplorerDlg::OnBackToDesktop)
 	ON_COMMAND(ID_EXPLORER_TB_DELETE, &CFileExplorerDlg::OnDelete)
 	ON_COMMAND(ID_EXPLORER_TB_BOOKMARK_PATH, &CFileExplorerDlg::OnBookmark)
@@ -130,7 +132,7 @@ BOOL CFileExplorerDlg::OnInitDialog()
 	}
 
 	// create toolbar
-	BOOL retTB = m_ExplorerToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_EXPLORER_TOOLBAR);
+	BOOL retTB = m_ExplorerToolBar.Create(this, AFX_DEFAULT_TOOLBAR_STYLE, IDR_EXPLORER_TOOLBAR_24);
 	retTB = m_ExplorerToolBar.LoadToolBar(IDR_EXPLORER_TOOLBAR_24, 0, 0, TRUE /* Is locked */);
 	if (!retTB)
 	{
@@ -138,7 +140,7 @@ BOOL CFileExplorerDlg::OnInitDialog()
 		return FALSE;      // fail to create
 	}
 	m_ExplorerToolBar.CleanUpLockedImages();
-	m_ExplorerToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDR_EXPLORER_TOOLBAR_24 : IDR_EXPLORER_TOOLBAR, 0, 0, TRUE /* Locked */);
+	m_ExplorerToolBar.LoadBitmap(IDR_EXPLORER_TOOLBAR_24, 0, 0, TRUE /* Locked */);
 	m_ExplorerToolBar.SetPaneStyle(m_ExplorerToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
 	m_ExplorerToolBar.SetPaneStyle(m_ExplorerToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
 	m_ExplorerToolBar.SetOwner(this);
@@ -179,6 +181,16 @@ void CFileExplorerDlg::OnRefresh()
 void CFileExplorerDlg::OnSearch()
 {
 	m_FileExplorerCtrl.OnOptionsEditSearchFiles();
+}
+
+void CFileExplorerDlg::OnGoto()
+{
+	m_FileExplorerCtrl.OnJumpToPath();
+}
+
+void CFileExplorerDlg::OnGetPath()
+{
+	m_FileExplorerCtrl.OnGetFullPath();
 }
 
 void CFileExplorerDlg::OnBackToDesktop()
@@ -224,12 +236,16 @@ BOOL CExplorerToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & strT
 	else if (pButton->m_nID == ID_EXPLORER_TB_BACK_TO_DESKTOP)
 		strTTText = _T("Back To Desktop");
 	else if (pButton->m_nID == ID_EXPLORER_TB_DELETE)
-		strTTText = _T("Delete Path");
+		strTTText = _T("Delete Selected Path");
 	else if (pButton->m_nID == ID_EXPLORER_TB_BOOKMARK_PATH)
-		strTTText = _T("Bookmark Path");
+		strTTText = _T("Bookmark Selected Path");
+	else if (pButton->m_nID == ID_EXPLORER_TB_GET_PATH_STRING)
+		strTTText = _T("Get Selected Path String");
 	else if (pButton->m_nID == ID_EXPLORER_TB_PRINT_FILE)
-		strTTText = _T("Print Path");
+		strTTText = _T("Print Selected Path");
 	else if (pButton->m_nID == ID_EXPLORER_TB_RENAME)
-		strTTText = _T("Rename Path");
+		strTTText = _T("Rename Selected Path");
+	else if (pButton->m_nID == ID_EXPLORER_TB_GOTO_PATH)
+		strTTText = _T("Goto Any Path");
 	return TRUE;
 }

@@ -56,6 +56,8 @@ public:
 	afx_msg void OnGoForward();
 	afx_msg void OnRefresh();
 	afx_msg void OnSearch();
+	afx_msg void OnGoto();
+	afx_msg void OnGetPath();
 	afx_msg void OnBackToDesktop();
 	afx_msg void OnDelete();
 	afx_msg void OnBookmark();

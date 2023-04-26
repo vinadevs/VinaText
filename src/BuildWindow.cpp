@@ -944,6 +944,10 @@ BEGIN_MESSAGE_MAP(CBuildPaneDlg, CDialogEx)
 	ON_COMMAND(ID_DEBUGGER_STEPINTO, &CBuildPaneDlg::OnStepInto)
 	ON_COMMAND(ID_DEBUGGER_STEPOVER, &CBuildPaneDlg::OnStepOver)
 	ON_COMMAND(ID_DEBUGGER_STEPOUT, &CBuildPaneDlg::OnStepOut)
+	ON_COMMAND(ID_DEBUGGER_VARIABLE_VALUE, &CBuildPaneDlg::OnWatchVariableValue)
+	ON_COMMAND(ID_DEBUGGER_VARIABLE_TYPE, &CBuildPaneDlg::OnWatchVariableType)
+	ON_COMMAND(ID_OPTIONS_ADD_NEW_BREAKPOINT, &CBuildPaneDlg::OnAddBreakpoint)
+	ON_COMMAND(ID_OPTIONS_DELETE_ALL_BREAKPOINT, &CBuildPaneDlg::OnDeleteAllBreakPoints)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_START, &CBuildPaneDlg::OnUpdateStartDebugger)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_STOP, &CBuildPaneDlg::OnUpdateStopDebugger)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_RESTART, &CBuildPaneDlg::OnUpdateReStartDebugger)
@@ -951,6 +955,10 @@ BEGIN_MESSAGE_MAP(CBuildPaneDlg, CDialogEx)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_STEPINTO, &CBuildPaneDlg::OnUpdateStepInto)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_STEPOVER, &CBuildPaneDlg::OnUpdateStepOver)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_STEPOUT, &CBuildPaneDlg::OnUpdateStepOut)
+	ON_UPDATE_COMMAND_UI(ID_OPTIONS_ADD_NEW_BREAKPOINT, &CBuildPaneDlg::OnUpdateAddBreakpoint)
+	ON_UPDATE_COMMAND_UI(ID_OPTIONS_DELETE_ALL_BREAKPOINT, &CBuildPaneDlg::OnUpdateDeleteAllBreakPoints)
+	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_VARIABLE_VALUE, OnUpdateWatchVariableValue)
+	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_VARIABLE_TYPE, OnUpdateWatchVariableType)
 END_MESSAGE_MAP()
 
 // CBuildPaneDlg message handlers
@@ -1532,7 +1540,7 @@ BOOL CBuildPaneDlg::OnInitDialog()
 		return FALSE;      // fail to create
 	}
 	m_wndDebuggerToolBar.CleanUpLockedImages();
-	m_wndDebuggerToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDR_TOOLBAR_DEBUGGER_24 : IDR_TOOLBAR_DEBUGGER, 0, 0, TRUE /* Locked */);
+	m_wndDebuggerToolBar.LoadBitmap(IDR_TOOLBAR_DEBUGGER_24, 0, 0, TRUE /* Locked */);
 	m_wndDebuggerToolBar.SetPaneStyle(m_wndDebuggerToolBar.GetPaneStyle() | CBRS_TOOLTIPS | CBRS_FLYBY);
 	m_wndDebuggerToolBar.SetPaneStyle(m_wndDebuggerToolBar.GetPaneStyle() & ~(CBRS_GRIPPER | CBRS_SIZE_DYNAMIC | CBRS_BORDER_TOP | CBRS_BORDER_BOTTOM | CBRS_BORDER_LEFT | CBRS_BORDER_RIGHT));
 	m_wndDebuggerToolBar.SetOwner(this);
@@ -1639,16 +1647,45 @@ void CBuildPaneDlg::OnStepOut()
 	VinaTextDebugger.StepOut();
 }
 
+void CBuildPaneDlg::OnWatchVariableValue()
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnWatchVariableValue();
+	}
+}
+
+void CBuildPaneDlg::OnWatchVariableType()
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnWatchVariableType();
+	}
+}
+
+void CBuildPaneDlg::OnAddBreakpoint()
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnOptionsAddBreakPoint();
+	}
+}
+
+void CBuildPaneDlg::OnDeleteAllBreakPoints()
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnOptionsDeleteAllBreakPoint();
+	}
+}
+
 void CBuildPaneDlg::OnUpdateStopDebugger(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsRunning());
 }
 
 void CBuildPaneDlg::OnUpdateStartDebugger(CCmdUI * pCmdUI)
@@ -1666,61 +1703,62 @@ void CBuildPaneDlg::OnUpdateStartDebugger(CCmdUI * pCmdUI)
 
 void CBuildPaneDlg::OnUpdateReStartDebugger(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CBuildPaneDlg::OnUpdateShowCallStack(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CBuildPaneDlg::OnUpdateStepInto(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CBuildPaneDlg::OnUpdateStepOver(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CBuildPaneDlg::OnUpdateStepOut(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
+}
+
+void CBuildPaneDlg::OnUpdateWatchVariableValue(CCmdUI* pCmdUI)
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
 	{
-		pCmdUI->Enable(TRUE);
+		pEditorDoc->GetEditorView()->OnUpdateWatchVariableValue(pCmdUI);
 	}
-	else
+}
+
+void CBuildPaneDlg::OnUpdateWatchVariableType(CCmdUI* pCmdUI)
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
 	{
-		pCmdUI->Enable(FALSE);
+		pEditorDoc->GetEditorView()->OnUpdateWatchVariableType(pCmdUI);
+	}
+}
+
+void CBuildPaneDlg::OnUpdateAddBreakpoint(CCmdUI* pCmdUI)
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnUpdateOptionsAddBreakPoint(pCmdUI);
+	}
+}
+
+void CBuildPaneDlg::OnUpdateDeleteAllBreakPoints(CCmdUI* pCmdUI)
+{
+	CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
+	{
+		pEditorDoc->GetEditorView()->OnUpdateOptionsDeleteAllBreakPoints(pCmdUI);
 	}
 }
 
@@ -1827,5 +1865,13 @@ BOOL CDebuggerToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & strT
 		strTTText = _T("Step Over");
 	else if (pButton->m_nID == ID_DEBUGGER_STEPOUT)
 		strTTText = _T("Step Out");
+	else if (pButton->m_nID == ID_DEBUGGER_VARIABLE_VALUE)
+		strTTText = _T("Print Out Selected (Text) Variable Value");
+	else if (pButton->m_nID == ID_DEBUGGER_VARIABLE_TYPE)
+		strTTText = _T("Print Out Selected (Text) Variable Type");
+	else if (pButton->m_nID == ID_OPTIONS_ADD_NEW_BREAKPOINT)
+		strTTText = _T("Add New Breakpoint At Current Line");
+	else if (pButton->m_nID == ID_OPTIONS_DELETE_ALL_BREAKPOINT)
+		strTTText = _T("Delete All Breakpoints");
 	return TRUE;
 }

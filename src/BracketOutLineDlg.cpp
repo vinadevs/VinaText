@@ -58,8 +58,11 @@ void CBracketOutLineDlg::UpdateFoldingMap(int nFoldingLevel)
 			m_BracketTree.SetItemImage(hRoot, 0, 0);
 			for (auto const& data : dataList)
 			{
-				HTREEITEM hChild = m_BracketTree.InsertItem(AppUtils::LongToCString(data._lineNumber) + _T(" | ") + data._lineText, 4, 4, hRoot);
-				m_BracketTree.SetItemImage(hChild, 0, 0);
+				if (data._lineText.Find(_T("(")) != -1)
+				{
+					HTREEITEM hChild = m_BracketTree.InsertItem(AppUtils::LongToCString(data._lineNumber) + _T(" | ") + data._lineText, 4, 4, hRoot);
+					m_BracketTree.SetItemImage(hChild, 0, 0);
+				}
 			}
 			m_BracketTree.InsertItem(_T(""), 4, 4, hRoot);
 			m_BracketTree.InsertItem(_T(""), 4, 4, hRoot);
@@ -96,7 +99,7 @@ BOOL CBracketOutLineDlg::OnInitDialog()
 	m_BracketTree.EnableToolTips(TRUE);
 	m_BracketTree.SetFont(&m_Font);
 	m_BracketTree.EnableSetBoldDbClick(FALSE);
-	if (!m_Bitmap.LoadBitmap(IDR_FOLDER_ROOT))
+	if (!m_Bitmap.LoadBitmap(IDR_FUNCTION_MAP))
 	{
 		return FALSE;
 	}

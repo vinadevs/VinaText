@@ -2748,12 +2748,12 @@ void CMainFrame::OnChangeAppLook(BOOL bOneNoteTabs, BOOL bMDITabColors, BOOL bIs
 	// Reload toolbar images:
 	CMFCToolBar::ResetAllImages();
 
-	m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDR_MAINFRAME_24 : IDR_MAINFRAME);
+	m_wndToolBar.LoadBitmap(IDR_MAINFRAME_24);
 
 	CDockingManager* pDockManager = GetDockingManager();
 	ASSERT_VALID(pDockManager);
 
-	SetDockingPaneIcons(theApp.m_bHiColorIcons);
+	SetDockingPaneIcons(TRUE);
 
 	pDockManager->AdjustPaneFrames();
 
@@ -4346,38 +4346,48 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 		strTTText = Native_Language("Copy");
 	else if (pButton->m_nID == ID_EDIT_PASTE)
 		strTTText = Native_Language("Paste");
+	else if (pButton->m_nID == ID_EXPLORER_PRINT_FILE_NOW)
+		strTTText = Native_Language("Print Current File");
 	else if (pButton->m_nID == ID_PANE_FILE_EXPLORER)
-		strTTText = Native_Language("Explorer Window (Ctrl + Shift + Q");
+		strTTText = Native_Language("Explorer Window (Ctrl + Shift + Q)");
 	else if (pButton->m_nID == ID_EDIT_UNDO)
-		strTTText = Native_Language("Undo");
+		strTTText = Native_Language("Undo Change");
 	else if (pButton->m_nID == ID_EDIT_REDO)
-		strTTText = Native_Language("Redo");
+		strTTText = Native_Language("Redo Change");
 	else if (pButton->m_nID == ID_PANE_OUTPUT_WINDOW)
 		strTTText = Native_Language("Message Window");
+	else if (pButton->m_nID == ID_PANE_BUILD_WINDOW)
+		strTTText = Native_Language("Debug Window");
 	else if (pButton->m_nID == ID_QUICK_SEARCH)
 		strTTText = Native_Language("Quick Search Dialog");
 	else if (pButton->m_nID == ID_PANE_SEARCH_AND_REPLACE_WINDOW)
-		strTTText = Native_Language("Search Text Window");
+		strTTText = Native_Language("Search Text Window (Ctrl + Shift + F)");
+	else if (pButton->m_nID == ID_HIDE_ALL_DOCKWINDOW)
+		strTTText = Native_Language("Hide All Dock Windows");
 	else if (pButton->m_nID == ID_WINDOW_MANAGER)
-		strTTText = Native_Language("Window Manager");
+		strTTText = Native_Language("Document List Manager");
 	else if (pButton->m_nID == ID_EDITOR_COMMENT)
-		strTTText = Native_Language("Comment");
+		strTTText = Native_Language("Comment Code");
 	else if (pButton->m_nID == ID_EDITOR_UNCOMMENT)
-		strTTText = Native_Language("Uncomment");
+		strTTText = Native_Language("Uncomment Code");
+	else if (pButton->m_nID == ID_OPTIONS_WRAPLINE)
+		strTTText = Native_Language("Enable Wrap Line Mode");
+	else if (pButton->m_nID == ID_EDIT_SYNC_SCROLL_VIEW)
+		strTTText = Native_Language("Enable Sync. Views Mode");
 	else if (pButton->m_nID == ID_DOCUMENT_SET_READ_ONLY)
-		strTTText = Native_Language("Disable Edit Mode");
+		strTTText = Native_Language("Enable Read Only Mode");
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE_ALL_DOC)
 		strTTText = Native_Language("Close All Tabs");
 	else if (pButton->m_nID == ID_EDIT_SHOW_ALL_CHARACTOR)
-		strTTText = Native_Language("All Hidden Characters");
+		strTTText = Native_Language("Show All Hidden Characters");
 	else if (pButton->m_nID == ID_EDITOR_SHOW_TRACKING_BAR)
-		strTTText = Native_Language("Right Tracking Bar");
+		strTTText = Native_Language("Matched Word Tracking Bar");
 	else if (pButton->m_nID == ID_EDITOR_FULL_SCREEN_MODE)
-		strTTText = Native_Language("Full Screen Mode");
+		strTTText = Native_Language("Enable Full Screen Mode");
 	else if (pButton->m_nID == ID_DEBUGGER_START)
 		strTTText = Native_Language("Start Debugging");
 	else if (pButton->m_nID == ID_TOGGLE_AUTO_COMPLETE)
-		strTTText = Native_Language("Auto Show Complete");
+		strTTText = Native_Language("Auto Show Complete Word");
 	else if (pButton->m_nID == ID_PATH_VINATEXT_BOOKMARK_TABLE)
 		strTTText = Native_Language("Open Path Bookmark Table");
 	else if (pButton->m_nID == ID_DOCUMENT_FILE_SUMMARY)
@@ -4387,17 +4397,23 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_MDI_TAB_NEW_VERTICAL_TAB)
 		strTTText = Native_Language("Move To Vertical Tab Group");
 	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CONTAINER_FOLDER)
-		strTTText = Native_Language("Reveal in Container Folder");
+		strTTText = Native_Language("Reveal File In Container Folder");
 	else if (pButton->m_nID == ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER)
-		strTTText = Native_Language("Reveal in Explorer Window");
+		strTTText = Native_Language("Reveal File In Explorer Window");
 	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CMD)
-		strTTText = Native_Language("Open CMD Terminal");
+		strTTText = Native_Language("Open New CMD Window");
 	else if (pButton->m_nID == ID_DOCUMENT_TRANSLATE)
 		strTTText = Native_Language("Translate Selected Text");
 	else if (pButton->m_nID == ID_MDI_TAB_RELOAD)
-		strTTText = Native_Language("Reload File");
+		strTTText = Native_Language("Reload Current File");
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE)
-		strTTText = Native_Language("Close File");
+		strTTText = Native_Language("Close Current File");
+	else if (pButton->m_nID == ID_VIEW_ZOOM_IN)
+		strTTText = Native_Language("Zoom In Editor View");
+	else if (pButton->m_nID == ID_VIEW_ZOOM_OUT)
+		strTTText = Native_Language("Zoom Out Editor View");
+	else if (pButton->m_nID == ID_TOOLS_PREVIEW_MODE)
+		strTTText = Native_Language("Enable Explorer Preview File Mode");
 	return TRUE;
 }
 

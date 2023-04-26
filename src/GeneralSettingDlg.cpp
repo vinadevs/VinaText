@@ -237,14 +237,14 @@ void GeneralSettingDlg::FromThemeColorCombobox()
 void GeneralSettingDlg::InitApplicationThemLookCombobox()
 {
 	m_ApplicationThemLookCombo.ResetContent();
-	m_ApplicationThemLookCombo.AddString(_T("Office 2003 Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Visual Studio 2005 Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Windows XP Native Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Office 2007 Aqua Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Office 2007 Obsidian Black Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Office 2007 Silver Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Office 2007 Luna Blue Look"));
-	m_ApplicationThemLookCombo.AddString(_T("Visual Studio 2008 Look"));
+	m_ApplicationThemLookCombo.AddString(_T("Office Classic GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Visual Classic GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Windows Native Look"));
+	m_ApplicationThemLookCombo.AddString(_T("Office Modern Aqua GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Office Modern Luna Blue GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Office Modern Black GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Office Modern Silver GUI"));
+	m_ApplicationThemLookCombo.AddString(_T("Visual Modern GUI"));
 	switch (AppSettingMgr.m_ApplicationThemeLook)
 	{
 	case APPLICATION_THEME_LOOK::THEME_OFFICE_2003:
@@ -295,13 +295,13 @@ void GeneralSettingDlg::FromApplicationThemLookCombobox()
 		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_AQUA;
 		break;
 	case 4:
-		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_OBSIDIAN_BLACK;
+		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_LUNA_BLUE;
 		break;
 	case 5:
-		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
+		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_OBSIDIAN_BLACK;
 		break;
 	case 6:
-		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_LUNA_BLUE;
+		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
 		break;
 	case 7:
 		AppSettingMgr.m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_VISUAL_STUDIO_2008_LOOK;

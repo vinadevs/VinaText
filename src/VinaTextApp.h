@@ -77,8 +77,7 @@ public:
 	afx_msg void OnUpdateFileOpenAsEncoding(CCmdUI * pCmdUI);
 
 	// global settings, only internal, user can not control
-	BOOL  m_bHiColorIcons = TRUE;
-	BOOL  m_bIsOpenInAdminMode = FALSE;
+	BOOL m_bIsOpenInAdminMode = FALSE;
 	BOOL m_bIsReloadDocument = FALSE;
 	BOOL m_bIsSaveDocument = FALSE;
 	BOOL m_bIsReloadByPreviewMode = FALSE;
@@ -88,7 +87,7 @@ public:
 	HWND m_hLatestHostWND = NULL; // latest host window handle
 	HostManager::STHostAppInfo m_STHostAppInfo;
 	CString m_strFileExplorerNavigatePath;
-	std::map<CString, CString> m_FileDescriptionData;
+	CAtlMap<CString, CString, CStringElementTraits<CString>> m_FileDescriptionData;
 
 	// document templates
 	CMultiDocTemplateEx* m_pEditorDocTemplate = NULL;

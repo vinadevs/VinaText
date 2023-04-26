@@ -1,5 +1,7 @@
 Project does not have any rules for coding style, but you can refer to some hints as below:
 
++ C++ 11 or newewr
+ 
 + Types start with upper case: MyClass.
 
 + Functions and variables start with upper case: MyMethod.
@@ -13,6 +15,11 @@ Project does not have any rules for coding style, but you can refer to some hint
 + All other names use snake case: unordered_map.
 
 + Name private data with a m_ prefix to distinguish it from public data. m_ stands for "member" data.
+
++ Bracket Style:
+{
+ // code
+}
 
 Please refer this url: 
 https://lefticus.gitbooks.io/cpp-best-practices/content/03-Style.html

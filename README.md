@@ -1,23 +1,20 @@
 # VinaText
 A lightweight and fast text editor for Windows.
 
-# Multiple tabbed views
+# Multiple tabbed views, multiple selections
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_1.png?raw=true)
 
-# Multiple selections, multiple cursors
+# Simple IDE, supported debugger for Python, Javascript, Pascal, C, C++
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_2.png?raw=true)
 
 # Integrated Terminals
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_3.png?raw=true)
 
-# Image Viewer
+# Media Viewer (video, audio, PDF, image, ...)
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_4.png?raw=true)
 
-# Simple code IDE, supported debugger for Python, Javascript, C, C++
+# Native, extremely fast and lightweight software
 ![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_5.png?raw=true)
-
-# Native, extremely fast and lightweight program
-![alt text](https://github.com/vinadevs/VinaText/blob/master/doc/Screenshot_App_6.png?raw=true)
 
 # Project Build Requirements
 
@@ -69,6 +66,8 @@ The git folder has a Visual Studio solution file for VS2022 (.sln) that you can 
 - include: global header libraries for C/C++
 - installer: installer script
 - lib: third party libraries
-- res: resource file, image
+- webpage: project webpage
+- license: project license
+- res: resource files
 - src : application source code
 - test : test case

@@ -1,0 +1,12 @@
+//
+// EditorProject.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+// TOOLBAR IDR_MAINFRAME : ,,
+// TOOLBAR IDR_MAINFRAME_24 : ,,
+// TOOLBAR IDR_TOOLBAR_DEBUGGER_24 : ,,
+// TOOLBAR IDR_EXPLORER_TOOLBAR_24 : ,,

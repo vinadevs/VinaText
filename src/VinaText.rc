@@ -99,7 +99,7 @@ IDR_LOG_WINDOW          ICON                    "..\\res\\logwindow.ico"
 
 IDR_SEARCH_WINDOW       ICON                    "..\\res\\searchwindow.ico"
 
-IDR_SEARCH_RESULT_WINDOW ICON                    "..\\res\\searchresultwindow.ico"
+IDR_SEARCH_RESULT_WINDOW ICON                   "..\\res\\searchresultwindow.ico"
 
 IDR_BUILD_WINDOW        ICON                    "..\\res\\buildwindow.ico"
 
@@ -127,11 +127,11 @@ IDR_SETTING_TAB         ICON                    "..\\res\\settingtab.ico"
 // Cursor
 //
 
-IDR_TREEFILECTRL_DROPCOPY CURSOR                  "..\\res\\tfdropcopy.cur"
+IDR_TREEFILECTRL_DROPCOPY CURSOR                "..\\res\\tfdropcopy.cur"
 
-IDR_TREEFILECTRL_NO_DROPCOPY CURSOR                  "..\\res\\tfnodropcopy.cur"
+IDR_TREEFILECTRL_NO_DROPCOPY CURSOR             "..\\res\\tfnodropcopy.cur"
 
-IDR_TREEFILECTRL_NO_DROPMOVE CURSOR                  "..\\res\\tfnodropmove.cur"
+IDR_TREEFILECTRL_NO_DROPMOVE CURSOR             "..\\res\\tfnodropmove.cur"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -143,15 +143,11 @@ IDR_MAINFRAME           BITMAP                  "..\\res\\Toolbar.bmp"
 
 IDR_MAINFRAME_24        BITMAP                  "..\\res\\Toolbar24.bmp"
 
-IDR_TOOLBAR_DEBUGGER    BITMAP                  "..\\res\\Debugger.bmp"
-
 IDR_TOOLBAR_DEBUGGER_24 BITMAP                  "..\\res\\Debugger24.bmp"
-
-IDR_EXPLORER_TOOLBAR    BITMAP                  "..\\res\\Explorertoolbar16.bmp"
 
 IDR_EXPLORER_TOOLBAR_24 BITMAP                  "..\\res\\Explorertoolbar24.bmp"
 
-IDR_FOLDER_ROOT         BITMAP                  "..\\res\\Folder.bmp"
+IDR_FUNCTION_MAP        BITMAP                  "..\\res\\functionmap.bmp"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -203,96 +199,91 @@ BEGIN
     BUTTON      ID_MDI_TAB_CLOSE
 END
 
-IDR_MAINFRAME_24 TOOLBAR 16, 16
+IDR_MAINFRAME_24 TOOLBAR  16, 16
 BEGIN
     BUTTON      ID_FILE_NEW
     BUTTON      ID_FILE_OPEN
     BUTTON      ID_FILE_SAVE
     BUTTON      ID_FILE_SAVE_ALL
+    BUTTON      ID_EXPLORER_PRINT_FILE_NOW
     SEPARATOR
     BUTTON      ID_EDIT_CUT
     BUTTON      ID_EDIT_COPY
     BUTTON      ID_EDIT_PASTE
-    SEPARATOR
-    BUTTON      ID_PANE_FILE_EXPLORER
+    BUTTON      ID_DOCUMENT_TRANSLATE
     SEPARATOR
     BUTTON      ID_EDIT_UNDO
     BUTTON      ID_EDIT_REDO
     SEPARATOR
+    BUTTON      ID_PANE_FILE_EXPLORER
     BUTTON      ID_PANE_OUTPUT_WINDOW
+    BUTTON      ID_PANE_BUILD_WINDOW
     BUTTON      ID_QUICK_SEARCH
     BUTTON      ID_PANE_SEARCH_AND_REPLACE_WINDOW
-    BUTTON      ID_WINDOW_MANAGER
+    BUTTON      ID_EDITOR_SHOW_TRACKING_BAR
+    BUTTON      ID_HIDE_ALL_DOCKWINDOW
     SEPARATOR
+    BUTTON      ID_OPTIONS_WRAPLINE
+    BUTTON      ID_EDIT_SHOW_ALL_CHARACTOR
+    BUTTON      ID_TOGGLE_AUTO_COMPLETE
     BUTTON      ID_EDITOR_COMMENT
     BUTTON      ID_EDITOR_UNCOMMENT
-    BUTTON      ID_DOCUMENT_SET_READ_ONLY
-    BUTTON      ID_MDI_TAB_CLOSE_ALL_DOC
-    BUTTON      ID_EDIT_SHOW_ALL_CHARACTOR
-    BUTTON      ID_EDITOR_SHOW_TRACKING_BAR
-    BUTTON      ID_EDITOR_FULL_SCREEN_MODE
     SEPARATOR
     BUTTON      ID_DEBUGGER_START
-    BUTTON      ID_TOGGLE_AUTO_COMPLETE
-    BUTTON      ID_PATH_VINATEXT_BOOKMARK_TABLE
-    BUTTON      ID_DOCUMENT_FILE_SUMMARY
+    SEPARATOR
     BUTTON      ID_MDI_TAB_MOVE_PREVIOUS_TAB
     BUTTON      ID_MDI_TAB_NEW_VERTICAL_TAB
+    BUTTON      ID_EDITOR_FULL_SCREEN_MODE
+    BUTTON      ID_WINDOW_MANAGER
+    BUTTON      ID_EDIT_SYNC_SCROLL_VIEW
+    SEPARATOR
+    BUTTON      ID_VIEW_ZOOM_IN
+    BUTTON      ID_VIEW_ZOOM_OUT
+    BUTTON      ID_TOOLS_PREVIEW_MODE
     SEPARATOR
     BUTTON      ID_MDI_TAB_OPEN_CONTAINER_FOLDER
     BUTTON      ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER
     BUTTON      ID_MDI_TAB_OPEN_CMD
-    BUTTON      ID_DOCUMENT_TRANSLATE
+    SEPARATOR
+    BUTTON      ID_PATH_VINATEXT_BOOKMARK_TABLE
+    BUTTON      ID_DOCUMENT_FILE_SUMMARY
     BUTTON      ID_MDI_TAB_RELOAD
+    BUTTON      ID_DOCUMENT_SET_READ_ONLY
+    BUTTON      ID_MDI_TAB_CLOSE_ALL_DOC
     BUTTON      ID_MDI_TAB_CLOSE
 END
 
-IDR_TOOLBAR_DEBUGGER TOOLBAR 16, 15
+IDR_TOOLBAR_DEBUGGER_24 TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_DEBUGGER_START
-    BUTTON      ID_DEBUGGER_CALL_STACK
     BUTTON      ID_DEBUGGER_STOP
     BUTTON      ID_DEBUGGER_RESTART
-    BUTTON      ID_DEBUGGER_STEPINTO
-    BUTTON      ID_DEBUGGER_STEPOVER
-    BUTTON      ID_DEBUGGER_STEPOUT
-END
-
-IDR_TOOLBAR_DEBUGGER_24 TOOLBAR 16, 15
-BEGIN
-    BUTTON      ID_DEBUGGER_START
+    SEPARATOR
     BUTTON      ID_DEBUGGER_CALL_STACK
-    BUTTON      ID_DEBUGGER_STOP
-    BUTTON      ID_DEBUGGER_RESTART
-    BUTTON      ID_DEBUGGER_STEPINTO
+    BUTTON      ID_DEBUGGER_VARIABLE_VALUE
+    BUTTON      ID_DEBUGGER_VARIABLE_TYPE
+    SEPARATOR
     BUTTON      ID_DEBUGGER_STEPOVER
-    BUTTON      ID_DEBUGGER_STEPOUT
+    BUTTON      ID_DEBUGGER_STEPINTO
+    SEPARATOR
+    BUTTON      ID_DEBUGGER_STEPOVER
+    BUTTON      ID_OPTIONS_ADD_NEW_BREAKPOINT
+    BUTTON      ID_OPTIONS_DELETE_ALL_BREAKPOINT
 END
 
-IDR_EXPLORER_TOOLBAR TOOLBAR 16, 15
+IDR_EXPLORER_TOOLBAR_24 TOOLBAR  16, 15
 BEGIN
     BUTTON      ID_EXPLORER_TB_GO_BACK
     BUTTON      ID_EXPLORER_TB_GO_FORWARD
-    BUTTON      ID_EXPLORER_TB_DELETE
-    BUTTON      ID_EXPLORER_TB_REFRESH
     BUTTON      ID_EXPLORER_TB_BACK_TO_DESKTOP
+    BUTTON      ID_EXPLORER_TB_REFRESH
     BUTTON      ID_EXPLORER_TB_SEARCH_FILE
+    BUTTON      ID_EXPLORER_TB_GOTO_PATH
     BUTTON      ID_EXPLORER_TB_BOOKMARK_PATH
     BUTTON      ID_EXPLORER_TB_PRINT_FILE
     BUTTON      ID_EXPLORER_TB_RENAME
-END
-
-IDR_EXPLORER_TOOLBAR_24 TOOLBAR 16, 15
-BEGIN
-    BUTTON      ID_EXPLORER_TB_GO_BACK
-    BUTTON      ID_EXPLORER_TB_GO_FORWARD
+    BUTTON      ID_EXPLORER_TB_GET_PATH_STRING
     BUTTON      ID_EXPLORER_TB_DELETE
-    BUTTON      ID_EXPLORER_TB_REFRESH
-    BUTTON      ID_EXPLORER_TB_BACK_TO_DESKTOP
-    BUTTON      ID_EXPLORER_TB_SEARCH_FILE
-    BUTTON      ID_EXPLORER_TB_BOOKMARK_PATH
-    BUTTON      ID_EXPLORER_TB_PRINT_FILE
-    BUTTON      ID_EXPLORER_TB_RENAME
 END
 
 
@@ -1418,9 +1409,9 @@ BEGIN
     DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.2",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.3",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: abcxyz",IDC_STATIC,63,67,168,8
+    LTEXT           "Commit Hash: 2a6a8f630080bc6848721cc201",IDC_STATIC,63,67,180,8
     LTEXT           "Release Date: 23/04/2023",IDC_STATIC,64,84,139,8
 END
 
@@ -1958,7 +1949,7 @@ BEGIN
     LTEXT           "Active Document Tab Color:",IDC_STATIC,37,28,90,8
     LTEXT           "Application Theme Color:",IDC_STATIC,47,51,80,8
     COMBOBOX        ID_THEME_COLOR_COMBO,146,49,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Application Theme Look:",IDC_STATIC,49,74,78,8
+    LTEXT           "Application Theme GUI:",IDC_STATIC,49,74,78,8
     COMBOBOX        ID_THEME_LOOK_COMBO,146,72,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Dialog Text Font Height:",IDC_STATIC,48,98,79,8
     LTEXT           "Dialog Text Font Name:",IDC_STATIC,51,121,76,8
@@ -2160,12 +2151,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.0"
+            VALUE "FileVersion", "1.3"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.0"
+            VALUE "ProductVersion", "1.3"
         END
     END
     BLOCK "VarFileInfo"
@@ -2746,12 +2737,6 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_BUILD_WARNING        "Enable/Disable Compiler Warning Flag\nCompiler Warning Flag"
-    ID_BUILD_PROGRAM        "Build Program\nBuild"
-END
-
-STRINGTABLE
-BEGIN
     ID_PANE_BUILD_WINDOW    "Shows or hides the Build Window\nBuild Window"
     ID_OPTIONS_SHOW_ERROR   "Show build error lines\nShow Build Error"
 END
@@ -2999,4 +2984,3 @@ LANGUAGE 9, 1
 1 TYPELIB "VinaText.tlb"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
-

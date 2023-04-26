@@ -10,7 +10,7 @@
 
 #include "TreeHelper.h"
 
-#define DEFAULT_FOLDONG_MAP_LEVEL 2
+#define DEFAULT_FOLDONG_MAP_LEVEL 1
 
 /////////////////////////////////////////////////////////////////////////////
 // CBracketOutLineDlg 

@@ -3479,8 +3479,11 @@ void CEditorView::OnOptionsAddBreakPoint()
 
 void CEditorView::OnUpdateOptionsAddBreakPoint(CCmdUI * pCmdUI)
 {
-	pCmdUI->Enable(!m_EditorCtrl.IsLineHasBreakPoint(m_EditorCtrl.GetCurrentLine())
-	&& AppUtils::IsLanguageSupportDebugger(m_CurrentDocLanguage));
+	int curLine = m_EditorCtrl.GetCurrentLine();
+	CString strLine;
+	m_EditorCtrl.GetTextFromLine(curLine, strLine);
+	pCmdUI->Enable(!m_EditorCtrl.IsLineHasBreakPoint(curLine)
+	&& AppUtils::IsLanguageSupportDebugger(m_CurrentDocLanguage) && !IsCommentLineCode(strLine));
 }
 
 void CEditorView::OnOptionsDeleteBreakPoint()
@@ -7290,14 +7293,7 @@ void CEditorView::OnUpdateStartDebugger(CCmdUI * pCmdUI)
 
 void CEditorView::OnUpdateReStartDebugger(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CEditorView::OnStopDebugger()
@@ -7310,14 +7306,7 @@ void CEditorView::OnStopDebugger()
 
 void CEditorView::OnUpdateStopDebugger(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsRunning());
 }
 
 void CEditorView::OnShowCallStack()
@@ -7363,76 +7352,34 @@ void CEditorView::OnWatchVariableType()
 	}
 }
 
-void CEditorView::OnUpdateShowCallStack(CCmdUI * pCmdUI)
+void CEditorView::OnUpdateShowCallStack(CCmdUI* pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CEditorView::OnUpdateStepInto(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CEditorView::OnUpdateStepOver(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CEditorView::OnUpdateStepOut(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning());
 }
 
 void CEditorView::OnUpdateWatchVariableValue(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning() && m_EditorCtrl.IsTextSelected());
 }
 
 void CEditorView::OnUpdateWatchVariableType(CCmdUI * pCmdUI)
 {
-	if (ThreadWorkerMgr.IsDebuggerRunning())
-	{
-		pCmdUI->Enable(TRUE);
-	}
-	else
-	{
-		pCmdUI->Enable(FALSE);
-	}
+	pCmdUI->Enable(ThreadWorkerMgr.IsDebuggerRunning() && m_EditorCtrl.IsTextSelected());
 }
 
 void CEditorView::OnShowBuildErrors()

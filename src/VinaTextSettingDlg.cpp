@@ -226,26 +226,8 @@ void VinaTextSettingDlg::UpdateApplicationLook()
 		break;
 	}
 
-	switch (AppSettingMgr.m_ApplicationThemeLook)
-	{
-	case 0: // Office 2003
-	case 1: // VS.NET 2005
-	case 2: // Windows XP
-	case 3: // Office 2007
-	case 4: // Office 2007
-	case 5: // Office 2007
-	case 6: // Office 2007
-	case 7: // VS 2008
-	{
-		CWindowDC dc(NULL);
-		theApp.m_bHiColorIcons = dc.GetDeviceCaps(BITSPIXEL) >= 16;
-		CDockingManager::SetDockingMode(DT_SMART);
-	}
-	break;
-
-	default:
-		theApp.m_bHiColorIcons = FALSE;
-	}
+	CWindowDC dc(NULL);
+	CDockingManager::SetDockingMode(DT_SMART);
 
 	CTabbedPane::ResetTabs();
 

@@ -156,6 +156,10 @@ public:
 	afx_msg void OnStepOver();
 	afx_msg void OnStepInto();
 	afx_msg void OnStepOut();
+	afx_msg void OnWatchVariableValue();
+	afx_msg void OnWatchVariableType();
+	afx_msg void OnAddBreakpoint();
+	afx_msg void OnDeleteAllBreakPoints();
 	afx_msg void OnUpdateStopDebugger(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateStartDebugger(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateReStartDebugger(CCmdUI * pCmdUI);
@@ -163,6 +167,10 @@ public:
 	afx_msg void OnUpdateStepInto(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateStepOver(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateStepOut(CCmdUI * pCmdUI);
+	afx_msg void OnUpdateWatchVariableValue(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateWatchVariableType(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateAddBreakpoint(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateDeleteAllBreakPoints(CCmdUI* pCmdUI);
 
 // Attributes
 protected:

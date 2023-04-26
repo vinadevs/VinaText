@@ -870,7 +870,7 @@ CString AppUtils::GetFileTypeByExtension(const CString & strFileExt)
 CString AppUtils::GetFileFormatDescription(const CString & strFileExt)
 {
 	CString strFileDescription = _T("Normal File");
-	if (AppUtils::GetVinaTextApp()->m_FileDescriptionData.empty())
+	if (AppUtils::GetVinaTextApp()->m_FileDescriptionData.IsEmpty())
 	{
 		CString strFilePath = PathUtils::GetVinaTextPackagePath() + _T("data-packages\\file-format-description.dat");
 		if (PathFileExists(strFilePath))
@@ -896,12 +896,11 @@ CString AppUtils::GetFileFormatDescription(const CString & strFileExt)
 	}
 	else
 	{
-		std::map<CString, CString>::const_iterator iter;
 		CString strFindWhat = _T(".") + strFileExt;
-		iter = AppUtils::GetVinaTextApp()->m_FileDescriptionData.find(strFindWhat);
-		if (iter != AppUtils::GetVinaTextApp()->m_FileDescriptionData.end())
+		auto iter = AppUtils::GetVinaTextApp()->m_FileDescriptionData.Lookup(strFindWhat);
+		if (iter)
 		{
-			strFileDescription = iter->second;
+			strFileDescription = iter->m_value;
 		}
 	}
 	return strFileDescription;
