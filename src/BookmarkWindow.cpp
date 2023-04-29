@@ -165,7 +165,7 @@ void CBookmarkDlg::ClearBookmarkData()
 	for (auto const& data : m_BookmarkData)
 	{
 		auto pOpenedDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(data._strTargetFile));
-		if (pOpenedDoc)
+		if (pOpenedDoc && pOpenedDoc->GetEditorCtrl()->IsLineHasBookMark(data._nLineNumber))
 		{
 			pOpenedDoc->GetEditorCtrl()->DeleteBookMark(data._nLineNumber, data._strTargetFile);
 		}
@@ -208,7 +208,7 @@ void CBookmarkDlg::ClearSelectedBoorkmark()
 			m_wndBookmarkList.SetItemCount(static_cast<int>(m_BookmarkData.size()));
 			// update editor
 			auto pOpenedDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(strFileTarget));
-			if (pOpenedDoc)
+			if (pOpenedDoc && pOpenedDoc->GetEditorCtrl()->IsLineHasBookMark(nLineNumber))
 			{
 				pOpenedDoc->GetEditorCtrl()->DeleteBookMark(nLineNumber, strFileTarget);
 			}
@@ -295,8 +295,6 @@ void CBookmarkDlg::OnGetdispinfoList(NMHDR * pNMHDR, LRESULT * pResult)
 		{
 			//Text is _strLine
 			text = m_BookmarkData[itemid]._strLine;
-			// remove junks from result, make it beautiful...
-			text = AppUtils::RemoveJunkFromCString(text);
 		}
 		//Copy the text to the LV_ITEM structure
 		//Maximum number of characters is in pItem->cchTextMax
@@ -625,7 +623,10 @@ namespace
 			int nLine = AppUtils::CStringToInt(strLineNumber);
 			pEditor->GotoLine(nLine);
 			pEditor->SetLineCenterDisplay(nLine);
-			pEditor->AddBookMark(nLine, strFileTarget);
+			if (!pEditor->IsLineHasBookMark(pEditor->AddBookMark(nLine, strFileTarget)))
+			{
+				pEditor->AddBookMark(nLine, strFileTarget);
+			}
 		}
 	}
 }

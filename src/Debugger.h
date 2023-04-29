@@ -92,6 +92,8 @@ typedef std::deque<CString> DebuggerCommandQueue;
 ////////////////////////////////////////////////////////////
 // Debugger Manager
 
+#include "Singleton.h"
+
 class CVinaTextDebugger : public CSingletonHelper<CVinaTextDebugger>
 {
 public:

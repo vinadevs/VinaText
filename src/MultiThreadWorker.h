@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "Singleton.h"
+
 class CMainFrame;
 
 // THIS MODULE USE TO INTERACT WITH EXTERNAL COMPILERS AND DEBUGGERS

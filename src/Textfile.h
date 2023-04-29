@@ -141,6 +141,8 @@ struct EncodingMap
 	}
 };
 
+#include "Singleton.h"
+
 class CEncodingManager : public CSingletonHelper<CEncodingManager>
 {
 public:

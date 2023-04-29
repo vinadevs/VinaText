@@ -81,17 +81,17 @@ CString AppUtils::LongToCString(long l)
 	return(str);
 }
 
-int AppUtils::CStringToInt(CString str)
+int AppUtils::CStringToInt(const CString& str)
 {
 	return _ttoi(str);
 }
 
-long AppUtils::CStringToLong(CString str)
+long AppUtils::CStringToLong(const CString& str)
 {
 	return _ttol(str);
 }
 
-float AppUtils::CStringToFloat(CString str)
+float AppUtils::CStringToFloat(const CString& str)
 {
 	return static_cast<float>(_ttof(str));
 }
@@ -104,22 +104,22 @@ char* AppUtils::CopyCharArray(const char* orig)
 	return res;
 }
 
-std::string AppUtils::CStringToStd(CString cs)
+std::string AppUtils::CStringToStd(const CString& str)
 {
-	CT2CA pszConvertedAnsiString(cs);
+	CT2CA pszConvertedAnsiString(str);
 	std::string strStd(pszConvertedAnsiString);
 	return strStd;
 }
 
-CString AppUtils::StdToCString(std::string stdSt)
+CString AppUtils::StdToCString(const std::string& str)
 {
-	CString cs(stdSt.c_str());
+	CString cs(str.c_str());
 	return cs;
 }
 
-std::wstring AppUtils::CStringToWStd(CString cs)
+std::wstring AppUtils::CStringToWStd(const CString& str)
 {
-	std::wstring wcs(cs);
+	std::wstring wcs(str);
 	return wcs;
 }
 
@@ -284,7 +284,7 @@ CStringW AppUtils::UTF8_TO_UTF16(const CStringA& utf8)
 	return utf16;
 }
 
-int AppUtils::FindFirstCharacterNotOf(CString str, CString strDelim)
+int AppUtils::FindFirstCharacterNotOf(const CString& str, const CString& strDelim)
 {
 	if (str.IsEmpty()) return -1;
 	const std::wstring delims = CStringToWStd(strDelim);
@@ -329,23 +329,23 @@ BOOL AppUtils::StringIsFloat(const std::wstring & str)
 	return TRUE;
 }
 
-CString	AppUtils::WStdToCString(const std::wstring& stdSt)
+CString	AppUtils::WStdToCString(const std::wstring& str)
 {
-	CString cs(stdSt.c_str());
+	CString cs(str.c_str());
 	return cs;
 }
 
-std::wstring AppUtils::StdToWStd(std::string stdSt)
+std::wstring AppUtils::StdToWStd(const std::string& str)
 {
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	std::wstring wcs = converter.from_bytes(stdSt);
+	std::wstring wcs = converter.from_bytes(str);
 	return wcs;
 }
 
-std::string AppUtils::WStdToStd(std::wstring stdSt)
+std::string AppUtils::WStdToStd(const std::wstring& str)
 {
 	std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-	std::string strStd = converter.to_bytes(stdSt);
+	std::string strStd = converter.to_bytes(str);
 	return strStd;
 }
 
@@ -1830,7 +1830,7 @@ void AppUtils::SyncActionAllEditorDocuments(std::function<void(CEditorDoc* pDoc)
 	}
 }
 
-BOOL AppUtils::IsDocumentExisted(CString strFile)
+BOOL AppUtils::IsDocumentExisted(const CString& strFile)
 {
 	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
 	while (posTemplate)

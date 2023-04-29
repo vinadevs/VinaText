@@ -8,6 +8,8 @@
 
 #pragma once
 
+#include "Singleton.h"
+
 typedef std::stack<CString> RECENT_TAB_BUFFER;
 
 class CRecentCloseMDITabManager

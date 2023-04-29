@@ -192,9 +192,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_HIDECURRENTUSERFOLDER, &CMainFrame::OnUpdateToolsHideCurrentUserFolder)
 	ON_COMMAND(ID_MDI_TABBED_DOCUMENT, &CMainFrame::OnMdiTabbedDocument)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TABBED_DOCUMENT, &CMainFrame::OnUpdateMdiTabbedDocument)	
-	ON_COMMAND(ID_APP_THEME_LIGHT, &CMainFrame::OnVinaTextThemeLight)
-	ON_COMMAND(ID_APP_THEME_MONOKAI, &CMainFrame::OnVinaTextThemeMonokai)
-	ON_COMMAND(ID_APP_THEME_SIERRABLUE, &CMainFrame::OnVinaTextThemeSierraBlue)
 	ON_COMMAND(ID_VIEW_APP_SETTINGS, &CMainFrame::OnVinaTextSettings)
 	ON_COMMAND(ID_TOOLS_SETROOTFOLDER, &CMainFrame::OnToolsSetRootFolder)
 	ON_COMMAND(ID_TOOLS_REMOVE_FOLDER, &CMainFrame::OnToolsRemoveFolder)
@@ -1704,27 +1701,6 @@ void CMainFrame::OnUpdateToolsHideCurrentUserFolder(CCmdUI* pCmdUI)
 {
 #pragma warning(suppress: 26486)
 	pCmdUI->SetCheck(!GetFileExplorerCtrl().GetShowCurrentUserFolder());
-}
-
-void CMainFrame::OnVinaTextThemeLight()
-{
-	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
-	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to Light."), MB_ICONINFORMATION);
-}
-
-void CMainFrame::OnVinaTextThemeMonokai()
-{
-	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_MONOKAI;
-	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to Monokai."), MB_ICONINFORMATION);
-}
-
-void CMainFrame::OnVinaTextThemeSierraBlue()
-{
-	AppSettingMgr.m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE;
-	AppUtils::UpdateSettingsForVinatext();
-	AfxMessageBox(_T("Theme changed to Sierra Blue."), MB_ICONINFORMATION);
 }
 
 BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)

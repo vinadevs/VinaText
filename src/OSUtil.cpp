@@ -341,8 +341,8 @@ tm* OSUtils::AddDays(tm* time, int days)
 
 tm* OSUtils::GetCurrentTimeEx()
 {
-	auto now = WindowsClock::now();
-	std::time_t now_c = WindowsClock::to_time_t(now);
+	auto now = std::chrono::system_clock::now();
+	std::time_t now_c = std::chrono::system_clock::to_time_t(now);
 	struct tm* currentDate = std::localtime(&now_c);
 	return currentDate;
 }

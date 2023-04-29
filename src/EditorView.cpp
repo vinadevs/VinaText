@@ -3567,7 +3567,8 @@ void CEditorView::OnOptionsAddBookmark()
 	CString strPathName = pDoc->GetPathName();
 	if (!PathFileExists(strPathName)) return;
 	int nBookmarkLine = m_EditorCtrl.GetCurrentLine();
-	if (m_EditorCtrl.AddBookMark(nBookmarkLine, strPathName))
+	if (!m_EditorCtrl.IsLineHasBookMark(nBookmarkLine)
+		&& m_EditorCtrl.AddBookMark(nBookmarkLine, strPathName))
 	{
 		UpdateDockPaneBookmark(nBookmarkLine, FALSE, strPathName);
 	}
@@ -3585,7 +3586,8 @@ void CEditorView::OnOptionsDeleteBookmark()
 	CString strPathName = pDoc->GetPathName();
 	if (!PathFileExists(strPathName)) return;
 	int nBookmarkLine = m_EditorCtrl.GetCurrentLine();
-	if (m_EditorCtrl.DeleteBookMark(nBookmarkLine, strPathName))
+	if (m_EditorCtrl.IsLineHasBookMark(nBookmarkLine) 
+		&& m_EditorCtrl.DeleteBookMark(nBookmarkLine, strPathName))
 	{
 		UpdateDockPaneBookmark(nBookmarkLine, TRUE, strPathName);
 	}
@@ -5820,36 +5822,22 @@ void CEditorView::GetMatchedWordsOnFile(std::vector<CString>& listWord, const CS
 
 			if (!fIsWordExisted(strTargetWord, listWord))
 			{
-				listWord.push_back(strTargetWord);
+				listWord.emplace_back(strTargetWord);
 			}
 		}
 		nPosFound = m_EditorCtrl.SearchTextInRange(strReExpress, wordEnd, docLength);
 	}
 }
 
-void CEditorView::GetAutoCompleteList(CString strWord, std::vector<CString>& listWord)
+void CEditorView::GetAutoCompleteList(const CString& strWord, std::vector<CString>& listWord)
 {
 	if (strWord.IsEmpty()) return;
-	if (m_IntellisenseDataset.empty() && m_bUseIntellisense == FALSE)
+	for (auto const& onedataset : m_AutoCompelteDataset)
 	{
-		for (auto const& onedataset : m_AutoCompelteDataset)
+		CString strCmp = onedataset.Mid(0, strWord.GetLength());
+		if (strCmp.CompareNoCase(strWord) == 0)
 		{
-			CString strCmp = onedataset.Mid(0, strWord.GetLength());
-			if (strCmp.CompareNoCase(strWord) == 0)
-			{
-				listWord.push_back(onedataset);
-			}
-		}
-	}
-	else
-	{
-		for (const CString& word : m_IntellisenseDataset)
-		{
-			CString strCmp = word.Mid(0, strWord.GetLength());
-			if (strCmp.CompareNoCase(strWord) == 0)
-			{
-				listWord.push_back(word);
-			}
+			listWord.emplace_back(onedataset);
 		}
 	}
 	for (int i = 0; i < m_LangKeywordDataset.size(); ++i)
@@ -5857,25 +5845,10 @@ void CEditorView::GetAutoCompleteList(CString strWord, std::vector<CString>& lis
 		CString strCmp = m_LangKeywordDataset[i].Mid(0, strWord.GetLength());
 		if (strCmp.CompareNoCase(strWord) == 0)
 		{
-			listWord.push_back(m_LangKeywordDataset[i]);
+			listWord.emplace_back(m_LangKeywordDataset[i]);
 		}
 	}
 	GetMatchedWordsOnFile(listWord, strWord);
-}
-
-void CEditorView::GetIntellisenseList(CString strPreviousWord, std::vector<CString>& listMethod)
-{
-	listMethod.clear();
-	if (strPreviousWord.IsEmpty()) return;
-	for (auto const& onedataset : m_AutoCompelteDataset)
-	{
-		CString strCmp = onedataset.Mid(0, strPreviousWord.GetLength());
-		int pos = onedataset.Find(strPreviousWord);
-		if (strCmp == strPreviousWord && pos != -1)
-		{
-			listMethod.push_back(onedataset.Mid(pos + strPreviousWord.GetLength()));
-		}
-	}
 }
 
 void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/, BOOL bClearSelection/*= TRUE*/)
@@ -6155,7 +6128,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					ShowAutoCompleteByAddedWord(strWord);
 				}
 			}
-			if (AppSettingMgr.m_bEnableProcessIndentationTab && AppUtils::IsLanguageSupportLexer(m_CurrentDocLanguage) && !m_bEnableLargeFileEditMode)
+			if (AppSettingMgr.m_bEnableProcessIndentationTab && m_bEnterKeyPressed && AppUtils::IsLanguageSupportLexer(m_CurrentDocLanguage) && !m_bEnableLargeFileEditMode)
 			{
 				ProcessIndentationTab();
 			}
@@ -6414,7 +6387,7 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 {
 	m_nSpaceDelta = 0;
 	m_nIndicatorPos = 0;
-	m_bActiveIndentationText = FALSE;
+	m_bEnterKeyPressed = FALSE;
 	m_bIsIndicatorChar = FALSE;
 	m_bIsDeltaSpaceEnable = FALSE;
 
@@ -6430,6 +6403,10 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 	CString strCurrentLine;
 	m_EditorCtrl.GetTextFromLine(lcurLine, strCurrentLine);
 	m_nIndicatorPos = AppUtils::FindFirstCharacterNotOf(strCurrentLine, _T(" \t"));
+	if (strCurrentLine.GetAt(0) == _T('\t'))
+	{
+		m_nIndicatorPos = strCurrentLine.Replace(_T("\t"), _T("\t")) * 4; // change to tab!
+	}
 	CString strNextLine;
 	m_EditorCtrl.GetTextFromLine(lcurLine + 1, strNextLine);
 	int nNextIndicatorPos = AppUtils::FindFirstCharacterNotOf(strNextLine, _T(" \t"));
@@ -6437,7 +6414,7 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 	if (nNextIndicatorPos == 0 && m_nIndicatorPos == -1)
 	{
 		m_strTab.Empty();
-		m_bActiveIndentationText = TRUE;
+		m_bEnterKeyPressed = TRUE;
 		return;
 	}
 	if (deltaSpace != m_nIndicatorPos)
@@ -6536,7 +6513,14 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 		int pos = AppUtils::FindFirstCharacterNotOf(strCurrentLine, _T(" \t"));
 		if (pos == -1) return;
 		m_strTab = strCurrentLine.Mid(0, pos);
-		m_strTab += EDITOR_TAB_4SPACE;
+		if (m_EditorCtrl.GetTabSpace() == TabSpace::Tabs)
+		{
+			m_strTab += EDITOR_TAB;
+		}
+		else
+		{
+			m_strTab += EDITOR_TAB_4SPACE;
+		}
 	}
 	else
 	{
@@ -6546,51 +6530,52 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 			m_strTab = strCurrentLine.Mid(0, pos1);
 		}
 	}
-	m_bActiveIndentationText = TRUE;
+	m_bEnterKeyPressed = TRUE;
 }
 
 void CEditorView::ProcessIndentationTab() // IMPORTANT FUNCTION!!!
 {
-	if (m_bActiveIndentationText)
+	int lcurPos = m_EditorCtrl.GetCurrentPosition();
+	if (m_bIsIndicatorChar)
 	{
-		int lcurPos = m_EditorCtrl.GetCurrentPosition();
-		if (m_bIsIndicatorChar)
+		CString strInicatorTab;
+		for (int i = 0; i < m_nIndicatorPos; ++i)
 		{
-			CString strInicatorTab;
-			for (int i = 0; i < m_nIndicatorPos; ++i)
-			{
-				strInicatorTab +=CSTRING_SPACE;
-			}
-			if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
-			{
-				m_EditorCtrl.InsertText(m_strTab + strInicatorTab, lcurPos);
-			}
-			else
-			{
-				m_EditorCtrl.InsertText(m_strTab + m_EditorCtrl.GetEOLCString() + strInicatorTab, lcurPos);
-			}
+			strInicatorTab += CSTRING_SPACE;
+		}
+		if (m_EditorCtrl.GetTabSpace() == TabSpace::Tabs)
+		{
+			strInicatorTab.Replace(EDITOR_TAB_4SPACE, EDITOR_TAB);
+		}
+		if (m_CurrentDocLanguage == VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PYTHON)
+		{
+			m_EditorCtrl.InsertText(m_strTab + strInicatorTab, lcurPos);
 		}
 		else
 		{
-			if (!m_bIsDeltaSpaceEnable)
-			{
-				m_EditorCtrl.InsertText(m_strTab, lcurPos);
-			}
-			else
-			{
-				for (int i = 0; i < m_nSpaceDelta; ++i)
-				{
-					AppUtils::ReplaceFirstOf(m_strTab,CSTRING_SPACE, _T(""));
-				}
-				m_EditorCtrl.InsertText(m_strTab, lcurPos);
-			}
+			m_EditorCtrl.InsertText(m_strTab + m_EditorCtrl.GetEOLCString() + strInicatorTab, lcurPos);
 		}
-		if (m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
-		{
-			m_EditorCtrl.GotoPosition(lcurPos + m_strTab.GetLength());
-		}
-		m_bActiveIndentationText = FALSE;
 	}
+	else
+	{
+		if (!m_bIsDeltaSpaceEnable)
+		{
+			m_EditorCtrl.InsertText(m_strTab, lcurPos);
+		}
+		else
+		{
+			for (int i = 0; i < m_nSpaceDelta; ++i)
+			{
+				AppUtils::ReplaceFirstOf(m_strTab, CSTRING_SPACE, _T(""));
+			}
+			m_EditorCtrl.InsertText(m_strTab, lcurPos);
+		}
+	}
+	if (m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
+	{
+		m_EditorCtrl.GotoPosition(lcurPos + m_strTab.GetLength());
+	}
+	m_bEnterKeyPressed = FALSE;
 }
 
 void CEditorView::ActiveDockWindow(DOCKABLE_PANE_TYPE type)

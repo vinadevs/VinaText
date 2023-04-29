@@ -453,8 +453,7 @@ protected:
 	// general helpers
 	void SortLineByOptions(SORT_LINE_OPT sortOptions);
 	void TrimLine(int trimOption);
-	void GetAutoCompleteList(CString strWord, std::vector<CString>& listWord);
-	void GetIntellisenseList(CString strPreviousWord, std::vector<CString>& listMethod);
+	void GetAutoCompleteList(const CString& strWord, std::vector<CString>& listWord);
 	void AutoIndentationText();
 	void ProcessIndentationTab();
 	void SelectAllOccurrences(const CString & strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE);
@@ -510,11 +509,10 @@ protected:
 	BOOL m_bChangedExtensionFile = FALSE;
 	BOOL m_bToggleMoniterFileRealTime = FALSE;
 	BOOL m_bToggleShowAllCharater = FALSE;
-	BOOL m_bActiveIndentationText = FALSE;
+	BOOL m_bEnterKeyPressed = FALSE;
 	BOOL m_bIsIndicatorChar = FALSE;
 	BOOL m_bIsDeltaSpaceEnable = FALSE;
 	BOOL m_bDocumentReadOnly = FALSE;
-	BOOL m_bUseIntellisense = FALSE;
 	BOOL m_bSelectionByMouseDrag = TRUE;
 	BOOL m_bIsWatchFileProcessing = FALSE;
 	BOOL m_bEnableSpellChecker = FALSE;
@@ -525,10 +523,11 @@ protected:
 	BOOL m_bEnableLargeFileEditMode = FALSE;
 	FILETIME m_FileSystemTime = {};
 	CEditorCtrl m_EditorCtrl;
-	FuncDocStringDataset m_mapFuncDocString;
-	FuncProtypeDocStringDataset m_mapFuncProtypeDocString;
-	FuntionCalltipDataset m_FuntionCalltipDataset;
-	IntellisenseDataset   m_IntellisenseDataset;
+	// Auto Complete Dataset
+	typedef std::vector<CString> LangKeywordDataset;
+	typedef std::set<CString> AutoCompelteDataset;
+	typedef std::set<CString> UpdateWordsDataset;
+	typedef std::unordered_set<int> MatchedLineDataset;
 	LangKeywordDataset    m_LangKeywordDataset;
 	AutoCompelteDataset   m_AutoCompelteDataset;
 	UpdateWordsDataset    m_UpdateWordsDataset;

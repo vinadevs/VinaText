@@ -12,6 +12,8 @@
 
 #pragma warning(disable : 4996)
 
+typedef CWnd CWin32Base;
+
 class CLanguageDatabase;
 
 class CEditorCtrl : public CWin32Base
@@ -20,7 +22,7 @@ public:
 	CEditorCtrl();
 	virtual ~CEditorCtrl();
 	void ReleaseDocument();
-	virtual BOOL Create(CString strWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
+	virtual BOOL Create(const CString& strWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID);
 	void InitilizeSetting(CLanguageDatabase* pDatabase);
 	void ResetUndoSavePoint();
 	void SetTextToEditor(const CString& strText);
@@ -29,7 +31,7 @@ public:
 	void GetTextRange(Sci_TextRange *txtRange);
 	void GetTextRange(CString & strText, size_t start, size_t end);
 	void GetTextRange(char* strText, int lStart, int lEnd);
-	void GetTextFromLine(int nline, CString &strText);
+	void GetTextFromLine(int nline, CString& strText);
 	CString GetTextFromCurrentLine();
 	CString GetRecentAddedText();
 	CString GetCurrentWord();
@@ -357,3 +359,12 @@ private:
 	// theme color
 	EditorThemeColorSet   m_AppThemeColorSet;
 };
+
+// buffer string macro
+#define CREATE_BUFFER_FROM_CSTRING(bufUtf8, CString) \
+	int lengthUtf8 = WideCharToMultiByte(CP_UTF8, 0, CString, -1, NULL, 0, NULL, NULL); \
+	if (lengthUtf8 <= 0) lengthUtf8 = 1; \
+	bufUtf8 = new char[lengthUtf8 + 1]; \
+	bufUtf8[0] = '\0'; \
+	WideCharToMultiByte(CP_UTF8, 0, CString, -1, bufUtf8, lengthUtf8, NULL, NULL); \
+	bufUtf8[lengthUtf8] = '\0'; \

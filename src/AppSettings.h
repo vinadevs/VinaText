@@ -9,6 +9,7 @@
 #pragma once
 
 #include "EditorDataStructure.h"
+#include "Singleton.h"
 
 enum FOLDER_MARGIN_STYPE
 {
@@ -242,6 +243,8 @@ private:
 	// settings can not edit by users...
 	int m_nFileCopyCounter = 0;
 	std::unordered_map<std::string, RecentEditorInfo> m_RecentEditorCaretInfo;
+	// Document ID
+	typedef std::unordered_set<int> DocumentEmptyIDBuffer;
 	DocumentEmptyIDBuffer m_DocIDBuffer;
 	// singleton
 	SINGLETON_IMPLEMENT(CAppSettings)

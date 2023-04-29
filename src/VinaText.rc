@@ -962,14 +962,7 @@ BEGIN
     END
     POPUP "Preference"
     BEGIN
-        POPUP "Application Theme"
-        BEGIN
-            MENUITEM "Light",                       ID_APP_THEME_LIGHT
-            MENUITEM "Monokai",                     ID_APP_THEME_MONOKAI
-            MENUITEM "Sierra Blue",                 ID_APP_THEME_SIERRABLUE
-        END
-        MENUITEM SEPARATOR
-        MENUITEM "General Settings",            ID_VIEW_APP_SETTINGS
+        MENUITEM "Application Settings",            ID_VIEW_APP_SETTINGS
     END
     POPUP "Help"
     BEGIN

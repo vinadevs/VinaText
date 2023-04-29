@@ -57,7 +57,7 @@ void CEditorCtrl::ReleaseDocument()
 	}
 }
 
-BOOL CEditorCtrl::Create(CString strWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
+BOOL CEditorCtrl::Create(const CString& strWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID)
 {
 	if (!CWnd::CreateEx(WS_EX_CLIENTEDGE | WS_EX_COMPOSITED, STR_SCINTILLAWND, strWindowName, dwStyle, rect, pParentWnd, (UINT)nID))
 	{
@@ -939,11 +939,6 @@ int CEditorCtrl::GetSelectionStartPosition()
 int CEditorCtrl::GetSelectionEndPosition()
 {
 	return (int)DoCommand(SCI_GETSELECTIONEND);
-}
-
-CStringA TCharToMulti(CString str)
-{
-	return CStringA(CT2CAEX<_MAX_PATH>(str));
 }
 
 CString CEditorCtrl::GetSelectedText()
@@ -3312,13 +3307,9 @@ BOOL CEditorCtrl::DeleteBookMark(int lLine, const CString& strFileName)
 	{
 		return FALSE;
 	}
-	if (IsLineHasBookMark(lLine))
-	{
-		DoCommand(SCI_MARKERDELETE, lLine - 1, SC_MARKER_BOOKMARK);
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Removed a bookmark at file %s, line %d."), strFileName, lLine);
-		return TRUE;
-	}
-	return FALSE;
+	DoCommand(SCI_MARKERDELETE, lLine - 1, SC_MARKER_BOOKMARK);
+	LOG_OUTPUT_MESSAGE_FORMAT(_T("> Removed a bookmark at file %s, line %d."), strFileName, lLine);
+	return TRUE;
 }
 
 void CEditorCtrl::DeleteAllBookMark()
@@ -3330,7 +3321,7 @@ BOOL CEditorCtrl::IsLineHasBookMark(int lLine)
 {
 	int nMarker = static_cast<int>(DoCommand(SCI_MARKERGET, lLine - 1, SC_MARKER_BOOKMARK));
 	// check mask for markerbit 0
-	if (nMarker == 8)
+	if (nMarker == 8 || nMarker == 9)
 	{
 		return TRUE;
 	}

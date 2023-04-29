@@ -337,8 +337,6 @@ void CSearchResultDlg::OnGetdispinfoList(NMHDR * pNMHDR, LRESULT * pResult)
 		{
 			//Text is _strLine
 			text = m_DisplayResultSearchData._vecResultSearchInfo[itemid]._strLine;
-			// remove junks from result, make it beautiful...
-			text = AppUtils::RemoveJunkFromCString(text);
 		}
 		//Copy the text to the LV_ITEM structure
 		//Maximum number of characters is in pItem->cchTextMax

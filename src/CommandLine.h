@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Singleton.h"
 #include "NamedPipe.h"
 
 enum class VINATEXT_CMD_OPTION : unsigned int
@@ -34,7 +35,7 @@ public:
 	void Write(LPCTSTR szText);
 	void WriteLine(LPCTSTR szLine = _T(""));
 	void SetOutputToNamedPipe(BOOL bOutToNamedPipe);
-	void SetNamedPipeName(CString stPipeName);
+	void SetNamedPipeName(const CString& stPipeName);
 	void CreateNamedPipe();
 	void CloseNamedPipe();
 	BOOL IsOutputToNamedPipe();
@@ -44,7 +45,7 @@ public:
 
 private:				
 	BOOL RedirectStdOut();
-	BOOL WriteNamedPipe(CString stMsg);
+	BOOL WriteNamedPipe(const CString& stMsg);
 	static BOOL m_bConsoleReady;
 	static BOOL m_bOutToNamedPipe;
 	static CNamedPipe* m_NamedPipe;

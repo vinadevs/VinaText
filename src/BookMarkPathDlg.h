@@ -15,7 +15,7 @@ class CBookMarkPathDlg : public CDlgBase
 {
 public:
 	//Constructors
-	CBookMarkPathDlg(CString strBookmarkFile, CWnd* pParent = NULL);
+	CBookMarkPathDlg(const CString& strBookmarkFile, CWnd* pParent = NULL);
 
 	//Member variables
 	enum { IDD = IDD_BOOKMARK_PATH_DLG };

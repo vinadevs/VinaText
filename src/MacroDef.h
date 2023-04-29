@@ -10,53 +10,12 @@
 
 #include "stdafx.h"
 
-/////////////////////////////////////
-// macros
-
-#define SINGLETON_IMPLEMENT(classname) \
-public: \
-    classname(classname const&) = delete; \
-    classname& operator=(classname const&) = delete; \
-    static classname& GetInstance() { \
-        static classname instance; \
-        return instance; \
-    } \
-private: \
-    classname() = default; \
-    ~classname() = default;
-
-#define SINGLETON_CUSTOM_CON_DESTRUCTOR(classname) \
-public: \
-    classname(classname const&) = delete; \
-    classname& operator=(classname const&) = delete; \
-    static classname& GetInstance() { \
-        static classname instance; \
-        return instance; \
-    } 
-
-#define DISABLE_COPY_AND_ASSIGNMENT(TypeName)  \
-    TypeName(const TypeName&) = delete;  \
-    void operator=(const TypeName&) = delete;
-
-#define DISABLE_MOVE_SEMANTICS(TypeName)  \
-    TypeName(const TypeName&&) = delete;  \
-    void operator=(const TypeName&&) = delete;
-
 // memory free
 #define DELETE_POINTER_CPP(x)		 { if(x) { delete (x); (x)=NULL;} }
 #define DELETE_POINTER_CPP_ARRAY(x)  { if(x){ delete [] (x); (x)=NULL;} }
 #define DELETE_POINTER_C(x)          { if (x) { free(x); x = NULL;} }
 #define DELETE_WIN32_HANDLE(x)       { if (x) { ::CloseHandle(x); x = INVALID_HANDLE_VALUE;} }
 #define DELETE_WIN32_HWND(x)       { if (x) { ::CloseWindow(x); x = NULL;} }
-
-struct STDeleteOperator
-{
-	template<class T>
-	void operator()(T*& p)
-	{
-		DELETE_POINTER_CPP(p)
-	}
-};
 
 // avoid block main thread
 #define USE_THREAD_PUMP_UI AfxGetApp()->PumpMessage(); ::Sleep(10);
@@ -75,15 +34,6 @@ struct STDeleteOperator
 
 // toggle flag
 #define TOGGLE_FLAG(flag) flag = !flag;
-
-// buffer string macro
-#define CREATE_BUFFER_FROM_CSTRING(bufUtf8, CString) \
-	int lengthUtf8 = WideCharToMultiByte(CP_UTF8, 0, CString, -1, NULL, 0, NULL, NULL); \
-	if (lengthUtf8 <= 0) lengthUtf8 = 1; \
-	bufUtf8 = new char[lengthUtf8 + 1]; \
-	bufUtf8[0] = '\0'; \
-	WideCharToMultiByte(CP_UTF8, 0, CString, -1, bufUtf8, lengthUtf8, NULL, NULL); \
-	bufUtf8[lengthUtf8] = '\0'; \
 
 #define CREATE_CSTRING_FROM_BUFFER 1
 
@@ -156,47 +106,3 @@ struct STDeleteOperator
 
 // max file size
 #define FILE_SIZE_LIMITATION INT_MAX
-
-//////////////////////////////////
-// Internal tydefs
-
-typedef CWnd CWin32Base;
-
-typedef std::chrono::system_clock WindowsClock;
-
-// Auto Complete Dataset
-typedef std::map<CString, CString> FuntionCalltipDataset;
-typedef std::vector<CString> IntellisenseDataset;
-typedef std::vector<CString> LangKeywordDataset;
-typedef std::set<CString> AutoCompelteDataset;
-typedef std::set<CString> UpdateWordsDataset;
-typedef std::map<CString, CString> FuncDocStringDataset;
-typedef std::map<CString, CString> FuncProtypeDocStringDataset;
-typedef std::unordered_set<int> MatchedLineDataset;
-
-// Document ID
-typedef std::unordered_set<int> DocumentEmptyIDBuffer;
-
-/////////////////////////////////////
-// singleton design pattern
-
-template <typename T>
-class CSingletonHelper
-{
-	friend T;
-public:
-	static T& GetInstance();
-private:
-	CSingletonHelper() = default;
-	~CSingletonHelper() = default;
-	CSingletonHelper(const CSingletonHelper&) = delete;
-	CSingletonHelper& operator=(const CSingletonHelper&) = delete;
-	CSingletonHelper(CSingletonHelper&&) = delete;
-	CSingletonHelper& operator=(CSingletonHelper&&) = delete;
-};
-template <typename T>
-T& CSingletonHelper<T>::GetInstance()
-{
-	static T inst;
-	return inst;
-}

@@ -44,13 +44,13 @@ namespace AppUtils
 	CString IntToCString(int n);
 	CString FloatToCString(float f);
 	CString LongToCString(long l);
-	int CStringToInt(CString str);
-	long CStringToLong(CString str);
-	float CStringToFloat(CString str);
+	int CStringToInt(const CString& str);
+	long CStringToLong(const CString& str);
+	float CStringToFloat(const CString& str);
 	char* CopyCharArray(const char * orig);
-	std::string  CStringToStd(CString cs);
-	CString      StdToCString(std::string stdSt);
-	std::wstring CStringToWStd(CString cs);
+	std::string  CStringToStd(const CString& str);
+	CString      StdToCString(const std::string& str);
+	std::wstring CStringToWStd(const CString& str);
 	CString DecimalToRomanNumerals(int nDecimalNumber);
 	void BufferBYTE2String(BYTE* pBuffer, const unsigned int	pBufferSize, char**	pString);
 	void String2BufferBYTE(const char* pString, BYTE** pBuffer, unsigned int* pBufferSize);
@@ -60,8 +60,8 @@ namespace AppUtils
 	BOOL IsUTF8String(const char * string);
 	const char * WideCharToCharAsCodePage(const wchar_t * wcharStr2Convert, UINT codepage, int lenIn = -1, int *pLenOut = NULL);
 	CString		 WStdToCString(const std::wstring& stdSt);
-	std::wstring StdToWStd(std::string stdSt);
-	std::string WStdToStd(std::wstring stdSt);
+	std::wstring StdToWStd(const std::string& stdSt);
+	std::string WStdToStd(const std::wstring& stdSt);
 	CString GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, CStringArray& arFields, BOOL bForceTrim = FALSE);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, std::list<CString>& arFields, BOOL bForceTrim = FALSE);
@@ -102,7 +102,7 @@ namespace AppUtils
 	std::vector<CEditorCtrl*> GetAllEditors();
 	void ResizeAllViews();
 	void SyncActionAllEditorDocuments(std::function<void(CEditorDoc* pDoc)> pFunctor, CEditorDoc* pExcludeDoc = NULL);
-	BOOL IsDocumentExisted(CString strFile);
+	BOOL IsDocumentExisted(const CString& strFile);
 	int GetDocumentTypeCount(DOCUMENT_TYPE type);
 	void CheckLastOpenDocument();
 	void UpdateModifiedDocumentTitle(CDocument * pDoc, BOOL bAddMarker = TRUE);
@@ -123,7 +123,7 @@ namespace AppUtils
 	std::vector<std::wstring> SplitterWStdString(const std::wstring & str, const std::wstring & delimiter);
 	std::vector<CString> SplitterCString(const CString& str, const std::string& delimiter);
 	int ReplaceFirstOf(CString & str, const CString& pszOld, const CString& pszNew);
-	int FindFirstCharacterNotOf(CString str, CString strDelim);
+	int FindFirstCharacterNotOf(const CString& str, const CString& strDelim);
 	BOOL StringIsDigits(const std::wstring & str);
 	BOOL StringIsInteger(const std::wstring & str);
 	BOOL StringIsFloat(const std::wstring & str);

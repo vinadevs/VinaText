@@ -20,7 +20,7 @@
 #endif //#ifdef _DEBUG
 
 #pragma warning(suppress: 26455)
-CBookMarkPathDlg::CBookMarkPathDlg(CString strBookmarkFile, CWnd* pParent)
+CBookMarkPathDlg::CBookMarkPathDlg(const CString& strBookmarkFile, CWnd* pParent)
 	: CDlgBase(CBookMarkPathDlg::IDD, pParent)
 	, m_strBookmarkFile(strBookmarkFile)
 {

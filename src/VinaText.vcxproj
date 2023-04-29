@@ -217,6 +217,7 @@
     <ClInclude Include="ExplorerSettingDlg.h" />
     <ClInclude Include="GeneralSettingDlg.h" />
     <ClInclude Include="ProgrammingSettingDlg.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="UserExtension.h" />
     <ClInclude Include="EditorCommonDef.h" />
     <ClInclude Include="EditorColorLight.h" />

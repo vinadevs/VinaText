@@ -154,12 +154,12 @@ BOOL CConsoleHepler::RedirectStdOut()
 	}
 }
 
-void CConsoleHepler::SetNamedPipeName(CString stPipeName)
+void CConsoleHepler::SetNamedPipeName(const CString& stPipeName)
 {
 	m_strPipeName = stPipeName;
 }
 
-BOOL CConsoleHepler::WriteNamedPipe(CString stMsg)
+BOOL CConsoleHepler::WriteNamedPipe(const CString& stMsg)
 {
 	// Write the string down the named pipe								
 	CStringA sMsgA(stMsg);

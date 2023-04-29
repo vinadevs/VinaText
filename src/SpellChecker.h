@@ -17,6 +17,7 @@ class CSpellChecker
 public:
 	CSpellChecker() = default;
 	~CSpellChecker();
+	typedef std::vector<CString> LangKeywordDataset;
 	BOOL Initilize(CEditorCtrl * pEditorCtrl, const std::wstring & langugueToCheck, const LangKeywordDataset & LangKeywordDataset);
 	void Finalize();
 	void GetSpellCheckSupportLanguages(std::vector<std::wstring>& listAvailableLanguages);

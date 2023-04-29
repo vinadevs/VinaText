@@ -1007,9 +1007,6 @@
 #define ID_MEDIA_VOLUME_DOWN            36439
 #define ID_MEDIA_NEXT_FRAME             36440
 #define ID_MEDIA_PREVIOUS_FRAME         36441
-#define ID_APP_THEME_LIGHT              36442
-#define ID_APP_THEME_MONOKAI            36443
-#define ID_APP_THEME_SIERRABLUE         36444
 #define ID_SELECTION_TO_WORD_LEFT       36445
 #define ID_PDF_FIND_TEXT                36446
 #define ID_PDF_GOTO_PAGE                36447

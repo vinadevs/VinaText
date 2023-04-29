@@ -310,8 +310,6 @@ void CBreakpointDlg::OnGetdispinfoList(NMHDR * pNMHDR, LRESULT * pResult)
 		{
 			//Text is _strLine
 			text = m_BreakpointData[itemid]._strLine;
-			// remove junks from result, make it beautiful...
-			text = AppUtils::RemoveJunkFromCString(text);
 		}
 		else if (pItem->iSubItem == 3)
 		{
