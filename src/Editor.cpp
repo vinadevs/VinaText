@@ -178,7 +178,7 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	if (m_strLexerName == _T("cpp") || m_strLexerName == _T("c") || m_strLexerName == _T("cs")
 		|| m_strLexerName == _T("java") || m_strLexerName == _T("javascript") || m_strLexerName == _T("typescript")
 		|| m_strLexerName == _T("phpscript") || m_strLexerName == _T("rust") || m_strLexerName == _T("kix")
-		|| m_strLexerName == _T("markdown") || m_strLexerName == _T("css"))
+		|| m_strLexerName == _T("markdown") || m_strLexerName == _T("css") || m_strLexerName == _T("bash"))
 	{
 		DoCommand(SCI_SETDEFAULTFOLDDISPLAYTEXT, 0, reinterpret_cast<LPARAM>(FOLDED_MARKER_CPP));
 	}
@@ -4276,6 +4276,24 @@ void CEditorCtrl::SetLanguageCFontStyle(int iItem, COLORREF rgb)
 		DoCommand(SCI_STYLESETBOLD, iItem, 1);
 	}
 	else if (iItem == SCE_C_STRING || iItem == SCE_C_CHARACTER)
+	{
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+		DoCommand(SCI_STYLESETITALIC, iItem, 1);
+	}
+	else
+	{
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+	}
+}
+
+void CEditorCtrl::SetLanguageBashFontStyle(int iItem, COLORREF rgb)
+{
+	if (iItem == SCE_C_NUMBER || iItem == SCE_C_COMMENTDOC)
+	{
+		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+		DoCommand(SCI_STYLESETBOLD, iItem, 1);
+	}
+	else if (iItem == SCE_C_PREPROCESSOR || iItem == SCE_C_STRING || iItem == SCE_C_CHARACTER)
 	{
 		SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 		DoCommand(SCI_STYLESETITALIC, iItem, 1);

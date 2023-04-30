@@ -9,7 +9,6 @@
 #include "stdafx.h"
 #include "AppUtil.h"
 #include "OSUtil.h"
-#include "ProcessHelper.h"
 #include "MainFrm.h"
 
 ///////////////////////////////// OS Utils //////////////////////////////////////
@@ -113,20 +112,6 @@ void OSUtils::RunSystemCMD(CString strCmdLine)
 	::_wsystem(AppUtils::CStringToWStd(strCmdLine).c_str());
 	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::orange);
 }
-
-// DO NOT USE FOR PROCESSES WHICH WILL NOT EXIT LATER
-//BOOL OSUtils::CreateWin32ProcessEx(CString strCmdLine, DWORD * pExitCode, BOOL bPrintOutput, CMainFrame * pMainFrame, BOOL bDisableWER, BOOL bCheckCancel)
-//{
-//	DWORD nExitCode = 0;
-//	CProcessHelper process;
-//	process.LaunchProcess(strCmdLine, &nExitCode, TRUE, NULL, TRUE, TRUE);
-//	if (pExitCode) *pExitCode = nExitCode;
-//	if (nExitCode == 0)
-//	{
-//		return TRUE;
-//	}
-//	return FALSE;
-//}
 
 int OSUtils::GetProcessID(const CString& processName, std::vector<DWORD>& vecProcessID)
 {

@@ -159,7 +159,7 @@ void CAppSettings::ResetAllSettings()
 	m_IndicatorColor = EDITOR_INDICATOR_COLOR::INDICATOR_BLUE;
 	m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
-	m_ApplicationLanguage = APPLICATION_LANGUAGE::LANGUAGE_ENGLISH;
+	m_ApplicationLanguage = VINATEXT_DISPLAY_LANGUAGE::LANGUAGE_ENGLISH;
 
 	// page width alignment text
 	m_nPageAlignmentWidth = 78;

@@ -33,7 +33,7 @@
 #include "HostManager.h"
 #include "SystemInfo.h"
 #include "WindowsPrinter.h"
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 // CMainFrame
 
@@ -445,7 +445,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	// top main menu
 	VERIFY(m_MainMenu.LoadMenu(IDR_MAINFRAME)); // load main menu bar
-	AppTranslator.ToNativeContextMenu(&m_MainMenu); // translate to native language
+	VinaTextLocalization.TranslateContextMenu(&m_MainMenu); // translate to native language
 	SetMenu(&m_MainMenu); // set back to mainframe
 	m_UserExtension.LoadMenuUserExtensions(&m_MainMenu); // load user defined extensions
 
@@ -680,7 +680,7 @@ BOOL CMainFrame::OnShowPopupMenu(CMFCPopupMenu* pMenuPopup)
 				CMenu* pSubMenu = CMenu::FromHandle(hMenu); ASSERT(pSubMenu != NULL);
 				if (pSubMenu)
 				{
-					AppTranslator.ToNativeContextMenu(pSubMenu);
+					VinaTextLocalization.TranslateContextMenu(pSubMenu);
 				}
 				pMenuBar->ImportFromMenu(hMenu);
 				::DestroyMenu(hMenu);
@@ -2380,7 +2380,7 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 			}
 		}
 		// system menu style
-		AppTranslator.ToNativeContextMenu(pPopup);
+		VinaTextLocalization.TranslateContextMenu(pPopup);
 		pPopup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
 	return TRUE;

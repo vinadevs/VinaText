@@ -851,6 +851,10 @@ CString AppUtils::GetFileTypeByExtension(const CString & strFileExt)
 	{
 		return _T("Yaml");
 	}
+	else if (strFileExt.CompareNoCase(_T("sh")) == 0)
+	{
+		return _T("Unix Shell");
+	}
 	else if (strFileExt.CompareNoCase(_T("txt")) == 0 || strFileExt.IsEmpty())
 	{
 		return _T("Text");

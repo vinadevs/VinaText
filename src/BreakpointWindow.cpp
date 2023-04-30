@@ -16,7 +16,7 @@
 #include "RAIIUtils.h"
 #include "AppSettings.h"
 #include "FileUtil.h"
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 #pragma warning(disable:4996)
 
@@ -547,7 +547,7 @@ void CBreakpointList::OnContextMenu(CWnd * pWnd, CPoint point)
 	{
 		CMenu* pSubMenu = menu.GetSubMenu(0);
 		if (!pSubMenu) return;
-		AppTranslator.ToNativeContextMenu(pSubMenu);
+		VinaTextLocalization.TranslateContextMenu(pSubMenu);
 		pSubMenu->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
 	}
 }

@@ -578,8 +578,8 @@ BEGIN
             MENUITEM "Remove From Character X To Y In Line", ID_EDIT_REMOVE_FROM_CHAR_X_Y_LINE
             MENUITEM "Remove Before Word In Line",  ID_EDIT_REMOVE_BEFORE_LINE
             MENUITEM "Remove After Word In Line",   ID_EDIT_REMOVE_AFTER_LINE
-            MENUITEM "Remove Lines Contain X",      ID_EDIT_DELETE_LINE_CONTAIN
-            MENUITEM "Remove Lines NOT Contain X",  ID_EDIT_DELETE_LINE_NOT_CONTAIN
+            MENUITEM "Remove Lines Contain Word",   ID_EDIT_DELETE_LINE_CONTAIN
+            MENUITEM "Remove Lines NOT Contain Word", ID_EDIT_DELETE_LINE_NOT_CONTAIN
         END
         MENUITEM SEPARATOR
         POPUP "Insert"
@@ -590,17 +590,17 @@ BEGIN
             MENUITEM "Insert New Line Above",       ID_EDIT_INSERT_LINE_ABOVE
             MENUITEM "Insert New Line Below",       ID_EDIT_INSERT_LINE_BELOW
             MENUITEM SEPARATOR
-            MENUITEM "Insert X At Begin Line",      ID_EDIT_INSERT_X_AT_BEGIN_LINE
-            MENUITEM "Insert X At End Line",        ID_EDIT_INSERT_X_AT_END_LINE
-            MENUITEM "Insert X At Position In Line", ID_EDIT_INSERT_X_AT_POSITION_LINE
-            MENUITEM "Insert X Before Word In Line", ID_EDIT_INSERT_X_BEFORE_WORD_LINE
-            MENUITEM "Insert X After Word In Line", ID_EDIT_INSERT_X_AFTER_WORD_LINE
-            MENUITEM "Insert X Between Lines",      ID_VIEW_INSERT_BETWEEN_LINE
+            MENUITEM "Insert Word At Begin Line",   ID_EDIT_INSERT_X_AT_BEGIN_LINE
+            MENUITEM "Insert Word At End Line",     ID_EDIT_INSERT_X_AT_END_LINE
+            MENUITEM "Insert Word At Position In Line", ID_EDIT_INSERT_X_AT_POSITION_LINE
+            MENUITEM "Insert Word Before Word In Line", ID_EDIT_INSERT_X_BEFORE_WORD_LINE
+            MENUITEM "Insert Word After Word In Line", ID_EDIT_INSERT_X_AFTER_WORD_LINE
+            MENUITEM "Insert Word Between Lines",   ID_VIEW_INSERT_BETWEEN_LINE
             MENUITEM SEPARATOR
-            MENUITEM "Insert Prefix Line Number From X", ID_EDIT_INDEXING_NUMBER_LINE
-            MENUITEM "Insert Prefix Line Alphabet From X", ID_EDIT_INDEXING_ALPHABET_LINE
-            MENUITEM "Insert Prefix Line Roman From X", ID_EDIT_INDEXING_ROMAN_LINE
-            MENUITEM "Insert Suffix Line Number From X", ID_EDIT_END_INDEXING_NUMBER_LINE
+            MENUITEM "Insert Prefix Line Number",   ID_EDIT_INDEXING_NUMBER_LINE
+            MENUITEM "Insert Prefix Line Alphabet", ID_EDIT_INDEXING_ALPHABET_LINE
+            MENUITEM "Insert Prefix Line Roman",    ID_EDIT_INDEXING_ROMAN_LINE
+            MENUITEM "Insert Suffix Line Number",   ID_EDIT_END_INDEXING_NUMBER_LINE
         END
         MENUITEM SEPARATOR
         POPUP "Count"
@@ -962,7 +962,7 @@ BEGIN
     END
     POPUP "Preference"
     BEGIN
-        MENUITEM "Application Settings",            ID_VIEW_APP_SETTINGS
+        MENUITEM "Application Settings",        ID_VIEW_APP_SETTINGS
     END
     POPUP "Help"
     BEGIN
@@ -1402,10 +1402,10 @@ BEGIN
     DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.5",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.6",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 5d16866b49d8b6682de1948",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 26/04/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 6d177b0e2b8bc7b39e1948",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 29/04/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1587,10 +1587,10 @@ END
 
 IDD_EDIT_WITH_X DIALOGEX 0, 0, 205, 55
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Please enter X"
+CAPTION "Please enter word to process..."
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
-    LTEXT           "X Value:",IDC_STATIC,10,11,29,8
+    LTEXT           "Value:",IDC_STATIC,15,11,25,8
     EDITTEXT        IDC_X_INPUT,46,8,144,14,ES_AUTOHSCROLL
     DEFPUSHBUTTON   "OK",IDOK,80,30,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,140,30,50,14
@@ -1656,12 +1656,12 @@ END
 
 IDD_EDIT_INSERT_AT_POSITION_X DIALOGEX 0, 0, 215, 110
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Insert At Position X In Line"
+CAPTION "Insert At Position In Line"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,87,89,50,14
     PUSHBUTTON      "Cancel",IDCANCEL,145,89,50,14
-    LTEXT           "Position X:",IDC_STATIC,16,18,34,8
+    LTEXT           "Position:",IDC_STATIC,16,18,34,8
     LTEXT           "Insert What:",IDC_STATIC,16,43,42,8
     EDITTEXT        IDC_EDIT_INSERT_POSITION_X,64,15,129,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        IDC_EDIT_INSERT_WHAT,64,40,129,14,ES_AUTOHSCROLL
@@ -1765,11 +1765,11 @@ END
 
 IDD_EDIT_INSERT_BETWEEN_LINES DIALOGEX 0, 0, 233, 97
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Insert X Between Lines"
+CAPTION "Insert Word Between Lines"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     PUSHBUTTON      "Cancel",IDCANCEL,165,76,50,14
-    LTEXT           "Insert What:",IDC_STATIC,15,16,42,8
+    LTEXT           "Insert What:",IDC_STATIC,15,17,42,8
     EDITTEXT        IDC_EDIT_INSERT_WHAT,63,14,153,14,ES_AUTOHSCROLL
     CONTROL         "Insert At Top Also",IDC_CHECK_INSERT_MOST_TOP,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,17,40,132,10
     DEFPUSHBUTTON   "OK",IDOK,107,76,50,14
@@ -2144,12 +2144,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.5"
+            VALUE "FileVersion", "1.6"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.5"
+            VALUE "ProductVersion", "1.6"
         END
     END
     BLOCK "VarFileInfo"

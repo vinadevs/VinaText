@@ -216,6 +216,8 @@
     <ClInclude Include="EditorSettingDlg.h" />
     <ClInclude Include="ExplorerSettingDlg.h" />
     <ClInclude Include="GeneralSettingDlg.h" />
+    <ClInclude Include="LocalizationDatabase.h" />
+    <ClInclude Include="LocalizationHandler.h" />
     <ClInclude Include="ProgrammingSettingDlg.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="UserExtension.h" />
@@ -250,8 +252,6 @@
     <ClInclude Include="pdf\UXReader\UXReaderToolbarPane.h" />
     <ClInclude Include="pdf\UXReader\UXReaderToolbarText.h" />
     <ClInclude Include="QuickGotoLine.h" />
-    <ClInclude Include="translator\PODictionary.h" />
-    <ClInclude Include="translator\POHandler.h" />
     <ClInclude Include="uchardet\CharDistribution.h" />
     <ClInclude Include="uchardet\JpCntx.h" />
     <ClInclude Include="uchardet\nsBig5Prober.h" />
@@ -395,6 +395,8 @@
     <ClCompile Include="EditorSettingDlg.cpp" />
     <ClCompile Include="ExplorerSettingDlg.cpp" />
     <ClCompile Include="GeneralSettingDlg.cpp" />
+    <ClCompile Include="LocalizationDatabase.cpp" />
+    <ClCompile Include="LocalizationHandler.cpp" />
     <ClCompile Include="ProgrammingSettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -431,8 +433,6 @@
     <ClCompile Include="pdf\UXReader\UXReaderToolbarPane.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderToolbarText.cpp" />
     <ClCompile Include="QuickGotoLine.cpp" />
-    <ClCompile Include="translator\PODictionary.cpp" />
-    <ClCompile Include="translator\POHandler.cpp" />
     <ClCompile Include="uchardet\CharDistribution.cpp" />
     <ClCompile Include="uchardet\JpCntx.cpp" />
     <ClCompile Include="uchardet\LangBulgarianModel.cpp" />
@@ -610,7 +610,6 @@
     <Image Include="..\res\terminal.ico" />
     <Image Include="..\res\Toolbar.bmp" />
     <Image Include="..\res\Toolbar24.bmp" />
-    <Image Include="C:\Users\TechnoStar\Downloads\add-file.png" />
     <Image Include="res\app.ico" />
     <Image Include="res\autocomplete.ico" />
     <Image Include="res\bookmarkwindow.ico" />

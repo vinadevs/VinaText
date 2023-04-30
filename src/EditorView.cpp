@@ -44,7 +44,7 @@
 #include "BookMarkPathDlg.h"
 #include "QuickGotoLine.h"
 
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 #pragma warning(disable:4996 4127)
 
@@ -269,6 +269,9 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_EOL_WINDOW_CRLF, OnOptionsEOLToCRLF)
 	ON_COMMAND(ID_EOL_LINUX_LF, OnOptionsEOLToLF)
 	ON_COMMAND(ID_EOL_MACOS_CR, OnOptionsEOLToCR)
+	ON_UPDATE_COMMAND_UI(ID_EOL_WINDOW_CRLF, OnUpdateOptionsEOLToCRLF)
+	ON_UPDATE_COMMAND_UI(ID_EOL_LINUX_LF, OnUpdateOptionsEOLToLF)
+	ON_UPDATE_COMMAND_UI(ID_EOL_MACOS_CR, OnUpdateOptionsEOLToCR)
 	ON_COMMAND(ID_EDIT_COUNT_WORD, OnEditCountWords)
 	ON_COMMAND(ID_EDIT_COUNT_DUPLICATE_WORD, OnEditCountDuplicateWords)
 	ON_COMMAND(ID_EDIT_COUNT_DUPLICATE_LINE, OnEditCountDuplicateLines)
@@ -834,7 +837,6 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 					{
 						AutoIndentationText();
 					}
-					//m_IntellisenseDataset.clear();
 					break;
 				case VK_SPACE:
 					if (GetKeyState(VK_CONTROL) & 0x8000)
@@ -846,16 +848,10 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 						}
 						return TRUE;
 					}
-					else
-					{
-						//m_IntellisenseDataset.clear();
-					}
 					break;
 				case VK_TAB:
-					//m_IntellisenseDataset.clear();
 					break;
 				case VK_BACK:
-					//m_IntellisenseDataset.clear();
 					m_bBackSpaceKeyDown = TRUE;
 					break;
 				case VK_F1:
@@ -1147,7 +1143,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "kix")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JSON;
-		m_strCurrentDocLanguageName = _T("Json");
+		m_strCurrentDocLanguageName = _T("JSON");
 	}
 	else if (m_czLexerFromFile == "markdown")
 	{
@@ -1247,7 +1243,7 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T("}"), lcurPos);
 			}
@@ -1256,7 +1252,7 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T("]"), lcurPos);
 			}
@@ -1265,7 +1261,7 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T(")"), lcurPos);
 			}
@@ -1306,7 +1302,7 @@ void CEditorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 #pragma warning(suppress: 26496)
 		AFXASSUME(pSubMenu != NULL);
 		if (!pSubMenu) return;
-		AppTranslator.ToNativeContextMenu(pSubMenu);
+		VinaTextLocalization.TranslateContextMenu(pSubMenu);
 
 		CString stSelectedScript = m_EditorCtrl.GetSelectedText().Trim();
 
@@ -4288,7 +4284,7 @@ void CEditorView::OnOptionsRemoveLineContainX()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
-	dlg.m_strDlgCaption = _T("Remove Line Contain X");
+	dlg.m_strDlgCaption = _T("Remove line contain word...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4369,7 +4365,7 @@ void CEditorView::OnOptionsRemoveLineNotContainX()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
-	dlg.m_strDlgCaption = _T("Remove Line NOT Contain X");
+	dlg.m_strDlgCaption = _T("Remove line NOT contain word...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4726,7 +4722,7 @@ void CEditorView::OnOptionsInsertXAtBeginLine()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
-	dlg.m_strDlgCaption = _T("Insert X At Begin Line");
+	dlg.m_strDlgCaption = _T("Insert Word At Begin Line");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4776,7 +4772,7 @@ void CEditorView::OnOptionsInsertXAtEndLine()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
-	dlg.m_strDlgCaption = _T("Insert X At End Line");
+	dlg.m_strDlgCaption = _T("Insert Word At End Line");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4827,7 +4823,7 @@ void CEditorView::OnOptionsInsertEndLineNumberIndex()
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput = _T("0");
-	dlg.m_strDlgCaption = _T("Add suffix number for each line From X");
+	dlg.m_strDlgCaption = _T("Add suffix number for each line...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4881,7 +4877,7 @@ void CEditorView::OnOptionsInsertLineNumberIndex()
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput = _T("0");
-	dlg.m_strDlgCaption = _T("Add prefix number for each line From X");
+	dlg.m_strDlgCaption = _T("Add prefix number for each line...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4935,7 +4931,7 @@ void CEditorView::OnOptionsInsertLineAlphabetIndex()
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput = _T("A");
-	dlg.m_strDlgCaption = _T("Add prefix alphabet for each line From X");
+	dlg.m_strDlgCaption = _T("Add prefix alphabet for each line...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -4996,7 +4992,7 @@ void CEditorView::OnOptionsInsertLineRomanIndex()
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput = _T("0");
-	dlg.m_strDlgCaption = _T("Add prefix roman numerals for each line From X");
+	dlg.m_strDlgCaption = _T("Add prefix roman numerals for each line...");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -5474,6 +5470,21 @@ void CEditorView::OnOptionsEOLToCR()
 	m_EditorCtrl.ConvertEOL(SC_EOL_CR);
 	m_EditorCtrl.SetEOLFile(SC_EOL_CR);
 	m_EditorCtrl.EnableShowEOL(TRUE);
+}
+
+void CEditorView::OnUpdateOptionsEOLToCRLF(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_CRLF);
+}
+
+void CEditorView::OnUpdateOptionsEOLToLF(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_LF);
+}
+
+void CEditorView::OnUpdateOptionsEOLToCR(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_CR);
 }
 
 void CEditorView::OnOptionsSnakeCaseToSplitCase()
@@ -6210,7 +6221,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		break;
 		case SCN_MODIFIED:
 		{
-			static int _mod_insdel_token = -1;
+			static int nModInsdelToken = -1;
 			int const iModType = pScinNotification->modificationType;
 			if ((iModType & SC_MULTISTEPUNDOREDO) && !(iModType & SC_LASTSTEPINUNDOREDO))
 			{
@@ -6220,14 +6231,14 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			{
 				if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
 				{
-					if (!m_EditorCtrl.InUndoRedoTransaction() && (_mod_insdel_token < 0))
+					if (!m_EditorCtrl.InUndoRedoTransaction() && (nModInsdelToken < 0))
 					{
 						BOOL const bIsSelEmpty = !m_EditorCtrl.IsSelectionEmpty();
 						BOOL const bIsMultiRectSel = m_EditorCtrl.IsMultiOrRectangleSelection();
 						if (bIsSelEmpty || bIsMultiRectSel)
 						{
 							int const token = m_EditorCtrl.SaveUndoMultiSelection();
-							_mod_insdel_token = (token >= 0) ? token : _mod_insdel_token;
+							nModInsdelToken = (token >= 0) ? token : nModInsdelToken;
 						}
 						if (bIsSelEmpty && bIsMultiRectSel)
 						{
@@ -6255,10 +6266,10 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			{
 				if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
 				{
-					if (!m_EditorCtrl.InUndoRedoTransaction() && (_mod_insdel_token >= 0))
+					if (!m_EditorCtrl.InUndoRedoTransaction() && (nModInsdelToken >= 0))
 					{
-						m_EditorCtrl.SaveRedoMultiSelection(_mod_insdel_token);
-						_mod_insdel_token = -1;
+						m_EditorCtrl.SaveRedoMultiSelection(nModInsdelToken);
+						nModInsdelToken = -1;
 					}
 				}
 				CEditorDoc *pDoc = GetEditorDocument();
@@ -6533,7 +6544,7 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 	m_bEnterKeyPressed = TRUE;
 }
 
-void CEditorView::ProcessIndentationTab() // IMPORTANT FUNCTION!!!
+void CEditorView::ProcessIndentationTab()
 {
 	int lcurPos = m_EditorCtrl.GetCurrentPosition();
 	if (m_bIsIndicatorChar)

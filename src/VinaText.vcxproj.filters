@@ -35,9 +35,6 @@
     <Filter Include="TinyXml">
       <UniqueIdentifier>{cce40058-a43d-4b6f-a47c-65c576b2e89c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Translator">
-      <UniqueIdentifier>{829a21cd-0d13-4086-b2da-3f953465d27a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Global Header">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -161,6 +158,9 @@
     </Filter>
     <Filter Include="Search Engine">
       <UniqueIdentifier>{b29494b1-57ba-4c04-ae28-a7bc77f99561}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component GUI\Localization">
+      <UniqueIdentifier>{f3504a40-814f-4aad-9593-9870d26dd247}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -569,12 +569,6 @@
     <ClInclude Include="uchardet\uchardet.h">
       <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClInclude>
-    <ClInclude Include="translator\POHandler.h">
-      <Filter>Translator</Filter>
-    </ClInclude>
-    <ClInclude Include="translator\PODictionary.h">
-      <Filter>Translator</Filter>
-    </ClInclude>
     <ClInclude Include="EditorCommonDef.h">
       <Filter>Component GUI\Editor\Editor</Filter>
     </ClInclude>
@@ -700,6 +694,12 @@
     </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Global Header</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalizationDatabase.h">
+      <Filter>Component GUI\Localization</Filter>
+    </ClInclude>
+    <ClInclude Include="LocalizationHandler.h">
+      <Filter>Component GUI\Localization</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1090,12 +1090,6 @@
     <ClCompile Include="uchardet\uchardet.cpp">
       <Filter>Component GUI\Editor\Unicode Mozilla</Filter>
     </ClCompile>
-    <ClCompile Include="translator\POHandler.cpp">
-      <Filter>Translator</Filter>
-    </ClCompile>
-    <ClCompile Include="translator\PODictionary.cpp">
-      <Filter>Translator</Filter>
-    </ClCompile>
     <ClCompile Include="FileExplorerView.cpp">
       <Filter>Main Skeleton\View</Filter>
     </ClCompile>
@@ -1212,6 +1206,12 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Global Header</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalizationDatabase.cpp">
+      <Filter>Component GUI\Localization</Filter>
+    </ClCompile>
+    <ClCompile Include="LocalizationHandler.cpp">
+      <Filter>Component GUI\Localization</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1386,9 +1386,6 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\settingtab.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="C:\Users\TechnoStar\Downloads\add-file.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\VinaText.ico">

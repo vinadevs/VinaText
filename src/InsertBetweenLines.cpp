@@ -38,7 +38,7 @@ void CInsertBetweenLines::DoDataExchange(CDataExchange* pDX)
 
 BOOL CInsertBetweenLines::OnInitDialog()
 {
-	m_strDlgCaption = _T("Insert X Between Lines");
+	m_strDlgCaption = _T("Insert Word Between Lines");
 
 	CDlgBase::OnInitDialog();
 

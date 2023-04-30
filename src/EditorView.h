@@ -226,6 +226,9 @@ public:
 	afx_msg void OnOptionsEOLToCRLF();
 	afx_msg void OnOptionsEOLToLF();
 	afx_msg void OnOptionsEOLToCR();
+	afx_msg void OnUpdateOptionsEOLToCRLF(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOptionsEOLToLF(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOptionsEOLToCR(CCmdUI* pCmdUI);
 	afx_msg void OnEditCountWords();
 	afx_msg void OnEditCountDuplicateWords();
 	afx_msg void OnEditCountDuplicateLines();

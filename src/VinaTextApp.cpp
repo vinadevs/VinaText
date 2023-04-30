@@ -27,6 +27,7 @@
 #include "FileExplorerDoc.h"
 #include "FileExplorerView.h"
 #include "HostManager.h"
+#include "LocalizationHandler.h"
 #include "CommandLine.h"
 #include "AppSettings.h"
 #include "SingleInstanceApp.h"
@@ -36,8 +37,6 @@
 #include "SaveFileWithPassWordDlg.h"
 #include "ReopenFileWithPasswordDlg.h"
 #include "AppAboutDlg.h"
-
-#include "translator/POHandler.h"
 
 #include "pdf/UXReader/UXReaderLibrary.h"
 
@@ -231,7 +230,7 @@ BOOL CVinaTextApp::InitInstance()
 	{
 		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Warning] Load previous application settings failed..."));
 	}
-	AppTranslator.InitFromSetting();
+	VinaTextLocalization.InitFromSetting();
 	// VinaText Application Settings
 
 	CWinAppEx::InitInstance();

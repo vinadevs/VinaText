@@ -262,6 +262,7 @@ public:
 	int GetTabSize();
 	void SetEditorInitiationState(BOOL bState);
 	void SetLanguageCFontStyle(int iItem, COLORREF rgb);
+	void SetLanguageBashFontStyle(int iItem, COLORREF rgb);
 	void GetFunctionListFromEditor(const TCHAR *pszChars, int lLength, std::vector<CString>& vecFunctionList);
 	void RenderSearchResultInLine(int lLine, const CString& strWord);
 	FoldingLineDataList GetFoldingLineDataList(int levelMax = 3);

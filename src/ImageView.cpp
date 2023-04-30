@@ -17,7 +17,7 @@
 #include "GuiUtils.h"
 #include "GammaDlg.h"
 #include "HostManager.h"
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 ColorMatrix	clrMatrix;
 
@@ -590,7 +590,7 @@ void CImageView::OnContextMenu(CWnd * pWnd, CPoint point)
 #pragma warning(suppress: 26496)
 		AFXASSUME(pSubMenu != NULL);
 		if (!pSubMenu) return;
-		AppTranslator.ToNativeContextMenu(pSubMenu);
+		VinaTextLocalization.TranslateContextMenu(pSubMenu);
 
 		if (PathUtils::IsGifFile(m_pDocument->GetPathName()))
 		{

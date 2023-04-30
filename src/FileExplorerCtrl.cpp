@@ -41,7 +41,7 @@
 #include "HostManager.h"
 #include "FindPathWorker.h"
 
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 //////////////////////////////// Defines / Locals /////////////////////////////
 
@@ -1841,7 +1841,7 @@ void CFileExplorerCtrl::OnContextMenu(CWnd*, CPoint point)
 #pragma warning(suppress: 26496)
 			AFXASSUME(pPopup != NULL);
 			if (!pPopup) return;
-			AppTranslator.ToNativeContextMenu(pPopup);
+			VinaTextLocalization.TranslateContextMenu(pPopup);
 
 			if (m_sRootFolder.IsEmpty())
 			{

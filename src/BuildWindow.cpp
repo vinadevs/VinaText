@@ -18,7 +18,7 @@
 #include "AppSettings.h"
 #include "Debugger.h"
 #include "RAIIUtils.h"
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 #pragma warning(disable:4996)
 
@@ -294,7 +294,7 @@ void CRichEditCtrlBuild::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
 	{
 		CMenu* pSubMenu = menu.GetSubMenu(0);
 		if (!pSubMenu) return;
-		AppTranslator.ToNativeContextMenu(pSubMenu);
+		VinaTextLocalization.TranslateContextMenu(pSubMenu);
 		CString strSelectedPath = GetSelText().Trim();
 		if (!PathFileExists(strSelectedPath))
 		{

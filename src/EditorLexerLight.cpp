@@ -150,7 +150,7 @@ void EditorLexerLight::Init_bash_Editor(CLanguageDatabase* pDatabase, CEditorCtr
 	pEditorCtrl->SetKeywords(EditorColorLight::g_bash_KeyWords);
 	for (int i = 0; EditorColorLight::g_rgb_Syntax_bash[i].iItem != -1; i++)
 	{
-		pEditorCtrl->SetLanguageCFontStyle(EditorColorLight::g_rgb_Syntax_bash[i].iItem, EditorColorLight::g_rgb_Syntax_bash[i].rgb);
+		pEditorCtrl->SetLanguageBashFontStyle(EditorColorLight::g_rgb_Syntax_bash[i].iItem, EditorColorLight::g_rgb_Syntax_bash[i].rgb);
 	}
 	pDatabase->SetLanguageName(EditorColorLight::g_str_bash_language);
 	pDatabase->SetLanguageExtension(EditorColorLight::g_str_bash_extention);

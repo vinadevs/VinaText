@@ -17,7 +17,7 @@
 #include "TreeHelper.h"
 #include "FindPathWorker.h"
 #include "VinaTextProgressBar.h"
-#include "translator/POHandler.h"
+#include "LocalizationHandler.h"
 
 // CSearchNavigatePathDlg dialog
 
