@@ -105,7 +105,7 @@ public:
 	virtual BOOL LoadFrame(UINT nIDResource, DWORD dwDefaultStyle = WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, CWnd* pParentWnd = NULL, CCreateContext* pContext = NULL);
 // Implementation
 public:
-	virtual ~CMainFrame();
+	virtual ~CMainFrame() {};
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -143,6 +143,7 @@ protected:  // control bar embedded members
 public:
 	afx_msg LRESULT OnMainFrameUpdate(WPARAM wParam, LPARAM lParam);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnStatusBarSize(int cx);
 	afx_msg void OnMoving(UINT nSide, LPRECT lpRect);
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnClose();
@@ -295,7 +296,6 @@ public:
 	afx_msg void OnHostFileExplorer();
 	afx_msg void OnToolPythonPipWindow();
 	afx_msg void OnToolNodeJSNPMWindow();
-	afx_msg void OnUpdateExplorerSelectedFilePath(CCmdUI * pCmdUI);
 	afx_msg LRESULT OnGetTabToolTip(WPARAM wp, LPARAM lp);
 	afx_msg LRESULT OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnCopyData(WPARAM wParam, LPARAM lParam);

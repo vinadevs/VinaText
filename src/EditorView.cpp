@@ -152,6 +152,7 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_EDIT_REDO_ALL_FILE, OnOptionsEditRedoAllFile)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_REDO_ALL_FILE, OnUpdateOptionsEditRedoAllFile)
 	ON_COMMAND(ID_OPTIONS_VIEW_LINENUMBERS, OnOptionsViewLinenumbers)
+	ON_UPDATE_COMMAND_UI(ID_INDICATOR_EDITOR_EOL, OnUpdateOptionsEOLInfo)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_CARET_INFO, OnUpdateOptionsCaretInfo)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_MATCHEDS, OnUpdateOptionsLength)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_SELECTIONS, OnUpdateOptionsSelections)
@@ -3293,6 +3294,12 @@ void CEditorView::OnOptionsEditRedoAllFile()
 void CEditorView::OnUpdateOptionsEditRedoAllFile(CCmdUI * pCmdUI)
 {
 	pCmdUI->Enable(m_EditorCtrl.IsAllowRedo());
+}
+
+void CEditorView::OnUpdateOptionsEOLInfo(CCmdUI* pCmdUI)
+{
+	pCmdUI->SetText(m_EditorCtrl.GetEOLName());
+	pCmdUI->Enable(TRUE);
 }
 
 void CEditorView::OnUpdateOptionsCaretInfo(CCmdUI * pCmdUI)

@@ -2683,23 +2683,21 @@ BEGIN
     ID_INDICATOR_SCRL       "SCRL"
     ID_INDICATOR_OVR        "  OVERTYPE  "
     ID_INDICATOR_REC        "REC"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_CURRENT_LANGUAGE_INDICATOR 
-                            "  %s                                          "
-    ID_INDICATOR_ENCODING   "        UTF-8                                "
-    IDS_ENCODING_INDICATOR  "     %s                              "
-    ID_OPTIONS_DELETE_ALL_BREAKPOINT 
-                            "Remove All Breakpoints\\Remove All Breakpoints"
     ID_INDICATOR_INS        "  INSERT  "
 END
 
 STRINGTABLE
 BEGIN
-    ID_INDICATOR_EXPLORER_SELECTED_PATH 
-                            "                                                                                                                                                                                                 "
+    IDS_CURRENT_LANGUAGE_INDICATOR "%s"
+    ID_INDICATOR_ENCODING   "UTF-8"
+    IDS_ENCODING_INDICATOR  "%s"
+    ID_OPTIONS_DELETE_ALL_BREAKPOINT 
+                            "Remove All Breakpoints\\Remove All Breakpoints"
+END
+
+STRINGTABLE
+BEGIN
+    ID_INDICATOR_EDITOR_EOL "                                                                                                                                                                                                 "
     ID_PANE_FILE_RESULT_WINDOW 
                             "Shows or hides the Path Result Window\\Path Result Window"
 END
@@ -2768,11 +2766,12 @@ BEGIN
     ID_EDITOR_COMMENT       "Comment Line or Block\nComment"
     ID_PANE_FILE_EXPLORER   "Shows or hides the File Explorer\nExplorer Tree Window"
     ID_PANE_OUTPUT_WINDOW   "Shows or hides the Message Log\nMessage Ouput Log"
-    ID_INDICATOR_CARET_INFO "     cine 1, column 1                                                                 "
+    ID_INDICATOR_CARET_INFO "Ln: 1 | Col: 1"
     IDS_INDICATOR_CARET_INFO_CURRENT 
-                            "     ln %d, col %d, pos %d                                                                "
-    ID_INDICATOR_MATCHEDS   "     matches: 1                                                  "
-    IDS_LENGTH_INDICATOR    "     matches: %d                                                  "
+                            "Ln: %d | Col: %d | Pos: %d"
+    ID_INDICATOR_MATCHEDS   "Matches: 0"
+    IDS_LENGTH_INDICATOR    "Matches: %d"
+    ID_INDICATOR_CURRENT_LANGUAGE "Text"
 END
 
 STRINGTABLE
@@ -2785,7 +2784,6 @@ BEGIN
                             "Reveal Active File In Explorer Window\nReveal In Explorer"
     ID_MDI_TAB_MOVE_PREVIOUS_TAB 
                             "Move Current Tab To Previous Group\nMove Current Tab To Previous Group"
-    ID_INDICATOR_CURRENT_LANGUAGE "Language: text            "
 END
 
 STRINGTABLE
@@ -2808,14 +2806,14 @@ END
 STRINGTABLE
 BEGIN
     IDS_INDICATOR_CARET_INFO_SELECTED 
-                            "     %d lines, %d characters                                                                                      "
+                            "%d Lines, %d Characters"
 END
 
 STRINGTABLE
 BEGIN
-    ID_INDICATOR_SELECTIONS "     selections: 1                                                  "
+    ID_INDICATOR_SELECTIONS "Selections: 1"
     IDS_SELECTIONS_INDICATOR 
-                            "     selections: %d                                                  "
+                            "Selections: %d"
 END
 
 STRINGTABLE

@@ -1512,24 +1512,24 @@ CString PathUtils::GetFileSystemInformation(const CString & strFullPath)
 	{
 		if (IsDirectory(strFullPath))
 		{
-			CString strMessageFileSummary = _T("____| Folder Information |__________________________\n");
-			CString strFilePath = _T("Full Path:          ") + strFullPath;
+			CString strFilePath = strFullPath + EDITOR_NEW_LINE_LF;
+			CString strSerparator = _T("____________________________________________________________");
 			CString strCreatedAt = _T("Created:            ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_CREATED);
 			CString strLastestModifiedate = _T("Last Modified:  ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_LAST_MODIFIED);
 			CString strLastestAccessedate = _T("Last Accsess:     ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_LAST_ACCESSED);
-			CString strFileDescription = _T("Description:      File folder");
+			CString strFileDescription = _T("Description:      Directory");
 			// join information...
-			strMessageFileSummary += strFilePath + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strCreatedAt + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strLastestModifiedate + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strLastestAccessedate + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strFileDescription + EDITOR_NEW_LINE_LF;
-			return strMessageFileSummary;
+			strFilePath += strSerparator + EDITOR_NEW_LINE_LF;
+			strFilePath += strCreatedAt + EDITOR_NEW_LINE_LF;
+			strFilePath += strLastestModifiedate + EDITOR_NEW_LINE_LF;
+			strFilePath += strLastestAccessedate + EDITOR_NEW_LINE_LF;
+			strFilePath += strFileDescription + EDITOR_NEW_LINE_LF;
+			return strFilePath;
 		}
 		else
 		{
-			CString strMessageFileSummary = _T("____| File Information |__________________________\n");
-			CString strFilePath = _T("Full Path:           ") + strFullPath;
+			CString strFilePath = strFullPath + EDITOR_NEW_LINE_LF;
+			CString strSerparator = _T("____________________________________________________________");
 			CString strCreatedAt = _T("Created:             ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_CREATED);
 			CString strLastestModifiedate = _T("Last Modified:  ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_LAST_MODIFIED);
 			CString strLastestAccessedate = _T("Last Accsess:     ") + PathUtils::GetFileTimePropertyCString(strFullPath, FILE_TIME_PROPERTY::FILE_TIME_LAST_ACCESSED);
@@ -1546,14 +1546,13 @@ CString PathUtils::GetFileSystemInformation(const CString & strFullPath)
 				strReadonly += _T("No");
 			}
 			// join information...
-			strMessageFileSummary += strFilePath + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strCreatedAt + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strLastestModifiedate + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strLastestAccessedate + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strFileDescription + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strFileSize + EDITOR_NEW_LINE_LF;
-			strMessageFileSummary += strReadonly + EDITOR_NEW_LINE_LF;
-			return strMessageFileSummary;
+			strFilePath += strSerparator + EDITOR_NEW_LINE_LF;
+			strFilePath += strLastestModifiedate + EDITOR_NEW_LINE_LF;
+			strFilePath += strLastestAccessedate + EDITOR_NEW_LINE_LF;
+			strFilePath += strFileDescription + EDITOR_NEW_LINE_LF;
+			strFilePath += strFileSize + EDITOR_NEW_LINE_LF;
+			strFilePath += strReadonly + EDITOR_NEW_LINE_LF;
+			return strFilePath;
 		}
 	}
 	else

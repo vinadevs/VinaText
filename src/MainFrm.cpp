@@ -43,12 +43,12 @@ IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
 
 static UINT g_Statusbar_Indicators[] =
 {
-	ID_INDICATOR_EXPLORER_SELECTED_PATH,
-	ID_INDICATOR_CURRENT_LANGUAGE,
 	ID_INDICATOR_ENCODING,
+	ID_INDICATOR_CURRENT_LANGUAGE,
 	ID_INDICATOR_CARET_INFO,
 	ID_INDICATOR_MATCHEDS,
 	ID_INDICATOR_SELECTIONS,
+	ID_INDICATOR_EDITOR_EOL,
 };
 
 BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
@@ -213,8 +213,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_TOOL_GET_WIFI_INFO, &CMainFrame::OnOptionsGetWifiInformation)
 	ON_COMMAND(ID_TOOL_GET_PATH_ENV_VARIABLE_INFO, &CMainFrame::OnOptionsGetPATHVariable)
 
-	ON_UPDATE_COMMAND_UI(ID_INDICATOR_EXPLORER_SELECTED_PATH, &CMainFrame::OnUpdateExplorerSelectedFilePath)
-
 	// register messages
 	ON_REGISTERED_MESSAGE(AFX_WM_ON_GET_TAB_TOOLTIP, &CMainFrame::OnGetTabToolTip)
 	ON_REGISTERED_MESSAGE(AFX_WM_CHANGE_ACTIVE_TAB, &CMainFrame::OnAfxWmChangedActiveTab)
@@ -301,10 +299,6 @@ CMainFrame::CMainFrame()
 	m_Font.CreateFontIndirect(&lf);
 }
 
-CMainFrame::~CMainFrame()
-{
-}
-
 LRESULT CMainFrame::OnMainFrameUpdate(WPARAM wParam, LPARAM lParam)
 {
 	WORD wMsgTarget = LOWORD(wParam);
@@ -354,6 +348,19 @@ LRESULT CMainFrame::OnMainFrameUpdate(WPARAM wParam, LPARAM lParam)
 void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIFrameWndEx::OnSize(nType, cx, cy);
+	OnStatusBarSize(cx);
+}
+
+void CMainFrame::OnStatusBarSize(int cx)
+{
+	UINT nStyle = m_wndStatusBar.GetPaneStyle(1);
+	int indexCX = cx / 6;
+	m_wndStatusBar.SetPaneWidth(0, indexCX); // encoding
+	m_wndStatusBar.SetPaneWidth(1, indexCX); // file type
+	m_wndStatusBar.SetPaneWidth(2, indexCX * 2); // caret info
+	m_wndStatusBar.SetPaneWidth(3, indexCX / 2); // matches
+	m_wndStatusBar.SetPaneWidth(4, indexCX / 2); // selections
+	m_wndStatusBar.SetPaneWidth(5, indexCX); // eol
 }
 
 void CMainFrame::OnMoving(UINT nSide, LPRECT lpRect)
@@ -3990,11 +3997,6 @@ void CMainFrame::OnUpdateBookmarkFile(CCmdUI * pCmdUI)
 void CMainFrame::OnCloseAllDocumentUnmodified()
 {
 	AppUtils::CloseAllDocumentUnmodified();
-}
-
-void CMainFrame::OnUpdateExplorerSelectedFilePath(CCmdUI * pCmdUI)
-{
-	pCmdUI->Enable(TRUE);
 }
 
 void CMainFrame::OnDeleteFile()

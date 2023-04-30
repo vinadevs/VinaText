@@ -105,6 +105,7 @@ public:
 	afx_msg void OnUpdateOptionsEditUndoAllFile(CCmdUI* pCmdUI);
 	afx_msg void OnOptionsEditRedoAllFile();
 	afx_msg void OnUpdateOptionsEditRedoAllFile(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateOptionsEOLInfo(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOptionsCaretInfo(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOptionsLength(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOptionsSelections(CCmdUI * pCmdUI);

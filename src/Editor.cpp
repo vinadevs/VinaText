@@ -4006,15 +4006,15 @@ CString CEditorCtrl::GetEOLName()
 	switch (currentEOL)
 	{
 	case SC_EOL_CRLF:
-		return _T("Window (CRLF)");
+		return _T("Windows(CRLF)");
 	case SC_EOL_CR:
-		return _T("MacOS (CR)");
+		return _T("MacOS(CR)");
 	case SC_EOL_LF:
-		return _T("Linux (LF)");
+		return _T("Linux(LF)");
 	default:
 		break;
 	}
-	return _T("Window (CRLF)");
+	return _T("Window(CRLF)");
 }
 
 int CEditorCtrl::GetSelectionNumber()
