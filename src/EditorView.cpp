@@ -978,8 +978,8 @@ void CEditorView::OnInitialUpdate()
 	// return previous state
 	if (AppSettingMgr.m_bKeepPreviousEditorState && PathFileExists(strEditorPathName))
 	{
-		RecentEditorInfo info = AppSettingMgr.GetRecentEditorInfo(strEditorPathName);
-		if (info._nWrapMode == 0)
+		RecentEditorInfo info = AppSettingMgr.GetRecentEditorCaretInfo(strEditorPathName);
+		if (!info._nWrapMode)
 		{
 			m_EditorCtrl.SetFirstVisibleLine(info._nFirstVisibleLine);
 			m_EditorCtrl.SetCurrentAnchor(info._nCurrentPosition);
@@ -6074,8 +6074,8 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 				CString strEditorPathName = m_pDocument->GetPathName();
 				if (AppSettingMgr.m_bKeepPreviousEditorState && PathFileExists(strEditorPathName))
 				{
-					RecentEditorInfo info = AppSettingMgr.GetRecentEditorInfo(strEditorPathName);
-					if (info._nWrapMode == 1 && !m_EditorCtrl.IsEditorInWrapMode())
+					RecentEditorInfo info = AppSettingMgr.GetRecentEditorCaretInfo(strEditorPathName);
+					if (info._nWrapMode && !m_EditorCtrl.IsEditorInWrapMode())
 					{
 						m_EditorCtrl.EnableTextWrappingMode(TRUE);
 					}
@@ -6774,7 +6774,11 @@ void CEditorView::ToggleBracketAslevel(int level)
 void CEditorView::UpdatePreviewFileContent()
 {
 	CMainFrame* pFrame = AppUtils::GetMainFrame();
-	if (!pFrame) return; pFrame->CloseQuickSearchDialog();
+	if (!pFrame) return;
+	if (pFrame->GetQuickSearchDialog())
+	{
+		pFrame->CloseQuickSearchDialog();
+	}
 	OnInitialUpdate();
 }
 
@@ -6839,7 +6843,7 @@ void CEditorView::OnDocumentFormatFile()
 	if (!pDoc) return;
 
 	CString strFilePath = pDoc->GetPathName();
-	if (FALSE == PathFileExists(strFilePath))
+	if (!PathFileExists(strFilePath))
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strFilePath);
@@ -6855,7 +6859,7 @@ void CEditorView::OnDocumentFormatFile()
 	{
 		//clang-format -i path/to/electron/file.c
 		CString strFolderPath = AppSettingMgr.m_strNodeJSFolderPath;
-		if (FALSE == PathFileExists(strFolderPath))
+		if (!PathFileExists(strFolderPath))
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Path Error] \"%s\" does not exist, this file need NodeJS for formatting. Please be sure to install it on your computer...\n"), strFolderPath);
@@ -6886,7 +6890,7 @@ void CEditorView::OnDocumentFormatFile()
 	{
 		//autopep8 standard .\Lib\site-packages\bin\autopep8.exe -i\test.py
 		CString strAutopep8Path = AppSettingMgr.m_strPythonFolderPath + _T("\\Lib\\site-packages\\bin\\autopep8.exe");
-		if (FALSE == PathFileExists(strAutopep8Path))
+		if (!PathFileExists(strAutopep8Path))
 		{
 			CString strMsg;
 			strMsg.Format(_T("> [Path Error] \"%s\" does not exist, this file need autopep8 for formatting. Please be sure to install it on your computer.\n"), strAutopep8Path);
@@ -7613,7 +7617,7 @@ LRESULT CEditorView::OnCompilerNotifyBuildExitCode(WPARAM wParam, LPARAM lParam)
 			{
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Java build process succeed..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 				LOG_BUILD_MESSAGE_COLOR(_T("[Message] Lauching Java virtual machine (JVM), initiating loader for execution..."), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
-				if (FALSE == PathFileExists(m_BuildSessionInfo._strJavaVMPath))
+				if (!PathFileExists(m_BuildSessionInfo._strJavaVMPath))
 				{
 					CString strMsg;
 					strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), m_BuildSessionInfo._strJavaVMPath);

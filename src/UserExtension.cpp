@@ -53,12 +53,12 @@ void CUserExtension::LoadMenuUserExtensions(CMenu* mainMenu, BOOL bRefresh/*= FA
 		while (stdFile.ReadString(strLine))
 		{
 			if (strLine.IsEmpty()) continue;
-			if (strLine.Find(_T("EXTENSION_BEGIN-------------------------------------------")) != -1)
+			if (strLine.Find(_T("EXTENSION_BEGIN")) != -1)
 			{
 				bStartReadExtensionSession = TRUE;
 				continue;
 			}
-			if (strLine.Find(_T("EXTENSION_END-------------------------------------------")) != -1)
+			if (strLine.Find(_T("EXTENSION_END")) != -1)
 			{
 				bStartReadExtensionSession = FALSE;
 				if (!strExtensionName.IsEmpty() && !strExtensionCMD.IsEmpty())

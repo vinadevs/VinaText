@@ -76,33 +76,8 @@ CLanguageDatabase* CEditorDoc::GetDocLanguageDatabase() const
 
 BOOL CEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	if (!PathFileExists(lpszPathName))
-	{
-		if (AppSettingMgr.m_bWarningForFileNotExist)
-		{
-			CString strMessage = _T("[Path Error] File \"%s\" does not exist. Do you want to create it?");
-			strMessage.Format(strMessage, lpszPathName);
-			if (IDYES == AfxMessageBox(strMessage, MB_YESNO | MB_ICONWARNING))
-			{
-				if (!PathUtils::SaveFileTrunc(lpszPathName, _T("")))
-				{
-					return FALSE;
-				}
-			}
-			else
-			{
-				return FALSE;
-			}
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
 	if (!CBaseDoc::OnOpenDocument(lpszPathName))
 		return FALSE;
-
 	CEditorView* pView = GetEditorView();
 	ASSERT(pView); if (!pView) return FALSE;
 	CEditorCtrl* pEditor = pView->GetEditorCtrl();
@@ -163,7 +138,7 @@ void CEditorDoc::ReloadPreviewDocument(const CString & strFilePath)
 {
 	if (PathFileExists(strFilePath))
 	{
-		AppSettingMgr.SaveRecentEditorInfo(GetPathName()); // save old editor state
+		AppSettingMgr.SaveRecentEditorCaretInfo(GetPathName()); // save old editor state
 		SetPathName(strFilePath);
 		AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = TRUE;
 		GetEditorView()->UpdatePreviewFileContent();
@@ -180,27 +155,36 @@ void CEditorDoc::OnCloseDocument()
 		SetTitle(AppSettingMgr.CreateDocumentUndefTitle());
 		return;
 	}
-
 	// clean up from mainframe
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 	ASSERT(pFrame);
-	if (!pFrame) return;
-	pFrame->RemoveDebuggerDocument(this);
-	pFrame->CloseQuickSearchDialog();
-
-	// clean up from worker thread
-	if (strPathName.CompareNoCase(ThreadWorkerMgr.GetCurrentTask().strRunFromDocPath) == 0 && ThreadWorkerMgr.IsRunning())
+	if (pFrame)
 	{
-		ThreadWorkerMgr.StopThreadWorker();
+		if (pFrame->GetQuickSearchDialog())
+		{
+			pFrame->CloseQuickSearchDialog();
+		}
+		if (PathFileExists(strPathName))
+		{
+			if (!pFrame->IsClosingVinaText())
+			{
+				if (pFrame->HasDebuggerDocument(this))
+				{
+					pFrame->RemoveDebuggerDocument(this);
+				}
+				// save recent data
+				RecentCloseMDITabManager.PushTab(strPathName);
+			}
+			// clean up from worker thread
+			if (strPathName.CompareNoCase(ThreadWorkerMgr.GetCurrentTask().strRunFromDocPath) == 0 && ThreadWorkerMgr.IsRunning())
+			{
+				ThreadWorkerMgr.StopThreadWorker();
+			}
+			AppSettingMgr.SaveRecentEditorCaretInfo(strPathName);
+		}
 	}
-
-	// save recent data
-	RecentCloseMDITabManager.PushTab(strPathName);
-	AppSettingMgr.SaveRecentEditorInfo(strPathName);
-
 	// this must be called so the reference count of the document is decreased and the memory can be released
 	GetEditorCtrl()->ReleaseDocument();
-
 	// every data get from document must be done before this...
 	CDocument::OnCloseDocument();
 	AppUtils::CheckLastOpenDocument();
@@ -281,8 +265,6 @@ void CEditorDoc::OnFileSaveAs()
 				// Set new file name
 				SetPathName(strFileName);
 			}
-			// reveal in explorer
-			//AppUtils::GetMainFrame()->RevealInExplorerWindow(strFileName);
 		}
 		else
 		{
@@ -389,6 +371,47 @@ void CEditorDoc::OnFileSaveAsEncoding()
 			OnFileSaveAs();
 		}
 	}
+}
+
+void CEditorDoc::OnFileBackUp()
+{
+	CString strFileName = GetPathName();
+	if (PathFileExists(strFileName))
+	{
+		// Save document
+		if (!OnSaveDocument(strFileName))
+		{
+			OSUtils::UseAdministrationHandler();
+		}
+	}
+	else
+	{
+		// Save it to appdata folder
+		OnFileSaveTemp();
+	}
+}
+
+void CEditorDoc::OnFileSaveTemp()
+{
+	// backup tab titles
+	CString strTitle = GetTitle();
+	// Save document to backup path
+	strTitle.Replace(_T("*"), _T(""));
+	CString strFileName = PathUtils::GetVinaTextBackUpPath() + strTitle + _T(" (autosaved)");
+	// Close same name document before save
+	if (!PathFileExists(GetPathName()))
+	{
+		AppUtils::CloseDocumentByFilePath(strFileName);
+	}
+	if (OnSaveDocument(strFileName))
+	{
+		SetPathName(strFileName);
+	}
+}
+
+void CEditorDoc::OnFileBackUpAll()
+{
+	AppUtils::BackupAllModifiedDocuments();
 }
 
 // CEditorDoc diagnostics

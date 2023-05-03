@@ -20,7 +20,7 @@ void LocalizationHandler::InitLocalizationDatabase(VINATEXT_DISPLAY_LANGUAGE lan
 	m_AppLanguage = lang;
 	if (lang == VINATEXT_DISPLAY_LANGUAGE::LANGUAGE_VIETNAMESE)
 	{
-		m_pLocalDatabase->Load(PathUtils::GetVinaTextPOPath() + _T("VinaText_Language_VN.mo"));
+		m_pLocalDatabase->Load(PathUtils::GetVinaTextLocalizationPath() + _T("VinaText_Language_VN.mo"));
 	}
 }
 

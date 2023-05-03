@@ -53,8 +53,6 @@ CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAdd
 			CWaitCursor wait;
 			if (!pDocument->OnOpenDocument(lpszPathName))
 			{
-				// user has be alerted to what failed in OnOpenDocument
-				TRACE0("CDocument::OnOpenDocument returned FALSE.\n");
 				return NULL;
 			}
 			CBaseDoc* pBaseDoc = dynamic_cast<CBaseDoc*>(pDocument);
@@ -77,5 +75,28 @@ CDocument* CMultiDocTemplateEx::OpenDocumentFile(LPCTSTR lpszPathName, BOOL bAdd
 
  CDocument * CMultiDocTemplateEx::OpenNewDocument(LPCTSTR lpszPathName, BOOL bAddToMRU, BOOL bMakeVisible)
 {
+	if (lpszPathName != NULL && !PathFileExists(lpszPathName))
+	{
+		if (AppSettingMgr.m_bWarningForFileNotExist)
+		{
+			CString strMessage = _T("[Path Error] File \"%s\" does not exist. Do you want to create it?");
+			strMessage.Format(strMessage, lpszPathName);
+			if (IDYES == AfxMessageBox(strMessage, MB_YESNO | MB_ICONWARNING))
+			{
+				if (!PathUtils::CreateNewEmptyFile(lpszPathName))
+				{
+					return NULL;
+				}
+			}
+			else
+			{
+				return NULL;
+			}
+		}
+		else
+		{
+			return NULL;
+		}
+	}
 	return CMultiDocTemplate::OpenDocumentFile(lpszPathName, bAddToMRU, bMakeVisible);
 } 

@@ -40,7 +40,7 @@ void VinaTextCompiler::START_COMPILER(VINATEXT_SUPPORTED_LANGUAGE docLanguage, C
 	if (!pLangDatabase) return;
 
 	CString strFilePath = pDoc->GetPathName();
-	if (FALSE == PathFileExists(strFilePath))
+	if (!PathFileExists(strFilePath))
 	{
 		CString strMsg;
 		strMsg.Format(_T("> [Path Error] \"%s\" does not exist...\n"), strFilePath);

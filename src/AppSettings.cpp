@@ -37,14 +37,14 @@ int CAppSettings::GetNewFileCopyID()
 	return m_nFileCopyCounter++;
 }
 
-void CAppSettings::ResetRecentEditorInfo()
+void CAppSettings::ResetEditorCaretInfo()
 {
 	m_RecentEditorCaretInfo.clear();
 }
 
-void CAppSettings::SaveRecentEditorInfo(const CString& strFileName)
+void CAppSettings::SaveRecentEditorCaretInfo(const CString& strPathName)
 {
-	CEditorDoc* pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(strFileName));
+	CEditorDoc* pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(strPathName));
 	if (!pDoc) return;
 	CEditorView* pView = pDoc->GetEditorView();
 	if (!pView) return;
@@ -56,18 +56,16 @@ void CAppSettings::SaveRecentEditorInfo(const CString& strFileName)
 	data._nWrapMode = static_cast<int>(pEditor->IsEditorInWrapMode());
 	if (data._nCurrentPosition != 0 || data._nFirstVisibleLine != 0 || data._nWrapMode != 0)
 	{
-		m_RecentEditorCaretInfo[AppUtils::CStringToStd(strFileName)] = data;
+		m_RecentEditorCaretInfo[AppUtils::CStringToStd(strPathName)] = data;
 	}
 }
 
-RecentEditorInfo CAppSettings::GetRecentEditorInfo(const CString& strFileName)
+RecentEditorInfo CAppSettings::GetRecentEditorCaretInfo(const CString& strPathName)
 {
-	for (auto const& data : m_RecentEditorCaretInfo)
+	const auto found = m_RecentEditorCaretInfo.find(AppUtils::CStringToStd(strPathName));
+	if (found != m_RecentEditorCaretInfo.end())
 	{
-		if (data.first == AppUtils::CStringToStd(strFileName))
-		{
-			return data.second;
-		}
+		return found->second;
 	}
 	return RecentEditorInfo();
 }
@@ -115,13 +113,15 @@ void CAppSettings::ResetAllSettings()
 	m_bAskBeforeReplaceInFiles = TRUE;
 	m_bEnableAutoDetectCodePage = TRUE;
 	m_bEnableShowHideFoldingMargin = FALSE;
+	m_bAutoSaveFileWhenCloseApp = TRUE;
+
 	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 
 	// indicator style
 	m_IndicatorStyle = EDITOR_INDICATOR_STYLE::FULL_BOX;
 
 	// auto save file interval
-	m_nIntervalAutoSaveFileMinutes = 9;
+	m_nIntervalAutoSaveFileMinutes = 120;
 
 	m_bUseInitialFilePickerPath = FALSE;
 	m_strInitialFilePickerPath = _T("C:\\");
@@ -182,7 +182,7 @@ void CAppSettings::ResetAllSettings()
 	AppUtils::SplitCString(m_strBinaryFileExtensionList, CSTRING_SPACE, m_BinaryFileExtensionList);
 }
 
-BOOL CAppSettings::SaveSetting()
+BOOL CAppSettings::SaveSettingData()
 {
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
 	JSonWriter jsonWriter(strJsonFilePath, "VinaText Setting");
@@ -226,6 +226,7 @@ BOOL CAppSettings::SaveSetting()
 	jsonWriter.AddBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonWriter.AddBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
 	jsonWriter.AddBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
+	jsonWriter.AddBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LanguageSpellCheck", AppUtils::CStringToStd(m_strLanguageSpellCheck));
 	jsonWriter.AddValue("DockWindowFontName", AppUtils::CStringToStd(m_DockWindowFontSetting._font));
@@ -273,7 +274,7 @@ BOOL CAppSettings::SaveSetting()
 	return TRUE;
 }
 
-BOOL CAppSettings::LoadSetting()
+BOOL CAppSettings::LoadSettingData()
 {
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("vinatext-app-settings.json");
 	if (!PathFileExists(strJsonFilePath))
@@ -323,6 +324,7 @@ BOOL CAppSettings::LoadSetting()
 	jsonReader.ReadBOOL("EnableAutoSearchWhenTyping", m_bEnableAutoSearchWhenTyping);
 	jsonReader.ReadBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonReader.ReadBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
+	jsonReader.ReadBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
 	jsonReader.ReadBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
@@ -372,16 +374,16 @@ BOOL CAppSettings::LoadSetting()
 	return TRUE;
 }
 
-BOOL CAppSettings::SaveRecentEditorData()
+BOOL CAppSettings::SaveRecentEditorCaretData()
 {
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("recent-file-data.json");
-	JSonWriter jsonWriter(strJsonFilePath, "VinaText Recent File Data");
-	jsonWriter.AddRecentEditorInfo("RecentFileStateData", m_RecentEditorCaretInfo);
+	JSonWriter jsonWriter(strJsonFilePath, "VinaText Editor File State Data");
+	jsonWriter.AddRecentEditorInfo("EditorFileStateData", m_RecentEditorCaretInfo);
 	jsonWriter.SaveFile();
 	return TRUE;
 }
 
-BOOL CAppSettings::LoadRecentEditorData()
+BOOL CAppSettings::LoadRecentEditorCaretData()
 {
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("recent-file-data.json");
 	if (!PathFileExists(strJsonFilePath))
@@ -389,8 +391,8 @@ BOOL CAppSettings::LoadRecentEditorData()
 		ResetAllSettings();
 		return FALSE;
 	}
-	JSonReader jsonReader(strJsonFilePath, "VinaText Recent File Data");
+	JSonReader jsonReader(strJsonFilePath, "VinaText Editor File State Data");
 	if (!jsonReader.LoadFile()) return FALSE;
-	jsonReader.ReadRecentEditorInfo("RecentFileStateData", m_RecentEditorCaretInfo);
+	jsonReader.ReadRecentEditorInfo("EditorFileStateData", m_RecentEditorCaretInfo);
 	return TRUE;
 }

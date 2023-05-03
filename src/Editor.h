@@ -314,8 +314,9 @@ public:
 	}
 	void SetColorForStyle(int style, COLORREF fore, COLORREF back = RGB(0, 0, 0), int size = -1, const char* face = 0);
 
-private:
+	// only use for backup, dont call it anywhere!
 	BOOL SaveFileWithEncoding(const CString& strFilePath);
+private:
 	int  m_nSearchflags = 0;
 	BOOL m_bLinenumbers = TRUE;
 	BOOL m_bSelection = TRUE;

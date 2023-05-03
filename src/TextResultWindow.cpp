@@ -740,7 +740,7 @@ void CSearchResultList::OnEditSaveToFile()
 		{
 			CString filename = fileDlg.GetPathName();
 			CString text = GetItemsText();
-			PathUtils::SaveFileTrunc(filename, text);
+			PathUtils::SaveFileTruncate(filename, text);
 		}
 	}
 }

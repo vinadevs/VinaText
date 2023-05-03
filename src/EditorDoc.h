@@ -40,6 +40,9 @@ public:
 	afx_msg void OnFileSave();
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnFileSaveAll();
+	afx_msg void OnFileBackUp();
+	afx_msg void OnFileSaveTemp();
+	afx_msg void OnFileBackUpAll();
 
 	// encoding...
 	afx_msg void OnFileSaveASCII();

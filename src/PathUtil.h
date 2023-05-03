@@ -19,12 +19,13 @@ namespace PathUtils
 	CString	GetVinaTextExePath();
 	CString	GetVinaTextTempPath();
 	CString GetVinaTextBookmarkPath();
+	CString GetVinaTextBackUpPath();
 	CString	GetVinaTextAppDataPath();
 	CString GetLanguageSettingFilePath(const CString & strLanguageName);
 	CString GetLanguageTemplateFilePath(VINATEXT_SUPPORTED_LANGUAGE language);
 	CString	GetUserExtensionPath();
 	CString	GetVinaTextPackagePath();
-	CString	GetVinaTextPOPath();
+	CString	GetVinaTextLocalizationPath();
 	CString GetAbsolutePath(const CString & strPath);
 	CString GetDataBaseFileFilter();
 	CString	GetWindowSystemPath();
@@ -48,7 +49,8 @@ namespace PathUtils
 	void GetAllFilesFromFolder(const CString& sDir, std::vector<CString>& vecFiles, BOOL bIncludeSubFolder = TRUE);
 	void GetAllFolderFromFolder(const CString& sDir, std::vector<CString>& vecPaths, BOOL bIncludeSubFolder = TRUE);
 	void GetAllPathFromFolder(const CString& sDir, std::vector<CString>& vecPaths, BOOL bIncludeSubFolder = TRUE);
-	BOOL SaveFileTrunc(const CString&  szFile, CString strContent);
+	BOOL CreateNewEmptyFile(const CString& szFile);
+	BOOL SaveFileTruncate(const CString&  szFile, CString strContent);
 	BOOL SaveFileAppend(const CString&  szFile, CString strContent);
 	BOOL SaveFileAppendNoDuplicateLine(const CString&  szFile, CString strContent);
 	BOOL OpenFile(const CString& szFile, CString & strContent);

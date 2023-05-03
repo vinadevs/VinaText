@@ -95,7 +95,8 @@ namespace AppUtils
 	void CloseAllDocumentButThis(CView * pActiveView);
 	BOOL CanCloseAllDocumentLeft(CView * pActiveView);
 	BOOL CanCloseAllDocumentRight(CView * pActiveView);
-	void SaveAllModifiedDocuments();
+	void SaveAllModifiedDocuments(BOOL bIsClosingApp = FALSE);
+	void BackupAllModifiedDocuments(BOOL bIsClosingApp = FALSE);
 	int GetModifiedDocumentCount();
 	std::vector<CDocument*> GetAllDocuments();
 	std::vector<CDocument*> GetAllDocumentTypes(DOCUMENT_TYPE type);

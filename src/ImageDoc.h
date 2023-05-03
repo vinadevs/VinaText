@@ -37,6 +37,7 @@ public:
 	afx_msg void OnFileSave();
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnFileSaveAll();
+
 	DECLARE_MESSAGE_MAP()
 
 	CString m_strSaveDocumentPath;

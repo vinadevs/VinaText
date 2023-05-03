@@ -672,7 +672,7 @@ BEGIN
         POPUP "VinaText Paths"
         BEGIN
             MENUITEM "Installation Path",           ID_PATH_VINATEXT
-            MENUITEM "App Data Path",               ID_PATH_VINATEXT_APPDATA
+            MENUITEM "AppData Path",                ID_PATH_VINATEXT_APPDATA
             MENUITEM "Temporary Path",              ID_PATH_VINATEXT_TEMP
         END
         MENUITEM SEPARATOR
@@ -873,7 +873,7 @@ BEGIN
         MENUITEM "Rotate Flip\tCtrl+D",         ID_IMAGE_FLIP
         MENUITEM "Rotate Mirror\tCtrl+M",       ID_IMAGE_MIRROR
         MENUITEM SEPARATOR
-        POPUP "Bitmap Effects"
+        POPUP "Adjust Bitmap Effect(s)"
         BEGIN
             MENUITEM "Negative",                    ID_IMAGE_NEGATIVE
             MENUITEM "Grayscale",                   ID_IMAGE_GRAYSCALE
@@ -2041,7 +2041,7 @@ BEGIN
     GROUPBOX        "Programming Settings",IDC_STATIC,19,12,216,226
 END
 
-IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 543, 453
+IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 543, 470
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -2115,8 +2115,10 @@ BEGIN
     COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,380,286,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Caret Editor (Cursor) Color:",IDC_STATIC,273,241,90,8
     COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,380,238,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,431
-    GROUPBOX        "Customize Settings",IDC_STATIC,238,11,282,431
+    GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,450
+    GROUPBOX        "Customize Settings",IDC_STATIC,238,11,284,450
+    CONTROL         "Auto Save File When Close Application",ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,443,146,10
 END
 
 
@@ -2407,7 +2409,7 @@ BEGIN
     IDD_DIALOG_SETTING_EDITOR, DIALOG
     BEGIN
         RIGHTMARGIN, 532
-        BOTTOMMARGIN, 451
+        BOTTOMMARGIN, 468
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2683,7 +2685,6 @@ BEGIN
     ID_INDICATOR_SCRL       "SCRL"
     ID_INDICATOR_OVR        "  OVERTYPE  "
     ID_INDICATOR_REC        "REC"
-    ID_INDICATOR_INS        "  INSERT  "
 END
 
 STRINGTABLE
@@ -2693,6 +2694,7 @@ BEGIN
     IDS_ENCODING_INDICATOR  "%s"
     ID_OPTIONS_DELETE_ALL_BREAKPOINT 
                             "Remove All Breakpoints\\Remove All Breakpoints"
+    ID_INDICATOR_INS        "  INSERT  "
 END
 
 STRINGTABLE
@@ -2766,12 +2768,10 @@ BEGIN
     ID_EDITOR_COMMENT       "Comment Line or Block\nComment"
     ID_PANE_FILE_EXPLORER   "Shows or hides the File Explorer\nExplorer Tree Window"
     ID_PANE_OUTPUT_WINDOW   "Shows or hides the Message Log\nMessage Ouput Log"
-    ID_INDICATOR_CARET_INFO "Ln: 1 | Col: 1"
-    IDS_INDICATOR_CARET_INFO_CURRENT 
-                            "Ln: %d | Col: %d | Pos: %d"
+    ID_INDICATOR_CARET_INFO "Ln: 1 | Col: 1 | Pos: 1"
+    IDS_INDICATOR_CARET_INFO_CURRENT "Ln: %d | Col: %d | Pos: %d"
     ID_INDICATOR_MATCHEDS   "Matches: 0"
     IDS_LENGTH_INDICATOR    "Matches: %d"
-    ID_INDICATOR_CURRENT_LANGUAGE "Text"
 END
 
 STRINGTABLE
@@ -2784,6 +2784,7 @@ BEGIN
                             "Reveal Active File In Explorer Window\nReveal In Explorer"
     ID_MDI_TAB_MOVE_PREVIOUS_TAB 
                             "Move Current Tab To Previous Group\nMove Current Tab To Previous Group"
+    ID_INDICATOR_CURRENT_LANGUAGE "Text"
 END
 
 STRINGTABLE
@@ -2805,15 +2806,13 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_INDICATOR_CARET_INFO_SELECTED 
-                            "%d Lines, %d Characters"
+    IDS_INDICATOR_CARET_INFO_SELECTED "%d Lines, %d Characters (Selected)"
 END
 
 STRINGTABLE
 BEGIN
     ID_INDICATOR_SELECTIONS "Selections: 1"
-    IDS_SELECTIONS_INDICATOR 
-                            "Selections: %d"
+    IDS_SELECTIONS_INDICATOR "Selections: %d"
 END
 
 STRINGTABLE

@@ -84,6 +84,7 @@ protected:
 	BOOL m_bEditorEnableUnderlineFont{ FALSE };
 	BOOL m_bAskBeforeReplaceInFiles{ FALSE };
 	BOOL m_bEnableAutoDetectCodePage{ FALSE };
+	BOOL m_bAutoSaveFileWhenCloseApp{ FALSE };
 
 	int m_nLineSpaceAbove{ 0 };
 	int m_nLineSpaceBelow{ 0 };

@@ -348,7 +348,8 @@ LRESULT CMainFrame::OnMainFrameUpdate(WPARAM wParam, LPARAM lParam)
 void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIFrameWndEx::OnSize(nType, cx, cy);
-	OnStatusBarSize(cx);
+	if (m_wndStatusBar.GetSafeHwnd())
+		OnStatusBarSize(cx);
 }
 
 void CMainFrame::OnStatusBarSize(int cx)
@@ -426,9 +427,8 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 
 void CMainFrame::OnClose()
 {
-	AppSettingMgr.ResetRecentEditorInfo();
+	AppSettingMgr.ResetEditorCaretInfo();
 	m_bIsClosingVinaText = TRUE;
-	SaveMDIState(theApp.GetRegSectionPath());
 	theApp.SaveOpenedFolderData();
 	CMDIFrameWndEx::OnClose();
 }
@@ -549,24 +549,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	RecalcLayout();
 
-	// for auto save document...
-	EnableAutoSaveDocument();
-
 	return 0;
-}
-
-unsigned __stdcall PreCheckBeforeSaveDocument(void* pArguments)
-{
-	// perform any check before saving...
-	((CMainFrame*)AfxGetApp()->m_pMainWnd)->EnableStartSaveDocumentTimer();
-	_endthreadex(0);
-	return 0;
-}
-
-void CMainFrame::EnableStartSaveDocumentTimer()
-{
-	KillTimer(START_SAVE_DOCUMENT_TIMER);
-	SetTimer(START_SAVE_DOCUMENT_TIMER, 1, NULL);
 }
 
 void CMainFrame::UpdateFoldingMap(BOOL bActiveDialogTab)
@@ -591,84 +574,6 @@ void CMainFrame::ShowErrorLineOnEditor()
 
 void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 {
-	if (nIDEvent == AUTO_SAVE_DOCUMENT_TIMER)
-	{
-		CDocument* pDoc = GetActiveFrame()->GetActiveDocument();
-		if (pDoc == NULL) return;
-
-		KillTimer(AUTO_SAVE_DOCUMENT_TIMER);
-
-		CEditorDoc* pEditorDoc = NULL;
-		if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
-		{
-			pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
-		}
-
-		if (pEditorDoc) 
-		{
-			HANDLE hThread;
-			unsigned threadID;
-			hThread = (HANDLE)_beginthreadex(NULL, 0, &PreCheckBeforeSaveDocument, pEditorDoc, 0, &threadID);
-			CloseHandle(hThread);
-		}
-	}
-	else if (nIDEvent == START_SAVE_DOCUMENT_TIMER)
-	{
-		KillTimer(START_SAVE_DOCUMENT_TIMER);
-
-		// start save all document...
-		POSITION pos = AfxGetApp()->GetFirstDocTemplatePosition();
-		while (pos)
-		{
-			CDocTemplate* pDocTemplate = AfxGetApp()->GetNextDocTemplate(pos);
-			if (pDocTemplate)
-			{
-				POSITION posDoc = pDocTemplate->GetFirstDocPosition();
-				while (posDoc)
-				{
-					CDocument* pDoc = pDocTemplate->GetNextDoc(posDoc);
-					if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
-					{
-						CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
-						if (pEditorDoc)
-						{
-							CString strDocName = pDoc->GetTitle();
-							strDocName.Replace(_T("*"), _T(""));
-							strDocName.Trim();
-							CString strDocFile = pDoc->GetPathName();
-							if (PathFileExists(strDocFile))
-							{
-								pEditorDoc->SetPathName(strDocFile);
-								if (pEditorDoc->OnSaveDocument(strDocFile))
-								{
-									pEditorDoc->SetModifiedFlag(FALSE);
-									CString strMessage = _T("> Auto save file ") + strDocName;
-									LOG_OUTPUT_MESSAGE_WITH_TIME(strMessage);
-								}
-							}
-							else
-							{
-								CString strTempFilePath = PathUtils::GetVinaTextTempPath();
-								if (PathFileExists(strTempFilePath))
-								{
-									CString strFileSave = strTempFilePath + strDocName;
-									if (pEditorDoc->OnSaveDocument(strFileSave))
-									{
-										pEditorDoc->SetPathName(strFileSave);
-										pEditorDoc->SetModifiedFlag(FALSE);
-										CString strMessage = _T("> Auto save file ") + strDocName;
-										LOG_OUTPUT_MESSAGE_WITH_TIME(strMessage);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		EnableAutoSaveDocument();
-	}
-
 	CMDIFrameWndEx::OnTimer(nIDEvent);
 }
 
@@ -3128,12 +3033,12 @@ BOOL CMainFrame::IsSameMDITabGroup(CView* pActiveView, CView* pParentView)
 
 void CMainFrame::QuickSearchDialogChangedActiveTab()
 {
-	CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pEditorActiveDoc && m_pQuickSearchDialog)
+	if (m_pQuickSearchDialog)
 	{
 		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
 		if (pParentDocument)
 		{
+			CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 			if (pParentDocument == pEditorActiveDoc)
 			{
 				m_pQuickSearchDialog->ShowWindow(SW_SHOW);
@@ -3148,13 +3053,12 @@ void CMainFrame::QuickSearchDialogChangedActiveTab()
 
 void CMainFrame::CloseQuickSearchDialog()
 {
-	CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pEditorActiveDoc && m_pQuickSearchDialog)
+	if (m_pQuickSearchDialog)
 	{
 		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
 		if (pParentDocument)
 		{
-			if (pParentDocument == pEditorActiveDoc)
+			if (pParentDocument == dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument()))
 			{
 				m_pQuickSearchDialog->OnCancel();
 			}
@@ -3261,17 +3165,9 @@ void CMainFrame::ReleaseQuickSearchDialog()
 	m_pQuickSearchDialog = NULL;
 }
 
-void CMainFrame::EnableAutoSaveDocument()
+BOOL CMainFrame::HasDebuggerDocument(CEditorDoc* pDocument)
 {
-	if (AppSettingMgr.m_bAutoSaveDocument) 
-	{
-		KillTimer(AUTO_SAVE_DOCUMENT_TIMER);
-		SetTimer(AUTO_SAVE_DOCUMENT_TIMER, AppSettingMgr.m_nIntervalAutoSaveFileMinutes*60*1000, NULL);
-	}
-	else 
-	{
-		KillTimer(AUTO_SAVE_DOCUMENT_TIMER);
-	}
+	return m_DebuggerDocList.find(pDocument) != m_DebuggerDocList.end();
 }
 
 void CMainFrame::RemoveDebuggerDocument(CEditorDoc* pDocument)
@@ -3690,7 +3586,7 @@ void CMainFrame::OnOpenPowerShellHere()
 void CMainFrame::OnOpenGitBashHere()
 {
 	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
-	if (FALSE == PathFileExists(strGitBash))
+	if (!PathFileExists(strGitBash))
 	{
 		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
 		return;
@@ -3887,7 +3783,7 @@ void CMainFrame::OnMDITabCloneFile()
 		if (pEditorDoc && pEditorDoc->GetEditorCtrl())
 		{
 			pEditorDoc->GetEditorCtrl()->GetText(stScript);
-			if (PathUtils::SaveFileTrunc(strPathName, stScript))
+			if (PathUtils::SaveFileTruncate(strPathName, stScript))
 			{
 				// Open new doc
 				AppUtils::CreateDocumentFromFile(strPathName);
@@ -4124,7 +4020,7 @@ void CMainFrame::OnToolPythonPipWindow()
 		AfxMessageBox(_T("Python Pip3 path does not exist, please set up it in Preference > General Settings > PythonFolderPath!"));
 		return;
 	}
-	if (FALSE == PathFileExists(AppSettingMgr.m_strPythonFolderPath))
+	if (!PathFileExists(AppSettingMgr.m_strPythonFolderPath))
 	{
 		CString strMsg;
 		strMsg.Format(_T("[Pip Path Error] \"%s\" does not exist...\n"), AppSettingMgr.m_strPythonFolderPath);
@@ -4148,7 +4044,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > General Settings > NodeJSFolderPath!"));
 		return;
 	}
-	if (FALSE == PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))
+	if (!PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))
 	{
 		CString strMsg;
 		strMsg.Format(_T("[NodeJS Path Error] \"%s\" does not exist...\n"), AppSettingMgr.m_strNodeJSFolderPath);

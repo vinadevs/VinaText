@@ -1019,7 +1019,6 @@ void CEditorCtrl::SetLexer(const char* m_strLexerNameName)
 		void* pLexer = m_CreateLexerFunc(m_strLexerNameName);
 		DoCommand(SCI_SETILEXER, 0, reinterpret_cast<LPARAM>(pLexer));
 	}
-
 }
 
 void CEditorCtrl::SetKeywords(const char* keywords, int nKeyWordSet)

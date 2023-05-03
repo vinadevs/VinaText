@@ -26,8 +26,6 @@
 
 #include "UserExtension.h"
 
-#define AUTO_SAVE_DOCUMENT_TIMER	WM_APP+307
-#define START_SAVE_DOCUMENT_TIMER	WM_APP+308
 #define UMW_SET_COLOR_ACTIVE_TAB_MDI WM_APP+309
 #define UMW_SET_READ_ONLY_TAB_MDI	WM_APP+310
 #define UMW_DISABLE_ALL_READ_ONLY_TAB_MDI WM_APP+316
@@ -62,6 +60,7 @@ public:
 	// get CWnd controls
 	CMFCStatusBar* GetStatusBar() { return &m_wndStatusBar; }
 	CMFCTabCtrl* GetActiveMDITabGroup();
+	CQuickSearchDialog* GetQuickSearchDialog() { return m_pQuickSearchDialog; }
 	CFileExplorerCtrl& GetFileExplorerCtrl() { return m_wndFileExplorer.GetFileExplorerCtrl(); }
 	CMDIClientAreaWnd& GetMDIClientAreaWnd() { return m_wndClientArea; }
 
@@ -81,13 +80,13 @@ public:
 	BOOL IsClosingVinaText() const { return m_bIsClosingVinaText; }
 	void OnChangeAppLook(BOOL bOneNoteTabs, BOOL bMDITabColors, BOOL bIsVSDotNetLook, BOOL bDockTabColors, BOOL bMDITabsVS2005Look, BOOL bActiveTabCloseButton);
 	void MDIMoveAllTabGroupMode(BOOL bNext); // customize internal MFC...
-	void EnableStartSaveDocumentTimer(); // for child thread...
 	void UpdateFoldingMap(BOOL bActiveDialogTab = TRUE);
 	void ShowErrorLineOnEditor();
 	void RemoveAllBreakPointDebuggerDoc(VINATEXT_SUPPORTED_LANGUAGE language);
 	BOOL IsDebuggerDocument(CEditorDoc * pDoc);
 	void ReleaseBookMarkTableDialog();
 	void ReleaseQuickSearchDialog();
+	BOOL HasDebuggerDocument(CEditorDoc* pDocument);
 	void RemoveDebuggerDocument(CEditorDoc* pDocument);
 	void RevealInExplorerWindow(const CString& strPath);
 	void ReactiveTabAfterFloatPane();
@@ -375,7 +374,6 @@ protected:
 	void UpdateUIForPrinter(CCmdUI * pCmdUI);
 	void SetDockingPaneIcons(BOOL bBigIcons);
 	BOOL CreateDockingBars();
-	void EnableAutoSaveDocument();
 	void FinalizeWorkerThread();
 	void UpdateEditorUiForDebugger(CEditorDoc * pEditorDoc, DWORD lPointerLine);
 };

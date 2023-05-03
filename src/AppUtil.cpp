@@ -314,19 +314,11 @@ BOOL AppUtils::StringIsInteger(const std::wstring &str)
 
 BOOL AppUtils::StringIsFloat(const std::wstring & str) 
 {
-	if (StringIsInteger(str))
-	{
-		return FALSE;
-	}
-	try
-	{
-		std::stod(str);
-	}
-	catch (...)
-	{
-		return FALSE;
-	}
-	return TRUE;
+	std::wistringstream iss(str);
+	float f;
+	iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+	// Check the entire string was consumed and if either failbit or badbit is set
+	return iss.eof() && !iss.fail();
 }
 
 CString	AppUtils::WStdToCString(const std::wstring& str)
@@ -762,6 +754,7 @@ void AppUtils::CreateNewEditorWithText(const CString & strTitle, const CString &
 			if (pEditor)
 			{
 				pEditor->SetTextToEditor(strText);
+				pEditor->ConvertEOL(SC_EOL_CRLF);
 			}
 		}
 	}
@@ -1516,7 +1509,7 @@ BOOL AppUtils::CanCloseAllDocumentRight(CView * pActiveView)
 	return FALSE;
 }
 
-void AppUtils::SaveAllModifiedDocuments()
+void AppUtils::SaveAllModifiedDocuments(BOOL bIsClosingApp/* = FALSE*/)
 {
 	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
 	while (posTemplate)
@@ -1548,7 +1541,34 @@ void AppUtils::SaveAllModifiedDocuments()
 			}
 		}
 	}
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> Save all modified documents..."));
+	if (!bIsClosingApp) LOG_OUTPUT_MESSAGE_COLOR(_T("> Saved all modified documents..."));
+}
+
+void AppUtils::BackupAllModifiedDocuments(BOOL bIsClosingApp/* = FALSE*/)
+{
+	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
+	while (posTemplate)
+	{
+		CDocTemplate* doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
+		if (!doctempl) return;
+		POSITION posDoc = doctempl->GetFirstDocPosition();
+		while (posDoc)
+		{
+			CDocument* pDoc = doctempl->GetNextDoc(posDoc);
+			if (pDoc && pDoc->IsModified())
+			{
+				if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
+				{
+					CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
+					if (pEditorDoc)
+					{
+						pEditorDoc->OnFileBackUp();
+					}
+				}
+			}
+		}
+	}
+	if (!bIsClosingApp) LOG_OUTPUT_MESSAGE_COLOR(_T("> Backed up all modified documents..."));
 }
 
 CDocument* AppUtils::CreateDocumentFromFile(const CString & strFile)
@@ -1598,7 +1618,7 @@ CDocument * AppUtils::CreateDocumentCheckFileExistence(const CString & strFile)
 		return dlg.GetSelectedCommandControlID();
 	};
 
-	if (FALSE == PathFileExists(strFile))
+	if (!PathFileExists(strFile))
 	{
 		//Try to create the new file
 		HANDLE hCreateFile = CreateFile(strFile,    // name of the file
@@ -1921,7 +1941,7 @@ void AppUtils::CheckLastOpenDocument()
 	}
 }
 
-void AppUtils::UpdateModifiedDocumentTitle(CDocument* pDoc, BOOL bAddMarker)
+void AppUtils::UpdateModifiedDocumentTitle(CDocument* pDoc, BOOL bAddMarker/* = TRUE*/)
 {
 	ASSERT(pDoc);
 	if (!pDoc) return;

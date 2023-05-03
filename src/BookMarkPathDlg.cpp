@@ -240,7 +240,7 @@ void CBookMarkPathDlg::OnBnClickedRemoveBookbarkPath()
 				strNewFileContent += strPath + EDITOR_NEW_LINE;
 			}
 		}
-		PathUtils::SaveFileTrunc(m_strBookmarkFile, strNewFileContent);
+		PathUtils::SaveFileTruncate(m_strBookmarkFile, strNewFileContent);
 
 		m_listPath.DeleteItem(selectedRow);
 	}

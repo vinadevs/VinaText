@@ -131,20 +131,20 @@ public:
 	void ResetAllSettings(); // all new variable members need to be initiated in this function also!
 
 	// editor document ID
-	void RemoveDocumentUndefTitle(const CString & strTitle);
+	void RemoveDocumentUndefTitle(const CString& strTitle);
 	CString CreateDocumentUndefTitle();
 	int GetNewFileCopyID();
 
 	// editor recent file data
-	void SaveRecentEditorInfo(const CString& strFileName);
-	RecentEditorInfo GetRecentEditorInfo(const CString& strFileName);
-	void ResetRecentEditorInfo();
+	void SaveRecentEditorCaretInfo(const CString& strPathName);
+	RecentEditorInfo GetRecentEditorCaretInfo(const CString& strPathName);
+	void ResetEditorCaretInfo();
 
 	// save / load
-	BOOL SaveSetting();
-	BOOL LoadSetting();
-	BOOL SaveRecentEditorData();
-	BOOL LoadRecentEditorData();
+	BOOL SaveSettingData();
+	BOOL LoadSettingData();
+	BOOL SaveRecentEditorCaretData();
+	BOOL LoadRecentEditorCaretData();
 
 	// all settings ///////////////////////////////////////////////////////////////////
 
@@ -189,13 +189,14 @@ public:
 	BOOL m_bAskBeforeReplaceInFiles = TRUE;
 	BOOL m_bEnableAutoDetectCodePage = TRUE;
 	BOOL m_bEnableShowHideFoldingMargin = FALSE;
+	BOOL m_bAutoSaveFileWhenCloseApp = TRUE;
 
 	// editor style
 	FOLDER_MARGIN_STYPE m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 	EDITOR_INDICATOR_STYLE m_IndicatorStyle = EDITOR_INDICATOR_STYLE::FULL_BOX;
 	
 	// editor auto save file
-	int m_nIntervalAutoSaveFileMinutes = 9;
+	int m_nIntervalAutoSaveFileMinutes = 120;
 
 	// paths
 	CString m_strInitialFilePickerPath = _T("C:\\");
@@ -242,7 +243,10 @@ public:
 private:
 	// settings can not edit by users...
 	int m_nFileCopyCounter = 0;
-	std::unordered_map<std::string, RecentEditorInfo> m_RecentEditorCaretInfo;
+	// Editor caret info state
+	typedef std::unordered_map<std::string, RecentEditorInfo> MapRecentEditorInfo;
+	MapRecentEditorInfo m_RecentEditorCaretInfo;
+
 	// Document ID
 	typedef std::unordered_set<int> DocumentEmptyIDBuffer;
 	DocumentEmptyIDBuffer m_DocIDBuffer;

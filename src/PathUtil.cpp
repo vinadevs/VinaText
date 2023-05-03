@@ -68,9 +68,9 @@ CString PathUtils::GetVinaTextTempPath()
 		::GetTempPath(_MAX_PATH, strPath.GetBufferSetLength(_MAX_PATH));
 		strPath.ReleaseBuffer();
 		strPath.Append(_T("VinaText\\"));
-		if (FALSE == PathFileExists(strPath))
+		if (!PathFileExists(strPath))
 		{
-			if (FALSE == CreateDirectory(strPath, NULL))
+			if (!CreateDirectory(strPath, NULL))
 			{
 				strPath = _T("");
 			}
@@ -84,24 +84,32 @@ CString PathUtils::GetVinaTextBookmarkPath()
 	return PathUtils::GetVinaTextAppDataPath() + _T("path-book-mark.dat");
 }
 
+CString PathUtils::GetVinaTextBackUpPath()
+{
+	CString strPath = PathUtils::GetVinaTextAppDataPath() + _T("backup\\");
+	if (!PathFileExists(strPath))
+	{
+		if (!CreateDirectory(strPath, NULL))
+		{
+			strPath = _T("");
+			return strPath;
+		}
+	}
+	return strPath;
+}
+
 CString PathUtils::GetVinaTextAppDataPath()
 {
 	CString strPath;
+	::SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, strPath.GetBufferSetLength(_MAX_PATH));
+	strPath.ReleaseBuffer();
+	strPath.Append(_T("\\VinaText\\"));
+	if (!PathFileExists(strPath))
 	{
-		TCHAR* pEnviAppFolder = NULL;
+		if (!CreateDirectory(strPath, NULL))
 		{
-			::SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, strPath.GetBufferSetLength(_MAX_PATH));
-			strPath.ReleaseBuffer();
-		}
-
-		strPath.Append(_T("\\VinaText\\"));
-		if (FALSE == PathFileExists(strPath))
-		{
-			if (FALSE == CreateDirectory(strPath, NULL))
-			{
-				strPath = _T("");
-				return strPath;
-			}
+			strPath = _T("");
+			return strPath;
 		}
 	}
 	return strPath;
@@ -321,7 +329,7 @@ CString PathUtils::GetVinaTextPackagePath()
 	return strPath;
 }
 
-CString PathUtils::GetVinaTextPOPath()
+CString PathUtils::GetVinaTextLocalizationPath()
 {
 	CString strPath = GetVinaTextPackagePath();
 	strPath.Append(_T("\\localization-packages\\"));
@@ -810,7 +818,25 @@ void PathUtils::GetAllPathFromFolder(const CString & sDir, std::vector<CString>&
 	FindClose(hFind); //Free handle 
 }
 
-BOOL PathUtils::SaveFileTrunc(const CString& szFile, CString strContent)
+BOOL PathUtils::CreateNewEmptyFile(const CString& szFile)
+{
+	HANDLE hFile = CreateFile(szFile, // name of the file
+							GENERIC_WRITE, // open for writing
+							0,             // sharing mode, none in this case
+							0,             // use default security descriptor
+							CREATE_ALWAYS, // overwrite if exists
+							FILE_ATTRIBUTE_NORMAL,
+							0);
+	if (hFile)
+	{
+		DELETE_WIN32_HANDLE(hFile)
+		return TRUE;
+	}
+	return FALSE;
+}
+
+
+BOOL PathUtils::SaveFileTruncate(const CString& szFile, CString strContent)
 {
 	// if pathname is empty do nothing
 	if (szFile.IsEmpty())
@@ -1119,7 +1145,7 @@ BOOL PathUtils::SendToRecycleBin(HWND hParentHWND, const CString& strPath, BOOL 
 
 BOOL PathUtils::CreateDirectoryIfNotExited(LPCTSTR pstrPath)
 {
-	if (FALSE == PathFileExists(pstrPath))
+	if (!PathFileExists(pstrPath))
 	{
 		if (CreateDirectory(pstrPath, NULL))
 		{
@@ -1144,21 +1170,18 @@ LONGLONG PathUtils::GetFileSize(const CString & szFile)
 	HANDLE hFile = CreateFile(szFile, GENERIC_READ,
 		FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING,
 		FILE_ATTRIBUTE_NORMAL, NULL);
-
 	if (hFile == INVALID_HANDLE_VALUE)
 	{
 		return -1; // error condition, could call GetLastError to find out more
 	}
-
 	LARGE_INTEGER size;
 	if (!GetFileSizeEx(hFile, &size))
 	{
 		DELETE_WIN32_HANDLE(hFile)
 			return -1; // error condition, could call GetLastError to find out more
 	}
-
 	DELETE_WIN32_HANDLE(hFile)
-		return size.QuadPart;
+	return size.QuadPart;
 }
 
 #define DIM(x) (sizeof(x)/sizeof(*(x)))

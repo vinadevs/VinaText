@@ -67,7 +67,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize = m_nEditorLineNumberFontSize;
 		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize = m_nEditorTextFontSize;
 		AppSettingMgr.m_nPageAlignmentWidth = m_nPageAlignmentWidth;
-
+		AppSettingMgr.m_bAutoSaveFileWhenCloseApp = m_bAutoSaveFileWhenCloseApp;
 		CButton* pButtonEditor = (CButton*)GetDlgItem(ID_EDITOR_FONT_NAME_BUTTON);
 		if (pButtonEditor)
 		{
@@ -112,6 +112,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_nEditorLineNumberFontSize = AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize;
 		m_nEditorTextFontSize = AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize;
 		m_nPageAlignmentWidth = AppSettingMgr.m_nPageAlignmentWidth;
+		m_bAutoSaveFileWhenCloseApp = AppSettingMgr.m_bAutoSaveFileWhenCloseApp;
 
 		CButton* pButtonEditor = (CButton*)GetDlgItem(ID_EDITOR_FONT_NAME_BUTTON);
 		if (pButtonEditor)
@@ -143,6 +144,7 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_EDITOR_ENABLE_UNDERLINE_FONT, m_bEditorEnableUnderlineFont);
 	DDX_Check(pDX, ID_ASK_BEFORE_REPLACE_IN_FILES, m_bAskBeforeReplaceInFiles);
 	DDX_Check(pDX, ID_ENABLE_AUTO_DETECT_CODE_PAGE, m_bEnableAutoDetectCodePage);
+	DDX_Check(pDX, ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP, m_bAutoSaveFileWhenCloseApp);
 	DDX_Control(pDX, ID_LANGUAGE_SPELL_CHECK_COMBO, m_LanguageSpellCheckCombo);
 	DDX_Control(pDX, ID_LANGUAGE_TRANSLATE_FROM_COMBO, m_LanguageTranslateFromCombo);
 	DDX_Control(pDX, ID_LANGUAGE_TRANSLATE_TO_COMBO, m_LanguageTranslateToCombo);

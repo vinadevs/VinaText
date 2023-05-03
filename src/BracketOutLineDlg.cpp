@@ -171,7 +171,7 @@ void CBracketOutLineDlg::OnEditSaveFile()
 		{ 
 			strAllText += strLine + _T("\n");
 		}
-		PathUtils::SaveFileTrunc(filename, strAllText);
+		PathUtils::SaveFileTruncate(filename, strAllText);
 	}
 }
 

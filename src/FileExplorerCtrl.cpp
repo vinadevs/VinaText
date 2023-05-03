@@ -1170,11 +1170,11 @@ HTREEITEM CFileExplorerCtrl::MoveFileWin32(HTREEITEM hItem, BOOL bIsCopy)
 				}
 				if (bIsCopy)
 				{
-					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Copied file from %s to %s..."), m_sSourceCopyPath, strDestFile);
+					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Copied file from \"%s\" to \"%s\"..."), m_sSourceCopyPath, strDestFile);
 				}
 				else
 				{
-					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Cut file from %s to %s..."), m_sSourceCopyPath, strDestFile);
+					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Cut file from \"%s\" to \"%s\"..."), m_sSourceCopyPath, strDestFile);
 				}
 			}
 
@@ -1734,11 +1734,11 @@ void CFileExplorerCtrl::OnDelete()
 				Sleep(500);
 				if (Delete(hSelItem))
 				{
-					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Deleted path %s, you can restore it from recycle bin..."), strFileToDelete);
+					LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Deleted path \"%s\", you can restore it from recycle bin..."), strFileToDelete);
 				}
 				else
 				{
-					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path %s does not allow to delete!"), strFileToDelete);
+					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path \"%s\" does not allow to delete!"), strFileToDelete);
 				}
 			}
 		}
@@ -2029,7 +2029,7 @@ void CFileExplorerCtrl::DoNavigateSearchFiles(CString strFolderPath)
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
+		CString strMessage = _T("> [Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
 }
@@ -2410,7 +2410,7 @@ void CFileExplorerCtrl::OnGetFullPath()
 	{
 		CString sPath(ItemToPath(hItem));
 		OpenClipBoard(sPath);
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Copied full file path %s..."), sPath);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Copied full file path \"%s\"..."), sPath);
 	}
 }
 
@@ -2765,7 +2765,7 @@ void CFileExplorerCtrl::OnOpenPowerShellHere()
 void CFileExplorerCtrl::OnOpenGitBashHere()
 {
 	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
-	if (FALSE == PathFileExists(strGitBash))
+	if (!PathFileExists(strGitBash))
 	{
 		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
 		return;
@@ -2834,7 +2834,7 @@ void CFileExplorerCtrl::OnOptionsEditListAllFile()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Path Error] \"%s\" does not exist.");
+		CString strMessage = _T("> [Explorer Window] [Path Error] \"%s\" does not exist.");
 		strMessage.Format(strMessage, strPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
@@ -2862,7 +2862,7 @@ void CFileExplorerCtrl::OnOptionsEditListAllFolder()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Path Error] \"%s\" does not exist.");
+		CString strMessage = _T("> [Explorer Window] [Path Error] \"%s\" does not exist.");
 		strMessage.Format(strMessage, strPath);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
@@ -2879,7 +2879,7 @@ void CFileExplorerCtrl::OnOptionsEditSearchText()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
+		CString strMessage = _T("> [Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
 }
@@ -2895,7 +2895,7 @@ void CFileExplorerCtrl::OnOptionsEditReplaceOnfolder()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
+		CString strMessage = _T("> [Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
 }
@@ -2951,7 +2951,7 @@ void CFileExplorerCtrl::OnOptionsEditFileSaveAs()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
+		CString strMessage = _T("> [Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
 }
@@ -2964,7 +2964,7 @@ void CFileExplorerCtrl::OnCut()
 	{
 		if (IsFolder(hItem))
 		{
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [From Explorer Window] Please use system menu for cutting folder [Shift + Right click]..."), BasicColors::orange);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Explorer Window] Please use system menu for cutting folder [Shift + Right click]..."), BasicColors::orange);
 		}
 		else
 		{
@@ -2982,7 +2982,7 @@ void CFileExplorerCtrl::OnCopy()
 	{
 		if (IsFolder(hItem))
 		{
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [From Explorer Window] Please use system menu for copying folder [Shift + Right click]..."), BasicColors::orange);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Explorer Window] Please use system menu for copying folder [Shift + Right click]..."), BasicColors::orange);
 		}
 		else
 		{
@@ -3502,7 +3502,7 @@ void CFileExplorerCtrl::OnPreviewFile(_In_ NMTREEVIEW* /*pNMTreeView*/, _In_ con
 		if (llFileSize > AppSettingMgr.m_nFilePreviewSizeLimit)
 		{
 			CString strFileSize = CString(std::unique_ptr<char>(PathUtils::SizeMemoryToString(llFileSize)).get());
-			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(AfxCStringFormat(_T("> [From Explorer Window] [Preview Waring] File size %s is %s, exceeded preview limitation. Please change limitation value in setting..."), sPath, strFileSize), BasicColors::orange);
+			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(AfxCStringFormat(_T("> [Explorer Window] [Preview Waring] File size \"%s\" is %s, exceeded preview limitation. Please change limitation value in setting..."), sPath, strFileSize), BasicColors::orange);
 			return;
 		}
 		CBaseDoc* pActiveDoc = dynamic_cast<CBaseDoc*>(AppUtils::GetMDIActiveDocument());
@@ -3631,7 +3631,7 @@ void CFileExplorerCtrl::OnPreviewFile(_In_ NMTREEVIEW* /*pNMTreeView*/, _In_ con
 	else
 	{
 		CString strMsg;
-		strMsg.Format(_T("> [From Explorer Window] Can not preview binary file %s..."), sPath);
+		strMsg.Format(_T("> [Explorer Window] Can not preview binary file \"%s\"..."), sPath);
 		LOG_OUTPUT_MESSAGE_COLOR(strMsg, BasicColors::orange);
 	}
 }
@@ -3732,7 +3732,7 @@ BOOL CFileExplorerCtrl::OnEndLabelEdit(NMHDR* pNMHDR, LRESULT* pResult)
 		if (bMonitoringThread)
 			CreateMonitoringThread(m_sMonitoringPath);
 
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Renamed %s to %s..."), sFrom, sTo);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Renamed \"%s\" to \"%s\"..."), sFrom, sTo);
 	}
 	*pResult = 0;
 	return FALSE; //Allow the message to be reflected again
@@ -5782,7 +5782,7 @@ void CFileExplorerCtrl::OnOpenFileContainer()
 	}
 	else
 	{
-		CString strMessage = _T("> [From Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
+		CString strMessage = _T("> [Explorer Window] [Search Path Error] selected path does not exist or is a special path.");
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMessage, BasicColors::orange);
 	}
 }
@@ -6042,7 +6042,7 @@ void CFileExplorerCtrl::OnExpandAll()
 	HTREEITEM hItem = GetSelectedItem();
 	m_nExpandCounterLevel = 0;
 	CollapseExpandBranch(hItem, TVE_EXPAND);
-	LOG_OUTPUT_MESSAGE_FORMAT(_T("> [From Explorer Window] Expand all childs with limited level %d..."), AppSettingMgr.m_nExplorerExpandLimitLevel);
+	LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] Expand all childs with limited level %d..."), AppSettingMgr.m_nExplorerExpandLimitLevel);
 	EnsureVisibleCenter(hItem);
 	SetRedraw(TRUE);
 }

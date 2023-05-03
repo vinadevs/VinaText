@@ -213,7 +213,7 @@ BOOL CVinaTextApp::InitInstance()
 	}
 
 	// Remove previous data in temp path...
-	PathUtils::DeletePathPermanently(PathUtils::GetVinaTextTempPath() + _T("*.*"));
+	//PathUtils::DeletePathPermanently(PathUtils::GetVinaTextTempPath() + _T("*.*"));
 
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
@@ -226,7 +226,7 @@ BOOL CVinaTextApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	// VinaText Application Settings
-	if (!AppSettingMgr.LoadSetting())
+	if (!AppSettingMgr.LoadSettingData())
 	{
 		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Warning] Load previous application settings failed..."));
 	}
@@ -317,7 +317,7 @@ BOOL CVinaTextApp::InitInstance()
 	}
 	m_pMainWnd = pMainFrame;
 
-	if (!AppSettingMgr.LoadRecentEditorData())
+	if (!AppSettingMgr.LoadRecentEditorCaretData())
 	{
 		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Warning] Load previous recent editor data failed..."));
 	}
@@ -399,8 +399,8 @@ int CVinaTextApp::ExitInstance()
 	GdiplusShutdown(g_GdiplusToken);
 
 	// save all aplication settings for next openning session
-	AppSettingMgr.SaveSetting();
-	AppSettingMgr.SaveRecentEditorData();
+	AppSettingMgr.SaveSettingData();
+	AppSettingMgr.SaveRecentEditorCaretData();
 
 	return CWinAppEx::ExitInstance();
 }
@@ -820,23 +820,34 @@ BOOL CVinaTextApp::OnAnotherInstanceMessage(LPMSG pMsg)
 
 BOOL CVinaTextApp::SaveAllModified()
 {
-	auto pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pEditorDoc && AppUtils::GetModifiedDocumentCount() > 1)
+	// backup modified documents
+	if (AppUtils::GetModifiedDocumentCount() > 0)
 	{
-		int nAnwser = AfxMessageBox(_T("Do you want to save all modified files?"), MB_YESNOCANCEL | MB_ICONINFORMATION);
-		if (IDYES == nAnwser)
+		if (AppSettingMgr.m_bAutoSaveFileWhenCloseApp)
 		{
-			pEditorDoc->OnFileSaveAll();
+			AppUtils::BackupAllModifiedDocuments(TRUE);
 		}
-		else if (IDCANCEL == nAnwser)
+		else
 		{
-			return FALSE;
+			if (AppUtils::GetModifiedDocumentCount() > 1)
+			{
+				int nAnwser = AfxMessageBox(_T("Do you want to save all modified files?"), MB_YESNOCANCEL | MB_ICONINFORMATION);
+				if (IDYES == nAnwser)
+				{
+					AppUtils::SaveAllModifiedDocuments(TRUE);
+				}
+				else if (IDCANCEL == nAnwser)
+				{
+					return FALSE;
+				}
+			}
+			else if (!CWinAppEx::SaveAllModified())
+			{
+				return FALSE;
+			}
 		}
 	}
-	else if (!CWinAppEx::SaveAllModified())
-	{
-		return FALSE;
-	}
+	// backup app state
 	CMDIFrameWndEx* pMainFrame = DYNAMIC_DOWNCAST(CMDIFrameWndEx, m_pMainWnd);
 	if (pMainFrame != NULL)
 	{
