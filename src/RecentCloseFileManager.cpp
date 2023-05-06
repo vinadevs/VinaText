@@ -15,7 +15,7 @@ void CRecentCloseMDITabManager::PushTab(const CString& strPathName)
 	if (PathFileExists(strPathName))
 	{
 		m_RecentTab.push(strPathName);
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Close Tab] %s..."), strPathName);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Close File] %s..."), strPathName);
 	}
 }
 

@@ -181,14 +181,14 @@ BOOL CPdfView::PreTranslateMessage(MSG* pMsg)
 }
 
 static CString PDFErrorString[] = {
-	_T("no error."),
-	_T("unknown error."),
-	_T("file not found or could not be opened."),
-	_T("file not in PDF format or corrupted."),
-	_T("password required or incorrect password."),
-	_T("unsupported security scheme."),
-	_T("page not found or content error."),
-	_T("the requested operation cannot be completed due to a license restrictions.")
+	_T("No error."),
+	_T("Unknown error."),
+	_T("File not found or could not be opened."),
+	_T("File not in PDF format or corrupted."),
+	_T("Password required or incorrect password."),
+	_T("Unsupported security scheme."),
+	_T("Page not found or content error."),
+	_T("The requested operation cannot be completed due to a license restrictions.")
 };
 
 void CPdfView::OnInitialUpdate()
@@ -220,13 +220,18 @@ void CPdfView::OnInitialUpdate()
 				const int cx = 0; const int cy = 0;
 				const int cw = (rectClient.right - rectClient.left);
 				const int ch = (rectClient.bottom - rectClient.top);
+				if (m_DocumentView) // preview mode
+				{
+					m_DocumentView->Destroy();
+					m_DocumentView.reset(nullptr);
+				}
 				m_DocumentView = std::make_unique<UXReader::UXReaderDocumentView>(document);
 				if (!m_DocumentView->Create(m_hWnd, cx, cy, cw, ch)) {
 					m_DocumentView = NULL;
 				}
 			}
 			else {
-				AfxMessageBoxFormat(MB_ICONWARNING, _T("PDF Error: %s"), PDFErrorString[errorCode]);
+				AfxMessageBoxFormat(MB_ICONWARNING, _T("[PDF Error] %s"), PDFErrorString[errorCode]);
 			}
 			SetCursor(oldCursor);
 		}

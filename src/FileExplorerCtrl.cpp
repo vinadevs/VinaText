@@ -3820,7 +3820,14 @@ BOOL CFileExplorerCtrl::PreTranslateMessage(MSG* pMsg)
 	//Hitting the delete key deletes the item
 	else if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_DELETE)
 	{
-		OnDelete();
+		if (GetKeyState(VK_CONTROL) & 0x8000)
+		{
+			OnRemoveFolderFromWorkSpace();
+		}
+		else
+		{
+			OnDelete();
+		}
 		return TRUE;
 	}
 	//hitting the F2 key begins in-place editing of an item

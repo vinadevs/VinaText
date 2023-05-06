@@ -3774,20 +3774,19 @@ void CMainFrame::OnMDITabCloneFile()
 	CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
 	CString strID = OSUtils::GetGUIDGlobal();
 	CString strFileNameCopied = strFileNameNoExt + _T("_") + strID;
-	strPathName.Replace(strFileNameNoExt, strFileNameCopied);
+	CString strClonePathName = strPathName;
+	strClonePathName.Replace(strFileNameNoExt, strFileNameCopied);
 
 	CString stScript;
 	if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
 	{
-		CEditorDoc* pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
-		if (pEditorDoc && pEditorDoc->GetEditorCtrl())
+		if (CopyFile(strPathName, strClonePathName, FALSE))
 		{
-			pEditorDoc->GetEditorCtrl()->GetText(stScript);
-			if (PathUtils::SaveFileTruncate(strPathName, stScript))
+			LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Clone File] Created file \"%s\""), strClonePathName);
+			// Open new doc
+			CDocument* pClonedDoc = AppUtils::CreateDocumentFromFile(strClonePathName);
+			if (pClonedDoc)
 			{
-				// Open new doc
-				AppUtils::CreateDocumentFromFile(strPathName);
-
 				// Refresh explorer window
 				GetFileExplorerCtrl().Refresh();
 			}

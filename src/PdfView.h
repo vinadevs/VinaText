@@ -26,7 +26,7 @@ protected:
 	// Attributes
 protected:
 	CAcrobatActiveXWrapper m_wndPdf;
-	std::unique_ptr<UXReader::UXReaderDocumentView> m_DocumentView;
+	std::unique_ptr<UXReader::UXReaderDocumentView> m_DocumentView {nullptr};
 	FILETIME m_FileSystemTime = {};
 	BOOL m_bIsWatchFileProcessing = FALSE;
 	BOOL m_bDocumentReadOnly = FALSE;

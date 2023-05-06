@@ -2,7 +2,7 @@
 //	UXReaderDocumentView.h
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+//	Copyright ï¿½ 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #pragma once
@@ -46,6 +46,7 @@ namespace UXReader
 			static ATOM DoRegisterWindowClass(const HMODULE hModule);
 			static BOOL UnRegisterWindowClass(const HMODULE hModule);
 
+			void ResetDocument(const std::shared_ptr<UXReaderDocument>& document) { m_Document = document; };
 			bool Create(const HWND hParent, const int x, const int y, const int w, const int h); void Destroy(void);
 			void UpdateXYWH(const int x, const int y, const int w, const int h); void UpdateWH(const int w, const int h);
 
