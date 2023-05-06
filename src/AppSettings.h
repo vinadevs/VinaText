@@ -235,6 +235,7 @@ public:
 	int m_nExplorerExpandLimitFileOpen = 20;
 	int m_nFilePreviewSizeLimit = 10000000; // 10 MB
 	int m_nDialogComboboxLimitSave = 30;
+	int m_nEditorZoomFactor = 0;
 
 	CStringArray m_BinaryFileExtensionList;
 	CString m_strBinaryFileExtensionList = _T("tga dds eot swf jar zip pyc pyo exe dll obj o a lib so dylib ncb sdf suo pdb idb DS_Store class psd db lnk o 7z tar ios mdb sqlite lib pyd opendb bin");

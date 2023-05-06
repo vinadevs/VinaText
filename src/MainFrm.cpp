@@ -2833,6 +2833,11 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 	if (pView)
 	{
 		pView->ReupdateTrackingBar();
+		ShowPane(&m_wndStatusBar, TRUE, FALSE, FALSE);
+	}
+	else
+	{
+		ShowPane(&m_wndStatusBar, FALSE, FALSE, FALSE);
 	}
 	return 0;
 }

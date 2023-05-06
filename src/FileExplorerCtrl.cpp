@@ -3774,6 +3774,23 @@ BOOL CFileExplorerCtrl::PreTranslateMessage(MSG* pMsg)
 		OnContextMenu(NULL, rect.CenterPoint());
 		return TRUE;
 	}
+	//Hitting the Ctrl + mousewheel combination scroll horizon view
+	else if (pMsg->message == WM_MOUSEWHEEL)
+	{
+		if ((GetKeyState(VK_CONTROL) & 0x8000))
+		{
+			short sDelta = GET_WHEEL_DELTA_WPARAM(pMsg->wParam);
+			if (sDelta > 0) // wheel mouse up
+			{
+				SendMessage(WM_HSCROLL, SB_LINELEFT);
+			}
+			else
+			{
+				SendMessage(WM_HSCROLL, SB_LINERIGHT);
+			}
+			return TRUE;
+		}
+	}
 	//Hitting the Escape key cancels drag & drop
 #ifndef FILETREECTRL_NO_RESOURCES
 	else if (pMsg->message == WM_KEYDOWN && pMsg->wParam == VK_ESCAPE && IsDragging())

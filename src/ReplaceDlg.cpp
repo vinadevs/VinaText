@@ -646,7 +646,6 @@ void CFindAndReplaceDlg::OnClickCheckBoxRegex()
 	}
 	else
 	{
-		GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDWHAT_COMBO)->SetWindowTextW(_T(""));
 		GetDlgItem(ID_EDITOR_REPLACE_REGEX_COMBO)->EnableWindow(FALSE);
 	}
 }

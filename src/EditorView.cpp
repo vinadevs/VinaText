@@ -8165,16 +8165,19 @@ void CEditorView::OnOptionsSyncScrollDownView()
 void CEditorView::OnOptionsSyncZoomInView()
 {
 	IMPLEMENT_SYNC_ACTION_VIEW(SCI_ZOOMIN);
+	AppSettingMgr.m_nEditorZoomFactor = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETZOOM));
 }
 
 void CEditorView::OnOptionsSyncZoomOutView()
 {
 	IMPLEMENT_SYNC_ACTION_VIEW(SCI_ZOOMOUT);
+	AppSettingMgr.m_nEditorZoomFactor = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETZOOM));
 }
 
 void CEditorView::OnOptionsZoomResetView()
 {
 	IMPLEMENT_SYNC_ACTION_VIEW(SCI_SETZOOM);
+	AppSettingMgr.m_nEditorZoomFactor = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETZOOM));
 }
 
 void CEditorView::OnOptionsEnableSyncScrolling()

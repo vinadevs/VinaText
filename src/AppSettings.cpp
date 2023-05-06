@@ -170,6 +170,7 @@ void CAppSettings::ResetAllSettings()
 	m_nLineSpaceBelow = 0;
 	m_nExplorerExpandLimitLevel = 50;
 	m_nExplorerExpandLimitFileOpen = 20;
+	m_nEditorZoomFactor = 0;
 
 	m_nFileCopyCounter = 0;
 	m_DocIDBuffer.clear();
@@ -261,6 +262,7 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddInteger("ExplorerExpandLimitLevel", m_nExplorerExpandLimitLevel);
 	jsonWriter.AddInteger("ExplorerExpandLimitFileOpen", m_nExplorerExpandLimitFileOpen);
 	jsonWriter.AddInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
+	jsonWriter.AddInteger("EditorZoomFactor", m_nEditorZoomFactor);
 	jsonWriter.AddValue("NodeJSFolderPath", AppUtils::CStringToStd(m_strNodeJSFolderPath));
 	jsonWriter.AddValue("PythonFolderPath", AppUtils::CStringToStd(m_strPythonFolderPath));
 	jsonWriter.AddValue("GitWindowFolderPath", AppUtils::CStringToStd(m_strGitWindowFolderPath));
@@ -360,6 +362,7 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadInteger("ExplorerExpandLimitLevel", m_nExplorerExpandLimitLevel);
 	jsonReader.ReadInteger("ExplorerExpandLimitFileOpen", m_nExplorerExpandLimitFileOpen);
 	jsonReader.ReadInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
+	jsonReader.ReadInteger("EditorZoomFactor", m_nEditorZoomFactor);
 	jsonReader.ReadCString("PythonFolderPath", m_strPythonFolderPath);
 	jsonReader.ReadCString("NodeJSFolderPath", m_strNodeJSFolderPath);
 	jsonReader.ReadCString("GitWindowFolderPath", m_strGitWindowFolderPath);
