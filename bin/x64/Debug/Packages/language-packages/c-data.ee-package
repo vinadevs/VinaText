@@ -3,7 +3,7 @@
 //    Vinatext C settings
 // -----------------------------------------------------------------------
 // This is a part of Vinatext Project
-// Copyright(C) www.vinatext.com - vinadevs
+// Copyright(C) www.vinatext.dev - vinadevs
 // This file can be used, distributed or modified under MIT license
 //////////////////////////////////////////////////////////////////////////
 
@@ -65,4 +65,4 @@ uint_least16_t uint_least32_t uint_least64_t int_least8_t int_least16_t
 int_least32_t int_least64_t uint_fast8_t uint_fast16_t uint_fast32_t 
 uint_fast64_t int_fast8_t int_fast16_t int_fast32_t int_fast64_t uintptr_t 
 intptr_t uintmax_t intmax_t ptrdiff_t max_align_t div_t ldiv_t lldiv_t 
-imaxdiv_t size_t time_t clock_t wchar_t char16_t char32_t sig_atomic_t FILE 
+imaxdiv_t size_t time_t clock_t wchar_t char16_t char32_t sig_atomic_t FILE 

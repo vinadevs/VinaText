@@ -3,7 +3,7 @@
 //    Vinatext Python settings
 // -----------------------------------------------------------------------
 // This is a part of Vinatext Project
-// Copyright(C) www.vinatext.com - vinadevs
+// Copyright(C) www.vinatext.dev - vinadevs
 // This file can be used, distributed or modified under MIT license
 //////////////////////////////////////////////////////////////////////////
 
@@ -68,4 +68,4 @@ enum py_compile wsgiref _stat errno pyclbr xdrlib _statistics faulthandler pydoc
 _string filecmp pydoc_data xmlrpc _strptime fileinput pyexpat xxsubtype _struct fnmatch 
 pylab zipapp _symtable formatter pyparsing zipfile _testbuffer fractions queue zipimport 
 _testcapi ftplib quopri zlib _testconsole functools zoneinfo _testimportmultiple gc 
-_testinternalcapi genericpath reprlib _testmultiphase getopt rlcompleter 
+_testinternalcapi genericpath reprlib _testmultiphase getopt rlcompleter 
