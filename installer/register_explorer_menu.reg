@@ -1,0 +1,7 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\*\shell\Open by &VinaText]
+"Icon"="full_path_to\\VinaText.exe"
+
+[HKEY_CLASSES_ROOT\*\shell\Open by &VinaText\command]
+@="\"full_path_to\\VinaText.exe\" \"%1\""

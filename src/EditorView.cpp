@@ -7281,7 +7281,7 @@ void CEditorView::OnStartDebugger()
 			CMainFrame* pFrame = AppUtils::GetMainFrame();
 			if (!pFrame) return;
 			pFrame->ClearDataOnDockPane(DOCKABLE_PANE_TYPE::BUILD_PANE);
-			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Execution Error] Current file format has not defined execution config yet, please set it in [Code > Programming Language Setting(s)]..."), BasicColors::orange);
+			OnTerminalRunActiveFile();
 			return;
 		}
 	}

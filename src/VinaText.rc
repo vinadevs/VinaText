@@ -1406,7 +1406,7 @@ BEGIN
     LTEXT           "Release Version: 1.8",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
     LTEXT           "Commit Hash: 6992c76102a84cc9428a",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 03/05/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Release Date: 13/05/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
