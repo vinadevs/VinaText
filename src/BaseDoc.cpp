@@ -7,7 +7,6 @@
 #*******************************************************************************/
 
 #include "stdafx.h"
-#include "afxdatarecovery.h"
 #include "VinaTextApp.h"
 #include "BaseDoc.h"
 #include "FileExplorerDoc.h"
@@ -28,14 +27,9 @@ END_MESSAGE_MAP()
 
 // CBaseDoc construction/destruction
 
-CBaseDoc::CBaseDoc()
-{
-	// TODO: add one-time construction code here
-}
+CBaseDoc::CBaseDoc() {}
 
-CBaseDoc::~CBaseDoc()
-{
-}
+CBaseDoc::~CBaseDoc() {}
 
 BOOL CBaseDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -108,5 +102,3 @@ void CBaseDoc::Dump(CDumpContext& dc) const
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
-
-// CBaseDoc commands

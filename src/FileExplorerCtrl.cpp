@@ -569,9 +569,6 @@ bool CFileExplorerCtrl::HasPlusButton(_In_ HTREEITEM hItem)
 HTREEITEM CFileExplorerCtrl::SetSelectedPath(_In_ const CString& sPath, _In_ BOOL bExpanded)
 {
 	CString sSearch(sPath);
-	sSearch.Replace(_T("/"), _T("\\"));
-	sSearch.Replace(_T("\\\\"), _T("\\"));
-	sSearch.Replace(_T("\n"), _T(""));
 	if (!PathFileExists(sSearch)) return NULL;
 	sSearch.MakeUpper();
 	int nSearchLength = sSearch.GetLength();
@@ -1909,6 +1906,11 @@ void CFileExplorerCtrl::OnContextMenu(CWnd*, CPoint point)
 					pPopup->DeleteMenu(ID_TREEFILECTRL_FILE_CHROME, MF_BYCOMMAND);
 					pPopup->DeleteMenu(ID_TREEFILECTRL_FILE_EDGE, MF_BYCOMMAND);
 					pPopup->DeleteMenu(ID_TREEFILECTRL_FILE_FIREFOX, MF_BYCOMMAND);
+					CMenu* pSubMenu = pPopup->GetSubMenu(7);
+					if (pSubMenu)
+					{
+						pSubMenu->RemoveMenu(3, MF_BYPOSITION);
+					}
 				}
 			}
 			else // NOT FOR FILE...
@@ -3496,7 +3498,7 @@ void CFileExplorerCtrl::OnPreviewFile(_In_ NMTREEVIEW* /*pNMTreeView*/, _In_ con
 	{
 		return;
 	}
-	if (!PathUtils::IsBinaryFile(sPath, FILE_BINNARY | FILE_OFFICE))
+	if (!PathUtils::IsBinaryFile(sPath, FILE_BINNARY))
 	{
 		LONGLONG llFileSize = PathUtils::GetFileSize(sPath);
 		if (llFileSize > AppSettingMgr.m_nFilePreviewSizeLimit)
@@ -5762,7 +5764,7 @@ void CFileExplorerCtrl::OnOpenAllFileByVinaText()
 		}
 		for (auto const& file : vecFileName)
 		{
-			if (!PathUtils::IsBinaryFile(file, FILE_BINNARY | FILE_OFFICE) && !PathUtils::IsDirectory(file))
+			if (!PathUtils::IsBinaryFile(file, FILE_BINNARY) && !PathUtils::IsDirectory(file))
 			{
 				nCount++;
 				AppUtils::CreateDocumentFromFile(file);

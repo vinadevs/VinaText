@@ -136,21 +136,13 @@ void CAppSettings::ResetAllSettings()
 	// spell checker
 	m_strLanguageSpellCheck = _T("en-us");
 
-	m_DockWindowFontSetting._font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
-	m_DockWindowFontSetting._lfHeight = 14;
-	m_DockWindowFontSetting._lfWeight = FW_MEDIUM;
-
-	m_DialogFontSetting._font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
-	m_DialogFontSetting._lfHeight = 14;
-	m_DialogFontSetting._lfWeight = FW_MEDIUM;
-
 	// font settings
-	m_EditorFontSetting._font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
-	m_EditorFontSetting._bEnableBoldFont = FALSE;
-	m_EditorFontSetting._bEnableItalicFont = FALSE;
-	m_EditorFontSetting._bEnableUnderlineFont = FALSE;
-	m_EditorFontSetting._nEditorTextFontSize = 12;
-	m_EditorFontSetting._nEditorLineNumberFontSize = 12;
+	m_EditorFontSetting._lfFaceName = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
+	m_EditorFontSetting._iPointSize = 12;
+	m_EditorFontSetting._isBold = FALSE;
+	m_EditorFontSetting._isItalic = FALSE;
+	m_EditorFontSetting._isUnderline = FALSE;
+	m_EditorFontSetting._color = BasicColors::black;
 
 	// ui
 	m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_YELLOW;
@@ -164,7 +156,7 @@ void CAppSettings::ResetAllSettings()
 	// page width alignment text
 	m_nPageAlignmentWidth = 78;
 	m_nLongLineMaximum = 80;
-	m_nRecentFileLimit = MAXIMUM_MOST_RECENT_FILE;
+	m_nRecentFileLimit = 16;
 	m_nFilePreviewSizeLimit = 10000000; // 5 MB
 	m_nLineSpaceAbove = 0;
 	m_nLineSpaceBelow = 0;
@@ -230,19 +222,13 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LanguageSpellCheck", AppUtils::CStringToStd(m_strLanguageSpellCheck));
-	jsonWriter.AddValue("DockWindowFontName", AppUtils::CStringToStd(m_DockWindowFontSetting._font));
 	jsonWriter.AddValue("BinaryFileExtensionList", AppUtils::CStringToStd(m_strBinaryFileExtensionList));
-	jsonWriter.AddInteger("DockWindowFontHeight", m_DockWindowFontSetting._lfHeight);
-	jsonWriter.AddInteger("DockWindowFontWeight", m_DockWindowFontSetting._lfWeight);
-	jsonWriter.AddValue("DialogFontName", AppUtils::CStringToStd(m_DialogFontSetting._font));
-	jsonWriter.AddInteger("DialogFontHeight", m_DialogFontSetting._lfHeight);
-	jsonWriter.AddInteger("DialogFontWeight", m_DialogFontSetting._lfWeight);
-	jsonWriter.AddValue("EditorFontName", AppUtils::CStringToStd(m_EditorFontSetting._font));
-	jsonWriter.AddBOOL("EditorEnableBoldFont", m_EditorFontSetting._bEnableBoldFont);
-	jsonWriter.AddBOOL("EditorEnableItalicFont", m_EditorFontSetting._bEnableItalicFont);
-	jsonWriter.AddBOOL("EditorEnableUnderlineFont", m_EditorFontSetting._bEnableUnderlineFont);
-	jsonWriter.AddInteger("EditorLineNumberFontSize", m_EditorFontSetting._nEditorLineNumberFontSize);
-	jsonWriter.AddInteger("EditorTextFontSize", m_EditorFontSetting._nEditorTextFontSize);
+	jsonWriter.AddValue("EditorFontName", AppUtils::CStringToStd(m_EditorFontSetting._lfFaceName));
+	jsonWriter.AddInteger("EditorFontPointSize", m_EditorFontSetting._iPointSize);
+	jsonWriter.AddBOOL("EditorFontIsBold", m_EditorFontSetting._isBold);
+	jsonWriter.AddBOOL("EditorFontIsStalic", m_EditorFontSetting._isItalic);
+	jsonWriter.AddBOOL("EditorFontIsUnderline", m_EditorFontSetting._isUnderline);
+	jsonWriter.AddValue("EditorFontColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_EditorFontSetting._color)));
 	jsonWriter.AddInteger("FilePreviewSizeLimit", m_nFilePreviewSizeLimit);
 	jsonWriter.AddInteger("FolderMarginStyle", m_FolderMarginStyle);
 	jsonWriter.AddInteger("IndicatorStyle", m_IndicatorStyle);
@@ -331,18 +317,12 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
 	jsonReader.ReadCString("LanguageSpellCheck", m_strLanguageSpellCheck);
-	jsonReader.ReadCString("DockWindowFontName", m_DockWindowFontSetting._font);
-	jsonReader.ReadInteger("DockWindowFontHeight", m_DockWindowFontSetting._lfHeight);
-	jsonReader.ReadInteger("DockWindowFontWeight", m_DockWindowFontSetting._lfWeight);
-	jsonReader.ReadCString("DialogFontName", m_DialogFontSetting._font);
-	jsonReader.ReadInteger("DialogFontHeight", m_DialogFontSetting._lfHeight);
-	jsonReader.ReadInteger("DialogFontWeight", m_DialogFontSetting._lfWeight);
-	jsonReader.ReadCString("EditorFontName", m_EditorFontSetting._font);
-	jsonReader.ReadBOOL("EditorEnableBoldFont", m_EditorFontSetting._bEnableBoldFont);
-	jsonReader.ReadBOOL("EditorEnableItalicFont", m_EditorFontSetting._bEnableItalicFont);
-	jsonReader.ReadBOOL("EditorEnableUnderlineFont", m_EditorFontSetting._bEnableUnderlineFont);
-	jsonReader.ReadInteger("EditorLineNumberFontSize", m_EditorFontSetting._nEditorLineNumberFontSize);
-	jsonReader.ReadInteger("EditorTextFontSize", m_EditorFontSetting._nEditorTextFontSize);
+	jsonReader.ReadCString("EditorFontName", m_EditorFontSetting._lfFaceName);
+	jsonReader.ReadInteger("EditorFontPointSize", m_EditorFontSetting._iPointSize);
+	jsonReader.ReadBOOL("EditorFontIsBold", m_EditorFontSetting._isBold);
+	jsonReader.ReadBOOL("EditorFontIsStalic", m_EditorFontSetting._isItalic);
+	jsonReader.ReadBOOL("EditorFontIsUnderline", m_EditorFontSetting._isUnderline);
+	jsonReader.ReadColor("EditorFontColor", (int&)m_EditorFontSetting._color);
 	jsonReader.ReadInteger("FilePreviewSizeLimit", m_nFilePreviewSizeLimit);
 	jsonReader.ReadInteger("FolderMarginStyle", (int&)m_FolderMarginStyle);
 	jsonReader.ReadInteger("IndicatorStyle", (int&)m_IndicatorStyle);
@@ -391,7 +371,6 @@ BOOL CAppSettings::LoadRecentEditorCaretData()
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("recent-file-data.json");
 	if (!PathFileExists(strJsonFilePath))
 	{
-		ResetAllSettings();
 		return FALSE;
 	}
 	JSonReader jsonReader(strJsonFilePath, "VinaText Editor File State Data");

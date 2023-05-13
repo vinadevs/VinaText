@@ -17,7 +17,7 @@ ProgrammingSettingDlg::ProgrammingSettingDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SETTING_PROGRAMMING, pParent) {
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);
-	m_pScrollHelper->SetDisplaySize(0, 800);
+	m_pScrollHelper->SetDisplaySize(0, 1500);
 }
 
 ProgrammingSettingDlg::~ProgrammingSettingDlg() {}

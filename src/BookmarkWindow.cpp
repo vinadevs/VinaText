@@ -92,7 +92,6 @@ void CBookmarkWindow::ClearAll()
 
 void CBookmarkWindow::UpdateUIVisual()
 {
-	m_BookMarkPaneDlg.UpdateDlgFont();
 	m_BookMarkPaneDlg.UpdateListCtrlVisual();
 }
 
@@ -101,15 +100,10 @@ void CBookmarkWindow::UpdateUIVisual()
 
 IMPLEMENT_DYNAMIC(CBookmarkDlg, CDialogEx)
 
-void CBookmarkDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
-}
-
 CBookmarkDlg::CBookmarkDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_SEARCH_RESULT_DLG, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CBookmarkDlg::~CBookmarkDlg()

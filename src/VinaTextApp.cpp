@@ -9,8 +9,8 @@
 #include "stdafx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "VinaTextApp.h"
 
+#include "VinaTextApp.h"
 #include "MainFrm.h"
 #include "ChildFrm.h"
 
@@ -26,6 +26,9 @@
 #include "HostView.h"
 #include "FileExplorerDoc.h"
 #include "FileExplorerView.h"
+#include "WebDoc.h"
+#include "WebView.h"
+
 #include "HostManager.h"
 #include "LocalizationHandler.h"
 #include "CommandLine.h"
@@ -127,8 +130,6 @@ BEGIN_MESSAGE_MAP(CVinaTextApp, CWinAppEx)
 
 	// help menu
 	ON_COMMAND(ID_VINATEXT_DOCUMENTATION, &CVinaTextApp::OnHelpDocumentation)
-	ON_COMMAND(ID_VINATEXT_FACEBOOK, &CVinaTextApp::OnHelpFacebook)
-	ON_COMMAND(ID_VINATEXT_TWITTER, &CVinaTextApp::OnHelpTwitter)
 	ON_COMMAND(ID_VINATEXT_REPORT_ISSUE, &CVinaTextApp::OnHelpReportIssue)
 	ON_COMMAND(ID_VINATEXT_RELEASE_NOTE, &CVinaTextApp::OnHelpReleaseNotes)
 	ON_COMMAND(ID_KEYBOARD_SHORTCUTS_REFERENCE, &CVinaTextApp::OnHelpKeyboardShortcutsReference)
@@ -166,6 +167,8 @@ CVinaTextApp theApp;
 
 BOOL CVinaTextApp::InitInstance()
 {
+	m_bIsStartAppInistance = TRUE;
+
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfoEx cmdInfo;
 	ParseCommandLine(cmdInfo);
@@ -226,11 +229,8 @@ BOOL CVinaTextApp::InitInstance()
 	InitCommonControlsEx(&InitCtrls);
 
 	// VinaText Application Settings
-	if (!AppSettingMgr.LoadSettingData())
-	{
-		LOG_OUTPUT_MESSAGE_COLOR(_T("> [Warning] Load previous application settings failed..."));
-	}
-	VinaTextLocalization.InitFromSetting();
+	AppSettingMgr.LoadSettingData();
+	//VinaTextLocalization.InitFromSetting();
 	// VinaText Application Settings
 
 	CWinAppEx::InitInstance();
@@ -257,9 +257,6 @@ BOOL CVinaTextApp::InitInstance()
 	// TODO: You should modify this string to be something appropriate
 	// such as the name of your company or organization
 	SetRegistryKey(_T("VinaText-Vinadevs\\Settings"));
-	LoadStdProfileSettings(AppSettingMgr.m_nRecentFileLimit); // Load standard INI file options (including MRU)
-	ASSERT(m_pRecentFileList);
-	m_pRecentFileList->m_nMaxDisplayLength = MAX_PATH; // display full path
 
 	// Set customize dialog
 	InitContextMenuManager();
@@ -368,7 +365,9 @@ BOOL CVinaTextApp::InitInstance()
 		pMainFrame->UpdateWindow();
 	}
 
-	LoadOpenedFolderData();
+	LoadRecentFilesData();
+
+	m_bIsStartAppInistance = FALSE;
 
 	return TRUE;
 }
@@ -461,6 +460,15 @@ BOOL CVinaTextApp::RegisterDocTemplates()
 		return FALSE;
 	AddDocTemplate(m_pFileExplorerDocTemplate);
 
+	// type web html
+	m_pWebDocTemplate = new CMultiDocTemplateEx(IDR_WEB_DOC,
+		RUNTIME_CLASS(CWebDoc),
+		RUNTIME_CLASS(CChildFrame),
+		RUNTIME_CLASS(CWebView));
+	if (!m_pWebDocTemplate)
+		return FALSE;
+	AddDocTemplate(m_pWebDocTemplate);
+
 	return TRUE;
 }
 
@@ -489,31 +497,14 @@ void CVinaTextApp::OnOpenRecentClosedFile()
 
 void CVinaTextApp::OnOpenAllRecentClosedFile()
 {
-	ASSERT(m_pRecentFileList);
-	int nRFL = m_pRecentFileList->GetSize();
-	while (nRFL > 0)
-	{
-		CString strFile = (*m_pRecentFileList)[--nRFL];
-		CDocument* pDoc = AppUtils::GetExistedDocument(strFile);
-		if (pDoc)
-		{
-			AppUtils::SetActiveDocument(pDoc);
-		}
-		else if (PathFileExists(strFile))
-		{
-			OnOpenDocument(strFile);
-		}
+	while (RecentCloseMDITabManager.HasRecentClosedTab()) {
+		OnOpenRecentClosedFile();
 	}
 }
 
 void CVinaTextApp::OnClearRecentClosedFile()
 {
-	ASSERT(m_pRecentFileList);
-	int nRFL = m_pRecentFileList->GetSize();
-	while (nRFL > 0)
-	{
-		m_pRecentFileList->Remove(--nRFL);
-	}
+	RecentCloseMDITabManager.ResetData();
 }
 
 void CVinaTextApp::OnSaveFileCryptography()
@@ -584,16 +575,6 @@ void CVinaTextApp::OnHelpKeyboardShortcutsReference()
 void CVinaTextApp::OnHelpDocumentation()
 {
 	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/#section--2"), _T(""), _T(""), SW_MAXIMIZE);
-}
-
-void CVinaTextApp::OnHelpFacebook()
-{
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://www.facebook.com/groups/vinatextuser"), _T(""), _T(""), SW_MAXIMIZE);
-}
-
-void CVinaTextApp::OnHelpTwitter()
-{
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://twitter.com/vinatext"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnHelpReportIssue()
@@ -703,18 +684,17 @@ BOOL CVinaTextApp::PreTranslateMessage(LPMSG pMsg)
 	return CWinAppEx::PreTranslateMessage(pMsg);
 }
 
-using namespace HostManager;
 CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 {
 	CDocument* pDoc = AppUtils::GetExistedDocument(lpszPathName);
 	if (pDoc)
 	{ 
-		AppUtils::CloseMDIDocument(pDoc);
+		AppUtils::SetActiveDocument(pDoc); return pDoc;
 	}
 	if (PathUtils::IsDirectory(lpszPathName))
 	{
 		// Open file explorer window
-		return HostApplicaton(HOST_APP_TYPE::FILE_EXPLORER, NULL, lpszPathName);
+		return HostManager::HostApplicaton(HostManager::HOST_APP_TYPE::FILE_EXPLORER, NULL, lpszPathName);
 	}
 	if (PathUtils::IsImageFile(lpszPathName))
 	{
@@ -736,6 +716,17 @@ CDocument* CVinaTextApp::OnOpenDocument(LPCTSTR lpszPathName)
 		// Open text file
 		return m_pEditorDocTemplate->OpenDocumentFile(lpszPathName, TRUE, TRUE);
 	}
+}
+
+CDocument* CVinaTextApp::CreateWebDocument()
+{
+	CWebDoc* pExistedDoc = dynamic_cast<CWebDoc*>(AppUtils::GetExistedWebDocument(_T("Path Compare Result")));
+	if (pExistedDoc)
+	{
+		AppUtils::SetActiveDocument(pExistedDoc);
+		return pExistedDoc;
+	}
+	return m_pWebDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 }
 
 CDocument * CVinaTextApp::CreateNewFileExplorerDocument(const CString& strNavigatePath)
@@ -917,64 +908,38 @@ void CVinaTextApp::OnNewProjectTemplate()
 	}
 }
 
-CString CVinaTextApp::GetRecentFile(int nIndex) const
-{
-	ASSERT(m_pRecentFileList);
-	CString strFile;
-	if (m_pRecentFileList->GetSize() > 0)
-	{
-		strFile = (*m_pRecentFileList)[nIndex];
-	}
-	return strFile;
-}
-
-BOOL CVinaTextApp::SaveOpenedFolderData()
+BOOL CVinaTextApp::SaveRecentFilesData()
 {
 	CString strFolderPath = PathUtils::GetVinaTextAppDataPath();
 	if (!PathFileExists(strFolderPath)) return FALSE;
-	CString strOpenedFolderDataPath = strFolderPath + _T("opened-folder-data.dat");
-	if (PathFileExists(strFolderPath))
+	CString strDataPath = strFolderPath + _T("recent-closed-data.dat");
+	if (PathFileExists(strDataPath))
 	{
-		::DeleteFile(strOpenedFolderDataPath);
+		::DeleteFile(strDataPath);
 	}
-	std::wofstream out_file(AppUtils::CStringToWStd(strOpenedFolderDataPath), std::wios::trunc);
-	if (!out_file) return FALSE;
-	out_file.imbue(std::locale(out_file.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
-	POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
-	while (posTemplate)
+	std::wofstream file(AppUtils::CStringToWStd(strDataPath), std::wios::trunc);
+	if (!file) return FALSE;
+	file.imbue(std::locale(file.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
+	for (auto const& filePath : RecentCloseMDITabManager.GetData())
 	{
-		CDocTemplate *doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
-		if (!doctempl) return FALSE;
-		POSITION posDoc = doctempl->GetFirstDocPosition();
-		while (posDoc)
-		{
-			CDocument* doc = doctempl->GetNextDoc(posDoc);
-			if (doc && PathUtils::IsDirectory(doc->GetPathName()))
-			{
-				out_file << AppUtils::CStringToWStd(doc->GetPathName()) << std::endl;
-			}
-		}
+		file << AppUtils::CStringToWStd(filePath) << std::endl;
 	}
-	out_file.close();
 	return TRUE;
 }
 
-BOOL CVinaTextApp::LoadOpenedFolderData()
+BOOL CVinaTextApp::LoadRecentFilesData()
 {
 	CString strFolderPath = PathUtils::GetVinaTextAppDataPath();
 	if (!PathFileExists(strFolderPath)) return FALSE;
-	CString strOpenedFolderDataPath = strFolderPath + _T("opened-folder-data.dat");
-	CStringArray arrFolderPath;
+	CString strOpenedFolderDataPath = strFolderPath + _T("recent-closed-data.dat");
+	CStringArray arrPath;
 	CString strFileContent;
 	PathUtils::OpenFile(strOpenedFolderDataPath, strFileContent);
 	if (strFileContent.IsEmpty()) return FALSE;
-	AppUtils::SplitCString(strFileContent, EDITOR_NEW_LINE, arrFolderPath);
-	for (int i = 0; i < arrFolderPath.GetSize(); ++i)
+	AppUtils::SplitCString(strFileContent, EDITOR_NEW_LINE, arrPath);
+	for (int i = 0; i < arrPath.GetSize(); ++i)
 	{
-		if (PathFileExists(arrFolderPath[i]))
-		{
-			HostApplicaton(HOST_APP_TYPE::FILE_EXPLORER, NULL, arrFolderPath[i]);
-		}
+		RecentCloseMDITabManager.PushTab(arrPath[i], FALSE);
 	}
 	return TRUE;
 }

@@ -17,6 +17,7 @@
 #include "AppUtil.h"
 #include "MultiThreadWorker.h"
 #include "AppSettings.h"
+#include "VinaTextApp.h"
 
 #pragma warning(disable:4996)
 
@@ -345,7 +346,7 @@ void VinaTextCompiler::BuildCPP(CMainFrame* pFrame, CEditorView* pView, const CS
 	taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
 
-	if (!PathFileExists(strBuildConfigPath) && AppSettingMgr.m_bAutoGenBuildConfigFile)
+	if (AppSettingMgr.m_bAutoGenBuildConfigFile)
 	{
 		if (!GenerateFileBuildConfigCPP(strFilePath, FALSE))
 		{
@@ -455,9 +456,11 @@ CString VinaTextCompiler::GetBuildCommandlineCPP(CEditorView* pView, const CStri
 
 BOOL VinaTextCompiler::GenerateFileBuildConfigCPP(const CString& strFilePath, BOOL bOpenFileBuildConfig)
 {
-	if (!PathFileExists(strFilePath)) return FALSE;
-
 	CString strBuildConfigPath = PathUtils::GetFilePathWithoutExtention(strFilePath) + _T("_cpp_build_config.json");
+	if (PathFileExists(strBuildConfigPath))
+	{
+		::DeleteFile(strBuildConfigPath);
+	}
 
 	std::string strFolderPath = AppUtils::CStringToStd(PathUtils::GetContainerPath(strFilePath));
 	AppUtils::ReplaceAllInStdString(strFolderPath, "\\\\", "\\");
@@ -559,7 +562,7 @@ void VinaTextCompiler::BuildC(CMainFrame* pFrame, CEditorView* pView, const CStr
 	taskBuild.strRunFromDirectory = PathUtils::GetContainerPath(strCompilerPath);
 	taskBuild.strRunFromDocPath = pView->m_BuildSessionInfo._strFilePath;
 
-	if (!PathFileExists(strBuildConfigPath) && AppSettingMgr.m_bAutoGenBuildConfigFile)
+	if (AppSettingMgr.m_bAutoGenBuildConfigFile)
 	{
 		if (!GenerateFileBuildConfigC(strFilePath, FALSE))
 		{
@@ -666,9 +669,11 @@ CString VinaTextCompiler::GetBuildCommandlineC(CEditorView* pView, const CString
 
 BOOL VinaTextCompiler::GenerateFileBuildConfigC(const CString& strFilePath, BOOL bOpenFileBuildConfig)
 {
-	if (!PathFileExists(strFilePath)) return FALSE;
-
 	CString strBuildConfigPath = PathUtils::GetFilePathWithoutExtention(strFilePath) + _T("_c_build_config.json");
+	if (PathFileExists(strBuildConfigPath))
+	{
+		::DeleteFile(strBuildConfigPath);
+	}
 
 	std::string strFolderPath = AppUtils::CStringToStd(PathUtils::GetContainerPath(strFilePath));
 	AppUtils::ReplaceAllInStdString(strFolderPath, "\\\\", "\\");
@@ -898,7 +903,12 @@ void VinaTextCompiler::GetIncludeSourceFileJava(const CString & strFilePath, con
 
 void VinaTextCompiler::BuildHTML(CMainFrame * pFrame, CEditorView * pView, const CString & strFilePath, const CString& strCompilerPath)
 {
-	if (strCompilerPath.Find(_T("CHROME_BROWSER")) != -1)
+	if (strCompilerPath.Find(_T("DEFAULT_BROWSER")) != -1)
+	{
+		OSUtils::CreateProcessAsynchronous(TEXT("open"), strFilePath, _T(""), _T(""));
+		pView->LOG_BUILD_INFO_MESSAGE(_T("cmd.exe \"") + strFilePath + _T("\""), _T("HTML"));
+	}
+	else if (strCompilerPath.Find(_T("CHROME_BROWSER")) != -1)
 	{
 		OSUtils::OpenFileInWebBrowser(_T("chrome.exe"), strFilePath);
 		pView->LOG_BUILD_INFO_MESSAGE(_T("chrome.exe \"") + strFilePath + _T("\""), _T("HTML"));
@@ -910,14 +920,8 @@ void VinaTextCompiler::BuildHTML(CMainFrame * pFrame, CEditorView * pView, const
 	}
 	else if (strCompilerPath.Find(_T("EDGE_BROWSER")) != -1)
 	{
-
 		OSUtils::OpenFileInWebBrowser(_T("shell:Appsfolder\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe!MicrosoftEdge"), strFilePath);
-		pView->LOG_BUILD_INFO_MESSAGE(_T("MicrosoftEdge.exe \"") + strFilePath + _T("\""), _T("HTML"));
-	}
-	else
-	{
-		OSUtils::CreateProcessAsynchronous(TEXT("open"), strFilePath, _T(""), _T(""));
-		pView->LOG_BUILD_INFO_MESSAGE(_T("cmd.exe \"") + strFilePath + _T("\""), _T("HTML"));
+		pView->LOG_BUILD_INFO_MESSAGE(_T("msedge.exe \"") + strFilePath + _T("\""), _T("HTML"));
 	}
 }
 

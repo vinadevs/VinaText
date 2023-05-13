@@ -294,10 +294,12 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_UPDATE_COMMAND_UI(ID_CHANGE_TEXT_BIDIRECTIONAL, OnUpdateEditChangeBidirectional)
 	ON_COMMAND(ID_START_MONITER_FILE, OnOptionsStartMoniterFile)
 	ON_UPDATE_COMMAND_UI(ID_START_MONITER_FILE, OnUpdateStartMoniterFile)
-	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_CPP, OnOptionsChangeTextLexerCPP)
-	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_PYTHON, OnOptionsChangeTextLexerPython)
-	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_HTML_XML, OnOptionsChangeTextLexerHtmlXml)
-	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_NON, OnOptionsChangeTextLexerNon)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_CPP, OnEnableUserLexerLexerCPP)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_PYTHON, OnEnableUserLexerLexerPython)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_HTML_XML, OnEnableUserLexerLexerHtmlXml)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_BASH_BATCH, OnEnableUserLexerLexerBashBatch)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_VB_PASCAL, OnEnableUserLexerLexerVBPascal)
+	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_NON, OnDisableUserLexer)
 	ON_COMMAND(ID_EDIT_ALIGN_LEFT, OnOptionAlignLeft)
 	ON_COMMAND(ID_EDIT_ALIGN_RIGHT, OnOptionAlignRight)
 	ON_COMMAND(ID_EDIT_ALIGN_CENTER, OnOptionAlignCenter)
@@ -1039,7 +1041,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "batch")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_BATCH;
-		m_strCurrentDocLanguageName = _T("Batch");
+		m_strCurrentDocLanguageName = _T("Batch Script");
 	}
 	else if (m_czLexerFromFile == "pascal")
 	{
@@ -1079,7 +1081,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "inno")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_INNOSETTUP;
-		m_strCurrentDocLanguageName = _T("Innosetup");
+		m_strCurrentDocLanguageName = _T("Innosetup Script");
 	}
 	else if (m_czLexerFromFile == "perl")
 	{
@@ -1114,7 +1116,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "autoit")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_AUTOIT;
-		m_strCurrentDocLanguageName = _T("AutoIT");
+		m_strCurrentDocLanguageName = _T("AutoIT Script");
 	}
 	else if (m_czLexerFromFile == "verilog")
 	{
@@ -1149,7 +1151,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "markdown")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_MARKDOWN;
-		m_strCurrentDocLanguageName = _T("Markdown");
+		m_strCurrentDocLanguageName = _T("Markdown Script");
 	}
 	else if (m_czLexerFromFile == "typescript")
 	{
@@ -1159,7 +1161,7 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "protobuf")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_PROTOBUF;
-		m_strCurrentDocLanguageName = _T("Protobuf");
+		m_strCurrentDocLanguageName = _T("Google Protobuf");
 	}
 	else if (m_czLexerFromFile == "css")
 	{
@@ -1169,12 +1171,22 @@ CString CEditorView::DetectCurrentDocLanguage()
 	else if (m_czLexerFromFile == "FLEXlm")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FLEXLM;
-		m_strCurrentDocLanguageName = _T("FLEXlm");
+		m_strCurrentDocLanguageName = _T("FLEXlm Script");
 	}
 	else if (m_czLexerFromFile == "freebasic")
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_FREEBASIC;
 		m_strCurrentDocLanguageName = _T("FreeBASIC");
+	}
+	else if (m_czLexerFromFile == "makefile")
+	{
+		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_MAKEFILE;
+		m_strCurrentDocLanguageName = _T("Makefile Script");
+	}
+	else if (m_czLexerFromFile == "cmake")
+	{
+		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CMAKE;
+		m_strCurrentDocLanguageName = _T("CMake Script");
 	}
 	else
 	{
@@ -1211,7 +1223,7 @@ void CEditorView::LOG_BUILD_INFO_MESSAGE(const CString& strCMD, const CString& m
 	CString strFileName = PathUtils::GetFilenameFromPath(strPathName);
 	CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
 	CString strBuildMode= bDebugMode ? _T("debug mode") : _T("release mode");
-	CString strTitleBuild = _T(">------ VinaText build started: Project: %s | Configuration: %s for Windows platform ------");
+	CString strTitleBuild = _T(">------ VinaText build started | Project: %s | Configuration: %s for Windows platform ------");
 	strTitleBuild.Format(strTitleBuild, strFileNameNoExt, strBuildMode);
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
 	LOG_BUILD_MESSAGE_COLOR(strTitleBuild, IS_LIGHT_THEME? BasicColors::black : BasicColors::light_orange);
@@ -7269,7 +7281,7 @@ void CEditorView::OnStartDebugger()
 			CMainFrame* pFrame = AppUtils::GetMainFrame();
 			if (!pFrame) return;
 			pFrame->ClearDataOnDockPane(DOCKABLE_PANE_TYPE::BUILD_PANE);
-			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Compiler Error] Current file format has not defined build configuration yet, please set it in [Code > Programming Language Setting(s)]..."), BasicColors::orange);
+			LOG_BUILD_MESSAGE_ACTIVE_PANE(_T("[Execution Error] Current file format has not defined execution config yet, please set it in [Code > Programming Language Setting(s)]..."), BasicColors::orange);
 			return;
 		}
 	}
@@ -7816,7 +7828,7 @@ namespace
 
 void CEditorView::AddAutoCompleteFromFile(const CString& strFilePath)
 {
-	if (PathUtils::IsBinaryFile(strFilePath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_OFFICE | FILE_PDF))
+	if (PathUtils::IsBinaryFile(strFilePath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF))
 	{
 		AfxMessageBox(_T("[Error] Auto complete data does not support binary file!"));
 		return;
@@ -7860,7 +7872,7 @@ void CEditorView::AddAutoCompleteFromFolder(const CString& strFolderPath)
 	PathUtils::GetAllFilesFromFolder(strFolderPath, vecFileName);
 	for (auto const& stFilePath : vecFileName)
 	{
-		if (PathUtils::IsBinaryFile(stFilePath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_OFFICE | FILE_PDF)) continue;
+		if (PathUtils::IsBinaryFile(stFilePath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF)) continue;
 		CString strFileContent;
 		PathUtils::OpenFile(stFilePath, strFileContent);
 		std::wstring strTarget = AppUtils::CStringToWStd(strFileContent);
@@ -8076,7 +8088,7 @@ void CEditorView::OnFileSummary()
 	LONGLONG llFileSize = PathUtils::GetFileSize(pDoc->GetPathName());
 	CString strFileSize = _T("File Size: ") + CString(std::unique_ptr<char>(PathUtils::SizeMemoryToString(llFileSize)).get());
 	CString strFileEncoding = _T("File Encoding: ") + m_EditorCtrl.GetEncodingName();;
-	CString strFileContentTemp = PathUtils::IsBinaryFile(pDoc->GetPathName()) ? _T("Binary") : _T("Text");
+	CString strFileContentTemp = PathUtils::IsBinaryFile(pDoc->GetPathName()) ? _T("Binary") : _T("PlainText");
 	CString strFileContent = _T("File Content: ") + strFileContentTemp;
 	CString strFileEOL = _T("End Of Line: ") + m_EditorCtrl.GetEOLName();
 	CString strReadonly = _T("Read Only: ");
@@ -9019,26 +9031,43 @@ void CEditorView::OnUpdateStartMoniterFile(CCmdUI * pCmdUI)
 	pCmdUI->SetCheck(m_bToggleMoniterFileRealTime);
 }
 
-void CEditorView::OnOptionsChangeTextLexerCPP()
+void CEditorView::ChangeUserLexer(const CString& strLexerName)
 {
-	m_EditorCtrl.LoadCPPHightlight();
+	if (strLexerName.IsEmpty())
+		m_EditorCtrl.DisableUserLexer();
+	else
+		m_EditorCtrl.EnableUserLexer(strLexerName);
+	m_EditorCtrl.InitilizeSetting(GetLanguageDatabase());
 }
 
-void CEditorView::OnOptionsChangeTextLexerPython()
+void CEditorView::OnEnableUserLexerLexerCPP()
 {
-	m_EditorCtrl.LoadPythonHightlight();
+	ChangeUserLexer(_T("cpp"));
 }
 
-void CEditorView::OnOptionsChangeTextLexerHtmlXml()
+void CEditorView::OnEnableUserLexerLexerPython()
 {
-	m_EditorCtrl.LoadHTMLHightlight();
+	ChangeUserLexer(_T("python"));
 }
 
-void CEditorView::OnOptionsChangeTextLexerNon()
+void CEditorView::OnEnableUserLexerLexerHtmlXml()
 {
-	m_EditorCtrl.RemoveTextHightlight();
-	CEditorDoc *pDoc = GetEditorDocument();
-	ASSERT(pDoc); if (!pDoc) return; pDoc->OnFileSave();
+	ChangeUserLexer(_T("hypertext"));
+}
+
+void CEditorView::OnEnableUserLexerLexerBashBatch()
+{
+	ChangeUserLexer(_T("batch"));
+}
+
+void CEditorView::OnEnableUserLexerLexerVBPascal()
+{
+	ChangeUserLexer(_T("vb"));
+}
+
+void CEditorView::OnDisableUserLexer()
+{
+	ChangeUserLexer(_T(""));
 }
 
 void CEditorView::OnQuickFindAllInFile()

@@ -30,14 +30,16 @@ public:
 	virtual BOOL SaveAllModified();
 
 	CDocument* OnOpenDocument(LPCTSTR lpszPathName);
+	CDocument* CreateWebDocument();
 	CDocument* CreateNewFileExplorerDocument(const CString& strNavigatePath);
 	CDocument* CreateNewHostDocument(const CString& strAppName,
 	const CString & strAppPathToHost, const CString & strAppArguments,
 		BOOL bRemoveTitleBarWindow = FALSE, BOOL bSilentStartup = FALSE,
 		UINT nAppIconID = -1, HostManager::HOST_METHOD HostType = HostManager::HOST_METHOD::USE_ENUMWINDOWS,
 		int nWaitTime = 500, const CString& strClassAppName = NULL, BOOL bOpenFileMode = FALSE);
-	BOOL SaveOpenedFolderData();
-	BOOL LoadOpenedFolderData();
+
+	BOOL SaveRecentFilesData();
+	BOOL LoadRecentFilesData();
 
 	afx_msg void OnFileOpen();
 	afx_msg void OnFileNewEditor();
@@ -54,8 +56,6 @@ public:
 	afx_msg void OnUpdateOpenRecentClosedFile(CCmdUI * pCmdUI);
 
 	afx_msg void OnHelpDocumentation();
-	afx_msg void OnHelpFacebook();
-	afx_msg void OnHelpTwitter();
 	afx_msg void OnHelpReportIssue();
 	afx_msg void OnHelpReleaseNotes();
 	afx_msg void OnHelpKeyboardShortcutsReference();
@@ -77,6 +77,7 @@ public:
 	afx_msg void OnUpdateFileOpenAsEncoding(CCmdUI * pCmdUI);
 
 	// global settings, only internal, user can not control
+	BOOL m_bIsStartAppInistance = FALSE;
 	BOOL m_bIsOpenInAdminMode = FALSE;
 	BOOL m_bIsReloadDocument = FALSE;
 	BOOL m_bIsSaveDocument = FALSE;
@@ -96,11 +97,11 @@ public:
 	CMultiDocTemplateEx* m_pMediaDocTemplate = NULL;
 	CMultiDocTemplateEx* m_pHostDocTemplate = NULL;
 	CMultiDocTemplateEx* m_pFileExplorerDocTemplate = NULL;
+	CMultiDocTemplateEx* m_pWebDocTemplate = NULL;
 
 	DECLARE_MESSAGE_MAP()
 protected:
 	BOOL OnAnotherInstanceMessage(LPMSG pMsg);
-	CString GetRecentFile(int nIndex) const;
 	BOOL RegisterDocTemplates();
 };
 

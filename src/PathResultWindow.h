@@ -80,7 +80,6 @@ public:
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_FILE_RESULT_DLG };
 #endif
-	void UpdateDlgFont();
 	void UpdateListCtrlVisual();
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	void InitResult(const PATH_RESULT_DATA_LIST & ResultSearchData, const CString & strSeachWhat, int nSearchTotal, double dTimeMeasured, BOOL bAppendResult, BOOL bSearchWithoutMatchName);

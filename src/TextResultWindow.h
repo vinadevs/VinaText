@@ -87,7 +87,6 @@ public:
 	void ClearResult();
 	void DeleteAPath(const CString& strFullPath);
 	void DeleteARow(const CString& strFullPath, unsigned int nLineNumber);
-	void UpdateDlgFont();
 	void UpdateListCtrlVisual();
 
 protected:

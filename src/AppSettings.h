@@ -96,31 +96,22 @@ const CString VINATEXT_TEXT_FONT_NAME[] =
 	_T("Courier New"),
 };
 
-struct DockWindowFontSetting
+struct AppGuiFontSetting
 {
 	CString _font = VINATEXT_TEXT_FONT_NAME[CONSOLAS];
 	int _lfHeight = 14;
 	int _lfWeight = FW_MEDIUM;
 };
 
-struct DialogFontSetting
-{
-	CString _font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
-	int _lfHeight = 14;
-	int _lfWeight = FW_MEDIUM;
-};
-
 struct EditorFontSetting
 {
-	CString _font = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
-	int _nEditorTextFontSize = 12;
-	int _nEditorLineNumberFontSize = 12;
-	BOOL _bEnableBoldFont = FALSE;
-	BOOL _bEnableItalicFont = FALSE;
-	BOOL _bEnableUnderlineFont = FALSE;
+	CString _lfFaceName = VINATEXT_TEXT_FONT_NAME[COURIER_NEW];
+	int _iPointSize = 12;
+	BOOL _isBold = FALSE;
+	BOOL _isItalic = FALSE;
+	BOOL _isUnderline = FALSE;
+	COLORREF _color = RGB(0, 0, 0);
 };
-
-#define MAXIMUM_MOST_RECENT_FILE 16 // can not exceed this value
 
 #define MDITAB_SETTINGS_COLOR RGB(230, 159, 102)
 
@@ -212,9 +203,8 @@ public:
 	CString m_strLanguageTranslateTo = _T("vi");
 
 	// editorfont size
-	DockWindowFontSetting m_DockWindowFontSetting;
-	EditorFontSetting	  m_EditorFontSetting;
-	DialogFontSetting	  m_DialogFontSetting;
+	AppGuiFontSetting m_AppGuiFontSetting;
+	EditorFontSetting m_EditorFontSetting;
 
 	// ui
 	EDITOR_CARET_BLINK_COLOR m_CaretBlinkColor = EDITOR_CARET_BLINK_COLOR::BLINK_COLOR_YELLOW;
@@ -228,7 +218,7 @@ public:
 	// page width alignment text
 	int m_nPageAlignmentWidth = 78;
 	int m_nLongLineMaximum = 80;
-	int m_nRecentFileLimit = MAXIMUM_MOST_RECENT_FILE;
+	int m_nRecentFileLimit = 16;
 	int m_nLineSpaceAbove = 0;
 	int m_nLineSpaceBelow = 0;
 	int m_nExplorerExpandLimitLevel = 50;

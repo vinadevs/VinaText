@@ -12,7 +12,6 @@
 #ifndef SHARED_HANDLERS
 #include "VinaTextApp.h"
 #endif
-#include "afxdatarecovery.h"
 #include "MainFrm.h"
 #include "PdfDoc.h"
 #include "PdfView.h"
@@ -31,14 +30,9 @@ END_MESSAGE_MAP()
 
 // CPdfDoc construction/destruction
 
-CPdfDoc::CPdfDoc()
-{
-	// TODO: add one-time construction code here
-}
+CPdfDoc::CPdfDoc() {}
 
-CPdfDoc::~CPdfDoc()
-{
-}
+CPdfDoc::~CPdfDoc() {}
 
 BOOL CPdfDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -84,5 +78,3 @@ void CPdfDoc::Dump(CDumpContext& dc) const
 	CBaseDoc::Dump(dc);
 }
 #endif //_DEBUG
-
-// CPdfDoc commands

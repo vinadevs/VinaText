@@ -97,7 +97,6 @@ void CPathResultWindow::ClearAll()
 
 void CPathResultWindow::UpdateUIVisual()
 {
-	m_ResultPaneDlg.UpdateDlgFont();
 	m_ResultPaneDlg.UpdateListCtrlVisual();
 }
 
@@ -109,7 +108,7 @@ IMPLEMENT_DYNAMIC(CPathResultDlg, CDialogEx)
 CPathResultDlg::CPathResultDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_SEARCH_RESULT_DLG, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CPathResultDlg::~CPathResultDlg()
@@ -137,11 +136,6 @@ BEGIN_MESSAGE_MAP(CPathResultDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // CPathResultDlg message handlers
-
-void CPathResultDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
-}
 
 void CPathResultDlg::UpdateListCtrlVisual()
 {
@@ -720,7 +714,7 @@ void CPathResultList::OpenSelectedPath()
 			if (strFileTarget.IsEmpty()) return;
 			if (PathFileExists(strFileTarget))
 			{
-				if (!PathUtils::IsDirectory(strFileTarget) && !PathUtils::IsBinaryFile(strFileTarget, FILE_BINNARY | FILE_OFFICE))
+				if (!PathUtils::IsDirectory(strFileTarget) && !PathUtils::IsBinaryFile(strFileTarget, FILE_BINNARY))
 				{
 					if (PathUtils::IsImageFile(strFileTarget)) // preview image file
 					{

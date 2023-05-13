@@ -20,6 +20,7 @@
 #include "MediaView.h"
 #include "HostDoc.h"
 #include "HostView.h"
+#include "WebDoc.h"
 #include "FileExplorerDoc.h"
 #include "FileExplorerView.h"
 #include "AppSettings.h"
@@ -34,12 +35,18 @@
 #include "SystemInfo.h"
 #include "WindowsPrinter.h"
 #include "LocalizationHandler.h"
+#include "PathComparatorDlg.h"
+#include "RecentCloseFileManager.h"
 
 // CMainFrame
 
 #pragma warning(disable: 4996 4127)
 
 IMPLEMENT_DYNAMIC(CMainFrame, CMDIFrameWndEx)
+
+const UINT MAIN_MENU_FILE = 0;
+const UINT MAIN_MENU_USER_EXTENSION = 9;
+const UINT SUB_MENU_RECENT_FILE = 17;
 
 static UINT g_Statusbar_Indicators[] =
 {
@@ -59,6 +66,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_WM_DROPFILES()
 	ON_WM_SIZE()
 	ON_WM_MOVING()
+	ON_WM_INITMENUPOPUP()
 
 	ON_MESSAGE(UMW_MAIN_FRAME_UPDATE, &CMainFrame::OnMainFrameUpdate)
 	ON_MESSAGE(WM_COPYDATA, &CMainFrame::OnCopyData)
@@ -276,10 +284,16 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_PRINT_SETUP_DLG, &CMainFrame::OnUpdatePrintFileSetupDlg)
 	ON_UPDATE_COMMAND_UI(ID_EXPLORER_PRINT_PAGE_DLG, &CMainFrame::OnUpdatePrintPageSetupDlg)
 
-	// Extensions
+	// User Extensions
 	ON_COMMAND(ID_EXTENSION_CONFIGURATION, &CMainFrame::OnUserExtensions)
 	ON_COMMAND(ID_EXTENSION_REFESH_LIST, &CMainFrame::OnExtensionRefreshList)
 	ON_COMMAND_RANGE(USER_EXTENSION_ID_1, USER_EXTENSION_ID_30, &CMainFrame::OnUserExtension)
+
+	// Plugins
+	ON_COMMAND(ID_PATH_COMPARATOR_TOOL, &CMainFrame::OnPathComparatorTool)
+
+	// Recent Files
+	ON_COMMAND_RANGE(ID_FILE_RECENT_FIRST, ID_FILE_RECENT_LAST, &CMainFrame::OnOpenFileRecent)
 
 END_MESSAGE_MAP()
 
@@ -293,9 +307,9 @@ CMainFrame::CMainFrame()
 	// Font initiating
 	LOGFONT lf;
 	memset(&lf, 0, sizeof(LOGFONT));
-	_tcscpy_s(lf.lfFaceName, 32 * sizeof(CHAR), AppSettingMgr.m_DockWindowFontSetting._font);
-	lf.lfHeight = AppSettingMgr.m_DockWindowFontSetting._lfHeight;
-	lf.lfWeight = AppSettingMgr.m_DockWindowFontSetting._lfWeight;
+	_tcscpy_s(lf.lfFaceName, 32 * sizeof(CHAR), AppSettingMgr.m_AppGuiFontSetting._font);
+	lf.lfHeight = AppSettingMgr.m_AppGuiFontSetting._lfHeight;
+	lf.lfWeight = AppSettingMgr.m_AppGuiFontSetting._lfWeight;
 	m_Font.CreateFontIndirect(&lf);
 }
 
@@ -429,7 +443,7 @@ void CMainFrame::OnClose()
 {
 	AppSettingMgr.ResetEditorCaretInfo();
 	m_bIsClosingVinaText = TRUE;
-	theApp.SaveOpenedFolderData();
+	theApp.SaveRecentFilesData();
 	CMDIFrameWndEx::OnClose();
 }
 
@@ -454,7 +468,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	VERIFY(m_MainMenu.LoadMenu(IDR_MAINFRAME)); // load main menu bar
 	VinaTextLocalization.TranslateContextMenu(&m_MainMenu); // translate to native language
 	SetMenu(&m_MainMenu); // set back to mainframe
-	m_UserExtension.LoadMenuUserExtensions(&m_MainMenu); // load user defined extensions
+	m_UserExtension.LoadMenuUserExtensions(m_MainMenu.GetSubMenu(MAIN_MENU_USER_EXTENSION)); // load user defined extensions
 
 	// prevent the menu bar from taking the focus on activation
 	CMFCPopupMenu::SetForceMenuFocus(FALSE);
@@ -577,42 +591,21 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 	CMDIFrameWndEx::OnTimer(nIDEvent);
 }
 
-#if 0
-BOOL CMainFrame::OnShowPopupMenu(CMFCPopupMenu* pMenuPopup)
+void CMainFrame::OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu)
 {
-	BOOL bRes = CMDIFrameWndEx::OnShowPopupMenu(pMenuPopup);
-	if (pMenuPopup != NULL)
-	{
-		CMFCPopupMenuBar* pMenuBar = pMenuPopup->GetMenuBar(); ASSERT(pMenuBar != NULL);
-		if (pMenuBar != NULL)
-		{
-			HMENU hMenu = pMenuBar->ExportToMenu(); ASSERT(hMenu != NULL);
-			if (hMenu != NULL)
-			{
-				CMenu* pSubMenu = CMenu::FromHandle(hMenu); ASSERT(pSubMenu != NULL);
-				if (pSubMenu)
-				{
-					VinaTextLocalization.TranslateContextMenu(pSubMenu);
-				}
-				pMenuBar->ImportFromMenu(hMenu);
-				::DestroyMenu(hMenu);
-			}
-		}
-	}
-	return bRes;
+	CMDIFrameWnd::OnInitMenuPopup(pPopupMenu, nIndex, bSysMenu);
+	if (nIndex == MAIN_MENU_FILE && !bSysMenu) InitRecentFilesList(pPopupMenu);
 }
-#endif
 
 void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 {
-	CBaseDoc* pDoc = dynamic_cast<CBaseDoc*>(AppUtils::GetMDIActiveDocument());
-	CString strFilePath;
+	CDocument* pDoc = AppUtils::GetMDIActiveDocument();
 	CString strTitle;
-	if (pDoc)
+	if (pDoc && !pDoc->IsKindOf(RUNTIME_CLASS(CWebDoc)))
 	{
-		strFilePath = pDoc->GetPathName();
+		CString strFilePath = pDoc->GetPathName();
 		CString strDocTitle = pDoc->GetTitle();
-		if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)))
+		if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)) || pDoc->IsKindOf(RUNTIME_CLASS(CImageDoc)))
 		{
 			CString strUnSaved;
 			if (strDocTitle.Replace(_T("*"), _T("*")))
@@ -623,7 +616,6 @@ void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 			{
 				strUnSaved = _T("");
 			}
-
 			if (!strFilePath.IsEmpty())
 			{
 				strTitle = _T("VinaText || ") + strFilePath + strUnSaved;
@@ -651,7 +643,7 @@ void CMainFrame::OnUpdateFrameTitle(BOOL bAddToTitle)
 	}
 	else
 	{
-		strTitle = _T("VinaText || Non Existent Tab");
+		strTitle = _T("VinaText");
 	}
 	SetWindowText(strTitle);
 }
@@ -1637,10 +1629,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 					{
 						CString strTabLabel;
 						tabGroup->GetTabLabel(i, strTabLabel);
-						if (strTabLabel == _T("vinatext-app-settings.json")) {
-							tabGroup->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
-						}
-						else if (i != tabIndex && pDoc->GetTitle() != strTabLabel)
+						if (i != tabIndex && pDoc->GetTitle() != strTabLabel)
 						{
 							tabGroup->SetTabBkColor(i, MDITAB_NON_ACTIVE_COLOR);
 						}
@@ -1656,10 +1645,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 					{
 						CString strTabLabel;
 						tabGroup->GetTabLabel(i, strTabLabel);
-						if (strTabLabel == _T("vinatext-app-settings.json")) {
-							tabGroup->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
-						}
-						else if (pDoc->GetTitle() != strTabLabel)
+						if (pDoc->GetTitle() != strTabLabel)
 						{
 							tabGroup->SetTabBkColor(i, MDITAB_NON_ACTIVE_COLOR);
 						}
@@ -2689,10 +2675,7 @@ void CMainFrame::OnHighLightMDIActiveTab()
 	{
 		CString strTabLabel;
 		pMDITabs->GetTabLabel(i, strTabLabel);
-		if (strTabLabel == _T("vinatext-app-settings.json")) {
-			pMDITabs->SetTabBkColor(i, MDITAB_SETTINGS_COLOR);
-		}
-		else if (pDoc->GetTitle() == strTabLabel)
+		if (pDoc->GetTitle() == strTabLabel)
 		{
 			pMDITabs->SetTabBkColor(i, AppSettingMgr.m_ActiveTabColor);
 		}
@@ -2832,8 +2815,10 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 	CEditorView* pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 	if (pView)
 	{
-		pView->ReupdateTrackingBar();
-		ShowPane(&m_wndStatusBar, TRUE, FALSE, FALSE);
+		if (!theApp.m_bIsStartAppInistance) // ignore when start up
+			pView->ReupdateTrackingBar();
+		if (!m_wndStatusBar.IsPaneVisible())
+			ShowPane(&m_wndStatusBar, TRUE, TRUE, FALSE);
 	}
 	else
 	{
@@ -2890,7 +2875,7 @@ void CMainFrame::ReleaseBookMarkTableDialog()
 
 void CMainFrame::RevealInExplorerWindow(const CString& strPath)
 {
-	if (PathFileExists(strPath))
+	if (PathFileExists(strPath) && strPath.Find(_T("\\wsl.localhost\\")) == -1)
 	{
 		HTREEITEM hItemFound = GetFileExplorerCtrl().PathToItem(strPath);
 		if (hItemFound)
@@ -2903,12 +2888,14 @@ void CMainFrame::RevealInExplorerWindow(const CString& strPath)
 			hItemFound = GetFileExplorerCtrl().SetSelectedPath(strPath, TRUE);
 			if (hItemFound == NULL)
 			{
-				LOG_OUTPUT_MESSAGE_FORMAT(_T("> Can not found revealed path in current workspace..."));
+				return;
 			}
 		}
+		ActiveDockPane(DOCKABLE_PANE_TYPE::FILE_EXPLORER_PANE);
+		GetFileExplorerCtrl().SetFocus();
+		return;
 	}
-	ActiveDockPane(DOCKABLE_PANE_TYPE::FILE_EXPLORER_PANE);
-	GetFileExplorerCtrl().SetFocus();
+	LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Explorer Window] can not found revealed path in current workspace..."));
 }
 
 void CMainFrame::ReactiveTabAfterFloatPane()
@@ -3777,8 +3764,7 @@ void CMainFrame::OnMDITabCloneFile()
 
 	CString strFileName = PathUtils::GetFilenameFromPath(strPathName);
 	CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
-	CString strID = OSUtils::GetGUIDGlobal();
-	CString strFileNameCopied = strFileNameNoExt + _T("_") + strID;
+	CString strFileNameCopied = strFileNameNoExt + _T("_") + OSUtils::GetGUIDGlobal();
 	CString strClonePathName = strPathName;
 	strClonePathName.Replace(strFileNameNoExt, strFileNameCopied);
 
@@ -4304,11 +4290,79 @@ void CMainFrame::OnUserExtensions()
 
 void CMainFrame::OnExtensionRefreshList()
 {
-	m_UserExtension.LoadMenuUserExtensions(&m_MainMenu, TRUE);
+	m_UserExtension.LoadMenuUserExtensions(m_MainMenu.GetSubMenu(MAIN_MENU_USER_EXTENSION), TRUE);
 	AfxMessageBox(_T("Extension list refreshed."), MB_ICONINFORMATION);
 }
 
 void CMainFrame::OnUserExtension(UINT nIDExtension)
 {
 	m_UserExtension.InvokeCommand(nIDExtension);
+}
+
+///////////////////////////// PLUGINS //////////////////////////////////////////////////
+
+void CMainFrame::OnPathComparatorTool()
+{
+	if (!m_pPathComparatorDlg)
+		m_pPathComparatorDlg = new CPathComparatorDlg();
+	if (!m_pPathComparatorDlg->GetSafeHwnd())
+	{ 
+		m_pPathComparatorDlg->Create(CPathComparatorDlg::IDD, this);
+		m_pPathComparatorDlg->ShowWindow(SW_SHOW);
+		m_pPathComparatorDlg->CenterWindow();
+	}
+}
+
+void CMainFrame::ReleasePathComparatorToolDialog()
+{
+	m_pPathComparatorDlg = NULL;
+}
+
+///////////////////////////// RECENT FILES //////////////////////////////////////////////////
+
+void CMainFrame::InitRecentFilesList(CMenu* pFileMenu)
+{
+	CMenu* pRecentMenu = pFileMenu->GetSubMenu(SUB_MENU_RECENT_FILE);
+	if (pRecentMenu)
+	{
+		if (pRecentMenu->GetMenuItemCount() == 4 && !RecentCloseMDITabManager.HasRecentClosedTab())
+		{
+			pRecentMenu->RemoveMenu(3, MF_BYPOSITION);
+		}
+		if (pRecentMenu->GetMenuItemCount() == 3 && RecentCloseMDITabManager.HasRecentClosedTab())
+		{
+			pRecentMenu->AppendMenuW(MF_SEPARATOR, 0, _T(""));
+		}
+		for (auto const& data : m_FileRecentIDMap)
+		{
+			pFileMenu->DeleteMenu(data.first, MF_BYCOMMAND);
+		}
+		m_FileRecentIDMap.clear();
+		UINT iRecentFileID = ID_FILE_RECENT_FILE1;
+		for (auto const& filePath : RecentCloseMDITabManager.GetData())
+		{
+			pRecentMenu->AppendMenuW(MF_STRING, iRecentFileID, filePath);
+			m_FileRecentIDMap.emplace(iRecentFileID, filePath);
+			iRecentFileID++;
+		}
+	}
+}
+
+void CMainFrame::OnOpenFileRecent(UINT nIDExtension)
+{
+	CMenu* pFileMenu = m_MainMenu.GetSubMenu(MAIN_MENU_FILE);
+	if (pFileMenu)
+	{
+		CMenu* pRecentMenu = pFileMenu->GetSubMenu(SUB_MENU_RECENT_FILE);
+		if (pRecentMenu)
+		{
+			CString strPathName;
+			pRecentMenu->GetMenuStringW(nIDExtension, strPathName, MF_STRING);
+			AppUtils::CreateDocumentFromFile(strPathName);
+			pRecentMenu->DeleteMenu(nIDExtension, MF_BYCOMMAND);
+			auto found = m_FileRecentIDMap.find(nIDExtension);
+			if (found != m_FileRecentIDMap.end()) m_FileRecentIDMap.erase(found);
+			RecentCloseMDITabManager.EraseTab(strPathName);
+		}
+	}
 }

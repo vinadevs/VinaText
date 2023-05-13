@@ -129,7 +129,6 @@ public:
 #endif
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	void UpdateDlgFont();
 	void UpdateLogVisual();
 	void AddLogMessage(CString strMessage, COLORREF color);
 	int GetNumVisibleLines(CRichEditCtrl * pCtrl);

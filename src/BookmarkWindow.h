@@ -52,7 +52,6 @@ public:
 	virtual ~CBookmarkDlg();
 	virtual void OnOK();
 	virtual void OnCancel();
-	void UpdateDlgFont();
 	void UpdateListCtrlVisual();
 
 	// Dialog Data

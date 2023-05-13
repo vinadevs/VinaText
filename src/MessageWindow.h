@@ -68,7 +68,6 @@ public:
 	void AddLogMessage(const CString& str, COLORREF color);
 	int GetNumVisibleLines(CRichEditCtrl * pCtrl);
 	void ClearAll();
-	void UpdateDlgFont();
 	void UpdateLogVisual();
 
 	DECLARE_MESSAGE_MAP()

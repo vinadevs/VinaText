@@ -213,11 +213,16 @@
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
+    <ClInclude Include="DiffEngine.h" />
     <ClInclude Include="EditorSettingDlg.h" />
     <ClInclude Include="ExplorerSettingDlg.h" />
+    <ClInclude Include="FilePartition.h" />
     <ClInclude Include="GeneralSettingDlg.h" />
+    <ClInclude Include="WebDoc.h" />
+    <ClInclude Include="WebView.h" />
     <ClInclude Include="LocalizationDatabase.h" />
     <ClInclude Include="LocalizationHandler.h" />
+    <ClInclude Include="PathComparatorDlg.h" />
     <ClInclude Include="ProgrammingSettingDlg.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="UserExtension.h" />
@@ -392,11 +397,16 @@
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
+    <ClCompile Include="DiffEngine.cpp" />
     <ClCompile Include="EditorSettingDlg.cpp" />
     <ClCompile Include="ExplorerSettingDlg.cpp" />
+    <ClCompile Include="FilePartition.cpp" />
     <ClCompile Include="GeneralSettingDlg.cpp" />
+    <ClCompile Include="WebDoc.cpp" />
+    <ClCompile Include="WebView.cpp" />
     <ClCompile Include="LocalizationDatabase.cpp" />
     <ClCompile Include="LocalizationHandler.cpp" />
+    <ClCompile Include="PathComparatorDlg.cpp" />
     <ClCompile Include="ProgrammingSettingDlg.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -610,6 +620,7 @@
     <Image Include="..\res\terminal.ico" />
     <Image Include="..\res\Toolbar.bmp" />
     <Image Include="..\res\Toolbar24.bmp" />
+    <Image Include="..\res\web.ico" />
     <Image Include="res\app.ico" />
     <Image Include="res\autocomplete.ico" />
     <Image Include="res\bookmarkwindow.ico" />

@@ -12,11 +12,9 @@
 #ifndef SHARED_HANDLERS
 #include "VinaTextApp.h"
 #endif
-#include "afxdatarecovery.h"
 #include "MainFrm.h"
 #include "FileExplorerDoc.h"
 #include "FileExplorerView.h"
-#include "AppUtil.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -29,24 +27,11 @@ IMPLEMENT_DYNCREATE(CFileExplorerDoc, CBaseDoc)
 BEGIN_MESSAGE_MAP(CFileExplorerDoc, CBaseDoc)
 END_MESSAGE_MAP()
 
-
 // CFileExplorerDoc construction/destruction
 
-CFileExplorerDoc::CFileExplorerDoc()
-{
-	// TODO: add one-time construction code here
+CFileExplorerDoc::CFileExplorerDoc() {}
 
-}
-
-CFileExplorerDoc::~CFileExplorerDoc()
-{
-}
-
-BOOL CFileExplorerDoc::OnNewDocument()
-{
-	if (!CBaseDoc::OnNewDocument()) return FALSE;
-	return TRUE;
-}
+CFileExplorerDoc::~CFileExplorerDoc() {}
 
 // CFileExplorerDoc diagnostics
 
@@ -61,6 +46,3 @@ void CFileExplorerDoc::Dump(CDumpContext& dc) const
 	CBaseDoc::Dump(dc);
 }
 #endif //_DEBUG
-
-
-// CFileExplorerDoc commands

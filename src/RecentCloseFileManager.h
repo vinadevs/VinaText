@@ -10,15 +10,17 @@
 
 #include "Singleton.h"
 
-typedef std::stack<CString> RECENT_TAB_BUFFER;
+typedef std::deque<CString> RECENT_TAB_BUFFER;
 
 class CRecentCloseMDITabManager
 {
 public:
-	void PushTab(const CString& strPathName);
+	void PushTab(const CString& strPathName, BOOL bCloseTabEvent = TRUE);
+	void EraseTab(const CString& strPathName);
 	CString PopTab();
 	BOOL HasRecentClosedTab();
-
+	void ResetData();
+	const RECENT_TAB_BUFFER& GetData() { return m_RecentTab; }
 protected:
 	RECENT_TAB_BUFFER m_RecentTab;
 	SINGLETON_IMPLEMENT(CRecentCloseMDITabManager)

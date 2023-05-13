@@ -8,9 +8,7 @@ namespace EditorLexerLight
 	void LoadLexer(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl, const CString& czLexer);
 
 	void Init_python_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
-	void Init_python_Editor_NoDB(CEditorCtrl* pEditorCtrl);
 	void Init_cpp_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
-	void Init_cpp_Editor_NoDB(CEditorCtrl* pEditorCtrl);
 	void Init_ada_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_asm_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_inno_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
@@ -18,12 +16,12 @@ namespace EditorLexerLight
 	void Init_batch_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_c_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_cmake_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
+	void Init_makefile_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_cshape_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_css_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_erlang_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_fortran_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_html_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
-	void Init_html_Editor_NoDB(CEditorCtrl* pEditorCtrl);
 	void Init_java_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_javascript_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_typescript_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);

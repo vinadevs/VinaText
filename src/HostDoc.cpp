@@ -12,11 +12,9 @@
 #ifndef SHARED_HANDLERS
 #include "VinaTextApp.h"
 #endif
-#include "afxdatarecovery.h"
 #include "MainFrm.h"
 #include "HostDoc.h"
 #include "HostView.h"
-#include "AppUtil.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,14 +29,9 @@ END_MESSAGE_MAP()
 
 // CHostDoc construction/destruction
 
-CHostDoc::CHostDoc()
-{
-	// TODO: add one-time construction code here
-}
+CHostDoc::CHostDoc() {}
 
-CHostDoc::~CHostDoc()
-{
-}
+CHostDoc::~CHostDoc() {}
 
 BOOL CHostDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -73,5 +66,3 @@ void CHostDoc::Dump(CDumpContext& dc) const
 	CBaseDoc::Dump(dc);
 }
 #endif //_DEBUG
-
-// CHostDoc commands

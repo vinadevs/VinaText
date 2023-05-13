@@ -266,19 +266,11 @@ public:
 	void GetFunctionListFromEditor(const TCHAR *pszChars, int lLength, std::vector<CString>& vecFunctionList);
 	void RenderSearchResultInLine(int lLine, const CString& strWord);
 	FoldingLineDataList GetFoldingLineDataList(int levelMax = 3);
-
-	// only highlight text
-	void LoadPythonHightlight();
-	void LoadCPPHightlight();
-	void LoadHTMLHightlight();
-	void RemoveTextHightlight();
-	// only highlight text
-
+	void EnableUserLexer(const CString& strLexerName);
+	void DisableUserLexer();
 	void RePaintUI();
 	void LoadExternalSettings(CLanguageDatabase* pDatabase);
 	int GetCurrentFolddingLevel();
-	CString GetUserTextLexer();
-	void SetUserTextLexer(const  CString& strUserLexerName);
 	CString GetFileExtension();
 	CString GetLexerName();
 	void ShowHideFoldingMargin(int nPosMouseX);
@@ -313,10 +305,9 @@ public:
 		return m_DirectFunc(m_pDirectPtr, Msg, wParam, lParam);
 	}
 	void SetColorForStyle(int style, COLORREF fore, COLORREF back = RGB(0, 0, 0), int size = -1, const char* face = 0);
-
-	// only use for backup, dont call it anywhere!
-	BOOL SaveFileWithEncoding(const CString& strFilePath);
 private:
+	BOOL SaveFileWithEncoding(const CString& strFilePath);
+
 	int  m_nSearchflags = 0;
 	BOOL m_bLinenumbers = TRUE;
 	BOOL m_bSelection = TRUE;
@@ -325,6 +316,7 @@ private:
 	BOOL m_bIncreaseSelectionMode = FALSE;
 	BOOL m_bSearchFromStartFile = FALSE;
 	BOOL m_bEditorInitiated = FALSE;
+	BOOL m_bUseUserLexer = FALSE;
 	int m_CurrentFoldingLevel = -1;
 	// lexer APIs
 	Lexilla::CreateLexerFn m_CreateLexerFunc = NULL;
@@ -333,7 +325,7 @@ private:
 	DirectFunc m_DirectFunc = NULL;
 	DirectPtr  m_pDirectPtr = NULL;
 	// default lexer text hightlight
-	CString m_strUserTextLexer = _T("python");
+	CString m_strUserLexerName;
 	CString m_strFileExtension;
 	CString m_strFilePath;
 	CString m_strLexerName;

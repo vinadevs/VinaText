@@ -65,7 +65,6 @@ LRESULT CBuildPane::OnDockPaneUpdate(WPARAM wParam, LPARAM lParam)
 
 void CBuildPane::UpdateUIVisual()
 {
-	m_LogPaneDlg.UpdateDlgFont();
 	m_LogPaneDlg.UpdateLogVisual();
 }
 
@@ -121,9 +120,23 @@ CRichEditCtrlBuild::~CRichEditCtrlBuild()
 {
 }
 
+static BOOL IsBuildInformationMessage(const CString& strline)
+{
+	if (strline.Find(_T(">------ VinaText build started | Project:")) != -1 || strline.Find(_T("[SystemTime]")) != -1 || strline.Find(_T("[MainFile]")) != -1 ||
+		strline.Find(_T("[Language]")) != -1 || strline.Find(_T("[CommandLine]")) != -1 || strline.Find(_T("[Message]")) != -1 || strline.Find(_T("[Error]")) != -1)
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
 void CRichEditCtrlBuild::ShowEditorAnnotationLine(const CString& strline, BuildErrorDataLineList& errorLines, BOOL bGotoLine)
 {
 	if (AppSettingMgr.m_bEnableDisplayBuildErrorOnEditor == FALSE)
+	{
+		return;
+	}
+	// ignore build info messages
+	if (IsBuildInformationMessage(strline))
 	{
 		return;
 	}
@@ -135,7 +148,7 @@ void CRichEditCtrlBuild::ShowEditorAnnotationLine(const CString& strline, BuildE
 		// now passing line to get error information...
 		CompilerMessageLineParser(strCurrentLine, strLineNumber, strFileTarget);
 		if (strFileTarget.IsEmpty() || strLineNumber.IsEmpty()) return;
-		CDocument * pOpenedDoc = AppUtils::GetDocumentFromTitle(strFileTarget);
+		CDocument * pOpenedDoc = AppUtils::GetExistedDocument(strFileTarget);
 		if (pOpenedDoc)
 		{
 			strFileTarget = pOpenedDoc->GetPathName();
@@ -916,7 +929,7 @@ IMPLEMENT_DYNAMIC(CBuildPaneDlg, CDialogEx)
 CBuildPaneDlg::CBuildPaneDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(ID_DIALOG_BUILD_PANE, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CBuildPaneDlg::~CBuildPaneDlg()
@@ -966,11 +979,6 @@ END_MESSAGE_MAP()
 void CBuildPaneDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
-}
-
-void CBuildPaneDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 void CBuildPaneDlg::UpdateLogVisual()

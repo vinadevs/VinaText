@@ -23,6 +23,8 @@ void EditorLexerLight::LoadLexer(CLanguageDatabase* pDatabase,
 		Init_batch_Editor(pDatabase, pEditorCtrl);
 	else if (czLexer == "cmake")
 		Init_cmake_Editor(pDatabase, pEditorCtrl);
+	else if (czLexer == "makefile")
+		Init_makefile_Editor(pDatabase, pEditorCtrl);
 	else if (czLexer == "cpp")
 		Init_cpp_Editor(pDatabase, pEditorCtrl);
 	else if (czLexer == "c")
@@ -223,6 +225,22 @@ void EditorLexerLight::Init_cmake_Editor(CLanguageDatabase* pDatabase, CEditorCt
 	pEditorCtrl->LoadExternalSettings(pDatabase);
 }
 
+void EditorLexerLight::Init_makefile_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
+{
+	pEditorCtrl->SetLexer("makefile");
+	pEditorCtrl->SetKeywords(EditorColorLight::g_makefile_KeyWords);
+	for (int i = 0; EditorColorLight::g_rgb_Syntax_makefile[i].iItem != -1; i++)
+	{
+		pEditorCtrl->SetLanguageCFontStyle(EditorColorLight::g_rgb_Syntax_makefile[i].iItem, EditorColorLight::g_rgb_Syntax_makefile[i].rgb);
+	}
+	pDatabase->SetLanguageName(EditorColorLight::g_str_makefile_language);
+	pDatabase->SetLanguageExtension(EditorColorLight::g_str_makefile_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorLight::g_str_makefile_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorLight::g_str_makefile_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorLight::g_str_makefile_commentEnd);
+	pEditorCtrl->LoadExternalSettings(pDatabase);
+}
+
 void EditorLexerLight::Init_cpp_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
 {
 	pEditorCtrl->SetLexer("cpp");
@@ -237,16 +255,6 @@ void EditorLexerLight::Init_cpp_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 	pDatabase->SetLanguageCommentStart(EditorColorLight::g_str_cpp_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorLight::g_str_cpp_commentEnd);
 	pEditorCtrl->LoadExternalSettings(pDatabase);
-}
-
-void EditorLexerLight::Init_cpp_Editor_NoDB(CEditorCtrl* pEditorCtrl)
-{
-	pEditorCtrl->SetLexer("cpp");
-	pEditorCtrl->SetKeywords("");
-	for (int i = 0; EditorColorLight::g_rgb_Syntax_cpp[i].iItem != -1; i++)
-	{
-		pEditorCtrl->SetLanguageCFontStyle(EditorColorLight::g_rgb_Syntax_cpp[i].iItem, EditorColorLight::g_rgb_Syntax_cpp[i].rgb);
-	}
 }
 
 void EditorLexerLight::Init_cshape_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
@@ -368,36 +376,6 @@ void EditorLexerLight::Init_html_Editor(CLanguageDatabase* pDatabase, CEditorCtr
 	pDatabase->SetLanguageCommentStart(EditorColorLight::g_str_html_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorLight::g_str_html_commentEnd);
 	pEditorCtrl->LoadExternalSettings(pDatabase);
-}
-
-void EditorLexerLight::Init_html_Editor_NoDB(CEditorCtrl* pEditorCtrl)
-{
-	pEditorCtrl->SetLexer("hypertext");
-	pEditorCtrl->SetKeywords("");
-	for (int i = 0; EditorColorLight::g_rgb_Syntax_html[i].iItem != -1; i++)
-	{
-		auto iItem = EditorColorLight::g_rgb_Syntax_html[i].iItem;
-		auto rgb = EditorColorLight::g_rgb_Syntax_html[i].rgb;
-		if (iItem == SCE_H_ATTRIBUTE || iItem == SCE_H_ATTRIBUTEUNKNOWN)
-		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
-			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
-			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
-		}
-		else if (iItem == SCE_H_TAG || iItem == SCE_H_ENTITY
-			|| iItem == SCE_HB_DEFAULT || iItem == SCE_HJA_DEFAULT
-			|| iItem == SCE_HBA_IDENTIFIER || iItem == SCE_HB_IDENTIFIER
-			|| iItem == SCE_HPHP_OPERATOR || iItem == SCE_HPHP_DEFAULT
-			|| iItem == SCE_H_OTHER)
-		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
-			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
-		}
-		else
-		{
-			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
-		}
-	}
 }
 
 void EditorLexerLight::Init_java_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
@@ -615,18 +593,6 @@ void EditorLexerLight::Init_python_Editor(CLanguageDatabase* pDatabase, CEditorC
 	pDatabase->SetLanguageCommentStart(EditorColorLight::g_str_python_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorLight::g_str_python_commentEnd);
 	pEditorCtrl->LoadExternalSettings(pDatabase);
-}
-
-void EditorLexerLight::Init_python_Editor_NoDB(CEditorCtrl* pEditorCtrl)
-{
-	pEditorCtrl->SetLexer("python");
-	pEditorCtrl->SetKeywords("");
-	for (int i = 0; EditorColorLight::g_rgb_Syntax_python_2[i].iItem != -1; i++)
-	{
-		auto iItem = EditorColorLight::g_rgb_Syntax_python_2[i].iItem;
-		auto rgb = EditorColorLight::g_rgb_Syntax_python_2[i].rgb;
-		pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
-	}
 }
 
 void EditorLexerLight::Init_ruby_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)

@@ -291,7 +291,11 @@ void OSUtils::OpenFileInWebBrowser(const CString& strEXEName, const CString& str
 		CString strAppPath = OSUtils::GetRegistryAppPath(strEXEName);
 		if (strAppPath.IsEmpty())
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("%s has not installed on this computer yet!"), strEXEName);
+			int nAnwser = AfxMessageBoxFormat(MB_YESNO | MB_ICONWARNING, _T("[%s] has not installed on this computer yet. You can change web browser in language setting file. Do you want to open it by default web browser?"), strEXEName);
+			if (IDYES == nAnwser)
+			{
+				::ShellExecute(NULL, _T("open"), strFilePath, NULL, NULL, SW_SHOW);
+			}
 		}
 		else
 		{

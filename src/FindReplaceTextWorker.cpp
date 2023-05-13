@@ -260,7 +260,7 @@ void CReplaceWorker::ReplaceInDocument(const CString& strDocPath,
 {
 	if (PathFileExists(strDocPath))
 	{
-		if (PathUtils::IsBinaryFile(strDocPath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_OFFICE | FILE_PDF)) return; // do not replace binary file...
+		if (PathUtils::IsBinaryFile(strDocPath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF)) return; // do not replace binary file...
 	}
 	std::wstring strLine;
 	std::wstring strOutputText;
@@ -317,7 +317,7 @@ void CReplaceWorker::ReplaceInFilePath(std::wstring inputfile,
 	CEditorCtrl * pCScintillaEditor)
 {
 	CString strInputFile = AppUtils::WStdToCString(inputfile);
-	if (PathUtils::IsBinaryFile(strInputFile, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_OFFICE | FILE_PDF)) return; // do not replace binary file...
+	if (PathUtils::IsBinaryFile(strInputFile, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF)) return; // do not replace binary file...
 	BOOL bHasTrailingReturn = PathUtils::IsFileHasTrailingReturn(strInputFile);
 	std::wifstream ifs(inputfile);
 	if (!ifs) return;

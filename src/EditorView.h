@@ -251,10 +251,12 @@ public:
 	afx_msg void OnUpdateEditChangeBidirectional(CCmdUI * pCmdUI);
 	afx_msg void OnOptionsStartMoniterFile();
 	afx_msg void OnUpdateStartMoniterFile(CCmdUI * pCmdUI);
-	afx_msg void OnOptionsChangeTextLexerCPP();
-	afx_msg void OnOptionsChangeTextLexerPython();
-	afx_msg void OnOptionsChangeTextLexerHtmlXml();
-	afx_msg void OnOptionsChangeTextLexerNon();
+	afx_msg void OnEnableUserLexerLexerCPP();
+	afx_msg void OnEnableUserLexerLexerPython();
+	afx_msg void OnEnableUserLexerLexerHtmlXml();
+	afx_msg void OnEnableUserLexerLexerBashBatch();
+	afx_msg void OnEnableUserLexerLexerVBPascal();
+	afx_msg void OnDisableUserLexer();
 	afx_msg void OnOptionAlignLeft();
 	afx_msg void OnOptionAlignRight();
 	afx_msg void OnOptionAlignCenter();
@@ -485,7 +487,7 @@ protected:
 	void OpenFileLanguageConfig(const CString & strLexerName);
 	void AdjustEditorPosition(int cx, int cy);
 	void ResetMultipleSelectionsBuffer();
-
+	void ChangeUserLexer(const CString& strLexerName);
 	void UpdateDockPaneBreakpoint(int nLineNumber, BOOL bDeleteFromList, const CString & strPathName, const CString & strProcessName);
 	void UpdateDockPaneBookmark(int nLineNumber, BOOL bDeleteFromList, const CString& strPathName);
 

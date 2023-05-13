@@ -386,15 +386,12 @@ CString PathUtils::GetProgramFilePath()
 
 CString PathUtils::GetFileExtention(const CString& strFile)
 {
-	CString strExtension = _T("");
-	if (strFile.IsEmpty())
-	{
-		return strExtension;
-	}
-	int nIndex = strFile.ReverseFind('.');
-	if (nIndex == -1) return strExtension;
-	strExtension = strFile.Mid(nIndex + 1).Trim();
-	return strExtension;
+	TCHAR szDir[_MAX_DIR];
+	TCHAR szDrive[_MAX_DRIVE];
+	TCHAR szName[_MAX_FNAME];
+	TCHAR szExt[_MAX_EXT];
+	_tsplitpath_s(strFile, szDrive, _MAX_DRIVE, szDir, _MAX_DIR, szName, _MAX_FNAME, szExt, _MAX_EXT);
+	return CString(szExt).Mid(1).Trim();
 }
 
 CString PathUtils::GetFilePathWithoutExtention(const CString & strFile)
@@ -836,38 +833,31 @@ BOOL PathUtils::CreateNewEmptyFile(const CString& szFile)
 }
 
 
-BOOL PathUtils::SaveFileTruncate(const CString& szFile, CString strContent)
+BOOL PathUtils::SaveFileTruncate(const CString& szFile, const CString& strContent)
 {
-	// if pathname is empty do nothing
-	if (szFile.IsEmpty())
+	CStdioFile f;
+	if (!f.Open(szFile, CFile::modeCreate | CFile::modeWrite | CFile::typeBinary))
 	{
 		return FALSE;
 	}
-	strContent.Replace(_T("\r"), _T("\n"));
-	std::wofstream out_file(AppUtils::CStringToWStd(szFile), std::wios::trunc);
-	out_file.imbue(std::locale(out_file.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
-	out_file << AppUtils::CStringToWStd(strContent);
-	out_file.close();
+	CT2CA utf8Content(strContent, CP_UTF8);
+	f.Write(utf8Content, static_cast<UINT>(::strlen(utf8Content)));
+	f.Close();
 	return TRUE;
 }
 
-BOOL PathUtils::SaveFileAppend(const CString & szFile, CString strContent)
+BOOL PathUtils::SaveFileAppend(const CString& szFile, CString& strContentToAppend)
 {
-	// if pathname is empty do nothing
-	if (szFile.IsEmpty())
-	{
-		return FALSE;
-	}
-	strContent.Replace(_T("\r"), _T("\n"));
+	strContentToAppend.Replace(_T("\r"), _T("\n"));
 	std::wofstream out_file(AppUtils::CStringToWStd(szFile), std::wios::app);
 	if (!out_file) return FALSE;
 	out_file.imbue(std::locale(out_file.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
-	out_file << std::endl << AppUtils::CStringToWStd(strContent);
+	out_file << AppUtils::CStringToWStd(strContentToAppend);
 	out_file.close();
 	return TRUE;
 }
 
-BOOL PathUtils::SaveFileAppendNoDuplicateLine(const CString & szFile, CString strContent)
+BOOL PathUtils::SaveFileAppendNoDuplicateLine(const CString& szFile, CString& strContentToAppend)
 {
 	// if pathname is empty do nothing
 	if (szFile.IsEmpty())
@@ -881,49 +871,25 @@ BOOL PathUtils::SaveFileAppendNoDuplicateLine(const CString & szFile, CString st
 		return FALSE;
 	}
 	std::wstring line;
+	strContentToAppend.Replace(_T("\r"), _T("\n"));
 	while (std::getline(in_file, line))
 	{
 		if (line.empty()) continue;
 		line += EDITOR_NEW_LINE_LF;
-		if (line == AppUtils::CStringToWStd(strContent))
+		if (line == AppUtils::CStringToWStd(strContentToAppend))
 		{
 			return FALSE;
 		}
 	}
-	strContent.Replace(_T("\r"), _T("\n"));
+	in_file.close();
+	// now write new lines
 	std::wofstream out_file(AppUtils::CStringToWStd(szFile), std::wios::app);
 	if (!out_file) return FALSE;
 	out_file.imbue(std::locale(out_file.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
-	out_file << std::endl << AppUtils::CStringToWStd(strContent);
+	out_file << AppUtils::CStringToWStd(strContentToAppend);
 	out_file.close();
 	return TRUE;
 }
-
-//#include <boost/iostreams/device/mapped_file.hpp> 
-//#include <boost/iostreams/stream.hpp>  
-//BOOL PathUtils::OpenFileByMappedFile(const char* fname, CString& strContent)
-//{
-//	using boost::iostreams::mapped_file_source;
-//	using boost::iostreams::stream;
-//	mapped_file_source mmap(fname);
-//	stream<mapped_file_source> is(mmap, std::ios::binary);
-//
-//	if (!is.is_open())
-//	{
-//		return FALSE;
-//	}
-//
-//	std::string line;
-//	std::string totalLines;
-//	uintmax_t m_numLines = 0;
-//	while (std::getline(is, line))
-//	{
-//		totalLines += line + "\n";
-//	}
-//	strContent = AppUtils::StdToCString(totalLines);
-//	return TRUE;
-//}
-
 
 BOOL PathUtils::OpenFile(const CString& szFile, CString& strContent)
 {
@@ -933,7 +899,7 @@ BOOL PathUtils::OpenFile(const CString& szFile, CString& strContent)
 	if (result < 0)
 	{
 		TCHAR *errmsg = GetLastErrorString();
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
+		LOG_OUTPUT_MESSAGE_FORMAT(_T("[Open File] error: %s\n"), errmsg);
 		return FALSE;
 	}
 
@@ -946,7 +912,7 @@ BOOL PathUtils::OpenFile(const CString& szFile, CString& strContent)
 			if (result == TF_ERROR) // else TF_EOF
 			{
 				TCHAR *errmsg = GetLastErrorString();
-				LOG_OUTPUT_MESSAGE_FORMAT(_T("%s\n"), errmsg);
+				LOG_OUTPUT_MESSAGE_FORMAT(_T("[Open File] error: %s\n"), errmsg);
 			}
 			break;
 		}
@@ -1249,6 +1215,7 @@ BOOL PathUtils::IsBlockFormatFileMailServer(const CString& strFile)
 
 BOOL PathUtils::IsBinaryFile(const CString& strFile, BINARY_FILE_TYPE BinnaryFileType)
 {
+	if (PathUtils::IsOfficeFile(strFile)) return TRUE;
 	if (BinnaryFileType & BINARY_FILE_TYPE::FILE_BINNARY)
 	{
 		CString strExt = PathUtils::GetFileExtention(strFile);
@@ -1257,10 +1224,6 @@ BOOL PathUtils::IsBinaryFile(const CString& strFile, BINARY_FILE_TYPE BinnaryFil
 		{
 			if (strExt.MakeLower() == AppSettingMgr.m_BinaryFileExtensionList[i]) return TRUE;
 		}
-	}
-	if (BinnaryFileType & BINARY_FILE_TYPE::FILE_OFFICE)
-	{
-		if (PathUtils::IsOfficeFile(strFile)) return TRUE;
 	}
 	if (BinnaryFileType & BINARY_FILE_TYPE::FILE_PDF)
 	{
@@ -1333,8 +1296,8 @@ BOOL PathUtils::IsMediaFile(const CString & strFile)
 }
 
 // list office candicates, update more...
-const std::string office_file_list[] = { "docx", "docm", "dotx", "dotm", "doc", "dot", "rtf", "htm", "mht", "mhtml",
-"xml", "odt", "xl", "xlsx", "xlsb", "xlam", "xlsm", "xltx", "xltm", "xls", "xlt", "xla", "xlm", "xlw", "ppt", "pptx",
+const std::string office_file_list[] = { "docx", "docm", "dotx", "dotm", "doc", "dot", "rtf", "htm", "mht", "mhtml"
+, "odt", "xl", "xlsx", "xlsb", "xlam", "xlsm", "xltx", "xltm", "xls", "xlt", "xla", "xlm", "xlw", "ppt", "pptx",
 "pptm", "potx", "potm", "pot", "ppsx", "ppsm", "pps", "vsd", "vsdx", "vdx", "vdw", "vtx", "vss", "vst", "vsx", "mpp",
 "mpt", "mpd", "mpx" };
 

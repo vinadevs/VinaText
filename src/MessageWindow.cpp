@@ -62,7 +62,6 @@ LRESULT CMessagePane::OnDockPaneUpdate(WPARAM wParam, LPARAM lParam)
 
 void CMessagePane::UpdateUIVisual()
 {
-	m_LogPaneDlg.UpdateDlgFont();
 	m_LogPaneDlg.UpdateLogVisual();
 }
 
@@ -297,14 +296,14 @@ void CRichEditCtrlEX::OnEditCountMessageLine()
 	int nLineCount = 0;
 	if (strSelectedText.IsEmpty())
 	{
-		nLineCount = GetLineCount();
+		nLineCount = GetLineCount() - 1;
 	}
 	else
 	{
 		auto vectorLine = AppUtils::SplitterCString(strSelectedText, "\r");
 		nLineCount = static_cast<int>(vectorLine.size());
 	}
-	AfxMessageBoxFormat(MB_ICONINFORMATION, _T("%d lines"), nLineCount - 1);
+	AfxMessageBoxFormat(MB_ICONINFORMATION, _T("%d lines"), nLineCount);
 }
 
 CString CRichEditCtrlEX::GetCurrentTextLine()
@@ -415,7 +414,7 @@ IMPLEMENT_DYNAMIC(CMessagePaneDlg, CDialogEx)
 CMessagePaneDlg::CMessagePaneDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(ID_DIALOG_MESSAGE_PANE, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CMessagePaneDlg::~CMessagePaneDlg()
@@ -572,11 +571,6 @@ BOOL CMessagePaneDlg::OnInitDialog()
 
 	UpdateData(FALSE);
 	return TRUE;
-}
-
-void CMessagePaneDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 void CMessagePaneDlg::UpdateLogVisual()

@@ -28,7 +28,7 @@ protected:
 #define IMPLEMENT_FONT_SETTING_DOCK_WINDOW \
 	LOGFONT lf; \
 	memset(&lf, 0, sizeof(LOGFONT)); \
-	_tcscpy_s(lf.lfFaceName, 32 * sizeof(CHAR), AppSettingMgr.m_DockWindowFontSetting._font); \
-	lf.lfHeight = AppSettingMgr.m_DockWindowFontSetting._lfHeight; \
-	lf.lfWeight = AppSettingMgr.m_DockWindowFontSetting._lfWeight; \
+	_tcscpy_s(lf.lfFaceName, 32 * sizeof(CHAR), AppSettingMgr.m_AppGuiFontSetting._font); \
+	lf.lfHeight = AppSettingMgr.m_AppGuiFontSetting._lfHeight; \
+	lf.lfWeight = AppSettingMgr.m_AppGuiFontSetting._lfWeight; \
 	m_Font.CreateFontIndirect(&lf);

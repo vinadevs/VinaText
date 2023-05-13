@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////
 // 
-//    Vinatext HTML settings (CHROME_BROWSER, FIREFOX_BROWSER, EDGE_BROWSER)
+//    Vinatext HTML settings
 // -----------------------------------------------------------------------
 // This is a part of Vinatext Project
 // Copyright(C) www.vinatext.dev - vinadevs
@@ -8,13 +8,13 @@
 //////////////////////////////////////////////////////////////////////////
 
 @@ configuration guide:
-- Please change to your default browser to view HTML file (CHROME_BROWSER, FIREFOX_BROWSER, EDGE_BROWSER)
+- Please change to your default browser to view HTML file (CHROME_BROWSER, FIREFOX_BROWSER, EDGE_BROWSER, DEFAULT_BROWSER)
 
 @@ compiler path:
-CHROME_BROWSER
+DEFAULT_BROWSER
 
 @@ debugger path:
-CHROME_BROWSER
+DEFAULT_BROWSER
 
 @@ auto complete:
 doctype a abbr accept accept-charset accesskey acronym action address align 

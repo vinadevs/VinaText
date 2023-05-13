@@ -45,16 +45,10 @@ protected:
 	void FromThemeColorCombobox();
 	void InitApplicationThemLookCombobox();
 	void FromApplicationThemLookCombobox();
-	void InitDockWindowFontWeightCombobox();
-	void InitDialogWindowFontWeightCombobox();
-	void FromDockWindowFontWeightCombobox();
-	void FromDialogWindowFontWeightCombobox();
 	void InitDialogComboboxLimitSaveCombobox();
 	void FromDialogComboboxLimitSaveCombobox();
 
 	DECLARE_MESSAGE_MAP()
-	afx_msg void OnBnClickedDockWindowFontNameButton();
-	afx_msg void OnBnClickedDialogFontNameButton();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
@@ -64,12 +58,8 @@ protected:
 	CComboBox m_ActiveTabColorCombo;
 	CComboBox m_ThemeColorCombo;
 	CComboBox m_ApplicationThemLookCombo;
-	CComboBox m_DockWindowFontWeightCombo;
-	CComboBox m_DialogWindowFontWeightCombo;
 	CComboBox m_DialogComboboxLimitSaveCombo;
 
-	int m_nDialogFontHeight{0};
-	int m_nDockWindowFontHeight{0};
 	int m_nRecentFileLimit{0};
 
 	BOOL m_bWarningForFileNotExist{ FALSE };

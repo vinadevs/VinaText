@@ -18,16 +18,6 @@ protected: // create from serialization only
 	CFileExplorerDoc();
 	DECLARE_DYNCREATE(CFileExplorerDoc)
 
-// Attributes
-public:
-
-// Operations
-public:
-
-// Overrides
-public:
-	virtual BOOL OnNewDocument();
-
 // Implementation
 public:
 	virtual ~CFileExplorerDoc();
@@ -35,10 +25,6 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-protected:
-
-// Generated message map functions
 protected:
 	DECLARE_MESSAGE_MAP()
 };

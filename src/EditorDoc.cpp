@@ -54,7 +54,6 @@ END_MESSAGE_MAP()
 
 CEditorDoc::CEditorDoc()
 {
-	// TODO: add one-time construction code here
 	if (m_pLangDatabase == NULL)
 	{
 		m_pLangDatabase = std::make_unique<CLanguageDatabase>();

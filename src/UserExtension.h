@@ -8,7 +8,6 @@
 
 #pragma once
 
-const UINT MENU_USER_EXTENSION = 12;
 const UINT USER_EXTENSIONS_MAX = 30;
 
 class CUserExtension final
@@ -25,7 +24,7 @@ public:
 	CUserExtension() {}
 	~CUserExtension() {}
 	void OpenConfigFile();
-	void LoadMenuUserExtensions(CMenu* mainMenu, BOOL bRefresh = FALSE);
+	void LoadMenuUserExtensions(CMenu* pExtensionsMenu, BOOL bRefresh = FALSE);
 	void InvokeCommand(UINT nIDExtension);
 private:
 	std::unordered_map<UINT, CommandData> m_ExtensionData;

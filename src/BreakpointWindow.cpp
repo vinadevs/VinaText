@@ -93,7 +93,6 @@ void CBreakpointWindow::ClearAll()
 
 void CBreakpointWindow::UpdateUIVisual()
 {
-	m_BreakpointPaneDlg.UpdateDlgFont();
 	m_BreakpointPaneDlg.UpdateListCtrlVisual();
 }
 
@@ -105,7 +104,7 @@ IMPLEMENT_DYNAMIC(CBreakpointDlg, CDialogEx)
 CBreakpointDlg::CBreakpointDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_SEARCH_RESULT_DLG, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CBreakpointDlg::~CBreakpointDlg()
@@ -129,11 +128,6 @@ void CBreakpointDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_SEARCH_RESULT, m_wndBreakpointList);
-}
-
-void CBreakpointDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 void CBreakpointDlg::AddBreakpointData(const BREAKPOINT_LINE_DATA & data)

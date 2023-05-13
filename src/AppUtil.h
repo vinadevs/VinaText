@@ -44,6 +44,7 @@ namespace AppUtils
 	CString IntToCString(int n);
 	CString FloatToCString(float f);
 	CString LongToCString(long l);
+	CString BOOLToCString(BOOL b);
 	int CStringToInt(const CString& str);
 	long CStringToLong(const CString& str);
 	float CStringToFloat(const CString& str);
@@ -79,12 +80,13 @@ namespace AppUtils
 	BOOL SetActiveDocument(CDocument* pDoc);
 	void CloseAllPreviewDocument(PREVIEW_TYPE type);
 	void CloseAllDocument();
-	CDocument * GetNextPreviewDocument(PREVIEW_TYPE type);
-	CDocument * GetExistedDocument(CString strFile);
-	CDocument * GetDocumentFromTitle(const CString & strTitleDocument);;
-	CDocument * CreateDocumentFromFile(const CString & strFile);
-	CDocument * CreateNewPreviewDocument(const CString & strFile);
-	CDocument * CreateDocumentCheckFileExistence(const CString & strFile);
+	CDocument* GetNextPreviewDocument(PREVIEW_TYPE type);
+	CDocument* GetExistedDocument(CString strFile);
+	CDocument* GetExistedWebDocument(const CString& strTitle);
+	CDocument* GetDocumentFromTitle(const CString & strTitle);
+	CDocument* CreateDocumentFromFile(const CString & strFile);
+	CDocument* CreateNewPreviewDocument(const CString & strFile);
+	CDocument* CreateDocumentCheckFileExistence(const CString & strFile);
 	void CloseMDIDocument(CDocument * pDocTarget);
 	void CloseDocumentByFilePath(CString strFile);
 	void CloseDocumentByTitle(const CString& strTitle);

@@ -69,7 +69,6 @@ protected:
 	BOOL m_bAutoCompleteIgnoreNumbers{ FALSE };
 	BOOL m_bDrawCaretLineFrame{ FALSE };
 	BOOL m_bDrawFoldingLineUnderLineStyle{ FALSE };
-	BOOL m_bEditorEnableBoldFont{ FALSE };
 	BOOL m_bEnableAutoComplete{ FALSE };
 	BOOL m_bEnableAutoSearchWhenTyping{ FALSE };
 	BOOL m_bEnableCaretBlink{ FALSE };
@@ -80,8 +79,6 @@ protected:
 	BOOL m_bEnableUrlHighlight{ FALSE };
 	BOOL m_bReturnPreviousEditorState{ FALSE };
 	BOOL m_bUseFolderMarginClassic{ FALSE };
-	BOOL m_bEditorEnableItalicFont{ FALSE };
-	BOOL m_bEditorEnableUnderlineFont{ FALSE };
 	BOOL m_bAskBeforeReplaceInFiles{ FALSE };
 	BOOL m_bEnableAutoDetectCodePage{ FALSE };
 	BOOL m_bAutoSaveFileWhenCloseApp{ FALSE };
@@ -90,9 +87,13 @@ protected:
 	int m_nLineSpaceBelow{ 0 };
 	int m_nIntervalAutoSaveFileMinutes{ 0 };
 	int m_nLongLineMaximum{ 0 };
-	int m_nEditorLineNumberFontSize{ 0 };
-	int m_nEditorTextFontSize{ 0 };
 	int m_nPageAlignmentWidth{ 0 };
 
+	CString m_lfFaceName = _T("Courier New");
+	int m_iPointSize = 12;
+	BOOL m_isBold = FALSE;
+	BOOL m_isItalic = FALSE;
+	BOOL m_isUnderline = FALSE;
+	COLORREF m_color = RGB(0, 0, 0);
 	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

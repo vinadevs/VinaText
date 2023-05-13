@@ -25,7 +25,7 @@ GeneralSettingDlg::GeneralSettingDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent) {
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);
-	m_pScrollHelper->SetDisplaySize(0, 800);
+	m_pScrollHelper->SetDisplaySize(0, 1500);
 }
 
 GeneralSettingDlg::~GeneralSettingDlg() {}
@@ -38,12 +38,8 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		FromActiveTabColorCombobox();
 		FromThemeColorCombobox();
 		FromApplicationThemLookCombobox();
-		FromDockWindowFontWeightCombobox();
-		FromDialogWindowFontWeightCombobox();
 		FromDialogComboboxLimitSaveCombobox();
 
-		AppSettingMgr.m_DialogFontSetting._lfHeight = m_nDialogFontHeight;
-		AppSettingMgr.m_DockWindowFontSetting._lfHeight = m_nDockWindowFontHeight;
 		AppSettingMgr.m_strInitialFilePickerPath = m_strInitialFilePickerPath;
 		AppSettingMgr.m_bWarningForFileNotExist = m_bWarningForFileNotExist;
 		AppSettingMgr.m_bShowTrackingBar = m_bShowTrackingBar;
@@ -52,34 +48,19 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bSaveDataBookmarkWindow = m_bSaveDataBookmarkWindow;
 		AppSettingMgr.m_bDetectFileChangeFromOutSide = m_bDetectFileChangeFromOutSide;
 		AppSettingMgr.m_bCheckFileSizeBeforeOpen = m_bCheckFileSizeBeforeOpen;
-		AppSettingMgr.m_nRecentFileLimit = m_nRecentFileLimit;
+		m_nRecentFileLimit > 16 ? AppSettingMgr.m_nRecentFileLimit = 16 : AppSettingMgr.m_nRecentFileLimit = m_nRecentFileLimit;
 
 		AppSettingMgr.m_BinaryFileExtensionList.RemoveAll();
 		AppUtils::SplitCString(m_strBinaryFileExtensionList, CSTRING_SPACE, AppSettingMgr.m_BinaryFileExtensionList);
 		AppSettingMgr.m_strBinaryFileExtensionList = m_strBinaryFileExtensionList;
-
-		CButton* pButtonDock = (CButton*)GetDlgItem(ID_DOCK_WINDOW_FONT_NAME_BUTTON);
-		if (pButtonDock)
-		{
-			pButtonDock->GetWindowTextW(AppSettingMgr.m_DockWindowFontSetting._font);
-		}
-		CButton* pButtonDlg = (CButton*)GetDlgItem(ID_DIALOG_FONT_NAME_BUTTON);
-		if (pButtonDlg)
-		{
-			pButtonDlg->GetWindowTextW(AppSettingMgr.m_DialogFontSetting._font);
-		}
 	}
 	else
 	{
 		InitActiveTabColorCombobox();
 		InitThemeColorCombobox();
 		InitApplicationThemLookCombobox();
-		InitDockWindowFontWeightCombobox();
-		InitDialogWindowFontWeightCombobox();
 		InitDialogComboboxLimitSaveCombobox();
 
-		m_nDialogFontHeight = AppSettingMgr.m_DialogFontSetting._lfHeight;
-		m_nDockWindowFontHeight = AppSettingMgr.m_DockWindowFontSetting._lfHeight;
 		m_strInitialFilePickerPath = AppSettingMgr.m_strInitialFilePickerPath;
 		m_bWarningForFileNotExist = AppSettingMgr.m_bWarningForFileNotExist;
 		m_bShowTrackingBar = AppSettingMgr.m_bShowTrackingBar;
@@ -90,17 +71,6 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bCheckFileSizeBeforeOpen = AppSettingMgr.m_bCheckFileSizeBeforeOpen;
 		m_nRecentFileLimit = AppSettingMgr.m_nRecentFileLimit;
 		m_strBinaryFileExtensionList = AppSettingMgr.m_strBinaryFileExtensionList;
-
-		CButton* pButtonDock = (CButton*)GetDlgItem(ID_DOCK_WINDOW_FONT_NAME_BUTTON);
-		if (pButtonDock)
-		{
-			pButtonDock->SetWindowTextW(AppSettingMgr.m_DockWindowFontSetting._font);
-		}
-		CButton* pButtonDlg = (CButton*)GetDlgItem(ID_DIALOG_FONT_NAME_BUTTON);
-		if (pButtonDlg)
-		{
-			pButtonDlg->SetWindowTextW(AppSettingMgr.m_DialogFontSetting._font);
-		}
 	}
 }
 
@@ -110,10 +80,6 @@ void GeneralSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, ID_ACTIVE_TAB_COLOR_COMBO, m_ActiveTabColorCombo);
 	DDX_Control(pDX, ID_THEME_COLOR_COMBO, m_ThemeColorCombo);
 	DDX_Control(pDX, ID_THEME_LOOK_COMBO, m_ApplicationThemLookCombo);
-	DDX_Control(pDX, ID_DIALOG_FONT_WEIGHT_COMBO, m_DialogWindowFontWeightCombo);
-	DDX_Control(pDX, ID_DOCK_WINDOW_FONT_WEIGHT_COMBO, m_DockWindowFontWeightCombo);
-	DDX_Text(pDX, ID_DIALOG_FONT_HEIGHT_EDIT, m_nDialogFontHeight);
-	DDX_Text(pDX, ID_DOCK_WINDOW_FONT_HEIGHT_EDIT, m_nDockWindowFontHeight);
 	DDX_Control(pDX, ID_INITIAL_FILE_PICKER_PATH_EDIT, m_EditInitialFilePickerPath);
 	DDX_Text(pDX, ID_INITIAL_FILE_PICKER_PATH_EDIT, m_strInitialFilePickerPath);
 	DDX_Check(pDX, ID_WARNING_FOR_FILE_NOT_EXIST, m_bWarningForFileNotExist);
@@ -200,9 +166,9 @@ void GeneralSettingDlg::FromActiveTabColorCombobox()
 void GeneralSettingDlg::InitThemeColorCombobox()
 {
 	m_ThemeColorCombo.ResetContent();
-	m_ThemeColorCombo.AddString(_T("Sierra Blue Theme"));
-	m_ThemeColorCombo.AddString(_T("Monokai Theme"));
-	m_ThemeColorCombo.AddString(_T("Lighting Theme"));
+	m_ThemeColorCombo.AddString(_T("Sierra Blue Color Background"));
+	m_ThemeColorCombo.AddString(_T("Monokai Color Background"));
+	m_ThemeColorCombo.AddString(_T("Lighting Color Background"));
 	switch (AppSettingMgr.m_AppThemeColor)
 	{
 	case EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_SIERRA_BLUE:
@@ -318,105 +284,6 @@ void GeneralSettingDlg::FromApplicationThemLookCombobox()
 	}
 }
 
-void GeneralSettingDlg::InitDockWindowFontWeightCombobox()
-{
-	m_DockWindowFontWeightCombo.ResetContent();
-	m_DockWindowFontWeightCombo.AddString(_T("Normal"));
-	m_DockWindowFontWeightCombo.AddString(_T("Medium"));
-	m_DockWindowFontWeightCombo.AddString(_T("Semi-Bold"));
-	m_DockWindowFontWeightCombo.AddString(_T("Bold"));
-	switch (AppSettingMgr.m_DockWindowFontSetting._lfWeight)
-	{
-	case FW_NORMAL:
-		m_DockWindowFontWeightCombo.SetCurSel(0);
-		break;
-	case FW_MEDIUM:
-		m_DockWindowFontWeightCombo.SetCurSel(1);
-		break;
-	case FW_SEMIBOLD:
-		m_DockWindowFontWeightCombo.SetCurSel(2);
-		break;
-	case FW_BOLD:
-		m_DockWindowFontWeightCombo.SetCurSel(3);
-		break;
-	default:
-		m_DockWindowFontWeightCombo.SetCurSel(0);
-		break;
-	}
-}
-
-void GeneralSettingDlg::InitDialogWindowFontWeightCombobox()
-{
-	m_DialogWindowFontWeightCombo.ResetContent();
-	m_DialogWindowFontWeightCombo.AddString(_T("Normal"));
-	m_DialogWindowFontWeightCombo.AddString(_T("Medium"));
-	m_DialogWindowFontWeightCombo.AddString(_T("Semi-Bold"));
-	m_DialogWindowFontWeightCombo.AddString(_T("Bold"));
-	switch (AppSettingMgr.m_DockWindowFontSetting._lfWeight)
-	{
-	case FW_NORMAL:
-		m_DialogWindowFontWeightCombo.SetCurSel(0);
-		break;
-	case FW_MEDIUM:
-		m_DialogWindowFontWeightCombo.SetCurSel(1);
-		break;
-	case FW_SEMIBOLD:
-		m_DialogWindowFontWeightCombo.SetCurSel(2);
-		break;
-	case FW_BOLD:
-		m_DialogWindowFontWeightCombo.SetCurSel(3);
-		break;
-	default:
-		m_DialogWindowFontWeightCombo.SetCurSel(0);
-		break;
-	}
-}
-
-void GeneralSettingDlg::FromDockWindowFontWeightCombobox()
-{
-	int iSel = m_DockWindowFontWeightCombo.GetCurSel();
-	switch (iSel)
-	{
-	case 0:
-		AppSettingMgr.m_DockWindowFontSetting._lfWeight = FW_NORMAL;
-		break;
-	case 1:
-		AppSettingMgr.m_DockWindowFontSetting._lfWeight = FW_MEDIUM;
-		break;
-	case 2:
-		AppSettingMgr.m_DockWindowFontSetting._lfWeight = FW_SEMIBOLD;
-		break;
-	case 3:
-		AppSettingMgr.m_DockWindowFontSetting._lfWeight = FW_BOLD;
-		break;
-	default:
-		AppSettingMgr.m_DockWindowFontSetting._lfWeight = DEFAULT_LFWEIGHT;
-		break;
-	}
-}
-
-void GeneralSettingDlg::FromDialogWindowFontWeightCombobox()
-{
-	int iSel = m_DialogWindowFontWeightCombo.GetCurSel();
-	switch (iSel)
-	{
-	case 0:
-		AppSettingMgr.m_DialogFontSetting._lfWeight = FW_NORMAL;
-		break;
-	case 1:
-		AppSettingMgr.m_DialogFontSetting._lfWeight = FW_MEDIUM;
-		break;
-	case 2:
-		AppSettingMgr.m_DialogFontSetting._lfWeight = FW_SEMIBOLD;
-		break;
-	case 3:
-		AppSettingMgr.m_DialogFontSetting._lfWeight = FW_BOLD;
-		break;
-	default:
-		AppSettingMgr.m_DialogFontSetting._lfWeight = DEFAULT_LFWEIGHT;
-		break;
-	}
-}
 void GeneralSettingDlg::InitDialogComboboxLimitSaveCombobox()
 {
 	m_DialogComboboxLimitSaveCombo.ResetContent();
@@ -473,8 +340,6 @@ BEGIN_MESSAGE_MAP(GeneralSettingDlg, CDialogEx)
 	ON_WM_VSCROLL()
 	ON_WM_MOUSEWHEEL()
 	ON_WM_SIZE()
-	ON_BN_CLICKED(ID_DOCK_WINDOW_FONT_NAME_BUTTON, &GeneralSettingDlg::OnBnClickedDockWindowFontNameButton)
-	ON_BN_CLICKED(ID_DIALOG_FONT_NAME_BUTTON, &GeneralSettingDlg::OnBnClickedDialogFontNameButton)
 END_MESSAGE_MAP()
 
 // for scrolling //////////////////////////////////////////////////////////////
@@ -526,32 +391,6 @@ void GeneralSettingDlg::OnDropFiles(HDROP hDropInfo)
 		}
 	}
 	DragFinish(hDropInfo);
-}
-
-void GeneralSettingDlg::OnBnClickedDockWindowFontNameButton()
-{
-	CFontDialog dlg;
-	if (dlg.DoModal() == IDOK)
-	{
-		CButton* pButton = (CButton*)GetDlgItem(ID_DOCK_WINDOW_FONT_NAME_BUTTON);
-		if (pButton)
-		{
-			pButton->SetWindowTextW(dlg.GetFaceName());
-		}
-	}
-}
-
-void GeneralSettingDlg::OnBnClickedDialogFontNameButton()
-{
-	CFontDialog dlg;
-	if (dlg.DoModal() == IDOK)
-	{
-		CButton* pButton = (CButton*)GetDlgItem(ID_DIALOG_FONT_NAME_BUTTON);
-		if (pButton)
-		{
-			pButton->SetWindowTextW(dlg.GetFaceName());
-		}
-	}
 }
 
 ///////////////////////////////////////////////////////////////////

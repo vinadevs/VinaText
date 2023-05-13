@@ -19,6 +19,7 @@
 #include "MediaDoc.h"
 #include "FileExplorerDoc.h"
 #include "HostDoc.h"
+#include "WebDoc.h"
 #include "FileUtil.h"
 #include "AppSettings.h"
 #include "tinyXml\tinyxml.h"
@@ -79,6 +80,11 @@ CString AppUtils::LongToCString(long l)
 	CString str;
 	str.Format(_T("%ld"), l);
 	return(str);
+}
+
+CString AppUtils::BOOLToCString(BOOL b)
+{
+	return b ? _T("True") : _T("False");
 }
 
 int AppUtils::CStringToInt(const CString& str)
@@ -850,7 +856,7 @@ CString AppUtils::GetFileTypeByExtension(const CString & strFileExt)
 	}
 	else if (strFileExt.CompareNoCase(_T("txt")) == 0 || strFileExt.IsEmpty())
 	{
-		return _T("Text");
+		return _T("TEXT");
 	}
 	else
 	{
@@ -1115,9 +1121,36 @@ CDocument* AppUtils::GetExistedDocument(CString strFile)
 	return NULL;
 }
 
-CDocument * AppUtils::GetDocumentFromTitle(const CString& strTitleDocument)
+CDocument* AppUtils::GetExistedWebDocument(const CString& strTitle)
 {
-	if (!strTitleDocument.IsEmpty())
+	if (!strTitle.IsEmpty())
+	{
+		POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
+		while (posTemplate)
+		{
+			CDocTemplate* doctempl = AfxGetApp()->GetNextDocTemplate(posTemplate);
+			if (!doctempl) return NULL;
+			POSITION posDoc = doctempl->GetFirstDocPosition();
+			while (posDoc)
+			{
+				CDocument* pDocTarget = doctempl->GetNextDoc(posDoc);
+				if (pDocTarget && pDocTarget->IsKindOf(RUNTIME_CLASS(CWebDoc)))
+				{
+					CString strTitle = pDocTarget->GetTitle();
+					if (strTitle == strTitle)
+					{
+						return pDocTarget;
+					}
+				}
+			}
+		}
+	}
+	return NULL;
+}
+
+CDocument * AppUtils::GetDocumentFromTitle(const CString& strTitle)
+{
+	if (!strTitle.IsEmpty())
 	{
 		POSITION posTemplate = AfxGetApp()->GetFirstDocTemplatePosition();
 		while (posTemplate)
@@ -1131,7 +1164,7 @@ CDocument * AppUtils::GetDocumentFromTitle(const CString& strTitleDocument)
 				if (pDocTarget)
 				{
 					CString strTitle = pDocTarget->GetTitle();
-					if (strTitleDocument == strTitle)
+					if (strTitle == strTitle)
 					{
 						return pDocTarget;
 					}
@@ -2250,7 +2283,7 @@ CString AppUtils::GetLanguageStringName(VINATEXT_SUPPORTED_LANGUAGE language)
 	}
 	else
 	{
-		strLanguage = _T("Text");
+		strLanguage = _T("TEXT");
 	}
 	return strLanguage;
 }

@@ -36,14 +36,9 @@ END_MESSAGE_MAP()
 
 // CImageDoc construction/destruction
 
-CImageDoc::CImageDoc()
-{
-	// TODO: add one-time construction code here
-}
+CImageDoc::CImageDoc() {}
 
-CImageDoc::~CImageDoc()
-{
-}
+CImageDoc::~CImageDoc() {}
 
 BOOL CImageDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -214,5 +209,3 @@ void CImageDoc::OnFileSaveAll()
 {
 	AppUtils::SaveAllModifiedDocuments();
 }
-
-// CImageDoc commands

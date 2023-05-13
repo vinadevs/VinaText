@@ -28,15 +28,19 @@ void CUserExtension::OpenConfigFile()
 	}
 }
 
-void CUserExtension::LoadMenuUserExtensions(CMenu* mainMenu, BOOL bRefresh/*= FALSE*/)
+void CUserExtension::LoadMenuUserExtensions(CMenu* pExtensionsMenu, BOOL bRefresh/*= FALSE*/)
 {
 	if (bRefresh)
 	{
 		for (auto const& data : m_ExtensionData)
 		{
-			mainMenu->GetSubMenu(MENU_USER_EXTENSION)->DeleteMenu(data.first, MF_BYCOMMAND);
+			pExtensionsMenu->DeleteMenu(data.first, MF_BYCOMMAND);
 		}
 		m_ExtensionData.clear();
+	}
+	if (pExtensionsMenu->GetMenuItemCount() == 1)
+	{
+		pExtensionsMenu->AppendMenuW(MF_SEPARATOR, 0, _T(""));
 	}
 	CString extensionPath = PathUtils::GetUserExtensionPath();
 	if (!PathFileExists(extensionPath)) return;
@@ -63,7 +67,7 @@ void CUserExtension::LoadMenuUserExtensions(CMenu* mainMenu, BOOL bRefresh/*= FA
 				bStartReadExtensionSession = FALSE;
 				if (!strExtensionName.IsEmpty() && !strExtensionCMD.IsEmpty())
 				{
-					mainMenu->GetSubMenu(MENU_USER_EXTENSION)->AppendMenuW(MF_STRING, uExtensionCount, strExtensionName);
+					pExtensionsMenu->AppendMenuW(MF_STRING, uExtensionCount, strExtensionName);
 					if (strExtensionRunFromDirectory.IsEmpty())
 					{
 						strExtensionRunFromDirectory = PathUtils::GetWindowSystemPath();

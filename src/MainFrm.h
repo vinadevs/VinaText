@@ -33,6 +33,7 @@
 class CEditorDoc;
 class CBookMarkPathDlg;
 class CQuickSearchDialog;
+class CPathComparatorDlg;
 
 ///////////////////////////// TOOLBARS //////////////////////////////////////////////////
 
@@ -86,6 +87,7 @@ public:
 	BOOL IsDebuggerDocument(CEditorDoc * pDoc);
 	void ReleaseBookMarkTableDialog();
 	void ReleaseQuickSearchDialog();
+	void ReleasePathComparatorToolDialog();
 	BOOL HasDebuggerDocument(CEditorDoc* pDocument);
 	void RemoveDebuggerDocument(CEditorDoc* pDocument);
 	void RevealInExplorerWindow(const CString& strPath);
@@ -115,9 +117,10 @@ public:
 	virtual CMDIChildWndEx* CreateDocumentWindow(LPCTSTR lpcszDocName, CObject* pObj);
 	virtual BOOL OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOOL bDrop);
 	virtual BOOL OnCloseMiniFrame(CPaneFrameWnd * pWnd);
-	//BOOL OnShowPopupMenu(CMFCPopupMenu * pMenuPopup);
+	virtual void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 
 protected:  // control bar embedded members
+	std::unordered_map<UINT, CString> m_FileRecentIDMap;
 	int					m_iCurrentTabCount = 0;
 	BOOL				m_bIsClosingVinaText = FALSE;
 	CFont				m_Font;
@@ -135,6 +138,7 @@ protected:  // control bar embedded members
 	CBreakpointWindow	  m_wndBreakpointWindow;
 	CBookMarkPathDlg*     m_pBookMarkPathDlg = NULL;
 	CQuickSearchDialog*   m_pQuickSearchDialog = NULL;
+	CPathComparatorDlg*   m_pPathComparatorDlg = NULL;
 	std::set<CEditorDoc*> m_DebuggerDocList;
 	CUserExtension        m_UserExtension;
 
@@ -361,9 +365,12 @@ public:
 	afx_msg void OnUserExtensions();
 	afx_msg void OnExtensionRefreshList();
 	afx_msg void OnUserExtension(UINT nIDExtension);
+	afx_msg void OnPathComparatorTool();
+	afx_msg void OnOpenFileRecent(UINT nIDExtension);
 
 	DECLARE_MESSAGE_MAP()
 protected:
+	void InitRecentFilesList(CMenu* pFileMenu);
 	CString GetCurrentDocFolder();
 	BOOL SetCurrentDirectoryTerminal();
 	void ShowQuickSearchDialog(SEARCH_REPLACE_GOTO_DLG_TYPE type);

@@ -128,12 +128,12 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	SetColorForStyle(STYLE_DEFAULT,
 		m_AppThemeColorSet._editorTextColor,
 		AppSettingMgr.m_AppThemeColor,
-		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize,
-		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
+		AppSettingMgr.m_EditorFontSetting._iPointSize,
+		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._lfFaceName).c_str());
 
-	DoCommand(SCI_STYLESETBOLD, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableBoldFont);
-	DoCommand(SCI_STYLESETITALIC, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableItalicFont);
-	DoCommand(SCI_STYLESETUNDERLINE, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._bEnableUnderlineFont);
+	DoCommand(SCI_STYLESETBOLD, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._isBold);
+	DoCommand(SCI_STYLESETITALIC, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._isItalic);
+	DoCommand(SCI_STYLESETUNDERLINE, STYLE_DEFAULT, AppSettingMgr.m_EditorFontSetting._isUnderline);
 
 	// This message sets all styles to have the same attributes as STYLE_DEFAULT.
 	// If you are setting up Scintilla for syntax colouring, it is likely that the
@@ -144,8 +144,12 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	if (m_strLexerName.IsEmpty()) {
 		m_strLexerName = LEXER_PLAIN_TEXT;
 	}
+	// if user choose lexers from app menu then we wont load default lexer
+	if (m_bUseUserLexer) {
+		m_strLexerName = m_strUserLexerName;
+	}
 	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
-		EditorLexerLight::LoadLexer(pDatabase, this, m_strLexerName):
+		EditorLexerLight::LoadLexer(pDatabase, this, m_strLexerName) :
 		EditorLexerDark::LoadLexer(pDatabase, this, m_strLexerName);
 
 	SetTabSettings(m_tabSpace);
@@ -155,8 +159,8 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 	SetColorForStyle(STYLE_LINENUMBER,
 		m_AppThemeColorSet._lineNumberColor,
 		m_AppThemeColorSet._editorMarginBarColor,
-		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize,
-		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._font).c_str());
+		AppSettingMgr.m_EditorFontSetting._iPointSize,
+		AppUtils::CStringToStd(AppSettingMgr.m_EditorFontSetting._lfFaceName).c_str());
 
 	// folding
 	DoCommand(SCI_SETPROPERTY, (WPARAM)"fold", reinterpret_cast<LPARAM>("1"));
@@ -622,11 +626,11 @@ void CEditorCtrl::AddText(const CString& strText)
 	if (strText.GetLength() <= 0) return;
 
 	char* bufUtf8 = NULL;
-	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText)
-		if (bufUtf8 != NULL)
-		{
-			DoCommand(SCI_INSERTTEXT, 0, reinterpret_cast<LPARAM>(bufUtf8));
-		}
+	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText);
+	if (bufUtf8 != NULL)
+	{
+		DoCommand(SCI_INSERTTEXT, 0, reinterpret_cast<LPARAM>(bufUtf8));
+	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -887,11 +891,11 @@ void CEditorCtrl::CopyLine()
 void CEditorCtrl::CopyText(const CString& strText, int length)
 {
 	char* bufUtf8 = NULL;
-	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText)
-		if (bufUtf8 != NULL)
-		{
-			DoCommand(SCI_COPYTEXT, length, reinterpret_cast<LPARAM>(bufUtf8));
-		}
+	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText);
+	if (bufUtf8 != NULL)
+	{
+		DoCommand(SCI_COPYTEXT, length, reinterpret_cast<LPARAM>(bufUtf8));
+	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -983,16 +987,6 @@ CString CEditorCtrl::GetSelectedTextAtSelection(int nSel)
 		GetTextFromLine(lLine + 1, strSelectedText);
 	}
 	return strSelectedText;
-}
-
-CString CEditorCtrl::GetUserTextLexer()
-{
-	return m_strUserTextLexer;;
-}
-
-void CEditorCtrl::SetUserTextLexer(const CString& strUserLexerName)
-{
-	m_strUserTextLexer = m_strUserTextLexer;
 }
 
 CString CEditorCtrl::GetFileExtension()
@@ -2543,16 +2537,20 @@ namespace // File IO
 
 void CEditorCtrl::DetectFileLexer(const CString& strFilePath)
 {
-	int nIndex = strFilePath.ReverseFind('.');
-	if (nIndex != -1)
+	CString strFileName = PathUtils::GetFilenameFromPath(strFilePath);
+	if (strFileName == _T("CMakeLists.txt"))
 	{
-		m_strFileExtension = strFilePath.Right(strFilePath.GetLength() - nIndex - 1).Trim();
+		m_strLexerName = _T("cmake");
 	}
-	else
+	else if (strFileName.CompareNoCase(_T("Makefile")) == 0)
 	{
-		m_strFileExtension.Empty();
+		m_strLexerName = _T("makefile");
 	}
-	m_strLexerName = GetLexerNameFromExtension(m_strFileExtension);
+	else // not special lexers
+	{
+		m_strFileExtension = PathUtils::GetFileExtention(strFilePath);
+		m_strLexerName = GetLexerNameFromExtension(m_strFileExtension);
+	}
 }
 
 void CEditorCtrl::SetTabSettings(TabSpace ts)
@@ -3070,11 +3068,11 @@ CString CEditorCtrl::GetLexerNameFromExtension(const CString& szExtension)
 void CEditorCtrl::SetFontname(int nStyle, CString szFontname)
 {
 	char* bufUtf8 = NULL;
-	CREATE_BUFFER_FROM_CSTRING(bufUtf8, szFontname)
-		if (bufUtf8 != NULL)
-		{
-			DoCommand(SCI_STYLESETFONT, nStyle, reinterpret_cast<LPARAM>(bufUtf8));
-		}
+	CREATE_BUFFER_FROM_CSTRING(bufUtf8, szFontname);
+	if (bufUtf8 != NULL)
+	{
+		DoCommand(SCI_STYLESETFONT, nStyle, reinterpret_cast<LPARAM>(bufUtf8));
+	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -3339,21 +3337,21 @@ void CEditorCtrl::ReplaceSearchedText(const CString& strText)
 {
 	if (strText.IsEmpty()) return;
 	char* bufUtf8 = NULL;
-	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText)
-		if (bufUtf8 != NULL)
+	CREATE_BUFFER_FROM_CSTRING(bufUtf8, strText);
+	if (bufUtf8 != NULL)
+	{
+		// set target search
+		DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
+		DoCommand(SCI_TARGETFROMSELECTION, 0, 0);
+		if (m_nSearchflags & SCFIND_REGEXP)
 		{
-			// set target search
-			DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
-			DoCommand(SCI_TARGETFROMSELECTION, 0, 0);
-			if (m_nSearchflags & SCFIND_REGEXP)
-			{
-				DoCommand(SCI_REPLACETARGETRE, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
-			}
-			else
-			{
-				DoCommand(SCI_REPLACETARGET, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
-			}
+			DoCommand(SCI_REPLACETARGETRE, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
 		}
+		else
+		{
+			DoCommand(SCI_REPLACETARGET, strText.GetLength(), reinterpret_cast<LPARAM>(bufUtf8));
+		}
+	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
@@ -3363,13 +3361,13 @@ int CEditorCtrl::ReplaceNext(const CString& szFind, const CString& szReplace)
 
 	char* bufUtf8_szFind = NULL;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind)
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind);
 	}
 	if (bufUtf8_szFind == NULL) return 0;
 
 	char* bufUtf8_szReplace = NULL;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace)
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace);
 	}
 	if (bufUtf8_szReplace == NULL) return 0;
 
@@ -3428,13 +3426,13 @@ int CEditorCtrl::ReplaceAll(const CString& szFind, const CString& szReplace)
 
 	char* bufUtf8_szFind = NULL;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind)
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind);
 	}
 	if (bufUtf8_szFind == NULL) return 0;
 
 	char* bufUtf8_szReplace = NULL;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace)
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace);
 	}
 	if (bufUtf8_szReplace == NULL) return 0;
 
@@ -3639,30 +3637,14 @@ void CEditorCtrl::RemoveIndicatorHightLightRenders()
 {
 	sptr_t startFilePosition = 0;
 	sptr_t endFilePosition = DoCommand(SCI_GETLENGTH);
-	if (m_strUserTextLexer != "python")
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
-		DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
-	}
-	else
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
-		DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
-	}
+	DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
+	DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
 }
 
 void CEditorCtrl::RemoveEachIndicatorHightLight(sptr_t startPosition, sptr_t endPosition)
 {
-	if (m_strUserTextLexer != "python")
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
-		DoCommand(SCI_INDICATORCLEARRANGE, startPosition, endPosition - startPosition);
-	}
-	else
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
-		DoCommand(SCI_INDICATORCLEARRANGE, startPosition, endPosition - startPosition);
-	}
+	DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
+	DoCommand(SCI_INDICATORCLEARRANGE, startPosition, endPosition - startPosition);
 }
 
 void CEditorCtrl::RemoveAllIndicators()
@@ -3675,16 +3657,8 @@ void CEditorCtrl::RemoveAllIndicators()
 	DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
 	DoCommand(SCI_SETINDICATORCURRENT, INDIC_SPELL_CHECKER);
 	DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
-	if (m_strUserTextLexer != "python")
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
-		DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
-	}
-	else
-	{
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
-		DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
-	}
+	DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
+	DoCommand(SCI_INDICATORCLEARRANGE, startFilePosition, endFilePosition - startFilePosition);
 }
 
 void CEditorCtrl::RemoveAnotations()
@@ -4477,42 +4451,21 @@ void CEditorCtrl::RenderHotSpotForUrlLinks()
 
 void CEditorCtrl::SetIndicatorForHighlightWord()
 {
-	if (m_strUserTextLexer != "python")
+	if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::FULL_BOX)
 	{
-		if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::FULL_BOX)
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_PYTHON, INDIC_FULLBOX);
-		}
-		else if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::BOX)
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_PYTHON, INDIC_BOX);
-		}
-		else
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
-		}
-		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_PYTHON, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_PYTHON, m_AppThemeColorSet._editorIndicatorColor);
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_PYTHON);
+		DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_FULLBOX);
+	}
+	else if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::BOX)
+	{
+		DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 	}
 	else
 	{
-		if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::FULL_BOX)
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_FULLBOX);
-		}
-		else if (AppSettingMgr.m_IndicatorStyle == EDITOR_INDICATOR_STYLE::BOX)
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
-		}
-		else
-		{
-			DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
-		}
-		DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_GENERAL, 100);
-		DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, m_AppThemeColorSet._editorIndicatorColor);
-		DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
+		DoCommand(SCI_INDICSETSTYLE, INDIC_HIGHLIGHT_GENERAL, INDIC_BOX);
 	}
+	DoCommand(SCI_INDICSETALPHA, INDIC_HIGHLIGHT_GENERAL, 100);
+	DoCommand(SCI_INDICSETFORE, INDIC_HIGHLIGHT_GENERAL, m_AppThemeColorSet._editorIndicatorColor);
+	DoCommand(SCI_SETINDICATORCURRENT, INDIC_HIGHLIGHT_GENERAL);
 	LRESULT indicatorForeground = DoCommand(SCI_STYLEGETFORE, STYLE_DEFAULT);
 	DoCommand(SCI_SETINDICATORVALUE, indicatorForeground);
 }
@@ -4638,32 +4591,16 @@ FoldingLineDataList CEditorCtrl::GetFoldingLineDataList(int levelMax)
 	return datalist;
 }
 
-void CEditorCtrl::LoadPythonHightlight()
+void CEditorCtrl::EnableUserLexer(const CString& strLexerName)
 {
-	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
-		EditorLexerLight::Init_python_Editor_NoDB(this) :
-		EditorLexerDark::Init_python_Editor_NoDB(this);
+	m_bUseUserLexer = TRUE;
+	m_strUserLexerName = strLexerName;
 }
 
-void CEditorCtrl::LoadCPPHightlight()
+void CEditorCtrl::DisableUserLexer()
 {
-	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
-		EditorLexerLight::Init_python_Editor_NoDB(this) :
-		EditorLexerDark::Init_python_Editor_NoDB(this);
-}
-
-void CEditorCtrl::LoadHTMLHightlight()
-{
-	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
-		EditorLexerLight::Init_python_Editor_NoDB(this) :
-		EditorLexerDark::Init_python_Editor_NoDB(this);
-}
-
-void CEditorCtrl::RemoveTextHightlight()
-{
-	AppSettingMgr.m_AppThemeColor == THEME_BACKGROUND_COLOR_LIGHT ?
-		EditorLexerLight::Init_text_Editor(this) :
-		EditorLexerDark::Init_text_Editor(this);
+	m_bUseUserLexer = FALSE;
+	m_strLexerName = LEXER_PLAIN_TEXT;
 }
 
 void CEditorCtrl::ShowHideFoldingMargin(int nPosMouseX)
@@ -4685,7 +4622,6 @@ void CEditorCtrl::ShowHideFoldingMargin(int nPosMouseX)
 	{
 		DoCommand(SCI_SETMARGINMASKN, SC_SETMARGINTYPE_FOLDING, ~SC_MASK_FOLDERS);
 	}
-
 }
 
 void CEditorCtrl::SetContextMenuPopupFlag(BOOL bFlag)

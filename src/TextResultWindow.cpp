@@ -94,7 +94,6 @@ void CTextResultWindow::ClearAll()
 
 void CTextResultWindow::UpdateUIVisual()
 {
-	m_ResultPaneDlg.UpdateDlgFont();
 	m_ResultPaneDlg.UpdateListCtrlVisual();
 }
 
@@ -106,7 +105,7 @@ IMPLEMENT_DYNAMIC(CSearchResultDlg, CDialogEx)
 CSearchResultDlg::CSearchResultDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(IDD_SEARCH_RESULT_DLG, pParent)
 {
-	UpdateDlgFont();
+	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 CSearchResultDlg::~CSearchResultDlg()
@@ -580,11 +579,6 @@ void CSearchResultDlg::InitFilterCtrl()
 	m_wndEditFilter.SetFont(&m_Font);
 	m_wndEditFilter.ModifyStyleEx(NULL, WS_EX_STATICEDGE);
 	m_wndEditFilter.SetWindowTextW(g_strSearchFilterMessage);
-}
-
-void CSearchResultDlg::UpdateDlgFont()
-{
-	IMPLEMENT_FONT_SETTING_DOCK_WINDOW
 }
 
 void CSearchResultDlg::UpdateListCtrlVisual()

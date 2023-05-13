@@ -12,7 +12,6 @@
 #ifndef SHARED_HANDLERS
 #include "VinaTextApp.h"
 #endif
-#include "afxdatarecovery.h"
 #include "MainFrm.h"
 #include "MediaDoc.h"
 #include "MediaView.h"
@@ -31,14 +30,9 @@ END_MESSAGE_MAP()
 
 // CMediaDoc construction/destruction
 
-CMediaDoc::CMediaDoc()
-{
-	// TODO: add one-time construction code here
-}
+CMediaDoc::CMediaDoc() {}
 
-CMediaDoc::~CMediaDoc()
-{
-}
+CMediaDoc::~CMediaDoc() {}
 
 BOOL CMediaDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
@@ -84,5 +78,3 @@ void CMediaDoc::Dump(CDumpContext& dc) const
 	CBaseDoc::Dump(dc);
 }
 #endif //_DEBUG
-
-// CMediaDoc commands

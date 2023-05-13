@@ -115,8 +115,6 @@ void VinaTextSettingDlg::OnBnClickedApply()
 {
 	// TODO: Add your control notification handler code here
 	UpdateSettings();
-	AfxMessageBox(_T("VinaText settings updated!"), MB_ICONINFORMATION);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [VinaText Setting] New settings updated..."));
 }
 
 void VinaTextSettingDlg::OnBnClickedOk()
@@ -124,8 +122,8 @@ void VinaTextSettingDlg::OnBnClickedOk()
 	// TODO: Add your control notification handler code here
 	CDialogEx::OnOK();
 	UpdateSettings();
-	AfxMessageBox(_T("VinaText settings updated!"), MB_ICONINFORMATION);
-	LOG_OUTPUT_MESSAGE_COLOR(_T("> [VinaText Setting] New settings updated..."));
+	AfxMessageBox(_T("New settings updated."), MB_ICONINFORMATION);
+	LOG_OUTPUT_MESSAGE_COLOR(_T("> [Prerefence] new settings updated..."));
 }
 
 void VinaTextSettingDlg::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)

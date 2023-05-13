@@ -34,8 +34,15 @@ Extension_Keep_Console: Yes/No, keep console window after execution or not (requ
 
 EXTENSION_BEGIN-------------------------------------------
 
-	Extension_Name: System Infomation
+	Extension_Name: Show System Infomation
 	Extension_CMD: msinfo32.exe
     Extension_Keep_Console: No
 
 EXTENSION_END---------------------------------------------
+EXTENSION_BEGIN-------------------------------------------
+
+	Extension_Name: Open Active File By Notepad
+	Extension_CMD: notepad.exe $(VAR_FILE_PATH)
+    Extension_Keep_Console: No
+
+EXTENSION_END---------------------------------------------

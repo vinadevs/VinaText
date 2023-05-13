@@ -49,7 +49,6 @@ public:
 	enum { IDD = IDD_SEARCH_RESULT_DLG };
 #endif
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	void UpdateDlgFont();
 	void AddBreakpointData(const BREAKPOINT_LINE_DATA& data);
 	void ClearBreakpointData();
 	void ClearSelectedBreakpoint();

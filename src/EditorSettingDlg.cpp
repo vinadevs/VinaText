@@ -12,6 +12,7 @@
 #include "EditorSettingDlg.h"
 #include "AppSettings.h"
 #include "ScrollHelper.h"
+#include "AppUtil.h"
 
 // EditorSettingDlg dialog
 
@@ -21,7 +22,7 @@ EditorSettingDlg::EditorSettingDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_DIALOG_SETTING_EDITOR, pParent) {
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);
-	m_pScrollHelper->SetDisplaySize(0, 800);
+	m_pScrollHelper->SetDisplaySize(0, 1500);
 }
 
 EditorSettingDlg::~EditorSettingDlg() {}
@@ -45,9 +46,6 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bAutoCompleteIgnoreNumbers = m_bAutoCompleteIgnoreNumbers;
 		AppSettingMgr.m_bDrawCaretLineFrame = m_bDrawCaretLineFrame;
 		AppSettingMgr.m_bDrawFoldingLineUnderLineStyle = m_bDrawFoldingLineUnderLineStyle;
-		AppSettingMgr.m_EditorFontSetting._bEnableBoldFont = m_bEditorEnableBoldFont;
-		AppSettingMgr.m_EditorFontSetting._bEnableItalicFont = m_bEditorEnableItalicFont;
-		AppSettingMgr.m_EditorFontSetting._bEnableUnderlineFont = m_bEditorEnableUnderlineFont;
 		AppSettingMgr.m_bEnableAutoComplete = m_bEnableAutoComplete;
 		AppSettingMgr.m_bEnableAutoSearchWhenTyping = m_bEnableAutoSearchWhenTyping;
 		AppSettingMgr.m_bEnableCaretBlink = m_bEnableCaretBlink;
@@ -64,15 +62,14 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_nLineSpaceBelow = m_nLineSpaceBelow;
 		AppSettingMgr.m_nIntervalAutoSaveFileMinutes = m_nIntervalAutoSaveFileMinutes;
 		AppSettingMgr.m_nLongLineMaximum = m_nLongLineMaximum;
-		AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize = m_nEditorLineNumberFontSize;
-		AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize = m_nEditorTextFontSize;
 		AppSettingMgr.m_nPageAlignmentWidth = m_nPageAlignmentWidth;
 		AppSettingMgr.m_bAutoSaveFileWhenCloseApp = m_bAutoSaveFileWhenCloseApp;
-		CButton* pButtonEditor = (CButton*)GetDlgItem(ID_EDITOR_FONT_NAME_BUTTON);
-		if (pButtonEditor)
-		{
-			pButtonEditor->GetWindowTextW(AppSettingMgr.m_EditorFontSetting._font);
-		}
+		AppSettingMgr.m_EditorFontSetting._lfFaceName = m_lfFaceName;
+		AppSettingMgr.m_EditorFontSetting._iPointSize = m_iPointSize;
+		AppSettingMgr.m_EditorFontSetting ._isBold = m_isBold;
+		AppSettingMgr.m_EditorFontSetting._isItalic = m_isItalic;
+		AppSettingMgr.m_EditorFontSetting._isUnderline = m_isUnderline;
+		AppSettingMgr.m_EditorFontSetting._color = m_color;
 	}
 	else
 	{
@@ -90,9 +87,6 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bAutoCompleteIgnoreNumbers = AppSettingMgr.m_bAutoCompleteIgnoreNumbers;
 		m_bDrawCaretLineFrame = AppSettingMgr.m_bDrawCaretLineFrame;
 		m_bDrawFoldingLineUnderLineStyle = AppSettingMgr.m_bDrawFoldingLineUnderLineStyle;
-		m_bEditorEnableBoldFont = AppSettingMgr.m_EditorFontSetting._bEnableBoldFont;
-		m_bEditorEnableItalicFont = AppSettingMgr.m_EditorFontSetting._bEnableItalicFont;
-		m_bEditorEnableUnderlineFont = AppSettingMgr.m_EditorFontSetting._bEnableUnderlineFont;
 		m_bEnableAutoComplete = AppSettingMgr.m_bEnableAutoComplete;
 		m_bEnableAutoSearchWhenTyping = AppSettingMgr.m_bEnableAutoSearchWhenTyping;
 		m_bEnableCaretBlink = AppSettingMgr.m_bEnableCaretBlink;
@@ -109,16 +103,15 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_nLineSpaceBelow = AppSettingMgr.m_nLineSpaceBelow;
 		m_nIntervalAutoSaveFileMinutes = AppSettingMgr.m_nIntervalAutoSaveFileMinutes;
 		m_nLongLineMaximum = AppSettingMgr.m_nLongLineMaximum;
-		m_nEditorLineNumberFontSize = AppSettingMgr.m_EditorFontSetting._nEditorLineNumberFontSize;
-		m_nEditorTextFontSize = AppSettingMgr.m_EditorFontSetting._nEditorTextFontSize;
 		m_nPageAlignmentWidth = AppSettingMgr.m_nPageAlignmentWidth;
 		m_bAutoSaveFileWhenCloseApp = AppSettingMgr.m_bAutoSaveFileWhenCloseApp;
+		m_lfFaceName = AppSettingMgr.m_EditorFontSetting._lfFaceName;
+		m_iPointSize = AppSettingMgr.m_EditorFontSetting._iPointSize;
+		m_isBold = AppSettingMgr.m_EditorFontSetting._isBold;
+		m_isItalic = AppSettingMgr.m_EditorFontSetting._isItalic;
+		m_isUnderline = AppSettingMgr.m_EditorFontSetting._isUnderline;
+		m_color = AppSettingMgr.m_EditorFontSetting._color;
 
-		CButton* pButtonEditor = (CButton*)GetDlgItem(ID_EDITOR_FONT_NAME_BUTTON);
-		if (pButtonEditor)
-		{
-			pButtonEditor->SetWindowTextW(AppSettingMgr.m_EditorFontSetting._font);
-		}
 	}
 }
 
@@ -129,7 +122,6 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_AUTO_COMPLETE_IGNORE_NUMBERS, m_bAutoCompleteIgnoreNumbers);
 	DDX_Check(pDX, ID_DRAW_CARET_LINE_FRAME, m_bDrawCaretLineFrame);
 	DDX_Check(pDX, ID_DRAW_FOLDING_LINE_UNDER_LINE_STYLE, m_bDrawFoldingLineUnderLineStyle);
-	DDX_Check(pDX, ID_EDITOR_ENABLE_BOLD_FONT, m_bEditorEnableBoldFont);
 	DDX_Check(pDX, ID_ENABLE_AUTO_COMPLETE, m_bEnableAutoComplete);
 	DDX_Check(pDX, ID_ENABLE_AUTO_SEARCH_WHEN_TYPING, m_bEnableAutoSearchWhenTyping);
 	DDX_Check(pDX, ID_ENABLE_CARET_BLINK, m_bEnableCaretBlink);
@@ -140,8 +132,6 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_ENABLE_URL_HIGHLIGHT, m_bEnableUrlHighlight);
 	DDX_Check(pDX, ID_RETURN_PREVIOUS_EDITOR_STATE, m_bReturnPreviousEditorState);
 	DDX_Check(pDX, ID_USE_FOLDER_MARGIN_CLASSIC, m_bUseFolderMarginClassic);
-	DDX_Check(pDX, ID_EDITOR_ENABLE_ITALIC_FONT, m_bEditorEnableItalicFont);
-	DDX_Check(pDX, ID_EDITOR_ENABLE_UNDERLINE_FONT, m_bEditorEnableUnderlineFont);
 	DDX_Check(pDX, ID_ASK_BEFORE_REPLACE_IN_FILES, m_bAskBeforeReplaceInFiles);
 	DDX_Check(pDX, ID_ENABLE_AUTO_DETECT_CODE_PAGE, m_bEnableAutoDetectCodePage);
 	DDX_Check(pDX, ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP, m_bAutoSaveFileWhenCloseApp);
@@ -152,8 +142,6 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_LINE_SPACE_BELOW_EDIT, m_nLineSpaceBelow);
 	DDX_Text(pDX, ID_LONG_LINE_MAXIMUM_EDIT, m_nLongLineMaximum);
 	DDX_Text(pDX, ID_INTERVAL_MINUTES_EDIT, m_nIntervalAutoSaveFileMinutes);
-	DDX_Text(pDX, ID_EDITOR_LINE_NUMBER_FONT_SIZE_EDIT, m_nEditorLineNumberFontSize);
-	DDX_Text(pDX, ID_EDITOR_TEXT_FONT_SIZE_EDIT, m_nEditorTextFontSize);
 	DDX_Control(pDX, ID_INDICATOR_COLOR_COMBO, m_IndicatorColorCombo);
 	DDX_Control(pDX, ID_INDICATOR_STYLE_COMBO, m_IndicatorStyleCombo);
 	DDX_Control(pDX, ID_FOLDER_MARGIN_STYLE_COMBO, m_FolderMarginStyleCombo);
@@ -884,13 +872,24 @@ void EditorSettingDlg::OnSize(UINT nType, int cx, int cy)
 
 void EditorSettingDlg::OnBnClickedEditorFontNameButton()
 {
-	CFontDialog dlg;
+	LOGFONTW lplfInitial;
+	_tcsncpy_s(lplfInitial.lfFaceName, LF_FACESIZE, m_lfFaceName, m_lfFaceName.GetLength());
+	CWindowDC dc(NULL); // screen DC
+	int nDPI = dc.GetDeviceCaps(LOGPIXELSY);
+	lplfInitial.lfHeight =  static_cast<LONG>(-(m_iPointSize * nDPI / 72.0 + 0.5));
+	lplfInitial.lfWeight = m_isBold;
+	lplfInitial.lfItalic = m_isItalic;
+	lplfInitial.lfUnderline = m_isUnderline;
+	CFontDialog dlg(&lplfInitial, CF_SCREENFONTS);
+	dlg.m_cf.iPointSize = m_iPointSize * 10;
+	dlg.m_cf.rgbColors = m_color;
 	if (dlg.DoModal() == IDOK)
 	{
-		CButton* pButton = (CButton*)GetDlgItem(ID_EDITOR_FONT_NAME_BUTTON);
-		if (pButton)
-		{
-			pButton->SetWindowTextW(dlg.GetFaceName());
-		}
+		m_lfFaceName = dlg.GetFaceName();
+		m_iPointSize = dlg.m_cf.iPointSize / 10;
+		m_isBold = dlg.IsBold();
+		m_isItalic = dlg.IsItalic();
+		m_isUnderline = dlg.IsUnderline();
+		m_color = dlg.GetColor();
 	}
 }
