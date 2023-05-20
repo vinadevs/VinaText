@@ -21,7 +21,7 @@ public:
 	virtual void OnCloseDocument();
 	BOOL IsPreviewMode() const;
 	void SetPreviewMode(BOOL bFlag);
-	BOOL PreSaveFile(LPCTSTR lpszPathName);
+	void PreprocessSaveFile(LPCTSTR lpszPathName);
 	void OnFileSendMailEx(); // enable email
 
 	// Implementation

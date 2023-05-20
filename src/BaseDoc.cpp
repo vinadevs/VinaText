@@ -67,17 +67,16 @@ void CBaseDoc::SetPreviewMode(BOOL bFlag)
 	m_bIsPreviewMode = bFlag;
 }
 
-BOOL CBaseDoc::PreSaveFile(LPCTSTR lpszPathName)
+void CBaseDoc::PreprocessSaveFile(LPCTSTR lpszPathName)
 {
 	CString strFilePath(lpszPathName);
-	if (strFilePath.IsEmpty()) return FALSE;
+	if (strFilePath.IsEmpty()) return;
 	int nPos = strFilePath.ReverseFind('\\');
-	if (nPos == -1) return FALSE;
+	if (nPos == -1) return;
 	CString strFileTitle = strFilePath.Mid(nPos + 1);
 	SetTitle(strFileTitle.GetBuffer());
 	strFileTitle.ReleaseBuffer();
 	AppUtils::GetVinaTextApp()->m_bIsSaveDocument = TRUE;
-	return TRUE;
 }
 
 void CBaseDoc::OnFileSendMailEx()

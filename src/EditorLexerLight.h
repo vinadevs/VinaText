@@ -48,5 +48,6 @@ namespace EditorLexerLight
 	void Init_resource_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_autoit_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_freebasic_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
+	void Init_vcxproject_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl);
 	void Init_text_Editor(CEditorCtrl* pEditorCtrl);
 }

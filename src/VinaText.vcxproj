@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>NotSet</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -212,7 +212,10 @@
   <ItemGroup>
     <ClInclude Include="AppAboutDlg.h" />
     <ClInclude Include="BreakpointWindow.h" />
+    <ClInclude Include="ComboboxMultiLine.h" />
+    <ClInclude Include="ComboBoxExtList.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
+    <ClInclude Include="OpenTabWindows.h" />
     <ClInclude Include="DiffEngine.h" />
     <ClInclude Include="EditorSettingDlg.h" />
     <ClInclude Include="ExplorerSettingDlg.h" />
@@ -292,7 +295,6 @@
     <ClInclude Include="CMemDC.h" />
     <ClInclude Include="CodePageMFC.h" />
     <ClInclude Include="CodePageMFCDlg.h" />
-    <ClInclude Include="ComboboxMultiLine.h" />
     <ClInclude Include="Compiler.h" />
     <ClInclude Include="Cryptography.h" />
     <ClInclude Include="CWMPEventDispatch.h" />
@@ -396,7 +398,10 @@
   <ItemGroup>
     <ClCompile Include="AppAboutDlg.cpp" />
     <ClCompile Include="BreakpointWindow.cpp" />
+    <ClCompile Include="ComboboxMultiLine.cpp" />
+    <ClCompile Include="ComboBoxExtList.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
+    <ClCompile Include="OpenTabWindows.cpp" />
     <ClCompile Include="DiffEngine.cpp" />
     <ClCompile Include="EditorSettingDlg.cpp" />
     <ClCompile Include="ExplorerSettingDlg.cpp" />
@@ -481,7 +486,6 @@
     <ClCompile Include="BracketOutLineDlg.cpp" />
     <ClCompile Include="CodePageMFC.cpp" />
     <ClCompile Include="CodePageMFCDlg.cpp" />
-    <ClCompile Include="ComboboxMultiLine.cpp" />
     <ClCompile Include="Compiler.cpp" />
     <ClCompile Include="Cryptography.cpp" />
     <ClCompile Include="CWMPEventDispatch.cpp" />

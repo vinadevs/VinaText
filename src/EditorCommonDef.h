@@ -94,7 +94,7 @@ namespace EditorLanguageDef
 		_T("rs"),                                     // SCLEX_RUST
 		_T("sql|spec|body|sps|spb|sf|sp"),            // SCLEX_SQL
 		_T("tcl"),                                    // SCLEX_TCL
-		_T("vb|vbs|frm|cls|ctl|pag|dsr|dob"),     // SCLEX_VB
+		_T("vb|vbs|frm|cls|ctl|pag|dsr|dob"),		  // SCLEX_VB
 		_T("v|sv|vh|svh"),							  //SCLEX_VERILOG
 		_T("vhd|vhdl"),								  //SCLEX_VHDL
 		_T("xml|gcl|xsl|svg|xul|xsd|dtd|xslt|axl"),   // SCLEX_XML
@@ -107,6 +107,7 @@ namespace EditorLanguageDef
 		_T("rc"),                                    // SCLEX_CPP
 		_T("au3"),                                   // SCLEX_CPP
 		_T("bas"),									 // SCLEX_VB
+		_T("vcxproj|filters|user|vcproj|csproj|csxproj|vbproj|dbproj"), // SCLEX_CPP
 		0,
 	};
 
@@ -155,6 +156,7 @@ namespace EditorLanguageDef
 		"Resource",
 		"autoit",
 		"freebasic",
+		"vcxproj",
 		"plaintext",
 		0,
 	};

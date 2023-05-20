@@ -167,7 +167,7 @@ void CBookMarkPathDlg::InitListBookmarkPath(BOOL bIsAddBookMark)
 		{
 			strStatusFile = _T("Not Existed");
 		}
-		int nItem;
+		int nItem = 0;
 		nItem = m_listPath.InsertItem(0, strPath);
 		if (PathUtils::IsDirectory(strPath))
 		{

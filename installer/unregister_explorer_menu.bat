@@ -1,0 +1,1 @@
+reg delete "HKEY_CLASSES_ROOT\*\shell\Open by &VinaText" /f

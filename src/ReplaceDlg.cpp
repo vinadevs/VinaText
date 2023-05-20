@@ -204,7 +204,10 @@ void CFindAndReplaceDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBo
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
+						::MessageBox(AfxGetMainWnd()->m_hWnd,
+							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
+							_T("VinaText"),
+							MB_ICONINFORMATION);
 					}
 				}
 			}
@@ -255,7 +258,10 @@ void CFindAndReplaceDlg::OnReplaceWith()
 			int nPos = pActiveEditor->ReplaceNext(strSearchWhat, strReplaceWith);
 			if (nPos == -1)
 			{
-				AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
+				::MessageBox(AfxGetMainWnd()->m_hWnd,
+					AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
+					_T("VinaText"),
+					MB_ICONINFORMATION);
 			}
 		}
 		else

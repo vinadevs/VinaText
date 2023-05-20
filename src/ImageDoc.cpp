@@ -58,7 +58,7 @@ BOOL CImageDoc::OnSaveDocument(LPCTSTR lpszPathName)
 	CImageView *pImageView = GetImageView();
 	if (pImageView != NULL)
 	{
-		PreSaveFile(lpszPathName);
+		PreprocessSaveFile(lpszPathName);
 		BOOL bRet = pImageView->SaveImage(lpszPathName);
 		if (bRet)
 		{

@@ -93,42 +93,54 @@ BEGIN_MESSAGE_MAP(VinaTextSettingDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_APPLY, &VinaTextSettingDlg::OnBnClickedApply)
 	ON_BN_CLICKED(IDOK, &VinaTextSettingDlg::OnBnClickedOk)
 	ON_NOTIFY(TCN_SELCHANGE, IDC_TAB_DIALOG_SETTINGS, &VinaTextSettingDlg::OnTcnSelchangeTab)
+	ON_BN_CLICKED(IDC_BUTTON_RESET_SETTINGS, &VinaTextSettingDlg::OnBnClickedButtonResetSettings)
 END_MESSAGE_MAP()
 
 // VinaTextSettingDlg message handlers
 
 
-void VinaTextSettingDlg::UpdateSettings()
+void VinaTextSettingDlg::UpdateSettings(BOOL bFromGUI)
 {
 	CWaitCursor wait;
-	// get latest settings
-	m_GeneralSettingDlg.UpdateGUISettings(TRUE);
-	m_EditorSettingDlg.UpdateGUISettings(TRUE);
-	m_ProgrammingSettingDlg.UpdateGUISettings(TRUE);
-	m_ExplorerSettingDlg.UpdateGUISettings(TRUE);
-	// reflect new changes
-	UpdateApplicationLook();
-	AppUtils::UpdateSettingsForVinatext();
+	m_GeneralSettingDlg.UpdateGUISettings(bFromGUI);
+	m_EditorSettingDlg.UpdateGUISettings(bFromGUI);
+	m_ProgrammingSettingDlg.UpdateGUISettings(bFromGUI);
+	m_ExplorerSettingDlg.UpdateGUISettings(bFromGUI);
+	if (bFromGUI) // reflect new changes
+	{
+		UpdateApplicationLook();
+		AppUtils::UpdateSettingsForVinatext();
+	}
 }
 
 void VinaTextSettingDlg::OnBnClickedApply()
 {
-	// TODO: Add your control notification handler code here
-	UpdateSettings();
+	UpdateSettings(TRUE);
 }
 
 void VinaTextSettingDlg::OnBnClickedOk()
 {
-	// TODO: Add your control notification handler code here
 	CDialogEx::OnOK();
-	UpdateSettings();
+	UpdateSettings(TRUE);
 	AfxMessageBox(_T("New settings updated."), MB_ICONINFORMATION);
 	LOG_OUTPUT_MESSAGE_COLOR(_T("> [Prerefence] new settings updated..."));
 }
 
+void VinaTextSettingDlg::OnBnClickedButtonResetSettings()
+{
+	if (IDYES == AfxMessageBox(_T("[Warning] This will reset all your settings to original default state, do you want reset it?"), MB_YESNO | MB_ICONWARNING))
+	{
+		AppSettingMgr.ResetAllSettings();
+		// Load original settings to dialog setting
+		UpdateSettings(FALSE);
+		// Update original to App GUI
+		UpdateSettings(TRUE);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Prerefence] all settings reset to original default state..."));
+	}
+}
+
 void VinaTextSettingDlg::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)
 {
-	// TODO: Add your control notification handler code here
 	if (m_pCurrentTabShow != NULL)
 	{
 		m_pCurrentTabShow->ShowWindow(SW_HIDE);

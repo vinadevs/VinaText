@@ -1693,20 +1693,20 @@ namespace EditorColorDark
 		"@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph ";
 	// color text
 	static SScintillaColors g_rgb_Syntax_json[] =
-	{ { SCE_JSON_DEFAULT,		editorTextColor },
+	{ { SCE_JSON_DEFAULT,		comment },
 	{ SCE_JSON_NUMBER,		number },
-	{ SCE_JSON_STRING,			string },
-	{ SCE_JSON_STRINGEOL,				string },
-	{ SCE_JSON_PROPERTYNAME,				keyword },
-	{ SCE_JSON_ESCAPESEQUENCE,			editorTextColor },
-	{ SCE_JSON_LINECOMMENT,				comment },
-	{ SCE_JSON_BLOCKCOMMENT,			comment },
+	{ SCE_JSON_STRING,			comment },
+	{ SCE_JSON_STRINGEOL,				keyword },
+	{ SCE_JSON_PROPERTYNAME,				builtin },
+	{ SCE_JSON_ESCAPESEQUENCE,			keyword },
+	{ SCE_JSON_LINECOMMENT,				editorTextColor },
+	{ SCE_JSON_BLOCKCOMMENT,			editorTextColor },
 	{ SCE_JSON_OPERATOR,		builtin },
-	{ SCE_JSON_URI,				string },
-	{ SCE_JSON_COMPACTIRI,				string },
-	{ SCE_JSON_KEYWORD,				keyword },
-	{ SCE_JSON_LDKEYWORD,    keyword },
-	{ SCE_JSON_ERROR,				keyword },
+	{ SCE_JSON_URI,				editorTextColor },
+	{ SCE_JSON_COMPACTIRI,				builtin },
+	{ SCE_JSON_KEYWORD,				builtin },
+	{ SCE_JSON_LDKEYWORD,    editorTextColor },
+	{ SCE_JSON_ERROR,				editorTextColor },
 	{ -1,						0 } };
 
 	//----------------------------------------------------------------------------
@@ -2159,6 +2159,51 @@ namespace EditorColorDark
 	{ SCE_C_HASHQUOTEDSTRING,				comment },
 	{ SCE_C_PREPROCESSORCOMMENT,				comment },
 	{ SCE_C_PREPROCESSORCOMMENTDOC,				yellow },
+	{ SCE_C_USERLITERAL,				comment },
+	{ SCE_C_TASKMARKER,				comment },
+	{ SCE_C_ESCAPESEQUENCE,				comment },
+	{ -1,						0 } };
+
+	//----------------------------------------------------------------------------
+	//---- vcxproject Language
+	//----------------------------------------------------------------------------
+	// language
+	static CString g_str_vcxproject_language = _T("vcxproj");
+	// extentions
+	static CString g_str_vcxproject_extention = _T("vcxproj");
+	// comment line
+	static CString g_str_vcxproject_commentline = _T("");
+	// comment start
+	static CString g_str_vcxproject_commentStart = _T("<!--");
+	// comment end
+	static CString g_str_vcxproject_commentEnd = _T("-->");
+	// text color 
+	static SScintillaColors g_rgb_Syntax_vcxproject[] =
+	{ { SCE_C_DEFAULT,		editorTextColor },
+	{ SCE_C_COMMENT,		comment },
+	{ SCE_C_COMMENTLINE,			comment },
+	{ SCE_C_COMMENTDOC,				comment },
+	{ SCE_C_NUMBER,				number },
+	{ SCE_C_WORD,			keyword },
+	{ SCE_C_STRING,				string },
+	{ SCE_C_CHARACTER,			definition },
+	{ SCE_C_UUID,				instance },
+	{ SCE_C_PREPROCESSOR,				comment_monokai },
+	{ SCE_C_OPERATOR,				builtin },
+	{ SCE_C_IDENTIFIER,				editorTextColor },
+	{ SCE_C_STRINGEOL,			editorTextColor },
+	{ SCE_C_VERBATIM,				yellow },
+	{ SCE_C_REGEX,				yellow },
+	{ SCE_C_COMMENTLINEDOC,				comment },
+	{ SCE_C_WORD2,				instance },
+	{ SCE_C_COMMENTDOCKEYWORD,				comment },
+	{ SCE_C_COMMENTDOCKEYWORDERROR,				comment },
+	{ SCE_C_GLOBALCLASS,				magenta },
+	{ SCE_C_STRINGRAW,				comment },
+	{ SCE_C_TRIPLEVERBATIM,				comment },
+	{ SCE_C_HASHQUOTEDSTRING,				comment },
+	{ SCE_C_PREPROCESSORCOMMENT,				comment },
+	{ SCE_C_PREPROCESSORCOMMENTDOC,				comment },
 	{ SCE_C_USERLITERAL,				comment },
 	{ SCE_C_TASKMARKER,				comment },
 	{ SCE_C_ESCAPESEQUENCE,				comment },

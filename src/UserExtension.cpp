@@ -129,10 +129,11 @@ void CUserExtension::InvokeCommand(UINT nIDExtension)
 						CEditorCtrl* pEditor = pEditorDoc->GetEditorView()->GetEditorCtrl();
 						if (pEditor) // only variables for editor document
 						{
+							CString strAllText; pEditor->GetText(strAllText);
 							strCommand.Replace(_T("$(VAR_EDIT_LINE_NUMBER)"), ESCAPSE_STRING_WITH_QUOTE(AppUtils::IntToCString(pEditor->GetCurrentLine())));
 							strCommand.Replace(_T("$(VAR_EDIT_POSITION)"), ESCAPSE_STRING_WITH_QUOTE(AppUtils::IntToCString(pEditor->GetCurrentPosition())));
 							strCommand.Replace(_T("$(VAR_EDIT_SELECTED_TEXT)"), ESCAPSE_STRING_WITH_QUOTE(pEditor->GetSelectedText()));
-							strCommand.Replace(_T("$(ALL_TEXT)"), ESCAPSE_STRING_WITH_QUOTE(pEditor->GetAllText()));
+							strCommand.Replace(_T("$(ALL_TEXT)"), ESCAPSE_STRING_WITH_QUOTE(strAllText));
 						}
 					}		
 					strCommand.Replace(_T("$(VAR_FILE_PATH)"), ESCAPSE_STRING_WITH_QUOTE(pDoc->GetPathName()));

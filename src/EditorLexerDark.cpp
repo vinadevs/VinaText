@@ -93,6 +93,8 @@ void EditorLexerDark::LoadLexer(CLanguageDatabase* pDatabase,
 		Init_autoit_Editor(pDatabase, pEditorCtrl);
 	else if (czLexer == "freebasic")
 		Init_freebasic_Editor(pDatabase, pEditorCtrl);
+	else if (czLexer == "vcxproj")
+		Init_vcxproject_Editor(pDatabase, pEditorCtrl);
 	else
 		Init_text_Editor(pEditorCtrl);
 }
@@ -780,7 +782,8 @@ void EditorLexerDark::Init_json_Editor(CLanguageDatabase* pDatabase, CEditorCtrl
 	{
 		auto iItem = EditorColorDark::g_rgb_Syntax_json[i].iItem;
 		auto rgb = EditorColorDark::g_rgb_Syntax_json[i].rgb;
-		if (iItem == SCE_JSON_DEFAULT || iItem == SCE_JSON_ESCAPESEQUENCE)
+		if (iItem == SCE_JSON_DEFAULT || iItem == SCE_JSON_ESCAPESEQUENCE || iItem == SCE_JSON_COMPACTIRI
+			|| iItem == SCE_JSON_PROPERTYNAME || iItem == SCE_JSON_OPERATOR || iItem == SCE_JSON_KEYWORD)
 		{
 			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
 			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
@@ -955,6 +958,20 @@ void EditorLexerDark::Init_freebasic_Editor(CLanguageDatabase* pDatabase, CEdito
 	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_freebasic_commentStart);
 	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_freebasic_commentEnd);
 	pEditorCtrl->LoadExternalSettings(pDatabase);
+}
+
+void EditorLexerDark::Init_vcxproject_Editor(CLanguageDatabase* pDatabase, CEditorCtrl* pEditorCtrl)
+{
+	pEditorCtrl->SetLexer("cpp");
+	for (int i = 0; EditorColorDark::g_rgb_Syntax_vcxproject[i].iItem != -1; i++)
+	{
+		pEditorCtrl->SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_vcxproject[i].iItem, EditorColorDark::g_rgb_Syntax_vcxproject[i].rgb);
+	}
+	pDatabase->SetLanguageName(EditorColorDark::g_str_vcxproject_language);
+	pDatabase->SetLanguageExtension(EditorColorDark::g_str_vcxproject_extention);
+	pDatabase->SetLanguageCommentSymbol(EditorColorDark::g_str_vcxproject_commentline);
+	pDatabase->SetLanguageCommentStart(EditorColorDark::g_str_vcxproject_commentStart);
+	pDatabase->SetLanguageCommentEnd(EditorColorDark::g_str_vcxproject_commentEnd);
 }
 
 void EditorLexerDark::Init_text_Editor(CEditorCtrl* pEditorCtrl)

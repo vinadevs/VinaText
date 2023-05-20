@@ -19,7 +19,8 @@
 IMPLEMENT_DYNAMIC(EditorSettingDlg, CDialogEx)
 
 EditorSettingDlg::EditorSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_EDITOR, pParent) {
+	: CDialogEx(IDD_DIALOG_SETTING_EDITOR, pParent)
+{
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);
 	m_pScrollHelper->SetDisplaySize(0, 1500);
@@ -41,6 +42,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		FromIndicatorColorCombobox();
 		FromIndicatorStyleCombobox();
 		FromRenderIndicatorActionCombobox();
+		FromDefaultEOLNewFileCombobox();
 
 		AppSettingMgr.m_bAutoCompleteIgnoreCase = m_bAutoCompleteIgnoreCase;
 		AppSettingMgr.m_bAutoCompleteIgnoreNumbers = m_bAutoCompleteIgnoreNumbers;
@@ -64,6 +66,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_nLongLineMaximum = m_nLongLineMaximum;
 		AppSettingMgr.m_nPageAlignmentWidth = m_nPageAlignmentWidth;
 		AppSettingMgr.m_bAutoSaveFileWhenCloseApp = m_bAutoSaveFileWhenCloseApp;
+		AppSettingMgr.m_bAutoAddNewLineAtTheEOF = m_bAutoAddNewLineAtTheEOF;
 		AppSettingMgr.m_EditorFontSetting._lfFaceName = m_lfFaceName;
 		AppSettingMgr.m_EditorFontSetting._iPointSize = m_iPointSize;
 		AppSettingMgr.m_EditorFontSetting ._isBold = m_isBold;
@@ -82,6 +85,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		InitIndicatorColorCombobox();
 		InitIndicatorStyleCombobox();
 		InitRenderIndicatorActionCombobox();
+		InitDefaultEOLNewFileCombobox();
 
 		m_bAutoCompleteIgnoreCase = AppSettingMgr.m_bAutoCompleteIgnoreCase;
 		m_bAutoCompleteIgnoreNumbers = AppSettingMgr.m_bAutoCompleteIgnoreNumbers;
@@ -105,13 +109,14 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_nLongLineMaximum = AppSettingMgr.m_nLongLineMaximum;
 		m_nPageAlignmentWidth = AppSettingMgr.m_nPageAlignmentWidth;
 		m_bAutoSaveFileWhenCloseApp = AppSettingMgr.m_bAutoSaveFileWhenCloseApp;
+		m_bAutoAddNewLineAtTheEOF = AppSettingMgr.m_bAutoAddNewLineAtTheEOF;
 		m_lfFaceName = AppSettingMgr.m_EditorFontSetting._lfFaceName;
 		m_iPointSize = AppSettingMgr.m_EditorFontSetting._iPointSize;
 		m_isBold = AppSettingMgr.m_EditorFontSetting._isBold;
 		m_isItalic = AppSettingMgr.m_EditorFontSetting._isItalic;
 		m_isUnderline = AppSettingMgr.m_EditorFontSetting._isUnderline;
 		m_color = AppSettingMgr.m_EditorFontSetting._color;
-
+		UpdateData(FALSE);
 	}
 }
 
@@ -148,6 +153,8 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, ID_PAGE_ALIGNMENT_WIDTH_EDIT, m_nPageAlignmentWidth);
 	DDX_Control(pDX, ID_RENDER_INDICATOR_ACTION_COMBO, m_RenderIndicatorActionCombo);
 	DDX_Control(pDX, ID_CARET_BLINK_COLOR_COMBO, m_CaretBlinkColorCombo);
+	DDX_Control(pDX, ID_DEFAULT_EOL_NEW_FILE_COMBO, m_DefaultEOLNewFileCombo);
+	DDX_Check(pDX, ID_AUTO_ADD_NEW_LINE_AT_EOF, m_bAutoAddNewLineAtTheEOF);
 }
 
 BOOL EditorSettingDlg::OnInitDialog()
@@ -155,8 +162,6 @@ BOOL EditorSettingDlg::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	UpdateGUISettings(FALSE);
-
-	UpdateData(FALSE);
 
 	return TRUE;
 }
@@ -799,6 +804,26 @@ void EditorSettingDlg::FromIndicatorStyleCombobox()
 	}
 }
 
+void EditorSettingDlg::FromDefaultEOLNewFileCombobox()
+{
+	int iSel = m_DefaultEOLNewFileCombo.GetCurSel();
+	switch (iSel)
+	{
+	case 0:
+		AppSettingMgr.m_DefaultFileEOL = SC_EOL_CRLF;
+		break;
+	case 1:
+		AppSettingMgr.m_DefaultFileEOL = SC_EOL_CR;
+		break;
+	case 2:
+		AppSettingMgr.m_DefaultFileEOL = SC_EOL_LF;
+		break;
+	default:
+		AppSettingMgr.m_DefaultFileEOL = SC_EOL_CRLF;
+		break;
+	}
+}
+
 
 void EditorSettingDlg::InitRenderIndicatorActionCombobox()
 {
@@ -815,6 +840,29 @@ void EditorSettingDlg::InitRenderIndicatorActionCombobox()
 		break;
 	default:
 		m_RenderIndicatorActionCombo.SetCurSel(0);
+		break;
+	}
+}
+
+void EditorSettingDlg::InitDefaultEOLNewFileCombobox()
+{
+	m_DefaultEOLNewFileCombo.ResetContent();
+	m_DefaultEOLNewFileCombo.AddString(_T("Windows (CRLF)"));
+	m_DefaultEOLNewFileCombo.AddString(_T("MacOS (CR)"));
+	m_DefaultEOLNewFileCombo.AddString(_T("Linux (LF)"));
+	switch (AppSettingMgr.m_DefaultFileEOL)
+	{
+	case SC_EOL_CRLF:
+		m_DefaultEOLNewFileCombo.SetCurSel(0);
+		break;
+	case SC_EOL_CR:
+		m_DefaultEOLNewFileCombo.SetCurSel(1);
+		break;
+	case SC_EOL_LF:
+		m_DefaultEOLNewFileCombo.SetCurSel(2);
+		break;
+	default:
+		m_DefaultEOLNewFileCombo.SetCurSel(0);
 		break;
 	}
 }

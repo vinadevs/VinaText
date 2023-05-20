@@ -71,6 +71,7 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bCheckFileSizeBeforeOpen = AppSettingMgr.m_bCheckFileSizeBeforeOpen;
 		m_nRecentFileLimit = AppSettingMgr.m_nRecentFileLimit;
 		m_strBinaryFileExtensionList = AppSettingMgr.m_strBinaryFileExtensionList;
+		UpdateData(FALSE);
 	}
 }
 
@@ -101,8 +102,6 @@ BOOL GeneralSettingDlg::OnInitDialog()
 	m_EditInitialFilePickerPath.EnableFolderBrowseButton();
 
 	UpdateGUISettings(FALSE);
-
-	UpdateData(FALSE);
 
 	return TRUE;
 }

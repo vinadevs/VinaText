@@ -360,6 +360,8 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_UPDATE_COMMAND_UI(ID_RUN_SELECTED_TEXT, OnUpdateTerminalRunSelectedText)
 	ON_COMMAND(ID_RUN_ACTIVE_FILE, OnTerminalRunActiveFile)
 	ON_UPDATE_COMMAND_UI(ID_RUN_ACTIVE_FILE, OnUpdateTerminalRunActiveFile)
+	ON_COMMAND(ID_RUN_ACTIVE_FILE_AS_ADMIN, OnTerminalRunActiveFileAsAdmin)
+	ON_UPDATE_COMMAND_UI(ID_RUN_ACTIVE_FILE_AS_ADMIN, OnUpdateTerminalRunActiveFileAsAdmin)
 
 	// from compiler...
 	ON_MESSAGE(UWM_GUI_WORKER_HANDLER_NOTIFY_PROGRESS, OnCompilerNotifyProgress)
@@ -466,11 +468,6 @@ END_MESSAGE_MAP()
 
 // CEditorView construction/destruction
 
-CEditorView::CEditorView()
-{
-	// TODO: add construction code here
-}
-
 CEditorView::~CEditorView()
 {
 	CEditorDoc *pDoc = GetEditorDocument();
@@ -482,9 +479,6 @@ CEditorView::~CEditorView()
 
 BOOL CEditorView::PreCreateWindow(CREATESTRUCT& cs)
 {
-	// TODO: Modify the Window class or styles here by modifying
-	//  the CREATESTRUCT cs
-
 	return CViewBase::PreCreateWindow(cs);
 }
 
@@ -943,20 +937,21 @@ void CEditorView::OnInitialUpdate()
 		}
 	}
 
-	// load file content to editor
-	m_EditorCtrl.LoadFile(strEditorPathName, m_encodingUser);
-
-	// set the modification notifications
-	m_EditorCtrl.SetModEventMask(SCI_MODEVENTMASK_FULL);
-
 	if (strEditorPathName.IsEmpty())
 	{
 		pDoc->SetTitle(AppSettingMgr.CreateDocumentUndefTitle());
+		// set default new file eol
+		m_EditorCtrl.DoCommand(SCI_SETEOLMODE, AppSettingMgr.m_DefaultFileEOL);
 	}
 	else
 	{
+		// load file content to editor
+		m_EditorCtrl.LoadFile(strEditorPathName, m_encodingUser);
 		pDoc->SetModifiedFlag(FALSE); // disable save file when file path exist
 	}
+
+	// set the modification notifications
+	m_EditorCtrl.SetModEventMask(SCI_MODEVENTMASK_FULL);
 
 	// init editor style
 	CLanguageDatabase* pDatabase = pDoc->GetDocLanguageDatabase();
@@ -1187,6 +1182,11 @@ CString CEditorView::DetectCurrentDocLanguage()
 	{
 		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CMAKE;
 		m_strCurrentDocLanguageName = _T("CMake Script");
+	}
+	else if (m_czLexerFromFile == "vcxproj")
+	{
+		m_CurrentDocLanguage = VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_VCXPROJECT;
+		m_strCurrentDocLanguageName = _T("Visual Studio Project");
 	}
 	else
 	{
@@ -5473,37 +5473,31 @@ void CEditorView::OnOptionsPascalCaseToSplitCase()
 void CEditorView::OnOptionsEOLToCRLF()
 {
 	m_EditorCtrl.ConvertEOL(SC_EOL_CRLF);
-	m_EditorCtrl.SetEOLFile(SC_EOL_CRLF);
-	m_EditorCtrl.EnableShowEOL(TRUE);
 }
 
 void CEditorView::OnOptionsEOLToLF()
 {
 	m_EditorCtrl.ConvertEOL(SC_EOL_LF);
-	m_EditorCtrl.SetEOLFile(SC_EOL_LF);
-	m_EditorCtrl.EnableShowEOL(TRUE);
 }
 
 void CEditorView::OnOptionsEOLToCR()
 {
 	m_EditorCtrl.ConvertEOL(SC_EOL_CR);
-	m_EditorCtrl.SetEOLFile(SC_EOL_CR);
-	m_EditorCtrl.EnableShowEOL(TRUE);
 }
 
 void CEditorView::OnUpdateOptionsEOLToCRLF(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_CRLF);
+	pCmdUI->SetCheck(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) == SC_EOL_CRLF);
 }
 
 void CEditorView::OnUpdateOptionsEOLToLF(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_LF);
+	pCmdUI->SetCheck(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) == SC_EOL_LF);
 }
 
 void CEditorView::OnUpdateOptionsEOLToCR(CCmdUI* pCmdUI)
 {
-	pCmdUI->Enable(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) != SC_EOL_CR);
+	pCmdUI->SetCheck(m_EditorCtrl.DoCommand(SCI_GETEOLMODE) == SC_EOL_CR);
 }
 
 void CEditorView::OnOptionsSnakeCaseToSplitCase()
@@ -6036,6 +6030,8 @@ CEditorDoc* CEditorView::GetEditorDocument() const // non-debug version is inlin
 	return (CEditorDoc*)m_pDocument;
 }
 #endif //_DEBUG
+
+CEditorView::CEditorView() {}
 
 CLanguageDatabase * CEditorView::GetLanguageDatabase() const
 {
@@ -9711,17 +9707,6 @@ void CEditorView::OpenFileLanguageConfig(const CString& czLexerName)
 	}
 }
 
-void CEditorView::OnTerminalRunSelectedText()
-{
-	CString strSelectedText = m_EditorCtrl.GetSelectedText();
-	strSelectedText.Replace(_T("\r"), _T(""));
-	strSelectedText.Replace(_T("\n"), _T(""));
-	if (!strSelectedText.IsEmpty())
-	{
-		OSUtils::CreateWin32Process(strSelectedText);
-	}
-}
-
 void CEditorView::OnTerminalRunActiveFile()
 {
 	if (PathFileExists(m_pDocument->GetPathName()))
@@ -9734,6 +9719,31 @@ void CEditorView::OnTerminalRunActiveFile()
 void CEditorView::OnUpdateTerminalRunActiveFile(CCmdUI * pCmdUI)
 {
 	pCmdUI->Enable(PathFileExists(m_pDocument->GetPathName()));
+}
+
+void CEditorView::OnTerminalRunActiveFileAsAdmin()
+{
+	if (PathFileExists(m_pDocument->GetPathName()))
+	{
+		CString strFullCmd = _T("\"") + m_pDocument->GetPathName() + _T("\"");
+		OSUtils::CreateProcessAsynchronous(_T("runas"), strFullCmd, NULL, NULL);
+	}
+}
+
+void CEditorView::OnUpdateTerminalRunActiveFileAsAdmin(CCmdUI* pCmdUI)
+{
+	pCmdUI->Enable(PathFileExists(m_pDocument->GetPathName()));
+}
+
+void CEditorView::OnTerminalRunSelectedText()
+{
+	CString strSelectedText = m_EditorCtrl.GetSelectedText();
+	strSelectedText.Replace(_T("\r"), _T(""));
+	strSelectedText.Replace(_T("\n"), _T(""));
+	if (!strSelectedText.IsEmpty())
+	{
+		OSUtils::CreateWin32Process(strSelectedText);
+	}
 }
 
 void CEditorView::OnUpdateTerminalRunSelectedText(CCmdUI * pCmdUI)

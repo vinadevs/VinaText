@@ -42,19 +42,21 @@ protected:
 	void InitLanguageSpellCheckCombo();
 	void InitLanguageTranslateFromCombo();
 	void InitLanguageTranslateToCombo();
-	void FromLanguageSpellCheckCombo();
-	void FromLanguageTranslateFromCombo();
-	void FromLanguageTranslateToCombo();
 	void InitCaretBlinkColorCombobox();
 	void InitFolderMarginStyleCombobox();
 	void InitIndicatorColorCombobox();
 	void InitIndicatorStyleCombobox();
 	void InitRenderIndicatorActionCombobox();
+	void InitDefaultEOLNewFileCombobox();
+	void FromLanguageSpellCheckCombo();
+	void FromLanguageTranslateFromCombo();
+	void FromLanguageTranslateToCombo();
 	void FromRenderIndicatorActionCombobox();
 	void FromCaretBlinkColorCombobox();
 	void FromFolderMarginStyleCombobox();
 	void FromIndicatorColorCombobox();
 	void FromIndicatorStyleCombobox();
+	void FromDefaultEOLNewFileCombobox();
 
 	CComboBox m_LanguageSpellCheckCombo;
 	CComboBox m_LanguageTranslateFromCombo;
@@ -64,6 +66,7 @@ protected:
 	CComboBox m_FolderMarginStyleCombo;
 	CComboBox m_RenderIndicatorActionCombo;
 	CComboBox m_CaretBlinkColorCombo;
+	CComboBox m_DefaultEOLNewFileCombo;
 
 	BOOL m_bAutoCompleteIgnoreCase{ FALSE };
 	BOOL m_bAutoCompleteIgnoreNumbers{ FALSE };
@@ -82,6 +85,7 @@ protected:
 	BOOL m_bAskBeforeReplaceInFiles{ FALSE };
 	BOOL m_bEnableAutoDetectCodePage{ FALSE };
 	BOOL m_bAutoSaveFileWhenCloseApp{ FALSE };
+	BOOL m_bAutoAddNewLineAtTheEOF{ FALSE };
 
 	int m_nLineSpaceAbove{ 0 };
 	int m_nLineSpaceBelow{ 0 };
@@ -95,5 +99,6 @@ protected:
 	BOOL m_isItalic = FALSE;
 	BOOL m_isUnderline = FALSE;
 	COLORREF m_color = RGB(0, 0, 0);
+
 	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

@@ -59,9 +59,10 @@ protected:
 	int m_nExplorerExpandLimitLevel{ 0 };
 	int m_nFilePreviewSizeLimit{ 0 };
 
-	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
-
 	CString m_strAntiVirusArgument;
 	CString m_strAntiVirusProgram;
+
 	ExplorerSettingBrowse m_EditAntiVirusProgram;
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

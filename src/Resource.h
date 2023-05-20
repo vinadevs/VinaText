@@ -8,7 +8,7 @@
 #define IDR_POPUP_EDIT                  119
 #define IDR_MAINFRAME                   128
 #define IDR_MAINFRAME_24                129
-#define ID_WINDOW_MANAGER               131
+#define ID_CURRENT_WINDOWS              130
 #define IDD_POS                         132
 #define IDD_GOTOLINE                    133
 #define IDD_FIND                        134
@@ -120,7 +120,6 @@
 #define IDD_EDIT_REMOVE_FROM_X_TO_Y     365
 #define IDD_DIALOG_REMOVE_AFTER_BEFORE_WORD 367
 #define IDD_EDIT_INSERT_AT_POSITION_X   368
-#define IDD_EDIT_INSERT_AT_POSITION_X1  369
 #define IDD_EDIT_INSERT_AFTER_WORD_IN_LINE 370
 #define IDR_BRACKETS_OUTLINE            371
 #define IDD_DIALOG_PROJECT_TEMPLATE     373
@@ -196,7 +195,7 @@
 #define IDC_PDFCTRL                     533
 #define IDD_DIALOG_SETTING_EDITOR       534
 #define IDD_DIALOG_PATH_COMPARATOR      535
-#define IDR_WEB_DOC				        536
+#define IDR_WEB_DOC                     536
 #define ID_FILE_RECENT_FIRST            537
 #define ID_FILE_RECENT_FILE1            538
 #define ID_FILE_RECENT_FILE2            539
@@ -215,6 +214,7 @@
 #define ID_FILE_RECENT_FILE15           552
 #define ID_FILE_RECENT_FILE16           553
 #define ID_FILE_RECENT_LAST             554
+#define IDD_DIALOG_OPEN_DOCUMENTS       555
 #define IDC_PRODUCT                     1000
 #define IDC_VERSION                     1001
 #define IDC_COPYRIGHT                   1002
@@ -343,6 +343,7 @@
 #define IDR_BREAKPOINT_WINDOW           1139
 #define ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP 1140
 #define IDR_SETTING_TAB                 1141
+#define ID_AUTO_ADD_NEW_LINE_AT_EOF     1142
 #define IDR_BREAKPOINT_WINDOW_CONTEXT_MENU 1143
 #define IDC_TAB_DIALOG_SETTINGS         1144
 #define ID_ADD_HOST_PATH_TO_RECENT_LIST 1145
@@ -423,6 +424,13 @@
 #define IDC_RIGHT_SIDE_PATH_COMPARATOR  1236
 #define IDC_CHECK_DIFF_MATCH_CASE       1237
 #define IDC_CHECK_DIFF_MATCH_INDENTATION 1238
+#define IDC_BUTTON_ACTIVE_TAB           1239
+#define IDC_BUTTON_CLOSE_TAB            1240
+#define IDC_BUTTON_SAVE_TAB             1241
+#define IDC_LIST_OPEN_TAB               1242
+#define IDC_BUTTON_COPY_PATH_TAB        1243
+#define IDC_BUTTON_RESET_SETTINGS       1244
+#define ID_DEFAULT_EOL_NEW_FILE_COMBO   1245
 #define ID_EXPLORER_PRINT_FILE_NOW      32770
 #define ID_EXPLORER_PRINT_SETUP_DLG     32771
 #define ID_EXPLORER_PRINT_PAGE_DLG      32772
@@ -1036,16 +1044,17 @@
 #define ID_LANGUAGE_FILE_CONFIG_FREEBASIC 36463
 #define ID_EXPLORER_TB_GOTO_PATH        36464
 #define ID_EXPLORER_TB_GET_PATH_STRING  36465
-#define ID_DOCUMENT_TEXT_LEXER_BASH_BATCH  36466
-#define ID_DOCUMENT_TEXT_LEXER_VB_PASCAL   36467
+#define ID_DOCUMENT_TEXT_LEXER_BASH_BATCH 36466
+#define ID_DOCUMENT_TEXT_LEXER_VB_PASCAL 36467
+#define ID_RUN_ACTIVE_FILE_AS_ADMIN     36468
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        555
-#define _APS_NEXT_COMMAND_VALUE         36468
-#define _APS_NEXT_CONTROL_VALUE         1239
+#define _APS_NEXT_RESOURCE_VALUE        557
+#define _APS_NEXT_COMMAND_VALUE         36469
+#define _APS_NEXT_CONTROL_VALUE         1246
 #define _APS_NEXT_SYMED_VALUE           321
 #endif
 #endif

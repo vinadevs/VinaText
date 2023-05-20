@@ -27,7 +27,6 @@ public:
 	void ResetUndoSavePoint();
 	void SetTextToEditor(const CString& strText);
 	void GetText(CString &strText);
-	CString GetAllText();
 	void GetTextRange(Sci_TextRange *txtRange);
 	void GetTextRange(CString & strText, size_t start, size_t end);
 	void GetTextRange(char* strText, int lStart, int lEnd);
@@ -105,10 +104,10 @@ public:
 	// brace and tag hightlights
 	void DoMatchSelectedText(); // for matched selection text from mouse
 	void DoBraceMatchHighlight(); // for {}
-	SearchResult FindTextResult(const char * text, sptr_t start, sptr_t end, int flags);
-	SearchResult FindOpenTag(const std::string & tagName, sptr_t start, sptr_t end);
-	sptr_t FindCloseAngle(sptr_t startPosition, sptr_t endPosition);
-	SearchResult FindCloseTag(const std::string & tagName, sptr_t start, sptr_t end);
+	SearchResult FindTextXmlHTMLResult(const char * text, sptr_t start, sptr_t end, int flags);
+	SearchResult FindOpenXmlHTMLTag(const std::string & tagName, sptr_t start, sptr_t end);
+	sptr_t FindCloseXmlHTMLAngle(sptr_t startPosition, sptr_t endPosition);
+	SearchResult FindCloseXmlHTMLTag(const std::string & tagName, sptr_t start, sptr_t end);
 	std::vector<std::pair<sptr_t, sptr_t>> GetAttributesPos(sptr_t start, sptr_t end);
 	bool GetXmlHtmlTagsPosition(XmlHtmlTagsPosition & xmlTags);
 	void DoXMLHTMLTagsHightlight(); // for </ >
@@ -278,6 +277,7 @@ public:
 	std::string GetWordChars();
 	std::string GetWhitespaceChars();
 	TabSpace GetTabSpace();
+	BOOL CanAddNewLineAtEOF();
 
 	// text database transaction, actually trantraction will be processed in external dll, below functions are just pre-processing...
 	void Undo();

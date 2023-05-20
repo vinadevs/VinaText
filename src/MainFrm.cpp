@@ -37,6 +37,7 @@
 #include "LocalizationHandler.h"
 #include "PathComparatorDlg.h"
 #include "RecentCloseFileManager.h"
+#include "OpenTabWindows.h"
 
 // CMainFrame
 
@@ -98,7 +99,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_PANE_FILE_RESULT_WINDOW, &CMainFrame::OnUpdateViewFileResultPane)
 	ON_COMMAND(ID_PANE_BREAKPOINT_WINDOW, &CMainFrame::OnViewBreakpointPane)
 	ON_UPDATE_COMMAND_UI(ID_PANE_BREAKPOINT_WINDOW, &CMainFrame::OnUpdateViewBreakpointPane)
-	ON_COMMAND(ID_WINDOW_MANAGER, &CMainFrame::OnWindowManager)
+	ON_COMMAND(ID_CURRENT_WINDOWS, &CMainFrame::OnWindowManager)
 	ON_COMMAND(ID_TOOLS_ALLOWCREATEFOLDER, &CMainFrame::OnToolsAllowCreateFolder)
 	ON_UPDATE_COMMAND_UI(ID_TOOLS_ALLOWCREATEFOLDER, &CMainFrame::OnUpdateToolsAllowCreateFolder)
 	ON_COMMAND(ID_TOOLS_ALLOWDELETE, &CMainFrame::OnToolsAllowDelete)
@@ -363,7 +364,15 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
 {
 	CMDIFrameWndEx::OnSize(nType, cx, cy);
 	if (m_wndStatusBar.GetSafeHwnd())
+	{
 		OnStatusBarSize(cx);
+	}
+	switch (nType)
+	{
+	case SIZE_MINIMIZED:
+		if (m_pQuickSearchDialog) m_pQuickSearchDialog->OnCancel();
+		break;
+	}
 }
 
 void CMainFrame::OnStatusBarSize(int cx)
@@ -535,9 +544,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL, NULL, NULL);
 
-	// Enable enhanced windows management dialog
-	EnableWindowsDialog(ID_WINDOW_MANAGER, ID_WINDOW_MANAGER, TRUE);
-
 	// Enable quick (Alt+drag) toolbar customization
 	CMFCToolBar::EnableQuickCustomization();
 
@@ -677,7 +683,8 @@ void CMainFrame::Dump(CDumpContext& dc) const
 
 void CMainFrame::OnWindowManager()
 {
-	CMDIFrameWndEx::ShowWindowsDialog();
+	COpenTabWindows dlg;
+	dlg.DoModal();
 }
 
 void CMainFrame::OnFullScreeenMode()
@@ -1903,7 +1910,7 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 			{
 				if ((GetKeyState(VK_CONTROL) & 0x8000) && (GetKeyState(VK_SHIFT) & 0x8000))
 				{
-					ShowWindowsDialog();
+					OnWindowManager();
 					return TRUE;
 				}
 				else if ((GetKeyState(VK_CONTROL) & 0x8000))
@@ -4228,8 +4235,8 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 		strTTText = Native_Language("Search Text Window (Ctrl + Shift + F)");
 	else if (pButton->m_nID == ID_HIDE_ALL_DOCKWINDOW)
 		strTTText = Native_Language("Hide All Dock Windows");
-	else if (pButton->m_nID == ID_WINDOW_MANAGER)
-		strTTText = Native_Language("Document List Manager");
+	else if (pButton->m_nID == ID_CURRENT_WINDOWS)
+		strTTText = Native_Language("Current Windows (Ctrl + Shift + W)");
 	else if (pButton->m_nID == ID_EDITOR_COMMENT)
 		strTTText = Native_Language("Comment Code");
 	else if (pButton->m_nID == ID_EDITOR_UNCOMMENT)

@@ -25,10 +25,10 @@ namespace OSUtils
 	LONGLONG    StartBenchmark();
 	double	    StopBenchmark(LONGLONG counterBegin);
 	void	    LogStopBenchmark(LOG_TARGET target, LONGLONG counterBegin, const CString& strMessage, COLORREF color = IS_LIGHT_THEME ? RGB(0, 0, 0) : RGB(255, 255, 255));
-	void	    CreateProcessAsynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show = FALSE);
-	unsigned long CreateProcessSynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show = FALSE);
+	void	    CreateProcessAsynchronous(const CString& lpVerb, const CString& cmd, const CString& args, const CString& cDir, BOOL show = FALSE);
+	unsigned long CreateProcessSynchronous(const CString& lpVerb, const CString& cmd, const CString& args, const CString& cDir, BOOL show = FALSE);
 	BOOL		CreateWin32Process(CString strCmdLine);
-	void		RunSystemCMD(CString strCmdLine);
+	int		    RunSystemCMD(const CString& strCmdLine);
 	int			GetProcessID(const CString& processName, std::vector<DWORD>& vecProcessID);
 	DWORD		GetProcessCount(const std::wstring& processName);
 	DWORD		GetProcIdFromHWND(HWND hwnd);
@@ -42,5 +42,5 @@ namespace OSUtils
 	CString		GetRegistryAppPath(const CString& strEXEName);
 	void		OpenFileInWebBrowser(const CString & strEXEName, const CString & strFilePath);
 	std::wstring GetCMDConsoleResult(const wchar_t * cmd);
-	void		UseAdministrationHandler();
+	void	    UseAdministrationHandler();
 }

@@ -410,6 +410,8 @@ public:
 	// from terminal
 	afx_msg void OnTerminalRunSelectedText();
 	afx_msg void OnTerminalRunActiveFile();
+	afx_msg void OnTerminalRunActiveFileAsAdmin();
+	afx_msg void OnUpdateTerminalRunActiveFileAsAdmin(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateTerminalRunActiveFile(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateTerminalRunSelectedText(CCmdUI* pCmdUI);
 

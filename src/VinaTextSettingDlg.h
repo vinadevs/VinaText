@@ -30,13 +30,14 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual BOOL OnInitDialog();
-	void UpdateSettings();
+	void UpdateSettings(BOOL bFromGUI);
 	void UpdateApplicationLook();
 
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnBnClickedApply();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButtonResetSettings();
 
 	CRect m_SaveRect;
 	CImageList *m_pImglist;

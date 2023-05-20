@@ -395,9 +395,6 @@
     <ClInclude Include="ViewBase.h">
       <Filter>Main Skeleton\View</Filter>
     </ClInclude>
-    <ClInclude Include="ComboboxMultiLine.h">
-      <Filter>Component GUI\MFC GUI</Filter>
-    </ClInclude>
     <ClInclude Include="ScrollHelper.h">
       <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
@@ -719,6 +716,15 @@
     <ClInclude Include="WebView.h">
       <Filter>Main Skeleton\View</Filter>
     </ClInclude>
+    <ClInclude Include="OpenTabWindows.h">
+      <Filter>Dialog GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboboxMultiLine.h">
+      <Filter>Component GUI\MFC GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ComboBoxExtList.h">
+      <Filter>Component GUI\MFC GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -924,9 +930,6 @@
     </ClCompile>
     <ClCompile Include="ViewBase.cpp">
       <Filter>Main Skeleton\View</Filter>
-    </ClCompile>
-    <ClCompile Include="ComboboxMultiLine.cpp">
-      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="ScrollHelper.cpp">
       <Filter>Component GUI\MFC GUI</Filter>
@@ -1245,6 +1248,15 @@
     </ClCompile>
     <ClCompile Include="WebView.cpp">
       <Filter>Main Skeleton\View</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenTabWindows.cpp">
+      <Filter>Dialog GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboboxMultiLine.cpp">
+      <Filter>Component GUI\MFC GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ComboBoxExtList.cpp">
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

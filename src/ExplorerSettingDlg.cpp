@@ -57,6 +57,7 @@ void ExplorerSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_nFilePreviewSizeLimit = AppSettingMgr.m_nFilePreviewSizeLimit;
 		m_strAntiVirusArgument = AppSettingMgr.m_strAntiVirusArgument;
 		m_strAntiVirusProgram = AppSettingMgr.m_strAntiVirusProgram;
+		UpdateData(FALSE);
 	}
 }
 
@@ -67,8 +68,6 @@ BOOL ExplorerSettingDlg::OnInitDialog()
 	m_EditAntiVirusProgram.EnableFileBrowseButton();
 
 	UpdateGUISettings(FALSE);
-
-	UpdateData(FALSE);
 
 	return TRUE;
 }

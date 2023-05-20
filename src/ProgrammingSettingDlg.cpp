@@ -50,6 +50,7 @@ void ProgrammingSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_strNodeJSFolderPath = AppSettingMgr.m_strNodeJSFolderPath;
 		m_strPythonFolderPath = AppSettingMgr.m_strPythonFolderPath;
 		m_strGitWindowFolderPath = AppSettingMgr.m_strGitWindowFolderPath;
+		UpdateData(FALSE);
 	}
 }
 
@@ -80,8 +81,6 @@ BOOL ProgrammingSettingDlg::OnInitDialog()
 	m_EditGitWindowFolderPath.EnableFolderBrowseButton();
 
 	UpdateGUISettings(FALSE);
-
-	UpdateData(FALSE);
 
 	return TRUE;
 }

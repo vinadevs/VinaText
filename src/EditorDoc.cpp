@@ -105,8 +105,13 @@ BOOL CEditorDoc::OnSaveDocument(LPCTSTR lpszPathName)
 		if (pEditor)
 		{
 			pEditor->SetEditorInitiationState(TRUE);
+			if (AppSettingMgr.m_bAutoAddNewLineAtTheEOF) {
+				if (pEditor->CanAddNewLineAtEOF()) {
+					pEditor->AppendText(pEditor->GetEOLCString(), pEditor->GetEOLCString().GetLength());
+				}
+			}
 		}
-		PreSaveFile(lpszPathName);
+		PreprocessSaveFile(lpszPathName);
 		BOOL bRet = pEditorView->SaveFileAndInitilizeEditor(lpszPathName);
 		if (bRet)
 		{

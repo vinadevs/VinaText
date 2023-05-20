@@ -176,7 +176,7 @@ BEGIN
     BUTTON      ID_PANE_OUTPUT_WINDOW
     BUTTON      ID_QUICK_SEARCH
     BUTTON      ID_PANE_SEARCH_AND_REPLACE_WINDOW
-    BUTTON      ID_WINDOW_MANAGER
+    BUTTON      ID_CURRENT_WINDOWS
     SEPARATOR
     BUTTON      ID_EDITOR_COMMENT
     BUTTON      ID_EDITOR_UNCOMMENT
@@ -236,7 +236,7 @@ BEGIN
     BUTTON      ID_MDI_TAB_MOVE_PREVIOUS_TAB
     BUTTON      ID_MDI_TAB_NEW_VERTICAL_TAB
     BUTTON      ID_EDITOR_FULL_SCREEN_MODE
-    BUTTON      ID_WINDOW_MANAGER
+    BUTTON      ID_CURRENT_WINDOWS
     BUTTON      ID_EDIT_SYNC_SCROLL_VIEW
     SEPARATOR
     BUTTON      ID_VIEW_ZOOM_IN
@@ -364,7 +364,7 @@ BEGIN
         MENUITEM "Undo For All Files",          ID_EDIT_UNDO_ALL_FILE
         MENUITEM "Redo For All Files",          ID_EDIT_REDO_ALL_FILE
         MENUITEM SEPARATOR
-        MENUITEM "Large File Edit Mode", ID_DOCUMENT_SET_EDIT_LARGE_FILE
+        MENUITEM "Large File Edit Mode",        ID_DOCUMENT_SET_EDIT_LARGE_FILE
         MENUITEM SEPARATOR
         POPUP "Folding Level"
         BEGIN
@@ -656,13 +656,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Switch Focus To Active Tab\tCtrl+Shift+Q", ID_SWITCH_EPLORER_TO_ACTIVE_TAB
         MENUITEM SEPARATOR
-        POPUP "Tree Navigation"
-        BEGIN
-            MENUITEM "Go Up",                       ID_TOOLS_UPONELEVEL
-            MENUITEM "Goto Previous Path",          ID_TOOLS_BACK
-            MENUITEM "Goto Next Path",              ID_TOOLS_FORWARD
-            MENUITEM "Go Back To Desktop",          ID_TOOLS_BACK_TO_ORIGINAL
-        END
+        MENUITEM "Compare Two Paths",           ID_PATH_COMPARATOR_TOOL
         MENUITEM SEPARATOR
         POPUP "VinaText Paths"
         BEGIN
@@ -844,6 +838,7 @@ BEGIN
         MENUITEM "New WSL Terminal Tab",        ID_OPEN_NEW_WSL_TAB
         MENUITEM SEPARATOR
         MENUITEM "Run Active File",             ID_RUN_ACTIVE_FILE
+        MENUITEM "Run Active File As Administrator", ID_RUN_ACTIVE_FILE_AS_ADMIN
         MENUITEM "Run Selected Text",           ID_RUN_SELECTED_TEXT
         MENUITEM SEPARATOR
         MENUITEM "Open CMD Terminal",           ID_MDI_TAB_OPEN_CMD
@@ -875,8 +870,6 @@ BEGIN
             MENUITEM "Generate Time-Date String",   ID_TOOL_CREATE_TIMEDATE
             MENUITEM "Generate Url Escape String",  ID_DOCUMENT_URL_ESCAPSE
         END
-        MENUITEM SEPARATOR
-        MENUITEM "Path Compare Tool",           ID_PATH_COMPARATOR_TOOL
     END
     POPUP "Extensions"
     BEGIN
@@ -1384,7 +1377,7 @@ BEGIN
     VK_F2,          ID_MDI_TAB_RENAME,      VIRTKEY 
     VK_TAB,         ID_MDI_SWITCH_TO_NEXT_TAB, VIRTKEY, CONTROL
     VK_TAB,         ID_MDI_SWITCH_TO_PREVIOUS_TAB, VIRTKEY, SHIFT, CONTROL
-    "W",            ID_WINDOW_MANAGER,      VIRTKEY, SHIFT, CONTROL
+    "W",            ID_CURRENT_WINDOWS,     VIRTKEY, SHIFT, CONTROL
     "J",            ID_DOCUMENT_SET_READ_ONLY, VIRTKEY, CONTROL
 END
 
@@ -1858,15 +1851,16 @@ BEGIN
     CONTROL         "Show Password",IDC_CHECK_SHOW_PASSWORD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,58,38,66,10
 END
 
-IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 573, 314
+IDD_DIALOG_APP_SETTINGS DIALOGEX 0, 0, 573, 365
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "VinaText Preference"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "OK",IDOK,252,290,58,18
-    PUSHBUTTON      "Cancel",IDCANCEL,322,290,58,18
-    DEFPUSHBUTTON   "Apply",IDC_APPLY,180,290,58,18
-    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,7,5,555,280,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "OK",IDOK,253,342,58,18
+    PUSHBUTTON      "Cancel",IDCANCEL,323,342,58,18
+    DEFPUSHBUTTON   "Apply",IDC_APPLY,181,342,58,18
+    CONTROL         "",IDC_TAB_DIALOG_SETTINGS,"SysTabControl32",WS_BORDER,7,5,555,332,WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Reset",IDC_BUTTON_RESET_SETTINGS,512,344,50,14
 END
 
 IDD_CREATE_NEW_MULTIPLE DIALOGEX 0, 0, 293, 51
@@ -1940,12 +1934,12 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     COMBOBOX        ID_ACTIVE_TAB_COLOR_COMBO,146,26,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Active Document Tab Color:",IDC_STATIC,37,28,90,8
-    LTEXT           "Application Theme Color:",IDC_STATIC,47,51,80,8
+    RTEXT           "Active Document Tab Color:",IDC_STATIC,17,28,111,8
+    RTEXT           "Application Theme Color:",IDC_STATIC,17,51,111,8
     COMBOBOX        ID_THEME_COLOR_COMBO,146,49,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Application Theme GUI:",IDC_STATIC,49,74,78,8
+    RTEXT           "Application Theme GUI:",IDC_STATIC,17,74,111,8
     COMBOBOX        ID_THEME_LOOK_COMBO,146,72,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Initial File Browser Path:",IDC_STATIC,49,121,78,8
+    RTEXT           "Initial File Browser Path:",IDC_STATIC,17,121,111,8
     EDITTEXT        ID_INITIAL_FILE_PICKER_PATH_EDIT,146,119,138,12,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
     CONTROL         "Show Warning Dialog For Files Not Exist",ID_WARNING_FOR_FILE_NOT_EXIST,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,61,143,10
@@ -1961,11 +1955,11 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,157,125,10
     CONTROL         "Display Warning Dialog For File Change Events",ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,181,165,10
-    LTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,34,97,93,8
+    RTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,17,97,111,8
     COMBOBOX        ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO,146,95,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Saved Recent Files Limitation:",IDC_STATIC,31,144,96,8
+    RTEXT           "Saved Recent Files Limitation:",IDC_STATIC,17,144,111,8
     EDITTEXT        ID_RECENT_FILE_LIMIT_EDIT,146,142,138,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Binary File Extension List:",IDC_STATIC,45,167,82,8
+    RTEXT           "Binary File Extension List:",IDC_STATIC,17,167,111,8
     EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,146,165,138,12,ES_AUTOHSCROLL
     GROUPBOX        "Customize Settings",IDC_STATIC,14,10,289,187
     GROUPBOX        "Toggle Settings",IDC_STATIC,317,10,201,187
@@ -1986,15 +1980,15 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,87,152,10
     CONTROL         "Use Win10 Explorer Tree Style",ID_USE_WIN10_EXPLORER_STYLE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,40,63,113,10
-    LTEXT           "Explorer Expand File Limitation:",IDC_STATIC,261,87,101,8
-    LTEXT           "Explorer Expand Level Limitation:",IDC_STATIC,255,111,107,8
-    LTEXT           "File Preview Size Limitation:",IDC_STATIC,274,136,88,8
+    RTEXT           "Explorer Expand File Limitation:",IDC_STATIC,243,87,119,8
+    RTEXT           "Explorer Expand Level Limitation:",IDC_STATIC,243,111,119,8
+    RTEXT           "File Preview Size Limitation:",IDC_STATIC,243,136,119,8
     EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_FILE_OPEN_EDIT,376,85,126,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        ID_EXPLORER_EXPAND_LIMIT_LEVEL_EDIT,376,109,126,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        ID_FILE_PREVIEW_SIZE_LIMIT_EDIT,376,134,126,14,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        ID_ANTI_VIRUS_ARGUMENT_EDIT,376,59,126,14,ES_AUTOHSCROLL
-    LTEXT           "Anti Virus Program Argument:",IDC_STATIC,266,61,96,8
-    LTEXT           "Anti Virus Program Path:",IDC_STATIC,283,37,79,8
+    RTEXT           "Anti Virus Program Argument:",IDC_STATIC,243,61,119,8
+    RTEXT           "Anti Virus Program Path:",IDC_STATIC,243,37,119,8
     EDITTEXT        ID_ANTI_VIRUS_PROGRAM_EDIT,376,35,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
     GROUPBOX        "Explorer Toggle Settings",IDC_STATIC,20,11,197,183
     GROUPBOX        "Other Settings",IDC_STATIC,238,11,278,182
@@ -2020,11 +2014,11 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,178,172,10
     CONTROL         "Open New CMD Window When Launching Program",ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,42,201,177,10
-    LTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,261,37,110,8
-    LTEXT           "Python Interpreter Folder Path:",IDC_STATIC,269,62,102,8
+    RTEXT           "Node JS Interpreter Folder Path:",IDC_STATIC,250,37,121,8
+    RTEXT           "Python Interpreter Folder Path:",IDC_STATIC,250,62,121,8
     EDITTEXT        ID_NODE_JS_FOLDER_PATH_EDIT,381,36,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
     EDITTEXT        ID_PYTHON_FOLDER_PATH_EDIT,381,60,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
-    LTEXT           "Git Window Folder Path:",IDC_STATIC,284,86,87,8
+    RTEXT           "Git Window Folder Path:",IDC_STATIC,250,86,121,8
     EDITTEXT        ID_GIT_WINDOW_FOLDER_PATH_EDIT,381,84,126,14,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
     GROUPBOX        "Package Management Settings",IDC_STATIC,247,12,269,120
     GROUPBOX        "Programming Settings",IDC_STATIC,19,12,216,226
@@ -2039,7 +2033,7 @@ BEGIN
     CONTROL         "Auto Complete Word Ignore Numbers",ID_AUTO_COMPLETE_IGNORE_NUMBERS,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,139,136,10
     CONTROL         "Use Caret Line Frame Style",ID_DRAW_CARET_LINE_FRAME,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,356,103,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,355,103,10
     CONTROL         "Draw Folding Line With Under Line Style",ID_DRAW_FOLDING_LINE_UNDER_LINE_STYLE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,29,148,10
     CONTROL         "Enable Auto Complete Word When Typing",ID_ENABLE_AUTO_COMPLETE,
@@ -2066,38 +2060,42 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,271,119,10
     CONTROL         "Auto Detect Code Page When Open File",ID_ENABLE_AUTO_DETECT_CODE_PAGE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,183,144,10
-    LTEXT           "Language Spell Check:",IDC_STATIC,290,285,73,8
-    LTEXT           "Selected Text Translate To:",IDC_STATIC,273,333,90,8
-    LTEXT           "Selected Text Translate From:",IDC_STATIC,265,310,98,8
+    RTEXT           "Language Spell Check:",IDC_STATIC,245,285,118,8
+    RTEXT           "Selected Text Translate To:",IDC_STATIC,245,333,118,8
+    RTEXT           "Selected Text Translate From:",IDC_STATIC,245,309,118,8
     COMBOBOX        ID_LANGUAGE_TRANSLATE_TO_COMBO,380,331,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_LANGUAGE_TRANSLATE_FROM_COMBO,380,308,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_LANGUAGE_SPELL_CHECK_COMBO,380,284,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Line Space Above:",IDC_STATIC,303,26,60,8
-    LTEXT           "Line Space Below:",IDC_STATIC,305,50,58,8
+    RTEXT           "Line Space Above:",IDC_STATIC,245,26,118,8
+    RTEXT           "Line Space Below:",IDC_STATIC,245,50,118,8
     EDITTEXT        ID_LINE_SPACE_ABOVE_EDIT,380,24,126,12,ES_AUTOHSCROLL | ES_NUMBER
     EDITTEXT        ID_LINE_SPACE_BELOW_EDIT,380,47,126,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Long Line Maximum:",IDC_STATIC,298,74,65,8
+    RTEXT           "Long Line Maximum:",IDC_STATIC,245,74,118,8
     EDITTEXT        ID_LONG_LINE_MAXIMUM_EDIT,380,71,126,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Auto Save Interval Minutes:",IDC_STATIC,272,262,91,8
+    RTEXT           "Auto Save Interval Minutes:",IDC_STATIC,245,262,118,8
     EDITTEXT        ID_INTERVAL_MINUTES_EDIT,380,260,126,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Editor Text Font Settings:",IDC_STATIC,279,95,84,8
+    RTEXT           "Editor Text Font Settings:",IDC_STATIC,245,95,118,8
     PUSHBUTTON      "Text Font Dialog",ID_EDITOR_FONT_NAME_BUTTON,380,94,126,12
-    LTEXT           "Editor Folder Margin Bar Style:",IDC_STATIC,265,119,98,8
-    LTEXT           "Duplicate Word Indicator Color:",IDC_STATIC,261,143,102,8
-    LTEXT           "Duplicate Word Indicator Style:",IDC_STATIC,262,167,101,8
+    RTEXT           "Editor Folder Margin Bar Style:",IDC_STATIC,245,119,118,8
+    RTEXT           "Duplicate Word Indicator Color:",IDC_STATIC,245,143,118,8
+    RTEXT           "Duplicate Word Indicator Style:",IDC_STATIC,245,167,118,8
     COMBOBOX        ID_INDICATOR_COLOR_COMBO,380,140,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_INDICATOR_STYLE_COMBO,380,164,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_FOLDER_MARGIN_STYLE_COMBO,380,116,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Maximum Page Alignment Width:",IDC_STATIC,258,214,105,8
-    LTEXT           "Render Word Indicator Event:",IDC_STATIC,265,238,98,8
+    RTEXT           "Maximum Page Alignment Width:",IDC_STATIC,245,214,118,8
+    RTEXT           "Render Word Indicator Event:",IDC_STATIC,245,238,118,8
     EDITTEXT        ID_PAGE_ALIGNMENT_WIDTH_EDIT,380,212,126,12,ES_AUTOHSCROLL | ES_NUMBER
     COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,380,236,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Caret Editor (Cursor) Color:",IDC_STATIC,273,191,90,8
+    RTEXT           "Caret Editor (Cursor) Color:",IDC_STATIC,245,191,118,8
     COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,380,188,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,450
     GROUPBOX        "Customize Settings",IDC_STATIC,238,11,284,450
     CONTROL         "Auto Save File When Close Application",ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,376,146,10
+    RTEXT           "Default End Of Line For New File:",IDC_STATIC,245,357,118,8
+    COMBOBOX        ID_DEFAULT_EOL_NEW_FILE_COMBO,380,355,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    CONTROL         "Auto Add New Line At End Of File",ID_AUTO_ADD_NEW_LINE_AT_EOF,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,397,146,10
 END
 
 IDD_DIALOG_PATH_COMPARATOR DIALOGEX 0, 0, 347, 157
@@ -2115,6 +2113,19 @@ BEGIN
     GROUPBOX        "Compare Options",IDC_STATIC,7,85,333,41
     CONTROL         "Match Case",IDC_CHECK_DIFF_MATCH_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,24,104,60,10
     CONTROL         "Indentation",IDC_CHECK_DIFF_MATCH_INDENTATION,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,103,104,72,10
+END
+
+IDD_DIALOG_OPEN_DOCUMENTS DIALOGEX 0, 0, 493, 234
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Current Windows"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LIST_OPEN_TAB,"SysListView32",LVS_REPORT | LVS_SHOWSELALWAYS | LVS_ALIGNLEFT | WS_TABSTOP,6,7,411,220,WS_EX_CLIENTEDGE
+    PUSHBUTTON      "Active Tab",IDC_BUTTON_ACTIVE_TAB,423,6,65,14
+    PUSHBUTTON      "Close Tab(s)",IDC_BUTTON_CLOSE_TAB,423,66,65,14
+    PUSHBUTTON      "Save Tab",IDC_BUTTON_SAVE_TAB,423,26,65,14
+    DEFPUSHBUTTON   "OK",IDOK,423,213,65,14
+    PUSHBUTTON      "Get Path Tab",IDC_BUTTON_COPY_PATH_TAB,423,46,65,14
 END
 
 
@@ -2356,7 +2367,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 562
         TOPMARGIN, 7
-        BOTTOMMARGIN, 308
+        BOTTOMMARGIN, 359
     END
 
     IDD_CREATE_NEW_MULTIPLE, DIALOG
@@ -2414,6 +2425,14 @@ BEGIN
         RIGHTMARGIN, 340
         TOPMARGIN, 7
         BOTTOMMARGIN, 149
+    END
+
+    IDD_DIALOG_OPEN_DOCUMENTS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 486
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 227
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -2601,6 +2620,11 @@ BEGIN
     0
 END
 
+IDD_DIALOG_OPEN_DOCUMENTS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -2672,7 +2696,6 @@ END
 STRINGTABLE
 BEGIN
     IDR_MAINFRAME           "VinaText"
-    ID_WINDOW_MANAGER       "Window Manager\n Document List"
 END
 
 STRINGTABLE

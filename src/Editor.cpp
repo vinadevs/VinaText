@@ -584,38 +584,6 @@ void CEditorCtrl::GetText(CString& strText)
 	}
 }
 
-CString CEditorCtrl::GetAllText()
-{
-	auto GetTextFromEditor = [&]() -> char*
-	{
-		int lLen = (int)DoCommand(SCI_GETLENGTH) + 1;
-		if (lLen > 0)
-		{
-			char* pReturn = new char[lLen + 1];
-			if (pReturn != NULL)
-			{
-				*pReturn = '\0';
-				DoCommand(SCI_GETTEXT, lLen, reinterpret_cast<LPARAM>(pReturn));
-				return pReturn;
-			}
-		}
-		return NULL;
-	};
-
-	CString strText;
-	std::unique_ptr<char> szText;
-	szText.reset(GetTextFromEditor());
-	if (szText != NULL)
-	{
-		auto uiCodePage = AppUtils::GetCurrentCodePage();
-		AppUtils::SetCurrentCodePage(TF_UTF8);
-		CString str = AppUtils::ArrayCharToCString(szText.get());
-		AppUtils::SetCurrentCodePage(uiCodePage);
-		strText = str;
-	}
-	return strText;
-}
-
 void CEditorCtrl::GetTextRange(Sci_TextRange* txtRange)
 {
 	DoCommand(SCI_GETTEXTRANGE, 0, sptr_t(txtRange));
@@ -1269,7 +1237,7 @@ void CEditorCtrl::DoBraceMatchHighlight()
 	}
 }
 
-SearchResult CEditorCtrl::FindTextResult(const char* text, sptr_t start, sptr_t end, int flags)
+SearchResult CEditorCtrl::FindTextXmlHTMLResult(const char* text, sptr_t start, sptr_t end, int flags)
 {
 	SearchResult returnValue = { 0 };
 	Sci_TextToFind search{};
@@ -1290,7 +1258,7 @@ SearchResult CEditorCtrl::FindTextResult(const char* text, sptr_t start, sptr_t 
 	return returnValue;
 }
 
-SearchResult CEditorCtrl::FindOpenTag(const std::string& tagName, sptr_t start, sptr_t end)
+SearchResult CEditorCtrl::FindOpenXmlHTMLTag(const std::string& tagName, sptr_t start, sptr_t end)
 {
 	std::string search("<");
 	search.append(tagName);
@@ -1304,7 +1272,7 @@ SearchResult CEditorCtrl::FindOpenTag(const std::string& tagName, sptr_t start, 
 	bool       forwardSearch = (start < end);
 	do
 	{
-		result = FindTextResult(search.c_str(), searchStart, searchEnd, 0);
+		result = FindTextXmlHTMLResult(search.c_str(), searchStart, searchEnd, 0);
 		if (result.success)
 		{
 			nextChar = static_cast<int>(DoCommand(SCI_GETCHARAT, result.end));
@@ -1322,7 +1290,7 @@ SearchResult CEditorCtrl::FindOpenTag(const std::string& tagName, sptr_t start, 
 				}
 				else if (AppUtils::IsXMLWhitespace(nextChar))
 				{
-					auto closeAnglePosition = FindCloseAngle(result.end, forwardSearch ? end : start);
+					auto closeAnglePosition = FindCloseXmlHTMLAngle(result.end, forwardSearch ? end : start);
 					if (-1 != closeAnglePosition && '/' != DoCommand(SCI_GETCHARAT, closeAnglePosition - 1))
 					{
 						openTagFound.end = closeAnglePosition;
@@ -1350,7 +1318,7 @@ SearchResult CEditorCtrl::FindOpenTag(const std::string& tagName, sptr_t start, 
 	return openTagFound;
 }
 
-sptr_t CEditorCtrl::FindCloseAngle(sptr_t startPosition, sptr_t endPosition)
+sptr_t CEditorCtrl::FindCloseXmlHTMLAngle(sptr_t startPosition, sptr_t endPosition)
 {
 	// We'll search for the next '>', and check it's not in an attribute using the style
 	SearchResult closeAngle{};
@@ -1370,7 +1338,7 @@ sptr_t CEditorCtrl::FindCloseAngle(sptr_t startPosition, sptr_t endPosition)
 	{
 		isValidClose = false;
 
-		closeAngle = FindTextResult(">", startPosition, endPosition, 0);
+		closeAngle = FindTextXmlHTMLResult(">", startPosition, endPosition, 0);
 		if (closeAngle.success)
 		{
 			int style = static_cast<int>(DoCommand(SCI_GETSTYLEAT, closeAngle.start));
@@ -1391,7 +1359,7 @@ sptr_t CEditorCtrl::FindCloseAngle(sptr_t startPosition, sptr_t endPosition)
 	return returnPosition;
 }
 
-SearchResult CEditorCtrl::FindCloseTag(const std::string& tagName, sptr_t start, sptr_t end)
+SearchResult CEditorCtrl::FindCloseXmlHTMLTag(const std::string& tagName, sptr_t start, sptr_t end)
 {
 	std::string search("</");
 	search.append(tagName);
@@ -1407,7 +1375,7 @@ SearchResult CEditorCtrl::FindCloseTag(const std::string& tagName, sptr_t start,
 	do
 	{
 		validCloseTag = false;
-		result = FindTextResult(search.c_str(), searchStart, searchEnd, 0);
+		result = FindTextXmlHTMLResult(search.c_str(), searchStart, searchEnd, 0);
 		if (result.success)
 		{
 			nextChar = static_cast<int>(DoCommand(SCI_GETCHARAT, result.end));
@@ -1464,11 +1432,11 @@ std::vector<std::pair<sptr_t, sptr_t>> CEditorCtrl::GetAttributesPos(sptr_t star
 	std::vector<std::pair<sptr_t, sptr_t>> attributes;
 
 	auto          bufLen = end - start + 1;
-	auto          buf = std::make_unique<char[]>(bufLen + 1);
+	auto          bufferText = std::make_unique<char[]>(bufLen + 1);
 	Sci_TextRange tr{};
 	tr.chrg.cpMin = static_cast<Sci_PositionCR>(start);
 	tr.chrg.cpMax = static_cast<Sci_PositionCR>(end);
-	tr.lpstrText = buf.get();
+	tr.lpstrText = bufferText.get();
 	DoCommand(SCI_GETTEXTRANGE, 0, reinterpret_cast<LPARAM>(&tr));
 
 	enum class AttrStates
@@ -1487,7 +1455,7 @@ std::vector<std::pair<sptr_t, sptr_t>> CEditorCtrl::GetAttributesPos(sptr_t star
 	sptr_t i = 0;
 	for (; i < bufLen; i++)
 	{
-		switch (buf[i])
+		switch (bufferText[i])
 		{
 		case ' ':
 		case '\t':
@@ -1565,7 +1533,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 	// Keep looking whilst the angle bracket found is inside an XML attribute
 	do
 	{
-		openFound = FindTextResult("<", searchStartPoint, 0, 0);
+		openFound = FindTextXmlHTMLResult("<", searchStartPoint, 0, 0);
 		styleAt = DoCommand(SCI_GETSTYLEAT, openFound.start);
 		searchStartPoint = openFound.start - 1;
 	} while (openFound.success && (styleAt == SCE_H_DOUBLESTRING || styleAt == SCE_H_SINGLESTRING) && searchStartPoint > 0);
@@ -1577,7 +1545,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 		searchStartPoint = openFound.start;
 		do
 		{
-			closeFound = FindTextResult(">", searchStartPoint, caret, 0);
+			closeFound = FindTextXmlHTMLResult(">", searchStartPoint, caret, 0);
 			styleAt = DoCommand(SCI_GETSTYLEAT, closeFound.start);
 			searchStartPoint = closeFound.end;
 		} while (closeFound.success && (styleAt == SCE_H_DOUBLESTRING || styleAt == SCE_H_SINGLESTRING) && searchStartPoint <= caret);
@@ -1594,7 +1562,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 			{
 				tagPositions.tagCloseStart = openFound.start;
 				auto docLength = DoCommand(SCI_GETLENGTH);
-				auto endCloseTag = FindTextResult(">", caret, docLength, 0);
+				auto endCloseTag = FindTextXmlHTMLResult(">", caret, docLength, 0);
 				if (endCloseTag.success)
 				{
 					tagPositions.tagCloseEnd = endCloseTag.end;
@@ -1637,7 +1605,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 					SearchResult nextOpenTag{};
 					do
 					{
-						nextOpenTag = FindOpenTag(tagName, currentEndPoint, 0);
+						nextOpenTag = FindOpenXmlHTMLTag(tagName, currentEndPoint, 0);
 						if (nextOpenTag.success)
 						{
 							--openTagsRemaining;
@@ -1655,7 +1623,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 
 							do
 							{
-								inBetweenCloseTag = FindCloseTag(tagName, currentStartPosition, currentEndPoint);
+								inBetweenCloseTag = FindCloseXmlHTMLTag(tagName, currentStartPosition, currentEndPoint);
 
 								if (inBetweenCloseTag.success)
 								{
@@ -1718,7 +1686,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 					// First we need to check if this is a self-closing tag.
 					// If it is, then we can just return this tag to highlight itself.
 					tagPositions.tagNameEnd = openFound.start + tagName.size() + 1;
-					auto closeAnglePosition = FindCloseAngle(position, docLength);
+					auto closeAnglePosition = FindCloseXmlHTMLAngle(position, docLength);
 					if (-1 != closeAnglePosition)
 					{
 						tagPositions.tagOpenEnd = closeAnglePosition + 1;
@@ -1747,7 +1715,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 							SearchResult nextCloseTag{};
 							do
 							{
-								nextCloseTag = FindCloseTag(tagName, currentStartPosition, docLength);
+								nextCloseTag = FindCloseXmlHTMLTag(tagName, currentStartPosition, docLength);
 								if (nextCloseTag.success)
 								{
 									--closeTagsRemaining;
@@ -1764,7 +1732,7 @@ bool CEditorCtrl::GetXmlHtmlTagsPosition(XmlHtmlTagsPosition& tagPositions)
 
 									do
 									{
-										inBetweenOpenTag = FindOpenTag(tagName, currentStartPosition, currentEndPosition);
+										inBetweenOpenTag = FindOpenXmlHTMLTag(tagName, currentStartPosition, currentEndPosition);
 
 										if (inBetweenOpenTag.success)
 										{
@@ -2337,7 +2305,7 @@ namespace // File IO
 		}
 	}
 
-	bool SaveAsUtf16(char* buf, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, int _encoding, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
+	bool SaveAsUtf16(char* bufferText, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, int _encoding, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
 	{
 		constexpr int writeWideBufSize = WriteBlockSize * 2;
 		auto          wideBuf = std::make_unique<wchar_t[]>(writeWideBufSize);
@@ -2365,7 +2333,7 @@ namespace // File IO
 				return false;
 			}
 		}
-		char* writeBuf = buf;
+		char* writeBuf = bufferText;
 		do
 		{
 			int charStart = UTF8Helper::characterStart(writeBuf, static_cast<int>(min(WriteBlockSize, lengthDoc)));
@@ -2392,7 +2360,7 @@ namespace // File IO
 		return true;
 	}
 
-	bool SaveAsUtf32(char* buf, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, int _encoding, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
+	bool SaveAsUtf32(char* bufferText, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, int _encoding, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
 	{
 		constexpr int writeWideBufSize = WriteBlockSize * 2;
 		auto          writeWideBuf = std::make_unique<wchar_t[]>(writeWideBufSize);
@@ -2413,7 +2381,7 @@ namespace // File IO
 			err = OSUtils::GetLastErrorAsString();
 			return false;
 		}
-		char* writeBuf = buf;
+		char* writeBuf = bufferText;
 		do
 		{
 			int charStart = UTF8Helper::characterStart(writeBuf, static_cast<int>(min(WriteBlockSize, lengthDoc)));
@@ -2460,7 +2428,7 @@ namespace // File IO
 		return true;
 	}
 
-	bool SaveAsUtf8(char* buf, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
+	bool SaveAsUtf8(char* bufferText, size_t lengthDoc, CAutoFile& hFile, std::wstring& err, bool _bHasBOM, int _encodingSaving, bool _bHasBOMSaving)
 	{
 		// UTF8: save the buffer as it is
 		DWORD bytesWritten = 0;
@@ -2479,18 +2447,18 @@ namespace // File IO
 		do
 		{
 			DWORD writeLen = static_cast<DWORD>(min(WriteBlockSize, lengthDoc));
-			if (!WriteFile(hFile, buf, writeLen, &bytesWritten, nullptr))
+			if (!WriteFile(hFile, bufferText, writeLen, &bytesWritten, nullptr))
 			{
 				err = OSUtils::GetLastErrorAsString();
 				return false;
 			}
 			lengthDoc -= writeLen;
-			buf += writeLen;
+			bufferText += writeLen;
 		} while (lengthDoc > 0);
 		return true;
 	}
 
-	bool SaveAsOther(char* buf, size_t lengthDoc, CAutoFile& hFile, std::wstring& err
+	bool SaveAsOther(char* bufferText, size_t lengthDoc, CAutoFile& hFile, std::wstring& err
 		, int _encoding, bool _bHasBOM,
 		int _encodingSaving, bool _bHasBOMSaving)
 	{
@@ -2504,7 +2472,7 @@ namespace // File IO
 		if (_encodingSaving != TF_INT)
 			encoding = _encodingSaving;
 
-		char* writeBuf = buf;
+		char* writeBuf = bufferText;
 		do
 		{
 			int  charStart = UTF8Helper::characterStart(writeBuf, static_cast<int>(min(WriteBlockSize, lengthDoc)));
@@ -2732,19 +2700,50 @@ BOOL CEditorCtrl::LoadFile(const CString& strFilePath, int nLoadEncoding, BOOL b
 	return TRUE;
 }
 
+BOOL CEditorCtrl::CanAddNewLineAtEOF()
+{
+	int nTextLength = GetTextLength();
+	int currentEOL = (int)DoCommand(SCI_GETEOLMODE);
+	switch (currentEOL)
+	{
+		case SC_EOL_CRLF:
+		{
+			if (nTextLength < 2) return FALSE;
+			if (GetCharacterAtPosition(nTextLength - 2) != _T('\r') && GetCharacterAtPosition(nTextLength - 1) != _T('\n'))
+				return TRUE;
+			break;
+		}
+		case SC_EOL_CR:
+		{
+			if (nTextLength < 1) return FALSE;
+			if (GetCharacterAtPosition(nTextLength - 1) != _T('\r'))
+				return TRUE;
+			break;
+		}
+		case SC_EOL_LF:
+		{
+			if (nTextLength < 1) return FALSE;
+			if (GetCharacterAtPosition(nTextLength - 1) != _T('\n'))
+				return TRUE;
+			break;
+		}
+		default:
+			break;
+	}
+	return FALSE;
+}
+
 BOOL CEditorCtrl::SaveFileWithEncoding(const CString& strFilePath)
 {
 	if (strFilePath.IsEmpty())
 		return FALSE;
 	CAutoFile hFile = CreateFile(strFilePath, GENERIC_WRITE, FILE_SHARE_DELETE | FILE_SHARE_READ | FILE_SHARE_WRITE, nullptr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
-	if (!hFile.IsValid())
-	{
+	if (!hFile.IsValid()) 
 		return FALSE;
-	}
 
 	size_t lengthDoc = DoCommand(SCI_GETLENGTH);
 	// get characters directly from Scintilla buffer
-	char* buf = reinterpret_cast<char*>(DoCommand(SCI_GETCHARACTERPOINTER));
+	char* bufferText = reinterpret_cast<char*>(DoCommand(SCI_GETCHARACTERPOINTER));
 	bool         bRetSave = FALSE;
 	std::wstring err;
 	auto         encoding = m_encodingLoading;
@@ -2753,24 +2752,24 @@ BOOL CEditorCtrl::SaveFileWithEncoding(const CString& strFilePath)
 
 	switch (encoding)
 	{
-	case TF_UTF8:
-	case TF_INT:
-		bRetSave = SaveAsUtf8(buf, lengthDoc, hFile, err, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
-		break;
-	case TF_UTF16LE: // UTF16_LE
-	case TF_UTF16BE: // UTF16_BE
-		bRetSave = SaveAsUtf16(buf, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
-		break;
-	case TF_UTF32LE: // UTF32_LE
-	case TF_UTF32BE: // UTF32_BE
-		bRetSave = SaveAsUtf32(buf, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
-		break;
-	default:
-		bRetSave = SaveAsOther(buf, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
-		break;
-	}
-	if (!bRetSave)
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("[Save File Error] %s %s"), strFilePath, err.c_str());
+		case TF_UTF8:
+		case TF_INT:
+			bRetSave = SaveAsUtf8(bufferText, lengthDoc, hFile, err, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
+			break;
+		case TF_UTF16LE: // UTF16_LE
+		case TF_UTF16BE: // UTF16_BE
+			bRetSave = SaveAsUtf16(bufferText, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
+			break;
+		case TF_UTF32LE: // UTF32_LE
+		case TF_UTF32BE: // UTF32_BE
+			bRetSave = SaveAsUtf32(bufferText, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
+			break;
+		default:
+			bRetSave = SaveAsOther(bufferText, lengthDoc, hFile, err, m_encodingLoading, m_bHasBOM, m_encodingSaving, m_bHasBOMSaving);
+			break;
+		}
+		if (!bRetSave)
+			LOG_OUTPUT_MESSAGE_FORMAT(_T("[Save File Error] %s %s"), strFilePath, err.c_str());
 	return TRUE;
 }
 
@@ -2810,9 +2809,7 @@ BOOL CEditorCtrl::SaveFile(const CString& strFilePath)
 	}
 
 	if (!hFile.IsValid())
-	{
 		return FALSE;
-	}
 
 	if (SaveFileWithEncoding(strFilePath))
 	{
@@ -4199,6 +4196,8 @@ BOOL CEditorCtrl::GetShowEOL()
 void CEditorCtrl::ConvertEOL(int nModeEOL)
 {
 	DoCommand(SCI_CONVERTEOLS, nModeEOL, 0);
+	DoCommand(SCI_SETEOLMODE, nModeEOL);
+	DoCommand(SCI_SETVIEWEOL, TRUE);
 }
 
 void CEditorCtrl::EnableMultiCursorMode(BOOL bEnable)

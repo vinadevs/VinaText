@@ -53,12 +53,12 @@ protected:
 	BOOL m_bEnableWindowSubsytemFlagForCAndCPP{ FALSE };
 	BOOL m_bOpenWindowCmdWhenRunProgram{ FALSE };
 
-	std::unique_ptr<CScrollHelper> m_pScrollHelper{nullptr};
-
 	CString m_strNodeJSFolderPath;
 	ProgrammingSettingBrowse m_EditNodeJSFolderPath;
 	CString m_strPythonFolderPath;
 	ProgrammingSettingBrowse m_EditPythonFolderPath;
 	CString m_strGitWindowFolderPath;
 	ProgrammingSettingBrowse m_EditGitWindowFolderPath;
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

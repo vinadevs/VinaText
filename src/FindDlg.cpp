@@ -326,7 +326,10 @@ void CFindDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOOL bS
 					pEditor->GotoPosition(nCurPos);
 					if (!bHideMessageBox)
 					{
-						AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
+						::MessageBox(AfxGetMainWnd()->m_hWnd,
+							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
+							_T("VinaText"),
+							MB_ICONINFORMATION);
 					}
 				}
 			}
@@ -364,7 +367,10 @@ void CFindDlg::DoSeachPrevious(CString strSearchWhat)
 				{
 					pEditor->SetFirstVisibleLine(nVisualLine);
 					pEditor->GotoPosition(nCurPos);
-					AfxMessageBox(_T("Matching lines: 0"), MB_ICONINFORMATION);
+					::MessageBox(AfxGetMainWnd()->m_hWnd,
+						AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
+						_T("VinaText"),
+						MB_ICONINFORMATION);
 				}
 			}
 			strSearchWhat.UnlockBuffer();

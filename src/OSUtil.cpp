@@ -42,7 +42,6 @@ void OSUtils::LogStopBenchmark(LOG_TARGET target, LONGLONG counterBegin, const C
 
 void OSUtils::CreateProcessAsynchronous(const CString & lpVerb, const CString & cmd, const CString & args, const CString & cDir, BOOL show)
 {
-	//const TCHAR *opVerb = m_runAsAdmin ? TEXT("runas") : TEXT("open");
 	::ShellExecute(::GetDesktopWindow(), lpVerb, cmd, args, cDir, show);
 	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::orange);
 }
@@ -107,10 +106,11 @@ BOOL OSUtils::CreateWin32Process(CString strCmdLine)
 	return TRUE;
 }
 
-void OSUtils::RunSystemCMD(CString strCmdLine)
+int OSUtils::RunSystemCMD(const CString& strCmdLine)
 {
-	::_wsystem(AppUtils::CStringToWStd(strCmdLine).c_str());
+	int ret = ::_wsystem(AppUtils::CStringToWStd(strCmdLine).c_str());
 	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + strCmdLine, BasicColors::orange);
+	return ret;
 }
 
 int OSUtils::GetProcessID(const CString& processName, std::vector<DWORD>& vecProcessID)
@@ -411,5 +411,5 @@ void OSUtils::UseAdministrationHandler()
 			CString strMsg; strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strPathVinaTextExe);
 			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		}
-	}
+	} 
 }

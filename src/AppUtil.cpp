@@ -760,7 +760,7 @@ void AppUtils::CreateNewEditorWithText(const CString & strTitle, const CString &
 			if (pEditor)
 			{
 				pEditor->SetTextToEditor(strText);
-				pEditor->ConvertEOL(SC_EOL_CRLF);
+				pEditor->DoCommand(SCI_CONVERTEOLS, SC_EOL_CRLF, 0);
 			}
 		}
 	}
@@ -1134,13 +1134,9 @@ CDocument* AppUtils::GetExistedWebDocument(const CString& strTitle)
 			while (posDoc)
 			{
 				CDocument* pDocTarget = doctempl->GetNextDoc(posDoc);
-				if (pDocTarget && pDocTarget->IsKindOf(RUNTIME_CLASS(CWebDoc)))
+				if (pDocTarget && pDocTarget->GetTitle() == strTitle && pDocTarget->IsKindOf(RUNTIME_CLASS(CWebDoc)))
 				{
-					CString strTitle = pDocTarget->GetTitle();
-					if (strTitle == strTitle)
-					{
-						return pDocTarget;
-					}
+					return pDocTarget;
 				}
 			}
 		}
@@ -1161,13 +1157,9 @@ CDocument * AppUtils::GetDocumentFromTitle(const CString& strTitle)
 			while (posDoc)
 			{
 				CDocument* pDocTarget = doctempl->GetNextDoc(posDoc);
-				if (pDocTarget)
+				if (pDocTarget && pDocTarget->GetTitle() == strTitle)
 				{
-					CString strTitle = pDocTarget->GetTitle();
-					if (strTitle == strTitle)
-					{
-						return pDocTarget;
-					}
+					return pDocTarget;
 				}
 			}
 		}

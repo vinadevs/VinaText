@@ -70,9 +70,11 @@ protected:
 	BOOL m_bCheckFileSizeBeforeOpen{ FALSE };
 	BOOL m_bDisplayMessageBoxForFileChange{ FALSE };
 
-	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
-
 	CString m_strBinaryFileExtensionList;
 	CString m_strInitialFilePickerPath;
+
 	GeneralSettingBrowse m_EditInitialFilePickerPath;
+
+	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
+
 };

@@ -114,6 +114,7 @@ void CAppSettings::ResetAllSettings()
 	m_bEnableAutoDetectCodePage = TRUE;
 	m_bEnableShowHideFoldingMargin = FALSE;
 	m_bAutoSaveFileWhenCloseApp = TRUE;
+	m_bAutoAddNewLineAtTheEOF = FALSE;
 
 	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 
@@ -152,6 +153,9 @@ void CAppSettings::ResetAllSettings()
 	m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
 	m_ApplicationLanguage = VINATEXT_DISPLAY_LANGUAGE::LANGUAGE_ENGLISH;
+
+	// save file eol
+	m_DefaultFileEOL = SC_EOL_CRLF;
 
 	// page width alignment text
 	m_nPageAlignmentWidth = 78;
@@ -220,6 +224,7 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
 	jsonWriter.AddBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonWriter.AddBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
+	jsonWriter.AddBOOL("AutoAddNewLineAtTheEOF", m_bAutoAddNewLineAtTheEOF);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LanguageSpellCheck", AppUtils::CStringToStd(m_strLanguageSpellCheck));
 	jsonWriter.AddValue("BinaryFileExtensionList", AppUtils::CStringToStd(m_strBinaryFileExtensionList));
@@ -239,6 +244,7 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddValue("ApplicationThemeColor", AppUtils::CStringToStd(AppUtils::ColorToRGBCString(m_AppThemeColor)));
 	jsonWriter.AddInteger("ApplicationThemeLook", m_ApplicationThemeLook);
 	jsonWriter.AddInteger("ApplicationLanguage", m_ApplicationLanguage);
+	jsonWriter.AddInteger("DefaultFileEOL", m_DefaultFileEOL);
 	jsonWriter.AddInteger("RenderIndicatorAction", m_RenderIndicatorAction);
 	jsonWriter.AddInteger("PageAlignmentWidth", m_nPageAlignmentWidth);
 	jsonWriter.AddInteger("LongLineColumnLimitation", m_nLongLineMaximum);
@@ -313,6 +319,7 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadBOOL("AskBeforeReplaceInFiles", m_bAskBeforeReplaceInFiles);
 	jsonReader.ReadBOOL("EnableAutoDetectCodePage", m_bEnableAutoDetectCodePage);
 	jsonReader.ReadBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
+	jsonReader.ReadBOOL("AutoAddNewLineAtTheEOF", m_bAutoAddNewLineAtTheEOF);
 	jsonReader.ReadBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
@@ -333,6 +340,7 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadColor("ApplicationThemeColor", (int&)m_AppThemeColor);
 	jsonReader.ReadInteger("ApplicationThemeLook", (int&)m_ApplicationThemeLook);
 	jsonReader.ReadInteger("ApplicationLanguage", (int&)m_ApplicationLanguage);
+	jsonReader.ReadInteger("DefaultFileEOL", (int&)m_DefaultFileEOL);
 	jsonReader.ReadInteger("RenderIndicatorAction", (int&)m_RenderIndicatorAction);
 	jsonReader.ReadInteger("PageAlignmentWidth", m_nPageAlignmentWidth);
 	jsonReader.ReadInteger("LongLineColumnLimitation", m_nLongLineMaximum);

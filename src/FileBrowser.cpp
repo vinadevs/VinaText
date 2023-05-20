@@ -34,7 +34,6 @@ CImageSaveDialog::CImageSaveDialog(BOOL bOpenFileDialog,
 
 void CImageSaveDialog::OnTypeChange()
 {
-	// TODO: Add your specialized code here and/or call the base class
 	CString sFileName(GetFileName());
 	if (sFileName.IsEmpty())
 	{
@@ -102,7 +101,6 @@ CEditSaveDialog::CEditSaveDialog(BOOL bOpenFileDialog,
 
 void CEditSaveDialog::OnTypeChange()
 {
-	// TODO: Add your specialized code here and/or call the base class
 	CString sFileName(GetFileName());
 	if (sFileName.IsEmpty())
 	{
