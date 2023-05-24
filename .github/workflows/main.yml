@@ -6,6 +6,22 @@ on:
       - feature/add-pipelines
 
 jobs:
+  # test:
+  #   runs-on: windows-latest
+
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v3
+
+  #     - name: Setup MSBuild
+  #       uses: microsoft/setup-msbuild@v1
+
+  #     - name: Run unit tests
+  #       shell: cmd
+  #       run: |
+  #         msbuild VinaText.sln /t:Rebuild
+  #         vstest.console.exe VinaText.dll
+
   build:
     runs-on: windows-latest
 
@@ -24,4 +40,4 @@ jobs:
 
       - name: Build
         shell: cmd
-        run: msbuild VinaText.sln /p:Configuration=Release /p:Platform="Any CPU"
+        run: msbuild VinaText.sln /p:Configuration=Release /p:Platform=x64
