@@ -1,0 +1,17 @@
+name: Main pipeline
+
+on:
+  push:
+    branches:
+      - feature/add-pipelines
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+          
+      - name: Run dir command
+        run: dir
