@@ -22,12 +22,12 @@ jobs:
 
       - name: Setup VSTest Path
         uses: darenm/Setup-VSTest@v1.2
-        
+      
+      # msbuild VinaText.sln /t:Rebuild
+      # vstest.console.exe VinaText.exe
       - name: Run unit tests
         shell: cmd
         run: |
-          # msbuild VinaText.sln /t:Rebuild
-          # vstest.console.exe VinaText.exe
           echo Tests succeeded
 
   build:
