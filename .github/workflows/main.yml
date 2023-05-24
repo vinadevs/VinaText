@@ -2,9 +2,8 @@ name: Main pipeline
 
 on:
   push:
-    branches:
-      - feature/add-pipelines
-      - master
+    branches-ignore:
+      - '*'
   pull_request:
     branches:
       - master
