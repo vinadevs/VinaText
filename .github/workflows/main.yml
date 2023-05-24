@@ -18,3 +18,10 @@ jobs:
 
       - name: Run echo command
         run: echo hello
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build
+        shell: cmd
+        run: msbuild VinaText.sln /p:Configuration=Release /p:Platform="Any CPU"
