@@ -27,7 +27,7 @@ jobs:
         shell: cmd
         run: |
           msbuild VinaText.sln /t:Rebuild
-          vstest.console.exe VinaText.dll
+          vstest.console.exe VinaText.exe
 
   build:
     runs-on: windows-latest
