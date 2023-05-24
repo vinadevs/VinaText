@@ -17,12 +17,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup MSBuild Path
-        uses: warrenbuckley/Setup-MSBuild@v1
-  
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
       - name: Setup VSTest Path
         uses: darenm/Setup-VSTest@v1.2
-
+        
       - name: Run unit tests
         shell: cmd
         run: |
