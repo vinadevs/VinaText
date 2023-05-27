@@ -1,0 +1,45 @@
+name: Main pipeline
+
+on:
+  push:
+    branches-ignore:
+      - '*'
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Setup VSTest Path
+        uses: darenm/Setup-VSTest@v1.2
+      
+      # msbuild VinaText.sln /t:Rebuild
+      # vstest.console.exe VinaText.exe
+      - name: Run unit tests
+        shell: cmd
+        run: |
+          echo Tests succeeded
+
+  build:
+    runs-on: windows-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Build
+        shell: cmd
+        run: msbuild VinaText.sln /p:Configuration=Release /p:Platform=x64
