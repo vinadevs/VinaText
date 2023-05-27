@@ -342,7 +342,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_DEBUGGER_STEPOVER, OnStepOver)
 	ON_COMMAND(ID_DEBUGGER_STEPOUT, OnStepOut)
 	ON_COMMAND(ID_OPTIONS_SHOW_ERROR, OnShowBuildErrors)
-	ON_COMMAND(ID_DOCUMENT_GENERATE_BUILD_FILE, OnGenerateBuildFile)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_RESTART, OnUpdateReStartDebugger)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_CALL_STACK, OnUpdateShowCallStack)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_STEPINTO, OnUpdateStepInto)
@@ -353,7 +352,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_VARIABLE_VALUE, OnUpdateWatchVariableValue)
 	ON_UPDATE_COMMAND_UI(ID_DEBUGGER_VARIABLE_TYPE, OnUpdateWatchVariableType)
 	ON_UPDATE_COMMAND_UI(ID_OPTIONS_SHOW_ERROR, OnUpdateShowBuildErrors)
-	ON_UPDATE_COMMAND_UI(ID_DOCUMENT_GENERATE_BUILD_FILE, OnUpdateGenerateBuildFile)
 
 	// from terminal...
 	ON_COMMAND(ID_RUN_SELECTED_TEXT, OnTerminalRunSelectedText)
@@ -422,7 +420,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	// load auto complete data set from external resource
 	ON_COMMAND(ID_DOCUMENT_ADD_AC_DATASET_FROM_FILE, OnAddAutoCompleteFromFile)
 	ON_COMMAND(ID_DOCUMENT_ADD_AC_DATASET_FROM_FOLDER, OnAddAutoCompleteFromFolder)
-	ON_COMMAND(ID_DOCUMENT_ADD_AC_DATASET_VIETNAMESE, OnAddAutoCompleteVietnameseDataset)
 	ON_COMMAND(ID_DOCUMENT_ADD_AC_DATASET_ENGLISH, OnAddAutoCompleteEnglishDataset)
 	ON_COMMAND(ID_DOCUMENT_CLEAR_AC_DATASET, OnClearAutoCompleteDataset)
 
@@ -1344,14 +1341,6 @@ void CEditorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 		{
 			pSubMenu->DeleteMenu(ID_EDITOR_COMMENT, MF_BYCOMMAND);
 			pSubMenu->DeleteMenu(ID_EDITOR_UNCOMMENT, MF_BYCOMMAND);
-		}
-
-		if (m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CPP
-			&& m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_C
-			&& m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_JAVA
-			&& m_CurrentDocLanguage != VINATEXT_SUPPORTED_LANGUAGE::LANGUAGE_CSHAPE)
-		{
-			pSubMenu->DeleteMenu(ID_DOCUMENT_GENERATE_BUILD_FILE, MF_BYCOMMAND);
 		}
 
 		if (!PathFileExists(stSelectedScript))
@@ -7293,8 +7282,7 @@ void CEditorView::OnStartDebugger()
 
 void CEditorView::OnUpdateStartDebugger(CCmdUI * pCmdUI)
 {
-	if (!ThreadWorkerMgr.IsRunning()
-		|| ThreadWorkerMgr.IsDebuggerRunning())
+	if (PathFileExists(m_pDocument->GetPathName()) && (!ThreadWorkerMgr.IsRunning() || ThreadWorkerMgr.IsDebuggerRunning()))
 	{
 		pCmdUI->Enable(TRUE);
 	}
@@ -7901,27 +7889,6 @@ void CEditorView::OnAddAutoCompleteFromFolder()
 	}
 	CString strFolderDataset = dlg.GetPathName();
 	AddAutoCompleteFromFolder(strFolderDataset);
-}
-
-void CEditorView::OnAddAutoCompleteVietnameseDataset()
-{
-	CString strDataSetPath = PathUtils::GetVinaTextPackagePath() + _T("\\translator-packages\\vietnamese-words.ee-package");
-	if (PathFileExists(strDataSetPath))
-	{
-		m_AutoCompelteDataset.clear();
-		CStringArray arrLine;
-		PathUtils::OpenFile(strDataSetPath, arrLine);
-		for (int i = 0; i < arrLine.GetSize(); ++i)
-		{
-			m_AutoCompelteDataset.insert(arrLine[i].Trim());
-		}
-		AfxMessageBox(_T("AutoComplete dataset vietnamese successfully loaded."), MB_ICONINFORMATION);
-		LOG_OUTPUT_MESSAGE_FORMAT(_T("> Loaded dataset vietnamese, total %d vocabulary words..."), static_cast<int>(m_AutoCompelteDataset.size()));
-	}
-	else
-	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist."), strDataSetPath);
-	}
 }
 
 void CEditorView::OnAddAutoCompleteEnglishDataset()
@@ -9554,7 +9521,7 @@ void CEditorView::TextAlignment(CTextAlignment::Alignment option)
 		{
 			std::vector<CString> listLine;
 			listLine.reserve(m_EditorCtrl.GetLineCount());
-			AppUtils::SplitCString(stScript, m_EditorCtrl.GetEOLCString(), listLine);
+			AppUtils::SplitFileContent(stScript, m_EditorCtrl.GetEOLCString(), listLine);
 			CTextAlignment textAlignment;
 			for (const auto& line : listLine)
 			{

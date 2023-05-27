@@ -18,6 +18,8 @@
 #include "stdafx.h"
 #include "FilePartition.h"
 
+#pragma warning(disable:4312)
+
 // Constructor
 CFileLine::CFileLine()
 {

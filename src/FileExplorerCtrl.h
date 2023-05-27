@@ -360,7 +360,6 @@ public:
   afx_msg void OnOpenCMDAppendPathHere();
   afx_msg void OnOpenCMDPatseClipboardHere();
   afx_msg void OnOpenPowerShellHere();
-  afx_msg void OnOpenGitBashHere();
   afx_msg void OnOpenGitWslHere();
   afx_msg void OnOptionsEditListAllFile();
   afx_msg void OnOptionsEditListAllFolder();

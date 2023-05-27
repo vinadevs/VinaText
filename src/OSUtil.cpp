@@ -284,7 +284,7 @@ void OSUtils::OpenFileInWebBrowser(const CString& strEXEName, const CString& str
 {
 	if (strEXEName.Find(_T("MicrosoftEdge")) != -1)
 	{
-		::ShellExecute(NULL, TEXT("open"), strEXEName, strFilePath, NULL, SW_SHOWNORMAL);
+		::ShellExecute(NULL, _T("open"), strFilePath, NULL, NULL, SW_SHOW);
 	}
 	else
 	{

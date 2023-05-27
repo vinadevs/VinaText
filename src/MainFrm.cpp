@@ -236,6 +236,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT, &CMainFrame::OnCloseAllDocumentRight)
 	ON_COMMAND(ID_MDI_TAB_CLOSE, &CMainFrame::OnCloseDocument)
 	ON_COMMAND(ID_MDI_TAB_CLOSE_ALL_UNCHANGE_FILE, &CMainFrame::OnCloseAllDocumentUnmodified)
+	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_CLOSE_ALL_DOC, &CMainFrame::OnUpdateCloseAllDocument)
+	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_CLOSE, &CMainFrame::OnUpdateCloseDocument)
 	ON_COMMAND(ID_MDI_TAB_DELETE_FILE, &CMainFrame::OnDeleteFile)
 	ON_COMMAND(ID_MDI_TAB_GET_FULL_FILE_PATH, &CMainFrame::OnGetFullPath)
 	ON_COMMAND(ID_MDI_TAB_GET_FULL_FILE_PATH_DOUBLE_SLASH, &CMainFrame::OnGetFullPathDoubleSlash)
@@ -247,6 +249,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_OPEN_CONTAINER_FOLDER, &CMainFrame::OnUpdateOpenContainerFolder)
 	ON_COMMAND(ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER, &CMainFrame::OnOpenFileExplorer)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER, &CMainFrame::OnUpdateOpenFileEplorer)
+	ON_COMMAND(ID_TB_OPEN_NEW_TERMINAL_WINDOWS, &CMainFrame::OnOpenToolbarTerminalWindows)
 	ON_COMMAND(ID_MDI_TAB_OPEN_CMD, &CMainFrame::OnOpenCMDHere)
 	ON_COMMAND(ID_MDI_TAB_OPEN_CMD_APPEND_FILE, &CMainFrame::OnOpenCMDAppendFileName)
 	ON_COMMAND(ID_MDI_TAB_OPEN_CMD_APPEND_PATH, &CMainFrame::OnOpenCMDAppendFilePath)
@@ -255,7 +258,6 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_OPEN_CMD_APPEND_FILE, &CMainFrame::OnUpdateOpenCMDAppendFile)
 	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_OPEN_CMD_APPEND_PATH, &CMainFrame::OnUpdateOpenCMDAppendFilePath)
 	ON_COMMAND(ID_MDI_TAB_OPEN_POWERSHELL, &CMainFrame::OnOpenPowerShellHere)
-	ON_COMMAND(ID_MDI_TAB_OPEN_GITBASH, &CMainFrame::OnOpenGitBashHere)
 	ON_COMMAND(ID_MDI_TAB_SHOW_PROPERTIES, &CMainFrame::OnOpenGitFileProperties)
 	ON_COMMAND(ID_MDI_TAB_RENAME, &CMainFrame::OnRenameDocument)
 	ON_COMMAND(ID_MDI_TAB_RELOAD, &CMainFrame::OnReLoadDocument)
@@ -276,6 +278,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWndEx)
 	ON_COMMAND(ID_MDI_TAB_FILE_CHROME, &CMainFrame::OnMDITabOpenInChrome)
 	ON_COMMAND(ID_MDI_TAB_FILE_EDGE, &CMainFrame::OnMDITabOpenInEdge)
 	ON_COMMAND(ID_MDI_TAB_FILE_FIREFOX, &CMainFrame::OnMDITabOpenInFireFox)
+	ON_UPDATE_COMMAND_UI(ID_MDI_TAB_MOVE_PREVIOUS_TAB, &CMainFrame::OnUpdateMDITabMoveToPreviousGroup)
+	ON_COMMAND(ID_TB_NEW_TAB_VERTICAL_GROUP, &CMainFrame::OnToolbarVerticalTabGroup)
+	ON_COMMAND(ID_TB_NEW_TAB_HORIZONTAL_GROUP, &CMainFrame::OnToolbarHorizontalTabGroup)
+	ON_UPDATE_COMMAND_UI(ID_TB_NEW_TAB_VERTICAL_GROUP, &CMainFrame::OnUpdateToolbarVerticalTabGroup)
+	ON_UPDATE_COMMAND_UI(ID_TB_NEW_TAB_HORIZONTAL_GROUP, &CMainFrame::OnUpdateToolbarHorizontalTabGroup)
 
 	// windows printer
 	ON_COMMAND(ID_EXPLORER_PRINT_FILE_NOW, &CMainFrame::OnPrintFileNow)
@@ -2240,7 +2247,6 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 					pPopup->RemoveMenu(7, MF_BYPOSITION);
 				}
 			}
-		
 
 			if ((dwAllowedItems & AFX_MDI_CREATE_HORZ_GROUP) == 0)
 			{
@@ -2282,6 +2288,10 @@ BOOL CMainFrame::OnShowMDITabContextMenu(CPoint point, DWORD dwAllowedItems, BOO
 			if (!AppUtils::CanCloseAllDocumentRight(AppUtils::GetMDIActiveView()))
 			{
 				pPopup->DeleteMenu(ID_MDI_TAB_CLOSE_ALL_DOC_RIGHT, MF_BYCOMMAND);
+			}
+			if (pActiveDoc->GetPathName().IsEmpty() && AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
+			{
+				pPopup->RemoveMenu(0, MF_BYPOSITION);
 			}
 		}
 		// system menu style
@@ -2824,8 +2834,15 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 	{
 		if (!theApp.m_bIsStartAppInistance) // ignore when start up
 			pView->ReupdateTrackingBar();
-		if (!m_wndStatusBar.IsPaneVisible())
-			ShowPane(&m_wndStatusBar, TRUE, TRUE, FALSE);
+		if (!m_wndStatusBar.IsPaneVisible()) {
+			ShowPane(&m_wndStatusBar, TRUE, FALSE, TRUE);
+			if (!theApp.m_bIsStartAppInistance && AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1) {
+				CDocument* pDoc = pView->GetDocument();
+				CString strTitle = pView->GetDocument()->GetTitle();
+				pDoc->SetTitle(_T("1"));
+				pDoc->SetTitle(strTitle);
+			}
+		}
 	}
 	else
 	{
@@ -3496,6 +3513,25 @@ void CMainFrame::OnOpenFileExplorer()
 	}
 }
 
+void CMainFrame::OnOpenToolbarTerminalWindows()
+{
+	switch (AppSettingMgr.m_DefaultToolbarTerminal)
+	{
+	case DEFAULT_TOOLBAR_TERMINAL::MS_CMD:
+		OnOpenCMDHere();
+		break;
+	case DEFAULT_TOOLBAR_TERMINAL::MS_POWERSHELL:
+		OnOpenPowerShellHere();
+		break;
+	case DEFAULT_TOOLBAR_TERMINAL::LINUX_WSL:
+		OnOpenWSLHere();
+		break;
+	default:
+		OnOpenCMDHere();
+		break;
+	}
+}
+
 BOOL CMainFrame::SetCurrentDirectoryTerminal()
 {
 	CString strFolderPath = GetCurrentDocFolder();
@@ -3580,19 +3616,6 @@ void CMainFrame::OnOpenPowerShellHere()
 {
 	SetCurrentDirectoryTerminal();
 	OSUtils::CreateWin32Process(_T("powershell.exe"));
-}
-
-void CMainFrame::OnOpenGitBashHere()
-{
-	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
-	if (!PathFileExists(strGitBash))
-	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
-		return;
-	}
-	SetCurrentDirectoryTerminal();
-	CString strCommandLine = _T("start \"\" \"") + strGitBash + _T("\"") + _T(" --login");
-	_wsystem(AppUtils::CStringToWStd(strCommandLine).c_str());
 }
 
 void CMainFrame::OnOpenGitFileProperties()
@@ -3887,6 +3910,59 @@ void CMainFrame::OnUpdateBookmarkFile(CCmdUI * pCmdUI)
 	UpdateUIByCheckExistFile(pCmdUI);
 }
 
+void CMainFrame::OnUpdateCloseAllDocument(CCmdUI* pCmdUI)
+{
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) > 1)
+	{
+		pCmdUI->Enable(TRUE);
+	}
+	else
+	{
+		pCmdUI->Enable(FALSE);
+	}
+}
+
+void CMainFrame::UpdateUIByCheckTabGroup(CCmdUI* pCmdUI)
+{
+	if (AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	else
+	{
+		pCmdUI->Enable(TRUE);
+	}
+}
+
+void CMainFrame::OnUpdateCloseDocument(CCmdUI* pCmdUI)
+{
+	CDocument* pDoc = GetActiveFrame()->GetActiveDocument();
+	ASSERT(pDoc); if (!pDoc) return;
+	if (!PathFileExists(pDoc->GetPathName()) && AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1)
+	{
+		pCmdUI->Enable(FALSE);
+	}
+	else
+	{
+		pCmdUI->Enable(TRUE);
+	}
+}
+
+void CMainFrame::OnUpdateToolbarVerticalTabGroup(CCmdUI* pCmdUI)
+{
+	UpdateUIByCheckTabGroup(pCmdUI);
+}
+
+void CMainFrame::OnUpdateToolbarHorizontalTabGroup(CCmdUI* pCmdUI)
+{
+	UpdateUIByCheckTabGroup(pCmdUI);
+}
+
+void CMainFrame::OnUpdateMDITabMoveToPreviousGroup(CCmdUI* pCmdUI)
+{
+	UpdateUIByCheckTabGroup(pCmdUI);
+}
+
 void CMainFrame::OnCloseAllDocumentUnmodified()
 {
 	AppUtils::CloseAllDocumentUnmodified();
@@ -4014,7 +4090,7 @@ void CMainFrame::OnToolPythonPipWindow()
 {
 	if (AppSettingMgr.m_strPythonFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("Python Pip3 path does not exist, please set up it in Preference > General Settings > PythonFolderPath!"));
+		AfxMessageBox(_T("Python Pip3 path does not exist, please set up it in Preference > Programming Settings > PythonFolderPath!"));
 		return;
 	}
 	if (!PathFileExists(AppSettingMgr.m_strPythonFolderPath))
@@ -4038,7 +4114,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 {
 	if (AppSettingMgr.m_strNodeJSFolderPath == _T("C:\\"))
 	{
-		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > General Settings > NodeJSFolderPath!"));
+		AfxMessageBox(_T("NodeJS path does not exist, please set up it in Preference > Programming Settings > NodeJSFolderPath!"));
 		return;
 	}
 	if (!PathFileExists(AppSettingMgr.m_strNodeJSFolderPath))
@@ -4159,6 +4235,11 @@ void CMainFrame::OnPrintFileSetupDlg()
 		CWindowsPrinter printer(pImageDoc->GetPathName(), this->GetSafeHwnd());
 		printer.PrintImage(TRUE, pImageDoc->GetImageView());
 	}
+	else if (pDoc->IsKindOf(RUNTIME_CLASS(CPdfDoc)))
+	{
+		CWindowsPrinter printer(pDoc->GetPathName());
+		printer.PrintPDF();
+	}
 }
 
 void CMainFrame::OnPrintPageSetupDlg()
@@ -4168,6 +4249,30 @@ void CMainFrame::OnPrintPageSetupDlg()
 	{
 		CWindowsPrinter printer(_T(""), this->GetSafeHwnd());
 		printer.ShowPageSetupDlg();
+	}
+}
+
+void CMainFrame::OnToolbarVerticalTabGroup()
+{
+	if (GetMDITabGroups().GetCount() > 1)
+	{
+		OnMDITabMoveToNextGroup();
+	}
+	else 
+	{
+		OnNewVerticalTabGroup();
+	}
+}
+
+void CMainFrame::OnToolbarHorizontalTabGroup()
+{
+	if (GetMDITabGroups().GetCount() > 1)
+	{
+		OnMDITabMoveToNextGroup();
+	}
+	else
+	{
+		OnNewHorizontalTabGroup();
 	}
 }
 
@@ -4191,7 +4296,15 @@ void CMainFrame::OnUpdatePrintFileNow(CCmdUI * pCmdUI)
 
 void CMainFrame::OnUpdatePrintFileSetupDlg(CCmdUI * pCmdUI)
 {
-	UpdateUIForPrinter(pCmdUI);
+	CDocument* pDoc = GetActiveFrame()->GetActiveDocument();
+	if (pDoc == NULL)
+	{
+		pCmdUI->Enable(FALSE); return;
+	}
+	if (pDoc->IsKindOf(RUNTIME_CLASS(CEditorDoc)) || pDoc->IsKindOf(RUNTIME_CLASS(CImageDoc)) || pDoc->IsKindOf(RUNTIME_CLASS(CPdfDoc)))
+		pCmdUI->Enable(TRUE);
+	else
+		pCmdUI->Enable(FALSE);
 }
 
 void CMainFrame::OnUpdatePrintPageSetupDlg(CCmdUI * pCmdUI)
@@ -4217,10 +4330,10 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 		strTTText = Native_Language("Copy");
 	else if (pButton->m_nID == ID_EDIT_PASTE)
 		strTTText = Native_Language("Paste");
-	else if (pButton->m_nID == ID_EXPLORER_PRINT_FILE_NOW)
+	else if (pButton->m_nID == ID_EXPLORER_PRINT_SETUP_DLG)
 		strTTText = Native_Language("Print Current File");
 	else if (pButton->m_nID == ID_PANE_FILE_EXPLORER)
-		strTTText = Native_Language("Explorer Window (Ctrl + Shift + Q)");
+		strTTText = Native_Language("Explorer Window (Ctrl+Shift+Q)");
 	else if (pButton->m_nID == ID_EDIT_UNDO)
 		strTTText = Native_Language("Undo Change");
 	else if (pButton->m_nID == ID_EDIT_REDO)
@@ -4232,11 +4345,11 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_QUICK_SEARCH)
 		strTTText = Native_Language("Quick Search Dialog");
 	else if (pButton->m_nID == ID_PANE_SEARCH_AND_REPLACE_WINDOW)
-		strTTText = Native_Language("Search Text Window (Ctrl + Shift + F)");
+		strTTText = Native_Language("Search Text Window (Ctrl+Shift+F)");
 	else if (pButton->m_nID == ID_HIDE_ALL_DOCKWINDOW)
 		strTTText = Native_Language("Hide All Dock Windows");
 	else if (pButton->m_nID == ID_CURRENT_WINDOWS)
-		strTTText = Native_Language("Current Windows (Ctrl + Shift + W)");
+		strTTText = Native_Language("Current Windows");
 	else if (pButton->m_nID == ID_EDITOR_COMMENT)
 		strTTText = Native_Language("Comment Code");
 	else if (pButton->m_nID == ID_EDITOR_UNCOMMENT)
@@ -4265,14 +4378,16 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 		strTTText = Native_Language("Print File Information");
 	else if (pButton->m_nID == ID_MDI_TAB_MOVE_PREVIOUS_TAB)
 		strTTText = Native_Language("Move To Previous Tab Group");
-	else if (pButton->m_nID == ID_MDI_TAB_NEW_VERTICAL_TAB)
+	else if (pButton->m_nID == ID_TB_NEW_TAB_VERTICAL_GROUP)
 		strTTText = Native_Language("Move To Vertical Tab Group");
+	else if (pButton->m_nID == ID_TB_NEW_TAB_HORIZONTAL_GROUP)
+		strTTText = Native_Language("Move To Horizontal Tab Group");
 	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CONTAINER_FOLDER)
 		strTTText = Native_Language("Reveal File In Container Folder");
 	else if (pButton->m_nID == ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER)
-		strTTText = Native_Language("Reveal File In Explorer Window");
-	else if (pButton->m_nID == ID_MDI_TAB_OPEN_CMD)
-		strTTText = Native_Language("Open New CMD Window");
+		strTTText = Native_Language("Reveal File In Explorer Window (Ctrl+Shift+Q)");
+	else if (pButton->m_nID == ID_TB_OPEN_NEW_TERMINAL_WINDOWS)
+		strTTText = Native_Language("Open New Terminal Window");
 	else if (pButton->m_nID == ID_DOCUMENT_TRANSLATE)
 		strTTText = Native_Language("Translate Selected Text");
 	else if (pButton->m_nID == ID_MDI_TAB_RELOAD)
@@ -4280,9 +4395,9 @@ BOOL CMainFrameToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & str
 	else if (pButton->m_nID == ID_MDI_TAB_CLOSE)
 		strTTText = Native_Language("Close Current File");
 	else if (pButton->m_nID == ID_VIEW_ZOOM_IN)
-		strTTText = Native_Language("Zoom In Editor View");
+		strTTText = Native_Language("Zoom In Editor View (Ctrl+ScrollUp)");
 	else if (pButton->m_nID == ID_VIEW_ZOOM_OUT)
-		strTTText = Native_Language("Zoom Out Editor View");
+		strTTText = Native_Language("Zoom Out Editor View (Ctrl+ScrollDown)");
 	else if (pButton->m_nID == ID_TOOLS_PREVIEW_MODE)
 		strTTText = Native_Language("Enable Explorer Preview File Mode");
 	return TRUE;

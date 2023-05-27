@@ -14,12 +14,13 @@ class CImageView;
 class CWindowsPrinter
 {
 public:
-	CWindowsPrinter(const CString& strDocumentPath, HWND hParent);
+	CWindowsPrinter(const CString& strDocumentPath, HWND hParent = NULL);
     ~CWindowsPrinter() = default;
 	BOOL ShowPageSetupDlg();
     void PrintText(BOOL bShowPrinterDlg = FALSE, CEditorCtrl* pEditorCtrl = NULL);
 	void PrintImage(BOOL bShowPrinterDlg = FALSE, CImageView* pView = NULL);
+	void PrintPDF();
 private:
-	HWND m_hParentUI;
+	HWND m_hParentUI {NULL};
 	CString m_strDocumentPath;
 };

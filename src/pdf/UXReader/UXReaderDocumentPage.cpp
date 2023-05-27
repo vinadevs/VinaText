@@ -2,7 +2,7 @@
 //	UXReaderDocumentPage.cpp
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #include "stdafx.h"
@@ -127,8 +127,8 @@ const HBITMAP UXReader::UXReaderDocumentPage::PageBitmap(const HDC hDC, const do
 			{
 				FPDFBitmap_FillRect(pdfBitmap, 0, 0, bw, bh, 0xFFFFFFFF); // Fill white
 
-				const FS_MATRIX matrix = {float(scale), 0.0f, 0.0f, float(-scale), 0.0f, float(bh)};
-
+				const FS_MATRIX matrix = { float(scale), 0.0f, 0.0f, float(scale), 0.0f, 0.0f };
+				
 				const FS_RECTF clip = {0.0f, 0.0f, float(bw), float(bh)}; // To bitmap
 
 				const int options = (FPDF_ANNOT | FPDF_LCD_TEXT | FPDF_NO_CATCH);
@@ -159,7 +159,7 @@ void UXReader::UXReaderDocumentPage::DrawPageArea(const FPDF_BITMAP pdfBitmap, c
 
 		const float tx = -area.xf(); const float ty = (area.hf() + area.yf());
 
-		const FS_MATRIX matrix = {float(scale), 0.0f, 0.0f, float(-scale), tx, ty};
+		const FS_MATRIX matrix = { float(scale), 0.0f, 0.0f, float(scale), 0.0f, 0.0f };
 
 		const FS_RECTF clip = {0.0f, 0.0f, float(bw), float(bh)}; // to bitmap
 
@@ -297,7 +297,7 @@ bool UXReader::UXReaderDocumentPage::ExtractPageLinks(void)
 
 					if (const FPDF_DEST dest = FPDFLink_GetDest(m_pdfDocument, link))
 					{
-						index = int(FPDFDest_GetPageIndex(m_pdfDocument, dest));
+						index = int(FPDFDest_GetDestPageIndex(m_pdfDocument, dest));
 
 						FPDF_BOOL bX = FALSE; FPDF_BOOL bY = FALSE; FPDF_BOOL bZ = FALSE;
 						FS_FLOAT pageX = 0.0f; FS_FLOAT pageY = 0.0f; FS_FLOAT zoom = 0.0f;
@@ -339,7 +339,7 @@ bool UXReader::UXReaderDocumentPage::ExtractPageLinks(void)
 
 					if (const FPDF_DEST dest = FPDFLink_GetDest(m_pdfDocument, link))
 					{
-						index = int(FPDFDest_GetPageIndex(m_pdfDocument, dest));
+						index = int(FPDFDest_GetDestPageIndex(m_pdfDocument, dest));
 
 						FPDF_BOOL bX = FALSE; FPDF_BOOL bY = FALSE; FPDF_BOOL bZ = FALSE;
 						FS_FLOAT pageX = 0.0f; FS_FLOAT pageY = 0.0f; FS_FLOAT zoom = 0.0f;
@@ -400,7 +400,7 @@ bool UXReader::UXReaderDocumentPage::ExtractPageLinks(void)
 
 			if (const FPDF_DEST dest = FPDFLink_GetDest(m_pdfDocument, link))
 			{
-				index = int(FPDFDest_GetPageIndex(m_pdfDocument, dest));
+				index = int(FPDFDest_GetDestPageIndex(m_pdfDocument, dest));
 
 				FPDF_BOOL bX = FALSE; FPDF_BOOL bY = FALSE; FPDF_BOOL bZ = FALSE;
 				FS_FLOAT pageX = 0.0f; FS_FLOAT pageY = 0.0f; FS_FLOAT zoom = 0.0f;

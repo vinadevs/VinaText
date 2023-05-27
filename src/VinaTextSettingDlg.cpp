@@ -128,7 +128,7 @@ void VinaTextSettingDlg::OnBnClickedOk()
 
 void VinaTextSettingDlg::OnBnClickedButtonResetSettings()
 {
-	if (IDYES == AfxMessageBox(_T("[Warning] This will reset all your settings to original default state, do you want reset it?"), MB_YESNO | MB_ICONWARNING))
+	if (IDYES == AfxMessageBox(_T("[Warning] This operation will reset all your settings to original default state, do you want to reset?"), MB_YESNO | MB_ICONWARNING))
 	{
 		AppSettingMgr.ResetAllSettings();
 		// Load original settings to dialog setting

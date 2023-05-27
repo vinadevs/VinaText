@@ -31,6 +31,7 @@ protected:
 
 	void InitiateList();
 	void OnCopyFullPath();
+	void OnSelectAll();
 
 	CListCtrl m_listTab;
 

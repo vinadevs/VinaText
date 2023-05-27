@@ -30,7 +30,7 @@ protected:
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditClear();
 	afx_msg void OnEditClearSelected();
-	afx_msg void OnEditSelectall();
+	afx_msg void OnEditSelectAll();
 	afx_msg void OnEditSaveToFile();
 	afx_msg void OnEditViewLogInEditor();
 	afx_msg void OnEditRevealPath();

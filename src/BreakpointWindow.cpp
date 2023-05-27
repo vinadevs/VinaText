@@ -588,7 +588,7 @@ void CBreakpointList::OnEditClearSelected()
 	}
 }
 
-void CBreakpointList::OnEditSelectall()
+void CBreakpointList::OnEditSelectAll()
 {
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
@@ -784,7 +784,7 @@ BOOL CBreakpointList::PreTranslateMessage(MSG * pMsg)
 		{
 			if (pMsg->wParam == 'A')
 			{
-				OnEditSelectall();
+				OnEditSelectAll();
 				return true;
 			}
 			if (pMsg->wParam == 'C')
@@ -824,7 +824,7 @@ BEGIN_MESSAGE_MAP(CBreakpointList, CListCtrl)
 	ON_COMMAND(ID_EDIT_COPY, &CBreakpointList::OnEditCopy)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CBreakpointList::OnEditClear)
 	ON_COMMAND(ID_EDIT_CLEAR_SELECTED, &CBreakpointList::OnEditClearSelected)
-	ON_COMMAND(ID_EDIT_SELECT_ALL, &CBreakpointList::OnEditSelectall)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, &CBreakpointList::OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_SAVE_LOG_TO_FILE, &CBreakpointList::OnEditSaveToFile)
 	ON_COMMAND(ID_EDIT_LOG_TO_EDITOR, &CBreakpointList::OnEditViewLogInEditor)
 	ON_COMMAND(ID_EDIT_BREAKPOINT_WINDOWN_REVEALPATH, &CBreakpointList::OnEditRevealPath)

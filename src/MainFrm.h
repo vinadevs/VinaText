@@ -317,13 +317,13 @@ public:
 	afx_msg void OnGetFileNameNoExtension();
 	afx_msg void OnOpenContainerFolder();
 	afx_msg void OnOpenFileExplorer();
+	afx_msg void OnOpenToolbarTerminalWindows();
 	afx_msg void OnOpenCMDHere();
 	afx_msg void OnOpenCMDPasteClipboard();
 	afx_msg void OnOpenCMDAppendFileName();
 	afx_msg void OnOpenCMDAppendFilePath();
 	afx_msg void OnOpenWSLHere();
 	afx_msg void OnOpenPowerShellHere();
-	afx_msg void OnOpenGitBashHere();
 	afx_msg void OnOpenGitFileProperties();
 	afx_msg void OnRenameDocument();
 	afx_msg void OnReLoadDocument();
@@ -353,6 +353,8 @@ public:
 	afx_msg void OnPrintFileNow();
 	afx_msg void OnPrintFileSetupDlg();
 	afx_msg void OnPrintPageSetupDlg();
+	afx_msg void OnToolbarVerticalTabGroup();
+	afx_msg void OnToolbarHorizontalTabGroup();
 	afx_msg void OnUpdatePrintFileNow(CCmdUI * pCmdUI);
 	afx_msg void OnUpdatePrintFileSetupDlg(CCmdUI * pCmdUI);
 	afx_msg void OnUpdatePrintPageSetupDlg(CCmdUI * pCmdUI);
@@ -362,6 +364,11 @@ public:
 	afx_msg void OnUpdateOpenCMDAppendFilePath(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOpenContainerFolder(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateBookmarkFile(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateCloseAllDocument(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateCloseDocument(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateToolbarVerticalTabGroup(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateToolbarHorizontalTabGroup(CCmdUI* pCmdUI);
+	afx_msg void OnUpdateMDITabMoveToPreviousGroup(CCmdUI* pCmdUI);
 	afx_msg void OnUserExtensions();
 	afx_msg void OnExtensionRefreshList();
 	afx_msg void OnUserExtension(UINT nIDExtension);
@@ -379,6 +386,7 @@ protected:
 	void UpdateUIByCheckExistFile(CCmdUI * pCmdUI);
 	void UpdateUIForEditorView(CCmdUI * pCmdUI);
 	void UpdateUIForPrinter(CCmdUI * pCmdUI);
+	void UpdateUIByCheckTabGroup(CCmdUI* pCmdUI);
 	void SetDockingPaneIcons(BOOL bBigIcons);
 	BOOL CreateDockingBars();
 	void FinalizeWorkerThread();

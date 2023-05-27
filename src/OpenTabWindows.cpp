@@ -55,6 +55,15 @@ BOOL COpenTabWindows::PreTranslateMessage(MSG* pMsg)
 			}
 			break;
 		}
+		case 'A':
+		{
+			if ((GetKeyState(VK_CONTROL) & 0x8000))
+			{
+				OnSelectAll();
+				return TRUE;
+			}
+			break;
+		}
 		case VK_RETURN:
 		{
 			OnBnClickedButtonActiveTab();
@@ -66,6 +75,11 @@ BOOL COpenTabWindows::PreTranslateMessage(MSG* pMsg)
 	return CDlgBase::PreTranslateMessage(pMsg);
 }
 
+void COpenTabWindows::OnSelectAll()
+{
+	m_listTab.SetItemState(-1, LVIS_SELECTED, LVIS_SELECTED);
+}
+
 void COpenTabWindows::InitiateList()
 {
 	m_listTab.DeleteAllItems();
@@ -75,7 +89,7 @@ void COpenTabWindows::InitiateList()
 	m_listTab.InsertColumn(1, L"Full Path", LVCFMT_LEFT, 500);
 
 	const auto listOpenTabs = AppUtils::GetAllDocuments();
-	for (int i = listOpenTabs.size() - 1; i >= 0; --i)
+	for (int i = (int)listOpenTabs.size() - 1; i >= 0; --i)
 	{
 		CString strFileName = listOpenTabs[i]->GetTitle();
 		CString strFilePath = listOpenTabs[i]->GetPathName();

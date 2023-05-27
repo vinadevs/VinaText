@@ -68,6 +68,8 @@ public:
 #endif
 
 protected:
+	void DoSaveDocument();
+
 	std::unique_ptr<CLanguageDatabase> m_pLangDatabase = NULL;
 	CString m_strSaveDocumentPath;
 

@@ -413,7 +413,7 @@ void AppUtils::SplitCString(const CString& strFields, const CString& strDelimite
 	}
 }
 
-void AppUtils::SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields)
+void AppUtils::SplitFileContent(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields)
 {
 	// Start at the beginning
 	int lastPos = 0;
@@ -430,7 +430,10 @@ void AppUtils::SplitCString(const CString& strFields, const CString& strDelimite
 		pos = strFields.Find(strDelimiters, lastPos);
 	}
 	// Push the last token
-	arFields.push_back(strFields.Mid(lastPos, pos - lastPos));
+	if (pos - lastPos < 0)
+		arFields.push_back(strFields.Mid(lastPos));
+	else
+		arFields.push_back(strFields.Mid(lastPos, pos - lastPos));
 }
 
 std::wstring AppUtils::GetUnicodeWString(const std::string& multibyte, bool stopAtNull)

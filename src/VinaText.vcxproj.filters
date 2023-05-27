@@ -665,9 +665,6 @@
     <ClInclude Include="pdf\UXReader\common.h">
       <Filter>Component GUI\PDF Viewer\PDFium\UXReaderInclude</Filter>
     </ClInclude>
-    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h">
-      <Filter>Component GUI\PDF Viewer\PDFium\UXReaderView</Filter>
-    </ClInclude>
     <ClInclude Include="WebHandler.h">
       <Filter>Internet</Filter>
     </ClInclude>
@@ -716,14 +713,14 @@
     <ClInclude Include="WebView.h">
       <Filter>Main Skeleton\View</Filter>
     </ClInclude>
-    <ClInclude Include="OpenTabWindows.h">
-      <Filter>Dialog GUI</Filter>
-    </ClInclude>
     <ClInclude Include="ComboboxMultiLine.h">
       <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
     <ClInclude Include="ComboBoxExtList.h">
       <Filter>Component GUI\MFC GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="OpenTabWindows.h">
+      <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1198,9 +1195,6 @@
     <ClCompile Include="pdf\UXReader\common.cpp">
       <Filter>Component GUI\PDF Viewer\PDFium\UXReaderInclude</Filter>
     </ClCompile>
-    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp">
-      <Filter>Component GUI\PDF Viewer\PDFium\UXReaderView</Filter>
-    </ClCompile>
     <ClCompile Include="WebHandler.cpp">
       <Filter>Internet</Filter>
     </ClCompile>
@@ -1249,14 +1243,14 @@
     <ClCompile Include="WebView.cpp">
       <Filter>Main Skeleton\View</Filter>
     </ClCompile>
-    <ClCompile Include="OpenTabWindows.cpp">
-      <Filter>Dialog GUI</Filter>
-    </ClCompile>
     <ClCompile Include="ComboboxMultiLine.cpp">
       <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
     <ClCompile Include="ComboBoxExtList.cpp">
       <Filter>Component GUI\MFC GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenTabWindows.cpp">
+      <Filter>Main Skeleton\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

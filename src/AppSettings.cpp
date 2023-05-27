@@ -6,70 +6,6 @@
 #include "EditorDoc.h"
 #include "EditorView.h"
 
-void CAppSettings::RemoveDocumentUndefTitle(const CString& strTitle)
-{
-	int nDocUndefID = AppUtils::CStringToInt(strTitle.Mid(10).Trim());
-	m_DocIDBuffer.erase(nDocUndefID);
-}
-
-CString CAppSettings::CreateDocumentUndefTitle()
-{
-	int nDocID = 1;
-	BOOL bBreakFlag = TRUE;
-	while (bBreakFlag)
-	{
-		// -> 1 3 4 6
-		if (m_DocIDBuffer.find(nDocID) == m_DocIDBuffer.end())
-		{
-			m_DocIDBuffer.insert(nDocID);
-			bBreakFlag = FALSE;
-		}
-		else
-		{
-			nDocID++;
-		}
-	}
-	return AfxCStringFormat(_T(" untitled %d"), nDocID);
-}
-
-int CAppSettings::GetNewFileCopyID()
-{
-	return m_nFileCopyCounter++;
-}
-
-void CAppSettings::ResetEditorCaretInfo()
-{
-	m_RecentEditorCaretInfo.clear();
-}
-
-void CAppSettings::SaveRecentEditorCaretInfo(const CString& strPathName)
-{
-	CEditorDoc* pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(strPathName));
-	if (!pDoc) return;
-	CEditorView* pView = pDoc->GetEditorView();
-	if (!pView) return;
-	CEditorCtrl* pEditor = pView->GetEditorCtrl();
-	if (!pEditor) return;
-	RecentEditorInfo data;
-	data._nCurrentPosition = pEditor->GetCurrentPosition();
-	data._nFirstVisibleLine = pEditor->GetFirstVisibleLine();
-	data._nWrapMode = static_cast<int>(pEditor->IsEditorInWrapMode());
-	if (data._nCurrentPosition != 0 || data._nFirstVisibleLine != 0 || data._nWrapMode != 0)
-	{
-		m_RecentEditorCaretInfo[AppUtils::CStringToStd(strPathName)] = data;
-	}
-}
-
-RecentEditorInfo CAppSettings::GetRecentEditorCaretInfo(const CString& strPathName)
-{
-	const auto found = m_RecentEditorCaretInfo.find(AppUtils::CStringToStd(strPathName));
-	if (found != m_RecentEditorCaretInfo.end())
-	{
-		return found->second;
-	}
-	return RecentEditorInfo();
-}
-
 void CAppSettings::ResetAllSettings()
 {
 	// general settings
@@ -116,6 +52,7 @@ void CAppSettings::ResetAllSettings()
 	m_bAutoSaveFileWhenCloseApp = TRUE;
 	m_bAutoAddNewLineAtTheEOF = FALSE;
 
+	// folder bar
 	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
 
 	// indicator style
@@ -128,7 +65,6 @@ void CAppSettings::ResetAllSettings()
 	m_strInitialFilePickerPath = _T("C:\\");
 	m_strPythonFolderPath = _T("C:\\");
 	m_strNodeJSFolderPath = _T("C:\\");
-	m_strGitWindowFolderPath = _T("C:\\");
 	m_strAntiVirusProgram = _T("C:\\Program Files\\Windows Defender\\MpCmdRun.exe");
 	m_strAntiVirusArgument = _T("-Scan -ScanType 3 -File");
 	m_strLanguageTranslateFrom = _T("en");
@@ -153,6 +89,9 @@ void CAppSettings::ResetAllSettings()
 	m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
 	m_ApplicationLanguage = VINATEXT_DISPLAY_LANGUAGE::LANGUAGE_ENGLISH;
+
+	// toolbar
+	m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::MS_CMD;
 
 	// save file eol
 	m_DefaultFileEOL = SC_EOL_CRLF;
@@ -255,9 +194,9 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddInteger("ExplorerExpandLimitFileOpen", m_nExplorerExpandLimitFileOpen);
 	jsonWriter.AddInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonWriter.AddInteger("EditorZoomFactor", m_nEditorZoomFactor);
+	jsonWriter.AddInteger("DefaultToolbarTerminal", m_DefaultToolbarTerminal);
 	jsonWriter.AddValue("NodeJSFolderPath", AppUtils::CStringToStd(m_strNodeJSFolderPath));
 	jsonWriter.AddValue("PythonFolderPath", AppUtils::CStringToStd(m_strPythonFolderPath));
-	jsonWriter.AddValue("GitWindowFolderPath", AppUtils::CStringToStd(m_strGitWindowFolderPath));
 	jsonWriter.AddValue("AntiVirusProgram", AppUtils::CStringToStd(m_strAntiVirusProgram));
 	jsonWriter.AddValue("AntiVirusArgument", AppUtils::CStringToStd(m_strAntiVirusArgument));
 	jsonWriter.AddValue("LanguageTranslateFrom", AppUtils::CStringToStd(m_strLanguageTranslateFrom));
@@ -340,7 +279,7 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadColor("ApplicationThemeColor", (int&)m_AppThemeColor);
 	jsonReader.ReadInteger("ApplicationThemeLook", (int&)m_ApplicationThemeLook);
 	jsonReader.ReadInteger("ApplicationLanguage", (int&)m_ApplicationLanguage);
-	jsonReader.ReadInteger("DefaultFileEOL", (int&)m_DefaultFileEOL);
+	jsonReader.ReadInteger("DefaultFileEOL", m_DefaultFileEOL);
 	jsonReader.ReadInteger("RenderIndicatorAction", (int&)m_RenderIndicatorAction);
 	jsonReader.ReadInteger("PageAlignmentWidth", m_nPageAlignmentWidth);
 	jsonReader.ReadInteger("LongLineColumnLimitation", m_nLongLineMaximum);
@@ -351,9 +290,9 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadInteger("ExplorerExpandLimitFileOpen", m_nExplorerExpandLimitFileOpen);
 	jsonReader.ReadInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonReader.ReadInteger("EditorZoomFactor", m_nEditorZoomFactor);
+	jsonReader.ReadInteger("DefaultToolbarTerminal", (int&)m_DefaultToolbarTerminal);
 	jsonReader.ReadCString("PythonFolderPath", m_strPythonFolderPath);
 	jsonReader.ReadCString("NodeJSFolderPath", m_strNodeJSFolderPath);
-	jsonReader.ReadCString("GitWindowFolderPath", m_strGitWindowFolderPath);
 	jsonReader.ReadCString("AntiVirusProgram", m_strAntiVirusProgram);
 	jsonReader.ReadCString("AntiVirusArgument", m_strAntiVirusArgument);
 	jsonReader.ReadCString("LanguageTranslateFrom", m_strLanguageTranslateFrom);
@@ -385,4 +324,68 @@ BOOL CAppSettings::LoadRecentEditorCaretData()
 	if (!jsonReader.LoadFile()) return FALSE;
 	jsonReader.ReadRecentEditorInfo("EditorFileStateData", m_RecentEditorCaretInfo);
 	return TRUE;
+}
+
+void CAppSettings::RemoveDocumentUndefTitle(const CString& strTitle)
+{
+	int nDocUndefID = AppUtils::CStringToInt(strTitle.Mid(10).Trim());
+	m_DocIDBuffer.erase(nDocUndefID);
+}
+
+CString CAppSettings::CreateDocumentUndefTitle()
+{
+	int nDocID = 1;
+	BOOL bBreakFlag = TRUE;
+	while (bBreakFlag)
+	{
+		// -> 1 3 4 6
+		if (m_DocIDBuffer.find(nDocID) == m_DocIDBuffer.end())
+		{
+			m_DocIDBuffer.insert(nDocID);
+			bBreakFlag = FALSE;
+		}
+		else
+		{
+			nDocID++;
+		}
+	}
+	return AfxCStringFormat(_T(" untitled %d"), nDocID);
+}
+
+int CAppSettings::GetNewFileCopyID()
+{
+	return m_nFileCopyCounter++;
+}
+
+void CAppSettings::ResetEditorCaretInfo()
+{
+	m_RecentEditorCaretInfo.clear();
+}
+
+void CAppSettings::SaveRecentEditorCaretInfo(const CString& strPathName)
+{
+	CEditorDoc* pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(strPathName));
+	if (!pDoc) return;
+	CEditorView* pView = pDoc->GetEditorView();
+	if (!pView) return;
+	CEditorCtrl* pEditor = pView->GetEditorCtrl();
+	if (!pEditor) return;
+	RecentEditorInfo data;
+	data._nCurrentPosition = pEditor->GetCurrentPosition();
+	data._nFirstVisibleLine = pEditor->GetFirstVisibleLine();
+	data._nWrapMode = static_cast<int>(pEditor->IsEditorInWrapMode());
+	if (data._nCurrentPosition != 0 || data._nFirstVisibleLine != 0 || data._nWrapMode != 0)
+	{
+		m_RecentEditorCaretInfo[AppUtils::CStringToStd(strPathName)] = data;
+	}
+}
+
+RecentEditorInfo CAppSettings::GetRecentEditorCaretInfo(const CString& strPathName)
+{
+	const auto found = m_RecentEditorCaretInfo.find(AppUtils::CStringToStd(strPathName));
+	if (found != m_RecentEditorCaretInfo.end())
+	{
+		return found->second;
+	}
+	return RecentEditorInfo();
 }

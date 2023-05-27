@@ -200,7 +200,7 @@ void CFindDlg::SearchAllOnFileFromEditor(const CString& strSearchWhat)
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
 			listLine.reserve(pEditor->GetLineCount());
-			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
+			AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int count = 0;
 			ResultSearchData._nTotalSearchFile = 1;
@@ -456,7 +456,7 @@ void CFindDlg::OnSearchAll()
 				if (strScript.IsEmpty()) return;
 				std::vector<CString> listLine;
 				listLine.reserve(pEditor->GetLineCount());
-				AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
+				AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
 				unsigned int curLine = 0;
 				unsigned int MatchedWords = 0;
 				ResultSearchData._nMatchedFiles = 1;
@@ -519,7 +519,7 @@ void CFindDlg::OnSearchAll()
 							if (strScript.IsEmpty()) continue;
 							std::vector<CString> listLine;
 							listLine.reserve(pEditor->GetLineCount());
-							AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
+							AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
 							unsigned int curLine = 0;
 							for (int i = 0; i < listLine.size(); ++i)
 							{

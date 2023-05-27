@@ -1,0 +1,188 @@
+[33mcommit 7e97fec60db694025588a3a92ef229dcffcd940f[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 20 11:27:21 2023 +0900
+
+    a lot of improvements, support for Linux users,...
+
+[33mcommit fc04a652054a5af76ebe3c3c26e08dd9e563b00c[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 13 15:10:58 2023 +0900
+
+    add regedit explorer menu script
+
+[33mcommit 092200ca8ff29a97d89e075698c2e16e5b2a3923[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 13 14:32:01 2023 +0900
+
+    Release v1.8
+
+[33mcommit 6992c76102a84cc9428a9d4583218da7e9d8898e[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 13 14:29:03 2023 +0900
+
+    fix reported bugs, add new features, some speedy improvement,...
+
+[33mcommit fe30b44fdf77b77d8a24c9eca97da08037650675[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 6 22:23:27 2023 +0900
+
+    changed website domain from package files
+
+[33mcommit 75be43e2850a6e4394fc1243d7e292da06dcdc34[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 6 22:21:52 2023 +0900
+
+    save zoom factor, keep search string when switch search/replace tabs
+
+[33mcommit 6cea3bf53299e93f3bd4af667d64ac98555a9088[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat May 6 21:18:19 2023 +0900
+
+    fix bug preview pdf file, bug clone file function
+
+[33mcommit 51da28ac6a60fab6bf2c5e7ff0eee8027621185f[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Wed May 3 10:59:37 2023 +0900
+
+    some GUI improvements, added auto saved file feature
+
+[33mcommit 42243490fe4119d200dce436c6fda490e15614cf[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sun Apr 30 18:42:07 2023 +0900
+
+    scale UI for low resolution screens
+
+[33mcommit 89c7d182f745f771aff04f62e84a41cea7dae554[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sun Apr 30 17:16:09 2023 +0900
+
+    Improvements for End Of Line (CR/LR/CR), Bash, Batch Text highlight
+
+[33mcommit 6d177b0e2b8bc7b3928d5aeb763d125397487e43[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sat Apr 29 12:01:03 2023 +0900
+
+    Fix bug display unicode text on dock windows, improve auto indentation tab
+
+[33mcommit e12fe173efba282ce33588f00d46d1b5d5630eca[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Wed Apr 26 23:55:26 2023 +0900
+
+    Fix Setting Dialog Too Big Issue
+
+[33mcommit 077ac77c3588de1095bbf9b8f232e9e9216b6fde[m
+Merge: 5d16866 4571030
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Wed Apr 26 21:17:16 2023 +0900
+
+    Merge branch 'master' of https://github.com/vinadevs/VinaText
+
+[33mcommit 5d16866b49d8b6682de194872506b8d7acbf22c1[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Wed Apr 26 21:16:47 2023 +0900
+
+    Drawing modern UI, toolbar,...
+
+[33mcommit 457103010f19f53601721f934d974529bac0ff98[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sun Apr 23 19:05:00 2023 +0900
+
+    Release 1.3
+
+[33mcommit 2a6a8f630080bc6848721cc2016e94f90960c48d[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sun Apr 23 19:00:14 2023 +0900
+
+    Support Free Basic, Free Pascal, renew setting dialogs,...
+
+[33mcommit 130b974f7ed0f1f01c91680247adae5d62c0fa7f[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Tue Apr 18 18:58:17 2023 +0900
+
+    Support relative path for compiler/debugger, improve text case converter
+
+[33mcommit 918f50f27e8680a523a82f6b3d1e879c3fc867bc[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Sun Apr 16 21:07:45 2023 +0900
+
+    Support User defined extensions, removed unused code
+
+[33mcommit d2fe667905be08ad9d40e32c073f278d79a37941[m
+Merge: 49c0fe6 11b6b16
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Fri Apr 14 22:58:43 2023 +0900
+
+    Merge branch 'master' of https://github.com/vinadevs/VinaText
+
+[33mcommit 49c0fe6635bcfeac0e48639a1dd9d09f0722811d[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Fri Apr 14 22:57:21 2023 +0900
+
+    (feedback) add Wsl tab feature
+
+[33mcommit 11b6b162f8440a0f3a3a921dc340a76aea9c862d[m
+Merge: 3e56704 a1523a1
+Author: vinadevs <75571755+vinadevs@users.noreply.github.com>
+Date:   Wed Apr 12 21:23:49 2023 +0900
+
+    Merge pull request #4 from vinadevs/update-webpage
+    
+    remove blurring effect
+
+[33mcommit a1523a16356a29849d1f90cadd163f081aef0983[m[33m ([m[1;31morigin/update-webpage[m[33m)[m
+Author: nagakura1998 <khiempro12c2@gmail.com>
+Date:   Wed Apr 12 11:52:33 2023 +0900
+
+    remove blurring effect
+
+[33mcommit 3e56704c1f0d689a61b9da42aafaaf036a5dd875[m
+Merge: afed9e0 3c8c077
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Tue Apr 11 20:02:51 2023 +0900
+
+    Merge branch 'master' of https://github.com/vinadevs/VinaText
+
+[33mcommit afed9e06f78f449acd1d4ee973d93ade0f40d35a[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Tue Apr 11 20:01:38 2023 +0900
+
+    Yahoo, we have released VinaText version 1.0!!!
+
+[33mcommit 3c8c077e0c40f85952b6c001ecf63c7e82521b46[m
+Merge: 013a076 bd73ecd
+Author: vinadevs <75571755+vinadevs@users.noreply.github.com>
+Date:   Wed Apr 5 18:23:45 2023 +0900
+
+    Merge pull request #3 from vinadevs/update-webpage
+    
+    Update VinaText Webpage.
+
+[33mcommit bd73ecd40930cf73b4dc63c9cbcba674d90a6f58[m
+Author: nagakura1998 <khiempro12c2@gmail.com>
+Date:   Wed Apr 5 10:17:15 2023 +0900
+
+    change introduction image
+
+[33mcommit 179dbca4644c6ea498c7525a5152c9dc70c73059[m
+Author: nagakura1998 <khiempro12c2@gmail.com>
+Date:   Wed Apr 5 10:08:50 2023 +0900
+
+    delete webdoc
+
+[33mcommit 22f5338d84865ec0d1aa4bf470636a9fa9ebe9b9[m
+Author: nagakura1998 <khiempro12c2@gmail.com>
+Date:   Wed Apr 5 10:06:20 2023 +0900
+
+    update license
+
+[33mcommit 1009e12e1bcc7f45ec4e4b4c3e9146a1d992ec8e[m
+Author: nagakura1998 <khiempro12c2@gmail.com>
+Date:   Wed Apr 5 09:26:41 2023 +0900
+
+    update webpage
+
+[33mcommit 013a076d0dd70f4b09f9f055d9328b47b3bd073a[m
+Author: Chung Tran Phuong <tranphuongchungit@gmail.com>
+Date:   Mon Apr 3 11:48:04 2023 +0900
+
+    renew master

@@ -1,5 +1,8 @@
 Windows Registry Editor Version 5.00
 
+; set the full path (with \\) of VinaText.exe to both blow settings
+; eg. C:\\Downloads\\VinaText-Poratable-x.x\\VinaText.exe
+
 [HKEY_CLASSES_ROOT\*\shell\Open by &VinaText]
 "Icon"="full_path_to\\VinaText.exe"
 

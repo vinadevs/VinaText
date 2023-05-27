@@ -584,7 +584,7 @@ void CVinaTextApp::OnHelpReportIssue()
 
 void CVinaTextApp::OnHelpReleaseNotes()
 {
-	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://vinatext.dev/"), _T(""), _T(""), SW_MAXIMIZE);
+	OSUtils::CreateProcessAsynchronous(TEXT("open"), _T("https://github.com/vinadevs/VinaText/releases"), _T(""), _T(""), SW_MAXIMIZE);
 }
 
 void CVinaTextApp::OnUpdateSaveFileCryptography(CCmdUI * pCmdUI)
@@ -609,7 +609,7 @@ void CVinaTextApp::OnFileOpenUTF8()
 
 void CVinaTextApp::OnFileOpenUTF16LE()
 {
-	ReloadDocumentWithNewEncoding(TF_UTF16LE, _T("UTF8"));
+	ReloadDocumentWithNewEncoding(TF_UTF16LE, _T("UTF16LE"));
 }
 
 void CVinaTextApp::OnFileOpenUTF16BE()

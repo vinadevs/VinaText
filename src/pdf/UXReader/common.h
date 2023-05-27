@@ -2,7 +2,7 @@
 //	stdafx.hpp
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 //	Master include file for standard system include files, or project specific
 //	include files that are used frequently, but are changed infrequently.

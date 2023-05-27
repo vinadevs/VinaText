@@ -2,7 +2,7 @@
 //	UXReaderResource.cpp
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #include "stdafx.h"
@@ -6515,7 +6515,7 @@ HBITMAP UXReader::UXReaderResource::RenderIcon(const HDC hDC, const int w, const
 					{
 						FPDFBitmap_FillRect(pdfBitmap, 0, 0, bw, bh, 0x00FFFFFF); // Fill white
 
-						const FS_MATRIX matrix = {float(ts), 0.0f, 0.0f, float(-ts), 0.0f, float(bh)};
+						const FS_MATRIX matrix = { float(ts), 0.0f, 0.0f, float(ts), 0.0f, 0.0f };
 
 						const FS_RECTF clip = {0.0f, 0.0f, float(bw), float(bh)}; // To bitmap
 

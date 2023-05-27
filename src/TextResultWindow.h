@@ -32,7 +32,7 @@ protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditClear();
-	afx_msg void OnEditSelectall();
+	afx_msg void OnEditSelectAll();
 	afx_msg void OnEditSaveToFile();
 	afx_msg void OnEditViewLogInEditor();
 	afx_msg void OnEditRevealPath();

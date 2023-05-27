@@ -24,14 +24,12 @@
 IMPLEMENT_DYNCREATE(CFileExplorerView, CView)
 
 BEGIN_MESSAGE_MAP(CFileExplorerView, CView)
-
     ON_COMMAND_EX(ID_VIEW_DETAILS, &CFileExplorerView::OnViewCommand)
     ON_COMMAND_EX(ID_VIEW_LARGEICON, &CFileExplorerView::OnViewCommand)
     ON_COMMAND_EX(ID_VIEW_LIST, &CFileExplorerView::OnViewCommand)
     ON_COMMAND_EX(ID_VIEW_SMALLICON, &CFileExplorerView::OnViewCommand)
 	ON_COMMAND_EX(ID_VIEW_LINEUP, &CFileExplorerView::OnViewCommand)
 	ON_COMMAND_EX(ID_VIEW_BYNAME, &CFileExplorerView::OnViewCommand)
-
 	ON_WM_CREATE()
 	ON_WM_SIZE()
     ON_WM_DESTROY()
@@ -44,7 +42,6 @@ CFileExplorerView::CFileExplorerView()
 {
     m_bShowFrames = true;
     m_dwAdviseCookie = 0;
-
 }
 
 CFileExplorerView::~CFileExplorerView()
@@ -73,7 +70,6 @@ void CFileExplorerView::OnDraw(CDC* /*pDC*/)
     // TODO: add draw code for native data here
 }
 
-
 // CFileExplorerView printing
 
 BOOL CFileExplorerView::OnPreparePrinting(CPrintInfo* pInfo)
@@ -91,7 +87,6 @@ void CFileExplorerView::OnEndPrinting(CDC* /*pDC*/, CPrintInfo* /*pInfo*/)
 {
     // TODO: add cleanup after printing
 }
-
 
 // CFileExplorerView diagnostics
 
@@ -112,7 +107,6 @@ CFileExplorerDoc* CFileExplorerView::GetDocument() const // non-debug version is
     return (CFileExplorerDoc*)m_pDocument;
 }
 #endif //_DEBUG
-
 
 // CFileExplorerView message handlers
 
@@ -568,7 +562,6 @@ HRESULT CFileExplorerView::OnNavigationPending(PCIDLIST_ABSOLUTE pidlFolder)
 
 void CFileExplorerView::OnNavigationComplete(PCIDLIST_ABSOLUTE pidlFolder)
 {
-	//ATLTRACE("OnNavigationComplete %S\n", static_cast<LPCTSTR>(GetFolderDisplayName(pidlFolder)));
 	m_strNavigatedPath = static_cast<LPCTSTR>(GetFolderDisplayName(pidlFolder));
 	if (PathFileExists(m_strNavigatedPath))
 	{
@@ -578,12 +571,10 @@ void CFileExplorerView::OnNavigationComplete(PCIDLIST_ABSOLUTE pidlFolder)
 
 void CFileExplorerView::OnViewCreated(IShellView *psv)
 {
-    //ATLTRACE("OnViewCreated\n");
 }
 
 void CFileExplorerView::OnNavigationFailed(PCIDLIST_ABSOLUTE pidlFolder)
 {
-    //ATLTRACE("OnNavigationFailed %S\n", static_cast<LPCTSTR>(GetFolderDisplayName(pidlFolder)));
 }
 
 void CFileExplorerView::GetSelectedPaths(CStringArray& arrSelection)

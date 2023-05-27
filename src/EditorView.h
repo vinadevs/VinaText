@@ -374,7 +374,6 @@ public:
 	afx_msg void OnUpdateOptionsSyncVerticalScrolling(CCmdUI * pCmdUI);
 	afx_msg void OnAddAutoCompleteFromFile();
 	afx_msg void OnAddAutoCompleteFromFolder();
-	afx_msg void OnAddAutoCompleteVietnameseDataset();
 	afx_msg void OnAddAutoCompleteEnglishDataset();
 	afx_msg void OnClearAutoCompleteDataset();
 	afx_msg void OnOptionsEditSpellChecker();

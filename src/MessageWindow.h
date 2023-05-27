@@ -36,7 +36,7 @@ protected:
 	afx_msg void OnEditClear();
 	afx_msg void OnEditGoolgeIt();
 	afx_msg void OnEditTranslateIt();
-	afx_msg void OnEditSelectall();
+	afx_msg void OnEditSelectAll();
 	afx_msg void OnEditViewLogInEditor();
 	afx_msg void OnEditWrapLine();
 	afx_msg void OnEditCountMessageLine();

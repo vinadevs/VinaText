@@ -27,6 +27,7 @@ void ProgrammingSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 	if (bFromGUI)
 	{
 		UpdateData(TRUE);
+		FromDefaultTerminalWindowsCombobox();
 		AppSettingMgr.m_bAllowOpenFileHasErrorBuild = m_bAllowOpenFileHasErrorBuild;
 		AppSettingMgr.m_bAskBeforeTerminateProgram = m_bAskBeforeTerminateProgram;
 		AppSettingMgr.m_bAutoSaveDocumentWhenbuild = m_bAutoSaveDocumentWhenbuild;
@@ -36,10 +37,10 @@ void ProgrammingSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bOpenWindowCmdWhenRunProgram = m_bOpenWindowCmdWhenRunProgram;
 		AppSettingMgr.m_strNodeJSFolderPath = m_strNodeJSFolderPath;
 		AppSettingMgr.m_strPythonFolderPath = m_strPythonFolderPath;
-		AppSettingMgr.m_strGitWindowFolderPath = m_strGitWindowFolderPath;
 	}
 	else
 	{
+		InitDefaultTerminalWindowsCombobox();
 		m_bAllowOpenFileHasErrorBuild = AppSettingMgr.m_bAllowOpenFileHasErrorBuild;
 		m_bAskBeforeTerminateProgram = AppSettingMgr.m_bAskBeforeTerminateProgram;
 		m_bAutoSaveDocumentWhenbuild = AppSettingMgr.m_bAutoSaveDocumentWhenbuild;
@@ -49,7 +50,6 @@ void ProgrammingSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bOpenWindowCmdWhenRunProgram = AppSettingMgr.m_bOpenWindowCmdWhenRunProgram;
 		m_strNodeJSFolderPath = AppSettingMgr.m_strNodeJSFolderPath;
 		m_strPythonFolderPath = AppSettingMgr.m_strPythonFolderPath;
-		m_strGitWindowFolderPath = AppSettingMgr.m_strGitWindowFolderPath;
 		UpdateData(FALSE);
 	}
 }
@@ -66,10 +66,9 @@ void ProgrammingSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_OPEN_WINDOW_CMD_WHEN_RUN_PROGRAM, m_bOpenWindowCmdWhenRunProgram);
 	DDX_Control(pDX, ID_NODE_JS_FOLDER_PATH_EDIT, m_EditNodeJSFolderPath);
 	DDX_Control(pDX, ID_PYTHON_FOLDER_PATH_EDIT, m_EditPythonFolderPath);
-	DDX_Control(pDX, ID_GIT_WINDOW_FOLDER_PATH_EDIT, m_EditGitWindowFolderPath);
 	DDX_Text(pDX, ID_NODE_JS_FOLDER_PATH_EDIT, m_strNodeJSFolderPath);
 	DDX_Text(pDX, ID_PYTHON_FOLDER_PATH_EDIT, m_strPythonFolderPath);
-	DDX_Text(pDX, ID_GIT_WINDOW_FOLDER_PATH_EDIT, m_strGitWindowFolderPath);
+	DDX_Control(pDX, IDC_COMBO_DEFAULT_TERMINAL_WINDOWS, m_DefaultToolbarTerminalWindows);
 }
 
 BOOL ProgrammingSettingDlg::OnInitDialog()
@@ -78,7 +77,6 @@ BOOL ProgrammingSettingDlg::OnInitDialog()
 
 	m_EditNodeJSFolderPath.EnableFolderBrowseButton();
 	m_EditPythonFolderPath.EnableFolderBrowseButton();
-	m_EditGitWindowFolderPath.EnableFolderBrowseButton();
 
 	UpdateGUISettings(FALSE);
 
@@ -155,6 +153,49 @@ void ProgrammingSettingDlg::OnSize(UINT nType, int cx, int cy)
 	CDialogEx::OnSize(nType, cx, cy);
 
 	m_pScrollHelper->OnSize(nType, cx, cy);
+}
+
+void ProgrammingSettingDlg::InitDefaultTerminalWindowsCombobox()
+{
+	m_DefaultToolbarTerminalWindows.ResetContent();
+	m_DefaultToolbarTerminalWindows.AddString(_T("Windows Command Prompt (CMD)"));
+	m_DefaultToolbarTerminalWindows.AddString(_T("Windows PowerShell"));
+	m_DefaultToolbarTerminalWindows.AddString(_T("Windows Subsystem Linux (WSL)"));
+	switch (AppSettingMgr.m_DefaultToolbarTerminal)
+	{
+	case DEFAULT_TOOLBAR_TERMINAL::MS_CMD:
+		m_DefaultToolbarTerminalWindows.SetCurSel(0);
+		break;
+	case DEFAULT_TOOLBAR_TERMINAL::MS_POWERSHELL:
+		m_DefaultToolbarTerminalWindows.SetCurSel(1);
+		break;
+	case DEFAULT_TOOLBAR_TERMINAL::LINUX_WSL:
+		m_DefaultToolbarTerminalWindows.SetCurSel(2);
+		break;
+	default:
+		m_DefaultToolbarTerminalWindows.SetCurSel(0);
+		break;
+	}
+}
+
+void ProgrammingSettingDlg::FromDefaultTerminalWindowsCombobox()
+{
+	int iSel = m_DefaultToolbarTerminalWindows.GetCurSel();
+	switch (iSel)
+	{
+	case 0:
+		AppSettingMgr.m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::MS_CMD;
+		break;
+	case 1:
+		AppSettingMgr.m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::MS_POWERSHELL;
+		break;
+	case 2:
+		AppSettingMgr.m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::LINUX_WSL;
+		break;
+	default:
+		AppSettingMgr.m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::MS_CMD;
+		break;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////

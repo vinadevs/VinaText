@@ -37,11 +37,14 @@ struct EditorFontSetting
 
 #define MDITAB_SETTINGS_COLOR RGB(230, 159, 102)
 
-// general settings
+// VinaText general settings
+////////////////////////////////////////////////////////////////////////////////
+// All new settings need be added into void CAppSettings::ResetAllSettings() too.
+////////////////////////////////////////////////////////////////////////////////
 class CAppSettings
 {
 public:
-	void ResetAllSettings(); // all new variable members need to be initiated in this function also!
+	void ResetAllSettings();
 
 	// editor document ID
 	void RemoveDocumentUndefTitle(const CString& strTitle);
@@ -53,7 +56,7 @@ public:
 	RecentEditorInfo GetRecentEditorCaretInfo(const CString& strPathName);
 	void ResetEditorCaretInfo();
 
-	// save / load
+	// save/load from file
 	BOOL SaveSettingData();
 	BOOL LoadSettingData();
 	BOOL SaveRecentEditorCaretData();
@@ -117,7 +120,6 @@ public:
 	CString m_strLanguageSpellCheck = _T("en-us");
 	CString m_strNodeJSFolderPath = _T("C:\\");
 	CString m_strPythonFolderPath = _T("C:\\");
-	CString m_strGitWindowFolderPath = _T("C:\\Program Files\\Git");
 	CString m_strAntiVirusProgram = _T("C:\\Program Files\\Windows Defender\\MpCmdRun.exe");
 	CString m_strAntiVirusArgument = _T("-Scan -ScanType 3 -File");
 
@@ -137,6 +139,9 @@ public:
 	EDITOR_THEME_BACKGROUND_COLOR m_AppThemeColor = EDITOR_THEME_BACKGROUND_COLOR::THEME_BACKGROUND_COLOR_LIGHT;
 	APPLICATION_THEME_LOOK m_ApplicationThemeLook = APPLICATION_THEME_LOOK::THEME_OFFICE_2007_SILVER_LOOK;
 	VINATEXT_DISPLAY_LANGUAGE m_ApplicationLanguage = VINATEXT_DISPLAY_LANGUAGE::LANGUAGE_ENGLISH;
+
+	// toolbar
+	DEFAULT_TOOLBAR_TERMINAL m_DefaultToolbarTerminal = DEFAULT_TOOLBAR_TERMINAL::MS_CMD;
 
 	// eol for new file
 	int m_DefaultFileEOL = SC_EOL_CRLF;

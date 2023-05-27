@@ -416,7 +416,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 						}
 						std::vector<CString> listLine;
 						listLine.reserve(pEditor->GetLineCount());
-						AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
+						AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
 						std::wstring inputfile = AppUtils::CStringToWStd(strFile);
 						std::wstring replace_what = AppUtils::CStringToWStd(strSearchWhat);
 						std::wstring replace_with = AppUtils::CStringToWStd(strReplaceWith);

@@ -679,7 +679,7 @@ void CPathResultList::OnEditDelete()
 	SetFocus();
 }
 
-void CPathResultList::OnEditSelectall()
+void CPathResultList::OnEditSelectAll()
 {
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
@@ -1010,7 +1010,7 @@ BOOL CPathResultList::PreTranslateMessage(MSG * pMsg)
 		{
 			if (pMsg->wParam == 'A')
 			{
-				OnEditSelectall();
+				OnEditSelectAll();
 				return TRUE;
 			}
 			if (pMsg->wParam == 'C')
@@ -1062,7 +1062,7 @@ BEGIN_MESSAGE_MAP(CPathResultList, CListCtrl)
 	ON_COMMAND(ID_EDIT_COPY, &CPathResultList::OnEditCopy)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CPathResultList::OnEditClear)
 	ON_COMMAND(ID_EDIT_DELETE_FROM_LIST, &CPathResultList::OnEditDelete)
-	ON_COMMAND(ID_EDIT_SELECT_ALL, &CPathResultList::OnEditSelectall)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, &CPathResultList::OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_SAVE_LOG_TO_FILE, &CPathResultList::OnEditSaveToFile)
 	ON_COMMAND(ID_EDIT_PATH_RESULT_WINDOWN_REVEALPATH, &CPathResultList::OnEditRevealPath)
 	ON_COMMAND(ID_EDIT_COPY_FULL_PATH, &CPathResultList::OnEditCopyFullPath)

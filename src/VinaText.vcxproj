@@ -77,10 +77,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
+    <IncludePath>
+    </IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(IncludePath);</IncludePath>
+    <IncludePath>
+    </IncludePath>
     <LibraryPath>$(LibraryPath);</LibraryPath>
     <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -105,6 +108,7 @@
       <SDLCheck>true</SDLCheck>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>..\..\boost;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -129,6 +133,7 @@
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -245,7 +250,6 @@
     <ClInclude Include="pdf\UXReader\UXReaderDocumentPage.h" />
     <ClInclude Include="pdf\UXReader\UXReaderDocumentPane.h" />
     <ClInclude Include="pdf\UXReader\UXReaderDocumentView.h" />
-    <ClInclude Include="pdf\UXReader\UXReaderMainWindow.h" />
     <ClInclude Include="pdf\UXReader\UXReaderGeometry.h" />
     <ClInclude Include="pdf\UXReader\UXReaderGlobals.h" />
     <ClInclude Include="pdf\UXReader\UXReaderLibrary.h" />
@@ -433,7 +437,6 @@
     <ClCompile Include="pdf\UXReader\UXReaderDocumentPage.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDocumentPane.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderDocumentView.cpp" />
-    <ClCompile Include="pdf\UXReader\UXReaderMainWindow.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderGeometry.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderGlobals.cpp" />
     <ClCompile Include="pdf\UXReader\UXReaderLibrary.cpp" />

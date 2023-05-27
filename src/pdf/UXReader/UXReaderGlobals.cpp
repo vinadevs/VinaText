@@ -2,7 +2,7 @@
 //	UXReaderGlobals.cpp
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #include "stdafx.h"
@@ -13,4 +13,4 @@
 //	Global statics
 //
 
-wchar_t *const uxreader = L"Copyright © 2017-2019 Julius Oklamcak. All rights reserved.";
+wchar_t *const uxreader = L"Copyright ï¿½ 2017-2019 Julius Oklamcak. All rights reserved.";

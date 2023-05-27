@@ -107,7 +107,7 @@ namespace EditorLanguageDef
 		_T("rc"),                                    // SCLEX_CPP
 		_T("au3"),                                   // SCLEX_CPP
 		_T("bas"),									 // SCLEX_VB
-		_T("vcxproj|filters|user|vcproj|csproj|csxproj|vbproj|dbproj"), // SCLEX_CPP
+		_T("vcxproj|filters|user|vcproj|csproj|csxproj|vbproj|dbproj|sln"), // SCLEX_CPP
 		0,
 	};
 

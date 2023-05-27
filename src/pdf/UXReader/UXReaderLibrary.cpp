@@ -2,13 +2,12 @@
 //	UXReaderLibrary.cpp
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #include "stdafx.h"
 #include "common.h"
 #include "UXReaderLibrary.h"
-#include "UXReaderMainWindow.h"
 #include "UXReaderDocumentPane.h"
 #include "UXReaderDocumentView.h"
 #include "UXReaderToolbarPane.h"
@@ -99,8 +98,6 @@ void UXReader::UXReaderLibrary::DoRegisterWindowClasses(void)
 
 	if (m_Module != nullptr)
 	{
-		UXReaderMainWindow::DoRegisterWindowClass(m_Module);
-
 		UXReaderDocumentPane::DoRegisterWindowClass(m_Module);
 		UXReaderDocumentView::DoRegisterWindowClass(m_Module);
 
@@ -118,8 +115,6 @@ void UXReader::UXReaderLibrary::UnRegisterWindowClasses(void)
 
 	if (m_Module != nullptr)
 	{
-		UXReaderMainWindow::UnRegisterWindowClass(m_Module);
-
 		UXReaderDocumentPane::UnRegisterWindowClass(m_Module);
 		UXReaderDocumentView::UnRegisterWindowClass(m_Module);
 

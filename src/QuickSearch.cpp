@@ -1,5 +1,10 @@
-// QuickSearch.cpp : implementation file
-//
+/*#*******************************************************************************
+# COPYRIGHT NOTES
+# ---------------
+# This is a part of VinaText Project
+# Copyright(C) - free open source - vinadevs
+# This source code can be used, distributed or modified under MIT license
+#*******************************************************************************/
 
 #include "stdafx.h"
 #include "Resource.h"
@@ -232,7 +237,7 @@ void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 			if (strScript.IsEmpty()) return;
 			std::vector<CString> listLine;
 			listLine.reserve(pEditor->GetLineCount());
-			AppUtils::SplitCString(strScript, pEditor->GetEOLCString(), listLine);
+			AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
 			unsigned int curLine = 0;
 			unsigned int MatchedWords = 0;
 			ResultSearchData._nMatchedFiles = 1;

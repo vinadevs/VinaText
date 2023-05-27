@@ -190,7 +190,6 @@ BEGIN_MESSAGE_MAP(CFileExplorerCtrl, FILETREECTRL_BASE_CLASS) //NOLINT(modernize
 	ON_COMMAND(ID_TREEFILECTRL_OPEN_CMD_APPEND_PATH, &CFileExplorerCtrl::OnOpenCMDAppendPathHere)
 	ON_COMMAND(ID_TREEFILECTRL_OPEN_CMD_PASTE_CLIPBOARD, &CFileExplorerCtrl::OnOpenCMDPatseClipboardHere)
 	ON_COMMAND(ID_TREEFILECTRL_OPEN_POWERSHELL, &CFileExplorerCtrl::OnOpenPowerShellHere)
-	ON_COMMAND(ID_TREEFILECTRL_OPEN_GITBASH, &CFileExplorerCtrl::OnOpenGitBashHere)
 	ON_COMMAND(ID_TREEFILECTRL_OPEN_WSL, &CFileExplorerCtrl::OnOpenGitWslHere)
 	ON_COMMAND(ID_TREEFILECTRL_LIST_ALL_FILE, &CFileExplorerCtrl::OnOptionsEditListAllFile)
 	ON_COMMAND(ID_TREEFILECTRL_LIST_ALL_FOLDER, &CFileExplorerCtrl::OnOptionsEditListAllFolder)
@@ -2764,36 +2763,6 @@ void CFileExplorerCtrl::OnOpenPowerShellHere()
 	}
 }
 
-void CFileExplorerCtrl::OnOpenGitBashHere()
-{
-	CString strGitBash = AppSettingMgr.m_strGitWindowFolderPath + _T("\\bin\\sh.exe");
-	if (!PathFileExists(strGitBash))
-	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist. Please set it in [Preference > General Settings]."), strGitBash);
-		return;
-	}
-	HTREEITEM hItem = GetSelectedItem();
-	if (hItem)
-	{
-		CString sPath(ItemToPath(hItem));
-		if (!PathFileExists(sPath)) return;
-		if (PathUtils::IsDirectory(sPath))
-		{
-			SetCurrentDirectoryW(sPath);
-			CString strCommandLine = _T("start \"\" \"") + strGitBash + _T("\"") + _T(" --login");
-			_wsystem(AppUtils::CStringToWStd(strCommandLine).c_str());
-		}
-		else
-		{
-			CString strContainerPath = PathUtils::GetContainerPath(sPath);
-			if (!PathFileExists(strContainerPath)) return;
-			SetCurrentDirectoryW(strContainerPath);
-			CString strCommandLine = _T("start \"\" \"") + strGitBash + _T("\"") + _T(" --login");
-			_wsystem(AppUtils::CStringToWStd(strCommandLine).c_str());
-		}
-	}
-}
-
 void CFileExplorerCtrl::OnOpenGitWslHere()
 {
 	HTREEITEM hItem = GetSelectedItem();
@@ -3749,7 +3718,7 @@ INT_PTR CFileExplorerCtrl::OnToolHitTest(CPoint point, TOOLINFO * pTI) const
 	{
 		GetItemRect(hitem, &rect, TRUE);
 		pTI->hwnd = m_hWnd;
-		pTI->uId = (UINT)hitem;
+		pTI->uId = (UINT_PTR)hitem;
 		pTI->lpszText = LPSTR_TEXTCALLBACK;
 		pTI->rect = rect;
 		return pTI->uId;
@@ -5969,7 +5938,7 @@ BOOL CFileExplorerCtrl::OnToolTipTextNotify(UINT id, NMHDR * pNMHDR, LRESULT * p
 	TOOLTIPTEXTW* pTTTW = (TOOLTIPTEXTW*)pNMHDR;
 
 	// do not process the message from built in tooltip 
-	if (pNMHDR->idFrom == (UINT)m_hWnd &&
+	if (pNMHDR->idFrom == (UINT_PTR)m_hWnd &&
 		((pNMHDR->code == TTN_NEEDTEXTA && pTTTA->uFlags & TTF_IDISHWND) ||
 		(pNMHDR->code == TTN_NEEDTEXTW && pTTTW->uFlags & TTF_IDISHWND)))
 	{

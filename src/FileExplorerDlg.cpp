@@ -64,10 +64,10 @@ BEGIN_MESSAGE_MAP(CFileExplorerDlg, CDialogEx)
 	ON_COMMAND(ID_EXPLORER_TB_SEARCH_FILE, &CFileExplorerDlg::OnSearch)
 	ON_COMMAND(ID_EXPLORER_TB_GOTO_PATH, &CFileExplorerDlg::OnGoto)
 	ON_COMMAND(ID_EXPLORER_TB_GET_PATH_STRING, &CFileExplorerDlg::OnGetPath)
-	ON_COMMAND(ID_EXPLORER_TB_BACK_TO_DESKTOP, &CFileExplorerDlg::OnBackToDesktop)
+	ON_COMMAND(ID_EXPLORER_TB_BACK_TO_ROOT, &CFileExplorerDlg::OnBackToDesktop)
 	ON_COMMAND(ID_EXPLORER_TB_DELETE, &CFileExplorerDlg::OnDelete)
 	ON_COMMAND(ID_EXPLORER_TB_BOOKMARK_PATH, &CFileExplorerDlg::OnBookmark)
-	ON_COMMAND(ID_EXPLORER_TB_PRINT_FILE, &CFileExplorerDlg::OnPrint)
+	ON_COMMAND(ID_EXPLORER_TB_SHOW_PROPERTIES, &CFileExplorerDlg::OnShowProperties)
 	ON_COMMAND(ID_EXPLORER_TB_RENAME, &CFileExplorerDlg::OnRename)
 END_MESSAGE_MAP()
 
@@ -208,11 +208,9 @@ void CFileExplorerDlg::OnBookmark()
 	m_FileExplorerCtrl.OnBookMarkPath();
 }
 
-void CFileExplorerDlg::OnPrint()
+void CFileExplorerDlg::OnShowProperties()
 {
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	ASSERT(pFrame); if (!pFrame) return;
-	pFrame->OnPrintFileSetupDlg();
+	m_FileExplorerCtrl.OnProperties();
 }
 
 void CFileExplorerDlg::OnRename()
@@ -226,26 +224,26 @@ void CFileExplorerDlg::OnRename()
 BOOL CExplorerToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & strTTText) const
 {
 	if (pButton->m_nID == ID_EXPLORER_TB_GO_BACK)
-		strTTText = _T("Goto Previous Selected Path");
+		strTTText = _T("Goto Previous Selected Path (Left Arrow)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_GO_FORWARD)
-		strTTText = _T("Goto Next Selected Path");
+		strTTText = _T("Goto Next Selected Path (Right Arrow)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_REFRESH)
-		strTTText = _T("Refresh Explorer");
+		strTTText = _T("Refresh Explorer (F5)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_SEARCH_FILE)
-		strTTText = _T("Search/Navigate At Path");
-	else if (pButton->m_nID == ID_EXPLORER_TB_BACK_TO_DESKTOP)
-		strTTText = _T("Back To Desktop");
+		strTTText = _T("Search/Navigate At Path  (Ctrl + F)");
+	else if (pButton->m_nID == ID_EXPLORER_TB_BACK_TO_ROOT)
+		strTTText = _T("Back To Root (Shift + Tab)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_DELETE)
-		strTTText = _T("Delete Selected Path");
+		strTTText = _T("Send Selected Path To Recycle Bin (Delete)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_BOOKMARK_PATH)
-		strTTText = _T("Bookmark Selected Path");
+		strTTText = _T("Bookmark Selected Path (Ctrl + B)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_GET_PATH_STRING)
-		strTTText = _T("Get Selected Path String");
-	else if (pButton->m_nID == ID_EXPLORER_TB_PRINT_FILE)
-		strTTText = _T("Print Selected Path");
+		strTTText = _T("Get Selected Path String (Ctrl + Shift + C)");
+	else if (pButton->m_nID == ID_EXPLORER_TB_SHOW_PROPERTIES)
+		strTTText = _T("Show Path Properties (Ctrl + P)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_RENAME)
-		strTTText = _T("Rename Selected Path");
+		strTTText = _T("Rename Selected Path (F2)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_GOTO_PATH)
-		strTTText = _T("Goto Any Path");
+		strTTText = _T("Goto Any Path (Ctrl + G)");
 	return TRUE;
 }

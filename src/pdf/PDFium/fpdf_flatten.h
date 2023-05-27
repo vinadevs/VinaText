@@ -1,4 +1,4 @@
-// Copyright 2014 PDFium Authors. All rights reserved.
+// Copyright 2014 The PDFium Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -35,7 +35,7 @@ extern "C" {
 //
 // Currently, all failures return |FLATTEN_FAIL| with no indication of the
 // cause.
-DLLEXPORT int STDCALL FPDFPage_Flatten(FPDF_PAGE page, int nFlag);
+FPDF_EXPORT int FPDF_CALLCONV FPDFPage_Flatten(FPDF_PAGE page, int nFlag);
 
 #ifdef __cplusplus
 }  // extern "C"

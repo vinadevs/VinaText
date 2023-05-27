@@ -382,7 +382,7 @@ std::string hexa_decode(std::string const & _str)
 		*/
 		else if ((_str[i] == '\n') || (_str[i] == '\r'))
 		{
-			if ((stat != st_cc) && (stat != st_init)) return false;
+			if ((stat != st_cc) && (stat != st_init)) return ascii;
 			stat = st_init;
 		}
 		else if ((_str[i] >= 'a' && _str[i] <= 'f') ||

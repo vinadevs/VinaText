@@ -66,7 +66,7 @@ namespace AppUtils
 	CString GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, CStringArray& arFields, BOOL bForceTrim = FALSE);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, std::list<CString>& arFields, BOOL bForceTrim = FALSE);
-	void SplitCString(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields); // recommend version
+	void SplitFileContent(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields); // recommend version
 	std::wstring GetUnicodeWString(const std::string & multibyte, bool stopAtNull);
 	void SetCurrentCodePage(unsigned int uiCodePage);
 	unsigned int GetCurrentCodePage();

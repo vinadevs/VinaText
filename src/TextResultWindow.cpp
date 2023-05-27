@@ -716,7 +716,7 @@ void CSearchResultList::OnEditDelete()
 	SetFocus();
 }
 
-void CSearchResultList::OnEditSelectall()
+void CSearchResultList::OnEditSelectAll()
 {
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
@@ -1009,7 +1009,7 @@ BOOL CSearchResultList::PreTranslateMessage(MSG * pMsg)
 		{
 			if (pMsg->wParam == 'A')
 			{
-				OnEditSelectall();
+				OnEditSelectAll();
 				return true;
 			}
 			if (pMsg->wParam == 'C')
@@ -1062,7 +1062,7 @@ BEGIN_MESSAGE_MAP(CSearchResultList, CListCtrl)
 	ON_COMMAND(ID_EDIT_COPY, &CSearchResultList::OnEditCopy)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CSearchResultList::OnEditClear)
 	ON_COMMAND(ID_EDIT_DELETE_FROM_LIST, &CSearchResultList::OnEditDelete)
-	ON_COMMAND(ID_EDIT_SELECT_ALL, &CSearchResultList::OnEditSelectall)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, &CSearchResultList::OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_SAVE_LOG_TO_FILE, &CSearchResultList::OnEditSaveToFile)
 	ON_COMMAND(ID_EDIT_LOG_TO_EDITOR, &CSearchResultList::OnEditViewLogInEditor)
 	ON_COMMAND(ID_EDIT_SEARCH_RESULT_WINDOWN_REVEALPATH, &CSearchResultList::OnEditRevealPath)

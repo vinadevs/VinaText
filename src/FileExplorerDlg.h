@@ -61,7 +61,7 @@ public:
 	afx_msg void OnBackToDesktop();
 	afx_msg void OnDelete();
 	afx_msg void OnBookmark();
-	afx_msg void OnPrint();
+	afx_msg void OnShowProperties();
 	afx_msg void OnRename();
 
 protected:

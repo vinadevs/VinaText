@@ -14,7 +14,6 @@
 #include "AppUtil.h"
 #include "AppSettings.h"
 
-#include "pdf/UXReader/UXReaderMainWindow.h"
 #include "pdf/UXReader/UXReaderDocument.h"
 
 #ifdef _DEBUG

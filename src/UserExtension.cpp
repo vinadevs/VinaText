@@ -145,7 +145,7 @@ void CUserExtension::InvokeCommand(UINT nIDExtension)
 				}
 				else // general
 				{
-					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Extension Error] \"%s\" does not exist!"), pDoc->GetPathName());
+					AfxMessageBox(_T("[Extension Error] $(VAR_FILE_PATH) does not exist!"), MB_ICONWARNING);
 					return;
 				}
 			}

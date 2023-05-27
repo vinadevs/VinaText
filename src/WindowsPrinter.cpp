@@ -13,7 +13,7 @@
 #include "ImageView.h"
 #include "Memdc.h"
 
-CWindowsPrinter::CWindowsPrinter(const CString& strDocumentPath, HWND hParent)
+CWindowsPrinter::CWindowsPrinter(const CString& strDocumentPath, HWND hParent/*= NULL*/)
 {
 	m_hParentUI = hParent;
 	m_strDocumentPath = strDocumentPath;
@@ -339,4 +339,10 @@ void CWindowsPrinter::PrintImage(BOOL bShowPrinterDlg, CImageView* pView)
 		GlobalFree(pDlg.hDevNames);
 	if (pDlg.lpPageRanges != nullptr)
 		GlobalFree(pDlg.lpPageRanges);
+}
+
+void CWindowsPrinter::PrintPDF()
+{
+    ShellExecute(NULL, L"print", m_strDocumentPath, NULL, NULL, SW_HIDE);
+    AfxMessageBox(_T("PDF file printed."), MB_ICONINFORMATION);
 }

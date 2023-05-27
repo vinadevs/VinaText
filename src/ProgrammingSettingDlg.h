@@ -45,6 +45,11 @@ protected:
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 
+	void InitDefaultTerminalWindowsCombobox();
+	void FromDefaultTerminalWindowsCombobox();
+
+	CComboBox m_DefaultToolbarTerminalWindows;
+
 	BOOL m_bAllowOpenFileHasErrorBuild{ FALSE };
 	BOOL m_bAskBeforeTerminateProgram{ FALSE };
 	BOOL m_bAutoSaveDocumentWhenbuild{ FALSE };
@@ -57,8 +62,6 @@ protected:
 	ProgrammingSettingBrowse m_EditNodeJSFolderPath;
 	CString m_strPythonFolderPath;
 	ProgrammingSettingBrowse m_EditPythonFolderPath;
-	CString m_strGitWindowFolderPath;
-	ProgrammingSettingBrowse m_EditGitWindowFolderPath;
 
 	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
 };

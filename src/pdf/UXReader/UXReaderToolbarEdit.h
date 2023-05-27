@@ -2,7 +2,7 @@
 //	UXReaderToolbarEdit.h
 //	UXReader v0.1
 //
-//	Copyright © 2017-2019 Julius Oklamcak. All rights reserved.
+// Copyright 2017-2019 Julius Oklamcak. All rights reserved.
 //
 
 #pragma once

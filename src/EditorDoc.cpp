@@ -203,19 +203,7 @@ void CEditorDoc::OnFileSave()
 		return;
 	}
 	CString strFileName = GetPathName();
-	if (PathFileExists(strFileName))
-	{
-		// Save document
-		if (!OnSaveDocument(strFileName))
-		{
-			OSUtils::UseAdministrationHandler();
-		}
-	}
-	else
-	{
-		// Call file save as function
-		OnFileSaveAs();
-	}
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveAs()
@@ -286,37 +274,37 @@ void CEditorDoc::OnFileSaveAll()
 void CEditorDoc::OnFileSaveASCII()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_ANSI);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveUTF8()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_UTF8);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveUTF16LE()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_UTF16LE);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveUTF16BE()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_UTF16BE);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveUTF32LE()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_UTF32LE);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnFileSaveUTF32BE()
 {
 	GetEditorCtrl()->SetSaveEncoding(TF_UTF32BE);
-	OnFileSave();
+	DoSaveDocument();
 }
 
 void CEditorDoc::OnUpdateFileOSaveUTFASCII(CCmdUI * pCmdUI)
@@ -360,20 +348,7 @@ void CEditorDoc::OnFileSaveAsEncoding()
 	dlg.SetDlgModeReopen(FALSE);
 	if (IDOK == dlg.DoModal())
 	{
-		CString strFileName = GetPathName();
-		if (PathFileExists(strFileName))
-		{
-			// Save document
-			if (!OnSaveDocument(strFileName))
-			{
-				OSUtils::UseAdministrationHandler();
-			}
-		}
-		else
-		{
-			// Call file save as function
-			OnFileSaveAs();
-		}
+		DoSaveDocument();
 	}
 }
 
@@ -416,6 +391,24 @@ void CEditorDoc::OnFileSaveTemp()
 void CEditorDoc::OnFileBackUpAll()
 {
 	AppUtils::BackupAllModifiedDocuments();
+}
+
+void CEditorDoc::DoSaveDocument()
+{
+	CString strFileName = GetPathName();
+	if (PathFileExists(strFileName))
+	{
+		// Save document
+		if (!OnSaveDocument(strFileName))
+		{
+			OSUtils::UseAdministrationHandler();
+		}
+	}
+	else
+	{
+		// Call file save as function
+		OnFileSaveAs();
+	}
 }
 
 // CEditorDoc diagnostics

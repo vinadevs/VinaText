@@ -123,7 +123,7 @@ BEGIN_MESSAGE_MAP(CRichEditCtrlEX, CRichEditCtrl)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CRichEditCtrlEX::OnEditClear)
 	ON_COMMAND(ID_EDIT_GOOGLE_IT, &CRichEditCtrlEX::OnEditGoolgeIt)
 	ON_COMMAND(ID_EDIT_TRANSLATE_IT, &CRichEditCtrlEX::OnEditTranslateIt)
-	ON_COMMAND(ID_EDIT_SELECT_ALL, &CRichEditCtrlEX::OnEditSelectall)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, &CRichEditCtrlEX::OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_WRAPLINE_OUTPUT, &CRichEditCtrlEX::OnEditWrapLine)
 	ON_COMMAND(ID_EDIT_LOG_TO_EDITOR, &CRichEditCtrlEX::OnEditViewLogInEditor)
 	ON_COMMAND(ID_EDIT_COUNT_MESSAGE_LINE, &CRichEditCtrlEX::OnEditCountMessageLine)
@@ -266,7 +266,7 @@ void CRichEditCtrlEX::OnEditTranslateIt()
 	OSUtils::CreateProcessAsynchronous(TEXT("open"), strGoogleTranslatePrefix, _T(""), _T(""), SW_MAXIMIZE);
 }
 
-void CRichEditCtrlEX::OnEditSelectall()
+void CRichEditCtrlEX::OnEditSelectAll()
 {
 	CRichEditCtrl::SetSel(0, -1);
 }

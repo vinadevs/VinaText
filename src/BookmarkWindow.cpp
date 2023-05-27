@@ -585,7 +585,7 @@ void CBookmarkList::OnEditClearSelected()
 	}
 }
 
-void CBookmarkList::OnEditSelectall()
+void CBookmarkList::OnEditSelectAll()
 {
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
@@ -785,7 +785,7 @@ BOOL CBookmarkList::PreTranslateMessage(MSG * pMsg)
 		{
 			if (pMsg->wParam == 'A')
 			{
-				OnEditSelectall();
+				OnEditSelectAll();
 				return true;
 			}
 			if (pMsg->wParam == 'C')
@@ -825,7 +825,7 @@ BEGIN_MESSAGE_MAP(CBookmarkList, CListCtrl)
 	ON_COMMAND(ID_EDIT_COPY, &CBookmarkList::OnEditCopy)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CBookmarkList::OnEditClear)
 	ON_COMMAND(ID_EDIT_CLEAR_SELECTED, &CBookmarkList::OnEditClearSelected)
-	ON_COMMAND(ID_EDIT_SELECT_ALL, &CBookmarkList::OnEditSelectall)
+	ON_COMMAND(ID_EDIT_SELECT_ALL, &CBookmarkList::OnEditSelectAll)
 	ON_COMMAND(ID_EDIT_SAVE_LOG_TO_FILE, &CBookmarkList::OnEditSaveToFile)
 	ON_COMMAND(ID_EDIT_LOG_TO_EDITOR, &CBookmarkList::OnEditViewLogInEditor)
 	ON_COMMAND(ID_EDIT_BOOKMARK_WINDOWN_REVEALPATH, &CBookmarkList::OnEditRevealPath)
