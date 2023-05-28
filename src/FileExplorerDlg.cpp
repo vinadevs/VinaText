@@ -230,20 +230,20 @@ BOOL CExplorerToolBar::OnUserToolTip(CMFCToolBarButton * pButton, CString & strT
 	else if (pButton->m_nID == ID_EXPLORER_TB_REFRESH)
 		strTTText = _T("Refresh Explorer (F5)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_SEARCH_FILE)
-		strTTText = _T("Search/Navigate At Path  (Ctrl + F)");
+		strTTText = _T("Search/Navigate At Path  (Ctrl+F)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_BACK_TO_ROOT)
-		strTTText = _T("Back To Root (Shift + Tab)");
+		strTTText = _T("Back To Root (Shift+Tab)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_DELETE)
 		strTTText = _T("Send Selected Path To Recycle Bin (Delete)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_BOOKMARK_PATH)
-		strTTText = _T("Bookmark Selected Path (Ctrl + B)");
+		strTTText = _T("Bookmark Selected Path (Ctrl+B)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_GET_PATH_STRING)
-		strTTText = _T("Get Selected Path String (Ctrl + Shift + C)");
+		strTTText = _T("Get Selected Path String (Ctrl+Shift+C)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_SHOW_PROPERTIES)
-		strTTText = _T("Show Path Properties (Ctrl + P)");
+		strTTText = _T("Show Path Properties (Ctrl+P)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_RENAME)
 		strTTText = _T("Rename Selected Path (F2)");
 	else if (pButton->m_nID == ID_EXPLORER_TB_GOTO_PATH)
-		strTTText = _T("Goto Any Path (Ctrl + G)");
+		strTTText = _T("Goto Any Path (Ctrl+G)");
 	return TRUE;
 }
