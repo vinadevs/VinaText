@@ -31,14 +31,6 @@ void CSearchAndReplaceWindow::InitSearchReplaceFromEditor(const CString& strSear
 	}
 }
 
-void CSearchAndReplaceWindow::SearchAllOnFileFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType)
-{
-	if (m_SearchAndReplaceWindowDlg.m_hWnd != NULL)
-	{
-		m_SearchAndReplaceWindowDlg.SearchAllOnFileFromEditor(strSearchWhat, searchType);
-	}
-}
-
 void CSearchAndReplaceWindow::SearchFromEditor(const CString& strSearchWhat, SEARCH_TYPE searchType,
 	BOOL bSeacrhNext, BOOL bHideMessageBox, BOOL bSaveSearchWord)
 {

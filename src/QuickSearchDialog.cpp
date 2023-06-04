@@ -253,6 +253,7 @@ void CQuickSearchDialog::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)
 		m_FindDlg.SetFocus();
 		m_pCurrentTabShow = &m_FindDlg;
 		m_FindDlg.InitSearchReplaceFromEditor(m_FindAndReplaceDlg.GetSearchWhat());
+		m_FindDlg.InitComboSearchOption(m_FindAndReplaceDlg.GetComboSearchOption());
 		RenderIndicatorWordsAndCount(m_FindDlg.GetSearchWhat(), m_FindDlg.GetSearchOption());
 		break;
 	case 1:
@@ -262,6 +263,7 @@ void CQuickSearchDialog::OnTcnSelchangeTab(NMHDR * pNMHDR, LRESULT * pResult)
 		m_FindAndReplaceDlg.SetFocus();
 		m_pCurrentTabShow = &m_FindAndReplaceDlg;
 		m_FindAndReplaceDlg.InitSearchReplaceFromEditor(m_FindDlg.GetSearchWhat());
+		m_FindAndReplaceDlg.InitComboSearchOption(m_FindDlg.GetComboSearchOption());
 		RenderIndicatorWordsAndCount(m_FindAndReplaceDlg.GetSearchWhat(), m_FindAndReplaceDlg.GetSearchOption());
 		break;
 	}

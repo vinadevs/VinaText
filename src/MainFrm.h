@@ -15,7 +15,7 @@
 #include "FileExplorerWindow.h"
 #include "MessageWindow.h"
 #include "BookmarkWindow.h"
-#include "TextResultWindow.h"
+#include "SearchResultWindow.h"
 #include "BuildWindow.h"
 #include "SearchAndReplaceWindow.h"
 #include "PathResultWindow.h"
@@ -55,7 +55,6 @@ public:
 class CMainFrame : public CMDIFrameWndEx
 {
 	DECLARE_DYNAMIC(CMainFrame)
-// Operations
 public:
 	CMainFrame();
 	// get CWnd controls
@@ -64,6 +63,7 @@ public:
 	CQuickSearchDialog* GetQuickSearchDialog() { return m_pQuickSearchDialog; }
 	CFileExplorerCtrl& GetFileExplorerCtrl() { return m_wndFileExplorer.GetFileExplorerCtrl(); }
 	CMDIClientAreaWnd& GetMDIClientAreaWnd() { return m_wndClientArea; }
+	BOOL IsClosingMainFrame() const { return m_bIsClosingMainFrame; }
 
 	// update from child controls to MainFrame
 	void ClearDataOnDockPane(DOCKABLE_PANE_TYPE type);
@@ -75,10 +75,8 @@ public:
 	void ActiveDockPane(DOCKABLE_PANE_TYPE type);
 	void InitSearchReplaceFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType);
 	void InitQuickSearchFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType);
-	void SearchAllOnFileFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType);
 	void SearchFromEditor(const CString& strSearchWhat, SEARCH_TYPE searchType, BOOL bSeacrhNext = TRUE, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void InitSearchReplaceFromExplorer(const CString& strFolderPath, SEARCH_REPLACE_GOTO_DLG_TYPE searchType);
-	BOOL IsClosingVinaText() const { return m_bIsClosingVinaText; }
 	void OnChangeAppLook(BOOL bOneNoteTabs, BOOL bMDITabColors, BOOL bIsVSDotNetLook, BOOL bDockTabColors, BOOL bMDITabsVS2005Look, BOOL bActiveTabCloseButton);
 	void MDIMoveAllTabGroupMode(BOOL bNext); // customize internal MFC...
 	void UpdateFoldingMap(BOOL bActiveDialogTab = TRUE);
@@ -119,10 +117,10 @@ public:
 	virtual BOOL OnCloseMiniFrame(CPaneFrameWnd * pWnd);
 	virtual void OnInitMenuPopup(CMenu* pPopupMenu, UINT nIndex, BOOL bSysMenu);
 
-protected:  // control bar embedded members
+protected:
 	std::unordered_map<UINT, CString> m_FileRecentIDMap;
 	int					m_iCurrentTabCount = 0;
-	BOOL				m_bIsClosingVinaText = FALSE;
+	BOOL				m_bIsClosingMainFrame = FALSE;
 	CFont				m_Font;
 	CMenu				m_MainMenu;
 	CMainFrameToolBar   m_wndToolBar;
@@ -132,7 +130,7 @@ protected:  // control bar embedded members
 	CMessagePane		m_wndMessageWindow;
 	CBuildPane			m_wndBuildWindow;
 	CSearchAndReplaceWindow  m_wndSearchAndReplaceWindow;
-	CTextResultWindow		 m_wndSearchResultPane;
+	CSearchResultWindow		 m_wndSearchResultPane;
 	CBookmarkWindow		  m_wndBookmarkWindow;
 	CPathResultWindow     m_wndPathResultWindow;
 	CBreakpointWindow	  m_wndBreakpointWindow;

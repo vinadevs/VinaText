@@ -543,7 +543,7 @@ void CPathResultDlg::InitListCtrl()
 	m_wndResultList.InsertColumn(3, _T("File Size"), LVCFMT_LEFT, 100);
 	m_wndResultList.InsertColumn(4, _T("Read Only"), LVCFMT_LEFT, 100);
 	m_wndResultList.InsertColumn(5, _T("Created Time"), LVCFMT_LEFT, 200);
-	m_wndResultList.InsertColumn(6, _T("Modifed Time"), LVCFMT_LEFT, 200);
+	m_wndResultList.InsertColumn(6, _T("Modified Time"), LVCFMT_LEFT, 200);
 	UpdateListCtrlVisual();
 }
 

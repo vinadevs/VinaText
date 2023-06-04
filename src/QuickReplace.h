@@ -20,6 +20,8 @@ public:
 	CQuickReplace(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CQuickReplace();
 	void InitSearchReplaceFromEditor(const CString& strSearchWhat);
+	void InitComboSearchOption(unsigned int uiSearchOptions);
+	unsigned int GetComboSearchOption() { return m_comboSearchOption.GetCurSel(); };
 	CString GetSearchWhat();
 	unsigned int GetSearchOption();
 	void SaveDialogState();

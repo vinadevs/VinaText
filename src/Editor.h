@@ -9,6 +9,7 @@
 #pragma once
 
 #include "EditorDataStructure.h"
+#include "SearchEngine.h"
 
 #pragma warning(disable : 4996)
 
@@ -115,8 +116,9 @@ public:
 
 	// search and replace
 	void ReplaceSearchedText(const CString & strText);
-	int ReplaceNext(const CString & szFind, const CString & szReplace);
-	int ReplaceAll(const CString& szFind, const CString& szReplace);
+	int ReplaceNext(const CString & strSearchWhat, const CString & strReplaceWith);
+	BOOL ReplaceAll(const CString& strFilePath, const CString& strSearchWhat, const CString& strReplaceWith, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData);
+	BOOL ReplaceAllInSelection(const CString& strSearchWhat, const CString& strReplaceWith);
 	int SearchTextInRange(const CString& strText, int lStartRange, int lEndRange);
 	int SearchTextInEditor(const CString & strText);
 	void SetSearchflags(int nSearchflags) { m_nSearchflags = nSearchflags; };
@@ -263,7 +265,7 @@ public:
 	void SetLanguageCFontStyle(int iItem, COLORREF rgb);
 	void SetLanguageBashFontStyle(int iItem, COLORREF rgb);
 	void GetFunctionListFromEditor(const TCHAR *pszChars, int lLength, std::vector<CString>& vecFunctionList);
-	void RenderSearchResultInLine(int lLine, const CString& strWord);
+	void RenderSearchResultInLine(int lLine, const CString& strWord, unsigned int uiSearchOptions);
 	FoldingLineDataList GetFoldingLineDataList(int levelMax = 3);
 	void EnableUserLexer(const CString& strLexerName);
 	void DisableUserLexer();

@@ -7,7 +7,7 @@
 #*******************************************************************************/
 
 #include "stdafx.h"
-#include "TextResultWindow.h"
+#include "SearchResultWindow.h"
 #include "VinaTextApp.h"
 #include "MainFrm.h"
 #include "EditorDoc.h"
@@ -26,23 +26,23 @@ static char THIS_FILE[] = __FILE__;
 
 static CString g_strSearchFilterMessage = _T("> > > File Filter...");
 
-IMPLEMENT_DYNCREATE(CTextResultWindow, CDockPaneBase)
+IMPLEMENT_DYNCREATE(CSearchResultWindow, CDockPaneBase)
 
-CTextResultWindow::CTextResultWindow()
+CSearchResultWindow::CSearchResultWindow()
 {
 }
 
-CTextResultWindow::~CTextResultWindow()
+CSearchResultWindow::~CSearchResultWindow()
 {
 }
 
-BEGIN_MESSAGE_MAP(CTextResultWindow, CDockPaneBase)
+BEGIN_MESSAGE_MAP(CSearchResultWindow, CDockPaneBase)
 	ON_WM_CREATE()
 	ON_WM_SIZE()
-	ON_MESSAGE(UMW_DOCK_PANE_UPDATE, &CTextResultWindow::OnDockPaneUpdate)
+	ON_MESSAGE(UMW_DOCK_PANE_UPDATE, &CSearchResultWindow::OnDockPaneUpdate)
 END_MESSAGE_MAP()
 
-LRESULT CTextResultWindow::OnDockPaneUpdate(WPARAM wParam, LPARAM lParam)
+LRESULT CSearchResultWindow::OnDockPaneUpdate(WPARAM wParam, LPARAM lParam)
 {
 	WORD wMsgTarget = LOWORD(wParam);
 	WORD wMsgHint = HIWORD(wParam);
@@ -61,7 +61,7 @@ LRESULT CTextResultWindow::OnDockPaneUpdate(WPARAM wParam, LPARAM lParam)
 	return 0L;
 }
 
-int CTextResultWindow::OnCreate(LPCREATESTRUCT lpCreateStruct)
+int CSearchResultWindow::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CDockPaneBase::OnCreate(lpCreateStruct) == -1)
 		return -1;
@@ -75,24 +75,24 @@ int CTextResultWindow::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	return 0;
 }
 
-void CTextResultWindow::OnSize(UINT nType, int cx, int cy)
+void CSearchResultWindow::OnSize(UINT nType, int cx, int cy)
 {
 	CDockPaneBase::OnSize(nType, cx, cy);
 	m_ResultPaneDlg.SetWindowPos(NULL, 0, 0, cx, cy, SWP_NOMOVE | SWP_NOACTIVATE | SWP_NOZORDER);
 }
 
 
-void CTextResultWindow::AddResultData(const TEXT_RESULT_SEARCH_REPLACE_DATA & ResultSearchData)
+void CSearchResultWindow::AddResultData(const TEXT_RESULT_SEARCH_REPLACE_DATA & ResultSearchData)
 {
 	m_ResultPaneDlg.InitResult(ResultSearchData);
 }
 
-void CTextResultWindow::ClearAll()
+void CSearchResultWindow::ClearAll()
 {
 	m_ResultPaneDlg.ClearResult();
 }
 
-void CTextResultWindow::UpdateUIVisual()
+void CSearchResultWindow::UpdateUIVisual()
 {
 	m_ResultPaneDlg.UpdateListCtrlVisual();
 }
@@ -153,42 +153,42 @@ void CSearchResultDlg::InitResult(const TEXT_RESULT_SEARCH_REPLACE_DATA & Result
 		m_DisplayResultSearchData._strScope = ResultSearchData._strScope;
 		m_DisplayResultSearchData._strSearchWhat = ResultSearchData._strSearchWhat;
 		m_DisplayResultSearchData._TimeMeasured = ResultSearchData._TimeMeasured;
-		APPEND_VECTOR_HELPER(m_DisplayResultSearchData._vecResultSearchInfo, ResultSearchData._vecResultSearchInfo);
-		APPEND_VECTOR_HELPER(m_OriginalResultSearchInfo, ResultSearchData._vecResultSearchInfo);
+		APPEND_VECTOR_HELPER(m_DisplayResultSearchData._vecSearchDataLine, ResultSearchData._vecSearchDataLine);
+		APPEND_VECTOR_HELPER(m_OriginalResultSearchInfo, ResultSearchData._vecSearchDataLine);
 	}
 	else
 	{
 		m_DisplayResultSearchData = ResultSearchData;
-		m_OriginalResultSearchInfo = ResultSearchData._vecResultSearchInfo;
+		m_OriginalResultSearchInfo = ResultSearchData._vecSearchDataLine;
 	}
 	//Resize the list to add the elements to the list
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
-	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecResultSearchInfo.size()));
+	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecSearchDataLine.size()));
+	CString strResult;
 	if (ResultSearchData._bIsReplaceData)
 	{
-		CString strResult = _T("[Replace all \"%s\" in %s] searched files: %d - matched files: %d | searched lines: %d - replaced lines: %d | replaced words: %d | time: %fs");
-		strResult.Format(strResult, ResultSearchData._strSearchWhat, ResultSearchData._strScope, (int)ResultSearchData._nTotalSearchFile, (int)ResultSearchData._nMatchedFiles, (int)ResultSearchData._nLineCounts,
-			(int)ResultSearchData._vecResultSearchInfo.size(), (int)ResultSearchData._nMatchedWords, ResultSearchData._TimeMeasured);
-		g_strSearchFilterMessage = strResult;
-		m_wndEditFilter.SetWindowTextW(g_strSearchFilterMessage);
+		strResult = _T("[Replace all \"%s\" with \"%s\" in %s] searched files: %d - matched files: %d | searched lines: %d | replaced words: %d | time: %fs");
+		strResult.Format(strResult, ResultSearchData._strSearchWhat, ResultSearchData._strReplaceWith, ResultSearchData._strScope, (int)ResultSearchData._nTotalSearchFile, (int)ResultSearchData._nMatchedFiles, (int)ResultSearchData._nLineCounts,
+			(int)ResultSearchData._nMatchedWords, ResultSearchData._TimeMeasured);
 		m_wndResultList.SetSeachWhatString(ResultSearchData._strReplaceWith);
 	}
 	else
 	{
-		CString strResult = _T("[Search all \"%s\" in %s] searched files: %d - matched files: %d | searched lines: %d - matched lines: %d | matched words: %d | time: %fs");
+		strResult = _T("[Search all \"%s\" in %s] searched files: %d - matched files: %d | searched lines: %d - matched lines: %d | matched words: %d | time: %fs");
 		strResult.Format(strResult, ResultSearchData._strSearchWhat, ResultSearchData._strScope, (int)ResultSearchData._nTotalSearchFile, (int)ResultSearchData._nMatchedFiles, (int)ResultSearchData._nLineCounts,
-			(int)ResultSearchData._vecResultSearchInfo.size(), (int)ResultSearchData._nMatchedWords, ResultSearchData._TimeMeasured);
-		g_strSearchFilterMessage = strResult;
-		m_wndEditFilter.SetWindowTextW(g_strSearchFilterMessage);
+			(int)ResultSearchData._vecSearchDataLine.size(), (int)ResultSearchData._nMatchedWords, ResultSearchData._TimeMeasured);
 		m_wndResultList.SetSeachWhatString(ResultSearchData._strSearchWhat);
 	}
+	g_strSearchFilterMessage = strResult;
+	m_wndEditFilter.SetWindowTextW(g_strSearchFilterMessage);
+	m_wndResultList.SetSeachOptions(ResultSearchData._nSearchOptions);
 }
 
 void CSearchResultDlg::ClearResult()
 {
 	m_DisplayResultSearchData.Reset();
 	m_OriginalResultSearchInfo.clear();
-	std::vector<RESULT_SEARCH_DATA>().swap(m_OriginalResultSearchInfo);
+	std::vector<SEARCH_DATA_LINE>().swap(m_OriginalResultSearchInfo);
 	//Resize the list to add the elements to the list
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
 	m_wndResultList.SetItemCount(0);
@@ -199,20 +199,20 @@ void CSearchResultDlg::ClearResult()
 
 void CSearchResultDlg::DeleteAPath(const CString & strFullPath)
 {
-	m_DisplayResultSearchData._vecResultSearchInfo.erase(std::remove_if(
-		m_DisplayResultSearchData._vecResultSearchInfo.begin(),
-		m_DisplayResultSearchData._vecResultSearchInfo.end(),
-		[&](RESULT_SEARCH_DATA const & data)
+	m_DisplayResultSearchData._vecSearchDataLine.erase(std::remove_if(
+		m_DisplayResultSearchData._vecSearchDataLine.begin(),
+		m_DisplayResultSearchData._vecSearchDataLine.end(),
+		[&](SEARCH_DATA_LINE const & data)
 	{
 		if (data._strTargetFile == strFullPath) return true;
 		else return false;
 	}),
-	m_DisplayResultSearchData._vecResultSearchInfo.end());
+	m_DisplayResultSearchData._vecSearchDataLine.end());
 
 	m_OriginalResultSearchInfo.erase(std::remove_if(
 		m_OriginalResultSearchInfo.begin(),
 		m_OriginalResultSearchInfo.end(),
-		[&](RESULT_SEARCH_DATA const & data)
+		[&](SEARCH_DATA_LINE const & data)
 	{
 		if (data._strTargetFile == strFullPath) return true;
 		else return false;
@@ -220,26 +220,26 @@ void CSearchResultDlg::DeleteAPath(const CString & strFullPath)
 	m_OriginalResultSearchInfo.end());
 	//Resize the list to add the elements to the list
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
-	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecResultSearchInfo.size()));
+	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecSearchDataLine.size()));
 	m_wndResultList.SetItemState(-1, LVIS_FOCUSED, LVIS_SELECTED);
 }
 
 void CSearchResultDlg::DeleteARow(const CString & strFullPath, unsigned int nLineNumber)
 {
-	m_DisplayResultSearchData._vecResultSearchInfo.erase(std::remove_if(
-		m_DisplayResultSearchData._vecResultSearchInfo.begin(),
-		m_DisplayResultSearchData._vecResultSearchInfo.end(),
-		[&](RESULT_SEARCH_DATA const & data)
+	m_DisplayResultSearchData._vecSearchDataLine.erase(std::remove_if(
+		m_DisplayResultSearchData._vecSearchDataLine.begin(),
+		m_DisplayResultSearchData._vecSearchDataLine.end(),
+		[&](SEARCH_DATA_LINE const & data)
 	{
 		if (data._strTargetFile == strFullPath && data._nLineNumber == nLineNumber) return true;
 		else return false;
 	}),
-		m_DisplayResultSearchData._vecResultSearchInfo.end());
+		m_DisplayResultSearchData._vecSearchDataLine.end());
 
 	m_OriginalResultSearchInfo.erase(std::remove_if(
 		m_OriginalResultSearchInfo.begin(),
 		m_OriginalResultSearchInfo.end(),
-		[&](RESULT_SEARCH_DATA const & data)
+		[&](SEARCH_DATA_LINE const & data)
 	{
 		if (data._strTargetFile == strFullPath && data._nLineNumber == nLineNumber) return true;
 		else return false;
@@ -247,7 +247,7 @@ void CSearchResultDlg::DeleteARow(const CString & strFullPath, unsigned int nLin
 	m_OriginalResultSearchInfo.end());
 	//Resize the list to add the elements to the list
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
-	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecResultSearchInfo.size()));
+	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecSearchDataLine.size()));
 	m_wndResultList.SetItemState(-1, LVIS_FOCUSED, LVIS_SELECTED);
 }
 
@@ -312,30 +312,35 @@ void CSearchResultDlg::OnGetdispinfoList(NMHDR * pNMHDR, LRESULT * pResult)
 		//Which column?
 		if (pItem->iSubItem == 0)
 		{
-			//Text is _nLineNumber
-			text = AppUtils::IntToCString(m_DisplayResultSearchData._vecResultSearchInfo[itemid]._nLineNumber);
-		}
-		else if (pItem->iSubItem == 1)
-		{
-			//Text is _nMatched
-			text = AppUtils::IntToCString(m_DisplayResultSearchData._vecResultSearchInfo[itemid]._nMatched);
-		}
-		else if (pItem->iSubItem == 2)
-		{
 			//Text is _strTargetFile
 			if (m_DisplayResultSearchData._bShowFileNameOnly)
 			{
-				text = PathUtils::GetFilenameFromPath(m_DisplayResultSearchData._vecResultSearchInfo[itemid]._strTargetFile);
+				text = PathUtils::GetFilenameFromPath(m_DisplayResultSearchData._vecSearchDataLine[itemid]._strTargetFile);
 			}
 			else
 			{
-				text = m_DisplayResultSearchData._vecResultSearchInfo[itemid]._strTargetFile;
+				text = m_DisplayResultSearchData._vecSearchDataLine[itemid]._strTargetFile;
 			}
+		}
+		else if (pItem->iSubItem == 1)
+		{
+			//Text is _strLine
+			text = m_DisplayResultSearchData._vecSearchDataLine[itemid]._strLine;
+		}
+		else if (pItem->iSubItem == 2)
+		{
+			//Text is _nLineNumber
+			text = AppUtils::IntToCString(m_DisplayResultSearchData._vecSearchDataLine[itemid]._nLineNumber);
 		}
 		else if (pItem->iSubItem == 3)
 		{
-			//Text is _strLine
-			text = m_DisplayResultSearchData._vecResultSearchInfo[itemid]._strLine;
+			//Text is _nColumnNumber
+			text = AppUtils::IntToCString(m_DisplayResultSearchData._vecSearchDataLine[itemid]._nColumnNumber);
+		}
+		else if (pItem->iSubItem == 4)
+		{
+			//Text is _nPositionNumber
+			text = AppUtils::IntToCString(m_DisplayResultSearchData._vecSearchDataLine[itemid]._nPositionNumber);
 		}
 		//Copy the text to the LV_ITEM structure
 		//Maximum number of characters is in pItem->cchTextMax
@@ -407,7 +412,7 @@ void CSearchResultDlg::OnOdfinditemList(NMHDR * pNMHDR, LRESULT * pResult)
 	do
 	{
 		//Do this word begins with all characters in searchstr?
-		if (m_DisplayResultSearchData._vecResultSearchInfo[currentPos]._strTargetFile.Find(searchstr) != -1)
+		if (m_DisplayResultSearchData._vecSearchDataLine[currentPos]._strTargetFile.Find(searchstr) != -1)
 		{
 			//Select this item and stop search.
 			*pResult = currentPos;
@@ -481,7 +486,7 @@ void CSearchResultDlg::OnItemchangedList(NMHDR* pNMHDR, LRESULT* pResult)
 
 void CSearchResultDlg::OnFilterTextChanged()
 {
-	m_DisplayResultSearchData._vecResultSearchInfo = m_OriginalResultSearchInfo;
+	m_DisplayResultSearchData._vecSearchDataLine = m_OriginalResultSearchInfo;
 	CString strFilterText = m_wndEditFilter.GetCurrentText();
 	if (!strFilterText.IsEmpty() && strFilterText != _T(">"))
 	{
@@ -492,7 +497,7 @@ void CSearchResultDlg::OnFilterTextChanged()
 			if (strFilterText.Find(_T(",")) != -1) // multiple filter
 			{
 				std::vector<CString> vecFilters = AppUtils::SplitterCString(strFilterText, ",");
-				for (auto const& info : m_DisplayResultSearchData._vecResultSearchInfo)
+				for (auto const& info : m_DisplayResultSearchData._vecSearchDataLine)
 				{
 					CString strTemp = info._strTargetFile;
 					size_t nCountCheck = 0;
@@ -505,18 +510,18 @@ void CSearchResultDlg::OnFilterTextChanged()
 					}
 					if (nCountCheck == vecFilters.size())
 					{
-						filterData._vecResultSearchInfo.push_back(info);
+						filterData._vecSearchDataLine.push_back(info);
 					}
 				}
 			}
 			else
 			{
-				for (auto const& info : m_DisplayResultSearchData._vecResultSearchInfo)
+				for (auto const& info : m_DisplayResultSearchData._vecSearchDataLine)
 				{
 					CString strTemp = info._strTargetFile;
 					if (strTemp.MakeLower().Find(strFilterText.MakeLower()) == -1)
 					{
-						filterData._vecResultSearchInfo.push_back(info);
+						filterData._vecSearchDataLine.push_back(info);
 					}
 				}
 			}
@@ -526,14 +531,14 @@ void CSearchResultDlg::OnFilterTextChanged()
 			if (strFilterText.Find(_T(",")) != -1) // multiple and filter
 			{
 				std::vector<CString> vecFilters = AppUtils::SplitterCString(strFilterText, ",");
-				for (auto const& info : m_DisplayResultSearchData._vecResultSearchInfo)
+				for (auto const& info : m_DisplayResultSearchData._vecSearchDataLine)
 				{
 					CString strTemp = info._strTargetFile;
 					for (auto filter : vecFilters)
 					{
 						if (strTemp.MakeLower().Find(filter.MakeLower()) != -1)
 						{
-							filterData._vecResultSearchInfo.push_back(info);
+							filterData._vecSearchDataLine.push_back(info);
 							break;
 						}
 					}
@@ -541,30 +546,31 @@ void CSearchResultDlg::OnFilterTextChanged()
 			}
 			else
 			{
-				for (auto const& info : m_DisplayResultSearchData._vecResultSearchInfo)
+				for (auto const& info : m_DisplayResultSearchData._vecSearchDataLine)
 				{
 					CString strTemp = info._strTargetFile;
 					if (strTemp.MakeLower().Find(strFilterText.MakeLower()) != -1)
 					{
-						filterData._vecResultSearchInfo.push_back(info);
+						filterData._vecSearchDataLine.push_back(info);
 					}
 				}
 			}
 		}
-		m_DisplayResultSearchData._vecResultSearchInfo = filterData._vecResultSearchInfo;
+		m_DisplayResultSearchData._vecSearchDataLine = filterData._vecSearchDataLine;
 	}
 	//Resize the list to add the elements to the list
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
-	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecResultSearchInfo.size()));
+	m_wndResultList.SetItemCount(static_cast<int>(m_DisplayResultSearchData._vecSearchDataLine.size()));
 }
 
 void CSearchResultDlg::InitListCtrl()
 {
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
-	m_wndResultList.InsertColumn(0, _T("Line Number"), LVCFMT_LEFT, 100);
-	m_wndResultList.InsertColumn(1, _T("Matcheds"), LVCFMT_LEFT, 100);
-	m_wndResultList.InsertColumn(2, _T("File Path"), LVCFMT_LEFT, 500);
-	m_wndResultList.InsertColumn(3, _T("Line Text"), LVCFMT_LEFT, 800);
+	m_wndResultList.InsertColumn(0, _T("Path"), LVCFMT_LEFT, 500);
+	m_wndResultList.InsertColumn(1, _T("Text"), LVCFMT_LEFT, 500);
+	m_wndResultList.InsertColumn(2, _T("Line"), LVCFMT_LEFT, 100);
+	m_wndResultList.InsertColumn(3, _T("Column"), LVCFMT_LEFT, 100);
+	m_wndResultList.InsertColumn(4, _T("Position"), LVCFMT_LEFT, 100);
 	UpdateListCtrlVisual();
 }
 
@@ -631,7 +637,7 @@ CString CSearchResultList::GetItemsText()
 	CString strPreviousTargetFile;
 	for (int nItem = 0; nItem < GetItemCount(); nItem++)
 	{
-		CString strFilePath = GetItemText(nItem, 2).Trim();
+		CString strFilePath = GetItemText(nItem, 0).Trim();
 		if (strPreviousTargetFile != strFilePath)
 		{
 			strSelectedItemsText += _T("______FILE__ ") + strFilePath + EDITOR_NEW_LINE;
@@ -703,8 +709,8 @@ void CSearchResultList::OnEditDelete()
 		while (pos)
 		{
 			int nItem = GetNextSelectedItem(pos);
-			CString strLineNumber = GetItemText(nItem, 0).Trim();
-			CString strFullPath = GetItemText(nItem, 2).Trim();
+			CString strLineNumber = GetItemText(nItem, 2).Trim();
+			CString strFullPath = GetItemText(nItem, 0).Trim();
 			listPathToDelete.push_back(std::make_pair(strFullPath, AppUtils::CStringToInt(strLineNumber)));
 		}
 		for (auto const& path : listPathToDelete)
@@ -741,14 +747,14 @@ void CSearchResultList::OnEditSaveToFile()
 
 namespace
 {
-	void GotoLineInEditor(CEditorCtrl* pEditor, const CString& strLineNumber, const CString& strSeachWhat)
+	void GotoLineInEditor(CEditorCtrl* pEditor, const CString& strLineNumber, const CString& strSeachWhat, unsigned int uiSearchOptions)
 	{
 		if (pEditor)
 		{
 			int nLine = AppUtils::CStringToInt(strLineNumber);
 			pEditor->GotoLine(nLine);
 			pEditor->SetLineCenterDisplay(nLine);
-			pEditor->RenderSearchResultInLine(nLine, strSeachWhat);
+			pEditor->RenderSearchResultInLine(nLine, strSeachWhat, uiSearchOptions);
 		}
 	}
 }
@@ -761,8 +767,8 @@ void CSearchResultList::OnOutputPreviewFile()
 		while (pos)
 		{
 			int nItem = GetNextSelectedItem(pos);
-			CString strLineNumber = GetItemText(nItem, 0).Trim();
-			CString strFileTarget = GetItemText(nItem, 2).Trim();
+			CString strLineNumber = GetItemText(nItem, 2).Trim();
+			CString strFileTarget = GetItemText(nItem, 0).Trim();
 			if (strFileTarget.IsEmpty() || strLineNumber.IsEmpty()) return;
 			if (PathFileExists(strFileTarget))
 			{
@@ -773,7 +779,7 @@ void CSearchResultList::OnOutputPreviewFile()
 					if (pActiveDoc && pActiveDoc->IsPreviewMode() && !pActiveDoc->IsModified()) // if there is a preview doc then reload file content
 					{
 						pActiveDoc->ReloadPreviewDocument(strFileTarget);
-						GotoLineInEditor(pActiveDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat);
+						GotoLineInEditor(pActiveDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat, m_uiSearchOptions);
 					}
 					else // create new preview document if there is no any
 					{
@@ -782,7 +788,7 @@ void CSearchResultList::OnOutputPreviewFile()
 						if (pNewPreviewEditorDoc)
 						{
 							pNewPreviewEditorDoc->SetPreviewMode(TRUE);
-							GotoLineInEditor(pNewPreviewEditorDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat);
+							GotoLineInEditor(pNewPreviewEditorDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat, m_uiSearchOptions);
 						}
 					}
 				}
@@ -795,7 +801,7 @@ void CSearchResultList::OnOutputPreviewFile()
 						auto pEditorOpenedDoc = dynamic_cast<CEditorDoc*>(pOpenedDoc);
 						if (pEditorOpenedDoc)
 						{
-							GotoLineInEditor(pEditorOpenedDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat);
+							GotoLineInEditor(pEditorOpenedDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat, m_uiSearchOptions);
 						}
 					}
 					else
@@ -803,7 +809,7 @@ void CSearchResultList::OnOutputPreviewFile()
 						auto pEditorOpenedDoc = dynamic_cast<CEditorDoc*>(pOpenedDoc);
 						if (pEditorOpenedDoc)
 						{
-							GotoLineInEditor(pEditorOpenedDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat);
+							GotoLineInEditor(pEditorOpenedDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat, m_uiSearchOptions);
 						}
 					}
 				}
@@ -833,7 +839,7 @@ void CSearchResultList::OnOutputPreviewFile()
 									auto pEditorDoc = dynamic_cast<CEditorDoc*>(doc);
 									if (pEditorDoc)
 									{
-										GotoLineInEditor(pEditorDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat);
+										GotoLineInEditor(pEditorDoc->GetEditorCtrl(), strLineNumber, m_strSeachWhat, m_uiSearchOptions);
 									}
 								}
 								break;
@@ -867,7 +873,7 @@ void CSearchResultList::OnEditCopyFullPath()
 		while (pos)
 		{
 			int nItem = GetNextSelectedItem(pos);
-			CString strFullPath = GetItemText(nItem, 2).Trim();
+			CString strFullPath = GetItemText(nItem, 0).Trim();
 			if (PathFileExists(strFullPath))
 			{
 				strCopiedPaths += strFullPath + EDITOR_NEW_LINE_CR_LF;
@@ -919,7 +925,7 @@ void CSearchResultList::OnEditSendToRecyclebin()
 				while (pos)
 				{
 					int nItem = GetNextSelectedItem(pos);
-					CString strFullPath = GetItemText(nItem, 2).Trim();
+					CString strFullPath = GetItemText(nItem, 0).Trim();
 					if (PathFileExists(strFullPath))
 					{
 						// close document before change file in system...
@@ -963,7 +969,7 @@ void CSearchResultList::OnEditRevealPath()
 		while (pos)
 		{
 			int nItem = GetNextSelectedItem(pos);
-			CString strFullPath = GetItemText(nItem, 2).Trim();
+			CString strFullPath = GetItemText(nItem, 0).Trim();
 			if (PathFileExists(strFullPath))
 			{
 				CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());

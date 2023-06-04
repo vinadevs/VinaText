@@ -13,48 +13,64 @@
 class CEditorDoc;
 class CEditorCtrl;
 
-class CFindWorker
+#define ID_EDITOR_CTRL_SEARCH 103
+
+class CFindTextWorker
 {
 public:
-	CFindWorker() = default;
-	~CFindWorker() = default;
-	void SetFindFolder(const CString& strFolder);
+	CFindTextWorker() = default;
+	~CFindTextWorker() = default;
+	void SetTargetSearchFolder(const CString& strPath);
 	void SetSearchWhat(const CString& strSearchWhat);
 	void SetSearchOptions(int nSearchOptions);
 	void SetIncludeSubFolder(BOOL bIncludeSubFolder);
-	int GetCurrentFindProgress()const;
+	void SetParentWindow(CWnd* pWndParent);
+	int GetCurrentFindProgress() const;
+	const CString& GetCurrentSearchPath() const;
 	void FindInFolder();
 	BOOL CheckFileFilter(const CString& strfileFilter);
 	void SetFileFilter(const CString& strFilePath);
 
+	static BOOL SearchAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, unsigned int nSearchOptions);
+	static void SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+	static void SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+
 	// return result data
 	TEXT_RESULT_SEARCH_REPLACE_DATA m_ResultSearchData;
 private:
-	CString m_strFindFolder;
+	CString m_strTargetSearchPath;
 	CString m_strSearchWhat;
+	CString m_strCurSearchPath;
 	int m_nSearchOptions = 0;
 	int m_nFindProgress = 0;
 	BOOL m_bIncludeSubFolder = TRUE;
+	CWnd* m_pWndParent{nullptr};
 	std::vector<CString> m_FileFilters;
 };
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-class CReplaceWorker
+class CReplaceTextWorker
 {
 public:
-	CReplaceWorker() = default;
-	~CReplaceWorker() = default;
-	void SetActiveDocument(CEditorDoc* pActiveDoc);
+	CReplaceTextWorker() = default;
+	~CReplaceTextWorker() = default;
 	void SetReplaceFolder(const CString& strFolder);
 	void SetSearchWhat(const CString& strSearchWhat);
 	void SetReplaceWith(const CString& strReplaceWith);
 	void SetSearchOptions(int nSearchOptions);
 	void SetIncludeSubFolder(BOOL bIncludeSubFolder);
-	int GetCurrentReplaceProgress()const;
+	int GetCurrentReplaceProgress() const;
+	const CString& GetCurrentReplacePath() const;
 	void ReplaceInFolder();
 	void SetFileFilter(const CString& strfileFilter);
 	BOOL CheckFileFilter(const CString& strFilePath);
+	void SetParentWindow(CWnd* pWndParent);
+	void ReportFailedCases();
+
+	static void ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+	static BOOL ReplaceAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
+	static BOOL ReplaceAllInSelection(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
 
 	// return result data
 	TEXT_RESULT_SEARCH_REPLACE_DATA m_ResultReplaceData;
@@ -62,33 +78,14 @@ public:
 	// failed replace files
 	std::vector<CString> m_listFailedReplaceFiles;
 
-	static void ReplaceInDocument(const CString& strDocPath, const std::vector<CString>& listInputLine,
-		std::wstring replace_what,
-		std::wstring replace_with,
-		std::vector<RESULT_SEARCH_DATA>& vecResultSearchInfo,
-		unsigned int & nMatchedFiles,
-		unsigned int & nMatchedWords,
-		unsigned int& nLineCounts,
-		int nSearchOptions,
-		CEditorCtrl * pCScintillaEditor = NULL,
-		BOOL bHasTrailingReturn = FALSE);
-
-	static void ReplaceInFilePath(std::wstring inputfile, std::wstring outputfile,
-		std::wstring replace_what, std::wstring replace_with,
-		std::vector<RESULT_SEARCH_DATA>& vecResultSearchInfo,
-		unsigned int & nMatchedFiles,
-		unsigned int& nMatchedWords,
-		unsigned int& nLineCounts,
-		int nSearchOptions,
-		CEditorCtrl* pCScintillaEditor = NULL);
-
 private:
 	CString m_strReplaceFolder;
 	CString m_strSearchWhat;
 	CString m_strReplaceWith;
+	CString m_strCurReplacePath;
 	int m_nSearchOptions = 0;
 	int m_nReplaceProgress = 0;
 	BOOL m_bIncludeSubFolder = TRUE;
-	CEditorDoc* m_pActiveDoc = NULL;
+	CWnd* m_pWndParent{ nullptr };
 	std::vector<CString> m_FileFilters;
 };

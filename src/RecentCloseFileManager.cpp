@@ -19,12 +19,9 @@ void CRecentCloseMDITabManager::PushTab(const CString& strPathName, BOOL bCloseT
 		{
 			if (m_RecentTab.size() > AppSettingMgr.m_nRecentFileLimit)
 			{
-				ResetData();
+				EraseLastTab();
 			}
-			else
-			{
-				EraseTab(strPathName);
-			}
+			EraseTab(strPathName);
 			LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Close File] %s..."), strPathName);
 		}
 		m_RecentTab.push_front(strPathName);
@@ -35,6 +32,11 @@ void CRecentCloseMDITabManager::EraseTab(const CString& strPathName)
 {
 	auto found = std::find(m_RecentTab.begin(), m_RecentTab.end(), strPathName);
 	if (found != m_RecentTab.end()) m_RecentTab.erase(found);
+}
+
+void CRecentCloseMDITabManager::EraseLastTab()
+{
+	m_RecentTab.erase(m_RecentTab.end() - 1);
 }
 
 CString CRecentCloseMDITabManager::PopTab()

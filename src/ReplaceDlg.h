@@ -30,7 +30,7 @@ public:
 	enum { IDD = IDD_REPLACE };
 
 	virtual BOOL OnInitDialog();
-	void InitSearchReplaceFromEditor(const CString& strSearchWhat, BOOL bSelectEditbox = TRUE);
+	void InitSearchReplaceFromEditor(const CString& strSearchWhat);
 	void InitSearchReplaceFromExplorer(const CString& strFolderPath);
 	void SaveSearchString(const CString& strSearch);
 	void SaveReplaceString(const CString& strReplace);
@@ -41,8 +41,8 @@ public:
 	CString GetSearchWhat();
 	unsigned int GetSearchOption();
 
-	SycnFindReplaceSettings GetSycnFindReplaceSettings();
-	void SyncSearchReplaceSettings(const SycnFindReplaceSettings& settings);
+	ADVANCED_SEARCH_DATA GetSycnFindReplaceSettings();
+	void SyncSearchReplaceSettings(const ADVANCED_SEARCH_DATA& settings);
 	void UpdateUIVisual();
 
 protected:
@@ -75,6 +75,8 @@ protected:
 	void DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void InitComboReplaceScope();
 	void InitComboRegexPattern();
+	void ReplaceAllInDocument(CDocument* pDoc, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void OnOK() {}
 	virtual void OnCancel() {}

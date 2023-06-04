@@ -768,12 +768,7 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 					}
 					break;
 				case 'G':
-					if ((GetKeyState(VK_CONTROL) & 0x8000) && (GetKeyState(VK_SHIFT) & 0x8000))
-					{
-						OnQuickFindAllInFile();
-						return TRUE;
-					}
-					else if (GetKeyState(VK_CONTROL) & 0x8000)
+					if (GetKeyState(VK_CONTROL) & 0x8000)
 					{
 						OnOptionGotoline();
 						return TRUE;
@@ -928,7 +923,7 @@ void CEditorView::OnInitialUpdate()
 
 	if (AppSettingMgr.m_bCheckFileSizeBeforeOpen && PathUtils::GetFileSize(strEditorPathName) > FILE_SIZE_LIMITATION)
 	{
-		if (IDNO == AfxMessageBox(_T("[Open Warning] This file is very big, continue open?"), MB_YESNO | MB_ICONWARNING))
+		if (IDNO == AfxMessageBox(_T("[File Size Warning] This file is very big, continue open?"), MB_YESNO | MB_ICONWARNING))
 		{
 			return;
 		}
@@ -993,7 +988,8 @@ void CEditorView::OnActivateView(BOOL bActivate, CView * pActivateView, CView * 
 	{
 		pFrame->OnOpenFileExplorer();
 	}
-	pFrame->QuickSearchDialogChangedActiveTab();
+	if (AppUtils::GetMainFrame()->GetQuickSearchDialog())
+		pFrame->QuickSearchDialogChangedActiveTab();
 	pFrame->PostMessage(WM_COMMAND, (WPARAM)UMW_SET_READ_ONLY_TAB_MDI);
 	pFrame->PostMessage(WM_COMMAND, (WPARAM)UMW_SET_COLOR_ACTIVE_TAB_MDI);
 }
@@ -5884,8 +5880,6 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 	int endRange = m_EditorCtrl.GetTextLength();
 	int targetStart = 0;
 	int targetEnd = 0;
-
-	// set search options
 	m_EditorCtrl.DoCommand(SCI_SETSEARCHFLAGS, nSearchOption);
 	while (targetStart != -1 && targetStart != -2)
 	{
@@ -5895,7 +5889,7 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 		{
 			break;
 		}
-		targetEnd = int(m_EditorCtrl.DoCommand(SCI_GETTARGETEND));
+		targetEnd = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETTARGETEND));
 
 		if (targetEnd > endRange)
 		{
@@ -5927,11 +5921,11 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 	GuiUtils::ForceRedrawCWnd(this);  // force tracking bar refresh...
 }
 
-void CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/)
+BOOL CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/)
 {
 	m_nIndicatorCount = 0;
 	m_MatchedLineDataset.clear();
-	if (strWord.IsEmpty() || !m_EditorCtrl.GetMultiSelectionModeState()) return;
+	if (strWord.IsEmpty() || !m_EditorCtrl.GetMultiSelectionModeState()) return 0;
 	int startRange = 0;
 	int endRange = m_EditorCtrl.GetTextLength();
 	int targetStart = 0;
@@ -5940,8 +5934,6 @@ void CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOptio
 	int targetAnchorFirstFound = 0;
 	int curCaret = m_EditorCtrl.GetCurrentPosition();
 	int firstVisibleLine = m_EditorCtrl.GetFirstVisibleLine();
-
-	// set search options
 	m_EditorCtrl.DoCommand(SCI_SETSEARCHFLAGS, nSearchOption);
 	while (targetStart != -1 && targetStart != -2)
 	{
@@ -5951,7 +5943,7 @@ void CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOptio
 		{
 			break;
 		}
-		targetEnd = int(m_EditorCtrl.DoCommand(SCI_GETTARGETEND));
+		targetEnd = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETTARGETEND));
 
 		if (targetEnd > endRange)
 		{
@@ -5998,6 +5990,55 @@ void CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOptio
 		m_EditorCtrl.DoCommand(SCI_DROPSELECTIONN, 0, 0);
 	}
 	GuiUtils::ForceRedrawCWnd(this);  // force tracking bar refresh...
+	return m_nIndicatorCount;
+}
+
+BOOL CEditorView::BookmarkAllOccurrences(const CString& strWord, int nSearchOption)
+{
+	int nCurPosition = m_EditorCtrl.GetCurrentPosition();
+	int startRange = 0;
+	int endRange = m_EditorCtrl.GetTextLength();
+	int targetStart = 0;
+	int targetEnd = 0;
+	int bookmarkCount = 0;
+	m_EditorCtrl.DoCommand(SCI_SETSEARCHFLAGS, nSearchOption);
+	while (targetStart != -1 && targetStart != -2)
+	{
+		targetStart = m_EditorCtrl.SearchTextInRange(strWord, startRange, endRange);
+		if (targetStart == -1 || targetStart == -2)
+		{
+			break;
+		}
+		targetEnd = static_cast<int>(m_EditorCtrl.DoCommand(SCI_GETTARGETEND));
+		if (targetEnd > endRange)
+		{
+			break;
+		}
+		int indicatorLength = targetEnd - targetStart;
+		if (indicatorLength > 0)
+		{
+			CString strPathName = m_pDocument->GetPathName();
+			if (PathFileExists(strPathName))
+			{
+				const int line = m_EditorCtrl.GetLineFromPosition(targetStart) + 1;
+				if (m_EditorCtrl.AddBookMark(line, strPathName))
+				{
+					bookmarkCount++;
+					UpdateDockPaneBookmark(line, FALSE, strPathName);
+				}
+			}
+		}
+		else
+		{
+			break;
+		}
+		if (targetStart + indicatorLength == endRange)
+		{
+			break;
+		}
+		startRange = targetStart + indicatorLength;
+	}
+	return bookmarkCount;
 }
 
 // CEditorView diagnostics
@@ -6038,7 +6079,8 @@ void CEditorView::OnSize(UINT nType, int cx, int cy)
 	{
 		AdjustEditorPosition(cx, cy);
 	}
-	AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
+	if (AppUtils::GetMainFrame()->GetQuickSearchDialog())
+		AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
 }
 
 void CEditorView::OnSetFocus(CWnd * pOldWnd)
@@ -6950,7 +6992,8 @@ void CEditorView::ReupdateTrackingBar()
 			RenderIndicatorWordsAndCount(m_EditorCtrl.GetSelectedText());
 		}
 	}
-	AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
+	if (AppUtils::GetMainFrame()->GetQuickSearchDialog())
+		AppUtils::GetMainFrame()->ResizeQuickSearchDialog();
 }
 
 void CEditorView::OnDocumentShowTrackingBar()
@@ -9031,19 +9074,6 @@ void CEditorView::OnEnableUserLexerLexerVBPascal()
 void CEditorView::OnDisableUserLexer()
 {
 	ChangeUserLexer(_T(""));
-}
-
-void CEditorView::OnQuickFindAllInFile()
-{
-	CMainFrame* pFrame = AppUtils::GetMainFrame();
-	if (!pFrame) return;
-	CString strSelectedWord = m_EditorCtrl.GetSelectedText();
-	if (strSelectedWord.IsEmpty())
-	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Quick Search All] Text selection is empty..."), BasicColors::orange);
-		return;
-	}
-	pFrame->SearchAllOnFileFromEditor(m_EditorCtrl.GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
 }
 
 void CEditorView::ChangeToEditorReadOnly()

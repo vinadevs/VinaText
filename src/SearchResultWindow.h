@@ -22,13 +22,15 @@ class CSearchResultList : public CListCtrl
 public:
 	CSearchResultList();
 	virtual ~CSearchResultList();
-	void SetSeachWhatString(CString strSeachWhat) { m_strSeachWhat = strSeachWhat; }
+	void SetSeachWhatString(const CString& strSeachWhat) { m_strSeachWhat = strSeachWhat; }
+	void SetSeachOptions(unsigned int uiSearchOptions) { m_uiSearchOptions = uiSearchOptions; }
 	CString GetSelectedItemsText();
 	CString GetItemsText();
 	afx_msg void OnOutputPreviewFile();
 
 protected:
 	CString m_strSeachWhat;
+	unsigned int m_uiSearchOptions;
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnEditCopy();
 	afx_msg void OnEditClear();
@@ -108,22 +110,22 @@ protected:
 	// Attributes
 protected:
 	TEXT_RESULT_SEARCH_REPLACE_DATA m_DisplayResultSearchData;
-	std::vector<RESULT_SEARCH_DATA> m_OriginalResultSearchInfo;
+	std::vector<SEARCH_DATA_LINE> m_OriginalResultSearchInfo;
 	CSearchResultList m_wndResultList;
 	CEditFilter m_wndEditFilter;
 	CFont m_Font;
 };
 
 /////////////////////////////////////////////////////////////////////////////
-// CTextResultWindow 
+// CSearchResultWindow 
 
-class CTextResultWindow : public CDockPaneBase
+class CSearchResultWindow : public CDockPaneBase
 {
 	// Construction
 public:
-	DECLARE_DYNCREATE(CTextResultWindow)
-	CTextResultWindow();
-	virtual ~CTextResultWindow();
+	DECLARE_DYNCREATE(CSearchResultWindow)
+	CSearchResultWindow();
+	virtual ~CSearchResultWindow();
 
 	// Implementation
 public:

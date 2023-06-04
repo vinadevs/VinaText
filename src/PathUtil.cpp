@@ -10,6 +10,7 @@
 #include "afxtaskdialog.h"
 #include "PathUtil.h"
 #include "AppUtil.h"
+#include "OSUtil.h"
 #include "AppSettings.h"
 #include "Hpsutils.h"
 #include "FileUtil.h"
@@ -588,7 +589,7 @@ CString PathUtils::GetCopyFileFromSourceFile(const CString & strDestFolder, cons
 					CString strParrentFolder = PathUtils::GetContainerPath(strSourceFile);
 					CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
 					CString strFileExt = PathUtils::GetFileExtention(strSourceFile);
-					CString strFileCopySuffix = _T("-copied-") + AppUtils::IntToCString(AppSettingMgr.GetNewFileCopyID()) + _T(".");
+					CString strFileCopySuffix = _T("-copied-") + OSUtils::GetGUIDGlobal() + _T(".");
 					int nPosCopied = strFileNameNoExt.Find(_T("-copied-"));
 					strCopyFileDest.Empty();
 					if (nPosCopied == -1)
@@ -618,7 +619,7 @@ CString PathUtils::GetCopyFileFromSourceFile(const CString & strDestFolder, cons
 					CString strParrentFolder = PathUtils::GetContainerPath(strSourceFile);
 					CString strFileNameNoExt = PathUtils::GetFileNameWithoutExtension(strFileName);
 					CString strFileExt = PathUtils::GetFileExtention(strSourceFile);
-					CString strFileCopySuffix = _T("-copied-") + AppUtils::IntToCString(AppSettingMgr.GetNewFileCopyID()) + _T(".");
+					CString strFileCopySuffix = _T("-copied-") + OSUtils::GetGUIDGlobal() + _T(".");
 					int nPosCopied = strFileNameNoExt.Find(_T("-copied-"));
 					strCopyFileDest.Empty();
 					if (nPosCopied == -1)
@@ -889,6 +890,15 @@ BOOL PathUtils::SaveFileAppendNoDuplicateLine(const CString& szFile, CString& st
 	out_file << AppUtils::CStringToWStd(strContentToAppend);
 	out_file.close();
 	return TRUE;
+}
+
+CString PathUtils::FileContentToUtf8(const CString& szFile)
+{
+	std::wifstream wif(szFile);
+	wif.imbue(std::locale(std::locale::empty(), new std::codecvt_utf8<wchar_t>));
+	std::wstringstream wss;
+	wss << wif.rdbuf();
+	return AppUtils::WStdToCString(wss.str());
 }
 
 BOOL PathUtils::OpenFile(const CString& szFile, CString& strContent)

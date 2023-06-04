@@ -49,7 +49,6 @@ public:
 	// editor document ID
 	void RemoveDocumentUndefTitle(const CString& strTitle);
 	CString CreateDocumentUndefTitle();
-	int GetNewFileCopyID();
 
 	// editor recent file data
 	void SaveRecentEditorCaretInfo(const CString& strPathName);
@@ -163,9 +162,8 @@ public:
 	std::vector<CString>  m_MultipleClipboardBuffer;
 
 private:
-	// settings can not edit by users...
-	int m_nFileCopyCounter = 0;
-	// Editor caret info state
+	// Settings can not edit by users...
+	// editor caret info state
 	typedef std::unordered_map<std::string, RecentEditorInfo> MapRecentEditorInfo;
 	MapRecentEditorInfo m_RecentEditorCaretInfo;
 

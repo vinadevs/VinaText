@@ -31,6 +31,8 @@ public:
 	VINATEXT_SUPPORTED_LANGUAGE GetCurrentDocLanguague() { return m_CurrentDocLanguage; }
 	BOOL SaveFileAndInitilizeEditor(const CString& szPath);
 	void RenderIndicatorWordsAndCount(const CString & strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE, BOOL bClearSelection = TRUE);
+	int SelectAllOccurrences(const CString& strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE);
+	int BookmarkAllOccurrences(const CString& strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE);
 	void ChangeToEditorReadOnly();
 	void DisableAllDocumemtReadOnly();
 	CString DetectCurrentDocLanguage();
@@ -427,7 +429,6 @@ public:
 	afx_msg void OnToolCreateSha256();
 	afx_msg void OnToolCreateSha1();
 
-	afx_msg void OnQuickFindAllInFile();
 	afx_msg void OnBuildSource();
 	afx_msg void OnRemoveAllDebugPointer();
 
@@ -463,7 +464,6 @@ protected:
 	void GetAutoCompleteList(const CString& strWord, std::vector<CString>& listWord);
 	void AutoIndentationText();
 	void ProcessIndentationTab();
-	void SelectAllOccurrences(const CString & strWord, int nSearchOption = SCFIND_WHOLEWORD | SCFIND_MATCHCASE);
 	void ShowAutoCompleteByAddedWord(CString strWord);
 	void ActiveDockWindow(DOCKABLE_PANE_TYPE type);
 	void Replace4SpacesByTab(BOOL bTabToSpace);

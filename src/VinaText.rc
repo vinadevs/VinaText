@@ -363,8 +363,8 @@ BEGIN
         MENUITEM "Undo To Last Action\tCtrl+Shift+Z", ID_EDIT_UNDO_ALL
         MENUITEM "Redo To Last Action\tCtrl+Shift+Y", ID_EDIT_REDO_ALL
         MENUITEM SEPARATOR
-        MENUITEM "Undo For All Files",          ID_EDIT_UNDO_ALL_FILE
-        MENUITEM "Redo For All Files",          ID_EDIT_REDO_ALL_FILE
+        MENUITEM "Undo For All Opened Files",   ID_EDIT_UNDO_ALL_FILE
+        MENUITEM "Redo For All Opened Files",   ID_EDIT_REDO_ALL_FILE
         MENUITEM SEPARATOR
         MENUITEM "Large File Edit Mode",        ID_DOCUMENT_SET_EDIT_LARGE_FILE
         MENUITEM SEPARATOR
@@ -465,8 +465,8 @@ BEGIN
     POPUP "Selection"
     BEGIN
         MENUITEM "All Text\tCtrl+A",            ID_EDIT_SELECT_ALL
-        MENUITEM "All Sensitive Matched\tSelection+Ctrl+A", ID_EDIT_SELECT_ALL_SELECTION
-        MENUITEM "All Insensitive Matched\tSelection+Ctrl+Shift+A", ID_EDIT_SELECT_ALL_SELECTION_NOT_MC_MW
+        MENUITEM "All Sensitive Matched\tCtrl+A", ID_EDIT_SELECT_ALL_SELECTION
+        MENUITEM "All Insensitive Matched\tCtrl+Shift+A", ID_EDIT_SELECT_ALL_SELECTION_NOT_MC_MW
         MENUITEM SEPARATOR
         MENUITEM "Invert Selection\tCtrl+Shift+I", ID_INVERT_SELECTION
         MENUITEM "Use Column Mode\tAlt+Left Mouse Drag", ID_SELECTION_WITH_COLUMN_MODE
@@ -476,19 +476,22 @@ BEGIN
         MENUITEM "Move Selected Line Up\tCtrl+Shift+Up", ID_EDIT_MOVE_SELECTED_LINE_UP
         MENUITEM "Move Selected Line Down\tCtrl+Shift+Down", ID_EDIT_MOVE_SELECTED_LINE_DOWN
         MENUITEM SEPARATOR
-        MENUITEM "Expand Selection To Word\tCtrl+D", ID_SELECTION_TO_WORD
-        MENUITEM "Expand Selection To Line\tCtrl+L", ID_SELECTION_TO_LINE
-        MENUITEM "Expand Selection To Quote\tCtrl+Shift+A", ID_SELECTION_TO_QUOTE
-        MENUITEM "Expand Selection Previous Line\tCtrl+Alt+Up", ID_ADD_PREIVOUS_LINE_SELECTION
-        MENUITEM "Expand Selection Next Line\tCtrl+Alt+Down", ID_ADD_NEXT_LINE_SELECTION
-        MENUITEM "Expand Selection To Next Paragraph\tCtrl+Shift+]", ID_SELECTION_TO_NEXT_PARAGRAPH
-        MENUITEM "Expand Selection To Previous Paragraph\tCtrl+Shift+[", ID_SELECTION_TO_PREV_PARAGRAPH
-        MENUITEM "Expand Selection End File\tCtrl+Shift+End", ID_SELECTION_TO_END_FILE
-        MENUITEM "Expand Selection Begin File\tCtrl+Shift+Home", ID_SELECTION_TO_BEGIN_FILE
-        MENUITEM "Expand Selection To Word Left\tCtrl+Shift+Left", ID_SELECTION_TO_WORD_LEFT
-        MENUITEM "Expand Selection To Word Right\tCtrl+Shift+Right", ID_SELECTION_TO_WORD_RIGHT
-        MENUITEM "Expand Selection To Part Left\tCtrl+Shift+/", ID_SELECTION_TO_PART_LEFT
-        MENUITEM "Expand Selection To Part Right\tCtrl+Shift+\\", ID_SELECTION_TO_PART_RIGHT
+        POPUP "Expand Selection..."
+        BEGIN
+            MENUITEM "To Word\tCtrl+D",             ID_SELECTION_TO_WORD
+            MENUITEM "To Line\tCtrl+L",             ID_SELECTION_TO_LINE
+            MENUITEM "To Quote\tCtrl+Shift+A",      ID_SELECTION_TO_QUOTE
+            MENUITEM "To Previous Line\tCtrl+Alt+Up", ID_ADD_PREIVOUS_LINE_SELECTION
+            MENUITEM "To Next Line\tCtrl+Alt+Down", ID_ADD_NEXT_LINE_SELECTION
+            MENUITEM "To Next Paragraph\tCtrl+Shift+]", ID_SELECTION_TO_NEXT_PARAGRAPH
+            MENUITEM "To Previous Paragraph\tCtrl+Shift+[", ID_SELECTION_TO_PREV_PARAGRAPH
+            MENUITEM "To End File\tCtrl+Shift+End", ID_SELECTION_TO_END_FILE
+            MENUITEM "To Begin File\tCtrl+Shift+Home", ID_SELECTION_TO_BEGIN_FILE
+            MENUITEM "To Word Left\tCtrl+Shift+Left", ID_SELECTION_TO_WORD_LEFT
+            MENUITEM "To Word Right\tCtrl+Shift+Right", ID_SELECTION_TO_WORD_RIGHT
+            MENUITEM "To Part Left\tCtrl+Shift+/",  ID_SELECTION_TO_PART_LEFT
+            MENUITEM "To Part Right\tCtrl+Shift+\\", ID_SELECTION_TO_PART_RIGHT
+        END
     END
     POPUP "Text"
     BEGIN
@@ -741,7 +744,7 @@ BEGIN
         MENUITEM "Message Window",              ID_PANE_OUTPUT_WINDOW
         MENUITEM "Debug Window",                ID_PANE_BUILD_WINDOW
         MENUITEM SEPARATOR
-        MENUITEM "Text Result Window",          ID_PANE_TEXT_RESULT_WINDOW
+        MENUITEM "Search Result Window",        ID_PANE_TEXT_RESULT_WINDOW
         MENUITEM "Path Result Window",          ID_PANE_FILE_RESULT_WINDOW
         MENUITEM SEPARATOR
         MENUITEM "Bookmark Window",             ID_PANE_BOOKMARK_WINDOW
@@ -1776,22 +1779,23 @@ STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     COMBOBOX        ID_EDITOR_QUICK_REPLACE_SEARCH_COMBO,5,3,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "Replace",ID_EDITOR_QUICK_REPLACE_NEXT,66,53,47,19
+    PUSHBUTTON      "Replace",ID_EDITOR_QUICK_REPLACE_NEXT,66,53,47,19
+    DEFPUSHBUTTON   "S. Next", ID_EDITOR_QUICK_SEARCH_REPLACE_NEXT,14,53,47,19
     PUSHBUTTON      "Replace All",ID_EDITOR_QUICK_REPLACE_ALL,119,53,47,19
     COMBOBOX        ID_EDITOR_QUICK_REPLACE_OPTION_COMBO,5,37,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     COMBOBOX        ID_EDITOR_QUICK_REPLACE_COMBO,5,20,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    DEFPUSHBUTTON   "S. Next",ID_EDITOR_QUICK_SEARCH_REPLACE_NEXT,14,53,47,19
 END
 
 IDD_DLG_QUICK_SEARCH DIALOGEX 0, 0, 189, 82
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    COMBOBOX        ID_EDITOR_QUICK_SEARCH_COMBO,5,8,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "S. Previous",ID_EDITOR_QUICK_SEARCH_PREVIOUS,67,48,47,19
-    DEFPUSHBUTTON   "S. Next",ID_EDITOR_QUICK_SEARCH_NEXT,15,48,47,19
-    PUSHBUTTON      "Search All",ID_EDITOR_QUICK_SEARCH_ALL,119,48,47,19
-    COMBOBOX        ID_EDITOR_QUICK_SEARCH_OPTION_COMBO,5,27,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_EDITOR_QUICK_SEARCH_COMBO,5,3,167,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "S. Previous",ID_EDITOR_QUICK_SEARCH_PREVIOUS,66,53,47,19
+    DEFPUSHBUTTON   "S. Next",ID_EDITOR_QUICK_SEARCH_NEXT,14,53,47,19
+    PUSHBUTTON      "Search All",ID_EDITOR_QUICK_SEARCH_ALL,119,53,47,19
+    COMBOBOX        ID_EDITOR_QUICK_SEARCH_OPTION_COMBO,5,20,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    COMBOBOX        ID_EDITOR_QUICK_SEARCH_RESULT_COMBO,5,37,167,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_OPEN_FILE_WITH_PASSWORD_DIALOG DIALOGEX 0, 0, 315, 59
@@ -2317,7 +2321,7 @@ BEGIN
         LEFTMARGIN, 4
         RIGHTMARGIN, 182
         TOPMARGIN, 9
-        BOTTOMMARGIN, 75
+        BOTTOMMARGIN, 81
     END
 
     IDD_OPEN_FILE_WITH_PASSWORD_DIALOG, DIALOG
@@ -2743,7 +2747,7 @@ STRINGTABLE
 BEGIN
     ID_QUICK_SEARCH         "Quick Search Dialog\nQuick Search Popup Dialog"
     ID_PANE_TEXT_RESULT_WINDOW 
-                            "Shows or hides the Text Result Window\nText Result Window"
+                            "Shows or hides the Search Result Window\nSearch Result Window"
     ID_VINATEXT_DOCUMENTATION "VinaText Help\nHelp"
     ID_MDI_TAB_LOCATE_IN_FILE_EXPLORER 
                             "Reveal Active File In Explorer Window\nReveal In Explorer"

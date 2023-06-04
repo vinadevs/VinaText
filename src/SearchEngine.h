@@ -18,9 +18,9 @@
 //to sanitize the input string before creating the expression regex.
 
 ///////////////////////////////////////////////////////////////////////
-// sync settings find and replace data structures
+// advanced settings find and replace data structures
 
-struct SycnFindReplaceSettings
+struct ADVANCED_SEARCH_DATA
 {
 	CString _strSearchWhat;
 	int _nSearchScope;
@@ -54,28 +54,31 @@ typedef std::vector<PATH_RESULT_DATA> PATH_RESULT_DATA_LIST;
 ///////////////////////////////////////////////////////////////////////
 // search line data structures
 
-struct RESULT_SEARCH_DATA
+struct SEARCH_DATA_LINE
 {
 	CString _strTargetFile;
 	CString _strLine;
-	unsigned int _nMatched;
 	unsigned int _nLineNumber;
+	unsigned int _nColumnNumber;
+	unsigned int _nPositionNumber;
 
-	RESULT_SEARCH_DATA() :
+	SEARCH_DATA_LINE() :
 		_nLineNumber(0),
-		_nMatched(0),
+		_nColumnNumber(0),
+		_nPositionNumber(0),
 		_strTargetFile(_T("")),
 		_strLine(_T("")) {}
 };
 
 struct TEXT_RESULT_SEARCH_REPLACE_DATA
 {
-	std::vector<RESULT_SEARCH_DATA> _vecResultSearchInfo;
+	std::vector<SEARCH_DATA_LINE> _vecSearchDataLine;
 	unsigned int _nMatchedFiles;
 	unsigned int _nMatchedLines;
 	unsigned int _nMatchedWords;
 	unsigned int _nLineCounts;
 	unsigned int _nTotalSearchFile;
+	unsigned int _nSearchOptions;
 	double		 _TimeMeasured;
 	CString _strSearchWhat;
 	CString _strReplaceWith;
@@ -90,6 +93,7 @@ struct TEXT_RESULT_SEARCH_REPLACE_DATA
 		_nMatchedLines(0),
 		_nLineCounts(0),
 		_nTotalSearchFile(0),
+		_nSearchOptions(0),
 		_TimeMeasured(0.0),
 		_bAppendResult(FALSE),
 		_bShowFileNameOnly(FALSE),
@@ -97,8 +101,8 @@ struct TEXT_RESULT_SEARCH_REPLACE_DATA
 
 	void Reset()
 	{
-		_vecResultSearchInfo.clear();
-		std::vector<RESULT_SEARCH_DATA>().swap(_vecResultSearchInfo);
+		_vecSearchDataLine.clear();
+		std::vector<SEARCH_DATA_LINE>().swap(_vecSearchDataLine);
 		_strSearchWhat.Empty();
 		_strScope.Empty();
 		_strReplaceWith.Empty();

@@ -1889,7 +1889,6 @@ BOOL CEditorCtrl::SearchForward(const CString& strText)
 	lPos = (int)DoCommand(SCI_FINDTEXT, m_nSearchflags, sptr_t(&tf));
 	if (lPos >= 0)
 	{
-		SetFocus();
 		GotoPosition(lPos);
 		SetSelectionTextColor(BasicColors::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
@@ -3352,109 +3351,98 @@ void CEditorCtrl::ReplaceSearchedText(const CString& strText)
 	DELETE_POINTER_CPP_ARRAY(bufUtf8);
 }
 
-int CEditorCtrl::ReplaceNext(const CString& szFind, const CString& szReplace)
+int CEditorCtrl::ReplaceNext(const CString& strSearchWhat, const CString& strReplaceWith)
 {
-	if (szFind.IsEmpty()) return 0;
-
-	char* bufUtf8_szFind = NULL;
+	char* bufUtf8_szFind = nullptr;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind);
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, strSearchWhat);
 	}
-	if (bufUtf8_szFind == NULL) return 0;
-
-	char* bufUtf8_szReplace = NULL;
+	if (bufUtf8_szFind == nullptr) return 0;
+	char* bufUtf8_szReplace = nullptr;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace);
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, strReplaceWith);
 	}
-	if (bufUtf8_szReplace == NULL) return 0;
-
+	if (bufUtf8_szReplace == nullptr) return 0;
 	// set target search
 	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
-
-	int nLen = 0;
-	int lStart = GetSelectionStartPosition();
-	int lEnd = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
-	DoCommand(SCI_SETTARGETSTART, lStart);
-	DoCommand(SCI_SETTARGETEND, lEnd);
-	int lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-	if (lPos < lEnd && lPos >= 0)
+	int lLenToReplace = 0;
+	int lStartSearchPos = GetSelectionStartPosition();
+	int lEndSearchPos = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
+	DoCommand(SCI_SETTARGETSTART, lStartSearchPos);
+	DoCommand(SCI_SETTARGETEND, lEndSearchPos);
+	int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+	if (lPosToReplace < lEndSearchPos && lPosToReplace >= 0)
 	{
 		if (m_nSearchflags & SCFIND_REGEXP)
 		{
-			nLen = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
 		}
 		else
 		{
-			nLen = static_cast<int>(DoCommand(SCI_REPLACETARGET, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
 		}
-		DoCommand(SCI_SETTARGETSTART, lPos + nLen);
-		DoCommand(SCI_SETTARGETEND, lEnd);
-		lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-		if (lPos >= 0)
+		DoCommand(SCI_SETTARGETSTART, lPosToReplace + lLenToReplace);
+		DoCommand(SCI_SETTARGETEND, lEndSearchPos);
+		lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+		if (lPosToReplace >= 0)
 		{
-			int lLine = GetLineFromPosition(lPos);
-			SetLineCenterKeepView(lLine);
-			SetSelectionRange(lPos, lPos + szFind.GetLength());
+			SetLineCenterKeepView(GetLineFromPosition(lPosToReplace));
+			SetSelectionRange(lPosToReplace, lPosToReplace + strSearchWhat.GetLength());
 		}
 	}
-	if (lPos >= lEnd || lPos < 0)
+	if (lPosToReplace >= lEndSearchPos || lPosToReplace < 0)
 	{
-		lStart = 0;
-		lEnd = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
-		DoCommand(SCI_SETTARGETSTART, lStart, 0);
-		DoCommand(SCI_SETTARGETEND, lEnd, 0);
-		lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-		if (lPos >= 0)
+		lStartSearchPos = 0;
+		lEndSearchPos = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
+		DoCommand(SCI_SETTARGETSTART, lStartSearchPos, 0);
+		DoCommand(SCI_SETTARGETEND, lEndSearchPos, 0);
+		lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+		if (lPosToReplace >= 0)
 		{
-			int lLine = GetLineFromPosition(lPos);
-			SetLineCenterKeepView(lLine);
-			SetSelectionRange(lPos, lPos + szFind.GetLength());
+			SetLineCenterKeepView(GetLineFromPosition(lPosToReplace));
+			SetSelectionRange(lPosToReplace, lPosToReplace + strSearchWhat.GetLength());
 		}
 	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szFind);
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szReplace);
-
-	return lPos;
+	return lPosToReplace;
 }
 
-int CEditorCtrl::ReplaceAll(const CString& szFind, const CString& szReplace)
+BOOL CEditorCtrl::ReplaceAllInSelection(const CString& strSearchWhat, const CString& strReplaceWith)
 {
-	if (szFind.IsEmpty()) return 0;
-
-	char* bufUtf8_szFind = NULL;
+	char* bufUtf8_szFind = nullptr;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, szFind);
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, strSearchWhat);
 	}
-	if (bufUtf8_szFind == NULL) return 0;
+	if (bufUtf8_szFind == nullptr) return 0;
 
-	char* bufUtf8_szReplace = NULL;
+	char* bufUtf8_szReplace = nullptr;
 	{
-		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, szReplace);
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, strReplaceWith);
 	}
-	if (bufUtf8_szReplace == NULL) return 0;
-
+	if (bufUtf8_szReplace == nullptr) return 0;
 	// set target search
 	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
-
+	int nSearchedLine = -1;
 	int nCountReplace = 0;
 	CString strSelectedText = GetSelectedText();
-	if (!strSelectedText.IsEmpty() && strSelectedText != szFind) // replace all in selection scope
+	if (!strSelectedText.IsEmpty() && strSelectedText != strSearchWhat) // replace all in selection scope
 	{
 		int lLenToReplace = 0;
 		int lStartSelection = GetSelectionStartPosition();
 		int lEndSelection = GetSelectionEndPosition();
 		DoCommand(SCI_SETTARGETSTART, lStartSelection);
 		DoCommand(SCI_SETTARGETEND, lEndSelection);
-		int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+		int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
 		while (lPosToReplace < lEndSelection && lPosToReplace >= 0)
 		{
 			if (m_nSearchflags & SCFIND_REGEXP)
 			{
-				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
 			}
 			else
 			{
-				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
 			}
 			if (lLenToReplace >= 0)
 			{
@@ -3463,91 +3451,89 @@ int CEditorCtrl::ReplaceAll(const CString& szFind, const CString& szReplace)
 			lEndSelection = GetSelectionEndPosition();
 			DoCommand(SCI_SETTARGETSTART, lPosToReplace + lLenToReplace);
 			DoCommand(SCI_SETTARGETEND, lEndSelection);
-			lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-		}
-	}
-	else // replace all in file scope
-	{
-		int nDeltaReplaceLength = szFind.GetLength() - szReplace.GetLength();
-		int lLen = 0;
-		int lStart = 0;
-		int lEnd = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
-		int lPosAnchor = GetCurrentAnchor();
-		int lPosCaret = GetCurrentPosition();
-		if (lPosAnchor < lPosCaret)
-		{
-			lStart = lPosAnchor;
-		}
-		else
-		{
-			lStart = lPosCaret;
-		}
-		DoCommand(SCI_SETTARGETSTART, lStart, 0);
-		DoCommand(SCI_SETTARGETEND, lEnd, 0);
-		int lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-		int lPosFirstMatched = lPos;
-		while (lPos < lEnd && lPos >= 0)
-		{
-			if (m_nSearchflags & SCFIND_REGEXP)
-			{
-				lLen = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-			}
-			else
-			{
-				lLen = static_cast<int>(DoCommand(SCI_REPLACETARGET, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-			}
-			if (lLen >= 0)
-			{
-				nCountReplace++;
-				lEnd = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
-				DoCommand(SCI_SETTARGETSTART, lPos + lLen);
-				DoCommand(SCI_SETTARGETEND, lEnd);
-				lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-			}
-		}
-		if (lPos >= lEnd || lPos < 0) // back to start file position
-		{
-			lLen = 0;
-			lStart = 0;
-			lEnd = lPosFirstMatched;
-			DoCommand(SCI_SETTARGETSTART, lStart, 0);
-			DoCommand(SCI_SETTARGETEND, lEnd, 0);
-			int lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-			while (lPos < lEnd && lPos >= 0)
-			{
-				if (m_nSearchflags & SCFIND_REGEXP)
-				{
-					lLen = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-				}
-				else
-				{
-					lLen = static_cast<int>(DoCommand(SCI_REPLACETARGET, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-				}
-				if (lLen >= 0)
-				{
-					DoCommand(SCI_SETTARGETSTART, lPos + lLen);
-					lEnd -= nDeltaReplaceLength;
-					DoCommand(SCI_SETTARGETEND, lEnd);
-					lPos = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szFind.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-					nCountReplace++;
-				}
-			}
-		}
-		if (lPosFirstMatched >= 0)
-		{
-			lStart = lPosFirstMatched;
-			lEnd = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
-			DoCommand(SCI_SETTARGETSTART, lStart, 0);
-			DoCommand(SCI_SETTARGETEND, lEnd, 0);
-			lPosFirstMatched = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, szReplace.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-			int lCurrentCaretPos = lPosFirstMatched + szReplace.GetLength();
-			ClearSelection(lCurrentCaretPos);
-			DoCommand(SCI_ADDUNDOACTION, lCurrentCaretPos, UNDO_NONE);
+			lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
 		}
 	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szFind);
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szReplace);
-	return nCountReplace;
+	if (nCountReplace) {
+		::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("%d occurrence(s) replaced in the selection."), nCountReplace), _T("VinaText"), MB_ICONINFORMATION);
+		return TRUE;
+	}
+	return FALSE;
+}
+
+BOOL CEditorCtrl::ReplaceAll(const CString& strFilePath, const CString& strSearchWhat, const CString& strReplaceWith, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData)
+{
+	int nVisualLine = GetFirstVisibleLine();
+	int nCurrentLine = GetCurrentLine();
+	char* bufUtf8_szFind = nullptr;
+	{
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, strSearchWhat);
+	}
+	if (bufUtf8_szFind == nullptr) return 0;
+
+	char* bufUtf8_szReplace = nullptr;
+	{
+		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, strReplaceWith);
+	}
+	if (bufUtf8_szReplace == nullptr) return 0;
+	// set target search
+	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
+	int nCountReplace = 0;
+	int lLenToReplace = 0;
+	int lStartSearchPos = 0;
+	int lEndSearchPos = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
+	DoCommand(SCI_SETTARGETSTART, lStartSearchPos, 0);
+	DoCommand(SCI_SETTARGETEND, lEndSearchPos, 0);
+	int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+	int lPosFirstMatched = lPosToReplace;
+	while (lPosToReplace < lEndSearchPos && lPosToReplace >= 0)
+	{
+		if (m_nSearchflags & SCFIND_REGEXP)
+		{
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+		}
+		else
+		{
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+		}
+		if (lLenToReplace >= 0)
+		{
+			nCountReplace++;
+			int nCurSearchLine = GetLineFromPosition(lPosToReplace) + 1;
+			SEARCH_DATA_LINE dataLine;
+			dataLine._nLineNumber = nCurSearchLine;
+			dataLine._nColumnNumber = GetColumnAtPosition(lPosToReplace);
+			dataLine._nPositionNumber = lPosToReplace;
+			CString strTextLine;
+			GetTextFromLine(nCurSearchLine, strTextLine);
+			dataLine._strLine = strTextLine;
+			dataLine._strTargetFile = strFilePath;
+			ResultSearchData._vecSearchDataLine.push_back(dataLine);
+			lEndSearchPos = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
+			DoCommand(SCI_SETTARGETSTART, lPosToReplace + lLenToReplace);
+			DoCommand(SCI_SETTARGETEND, lEndSearchPos);
+			lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+		}
+	}
+	if (lPosFirstMatched >= 0)
+	{
+		GotoLine(nCurrentLine);
+		SetFirstVisibleLine(nVisualLine);
+		lStartSearchPos = lPosFirstMatched;
+		lEndSearchPos = static_cast<int>(DoCommand(SCI_GETTEXTLENGTH, 0, 0));
+		DoCommand(SCI_SETTARGETSTART, lStartSearchPos, 0);
+		DoCommand(SCI_SETTARGETEND, lEndSearchPos, 0);
+		lPosFirstMatched = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+		int lCurrentCaretPos = lPosFirstMatched + strReplaceWith.GetLength();
+		DoCommand(SCI_ADDUNDOACTION, lCurrentCaretPos, UNDO_NONE);
+	}
+	DELETE_POINTER_CPP_ARRAY(bufUtf8_szFind);
+	DELETE_POINTER_CPP_ARRAY(bufUtf8_szReplace);
+	ResultSearchData._nMatchedWords += nCountReplace;
+	ResultSearchData._nLineCounts += GetLineCount();
+	return nCountReplace > 0 ? TRUE : FALSE;
 }
 
 int CEditorCtrl::SearchTextInRange(const CString& strText, int lStartRange, int lEndRange)
@@ -4348,7 +4334,7 @@ void CEditorCtrl::GetFunctionListFromEditor(const TCHAR* pszChars, int lLength, 
 	}
 }
 
-void CEditorCtrl::RenderSearchResultInLine(int lLine, const CString& strWord)
+void CEditorCtrl::RenderSearchResultInLine(int lLine, const CString& strWord, unsigned int uiSearchOptions)
 {
 	if (strWord.IsEmpty()) return;
 
@@ -4365,7 +4351,7 @@ void CEditorCtrl::RenderSearchResultInLine(int lLine, const CString& strWord)
 	SetIndicatorForHighlightWord();
 
 	// set target search
-	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
+	DoCommand(SCI_SETSEARCHFLAGS, uiSearchOptions);
 	while (targetStart != -1 && targetStart != -2)
 	{
 		targetStart = SearchTextInRange(strWord, startRange, endRange);

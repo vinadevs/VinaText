@@ -170,7 +170,7 @@ void CEditorDoc::OnCloseDocument()
 		}
 		if (PathFileExists(strPathName))
 		{
-			if (!pFrame->IsClosingVinaText())
+			if (!pFrame->IsClosingMainFrame())
 			{
 				if (pFrame->HasDebuggerDocument(this))
 				{

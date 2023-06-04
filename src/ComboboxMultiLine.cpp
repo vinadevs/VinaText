@@ -306,8 +306,10 @@ void CComboboxMultiLine::SetFocusEx()
 	CEdit* pEdit = (CEdit*)GetDlgItem(ID_EDIT_CHILD_COMBOBOX);
 	if (pEdit)
 	{
+		int a, b;
+		pEdit->GetSel(a, b);
 		pEdit->SetFocus();
-		pEdit->SetSel(0, -1); // select all text and move cursor at the end
+		pEdit->SetSel(a, b); // select all text and move cursor at the end
 		pEdit->SetSel(-1); //  remove selection
 	}
 }

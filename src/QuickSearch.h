@@ -20,6 +20,8 @@ public:
 	CQuickSearch(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CQuickSearch();
 	void InitSearchReplaceFromEditor(const CString& strSearchWhat);
+	void InitComboSearchOption(unsigned int uiSearchOptions);
+	unsigned int GetComboSearchOption() { return m_comboSearchOption.GetCurSel(); };
 	void SetFocusComboSearchWhat();
 	CString GetSearchWhat();
 	unsigned int GetSearchOption();
@@ -43,14 +45,24 @@ protected:
 	int m_nCurrentFirstLineVisible = 0;
 	CComboboxMultiLine	m_comboSearchWhat;
 	CComboBox	m_comboSearchOption;
+	CComboBox	m_comboSearchResult;
 	CStringArray m_strSearchWhats;
 	unsigned int m_nSearchOptions = 0;
 	void DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void DoSeachPrevious(CString strSearchWhat);
 	void SaveSearchString(const CString& strSearch);
-	void InitComboSearchOption();
 	void EnableButtons(BOOL bEnable);
+	void InitComboSearchOption();
 	void UpdateQuickSearchOptionCombo();
+
+	enum ADD_RESULT_TO {
+		SEARCH_RESULT_WINDOW,
+		SELECTION_TEXT,
+		BOOKMARK_BAR,
+	};
+	ADD_RESULT_TO m_nAddResultTo = ADD_RESULT_TO::SEARCH_RESULT_WINDOW;
+	void UpdateQuickSearchResultCombo();
+	void InitComboSearchResult();
 
 	DECLARE_MESSAGE_MAP()
 public:

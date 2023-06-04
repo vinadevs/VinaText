@@ -20,9 +20,6 @@
     <Filter Include="Dock Windows">
       <UniqueIdentifier>{03c4fb31-945f-4a82-b583-9b05cf57c455}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dock Windows\Base">
-      <UniqueIdentifier>{85f6c840-d114-4d43-b82e-b26fb1f6563b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Dock Windows\Message Window">
       <UniqueIdentifier>{209a2acb-dd8d-4a5f-86af-93e0d1533a13}</UniqueIdentifier>
     </Filter>
@@ -165,6 +162,9 @@
     <Filter Include="Component GUI\Text Editor\Template File">
       <UniqueIdentifier>{5abc48d1-0450-49d0-af70-003625629d26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dock Windows\Base Window">
+      <UniqueIdentifier>{85f6c840-d114-4d43-b82e-b26fb1f6563b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.md" />
@@ -222,7 +222,7 @@
       <Filter>Command Line</Filter>
     </ClInclude>
     <ClInclude Include="DockPaneBase.h">
-      <Filter>Dock Windows\Base</Filter>
+      <Filter>Dock Windows\Base Window</Filter>
     </ClInclude>
     <ClInclude Include="MessageWindow.h">
       <Filter>Dock Windows\Message Window</Filter>
@@ -473,7 +473,7 @@
     <ClInclude Include="FileExplorerDoc.h">
       <Filter>Main Skeleton\Document</Filter>
     </ClInclude>
-    <ClInclude Include="TextResultWindow.h">
+    <ClInclude Include="SearchResultWindow.h">
       <Filter>Dock Windows\Search Text Result Window</Filter>
     </ClInclude>
     <ClInclude Include="TextFormatConverter.h">
@@ -743,7 +743,7 @@
       <Filter>Dock Windows\Search And Replace Window</Filter>
     </ClCompile>
     <ClCompile Include="DockPaneBase.cpp">
-      <Filter>Dock Windows\Base</Filter>
+      <Filter>Dock Windows\Base Window</Filter>
     </ClCompile>
     <ClCompile Include="GotoDlg.cpp">
       <Filter>Dock Windows\Search And Replace Window</Filter>
@@ -1000,7 +1000,7 @@
     <ClCompile Include="FileExplorerDoc.cpp">
       <Filter>Main Skeleton\Document</Filter>
     </ClCompile>
-    <ClCompile Include="TextResultWindow.cpp">
+    <ClCompile Include="SearchResultWindow.cpp">
       <Filter>Dock Windows\Search Text Result Window</Filter>
     </ClCompile>
     <ClCompile Include="TextFormatConverter.cpp">

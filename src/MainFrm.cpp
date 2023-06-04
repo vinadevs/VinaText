@@ -377,7 +377,7 @@ void CMainFrame::OnSize(UINT nType, int cx, int cy)
 	switch (nType)
 	{
 	case SIZE_MINIMIZED:
-		if (m_pQuickSearchDialog) m_pQuickSearchDialog->OnCancel();
+		if (m_pQuickSearchDialog) m_pQuickSearchDialog->ShowWindow(SW_HIDE);
 		break;
 	}
 }
@@ -426,7 +426,6 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 				vecFile.push_back(szFileName);
 			}
 		}
-
 		for (auto const& file : vecFile)
 		{
 			if (PathFileExists(file))
@@ -434,7 +433,6 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 				AppUtils::CreateDocumentFromFile(file);
 			}
 		}
-
 		if (vecFolder.size() > 0)
 		{
 			for (auto const& folder : vecFolder)
@@ -445,7 +443,6 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 				}
 			}
 		}
-
 		if (::IsIconic(m_hWnd))
 		{
 			::ShowWindow(m_hWnd, SW_RESTORE);
@@ -457,8 +454,9 @@ void CMainFrame::OnDropFiles(HDROP hDropInfo)
 
 void CMainFrame::OnClose()
 {
+	if (m_pQuickSearchDialog) m_pQuickSearchDialog->OnCancel();
 	AppSettingMgr.ResetEditorCaretInfo();
-	m_bIsClosingVinaText = TRUE;
+	m_bIsClosingMainFrame = TRUE;
 	theApp.SaveRecentFilesData();
 	CMDIFrameWndEx::OnClose();
 }
@@ -1987,15 +1985,15 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 				{
 					m_pQuickSearchDialog->OnCancel();
 				}
-				CEditorView* pEditorView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
-				if (pEditorView)
+				else
 				{
-					// remove multi-selection mode, kept main selection only
-					if (pEditorView->GetEditorCtrl())
+					const auto pEditorView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+					const auto pEditor = pEditorView->GetEditorCtrl();
+					if (pEditorView && pEditor->GetSelectionNumber() > SINGLE_SELECTION)
 					{
-						pEditorView->GetEditorCtrl()->DropSelections();
+						// remove multi-selection mode, kept main selection only
+						pEditor->DropSelections();
 					}
-					return TRUE;
 				}
 				return TRUE;
 			}
@@ -2342,9 +2340,9 @@ BOOL CMainFrame::CreateDockingBars()
 		return FALSE; // failed to create
 	}
 
-	if (!m_wndSearchResultPane.Create(Native_Language("Text Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_TEXT_RESULT_WINDOW, dwBottomStyle))
+	if (!m_wndSearchResultPane.Create(Native_Language("Search Result Window"), this, CRect(0, 0, 300, 200), TRUE, ID_PANE_TEXT_RESULT_WINDOW, dwBottomStyle))
 	{
-		TRACE0("Failed to create Text Result Window\n");
+		TRACE0("Failed to create Search Result Window\n");
 		return FALSE; // failed to create
 	}
 
@@ -2575,14 +2573,6 @@ void CMainFrame::InitQuickSearchFromEditor(const CString& strSearchWhat, SEARCH_
 	if (m_pQuickSearchDialog)
 	{
 		m_pQuickSearchDialog->InitSearchReplaceFromEditor(strSearchWhat, searchType);
-	}
-}
-
-void CMainFrame::SearchAllOnFileFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType)
-{
-	if (m_wndSearchAndReplaceWindow.GetSafeHwnd())
-	{
-		m_wndSearchAndReplaceWindow.SearchAllOnFileFromEditor(strSearchWhat, searchType);
 	}
 }
 
@@ -3055,7 +3045,7 @@ void CMainFrame::QuickSearchDialogChangedActiveTab()
 		if (pParentDocument)
 		{
 			CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-			if (pParentDocument == pEditorActiveDoc)
+			if (pParentDocument == pEditorActiveDoc && !this->m_bIsMinimized && !m_pQuickSearchDialog->IsWindowVisible())
 			{
 				m_pQuickSearchDialog->ShowWindow(SW_SHOW);
 			}

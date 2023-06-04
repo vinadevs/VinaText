@@ -17,6 +17,7 @@ class CRecentCloseMDITabManager
 public:
 	void PushTab(const CString& strPathName, BOOL bCloseTabEvent = TRUE);
 	void EraseTab(const CString& strPathName);
+	void EraseLastTab();
 	CString PopTab();
 	BOOL HasRecentClosedTab();
 	void ResetData();

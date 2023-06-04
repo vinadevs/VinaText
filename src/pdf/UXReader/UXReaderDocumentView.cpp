@@ -39,7 +39,7 @@ UXReader::UXReaderDocumentView::UXReaderDocumentView(const std::shared_ptr<UXRea
 
 UXReader::UXReaderDocumentView::~UXReaderDocumentView(void)
 {
-	m_ToolbarPane == nullptr; m_DocumentPane = nullptr; m_StatusPane = nullptr;
+	m_ToolbarPane = nullptr; m_DocumentPane = nullptr; m_StatusPane = nullptr;
 	m_Document = nullptr; m_WindowHandle = nullptr; m_ParentWindow = nullptr;
 }
 

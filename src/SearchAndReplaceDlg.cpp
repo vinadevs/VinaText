@@ -56,7 +56,6 @@ void CSearchAndReplaceWindowDlg::InitSearchReplaceFromEditor(const CString& strS
 			m_CTabCtrl.SetCurSel(0);
 			m_uiActiveTab = TABACTIVE::FIND_TAB;
 			m_FindDlg.ShowWindow(SW_SHOW);
-			m_FindDlg.UpdateData(FALSE);
 			m_FindDlg.SetFocus();
 			m_pCurrentTabShow = &m_FindDlg;
 			m_FindDlg.InitSearchReplaceFromEditor(strSearchWhat);
@@ -71,7 +70,6 @@ void CSearchAndReplaceWindowDlg::InitSearchReplaceFromEditor(const CString& strS
 			m_CTabCtrl.SetCurSel(1);
 			m_uiActiveTab = TABACTIVE::FIND_REPLACE_TAB;
 			m_FindAndReplaceDlg.ShowWindow(SW_SHOW);
-			m_FindAndReplaceDlg.UpdateData(FALSE);
 			m_FindAndReplaceDlg.SetFocus();
 			m_pCurrentTabShow = &m_FindAndReplaceDlg;
 			m_FindDlg.InitSearchReplaceFromEditor(strSearchWhat);
@@ -85,7 +83,6 @@ void CSearchAndReplaceWindowDlg::InitSearchReplaceFromEditor(const CString& strS
 			m_CTabCtrl.SetCurSel(2);
 			m_uiActiveTab = TABACTIVE::GOTO_TAB;
 			m_GotoDlg.ShowWindow(SW_SHOW);
-			m_GotoDlg.UpdateData(FALSE);
 			m_GotoDlg.SetFocus();
 			m_pCurrentTabShow = &m_GotoDlg;
 			m_GotoDlg.InitGotoRangeByDocument();
@@ -94,17 +91,6 @@ void CSearchAndReplaceWindowDlg::InitSearchReplaceFromEditor(const CString& strS
 	}
 
 	UpdateData(FALSE);
-}
-
-void CSearchAndReplaceWindowDlg::SearchAllOnFileFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType)
-{
-	if (searchType == SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH)
-	{
-		if (m_FindDlg.m_hWnd != NULL)
-		{
-			m_FindDlg.SearchAllOnFileFromEditor(strSearchWhat);
-		}
-	}
 }
 
 void CSearchAndReplaceWindowDlg::SearchFromEditor(const CString& strSearchWhat,

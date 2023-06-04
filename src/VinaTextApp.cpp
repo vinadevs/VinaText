@@ -937,7 +937,7 @@ BOOL CVinaTextApp::LoadRecentFilesData()
 	PathUtils::OpenFile(strOpenedFolderDataPath, strFileContent);
 	if (strFileContent.IsEmpty()) return FALSE;
 	AppUtils::SplitCString(strFileContent, EDITOR_NEW_LINE, arrPath);
-	for (int i = 0; i < arrPath.GetSize(); ++i)
+	for (int i = static_cast<int>(arrPath.GetSize()) - 1; i >= 0; --i)
 	{
 		RecentCloseMDITabManager.PushTab(arrPath[i], FALSE);
 	}

@@ -1578,7 +1578,7 @@ BOOL CBuildPaneDlg::OnInitDialog()
 	m_wndUserInput.ModifyStyleEx(NULL, WS_EX_STATICEDGE);
 	m_wndUserInput.SetWindowTextW(_T("> > > ..."));
 
-	AddLogMessage(_T("Program log will be displayed here...\n"),
+	AddLogMessage(_T("Program log message will be displayed here...\n"),
 		IS_LIGHT_THEME ? BasicColors::black : BasicColors::white);
 
 	UpdateData(FALSE);

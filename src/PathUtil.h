@@ -53,6 +53,7 @@ namespace PathUtils
 	BOOL SaveFileTruncate(const CString& szFile, const CString& strContent);
 	BOOL SaveFileAppend(const CString& szFile, CString& strContentToAppend);
 	BOOL SaveFileAppendNoDuplicateLine(const CString& szFile, CString& strContentToAppend);
+	CString FileContentToUtf8(const CString& szFile);
 	BOOL OpenFile(const CString& szFile, CString & strContent);
 	BOOL OpenFile(const CString& szFile, CStringArray& arrLine);
 	BOOL OpenFileBinaryMode(const CString & strFile, std::string & str);

@@ -44,7 +44,7 @@ CFindDlg::~CFindDlg() {}
 
 UINT CFindDlg::FindBackgroundThreadProc(LPVOID pParam)
 {
-	CFindWorker* pFinder = reinterpret_cast<CFindWorker*>(pParam);
+	CFindTextWorker* pFinder = reinterpret_cast<CFindTextWorker*>(pParam);
 	if (pFinder == NULL)
 	{
 		return 1;
@@ -165,83 +165,6 @@ void CFindDlg::InitSearchReplaceFromEditor(const CString& strSearchWhat, BOOL bS
 	}
 }
 
-void CFindDlg::SearchAllOnFileFromEditor(const CString& strSearchWhat)
-{
-	UpdateData(TRUE);
-
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	ASSERT(pFrame);
-	if (!pFrame) return;
-	if (m_bAppendResult == FALSE)
-	{
-		pFrame->ClearDataOnDockPane(DOCKABLE_PANE_TYPE::SEARCH_RESULT_PANE);
-	}
-
-	if (strSearchWhat.IsEmpty()) return;
-	m_comboSearchWhat.SetWindowTextW(strSearchWhat);
-
-	unsigned int nSearchOptions = VinaTextSearchEngine::OPTIONS::INT_SEARCH_OPTION;
-
-	TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
-	std::vector<RESULT_SEARCH_DATA> vecResultSearchInfo;
-
-	auto startMeasure = OSUtils::StartBenchmark();
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
-	{
-		auto pEditor = pDoc->GetEditorCtrl();
-		if (pEditor != NULL)
-		{
-			CString strFile = pDoc->GetPathName();
-			std::wstring strLine;
-			CString strScript;
-			pEditor->GetText(strScript);
-			if (strScript.IsEmpty()) return;
-			std::vector<CString> listLine;
-			listLine.reserve(pEditor->GetLineCount());
-			AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-			unsigned int curLine = 0;
-			unsigned int count = 0;
-			ResultSearchData._nTotalSearchFile = 1;
-			ResultSearchData._vecResultSearchInfo.reserve(listLine.size());
-			for (int i = 0; i < listLine.size(); ++i)
-			{
-				strLine = AppUtils::CStringToWStd(*std::next(listLine.begin(), i));
-				curLine++;
-				auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(strSearchWhat).c_str(), nSearchOptions);
-				if (nWordCount > 0)
-				{
-					count += nWordCount;
-					RESULT_SEARCH_DATA data;
-					data._nMatched = nWordCount;
-					data._nLineNumber = curLine;
-					data._strLine = AppUtils::WStdToCString(strLine);
-					if (strFile.IsEmpty())
-					{
-						data._strTargetFile = pDoc->GetTitle();
-					}
-					else
-					{
-						data._strTargetFile = strFile;
-					}
-					vecResultSearchInfo.push_back(data);
-				}
-			}
-			ResultSearchData._vecResultSearchInfo = vecResultSearchInfo;
-			ResultSearchData._nMatchedWords = count;
-			ResultSearchData._nLineCounts = static_cast<unsigned int>(listLine.size());
-		}
-	}
-	ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
-	ResultSearchData._strSearchWhat = strSearchWhat;
-	ResultSearchData._bAppendResult = m_bAppendResult;
-	ResultSearchData._bShowFileNameOnly = m_bShowFileNameOnly;
-	ResultSearchData._strScope = _T("Current File");
-	// send data to log window
-	pFrame->AddSearchResultDataToPane(ResultSearchData);
-}
-
 void CFindDlg::SearchFromEditor(const CString& strSearchWhat, SEARCH_TYPE searchType,
 	BOOL bSeacrhNext, BOOL bHideMessageBox, BOOL bSaveSearchWord)
 {
@@ -297,83 +220,35 @@ void CFindDlg::OnSearchNext()
 
 void CFindDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOOL bSaveSearchWord)
 {
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
-
+	if (strSearchWhat.IsEmpty()) return;
 	UpdateSearchOptions();
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			if (bSaveSearchWord)
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				pEditor->GotoPosition(0);
-				if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					if (!bHideMessageBox)
-					{
-						::MessageBox(AfxGetMainWnd()->m_hWnd,
-							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-							_T("VinaText"),
-							MB_ICONINFORMATION);
-					}
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
 		}
 	}
-	m_comboSearchWhat.SetFocusEx();
 }
 
 void CFindDlg::DoSeachPrevious(CString strSearchWhat)
 {
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
-	
+	if (strSearchWhat.IsEmpty()) return;
 	UpdateSearchOptions();
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			SaveSearchString(strSearchWhat);
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchBackward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				int nLines = pEditor->GetLineCount();
-				int nLineEndPos = pEditor->GetLineEndPosition(nLines);
-				pEditor->GotoPosition(nLineEndPos);
-				if (!pEditor->SearchBackward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					::MessageBox(AfxGetMainWnd()->m_hWnd,
-						AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-						_T("VinaText"),
-						MB_ICONINFORMATION);
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchBackwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions);
 		}
 	}
 	m_comboSearchWhat.SetFocusEx();
@@ -385,6 +260,30 @@ void CFindDlg::OnSeachPrevious()
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
 	DoSeachPrevious(strSearchWhat);
+}
+
+void CFindDlg::SearchAllInDocument(CDocument* pDoc,
+	TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData,
+	const CString& strSearchWhat,
+	unsigned int nSearchOptions)
+{
+	auto const pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
+	if (pEditorDoc)
+	{
+		auto pEditor = pEditorDoc->GetEditorCtrl();
+		if (pEditor != NULL)
+		{
+			CString strFilePath = pEditorDoc->GetPathName();
+			if (strFilePath.IsEmpty())
+			{
+				strFilePath = pEditorDoc->GetTitle();
+			}
+			if (CFindTextWorker::SearchAllInEditor(strFilePath, pEditor, ResultSearchData, strSearchWhat, nSearchOptions))
+			{
+				ResultSearchData._nMatchedFiles++;
+			}
+		}
+	}
 }
 
 void CFindDlg::OnSearchAll()
@@ -418,13 +317,7 @@ void CFindDlg::OnSearchAll()
 		return;
 	}
 
-	unsigned int nSearchOptions = VinaTextSearchEngine::OPTIONS::INT_SEARCH_OPTION;
-	if (m_bMatchwords)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_WORD;
-	if (m_bMatchcase)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_CASE;
-	if (m_bMatchregex)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::REGEX;
+	UpdateSearchOptions();
 
 	TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
 	
@@ -432,226 +325,119 @@ void CFindDlg::OnSearchAll()
 
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
+	if (strSearchWhat.IsEmpty()) return;
+
+	SaveSearchString(strSearchWhat);
 
 	CString strSearchScope;
 	m_comboSearchScope.GetWindowText(strSearchScope);
 	if (strSearchScope == _T("Current File"))
 	{
-		auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-		if (pDoc)
-		{
-			auto pEditor = pDoc->GetEditorCtrl();
-			if (pEditor != NULL)
-			{
-				SaveSearchString(strSearchWhat);
-				pEditor->SetSearchflags(nSearchOptions);
-				CString strFile = pDoc->GetPathName();
-				std::wstring strLine;
-				CString strScript;
-				pEditor->GetText(strScript);
-				if (strScript.IsEmpty()) return;
-				std::vector<CString> listLine;
-				listLine.reserve(pEditor->GetLineCount());
-				AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-				unsigned int curLine = 0;
-				unsigned int MatchedWords = 0;
-				ResultSearchData._nMatchedFiles = 1;
-				ResultSearchData._nTotalSearchFile = 1;
-				ResultSearchData._vecResultSearchInfo.reserve(listLine.size());
-				for (int i = 0; i < listLine.size(); ++i)
-				{
-					strLine = AppUtils::CStringToWStd(*std::next(listLine.begin(), i));
-					curLine++;
-					auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(strSearchWhat).c_str(), nSearchOptions);
-					if (nWordCount > 0)
-					{
-						MatchedWords += nWordCount;
-						RESULT_SEARCH_DATA data;
-						data._nMatched = nWordCount;
-						data._nLineNumber = curLine;
-						data._strLine = AppUtils::WStdToCString(strLine);
-						if (strFile.IsEmpty())
-						{
-							data._strTargetFile = pDoc->GetTitle();
-						}
-						else
-						{
-							data._strTargetFile = strFile;
-						}
-						ResultSearchData._vecResultSearchInfo.push_back(data);
-					}
-				}
-				ResultSearchData._nMatchedWords = MatchedWords;
-				ResultSearchData._nLineCounts = static_cast<unsigned int>(listLine.size());
-			}
-		}
+		ResultSearchData._nTotalSearchFile = 1;
+		SearchAllInDocument(AppUtils::GetMDIActiveDocument(), ResultSearchData, strSearchWhat, m_nSearchOptions);
 	}
-	else if (strSearchScope == _T("All Open Files"))
+	else if (strSearchScope == _T("All Opened Files"))
 	{
 		auto vecDocs = AppUtils::GetAllDocuments();
-		unsigned int MatchedWords = 0;
-		unsigned int MatchedFiles = 0;
 		ResultSearchData._nTotalSearchFile = (unsigned int)vecDocs.size();
-		SaveSearchString(strSearchWhat);
 		for (auto const& doc : vecDocs)
 		{
-			if (doc)
-			{
-				auto pDoc = dynamic_cast<CEditorDoc*>(doc);
-				if (pDoc)
-				{
-					auto pEditor = pDoc->GetEditorCtrl();
-					if (pEditor != NULL)
-					{
-						CString strFile = pDoc->GetPathName();
-						CFindWorker finder;
-						finder.SetFileFilter(m_strFileFilter);
-						if (finder.CheckFileFilter(strFile))
-						{
-							pEditor->SetSearchflags(nSearchOptions);
-							std::wstring strLine;
-							CString strScript;
-							pEditor->GetText(strScript);
-							if (strScript.IsEmpty()) continue;
-							std::vector<CString> listLine;
-							listLine.reserve(pEditor->GetLineCount());
-							AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-							unsigned int curLine = 0;
-							for (int i = 0; i < listLine.size(); ++i)
-							{
-								strLine = AppUtils::CStringToWStd(*std::next(listLine.begin(), i));
-								curLine++;
-								auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(strSearchWhat).c_str(), nSearchOptions);
-								if (nWordCount > 0)
-								{
-									MatchedFiles++;
-									MatchedWords += nWordCount;
-									RESULT_SEARCH_DATA data;
-									data._nMatched = nWordCount;
-									data._nLineNumber = curLine;
-									data._strLine = AppUtils::WStdToCString(strLine);
-									if (strFile.IsEmpty())
-									{
-										data._strTargetFile = pDoc->GetTitle();
-									}
-									else
-									{
-										data._strTargetFile = strFile;
-									}
-									ResultSearchData._vecResultSearchInfo.push_back(data);
-								}
-							}
-							ResultSearchData._nLineCounts += static_cast<unsigned int>(listLine.size());
-						}
-					}
-				}
-			}
+			SearchAllInDocument(doc, ResultSearchData, strSearchWhat, m_nSearchOptions);
 		}
-		ResultSearchData._nMatchedFiles = MatchedFiles;
-		ResultSearchData._nMatchedWords = MatchedWords;
 	}
 	else if (strSearchScope == _T("Container Folder"))
 	{
-		auto pDoc = AppUtils::GetMDIActiveDocument();
+		auto const pDoc = AppUtils::GetMDIActiveDocument();
 		if (pDoc)
 		{
-			GetDlgItem(ID_EDITOR_SEARCH_ALL)->SetWindowTextW(_T("Stop"));
-			GetDlgItem(ID_EDITOR_SEARCH_NEXT)->EnableWindow(FALSE);
-			GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(FALSE);
-
-			SaveSearchString(strSearchWhat);
 			CString strFilePath = pDoc->GetPathName();
-			CString strContainerFoler = PathUtils::GetContainerPath(strFilePath);
-			// background search start...
-			CString strMessageProgressbar;
-			strMessageProgressbar.Format(_T("Searching text..."));
-			m_pFindProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
-			m_pFindProgressBar->SetPos(0);
-			std::unique_ptr<CFindWorker> pFinder = std::make_unique<CFindWorker>();
-			pFinder->SetFindFolder(strContainerFoler);
-			pFinder->SetSearchWhat(strSearchWhat);
-			pFinder->SetSearchOptions(nSearchOptions);
-			pFinder->SetIncludeSubFolder(!m_bExcludeSubFolder);
-			pFinder->SetFileFilter(m_strFileFilter);
-			DWORD dwExitCode = 0;
-			CWinThread* pThread = ::AfxBeginThread(FindBackgroundThreadProc, (LPVOID)pFinder.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
-			if (pThread)
+			if (PathFileExists(strFilePath))
 			{
-				m_hThreadFindBackground = pThread->m_hThread;
-				pThread->m_bAutoDelete = TRUE;
-				pThread->ResumeThread();
+				CString strContainerFoler = PathUtils::GetContainerPath(strFilePath);
+				GetDlgItem(ID_EDITOR_SEARCH_ALL)->SetWindowTextW(_T("Stop"));
+				GetDlgItem(ID_EDITOR_SEARCH_NEXT)->EnableWindow(FALSE);
+				GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(FALSE);
+				// background search start...
+				CString strMessageProgressbar;
+				strMessageProgressbar.Format(_T("Searching text..."));
+				m_pFindProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
+				m_pFindProgressBar->SetPos(0);
+				std::unique_ptr<CFindTextWorker> pFinder = std::make_unique<CFindTextWorker>();
+				pFinder->SetTargetSearchFolder(strContainerFoler);
+				pFinder->SetSearchWhat(strSearchWhat);
+				pFinder->SetSearchOptions(m_nSearchOptions);
+				pFinder->SetIncludeSubFolder(!m_bExcludeSubFolder);
+				pFinder->SetFileFilter(m_strFileFilter);
+				pFinder->SetParentWindow(this);
+				DWORD dwExitCode = 0;
+				CWinThread* pThread = ::AfxBeginThread(FindBackgroundThreadProc, (LPVOID)pFinder.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
+				if (pThread)
+				{
+					m_hThreadFindBackground = pThread->m_hThread;
+					pThread->m_bAutoDelete = TRUE;
+					pThread->ResumeThread();
+				}
+				while (TRUE)
+				{
+					if (!::GetExitCodeThread(m_hThreadFindBackground, &dwExitCode))
+					{
+						break;
+					}
+					if (dwExitCode != STILL_ACTIVE)
+					{
+						break;
+					}
+					USE_THREAD_PUMP_UI;
+					if (m_pFindProgressBar && pFinder)
+					{
+						int nCurPos = pFinder->GetCurrentFindProgress();
+						m_pFindProgressBar->SetPos(nCurPos);
+						CString strMessageProgressbar;
+						strMessageProgressbar.Format(_T("%s - %d%% completed..."), pFinder->GetCurrentSearchPath(), nCurPos);
+						m_pFindProgressBar->SetText(strMessageProgressbar);
+					}
+				}
+				m_hThreadFindBackground = NULL;
+				m_pFindProgressBar.reset();
+				ResultSearchData = pFinder->m_ResultSearchData;
+				GetDlgItem(ID_EDITOR_SEARCH_ALL)->SetWindowTextW(_T("Search All"));
+				GetDlgItem(ID_EDITOR_SEARCH_NEXT)->EnableWindow(TRUE);
+				GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(TRUE);
 			}
-			while (TRUE)
+			else
 			{
-				if (!::GetExitCodeThread(m_hThreadFindBackground, &dwExitCode))
-				{
-					break;
-				}
-				if (dwExitCode != STILL_ACTIVE)
-				{
-					break;
-				}
-				USE_THREAD_PUMP_UI;
-				if (m_pFindProgressBar && pFinder)
-				{
-					int nCurPos = pFinder->GetCurrentFindProgress();
-					m_pFindProgressBar->SetPos(nCurPos);
-					CString strMessageProgressbar;
-					strMessageProgressbar.Format(_T("Searching text %d%% completed..."), nCurPos);
-					m_pFindProgressBar->SetText(strMessageProgressbar);
-				}
+				AfxMessageBox(_T("[Search In Container Folder Error] current file path does not exist."));
+				return;
 			}
-			m_hThreadFindBackground = NULL;
-			m_pFindProgressBar.reset();
-			ResultSearchData = pFinder->m_ResultSearchData;
-			GetDlgItem(ID_EDITOR_SEARCH_ALL)->SetWindowTextW(_T("Search All"));
-			GetDlgItem(ID_EDITOR_SEARCH_NEXT)->EnableWindow(TRUE);
-			GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(TRUE);
 		}
 	}
 	else if (strSearchScope == _T("Specific Path"))
 	{
-		if (m_strSpecificPath.IsEmpty()) return;
+		if (m_strSpecificPath.IsEmpty())
+		{
+			AfxMessageBox(_T("[Search In Path Error] specific path is empty."));
+			return;
+		}
 		if (PathFileExists(m_strSpecificPath))
 		{
 			if (!PathUtils::IsDirectory(m_strSpecificPath))
 			{
-				CFindWorker finder;
+				CFindTextWorker finder;
 				finder.SetFileFilter(m_strFileFilter);
 				if (finder.CheckFileFilter(m_strFileFilter))
 				{
-					SaveSearchString(strSearchWhat);
-					std::wstring strFile = AppUtils::CStringToWStd(m_strSpecificPath);
-					std::wifstream fileTarget;
-					std::wstring strLine;
-					fileTarget.open(strFile.c_str());
-					unsigned int MatchedWords = 0;
-					ResultSearchData._nTotalSearchFile = 1;
-					ResultSearchData._nMatchedFiles = 1;
-					if (fileTarget.is_open())
+					CRect rectEditor;
+					rectEditor.SetRectEmpty();
+					std::unique_ptr<CEditorCtrl> pEditor = std::make_unique<CEditorCtrl>();
+					pEditor->Create(_T("Search Editor"), WS_CHILD | WS_CLIPCHILDREN | WS_EX_RTLREADING, rectEditor, this, ID_EDITOR_CTRL_SEARCH);
+					if (::IsWindow(pEditor->GetSafeHwnd()))
 					{
-						unsigned int curLine = 0;
-						while (std::getline(fileTarget, strLine))
+						pEditor->LoadFile(m_strSpecificPath);
+						ResultSearchData._nTotalSearchFile = 1;
+						if (CFindTextWorker::SearchAllInEditor(m_strSpecificPath, pEditor.get(), ResultSearchData, strSearchWhat, m_nSearchOptions))
 						{
-							curLine++;
-							auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(strSearchWhat).c_str(), nSearchOptions);
-							if (nWordCount > 0)
-							{
-								MatchedWords += nWordCount;
-								RESULT_SEARCH_DATA data;
-								data._nMatched = nWordCount;
-								data._nLineNumber = curLine;
-								data._strLine = AppUtils::WStdToCString(strLine);
-								data._strTargetFile = m_strSpecificPath;
-								ResultSearchData._vecResultSearchInfo.push_back(data);
-							}
+							ResultSearchData._nMatchedFiles = 1;
 						}
-						ResultSearchData._nMatchedWords = MatchedWords;
-						fileTarget.close();
 					}
 				}
 			}
@@ -660,19 +446,18 @@ void CFindDlg::OnSearchAll()
 				GetDlgItem(ID_EDITOR_SEARCH_ALL)->SetWindowTextW(_T("Stop"));
 				GetDlgItem(ID_EDITOR_SEARCH_NEXT)->EnableWindow(FALSE);
 				GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(FALSE);
-
-				SaveSearchString(strSearchWhat);
 				// background search start...
 				CString strMessageProgressbar;
 				strMessageProgressbar.Format(_T("Searching text..."), strSearchWhat, m_strSpecificPath);
 				m_pFindProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
 				m_pFindProgressBar->SetPos(0);
-				std::unique_ptr<CFindWorker> pFinder = std::make_unique<CFindWorker>();
-				pFinder->SetFindFolder(m_strSpecificPath);
+				std::unique_ptr<CFindTextWorker> pFinder = std::make_unique<CFindTextWorker>();
+				pFinder->SetTargetSearchFolder(m_strSpecificPath);
 				pFinder->SetSearchWhat(strSearchWhat);
-				pFinder->SetSearchOptions(nSearchOptions);
+				pFinder->SetSearchOptions(m_nSearchOptions);
 				pFinder->SetIncludeSubFolder(!m_bExcludeSubFolder);
 				pFinder->SetFileFilter(m_strFileFilter);
+				pFinder->SetParentWindow(this);
 				DWORD dwExitCode = 0;
 				CWinThread* pThread = ::AfxBeginThread(FindBackgroundThreadProc, (LPVOID)pFinder.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
 				if (pThread)
@@ -697,7 +482,7 @@ void CFindDlg::OnSearchAll()
 						int nCurPos = pFinder->GetCurrentFindProgress();
 						m_pFindProgressBar->SetPos(nCurPos);
 						CString strMessageProgressbar;
-						strMessageProgressbar.Format(_T("Searching text %d%% completed..."), nCurPos);
+						strMessageProgressbar.Format(_T("%s - %d%% completed..."), pFinder->GetCurrentSearchPath(), nCurPos);
 						m_pFindProgressBar->SetText(strMessageProgressbar);
 					}
 				}
@@ -710,8 +495,12 @@ void CFindDlg::OnSearchAll()
 				GetDlgItem(ID_EDITOR_SEARCH_PREVIOUS)->EnableWindow(TRUE);
 			}
 		}
+		else
+		{
+			AfxMessageBox(_T("[Search In Path Error] specific path does not exist."));
+			return;
+		}
 	}
-
 	ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
 	ResultSearchData._strSearchWhat = strSearchWhat;
 	ResultSearchData._bAppendResult = m_bAppendResult;
@@ -728,7 +517,10 @@ void CFindDlg::OnClickCheckBoxRegex()
 	if (m_bMatchregex)
 	{
 		GetDlgItem(ID_EDITOR_SEARCH_REGEX_COMBO)->EnableWindow(TRUE);
-		OnCbnSelchangeRegexPattern();
+		if (GetSearchWhat().IsEmpty())
+		{
+			OnCbnSelchangeRegexPattern();
+		}
 	}
 	else
 	{
@@ -757,7 +549,6 @@ void CFindDlg::OnCbnSelchangeSearchScope()
 	{
 		GetDlgItem(ID_EDITOR_SEARCH_FILE_FILTER_EDIT)->EnableWindow(FALSE);
 	}
-	UpdateData(FALSE);
 }
 
 void CFindDlg::OnCbnSelchangeRegexPattern()
@@ -818,7 +609,7 @@ void CFindDlg::InitComboSearchScope()
 {
 	m_comboSearchScope.ResetContent();
 	m_comboSearchScope.AddString(_T("Current File"));
-	m_comboSearchScope.AddString(_T("All Open Files"));
+	m_comboSearchScope.AddString(_T("All Opened Files"));
 	m_comboSearchScope.AddString(_T("Container Folder"));
 	m_comboSearchScope.AddString(_T("Specific Path"));
 	//m_comboSearchScope.AddString(_T("Current Project"));
@@ -947,12 +738,12 @@ void CFindDlg::EnableButtons(BOOL bEnable)
 	GetDlgItem(ID_EDITOR_SEARCH_ALL)->EnableWindow(bEnable);
 }
 
-SycnFindReplaceSettings CFindDlg::GetSycnFindReplaceSettings()
+ADVANCED_SEARCH_DATA CFindDlg::GetSycnFindReplaceSettings()
 {
 	UpdateData(TRUE);
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
-	SycnFindReplaceSettings dataSync;
+	ADVANCED_SEARCH_DATA dataSync;
 	dataSync._strSearchWhat = strSearchWhat;
 	dataSync._strSpecificPath = m_strSpecificPath;
 	dataSync._bAppendResult = m_bAppendResult;
@@ -967,7 +758,7 @@ SycnFindReplaceSettings CFindDlg::GetSycnFindReplaceSettings()
 	return dataSync;
 }
 
-void CFindDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings & settings)
+void CFindDlg::SyncSearchReplaceSettings(const ADVANCED_SEARCH_DATA & settings)
 {
 	m_comboSearchWhat.SetWindowTextW(settings._strSearchWhat);
 	m_comboSearchWhat.SetFocusEx();
@@ -1011,7 +802,6 @@ void CFindDlg::OnSearchEditChange()
 	}
 	else
 	{
-		CEditorView* pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 		if (AppSettingMgr.m_bEnableAutoSearchWhenTyping)
 		{
 			DoSearchNext(strSearchWhat, TRUE, FALSE);

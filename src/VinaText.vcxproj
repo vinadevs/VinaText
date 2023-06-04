@@ -340,7 +340,7 @@
     <ClInclude Include="RecentCloseFileManager.h" />
     <ClInclude Include="ReopenFileWithPasswordDlg.h" />
     <ClInclude Include="SaveFileWithPassWordDlg.h" />
-    <ClInclude Include="TextResultWindow.h" />
+    <ClInclude Include="SearchResultWindow.h" />
     <ClInclude Include="ImageView.h" />
     <ClInclude Include="SpellChecker.h" />
     <ClInclude Include="TextProgressCtrl.h" />
@@ -528,7 +528,7 @@
     <ClCompile Include="RecentCloseFileManager.cpp" />
     <ClCompile Include="ReopenFileWithPasswordDlg.cpp" />
     <ClCompile Include="SaveFileWithPassWordDlg.cpp" />
-    <ClCompile Include="TextResultWindow.cpp" />
+    <ClCompile Include="SearchResultWindow.cpp" />
     <ClCompile Include="ImageView.cpp" />
     <ClCompile Include="SpellChecker.cpp" />
     <ClCompile Include="TextProgressCtrl.cpp" />

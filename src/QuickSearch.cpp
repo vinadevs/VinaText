@@ -17,6 +17,7 @@
 #include "MainFrm.h"
 #include "AppSettings.h"
 #include "FileUtil.h"
+#include "FindReplaceTextWorker.h"
 
 // CQuickSearch dialog
 
@@ -47,6 +48,11 @@ void CQuickSearch::InitSearchReplaceFromEditor(const CString & strSearchWhat)
 	UpdateData(TRUE);
 }
 
+void CQuickSearch::InitComboSearchOption(unsigned int uiSearchOptions)
+{
+	m_comboSearchOption.SetCurSel(uiSearchOptions);
+}
+
 void CQuickSearch::SetFocusComboSearchWhat()
 {
 	m_comboSearchWhat.SetFocus();
@@ -61,6 +67,7 @@ CString CQuickSearch::GetSearchWhat()
 
 unsigned int CQuickSearch::GetSearchOption()
 {
+	UpdateQuickSearchOptionCombo();
 	return m_nSearchOptions;
 }
 
@@ -69,17 +76,17 @@ void CQuickSearch::DoDataExchange(CDataExchange* pDX)
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, ID_EDITOR_QUICK_SEARCH_COMBO, m_comboSearchWhat);
 	DDX_Control(pDX, ID_EDITOR_QUICK_SEARCH_OPTION_COMBO, m_comboSearchOption);
+	DDX_Control(pDX, ID_EDITOR_QUICK_SEARCH_RESULT_COMBO, m_comboSearchResult);
 }
 
 BOOL CQuickSearch::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
 	InitComboSearchOption();
+	InitComboSearchResult();
 	m_comboSearchWhat.SetCueBanner(_T("target..."));
 	LoadDialogState();
 	UpdateData(FALSE);
-
 	return TRUE;
 }
 
@@ -114,39 +121,19 @@ void CQuickSearch::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOO
 		return;
 	}
 	UpdateQuickSearchOptionCombo();
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			if (bSaveSearchWord)
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				pEditor->GotoPosition(0);
-				if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					if (!bHideMessageBox)
-					{
-						::MessageBox(AfxGetMainWnd()->m_hWnd,
-							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-							_T("VinaText"),
-							MB_ICONINFORMATION);
-					}
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
 		}
 	}
-	m_comboSearchWhat.SetFocusEx();
 }
 
 void CQuickSearch::DoSeachPrevious(CString strSearchWhat)
@@ -156,35 +143,16 @@ void CQuickSearch::DoSeachPrevious(CString strSearchWhat)
 		return;
 	}
 	UpdateQuickSearchOptionCombo();
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			SaveSearchString(strSearchWhat);
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchBackward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				int nLines = pEditor->GetLineCount();
-				int nLineEndPos = pEditor->GetLineEndPosition(nLines);
-				pEditor->GotoPosition(nLineEndPos);
-				if (!pEditor->SearchBackward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					::MessageBox(AfxGetMainWnd()->m_hWnd,
-						AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-						_T("VinaText"),
-						MB_ICONINFORMATION);
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchBackwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions);
 		}
 	}
-	m_comboSearchWhat.SetFocusEx();
 }
 
 void CQuickSearch::OnBnClickedEditorQuickSearchNext()
@@ -205,85 +173,73 @@ void CQuickSearch::OnBnClickedEditorQuickSearchPrevious()
 
 void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 {
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	ASSERT(pFrame);
-	if (!pFrame) return;
-
-	UpdateQuickSearchOptionCombo();
-
-	TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
-
-	auto startMeasure = OSUtils::StartBenchmark();
-
+	BOOL bCantFoundWord = FALSE;
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
-	if (strSearchWhat.IsEmpty())
+	const auto pEditorDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pEditorDoc)
 	{
-		return;
-	}
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
-	{
-		auto pEditor = pDoc->GetEditorCtrl();
-		if (pEditor != NULL)
+		UpdateQuickSearchOptionCombo();
+		UpdateQuickSearchResultCombo();
+		if (m_nAddResultTo == ADD_RESULT_TO::SEARCH_RESULT_WINDOW)
 		{
 			SaveSearchString(strSearchWhat);
-			pEditor->SetSearchflags(m_nSearchOptions);
-			CString strFile = pDoc->GetPathName();
-			std::wstring strLine;
-			CString strScript;
-			pEditor->GetText(strScript);
-			if (strScript.IsEmpty()) return;
-			std::vector<CString> listLine;
-			listLine.reserve(pEditor->GetLineCount());
-			AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-			unsigned int curLine = 0;
-			unsigned int MatchedWords = 0;
-			ResultSearchData._nMatchedFiles = 1;
-			ResultSearchData._nTotalSearchFile = 1;
-			ResultSearchData._vecResultSearchInfo.reserve(listLine.size());
-			for (int i = 0; i < listLine.size(); ++i)
+			auto startMeasure = OSUtils::StartBenchmark();;
+			CString strFilePath = pEditorDoc->GetPathName();
+			if (strFilePath.IsEmpty())
 			{
-				strLine = AppUtils::CStringToWStd(*std::next(listLine.begin(), i));
-				curLine++;
-				auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(strSearchWhat).c_str(), m_nSearchOptions);
-				if (nWordCount > 0)
-				{
-					MatchedWords += nWordCount;
-					RESULT_SEARCH_DATA data;
-					data._nMatched = nWordCount;
-					data._nLineNumber = curLine;
-					data._strLine = AppUtils::WStdToCString(strLine);
-					if (strFile.IsEmpty())
-					{
-						data._strTargetFile = pDoc->GetTitle();
-					}
-					else
-					{
-						data._strTargetFile = strFile;
-					}
-					ResultSearchData._vecResultSearchInfo.push_back(data);
-				}
+				strFilePath = pEditorDoc->GetTitle();
 			}
-			ResultSearchData._nMatchedWords = MatchedWords;
-			ResultSearchData._nLineCounts = static_cast<unsigned int>(listLine.size());
+			TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
+			if (CFindTextWorker::SearchAllInEditor(strFilePath, pEditorDoc->GetEditorCtrl(), ResultSearchData, strSearchWhat, m_nSearchOptions))
+			{
+				ResultSearchData._nTotalSearchFile = 1;
+				ResultSearchData._nMatchedFiles = 1;
+				ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
+				ResultSearchData._strSearchWhat = strSearchWhat;
+				ResultSearchData._bAppendResult = FALSE;
+				ResultSearchData._bShowFileNameOnly = FALSE;
+				ResultSearchData._strScope = _T("Current File");
+				// send data to log window
+				CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+				ASSERT(pFrame); if (!pFrame) return;
+				pFrame->AddSearchResultDataToPane(ResultSearchData);
+			}
+			else
+			{
+				bCantFoundWord = TRUE;
+			}
+		}
+		else if (m_nAddResultTo == ADD_RESULT_TO::SELECTION_TEXT)
+		{
+			if (pEditorDoc->GetEditorView()->SelectAllOccurrences(strSearchWhat, m_nSearchOptions))
+			{
+				pEditorDoc->GetEditorView()->SetFocus();
+			}
+			else
+			{
+				bCantFoundWord = TRUE;
+			}
+		}
+		else if (m_nAddResultTo == ADD_RESULT_TO::BOOKMARK_BAR)
+		{
+			if (pEditorDoc->GetEditorView()->BookmarkAllOccurrences(strSearchWhat, m_nSearchOptions))
+			{ 
+			}
+			else
+			{
+				bCantFoundWord = TRUE;
+			}
 		}
 	}
-
-	ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
-	ResultSearchData._strSearchWhat = strSearchWhat;
-	ResultSearchData._bAppendResult = FALSE;
-	ResultSearchData._bShowFileNameOnly = FALSE;
-	ResultSearchData._strScope = _T("Current File");
-	// send data to log window
-	pFrame->AddSearchResultDataToPane(ResultSearchData);
-	m_comboSearchWhat.SetFocusEx();
+	if (bCantFoundWord)
+	{
+		::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search All Text"), MB_ICONINFORMATION);
+	}
 }
 
 void CQuickSearch::UpdateQuickSearchOptionCombo()
 {
-	UpdateData(TRUE);
 	m_nSearchOptions = 0;
 	int nSel = m_comboSearchOption.GetCurSel();
 	if (nSel == 0)
@@ -308,6 +264,33 @@ void CQuickSearch::UpdateQuickSearchOptionCombo()
 		m_nSearchOptions |= VinaTextSearchEngine::OPTIONS::REGEX;
 	}
 }
+
+void CQuickSearch::UpdateQuickSearchResultCombo()
+{
+	int nSel = m_comboSearchResult.GetCurSel();
+	if (nSel == 0)
+	{
+		m_nAddResultTo = ADD_RESULT_TO::SEARCH_RESULT_WINDOW;
+	}
+	else if (nSel == 1)
+	{
+		m_nAddResultTo = ADD_RESULT_TO::SELECTION_TEXT;
+	}
+	else if (nSel == 2)
+	{
+		m_nAddResultTo = ADD_RESULT_TO::BOOKMARK_BAR;
+	}
+}
+
+void CQuickSearch::InitComboSearchResult()
+{
+	m_comboSearchResult.ResetContent();
+	m_comboSearchResult.AddString(_T("  Search All Results"));
+	m_comboSearchResult.AddString(_T("  Select All Results"));
+	m_comboSearchResult.AddString(_T("  Bookmark All Results"));
+	m_comboSearchOption.SetCurSel(0);
+}
+
 void CQuickSearch::OnCbnSelchangeEditorQuickSearchOptionCombo()
 {
 	UpdateQuickSearchOptionCombo();
@@ -389,6 +372,8 @@ void CQuickSearch::SaveDialogState()
 		nLimitData++;
 	}
 	jsonWriter.AddValue("combobox-search-data", AppUtils::CStringToStd(strSearchCBData));
+	jsonWriter.AddValue("combobox-search-option", std::to_string(m_comboSearchOption.GetCurSel()));
+	jsonWriter.AddValue("combobox-search-result", std::to_string(m_comboSearchResult.GetCurSel()));
 	jsonWriter.SaveFile();
 }
 
@@ -415,6 +400,12 @@ void CQuickSearch::LoadDialogState()
 			m_comboSearchWhat.InsertString(0, strText);
 		}
 	}
+	CString strSearchOptionData;
+	jsonReader.ReadCString("combobox-search-option", strSearchOptionData);
+	m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
+	CString strSearchResultData;
+	jsonReader.ReadCString("combobox-search-result", strSearchResultData);
+	m_comboSearchResult.SetCurSel(AppUtils::CStringToInt(strSearchResultData));
 }
 
 void CQuickSearch::OnSearchEditChange()

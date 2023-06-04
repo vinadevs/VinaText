@@ -62,18 +62,23 @@ BOOL CQuickReplace::OnInitDialog()
 
 void CQuickReplace::InitSearchReplaceFromEditor(const CString & strSearchWhat)
 {
-	m_comboSearchWhat.SetWindowTextW(strSearchWhat);
-	m_comboSearchWhat.SetFocus();
-	SaveSearchString(strSearchWhat);
 	if (strSearchWhat.IsEmpty())
 	{
+		m_comboSearchWhat.SetFocus();
 		EnableButtons(FALSE);
 	}
 	else
 	{
+		m_comboSearchWhat.SetWindowTextW(strSearchWhat);
+		SaveSearchString(strSearchWhat);
+		m_comboReplaceWith.SetFocus();
 		EnableButtons(TRUE);
 	}
-	m_comboSearchWhat.SetFocus();
+}
+
+void CQuickReplace::InitComboSearchOption(unsigned int uiSearchOptions)
+{
+	m_comboSearchOption.SetCurSel(uiSearchOptions);
 }
 
 void CQuickReplace::InitComboSearchOption()
@@ -117,7 +122,6 @@ void CQuickReplace::EnableButtons(BOOL bEnable)
 
 void CQuickReplace::UpdateQuickSearchReplaceOptionCombo()
 {
-	UpdateData(TRUE);
 	m_nSearchOptions = 0;
 	int nSel = m_comboSearchOption.GetCurSel();
 	if (nSel == 0)
@@ -169,7 +173,6 @@ void CQuickReplace::SaveDialogState()
 {
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("quickreplace-dialog-state.json");
 	JSonWriter jsonWriter(strJsonFilePath, "VinaText QuickReplace Dialog Saved States");
-	
 	int nLimitData = 0;
 	CString strSearchCBData;
 	for (int i = 0; i < m_comboSearchWhat.GetCount(); ++i)
@@ -181,7 +184,6 @@ void CQuickReplace::SaveDialogState()
 		nLimitData++;
 	}
 	jsonWriter.AddValue("combobox-search-data", AppUtils::CStringToStd(strSearchCBData));
-
 	nLimitData = 0;
 	CString strReplaceCBData;
 	for (int i = 0; i < m_comboReplaceWith.GetCount(); ++i)
@@ -193,6 +195,7 @@ void CQuickReplace::SaveDialogState()
 		nLimitData++;
 	}
 	jsonWriter.AddValue("combobox-replace-data", AppUtils::CStringToStd(strReplaceCBData));
+	jsonWriter.AddValue("combobox-search-option", std::to_string(m_comboSearchOption.GetCurSel()));
 	jsonWriter.SaveFile();
 }
 
@@ -235,6 +238,10 @@ void CQuickReplace::LoadDialogState()
 			m_comboReplaceWith.InsertString(0, arrLineReplace[i]);
 		}
 	}
+
+	CString strSearchOptionData;
+	jsonReader.ReadCString("combobox-search-option", strSearchOptionData);
+	m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
 }
 
 void CQuickReplace::OnSearchEditChange()
@@ -329,121 +336,96 @@ void CQuickReplace::OnBnClickedEditorQuickReplaceNext()
 	{
 		return;
 	}
-
 	UpdateQuickSearchReplaceOptionCombo();
-
 	CString strReplaceWith;
 	m_comboReplaceWith.GetWindowText(strReplaceWith);
-
 	if (strSearchWhat.CompareNoCase(strReplaceWith) == 0)
 	{
 		m_nSearchOptions |= SCFIND_MATCHCASE;
 	}
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pActiveEditor = pDoc->GetEditorCtrl();
-		if (pActiveEditor != NULL && !pActiveEditor->IsReadOnlyEditor())
+		auto pEditor = pView->GetEditorCtrl();
+		if (pEditor != NULL && !pEditor->IsReadOnlyEditor())
 		{
 			SaveSearchString(strSearchWhat);
 			SaveReplaceString(strReplaceWith);
-			int nPos = pActiveEditor->ReplaceNext(strSearchWhat, strReplaceWith);
-			if (nPos == -1)
-			{
-				::MessageBox(AfxGetMainWnd()->m_hWnd,
-					AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-					_T("VinaText"),
-					MB_ICONINFORMATION);
-			}
+			CReplaceTextWorker::ReplaceForwardOnEditor(pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions);
 		}
 		else
 		{
-			AfxMessageBox(_T("Read only mode!"));
+			AfxMessageBox(_T("Read only mode."));
 		}
 	}
 }
 
 void CQuickReplace::OnBnClickedEditorQuickReplaceAll()
 {
-	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
-	ASSERT(pFrame);
-	if (!pFrame) return;
-
 	UpdateQuickSearchReplaceOptionCombo();
-
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
 	CString strReplaceWith;
 	m_comboReplaceWith.GetWindowText(strReplaceWith);
-
-	TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
-
 	auto startMeasure = OSUtils::StartBenchmark();
-
 	if (strSearchWhat.IsEmpty())
 	{
 		return;
 	}
-
 	if (strSearchWhat.CompareNoCase(strReplaceWith) == 0)
 	{
 		m_nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_CASE;
 	}
-
-	long lVisualLine = -1;
-	long lCurrentLine = -1;
-	CEditorCtrl* pActiveEditor = NULL;
 	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 	if (pDoc)
 	{
-		pActiveEditor = pDoc->GetEditorCtrl();
-		if (pActiveEditor != NULL && !pActiveEditor->IsReadOnlyEditor())
-		{
-			lVisualLine = pActiveEditor->GetFirstVisibleLine();
-			lCurrentLine = pActiveEditor->GetCurrentLine();
-		}
-		else
-		{
-			AfxMessageBox(_T("Read only mode!"));
-			return;
-		}
-	}
-
-	if (pDoc)
-	{
-		if (pActiveEditor != NULL)
+		CEditorCtrl* pEditor = pDoc->GetEditorCtrl();
+		if (pEditor != NULL && !pEditor->IsReadOnlyEditor())
 		{
 			SaveSearchString(strSearchWhat);
 			SaveReplaceString(strReplaceWith);
-			pActiveEditor->SetSearchflags(m_nSearchOptions);
-			if (pActiveEditor != NULL)
+			if (pEditor->IsTextSelected()) // replace all in selection scope
 			{
-				auto selectionProfiler = OSUtils::StartBenchmark();
-				pActiveEditor->BeginUndoTransactions();
-				int nCountReplaced = pActiveEditor->ReplaceAll(strSearchWhat, strReplaceWith);
-				pActiveEditor->EndUndoTransactions();
-				OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, selectionProfiler, AfxCStringFormat(_T("> Replaced all %d occurrence(s) on current file - timelapse: "), nCountReplaced));
-				return;
+				if (!CReplaceTextWorker::ReplaceAllInSelection( pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions))
+				{
+					::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace All Text"), MB_ICONINFORMATION);
+				}
+			}
+			else
+			{
+				CString strFilePath = pDoc->GetPathName();
+				if (strFilePath.IsEmpty())
+				{
+					strFilePath = pDoc->GetTitle();
+				}
+				TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
+				if (CReplaceTextWorker::ReplaceAllInEditor(strFilePath, pEditor, ResultSearchData, strSearchWhat, strReplaceWith, m_nSearchOptions))
+				{
+					ResultSearchData._nMatchedFiles++;
+					ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
+					ResultSearchData._strSearchWhat = strSearchWhat;
+					ResultSearchData._bAppendResult = FALSE;
+					ResultSearchData._bShowFileNameOnly = FALSE;
+					ResultSearchData._strScope = _T("Current File");
+					ResultSearchData._strReplaceWith = strReplaceWith;
+					ResultSearchData._bIsReplaceData = TRUE;
+					ResultSearchData._nTotalSearchFile = 1;
+					// send data to log window
+					CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+					ASSERT(pFrame); if (!pFrame) return;
+					pFrame->AddSearchResultDataToPane(ResultSearchData);
+				}
+				else
+				{
+					::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace All Text"), MB_ICONINFORMATION);
+				}
 			}
 		}
-	}
-
-	ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
-	ResultSearchData._strSearchWhat = strSearchWhat;
-	ResultSearchData._bAppendResult = FALSE;
-	ResultSearchData._bShowFileNameOnly = FALSE;
-	ResultSearchData._strScope = _T("Current File");
-	ResultSearchData._strReplaceWith = strReplaceWith;
-	ResultSearchData._bIsReplaceData = TRUE;
-	ResultSearchData._nMatchedFiles = 1;
-	ResultSearchData._nTotalSearchFile = 1;
-	// send data to log window
-	pFrame->AddSearchResultDataToPane(ResultSearchData);
-	if (pDoc && pActiveEditor && lVisualLine != -1 && lCurrentLine != -1)
-	{
-		pActiveEditor->GotoLine(lCurrentLine);
-		pActiveEditor->SetFirstVisibleLine(lVisualLine);
+		else
+		{
+			AfxMessageBox(_T("Can not replace text on this document. It is read only."));
+			return;
+		}
 	}
 }
 
@@ -468,39 +450,19 @@ void CQuickReplace::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BO
 		return;
 	}
 	UpdateQuickSearchReplaceOptionCombo();
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			if (bSaveSearchWord)
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				pEditor->GotoPosition(0);
-				if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					if (!bHideMessageBox)
-					{
-						::MessageBox(AfxGetMainWnd()->m_hWnd,
-							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-							_T("VinaText"),
-							MB_ICONINFORMATION);
-					}
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
 		}
 	}
-	m_comboSearchWhat.SetFocusEx();
 }
 
 CString CQuickReplace::GetSearchWhat()
@@ -512,5 +474,6 @@ CString CQuickReplace::GetSearchWhat()
 
 unsigned int CQuickReplace::GetSearchOption()
 {
+	UpdateQuickSearchReplaceOptionCombo();
 	return m_nSearchOptions;
 }

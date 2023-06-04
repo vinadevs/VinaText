@@ -107,7 +107,6 @@ void CAppSettings::ResetAllSettings()
 	m_nExplorerExpandLimitFileOpen = 20;
 	m_nEditorZoomFactor = 0;
 
-	m_nFileCopyCounter = 0;
 	m_DocIDBuffer.clear();
 
 	m_nDialogComboboxLimitSave = 30;
@@ -350,11 +349,6 @@ CString CAppSettings::CreateDocumentUndefTitle()
 		}
 	}
 	return AfxCStringFormat(_T(" untitled %d"), nDocID);
-}
-
-int CAppSettings::GetNewFileCopyID()
-{
-	return m_nFileCopyCounter++;
 }
 
 void CAppSettings::ResetEditorCaretInfo()

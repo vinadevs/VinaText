@@ -1963,7 +1963,7 @@ void AppUtils::CheckLastOpenDocument()
 	if (GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 0) {
 		const CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 		ASSERT(pFrame); if (!pFrame) return;
-		if (!pFrame->IsClosingVinaText() && !GetVinaTextApp()->m_bIsReloadDocument) {
+		if (!pFrame->IsClosingMainFrame() && !GetVinaTextApp()->m_bIsReloadDocument) {
 			GetVinaTextApp()->OnFileNewEditor();
 		}
 	}

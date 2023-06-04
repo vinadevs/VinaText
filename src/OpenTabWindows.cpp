@@ -31,7 +31,6 @@ void COpenTabWindows::DoDataExchange(CDataExchange* pDX)
 
 BOOL COpenTabWindows::OnInitDialog()
 {
-	m_strDlgCaption = _T("Current Windows");
 	CDlgBase::OnInitDialog();
 	InitiateList();
 	m_listTab.SetFocus();
@@ -83,13 +82,12 @@ void COpenTabWindows::OnSelectAll()
 void COpenTabWindows::InitiateList()
 {
 	m_listTab.DeleteAllItems();
-
 	m_listTab.SetExtendedStyle(m_listTab.GetExtendedStyle() | LVS_EX_FULLROWSELECT | LVS_EX_GRIDLINES);
 	m_listTab.InsertColumn(0, L"File Name", LVCFMT_LEFT, 150);
 	m_listTab.InsertColumn(1, L"Full Path", LVCFMT_LEFT, 500);
-
 	const auto listOpenTabs = AppUtils::GetAllDocuments();
-	for (int i = (int)listOpenTabs.size() - 1; i >= 0; --i)
+	int nNumberTabs = (int)listOpenTabs.size();
+	for (int i = nNumberTabs - 1; i >= 0; --i)
 	{
 		CString strFileName = listOpenTabs[i]->GetTitle();
 		CString strFilePath = listOpenTabs[i]->GetPathName();
@@ -101,6 +99,9 @@ void COpenTabWindows::InitiateList()
 			m_listTab.SetItemText(nItem, 1, L"N/A");
 	}
 	m_listTab.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
+
+	SetWindowText(AfxCStringFormat(_T("Current Windows (%d)"), nNumberTabs));
+	return;
 }
 
 void COpenTabWindows::OnCopyFullPath()

@@ -124,22 +124,23 @@ BOOL CFindAndReplaceDlg::OnInitDialog()
 	return TRUE;
 }
 
-void CFindAndReplaceDlg::InitSearchReplaceFromEditor(const CString& strSearchWhat, BOOL bSelectEditbox)
+void CFindAndReplaceDlg::InitSearchReplaceFromEditor(const CString& strSearchWhat)
 {
-	m_comboSearchWhat.SetWindowTextW(strSearchWhat);
-	if (bSelectEditbox)
-		m_comboSearchWhat.SetFocus();
-	else
-		m_comboSearchWhat.SetFocusEx();
-	m_comboReplaceScope.SetCurSel(0);
-	OnCbnSelchangeSearchScope();
-	SaveSearchString(strSearchWhat);
-	if (strSearchWhat.IsEmpty())
+	CString strCurrentSearchWhat;
+	m_comboSearchWhat.GetWindowText(strCurrentSearchWhat);
+	if (strSearchWhat.IsEmpty() && strCurrentSearchWhat.IsEmpty())
 	{
+		m_comboSearchWhat.SetFocus();
 		EnableButtons(FALSE);
 	}
 	else
 	{
+		if (!strSearchWhat.IsEmpty())
+			m_comboSearchWhat.SetWindowTextW(strSearchWhat);
+		else
+			m_comboSearchWhat.SetWindowTextW(strCurrentSearchWhat);
+		SaveSearchString(strSearchWhat);
+		m_comboReplaceWith.SetFocus();
 		EnableButtons(TRUE);
 	}
 }
@@ -149,7 +150,7 @@ void CFindAndReplaceDlg::InitSearchReplaceFromExplorer(const CString& strFolderP
 	m_comboReplaceScope.SetCurSel(3);
 	OnCbnSelchangeSearchScope();
 	m_strSpecificPath = strFolderPath;
-	m_comboReplaceWith.SetFocus();
+	m_comboSearchWhat.SetFocus();
 	UpdateData(FALSE);
 }
 
@@ -175,46 +176,21 @@ void CFindAndReplaceDlg::DoDataExchange(CDataExchange* pDX)
 
 void CFindAndReplaceDlg::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOOL bSaveSearchWord)
 {
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
-
+	if (strSearchWhat.IsEmpty()) return;
 	UpdateSearchOptions();
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pEditor = pDoc->GetEditorCtrl();
+		auto pEditor = pView->GetEditorCtrl();
 		if (pEditor != NULL)
 		{
 			if (bSaveSearchWord)
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			pEditor->SetSearchflags(m_nSearchOptions);
-			if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-			{
-				int nVisualLine = pEditor->GetFirstVisibleLine();
-				int nCurPos = pEditor->GetCurrentPosition();
-				pEditor->GotoPosition(0);
-				if (!pEditor->SearchForward(strSearchWhat.LockBuffer()))
-				{
-					pEditor->SetFirstVisibleLine(nVisualLine);
-					pEditor->GotoPosition(nCurPos);
-					if (!bHideMessageBox)
-					{
-						::MessageBox(AfxGetMainWnd()->m_hWnd,
-							AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-							_T("VinaText"),
-							MB_ICONINFORMATION);
-					}
-				}
-			}
-			strSearchWhat.UnlockBuffer();
+			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
 		}
 	}
-	m_comboSearchWhat.SetFocusEx();
 }
 
 void CFindAndReplaceDlg::OnFindNext()
@@ -229,44 +205,59 @@ void CFindAndReplaceDlg::OnFindNext()
 void CFindAndReplaceDlg::OnReplaceWith()
 {
 	UpdateData(TRUE);
-
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
-
+	if (strSearchWhat.IsEmpty()) return;
 	UpdateSearchOptions();
-
 	CString strReplaceWith;
 	m_comboReplaceWith.GetWindowText(strReplaceWith);
-
 	if (strSearchWhat.CompareNoCase(strReplaceWith) == 0)
 	{
 		m_nSearchOptions |= SCFIND_MATCHCASE;
 	}
-
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
+	auto const pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pView)
 	{
-		auto pActiveEditor = pDoc->GetEditorCtrl();
-		if (pActiveEditor != NULL && !pActiveEditor->IsReadOnlyEditor())
+		auto pEditor = pView->GetEditorCtrl();
+		if (pEditor != NULL && !pEditor->IsReadOnlyEditor())
 		{
 			SaveSearchString(strSearchWhat);
 			SaveReplaceString(strSearchWhat);
-			int nPos = pActiveEditor->ReplaceNext(strSearchWhat, strReplaceWith);
-			if (nPos == -1)
+			CReplaceTextWorker::ReplaceForwardOnEditor(pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions);
+		}
+		else
+		{
+			AfxMessageBox(_T("Can not replace text on this file. It is read only."));
+		}
+	}
+}
+
+void CFindAndReplaceDlg::ReplaceAllInDocument(CDocument* pDoc,
+	TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData,
+	const CString& strSearchWhat,
+	const CString& strReplaceWith,
+	unsigned int nSearchOptions)
+{
+	auto const pEditorDoc = dynamic_cast<CEditorDoc*>(pDoc);
+	if (pEditorDoc)
+	{
+		CString strFilePath = pEditorDoc->GetPathName();
+		if (strFilePath.IsEmpty())
+		{
+			strFilePath = pEditorDoc->GetTitle();
+		}
+		auto pEditor = pEditorDoc->GetEditorCtrl();
+		if (pEditor != NULL && !pEditor->IsReadOnlyEditor())
+		{
+			if (CReplaceTextWorker::ReplaceAllInEditor(strFilePath, pEditor, ResultSearchData, strSearchWhat, strReplaceWith, nSearchOptions))
 			{
-				::MessageBox(AfxGetMainWnd()->m_hWnd,
-					AfxCStringFormat(_T("Word not found: %s"), strSearchWhat),
-					_T("VinaText"),
-					MB_ICONINFORMATION);
+				ResultSearchData._nMatchedFiles++;
 			}
 		}
 		else
 		{
-			AfxMessageBox(_T("Read only mode!"));
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("Can not replace text on the file \"%s\". It is read only."), strFilePath);
+			return;
 		}
 	}
 }
@@ -275,7 +266,7 @@ void CFindAndReplaceDlg::OnReplaceAll()
 {
 	if (ThreadWorkerMgr.IsRunning() || ThreadWorkerMgr.IsDebuggerRunning())
 	{
-		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Replace Warning] Program/Debugger is running now, do not allow replacement in files..."), BasicColors::orange);
+		::MessageBox(AfxGetMainWnd()->m_hWnd, _T("Program/Debugger is running now, do not allow replacement in files..."), _T("Replace Text"), MB_ICONWARNING);
 		return;
 	}
 
@@ -318,251 +309,67 @@ void CFindAndReplaceDlg::OnReplaceAll()
 
 	// replace results
 	TEXT_RESULT_SEARCH_REPLACE_DATA ResultSearchData;
-	std::vector<CString> listFailedReplaceFiles;
 
 	auto startMeasure = OSUtils::StartBenchmark();
 
-	unsigned int nSearchOptions = VinaTextSearchEngine::OPTIONS::INT_SEARCH_OPTION;
-	if (m_bMatchwords)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_WORD;
-	if (m_bMatchcase)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_CASE;
-	if (m_bMatchregex)
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::REGEX;
+	UpdateSearchOptions();
 
-	if (strSearchWhat.IsEmpty())
-	{
-		return;
-	}
+	if (strSearchWhat.IsEmpty()) return;
+
+	SaveSearchString(strSearchWhat);
+	SaveReplaceString(strReplaceWith);
 
 	if (strSearchWhat.CompareNoCase(strReplaceWith) == 0)
 	{
-		nSearchOptions |= VinaTextSearchEngine::OPTIONS::MATCH_CASE;
-	}
-
-	long lVisualLine = -1;
-	long lCurrentLine = -1;
-	CEditorCtrl* pActiveEditor = NULL;
-	auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pDoc)
-	{
-		pActiveEditor = pDoc->GetEditorCtrl();
-		if (pActiveEditor != NULL)
-		{
-			lVisualLine = pActiveEditor->GetFirstVisibleLine();
-			lCurrentLine = pActiveEditor->GetCurrentLine();
-		}
+		m_nSearchOptions |= SCFIND_MATCHCASE;
 	}
 
 	if (strReplaceScope == _T("Current File"))
 	{
-		if (pDoc)
-		{
-			if (pActiveEditor != NULL && !pActiveEditor->IsReadOnlyEditor())
-			{
-				auto selectionProfiler = OSUtils::StartBenchmark();
-				SaveSearchString(strSearchWhat);
-				SaveReplaceString(strReplaceWith);
-				pActiveEditor->SetSearchflags(nSearchOptions);
-				pActiveEditor->BeginUndoTransactions();
-				int nCountReplaced = pActiveEditor->ReplaceAll(strSearchWhat, strReplaceWith);
-				pActiveEditor->EndUndoTransactions();
-				OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, selectionProfiler, AfxCStringFormat(_T("> Replaced all %d occurrence(s) on current file - timelapse: "), nCountReplaced));
-				return;
-			}
-			else
-			{
-				AfxMessageBox(_T("Read only mode!"));
-				return;
-			}
-		}
+		ResultSearchData._nTotalSearchFile = 1;
+		ReplaceAllInDocument(AppUtils::GetMDIActiveDocument(), ResultSearchData, strSearchWhat, strReplaceWith, m_nSearchOptions);
 	}
-	else if (strReplaceScope == _T("All Open Files"))
+	else if (strReplaceScope == _T("All Opened Files"))
 	{
 		BOOL bUserAnwser = AskBeforeContinueReplace(strReplaceScope);
 		if (!bUserAnwser) return;
 
 		auto vecDocs = AppUtils::GetAllDocuments();
 		ResultSearchData._nTotalSearchFile = (unsigned int)vecDocs.size();
-		SaveSearchString(strSearchWhat);
-		SaveReplaceString(strReplaceWith);
 		for (auto const& doc : vecDocs)
 		{
-			if (doc)
-			{
-				auto pDocEditor = dynamic_cast<CEditorDoc*>(doc);
-				if (pDocEditor)
-				{
-					auto pEditor = pDocEditor->GetEditorCtrl();
-					if (pEditor != NULL)
-					{
-						CString strFile = pDocEditor->GetPathName();
-
-						if (pEditor->IsReadOnlyEditor())
-						{
-							listFailedReplaceFiles.push_back(strFile);
-							continue;
-						}
-
-						CString strScript;
-						pEditor->GetText(strScript);
-						if (strScript.IsEmpty()) continue;
-
-						pEditor->SetSearchflags(nSearchOptions);
-						BOOL bHasTrailingReturn = FALSE;
-						if (strScript.GetAt(strScript.GetLength() - 1) == _T('\r'))
-						{
-							bHasTrailingReturn = TRUE;
-						}
-						std::vector<CString> listLine;
-						listLine.reserve(pEditor->GetLineCount());
-						AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-						std::wstring inputfile = AppUtils::CStringToWStd(strFile);
-						std::wstring replace_what = AppUtils::CStringToWStd(strSearchWhat);
-						std::wstring replace_with = AppUtils::CStringToWStd(strReplaceWith);
-						pEditor->BeginUndoTransactions();
-						if (!PathFileExists(strFile))
-						{
-							CReplaceWorker::ReplaceInDocument(pDocEditor->GetTitle(), listLine, replace_what, replace_with, ResultSearchData._vecResultSearchInfo, ResultSearchData._nMatchedFiles,
-								ResultSearchData._nMatchedWords, ResultSearchData._nLineCounts, nSearchOptions, pEditor, bHasTrailingReturn);
-						}
-						else
-						{
-							CReplaceWorker replacer;
-							replacer.SetFileFilter(m_strFileFilter);
-							if (replacer.CheckFileFilter(strFile))
-							{
-								CReplaceWorker::ReplaceInDocument(pDocEditor->GetPathName(), listLine, replace_what, replace_with, ResultSearchData._vecResultSearchInfo, ResultSearchData._nMatchedFiles,
-									ResultSearchData._nMatchedWords, ResultSearchData._nLineCounts, nSearchOptions, pEditor, bHasTrailingReturn);
-							}
-						}
-						pEditor->EndUndoTransactions();
-					}
-				}
-			}
+			ReplaceAllInDocument(doc, ResultSearchData, strSearchWhat, strReplaceWith, m_nSearchOptions);
 		}
 	}
 	else if (strReplaceScope == _T("Container Folder"))
 	{
+		auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 		if (pDoc)
 		{
 			CString strFilePath = pDoc->GetPathName();
-			CString strContainerFoler = PathUtils::GetContainerPath(strFilePath);
-
-			BOOL bUserAnwser = AskBeforeContinueReplace(strContainerFoler);
-			if (!bUserAnwser) return;
-
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Stop"));
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(FALSE);
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(FALSE);
-
-			SaveSearchString(strSearchWhat);
-			SaveReplaceString(strReplaceWith);
-
-			// background replace start...
-			CString strMessageProgressbar;
-			strMessageProgressbar.Format(_T("Replacing text..."));
-			m_pReplaceProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
-			m_pReplaceProgressBar->SetPos(0);
-			std::unique_ptr<CReplaceWorker> pReplacer = std::make_unique<CReplaceWorker>();
-			pReplacer->SetActiveDocument(pDoc);
-			pReplacer->SetReplaceFolder(strContainerFoler);
-			pReplacer->SetSearchWhat(strSearchWhat);
-			pReplacer->SetReplaceWith(strReplaceWith);
-			pReplacer->SetIncludeSubFolder(!m_bExcludeSubFolder);
-			pReplacer->SetSearchOptions(nSearchOptions);
-			pReplacer->SetFileFilter(m_strFileFilter);
-			DWORD dwExitCode = 0;
-			CWinThread* pThread = ::AfxBeginThread(ReplaceBackgroundThreadProc, (LPVOID)pReplacer.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
-			if (pThread)
+			if (PathFileExists(strFilePath))
 			{
-				m_hThreadReplaceBackground = pThread->m_hThread;
-				pThread->m_bAutoDelete = TRUE;
-				pThread->ResumeThread();
-			}
-			while (TRUE)
-			{
-				if (!::GetExitCodeThread(m_hThreadReplaceBackground, &dwExitCode))
-				{
-					break;
-				}
-				if (dwExitCode != STILL_ACTIVE)
-				{
-					break;
-				}
-				USE_THREAD_PUMP_UI;
-				if (m_pReplaceProgressBar && pReplacer) // avoid crashing when stop searching
-				{
-					int nCurPos = pReplacer->GetCurrentReplaceProgress();
-					m_pReplaceProgressBar->SetPos(nCurPos);
-					CString strMessageProgressbar;
-					strMessageProgressbar.Format(_T("Searching text %d%% completed..."), nCurPos);
-					m_pReplaceProgressBar->SetText(strMessageProgressbar);
-				}
-			}
-			m_hThreadReplaceBackground = NULL;
-			m_pReplaceProgressBar.reset();
-			// update result to main thread...
-			ResultSearchData = pReplacer->m_ResultReplaceData;
-			listFailedReplaceFiles = pReplacer->m_listFailedReplaceFiles;
-
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Replace All"));
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(TRUE);
-			GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(TRUE);
-
-		}
-	}
-	else if (strReplaceScope == _T("Specific Path"))
-	{
-		if (m_strSpecificPath.IsEmpty()) return;
-		if (PathFileExists(m_strSpecificPath))
-		{
-			if (!PathUtils::IsDirectory(m_strSpecificPath))
-			{
-				if (PathUtils::IsFileReadOnly(m_strSpecificPath))
-				{
-					AfxMessageBox(_T("This file has read only attribute!"));
-					return;
-				}
-				CReplaceWorker replacer;
-				replacer.SetFileFilter(m_strFileFilter);
-				if (replacer.CheckFileFilter(m_strFileFilter))
-				{
-					ResultSearchData._nTotalSearchFile = 1;
-					SaveSearchString(strSearchWhat);
-					SaveReplaceString(strReplaceWith);
-					std::wstring inputfile = AppUtils::CStringToWStd(m_strSpecificPath);
-					std::wstring outputfile = AppUtils::CStringToWStd(m_strSpecificPath);
-					std::wstring replace_what = AppUtils::CStringToWStd(strSearchWhat);
-					std::wstring replace_with = AppUtils::CStringToWStd(strReplaceWith);
-					CReplaceWorker::ReplaceInFilePath(inputfile, outputfile, replace_what, replace_with, ResultSearchData._vecResultSearchInfo, ResultSearchData._nMatchedFiles,
-						ResultSearchData._nMatchedWords, ResultSearchData._nLineCounts, nSearchOptions);
-				}
-			}
-			else
-			{
-				BOOL bUserAnwser = AskBeforeContinueReplace(m_strSpecificPath);
+				CString strContainerFoler = PathUtils::GetContainerPath(strFilePath);
+				BOOL bUserAnwser = AskBeforeContinueReplace(strContainerFoler);
 				if (!bUserAnwser) return;
 
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Stop"));
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(FALSE);
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(FALSE);
 
-				SaveSearchString(strSearchWhat);
-				SaveReplaceString(strReplaceWith);
 				// background replace start...
 				CString strMessageProgressbar;
 				strMessageProgressbar.Format(_T("Replacing text..."));
 				m_pReplaceProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
 				m_pReplaceProgressBar->SetPos(0);
-				std::unique_ptr<CReplaceWorker> pReplacer = std::make_unique<CReplaceWorker>();
-				pReplacer->SetActiveDocument(pDoc);
-				pReplacer->SetReplaceFolder(m_strSpecificPath);
+				std::unique_ptr<CReplaceTextWorker> pReplacer = std::make_unique<CReplaceTextWorker>();
+				pReplacer->SetReplaceFolder(strContainerFoler);
 				pReplacer->SetSearchWhat(strSearchWhat);
 				pReplacer->SetReplaceWith(strReplaceWith);
 				pReplacer->SetIncludeSubFolder(!m_bExcludeSubFolder);
-				pReplacer->SetSearchOptions(nSearchOptions);
+				pReplacer->SetSearchOptions(m_nSearchOptions);
 				pReplacer->SetFileFilter(m_strFileFilter);
+				pReplacer->SetParentWindow(this);
 				DWORD dwExitCode = 0;
 				CWinThread* pThread = ::AfxBeginThread(ReplaceBackgroundThreadProc, (LPVOID)pReplacer.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
 				if (pThread)
@@ -587,20 +394,126 @@ void CFindAndReplaceDlg::OnReplaceAll()
 						int nCurPos = pReplacer->GetCurrentReplaceProgress();
 						m_pReplaceProgressBar->SetPos(nCurPos);
 						CString strMessageProgressbar;
-						strMessageProgressbar.Format(_T("Replacing text %d%% Completed..."), nCurPos);
+						strMessageProgressbar.Format(_T("%s, %d%% completed..."), pReplacer->GetCurrentReplacePath(), nCurPos);
 						m_pReplaceProgressBar->SetText(strMessageProgressbar);
 					}
 				}
+				pReplacer->ReportFailedCases();
 				m_hThreadReplaceBackground = NULL;
 				m_pReplaceProgressBar.reset();
 				// update result to main thread...
 				ResultSearchData = pReplacer->m_ResultReplaceData;
-				listFailedReplaceFiles = pReplacer->m_listFailedReplaceFiles;
-
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Replace All"));
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(TRUE);
 				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(TRUE);
 			}
+			else
+			{
+				AfxMessageBox(_T("[Replace In Container Folder Error] current file path does not exist."));
+				return;
+			}
+		}
+	}
+	else if (strReplaceScope == _T("Specific Path"))
+	{
+		if (m_strSpecificPath.IsEmpty())
+		{
+			AfxMessageBox(_T("[Replace In Path Error] specific path is empty."));
+			return;
+		}
+		if (PathFileExists(m_strSpecificPath))
+		{
+			if (!PathUtils::IsDirectory(m_strSpecificPath))
+			{
+				if (PathUtils::IsFileReadOnly(m_strSpecificPath))
+				{
+					AfxMessageBoxFormat(MB_ICONWARNING, _T("Can not replace text on the file \"%s\". It is read only."), m_strSpecificPath);
+					return;
+				}
+				CReplaceTextWorker replacer;
+				replacer.SetFileFilter(m_strFileFilter);
+				if (replacer.CheckFileFilter(m_strFileFilter))
+				{
+					CRect rectEditor;
+					rectEditor.SetRectEmpty();
+					std::unique_ptr<CEditorCtrl> pEditor = std::make_unique<CEditorCtrl>();
+					pEditor->Create(_T("Replace Editor"), WS_CHILD | WS_CLIPCHILDREN | WS_EX_RTLREADING, rectEditor, this, ID_EDITOR_CTRL_SEARCH);
+					if (::IsWindow(pEditor->GetSafeHwnd()))
+					{
+						pEditor->LoadFile(m_strSpecificPath);
+						ResultSearchData._nTotalSearchFile = 1;
+						if (CReplaceTextWorker::ReplaceAllInEditor(m_strSpecificPath, pEditor.get(), ResultSearchData, strSearchWhat, strReplaceWith, m_nSearchOptions))
+						{
+							ResultSearchData._nMatchedFiles = 1;
+						}
+					}
+				}
+			}
+			else
+			{
+				auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+				BOOL bUserAnwser = AskBeforeContinueReplace(m_strSpecificPath);
+				if (!bUserAnwser) return;
+
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Stop"));
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(FALSE);
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(FALSE);
+
+				// background replace start...
+				CString strMessageProgressbar;
+				strMessageProgressbar.Format(_T("Replacing text..."));
+				m_pReplaceProgressBar = std::make_unique<CVinaTextProgressBar>(0, 100, strMessageProgressbar, PROGRESS_BAR_TYPE::TYPE_SEARCH);
+				m_pReplaceProgressBar->SetPos(0);
+				std::unique_ptr<CReplaceTextWorker> pReplacer = std::make_unique<CReplaceTextWorker>();
+				pReplacer->SetReplaceFolder(m_strSpecificPath);
+				pReplacer->SetSearchWhat(strSearchWhat);
+				pReplacer->SetReplaceWith(strReplaceWith);
+				pReplacer->SetIncludeSubFolder(!m_bExcludeSubFolder);
+				pReplacer->SetSearchOptions(m_nSearchOptions);
+				pReplacer->SetFileFilter(m_strFileFilter);
+				pReplacer->SetParentWindow(this);
+				DWORD dwExitCode = 0;
+				CWinThread* pThread = ::AfxBeginThread(ReplaceBackgroundThreadProc, (LPVOID)pReplacer.get(), THREAD_PRIORITY_NORMAL, 0, CREATE_SUSPENDED | THREAD_TERMINATE, NULL);
+				if (pThread)
+				{
+					m_hThreadReplaceBackground = pThread->m_hThread;
+					pThread->m_bAutoDelete = TRUE;
+					pThread->ResumeThread();
+				}
+				while (TRUE)
+				{
+					if (!::GetExitCodeThread(m_hThreadReplaceBackground, &dwExitCode))
+					{
+						break;
+					}
+					if (dwExitCode != STILL_ACTIVE)
+					{
+						break;
+					}
+					USE_THREAD_PUMP_UI;
+					if (m_pReplaceProgressBar && pReplacer) // avoid crashing when stop searching
+					{
+						int nCurPos = pReplacer->GetCurrentReplaceProgress();
+						m_pReplaceProgressBar->SetPos(nCurPos);
+						CString strMessageProgressbar;
+						strMessageProgressbar.Format(_T("%s - %d%% completed..."), pReplacer->GetCurrentReplacePath(), nCurPos);
+						m_pReplaceProgressBar->SetText(strMessageProgressbar);
+					}
+				}
+				pReplacer->ReportFailedCases();
+				m_hThreadReplaceBackground = NULL;
+				m_pReplaceProgressBar.reset();
+				// update result to main thread...
+				ResultSearchData = pReplacer->m_ResultReplaceData;
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN)->SetWindowTextW(_T("Replace All"));
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN)->EnableWindow(TRUE);
+				GetDlgItem(ID_EDITOR_REPLACE_DLG_REPLACE_BTN)->EnableWindow(TRUE);
+			}
+		}
+		else
+		{
+			AfxMessageBox(_T("[Replace In Path Error] specific path does not exist."));
+			return;
 		}
 	}
 	ResultSearchData._TimeMeasured = OSUtils::StopBenchmark(startMeasure);
@@ -612,23 +525,6 @@ void CFindAndReplaceDlg::OnReplaceAll()
 	ResultSearchData._bIsReplaceData = TRUE;
 	// send data to log window
 	pFrame->AddSearchResultDataToPane(ResultSearchData);
-	if (pDoc && pActiveEditor && lVisualLine != -1 && lCurrentLine != -1)
-	{
-		pActiveEditor->GotoLine(lCurrentLine);
-		pActiveEditor->SetFirstVisibleLine(lVisualLine);
-	}
-	// log list failed file
-	if (listFailedReplaceFiles.size() > 0)
-	{
-		CString strLog;
-		AfxMessageBox(_T("[Warning] Replacement finished but some file(s) has read only attribute, please check Message Window for detail!"));
-		for (auto const& path : listFailedReplaceFiles)
-		{
-			strLog += path + EDITOR_NEW_LINE_LF;
-		}
-		LOG_OUTPUT_MESSAGE_COLOR(_T("\n___________| REPLACE TEXT - READ ONLY FILE(S) |________________________________________\n"));
-		LOG_OUTPUT_MESSAGE_COLOR(strLog);
-	}
 }
 
 BOOL CFindAndReplaceDlg::OnEraseBkgnd(CDC * pDC)
@@ -648,7 +544,10 @@ void CFindAndReplaceDlg::OnClickCheckBoxRegex()
 	if (m_bMatchregex)
 	{
 		GetDlgItem(ID_EDITOR_REPLACE_REGEX_COMBO)->EnableWindow(TRUE);
-		OnCbnSelchangeRegexPattern();
+		if (GetSearchWhat().IsEmpty())
+		{
+			OnCbnSelchangeRegexPattern();
+		}
 	}
 	else
 	{
@@ -785,7 +684,7 @@ void CFindAndReplaceDlg::ClearAll()
 
 UINT CFindAndReplaceDlg::ReplaceBackgroundThreadProc(LPVOID pParam)
 {
-	CReplaceWorker* pReplacer = reinterpret_cast<CReplaceWorker*>(pParam);
+	CReplaceTextWorker* pReplacer = reinterpret_cast<CReplaceTextWorker*>(pParam);
 	if (pReplacer == NULL)
 	{
 		return 1;
@@ -798,7 +697,7 @@ void CFindAndReplaceDlg::InitComboReplaceScope()
 {
 	m_comboReplaceScope.ResetContent();
 	m_comboReplaceScope.AddString(_T("Current File"));
-	m_comboReplaceScope.AddString(_T("All Open Files"));
+	m_comboReplaceScope.AddString(_T("All Opened Files"));
 	m_comboReplaceScope.AddString(_T("Container Folder"));
 	m_comboReplaceScope.AddString(_T("Specific Path"));
 	//m_comboReplaceScope.AddString(_T("Current Project"));
@@ -831,8 +730,6 @@ void CFindAndReplaceDlg::OnCbnSelchangeSearchScope()
 	{
 		GetDlgItem(ID_EDITOR_REPLACE_FILE_FILTER_EDIT)->EnableWindow(FALSE);
 	}
-
-	UpdateData(FALSE);
 }
 
 void CFindAndReplaceDlg::OnCbnSelchangeRegexPattern()
@@ -903,12 +800,12 @@ unsigned int CFindAndReplaceDlg::GetSearchOption()
 	return m_nSearchOptions;
 }
 
-SycnFindReplaceSettings CFindAndReplaceDlg::GetSycnFindReplaceSettings()
+ADVANCED_SEARCH_DATA CFindAndReplaceDlg::GetSycnFindReplaceSettings()
 {
 	UpdateData(TRUE);
 	CString strSearchWhat;
 	m_comboSearchWhat.GetWindowText(strSearchWhat);
-	SycnFindReplaceSettings dataSync;
+	ADVANCED_SEARCH_DATA dataSync;
 	dataSync._strSearchWhat = strSearchWhat;
 	dataSync._strSpecificPath = m_strSpecificPath;
 	dataSync._bAppendResult = m_bAppendResult;
@@ -923,7 +820,7 @@ SycnFindReplaceSettings CFindAndReplaceDlg::GetSycnFindReplaceSettings()
 	return dataSync;
 }
 
-void CFindAndReplaceDlg::SyncSearchReplaceSettings(const SycnFindReplaceSettings & settings)
+void CFindAndReplaceDlg::SyncSearchReplaceSettings(const ADVANCED_SEARCH_DATA & settings)
 {
 	m_comboSearchWhat.SetWindowTextW(settings._strSearchWhat);
 	m_comboSearchWhat.SetFocusEx();
@@ -959,9 +856,9 @@ void CFindAndReplaceDlg::UpdateUIVisual()
 BOOL CFindAndReplaceDlg::AskBeforeContinueReplace(const CString& strWhereToReplace)
 {
 	if (!AppSettingMgr.m_bAskBeforeReplaceInFiles) return TRUE;
-	CString strMsg;
-	strMsg.Format(_T("[Warning] Application will replace text of file(s) in [%s], do you want to continue?"), strWhereToReplace);
-	if (IDYES == AfxMessageBox(strMsg, MB_YESNO | MB_ICONWARNING))
+	int anwser = ::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("[Warning] VinaText will replace text of file(s) in [%s], do you want to continue?"),
+		strWhereToReplace), _T("Search And Replace Text"), MB_YESNO | MB_ICONINFORMATION);
+	if (IDYES == anwser)
 	{
 		return TRUE;
 	}
@@ -986,7 +883,6 @@ void CFindAndReplaceDlg::OnSearchEditChange()
 	}
 	else
 	{
-		CEditorView* pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 		if (AppSettingMgr.m_bEnableAutoSearchWhenTyping)
 		{
 			DoSearchNext(strSearchWhat, TRUE, FALSE);

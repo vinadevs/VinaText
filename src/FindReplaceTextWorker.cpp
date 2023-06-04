@@ -10,72 +10,172 @@
 #include "FindReplaceTextWorker.h"
 #include "AppUtil.h"
 #include "PathUtil.h"
+#include "OSUtil.h"
 #include "EditorDoc.h"
 #include "Editor.h"
 
-void CFindWorker::SetFindFolder(const CString & strFolder)
+constexpr int InitialProgress = 0;
+
+void CFindTextWorker::SetTargetSearchFolder(const CString & strPath)
 {
-	m_strFindFolder = strFolder;
+	m_strTargetSearchPath = strPath;
 }
 
-void CFindWorker::SetSearchWhat(const CString & strSearchWhat)
+void CFindTextWorker::SetSearchWhat(const CString & strSearchWhat)
 {
 	m_strSearchWhat = strSearchWhat;
 }
 
-void CFindWorker::SetSearchOptions(int nSearchOptions)
+void CFindTextWorker::SetSearchOptions(int nSearchOptions)
 {
 	m_nSearchOptions = nSearchOptions;
 }
 
-void CFindWorker::SetIncludeSubFolder(BOOL bIncludeSubFolder)
+void CFindTextWorker::SetIncludeSubFolder(BOOL bIncludeSubFolder)
 {
 	m_bIncludeSubFolder = bIncludeSubFolder;
 }
 
-void CFindWorker::FindInFolder()
+void CFindTextWorker::SetParentWindow(CWnd* pWndParent)
 {
-	std::vector<CString> vecFilePath;
-	m_nFindProgress = 20;
-	PathUtils::GetAllFilesFromFolder(m_strFindFolder, vecFilePath, m_bIncludeSubFolder);
-	auto nTotalFile = vecFilePath.size();
-	for (auto const& filepath : vecFilePath)
+	m_pWndParent = pWndParent;
+}
+
+void CFindTextWorker::SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
+{
+	pEditor->SetSearchflags(nSearchOptions);
+	if (!pEditor->SearchForward(strSearchWhat))
 	{
-		m_ResultSearchData._nTotalSearchFile++;
-		if (PathFileExists(filepath) && CheckFileFilter(filepath))
+		int nVisualLine = pEditor->GetFirstVisibleLine();
+		int nCurPos = pEditor->GetCurrentPosition();
+		pEditor->GotoPosition(0);
+		if (!pEditor->SearchForward(strSearchWhat))
 		{
-			std::wstring strFile = AppUtils::CStringToWStd(filepath);
-			std::wifstream fileTarget;
-			std::wstring strLine;
-			fileTarget.open(strFile.c_str());
-			if (fileTarget.is_open())
+			pEditor->SetFirstVisibleLine(nVisualLine);
+			pEditor->GotoPosition(nCurPos);
+			if (!bHideMessageBox)
 			{
-				unsigned int curLine = 0;
-				while (std::getline(fileTarget, strLine))
-				{
-					curLine++;
-					auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(m_strSearchWhat).c_str(), m_nSearchOptions);
-					if (nWordCount > 0)
-					{
-						m_ResultSearchData._nMatchedFiles++;
-						m_ResultSearchData._nMatchedWords += nWordCount;
-						RESULT_SEARCH_DATA data;
-						data._nMatched = nWordCount;
-						data._nLineNumber = curLine;
-						data._strLine = AppUtils::WStdToCString(strLine);
-						data._strTargetFile = filepath;
-						m_ResultSearchData._vecResultSearchInfo.push_back(data);
-					}
-				}
-				fileTarget.close();
-				m_ResultSearchData._nLineCounts += curLine;
+				::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search Text"), MB_ICONINFORMATION);
 			}
-			m_nFindProgress = 20 + static_cast<int>(m_ResultSearchData._nTotalSearchFile * 80 / nTotalFile);
 		}
 	}
 }
 
-BOOL CFindWorker::CheckFileFilter(const CString & strFilePath)
+void CFindTextWorker::SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
+{
+	pEditor->SetSearchflags(nSearchOptions);
+	if (!pEditor->SearchBackward(strSearchWhat))
+	{
+		int nVisualLine = pEditor->GetFirstVisibleLine();
+		int nCurPos = pEditor->GetCurrentPosition();
+		int nLines = pEditor->GetLineCount();
+		int nLineEndPos = pEditor->GetLineEndPosition(nLines);
+		pEditor->GotoPosition(nLineEndPos);
+		if (!pEditor->SearchBackward(strSearchWhat))
+		{
+			pEditor->SetFirstVisibleLine(nVisualLine);
+			pEditor->GotoPosition(nCurPos);
+			if (!bHideMessageBox)
+			{
+				::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search Text"), MB_ICONINFORMATION);
+			}
+		}
+	}
+}
+
+BOOL CFindTextWorker::SearchAllInEditor(const CString& strFilePath,
+	CEditorCtrl* pEditor,
+	TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData,
+	const CString& strSearchWhat,
+	unsigned int nSearchOptions)
+{
+	unsigned int uiMatchedWords = 0;
+	int nCurPosition = pEditor->GetCurrentPosition();
+	int startRange = 0;
+	int endRange = pEditor->GetTextLength();
+	int targetStart = 0;
+	int targetEnd = 0;
+	int nSearchedLine = -1;
+	// set search options
+	pEditor->DoCommand(SCI_SETSEARCHFLAGS, nSearchOptions);
+	while (targetStart != -1 && targetStart != -2)
+	{
+		targetStart = pEditor->SearchTextInRange(strSearchWhat, startRange, endRange);
+		if (targetStart == -1 || targetStart == -2)
+		{
+			break;
+		}
+		targetEnd = static_cast<int>(pEditor->DoCommand(SCI_GETTARGETEND));
+		if (targetEnd > endRange)
+		{
+			break;
+		}
+		int indicatorLength = targetEnd - targetStart;
+		if (indicatorLength > 0)
+		{
+			uiMatchedWords++;
+			int nCurSearchLine = pEditor->GetLineFromPosition(targetStart) + 1;
+			if (nSearchedLine != nCurSearchLine)
+			{
+				nSearchedLine = nCurSearchLine;
+				SEARCH_DATA_LINE dataLine;
+				dataLine._nLineNumber = nCurSearchLine;
+				dataLine._nColumnNumber = pEditor->GetColumnAtPosition(targetStart);
+				dataLine._nPositionNumber = targetStart;
+				CString strTextLine;
+				pEditor->GetTextFromLine(nCurSearchLine, strTextLine);
+				dataLine._strLine = strTextLine;
+				dataLine._strTargetFile = strFilePath;
+				ResultSearchData._vecSearchDataLine.push_back(dataLine);
+			}
+		}
+		else
+		{
+			break;
+		}
+		if (targetStart + indicatorLength == endRange)
+		{
+			break;
+		}
+		startRange = targetStart + indicatorLength;
+	}
+	ResultSearchData._nMatchedWords += uiMatchedWords;
+	ResultSearchData._nLineCounts += pEditor->GetLineCount();
+	ResultSearchData._nSearchOptions = nSearchOptions;
+	return uiMatchedWords > 0 ? TRUE : FALSE;
+}
+
+void CFindTextWorker::FindInFolder()
+{
+	CRect rectEditor;
+	rectEditor.SetRectEmpty();
+	std::unique_ptr<CEditorCtrl> pEditor = std::make_unique<CEditorCtrl>();
+	pEditor->Create(_T("Search Editor"), WS_CHILD | WS_CLIPCHILDREN | WS_EX_RTLREADING, rectEditor, m_pWndParent, ID_EDITOR_CTRL_SEARCH);
+	if (::IsWindow(pEditor->GetSafeHwnd()))
+	{
+		std::vector<CString> vecSearchPath;
+		m_nFindProgress = InitialProgress;
+		PathUtils::GetAllFilesFromFolder(m_strTargetSearchPath, vecSearchPath, m_bIncludeSubFolder);
+		auto nTotalFile = vecSearchPath.size();
+		for (auto const& searchpath : vecSearchPath)
+		{
+			m_ResultSearchData._nTotalSearchFile++;
+			if (PathFileExists(searchpath) && CheckFileFilter(searchpath))
+			{
+				pEditor->SetTextToEditor(PathUtils::FileContentToUtf8(searchpath));
+				m_ResultSearchData._vecSearchDataLine.reserve(m_ResultSearchData._vecSearchDataLine.size() + pEditor->GetLineCount());
+				if (CFindTextWorker::SearchAllInEditor(searchpath, pEditor.get(), m_ResultSearchData, m_strSearchWhat, m_nSearchOptions))
+				{
+					m_ResultSearchData._nMatchedFiles++;
+				}
+				m_strCurSearchPath = searchpath;
+				m_nFindProgress = InitialProgress + static_cast<int>(m_ResultSearchData._nTotalSearchFile * 100 / nTotalFile);
+			}
+		}
+	}
+}
+
+BOOL CFindTextWorker::CheckFileFilter(const CString & strFilePath)
 {
 	if (m_FileFilters.empty()) return TRUE;
 	if (m_FileFilters[0].Trim() == _T("*.*")) return TRUE;
@@ -88,291 +188,169 @@ BOOL CFindWorker::CheckFileFilter(const CString & strFilePath)
 	return FALSE;
 }
 
-void CFindWorker::SetFileFilter(const CString& strfileFilter)
+void CFindTextWorker::SetFileFilter(const CString& strfileFilter)
 {
 	m_FileFilters = AppUtils::SplitterCString(strfileFilter, ";");
 }
 
-int CFindWorker::GetCurrentFindProgress() const
+int CFindTextWorker::GetCurrentFindProgress() const
 {
 	return m_nFindProgress;
 }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void CReplaceWorker::SetActiveDocument(CEditorDoc * pActiveDoc)
+const CString& CFindTextWorker::GetCurrentSearchPath() const
 {
-	m_pActiveDoc = pActiveDoc;
+	return m_strCurSearchPath;
 }
 
-void CReplaceWorker::SetReplaceFolder(const CString & strFolder)
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void CReplaceTextWorker::SetReplaceFolder(const CString & strFolder)
 {
 	m_strReplaceFolder = strFolder;
 }
 
-void CReplaceWorker::SetSearchWhat(const CString & strSearchWhat)
+void CReplaceTextWorker::SetSearchWhat(const CString & strSearchWhat)
 {
 	m_strSearchWhat = strSearchWhat;
 }
 
-void CReplaceWorker::SetReplaceWith(const CString & strReplaceWith)
+void CReplaceTextWorker::SetReplaceWith(const CString & strReplaceWith)
 {
 	m_strReplaceWith = strReplaceWith;
 }
 
-void CReplaceWorker::SetSearchOptions(int nSearchOptions)
+void CReplaceTextWorker::SetSearchOptions(int nSearchOptions)
 {
 	m_nSearchOptions = nSearchOptions;
 }
 
-void CReplaceWorker::SetIncludeSubFolder(BOOL bIncludeSubFolder)
+void CReplaceTextWorker::SetIncludeSubFolder(BOOL bIncludeSubFolder)
 {
 	m_bIncludeSubFolder = bIncludeSubFolder;
 }
 
-int CReplaceWorker::GetCurrentReplaceProgress() const
+int CReplaceTextWorker::GetCurrentReplaceProgress() const
 {
 	return m_nReplaceProgress;
 }
 
-void CReplaceWorker::ReplaceInFolder()
+const CString& CReplaceTextWorker::GetCurrentReplacePath() const
 {
-	std::vector<CString> vecFindPath, vecReplacePath;
-	m_nReplaceProgress = 20;
-	PathUtils::GetAllFilesFromFolder(m_strReplaceFolder, vecFindPath, m_bIncludeSubFolder);
-	for (auto const& findpath : vecFindPath)
-	{
-		if (PathFileExists(findpath) && !PathUtils::IsFileReadOnly(findpath))
-		{
-			if (CheckFileFilter(findpath))
-			{
-				std::wstring strFile = AppUtils::CStringToWStd(findpath);
-				std::wifstream fileSTREAM;
-				std::wstring strLine;
-				fileSTREAM.open(strFile.c_str());
-				if (fileSTREAM.is_open())
-				{
-					unsigned int curLine = 0;
-					while (std::getline(fileSTREAM, strLine))
-					{
-						curLine++;
-						auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), AppUtils::CStringToWStd(m_strSearchWhat).c_str(), m_nSearchOptions);
-						if (nWordCount > 0)
-						{
-							vecReplacePath.push_back(findpath);
-						}
-					}
-					fileSTREAM.close();
-				}
-			}
-		}
-		else
-		{
-			m_listFailedReplaceFiles.push_back(findpath);
-		}
-	}
+	return m_strCurReplacePath;
+}
 
-	auto nTotalFile = vecReplacePath.size();
-	for (auto const& replacepath : vecReplacePath)
+void CReplaceTextWorker::ReplaceInFolder()
+{
+	CRect rectEditor;
+	rectEditor.SetRectEmpty();
+	std::unique_ptr<CEditorCtrl> pEditor = std::make_unique<CEditorCtrl>();
+	pEditor->Create(_T("Replace Editor"), WS_CHILD | WS_CLIPCHILDREN | WS_EX_RTLREADING, rectEditor, m_pWndParent, ID_EDITOR_CTRL_SEARCH);
+	if (::IsWindow(pEditor->GetSafeHwnd()))
 	{
-		m_ResultReplaceData._nTotalSearchFile++;
-		if (PathFileExists(replacepath) && CheckFileFilter(replacepath))
+		std::vector<CString> vecFindPath, vecReplacePath;
+		m_nReplaceProgress = InitialProgress;
+		PathUtils::GetAllFilesFromFolder(m_strReplaceFolder, vecFindPath, m_bIncludeSubFolder);
+		for (auto const& findpath : vecFindPath)
 		{
-			auto pDocFileExist = AppUtils::GetExistedDocument(replacepath);
-			if (pDocFileExist)
+			if (PathFileExists(findpath) && !PathUtils::IsFileReadOnly(findpath))
 			{
-				auto pDocEditor = dynamic_cast<CEditorDoc*>(pDocFileExist);
-				if (pDocEditor)
+				if (CheckFileFilter(findpath))
 				{
-					auto pEditor = pDocEditor->GetEditorCtrl();
-					if (pEditor != NULL)
-					{
-						pEditor->SetSearchflags(m_nSearchOptions);
-						CString strScript;
-						pEditor->GetText(strScript);
-						if (strScript.IsEmpty()) continue;
-						BOOL bHasTrailingReturn = FALSE;
-						if (strScript.GetAt(strScript.GetLength() - 1) == _T('\r'))
-						{
-							bHasTrailingReturn = TRUE;
-						}
-						std::vector<CString> listLine;
-						listLine.reserve(pEditor->GetLineCount());
-						AppUtils::SplitFileContent(strScript, pEditor->GetEOLCString(), listLine);
-						std::wstring inputfile = AppUtils::CStringToWStd(pDocEditor->GetPathName());
-						std::wstring replace_what = AppUtils::CStringToWStd(m_strSearchWhat);
-						std::wstring replace_with = AppUtils::CStringToWStd(m_strReplaceWith);
-						pEditor->BeginUndoTransactions();
-						if (PathFileExists(m_pActiveDoc->GetPathName()))
-						{
-							ReplaceInDocument(pDocEditor->GetPathName(), listLine, replace_what, replace_with, m_ResultReplaceData._vecResultSearchInfo,
-								m_ResultReplaceData._nMatchedFiles, m_ResultReplaceData._nMatchedWords, m_ResultReplaceData._nLineCounts,
-								m_nSearchOptions, pEditor, bHasTrailingReturn);
-						}
-						pEditor->EndUndoTransactions();
-					}
+					vecReplacePath.push_back(findpath);
 				}
 			}
 			else
 			{
-				std::wstring inputfile = AppUtils::CStringToWStd(replacepath);
-				std::wstring outputfile = AppUtils::CStringToWStd(replacepath);
-				std::wstring replace_what = AppUtils::CStringToWStd(m_strSearchWhat);
-				std::wstring replace_with = AppUtils::CStringToWStd(m_strReplaceWith);
-				ReplaceInFilePath(inputfile, outputfile, replace_what, replace_with, m_ResultReplaceData._vecResultSearchInfo,
-					m_ResultReplaceData._nMatchedFiles, m_ResultReplaceData._nMatchedWords,
-					m_ResultReplaceData._nLineCounts, m_nSearchOptions);
+				m_listFailedReplaceFiles.push_back(findpath);
 			}
-			m_nReplaceProgress = 20 + static_cast<int>(m_ResultReplaceData._nTotalSearchFile * 80 / nTotalFile);
+		}
+		auto nTotalFile = vecReplacePath.size();
+		for (auto const& replacepath : vecReplacePath)
+		{
+			m_ResultReplaceData._nTotalSearchFile++;
+			if (CheckFileFilter(replacepath))
+			{
+				pEditor->SetTextToEditor(PathUtils::FileContentToUtf8(replacepath));
+				m_ResultReplaceData._vecSearchDataLine.reserve(m_ResultReplaceData._vecSearchDataLine.size() + pEditor->GetLineCount());
+				if (CReplaceTextWorker::ReplaceAllInEditor(replacepath, pEditor.get(), m_ResultReplaceData, m_strSearchWhat, m_strReplaceWith, m_nSearchOptions))
+				{
+					m_ResultReplaceData._nMatchedFiles++;
+					pEditor->SaveFile(replacepath);
+				}
+				m_strCurReplacePath = replacepath;
+				m_nReplaceProgress = InitialProgress + static_cast<int>(m_ResultReplaceData._nTotalSearchFile * 100 / nTotalFile);
+			}
 		}
 	}
 }
 
-BOOL CReplaceWorker::CheckFileFilter(const CString & strFilePath)
+BOOL CReplaceTextWorker::CheckFileFilter(const CString & strFilePath)
 {
 	if (m_FileFilters.empty()) return TRUE;
 	if (m_FileFilters[0].Trim() == _T("*.*")) return TRUE;
 	CString strFileExt = PathUtils::GetFileExtention(strFilePath);
-	if (std::find_if(m_FileFilters.begin(), m_FileFilters.end(), [&](CString &strExt)
-	{
+	if (std::find_if(m_FileFilters.begin(), m_FileFilters.end(), [&](CString &strExt) {
 		return strExt.Trim().Mid(2) == strFileExt.Trim();
-	}) != m_FileFilters.end())
-	{
+	}) != m_FileFilters.end()) {
 		return TRUE;
 	}
 	return FALSE;
 }
 
-void CReplaceWorker::SetFileFilter(const CString& strfileFilter)
+void CReplaceTextWorker::SetFileFilter(const CString& strfileFilter)
 {
 	m_FileFilters = AppUtils::SplitterCString(strfileFilter, ";");
 }
 
-void CReplaceWorker::ReplaceInDocument(const CString& strDocPath,
-	const std::vector<CString>& listInputLine,
-	std::wstring replace_what, std::wstring replace_with,
-	std::vector<RESULT_SEARCH_DATA>& vecResultSearchInfo,
-	unsigned int & nMatchedFiles,
-	unsigned int & nMatchedWords,
-	unsigned int& nLineCounts,
-	int nSearchOptions, CEditorCtrl* pCScintillaEditor /*= NULL*/,
-	BOOL bHasTrailingReturn)
+void CReplaceTextWorker::SetParentWindow(CWnd* pWndParent)
 {
-	if (PathFileExists(strDocPath))
+	m_pWndParent = pWndParent;
+}
+
+void CReplaceTextWorker::ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox)
+{
+	pEditor->SetSearchflags(nSearchOptions);
+	if (pEditor->ReplaceNext(strSearchWhat, strReplaceWith) == -1)
 	{
-		if (PathUtils::IsBinaryFile(strDocPath, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF)) return; // do not replace binary file...
-	}
-	std::wstring strLine;
-	std::wstring strOutputText;
-	unsigned int curLine = 0;
-	for (int i = 0; i < listInputLine.size(); ++i)
-	{
-		curLine++;
-		strLine = AppUtils::CStringToWStd(*std::next(listInputLine.begin(), i));
-		auto strNewLine = strLine;
-		auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), replace_what.c_str(), nSearchOptions);
-		if (nWordCount > 0)
+		if (!bHideMessageBox)
 		{
-			nMatchedFiles++;
-			strNewLine = VinaTextSearchEngine::REPLACE_WORD(strLine.c_str(), replace_what.c_str(), replace_with.c_str(), nSearchOptions);
-			{
-				nMatchedWords += nWordCount;
-				RESULT_SEARCH_DATA data;
-				data._nMatched = nWordCount;
-				data._nLineNumber = curLine;
-				data._strLine = AppUtils::WStdToCString(strNewLine);
-				data._strTargetFile = strDocPath;
-				vecResultSearchInfo.push_back(data);
-			}
+			::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace Text"), MB_ICONINFORMATION);
 		}
-		if (listInputLine.size() - 1 == i)
-		{
-			if (bHasTrailingReturn)
-			{
-				strOutputText += strNewLine + EDITOR_NEW_LINE;
-			}
-			else
-			{
-				strOutputText += strNewLine;
-			}
-		}
-		else
-		{
-			strOutputText += strNewLine + EDITOR_NEW_LINE;
-		}
-	}
-	nLineCounts += curLine;
-	if (pCScintillaEditor)
-	{
-		long nVisualLine = pCScintillaEditor->GetFirstVisibleLine();
-		pCScintillaEditor->SetTextToEditor(AppUtils::WStdToCString(strOutputText));
-		pCScintillaEditor->SetFirstVisibleLine(nVisualLine);
 	}
 }
 
-void CReplaceWorker::ReplaceInFilePath(std::wstring inputfile,
-	std::wstring outputfile, std::wstring replace_what,
-	std::wstring replace_with, std::vector<RESULT_SEARCH_DATA>& vecResultSearchInfo,
-	unsigned int & nMatchedFiles, unsigned int & nMatchedWords, unsigned int& nLineCounts, int nSearchOptions,
-	CEditorCtrl * pCScintillaEditor)
+BOOL CReplaceTextWorker::ReplaceAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions)
 {
-	CString strInputFile = AppUtils::WStdToCString(inputfile);
-	if (PathUtils::IsBinaryFile(strInputFile, FILE_BINNARY | FILE_MEDIA | FILE_IMAGE | FILE_PDF)) return; // do not replace binary file...
-	BOOL bHasTrailingReturn = PathUtils::IsFileHasTrailingReturn(strInputFile);
-	std::wifstream ifs(inputfile);
-	if (!ifs) return;
-	std::wstring strLine;
-	std::wstring strOutputText;
-	unsigned int curLine = 0;
-	while (std::getline(ifs, strLine))
+	pEditor->SetSearchflags(nSearchOptions);
+	ResultSearchData._nSearchOptions = nSearchOptions;
+	pEditor->BeginUndoTransactions();
+	BOOL bMatchedFile = pEditor->ReplaceAll(strFilePath, strSearchWhat, strReplaceWith, ResultSearchData);
+	pEditor->EndUndoTransactions();
+	return bMatchedFile;
+}
+
+BOOL CReplaceTextWorker::ReplaceAllInSelection(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions)
+{
+	pEditor->SetSearchflags(nSearchOptions);
+	pEditor->BeginUndoTransactions();
+	BOOL bMatchedFile = pEditor->ReplaceAllInSelection(strSearchWhat, strReplaceWith);
+	pEditor->EndUndoTransactions();
+	return bMatchedFile;
+}
+
+void CReplaceTextWorker::ReportFailedCases()
+{
+	// log list failed file
+	if (m_listFailedReplaceFiles.size() > 0)
 	{
-		curLine++;
-		auto strNewLine = strLine;
-		auto nWordCount = (unsigned int)VinaTextSearchEngine::COUNT_WORD(strLine.c_str(), replace_what.c_str(), nSearchOptions);
-		if (nWordCount > 0)
+		CString strLog;
+		AfxMessageBox(_T("Replacement finished but some file(s) has read only attribute, please check Message Window for detail."), MB_ICONINFORMATION);
+		for (auto const& path : m_listFailedReplaceFiles)
 		{
-			nMatchedFiles++;
-			strNewLine = VinaTextSearchEngine::REPLACE_WORD(strLine.c_str(), replace_what.c_str(), replace_with.c_str(), nSearchOptions);
-			{
-				nMatchedWords += nWordCount;
-				RESULT_SEARCH_DATA data;
-				data._nMatched = nWordCount;
-				data._nLineNumber = curLine;
-				data._strLine = AppUtils::WStdToCString(strNewLine);
-				data._strTargetFile = AppUtils::WStdToCString(outputfile);
-				vecResultSearchInfo.push_back(data);
-			}
+			strLog += path + EDITOR_NEW_LINE_LF;
 		}
-		if (ifs.eof())
-		{
-			if (bHasTrailingReturn)
-			{
-				strOutputText += strNewLine + EDITOR_NEW_LINE;
-			}
-			else
-			{
-				strOutputText += strNewLine;
-			}
-		}
-		else
-		{
-			strOutputText += strNewLine + EDITOR_NEW_LINE;
-		}
-	}
-	ifs.close();
-	nLineCounts += curLine;
-	if (pCScintillaEditor)
-	{
-		long nVisualLine = pCScintillaEditor->GetFirstVisibleLine();
-		pCScintillaEditor->SetTextToEditor(AppUtils::WStdToCString(strOutputText));
-		pCScintillaEditor->SetFirstVisibleLine(nVisualLine);
-	}
-	else
-	{
-		AppUtils::ReplaceAllInWStdString(strOutputText, L"\r", L"\n");
-		std::wofstream file(outputfile, std::wios::trunc);
-		if (!file) return;
-		file << strOutputText;
-		file.close();
+		LOG_OUTPUT_MESSAGE_COLOR(_T("\n___________| REPLACE TEXT - READ ONLY FILE(S) |________________________________________\n"));
+		LOG_OUTPUT_MESSAGE_COLOR(strLog);
 	}
 }

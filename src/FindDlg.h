@@ -15,7 +15,7 @@
 
 class CScrollHelper;
 class CVinaTextProgressBar;
-
+class CEditorCtrl;
 class CFindDlg : public CDialogEx
 {
 	DECLARE_DYNAMIC(CFindDlg)
@@ -25,7 +25,6 @@ public:
 
 	void InitSearchReplaceFromEditor(const CString & strSearchWhat, BOOL bSelectEditbox = TRUE);
 	void InitSearchReplaceFromExplorer(const CString& strFolderPath);
-	void SearchAllOnFileFromEditor(const CString& strSearchWhat);
 	void SearchFromEditor(const CString& strSearchWhat, SEARCH_TYPE searchType, BOOL bSeacrhNext = TRUE, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void SetFocusComboSearchWhat();
 	void SaveDialogState();
@@ -36,8 +35,8 @@ public:
 	unsigned int GetSearchOption();
 	void EnableButtons(BOOL bEnable);
 
-	SycnFindReplaceSettings GetSycnFindReplaceSettings();
-	void SyncSearchReplaceSettings(const SycnFindReplaceSettings& settings);
+	ADVANCED_SEARCH_DATA GetSycnFindReplaceSettings();
+	void SyncSearchReplaceSettings(const ADVANCED_SEARCH_DATA& settings);
 	void UpdateUIVisual();
 
 	enum { IDD = IDD_FIND };
@@ -48,6 +47,7 @@ protected:
 	void InitComboRegexPattern();
 	void DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void DoSeachPrevious(CString strSearchWhat);
+	void SearchAllInDocument(CDocument* pDoc, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, unsigned int nSearchOptions);
 
 	CUndoRedoEditControl m_EditFilter;
 	CMFCEditBrowseCtrl m_EditSpecialPath;
