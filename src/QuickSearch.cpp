@@ -18,6 +18,7 @@
 #include "AppSettings.h"
 #include "FileUtil.h"
 #include "FindReplaceTextWorker.h"
+#include "QuickSearchDialog.h"
 
 // CQuickSearch dialog
 
@@ -98,6 +99,21 @@ BOOL CQuickSearch::PreTranslateMessage(MSG * pMsg)
 		{
 			GetParent()->GetParent()->SendMessage(WM_CLOSE, 0, 0);
 			return TRUE;
+		}
+		else if (pMsg->wParam == 'H')
+		{
+			if (GetKeyState(VK_CONTROL) & 0x8000)
+			{
+				auto const pParent = GetParent()->GetParent();
+				auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
+				if (pQSDialog)
+				{
+					CString strSearchWhat;
+					m_comboSearchWhat.GetWindowText(strSearchWhat);
+					pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
+					return TRUE;
+				}
+			}
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -215,6 +231,7 @@ void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 			if (pEditorDoc->GetEditorView()->SelectAllOccurrences(strSearchWhat, m_nSearchOptions))
 			{
 				pEditorDoc->GetEditorView()->SetFocus();
+				pEditorDoc->GetEditorCtrl()->UpdateMainSelectionInCurrentView();
 			}
 			else
 			{

@@ -17,6 +17,7 @@
 #include "MainFrm.h"
 #include "AppSettings.h"
 #include "FileUtil.h"
+#include "QuickSearchDialog.h"
 
 // CQuickReplace dialog
 
@@ -41,6 +42,21 @@ BOOL CQuickReplace::PreTranslateMessage(MSG * pMsg)
 		{
 			GetParent()->GetParent()->SendMessage(WM_CLOSE, 0, 0);
 			return TRUE;
+		}
+		else if (pMsg->wParam == 'F')
+		{
+			if (GetKeyState(VK_CONTROL) & 0x8000)
+			{
+				auto const pParent = GetParent()->GetParent();
+				auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
+				if (pQSDialog)
+				{
+					CString strSearchWhat;
+					m_comboSearchWhat.GetWindowText(strSearchWhat);
+					pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
+					return TRUE;
+				}
+			}
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);
@@ -384,9 +400,10 @@ void CQuickReplace::OnBnClickedEditorQuickReplaceAll()
 		{
 			SaveSearchString(strSearchWhat);
 			SaveReplaceString(strReplaceWith);
-			if (pEditor->IsTextSelected()) // replace all in selection scope
+			CString strSelectedText = pEditor->GetSelectedText();
+			if (!strSelectedText.IsEmpty() && strSelectedText != strSearchWhat) // replace all in selection scope
 			{
-				if (!CReplaceTextWorker::ReplaceAllInSelection( pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions))
+				if (!CReplaceTextWorker::ReplaceAllInSelection(pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions))
 				{
 					::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace All Text"), MB_ICONINFORMATION);
 				}

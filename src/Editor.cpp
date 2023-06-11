@@ -3414,45 +3414,41 @@ BOOL CEditorCtrl::ReplaceAllInSelection(const CString& strSearchWhat, const CStr
 	{
 		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, strSearchWhat);
 	}
-	if (bufUtf8_szFind == nullptr) return 0;
+	if (bufUtf8_szFind == nullptr) return FALSE;
 
 	char* bufUtf8_szReplace = nullptr;
 	{
 		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, strReplaceWith);
 	}
-	if (bufUtf8_szReplace == nullptr) return 0;
+	if (bufUtf8_szReplace == nullptr) return FALSE;
 	// set target search
 	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
 	int nSearchedLine = -1;
 	int nCountReplace = 0;
-	CString strSelectedText = GetSelectedText();
-	if (!strSelectedText.IsEmpty() && strSelectedText != strSearchWhat) // replace all in selection scope
+	int lLenToReplace = 0;
+	int lStartSelection = GetSelectionStartPosition();
+	int lEndSelection = GetSelectionEndPosition();
+	DoCommand(SCI_SETTARGETSTART, lStartSelection);
+	DoCommand(SCI_SETTARGETEND, lEndSelection);
+	int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+	while (lPosToReplace < lEndSelection && lPosToReplace >= 0)
 	{
-		int lLenToReplace = 0;
-		int lStartSelection = GetSelectionStartPosition();
-		int lEndSelection = GetSelectionEndPosition();
-		DoCommand(SCI_SETTARGETSTART, lStartSelection);
-		DoCommand(SCI_SETTARGETEND, lEndSelection);
-		int lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
-		while (lPosToReplace < lEndSelection && lPosToReplace >= 0)
+		if (m_nSearchflags & SCFIND_REGEXP)
 		{
-			if (m_nSearchflags & SCFIND_REGEXP)
-			{
-				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-			}
-			else
-			{
-				lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
-			}
-			if (lLenToReplace >= 0)
-			{
-				nCountReplace++;
-			}
-			lEndSelection = GetSelectionEndPosition();
-			DoCommand(SCI_SETTARGETSTART, lPosToReplace + lLenToReplace);
-			DoCommand(SCI_SETTARGETEND, lEndSelection);
-			lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGETRE, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
 		}
+		else
+		{
+			lLenToReplace = static_cast<int>(DoCommand(SCI_REPLACETARGET, strReplaceWith.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szReplace)));
+		}
+		if (lLenToReplace >= 0)
+		{
+			nCountReplace++;
+		}
+		lEndSelection = GetSelectionEndPosition();
+		DoCommand(SCI_SETTARGETSTART, lPosToReplace + lLenToReplace);
+		DoCommand(SCI_SETTARGETEND, lEndSelection);
+		lPosToReplace = static_cast<int>(DoCommand(SCI_SEARCHINTARGET, strSearchWhat.GetLength(), reinterpret_cast<LPARAM>(bufUtf8_szFind)));
 	}
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szFind);
 	DELETE_POINTER_CPP_ARRAY(bufUtf8_szReplace);
@@ -3471,13 +3467,13 @@ BOOL CEditorCtrl::ReplaceAll(const CString& strFilePath, const CString& strSearc
 	{
 		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szFind, strSearchWhat);
 	}
-	if (bufUtf8_szFind == nullptr) return 0;
+	if (bufUtf8_szFind == nullptr) return FALSE;
 
 	char* bufUtf8_szReplace = nullptr;
 	{
 		CREATE_BUFFER_FROM_CSTRING(bufUtf8_szReplace, strReplaceWith);
 	}
-	if (bufUtf8_szReplace == nullptr) return 0;
+	if (bufUtf8_szReplace == nullptr) return FALSE;
 	// set target search
 	DoCommand(SCI_SETSEARCHFLAGS, m_nSearchflags);
 	int nCountReplace = 0;
@@ -4926,15 +4922,15 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 	unsigned int utokenMap = 0;
 	if (MultiCaretTransaction(token, undoRedoSelection, utokenMap) >= 0 && utokenMap > 0U)
 	{
-		if (!bUndo && undoRedoSelection.curPos_redo.size() > 1) // if redo mode and start multi redo action, we offset min position 1
+		if (!bUndo && undoRedoSelection._curPosRedo.size() > 1) // if redo mode and start multi redo action, we offset min position 1
 		{
-			Sci_Position minCaretPos = *min_element(undoRedoSelection.curPos_redo.begin(), undoRedoSelection.curPos_redo.end());
-			for (size_t i = 0; i < undoRedoSelection.curPos_redo.size(); ++i)
+			Sci_Position minCaretPos = *min_element(undoRedoSelection._curPosRedo.begin(), undoRedoSelection._curPosRedo.end());
+			for (size_t i = 0; i < undoRedoSelection._curPosRedo.size(); ++i)
 			{
-				if (undoRedoSelection.curPos_redo[i] == minCaretPos)
+				if (undoRedoSelection._curPosRedo[i] == minCaretPos)
 				{
-					undoRedoSelection.curPos_redo[i]++;
-					undoRedoSelection.anchorPos_redo[i]++;
+					undoRedoSelection._curPosRedo[i]++;
+					undoRedoSelection._anchorPosRedo[i]++;
 				}
 			}
 		}
@@ -4943,10 +4939,10 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 		Sci_Position PosCur = 0;
 		Sci_Position PosAnchorVS = 0;
 		Sci_Position PosCurVS = 0;
-		PosAnchor = bUndo ? array_front(undoRedoSelection.anchorPos_undo) : array_front(undoRedoSelection.anchorPos_redo);
-		PosCur = bUndo ? array_front(undoRedoSelection.curPos_undo) : array_front(undoRedoSelection.curPos_redo);
-		PosAnchorVS = bUndo ? array_front(undoRedoSelection.anchorVS_undo) : array_front(undoRedoSelection.anchorVS_redo);
-		PosCurVS = bUndo ? array_front(undoRedoSelection.curVS_undo) : array_front(undoRedoSelection.curVS_redo);
+		PosAnchor = bUndo ? GetFront(undoRedoSelection._anchorPosUndo) : GetFront(undoRedoSelection._anchorPosRedo);
+		PosCur = bUndo ? GetFront(undoRedoSelection._CurPosUndo) : GetFront(undoRedoSelection._curPosRedo);
+		PosAnchorVS = bUndo ? GetFront(undoRedoSelection._anchorVSUndo) : GetFront(undoRedoSelection._anchorVSRedo);
+		PosCurVS = bUndo ? GetFront(undoRedoSelection._curVSUndo) : GetFront(undoRedoSelection._curVSRedo);
 
 		if (PosAnchor > 0 && PosCur > 0)
 		{
@@ -4960,7 +4956,7 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 				PostMessage(SCI_ENSUREVISIBLE, currPosLine, 0);
 			}
 
-			int const selectionMode = (bUndo) ? undoRedoSelection.selMode_undo : undoRedoSelection.selMode_redo;
+			int const selectionMode = (bUndo) ? undoRedoSelection._ModeUndo : undoRedoSelection._ModeRedo;
 
 			PostMessage(SCI_SETSELECTIONMODE, (WPARAM)((selectionMode == SEL_MULTI_MODE) ? SC_SEL_STREAM : selectionMode), 0);
 
@@ -4968,9 +4964,9 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 			{
 			case SEL_MULTI_MODE:
 			{
-				unsigned int i = 0;
-				Sci_PositionU const selCount = bUndo ? array_len(undoRedoSelection.anchorPos_undo) : array_len(undoRedoSelection.anchorPos_redo);
-				Sci_PositionU const selCountVS = bUndo ? array_len(undoRedoSelection.anchorVS_undo) : array_len(undoRedoSelection.anchorVS_redo);
+				unsigned int sel = 0;
+				Sci_PositionU const selCount = bUndo ? UndoRedoBufferSize(undoRedoSelection._anchorPosUndo) : UndoRedoBufferSize(undoRedoSelection._anchorPosRedo);
+				Sci_PositionU const selCountVS = bUndo ? UndoRedoBufferSize(undoRedoSelection._anchorVSUndo) : UndoRedoBufferSize(undoRedoSelection._anchorVSRedo);
 				PostMessage(SCI_SETSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
 				if (PosAnchorVS && PosCurVS)
 				{
@@ -4979,26 +4975,26 @@ BOOL CEditorCtrl::RestoreMultiSelection(int token, BOOL bUndo)
 				}
 				PostMessage(SCI_CANCEL, 0, 0); // (!) else shift-key selection behavior is kept
 
-				++i;
-				while (i < selCount)
+				++sel;
+				while (sel < selCount)
 				{
-					PosAnchor = bUndo ? array_eltptr(undoRedoSelection.anchorPos_undo, i) : array_eltptr(undoRedoSelection.anchorPos_redo, i);
-					PosCur = bUndo ? array_eltptr(undoRedoSelection.curPos_undo, i) : array_eltptr(undoRedoSelection.curPos_redo, i);
+					PosAnchor = bUndo ? GetAt(undoRedoSelection._anchorPosUndo, sel) : GetAt(undoRedoSelection._anchorPosRedo, sel);
+					PosCur = bUndo ? GetAt(undoRedoSelection._CurPosUndo, sel) : GetAt(undoRedoSelection._curPosRedo, sel);
 					if (PosAnchor && PosCur)
 					{
 						PostMessage(SCI_ADDSELECTION, (WPARAM)(PosCur), (LPARAM)(PosAnchor));
-						if (i < selCountVS)
+						if (sel < selCountVS)
 						{
-							PosAnchorVS = bUndo ? array_eltptr(undoRedoSelection.anchorVS_undo, i) : array_eltptr(undoRedoSelection.anchorVS_redo, i);
-							PosCurVS = bUndo ? array_eltptr(undoRedoSelection.curVS_undo, i) : array_eltptr(undoRedoSelection.curVS_redo, i);
+							PosAnchorVS = bUndo ? GetAt(undoRedoSelection._anchorVSUndo, sel) : GetAt(undoRedoSelection._anchorVSRedo, sel);
+							PosCurVS = bUndo ? GetAt(undoRedoSelection._curVSUndo, sel) : GetAt(undoRedoSelection._curVSRedo, sel);
 							if (PosAnchorVS && PosCurVS)
 							{
-								PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosAnchorVS));
-								PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)i, (LPARAM)(PosCurVS));
+								PostMessage(SCI_SETSELECTIONNANCHORVIRTUALSPACE, (WPARAM)sel, (LPARAM)(PosAnchorVS));
+								PostMessage(SCI_SETSELECTIONNCARETVIRTUALSPACE, (WPARAM)sel, (LPARAM)(PosCurVS));
 							}
 						}
 					}
-					++i;
+					++sel;
 				}
 			}
 			break;
@@ -5055,7 +5051,7 @@ int CEditorCtrl::SaveUndoMultiSelection()
 
 	int const selMode = ((numOfSel > 1) && !IsRectangleSelection()) ? SEL_MULTI_MODE : GetSelectionMode();
 
-	sel.selMode_undo = selMode;
+	sel._ModeUndo = selMode;
 
 	switch (selMode)
 	{
@@ -5064,14 +5060,14 @@ int CEditorCtrl::SaveUndoMultiSelection()
 		for (int i = 0; i < numOfSel; ++i)
 		{
 			int const anchorPos = GetSelectionNumberAnchor(i);
-			array_push_back(sel.anchorPos_undo, anchorPos);
+			AddUndoRedoDataToBuffer(sel._anchorPosUndo, anchorPos);
 			int const curPos = GetSelectionNumberCaret(i);
-			array_push_back(sel.curPos_undo, curPos);
+			AddUndoRedoDataToBuffer(sel._CurPosUndo, curPos);
 
 			int const anchorVS = GetSelectionNAnchorVirtualSpace(i);
-			array_push_back(sel.anchorVS_undo, anchorVS);
+			AddUndoRedoDataToBuffer(sel._anchorVSUndo, anchorVS);
 			int const curVS = GetSelectionNCaretVirtualSpace(i);
-			array_push_back(sel.curVS_undo, curVS);
+			AddUndoRedoDataToBuffer(sel._curVSUndo, curVS);
 		}
 	}
 	break;
@@ -5080,13 +5076,13 @@ int CEditorCtrl::SaveUndoMultiSelection()
 	case SC_SEL_THIN:
 	{
 		Sci_Position const anchorPos = GetRectangularSelectionAnchor();
-		array_push_back(sel.anchorPos_undo, anchorPos);
+		AddUndoRedoDataToBuffer(sel._anchorPosUndo, anchorPos);
 		Sci_Position const curPos = GetRectangularSelectionCaret();
-		array_push_back(sel.curPos_undo, curPos);
+		AddUndoRedoDataToBuffer(sel._CurPosUndo, curPos);
 		Sci_Position const anchorVS = GetRectangularSelectionAnchorVirtualSpace();
-		array_push_back(sel.anchorVS_undo, anchorVS);
+		AddUndoRedoDataToBuffer(sel._anchorVSUndo, anchorVS);
 		Sci_Position const curVS = GetRectangularSelectionCaretVirtualSpace();
-		array_push_back(sel.curVS_undo, curVS);
+		AddUndoRedoDataToBuffer(sel._curVSUndo, curVS);
 	}
 	break;
 
@@ -5095,12 +5091,12 @@ int CEditorCtrl::SaveUndoMultiSelection()
 	default:
 	{
 		Sci_Position const anchorPos = GetCurrentAnchor();
-		array_push_back(sel.anchorPos_undo, anchorPos);
+		AddUndoRedoDataToBuffer(sel._anchorPosUndo, anchorPos);
 		Sci_Position const curPos = GetCurrentPosition();
-		array_push_back(sel.curPos_undo, curPos);
+		AddUndoRedoDataToBuffer(sel._CurPosUndo, curPos);
 		Sci_Position const dummy = (Sci_Position)-1;
-		array_push_back(sel.anchorVS_undo, dummy);
-		array_push_back(sel.curVS_undo, dummy);
+		AddUndoRedoDataToBuffer(sel._anchorVSUndo, dummy);
+		AddUndoRedoDataToBuffer(sel._curVSUndo, dummy);
 	}
 	break;
 	}
@@ -5144,7 +5140,7 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 	{
 		int const selMode = ((numOfSel > 1) && !IsRectangleSelection()) ? SEL_MULTI_MODE : GetSelectionMode();
 
-		m_MapUndoRedoSelection[utokenMap].selMode_redo = selMode;
+		m_MapUndoRedoSelection[utokenMap]._ModeRedo = selMode;
 
 		switch (selMode)
 		{
@@ -5153,13 +5149,13 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 			for (int i = 0; i < numOfSel; ++i)
 			{
 				int const anchorPos = GetSelectionNumberAnchor(i);
-				array_push_back(m_MapUndoRedoSelection[utokenMap].anchorPos_redo, anchorPos);
+				AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._anchorPosRedo, anchorPos);
 				int const curPos = GetSelectionNumberCaret(i);
-				array_push_back(m_MapUndoRedoSelection[utokenMap].curPos_redo, curPos);
+				AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._curPosRedo, curPos);
 				int const anchorVS = GetSelectionNAnchorVirtualSpace(i);
-				array_push_back(m_MapUndoRedoSelection[utokenMap].anchorVS_redo, anchorVS);
+				AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._anchorVSRedo, anchorVS);
 				int const curVS = GetSelectionNCaretVirtualSpace(i);
-				array_push_back(m_MapUndoRedoSelection[utokenMap].curVS_redo, curVS);
+				AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._curVSRedo, curVS);
 			}
 		}
 		break;
@@ -5168,13 +5164,13 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 		case SC_SEL_THIN:
 		{
 			Sci_Position const anchorPos = GetRectangularSelectionAnchor();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].anchorPos_redo, anchorPos);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._anchorPosRedo, anchorPos);
 			Sci_Position const curPos = GetRectangularSelectionCaret();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].curPos_redo, curPos);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._curPosRedo, curPos);
 			Sci_Position const anchorVS = GetRectangularSelectionAnchorVirtualSpace();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].anchorVS_redo, anchorVS);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._anchorVSRedo, anchorVS);
 			Sci_Position const curVS = GetRectangularSelectionCaretVirtualSpace();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].curVS_redo, curVS);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._curVSRedo, curVS);
 		}
 		break;
 
@@ -5183,9 +5179,9 @@ void CEditorCtrl::SaveRedoMultiSelection(int token)
 		default:
 		{
 			Sci_Position const anchorPos = GetCurrentAnchor();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].anchorPos_redo, anchorPos);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._anchorPosRedo, anchorPos);
 			Sci_Position const curPos = GetCurrentPosition();
-			array_push_back(m_MapUndoRedoSelection[utokenMap].curPos_redo, curPos);
+			AddUndoRedoDataToBuffer(m_MapUndoRedoSelection[utokenMap]._curPosRedo, curPos);
 		}
 		break;
 		}

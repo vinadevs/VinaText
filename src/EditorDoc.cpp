@@ -188,7 +188,7 @@ void CEditorDoc::OnCloseDocument()
 		}
 	}
 	// this must be called so the reference count of the document is decreased and the memory can be released
-	GetEditorCtrl()->ReleaseDocument();
+	if (GetEditorView()) GetEditorCtrl()->ReleaseDocument();
 	// every data get from document must be done before this...
 	CDocument::OnCloseDocument();
 	AppUtils::CheckLastOpenDocument();

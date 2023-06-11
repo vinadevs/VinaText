@@ -20,6 +20,7 @@
 #include "AppSettings.h"
 #include "FileUtil.h"
 #include "GuiUtils.h"
+#include "SearchAndReplaceDlg.h"
 
 #pragma warning(disable : 4244)
 
@@ -141,6 +142,21 @@ BOOL CFindDlg::PreTranslateMessage(MSG* pMsg)
 				pActiveDoc->GetEditorCtrl()->SetFocus();
 			}
 			return TRUE;
+		}
+		else if (pMsg->wParam == 'H')
+		{
+			if ((GetKeyState(VK_CONTROL) & 0x8000) && (GetKeyState(VK_SHIFT) & 0x8000))
+			{
+				auto const pParent = GetParent()->GetParent();
+				auto const pQSDialog = dynamic_cast<CSearchAndReplaceWindowDlg*>(pParent);
+				if (pQSDialog)
+				{
+					CString strSearchWhat;
+					m_comboSearchWhat.GetWindowText(strSearchWhat);
+					pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
+					return TRUE;
+				}
+			}
 		}
 	}
 	return CDialogEx::PreTranslateMessage(pMsg);

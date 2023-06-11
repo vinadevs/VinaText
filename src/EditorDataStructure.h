@@ -94,33 +94,33 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-typedef std::vector<Sci_Position> arrayPosition;
+typedef std::vector<Sci_Position> UndoRedoPositionBuffer;
 
 struct UndoRedoSelection
 {
-	int selMode_undo = SC_SEL_STREAM;
-	arrayPosition anchorPos_undo;
-	arrayPosition curPos_undo;
-	arrayPosition anchorVS_undo;
-	arrayPosition curVS_undo;
+	int _ModeUndo = SC_SEL_STREAM;
+	UndoRedoPositionBuffer _anchorPosUndo;
+	UndoRedoPositionBuffer _CurPosUndo;
+	UndoRedoPositionBuffer _anchorVSUndo;
+	UndoRedoPositionBuffer _curVSUndo;
 
-	int selMode_redo = SC_SEL_STREAM;
-	arrayPosition anchorPos_redo;
-	arrayPosition curPos_redo;
-	arrayPosition anchorVS_redo;
-	arrayPosition curVS_redo;
+	int _ModeRedo = SC_SEL_STREAM;
+	UndoRedoPositionBuffer _anchorPosRedo;
+	UndoRedoPositionBuffer _curPosRedo;
+	UndoRedoPositionBuffer _anchorVSRedo;
+	UndoRedoPositionBuffer _curVSRedo;
 
-	UndoRedoSelection() : selMode_undo(SC_SEL_STREAM), selMode_redo(SC_SEL_STREAM) {}
+	UndoRedoSelection() : _ModeUndo(SC_SEL_STREAM), _ModeRedo(SC_SEL_STREAM) {}
 
 	BOOL IsEmpty()
 	{
-		return selMode_redo == 0 && selMode_undo == 0;
+		return _ModeRedo == 0 && _ModeUndo == 0;
 	}
 };
 
 typedef std::unordered_map<unsigned int, UndoRedoSelection> MapUndoRedoSelection;
 
-inline Sci_Position array_front(const arrayPosition& arr)
+inline Sci_Position GetFront(const UndoRedoPositionBuffer& arr)
 {
 	if (arr.size() > 0)
 	{
@@ -132,7 +132,7 @@ inline Sci_Position array_front(const arrayPosition& arr)
 	}
 }
 
-inline Sci_Position array_eltptr(const arrayPosition& arr, unsigned int i)
+inline Sci_Position GetAt(const UndoRedoPositionBuffer& arr, unsigned int i)
 {
 	if (arr.size() > 0)
 	{
@@ -144,9 +144,9 @@ inline Sci_Position array_eltptr(const arrayPosition& arr, unsigned int i)
 	}
 }
 
-#define array_len(arr) static_cast<Sci_PositionU>(arr.size())
+#define UndoRedoBufferSize(arr) static_cast<Sci_PositionU>(arr.size())
 
-#define array_push_back(arr, i) arr.push_back(i)
+#define AddUndoRedoDataToBuffer(arr, i) arr.push_back(i)
 
 /////////////////////////////////////////////////////////////////////////////
 

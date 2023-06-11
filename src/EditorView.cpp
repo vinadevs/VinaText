@@ -5921,7 +5921,7 @@ void CEditorView::RenderIndicatorWordsAndCount(const CString & strWord, int nSea
 	GuiUtils::ForceRedrawCWnd(this);  // force tracking bar refresh...
 }
 
-BOOL CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/)
+int CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOption /*= SCFIND_WHOLEWORD | SCFIND_MATCHCASE*/)
 {
 	m_nIndicatorCount = 0;
 	m_MatchedLineDataset.clear();
@@ -5993,7 +5993,7 @@ BOOL CEditorView::SelectAllOccurrences(const CString & strWord, int nSearchOptio
 	return m_nIndicatorCount;
 }
 
-BOOL CEditorView::BookmarkAllOccurrences(const CString& strWord, int nSearchOption)
+int CEditorView::BookmarkAllOccurrences(const CString& strWord, int nSearchOption)
 {
 	int nCurPosition = m_EditorCtrl.GetCurrentPosition();
 	int startRange = 0;
@@ -6023,9 +6023,9 @@ BOOL CEditorView::BookmarkAllOccurrences(const CString& strWord, int nSearchOpti
 				const int line = m_EditorCtrl.GetLineFromPosition(targetStart) + 1;
 				if (m_EditorCtrl.AddBookMark(line, strPathName))
 				{
-					bookmarkCount++;
 					UpdateDockPaneBookmark(line, FALSE, strPathName);
 				}
+				bookmarkCount++;
 			}
 		}
 		else
@@ -6267,7 +6267,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		break;
 		case SCN_MODIFIED:
 		{
-			static int nModInsdelToken = -1;
+			//static int nModInsdelToken = -1;
 			int const iModType = pScinNotification->modificationType;
 			if ((iModType & SC_MULTISTEPUNDOREDO) && !(iModType & SC_LASTSTEPINUNDOREDO))
 			{
@@ -6275,7 +6275,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			}
 			if (iModType & (SC_MOD_BEFOREINSERT | SC_MOD_BEFOREDELETE))
 			{
-				if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
+				/*if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
 				{
 					if (!m_EditorCtrl.InUndoRedoTransaction() && (nModInsdelToken < 0))
 					{
@@ -6292,7 +6292,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 							m_EditorCtrl.DoCommand(SCI_SETADDITIONALSELECTIONTYPING, bAddSelTyping);
 						}
 					}
-				}
+				}*/
 				if (iModType & SC_MOD_BEFOREDELETE)
 				{
 					int lcurPos = m_EditorCtrl.GetCurrentPosition();
@@ -6310,14 +6310,14 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 			}
 			else if (iModType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT) && !AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
 			{
-				if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
+				/*if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
 				{
 					if (!m_EditorCtrl.InUndoRedoTransaction() && (nModInsdelToken >= 0))
 					{
 						m_EditorCtrl.SaveRedoMultiSelection(nModInsdelToken);
 						nModInsdelToken = -1;
 					}
-				}
+				}*/
 				CEditorDoc *pDoc = GetEditorDocument();
 				if (pDoc->IsPreviewMode())
 				{
@@ -6335,7 +6335,8 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					m_EditorCtrl.DeleteAllDebugPointer();
 				}
 			}
-			if (iModType & SC_MOD_CONTAINER) 
+			// performance issue, will be improved soon...
+			/*if (iModType & SC_MOD_CONTAINER) 
 			{
 				if (iModType & SC_PERFORMED_UNDO) 
 				{
@@ -6346,7 +6347,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					m_EditorCtrl.RestoreMultiSelection(pScinNotification->token, FALSE);
 				}
 				AppUtils::UpdateModifiedDocumentTitle(m_pDocument);
-			}
+			}*/
 			if (m_bEnableSpellChecker && (iModType & (SC_MOD_DELETETEXT | SC_MOD_INSERTTEXT)) != 0)
 			{
 				KillTimer(START_SPELL_CHECKER_TIMER);

@@ -226,27 +226,34 @@ LRESULT CBracketOutLineDlg::OnTreeItemSelect(WPARAM wParam, LPARAM lParam)
 	HTREEITEM hTreeItem = (HTREEITEM)lParam;
 	if (hTreeItem)
 	{
-		CString strTreeItemText = m_BracketTree.GetItemText(hTreeItem);
-		int pos = strTreeItemText.Find(_T("|"));
-		if (pos != -1)
+		if (hTreeItem == m_BracketTree.GetRootItem())
 		{
-			auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(m_strFilePath));
-			if (!pDoc)
+			OnEditRefresh();
+		}
+		else
+		{
+			CString strTreeItemText = m_BracketTree.GetItemText(hTreeItem);
+			int pos = strTreeItemText.Find(_T("|"));
+			if (pos != -1)
 			{
-				pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-			}
-			else
-			{
-				AppUtils::SetActiveDocument(pDoc);
-			}
-			if (pDoc)
-			{
-				auto pEditor = pDoc->GetEditorCtrl();
-				if (pEditor != NULL)
+				auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetExistedDocument(m_strFilePath));
+				if (!pDoc)
 				{
-					long lEditorLine = AppUtils::CStringToLong(strTreeItemText.Mid(0, pos).Trim());
-					pEditor->GotoLine(lEditorLine);
-					pEditor->SetLineCenterDisplay(lEditorLine);
+					pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+				}
+				else
+				{
+					AppUtils::SetActiveDocument(pDoc);
+				}
+				if (pDoc)
+				{
+					auto pEditor = pDoc->GetEditorCtrl();
+					if (pEditor != NULL)
+					{
+						long lEditorLine = AppUtils::CStringToLong(strTreeItemText.Mid(0, pos).Trim());
+						pEditor->GotoLine(lEditorLine);
+						pEditor->SetLineCenterDisplay(lEditorLine);
+					}
 				}
 			}
 		}

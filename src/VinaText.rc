@@ -1390,13 +1390,13 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,23,28,21,20
     LTEXT           "An opensource text editor and file viewer software",IDC_STATIC,64,14,180,22,SS_NOPREFIX
-    DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
+    DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.10",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.11",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 3f0574bf049d023d52354",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 28/05/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 6507e24c2117c90a5c01cfd06",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 11/06/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1434,8 +1434,8 @@ BEGIN
     LTEXT           "Search What:",ID_EDITOR_SEARCH_STATIC,16,11,56,8
     COMBOBOX        ID_EDITOR_SEARCH_COMBO,16,22,200,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Search Options",ID_EDITOR_SEARCH_GROUPBOX,15,168,200,105
-    CONTROL         "Match case",ID_EDITOR_SEARCH_CHECK_MATCH_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,185,74,10
-    CONTROL         "Match whole word",ID_EDITOR_SEARCH_CHECK_MATCH_WHOLE,
+    CONTROL         "Match Case",ID_EDITOR_SEARCH_CHECK_MATCH_CASE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,185,74,10
+    CONTROL         "Match Whole Word",ID_EDITOR_SEARCH_CHECK_MATCH_WHOLE,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,199,111,10
     CONTROL         "Regular Expressions",ID_EDITOR_SEARCH_CHECK_REGEX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,213,105,10
@@ -1469,9 +1469,9 @@ BEGIN
     LTEXT           "Replace With:",ID_EDITOR_REPLACE_DLG_REPLACEWITH_STATIC,16,41,56,8
     COMBOBOX        ID_EDITOR_REPLACE_DLG_REPLACEWITH_COMBO,16,53,200,30,CBS_DROPDOWN | CBS_AUTOHSCROLL | WS_VSCROLL | WS_TABSTOP
     GROUPBOX        "Replace Options",ID_EDITOR_REPLACE_DLG_OPTIONS_STATIC,16,202,199,104,WS_TABSTOP
-    CONTROL         "Match case",ID_EDITOR_REPLACE_DLG_MATCHCASE_CHECKBOX,
+    CONTROL         "Match Case",ID_EDITOR_REPLACE_DLG_MATCHCASE_CHECKBOX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,219,74,10
-    CONTROL         "Match whole word",ID_EDITOR_REPLACE_DLG_WRAPAROUND_CHECKBOX,
+    CONTROL         "Match Whole Word",ID_EDITOR_REPLACE_DLG_WRAPAROUND_CHECKBOX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,232,111,10
     CONTROL         "Regular Expressions",ID_EDITOR_REPLACE_DLG_REGEX_CHECKBOX,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,28,245,105,10
@@ -2127,12 +2127,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.10"
+            VALUE "FileVersion", "1.11"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.10"
+            VALUE "ProductVersion", "1.11"
         END
     END
     BLOCK "VarFileInfo"
