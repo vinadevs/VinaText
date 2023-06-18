@@ -38,6 +38,7 @@
 #include "CreateNewMultiplePath.h"
 
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "HostManager.h"
 #include "FindPathWorker.h"
 
@@ -2558,7 +2559,7 @@ void CFileExplorerCtrl::OnTerminalOpenNewCMDTab()
 			// clipboard process...
 			CString strClipBoardText = GetClipboardPlainText();
 			OpenClipBoard(PathUtils::GetLastLevelPath(sPath));
-			OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+			OSUtils::PatseClipboardToCMD(TemporarySettings.m_hLatestHostWND);
 			OpenClipBoard(strClipBoardText);
 		}
 	}
@@ -2587,7 +2588,7 @@ void CFileExplorerCtrl::OnTerminalOpenNewPowerShellTab()
 			// clipboard process...
 			CString strClipBoardText = GetClipboardPlainText();
 			OpenClipBoard(PathUtils::GetLastLevelPath(sPath));
-			OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+			OSUtils::PatseClipboardToCMD(TemporarySettings.m_hLatestHostWND);
 			OpenClipBoard(strClipBoardText);
 		}
 	}
@@ -2616,7 +2617,7 @@ void CFileExplorerCtrl::OnTerminalOpenNewWSLTab()
 			// clipboard process...
 			CString strClipBoardText = GetClipboardPlainText();
 			OpenClipBoard(PathUtils::GetLastLevelPath(sPath));
-			OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+			OSUtils::PatseClipboardToCMD(TemporarySettings.m_hLatestHostWND);
 			OpenClipBoard(strClipBoardText);
 		}
 	}
@@ -4313,7 +4314,7 @@ UINT CFileExplorerCtrl::MonitoringThread()
 		//Close the handle we have open
 		FindCloseChangeNotification(hChange);
 	}
-	AppUtils::GetVinaTextApp()->m_bIsSaveDocument = FALSE;
+	TemporarySettings.m_bIsSaveDocument = FALSE;
 	return 0;
 }
 
@@ -5770,9 +5771,9 @@ void CFileExplorerCtrl::OnOpenFileContainer()
 		PIDLIST_ABSOLUTE pidl;
 		if (SUCCEEDED(SHParseDisplayName(strFolderPath, 0, &pidl, 0, 0)))
 		{
-			ITEMIDLIST *pidl = ILCreateFromPath(strFilePath);
-			SHOpenFolderAndSelectItems(pidl, 0, 0, 0);
-			ILFree(pidl);
+			PIDLIST_ABSOLUTE pidl_path = ILCreateFromPath(strFilePath);
+			SHOpenFolderAndSelectItems(pidl_path, 0, 0, 0);
+			ILFree(pidl_path);
 		}
 	}
 	else
@@ -5923,7 +5924,7 @@ void CFileExplorerCtrl::OnDestroy()
 
 LRESULT CFileExplorerCtrl::OnChange(WPARAM /*wParam*/, LPARAM /*lParam*/)
 {
-	if (m_bAutoRefresh && AppUtils::GetVinaTextApp()->m_bIsSaveDocument == FALSE)
+	if (m_bAutoRefresh && TemporarySettings.m_bIsSaveDocument == FALSE)
 	{
 		//Trace message which is helpful for diagnosing autorefresh
 		TRACE(_T("CFileExplorerCtrl::OnChange, Refreshing %s due to change\n"), m_sMonitoringPath.GetString()), Refresh();

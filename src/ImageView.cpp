@@ -7,12 +7,12 @@
 #*******************************************************************************/
 
 #include "stdafx.h"
-#include "VinaTextApp.h"
 #include "MainFrm.h"
 #include "ImageDoc.h"
 #include "ImageView.h"
 #include "Memdc.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "AppUtil.h"
 #include "GuiUtils.h"
 #include "GammaDlg.h"
@@ -145,7 +145,7 @@ void CImageView::OnInitialUpdate()
 			CloseHandle(hFile);
 		}
 		
-		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		if (!TemporarySettings.m_bIsReloadByPreviewMode)
 		{
 			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFileImagePath);
 			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);
@@ -306,7 +306,7 @@ BOOL CImageView::SaveImage(const CString & szPath)
 		if (saveStatus == Gdiplus::Ok)
 		{
 			CString strMsg;
-			if (AppUtils::GetVinaTextApp()->m_bIsOpenInAdminMode)
+			if (TemporarySettings.m_bIsOpenInAdminMode)
 			{
 				strMsg = AfxCStringFormat(_T("> [Save File Administrator] %s - timelapse: "), szPath);
 			}

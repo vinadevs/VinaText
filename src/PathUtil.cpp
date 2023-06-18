@@ -359,7 +359,7 @@ CString PathUtils::GetDataBaseFileFilter()
 		{
 			CString strFilterFull = arrFilter[i].Trim();
 			if (strFilterFull.IsEmpty()) continue;
-			CString strFileExt = AppUtils::GetSubCStringBetweenTwoDemiliter(strFilterFull, _T("("), _T(")")).Trim();
+			CString strFileExt = AppUtils::GetSubCStringBetweenTwoDelimiter(strFilterFull, _T("("), _T(")")).Trim();
 			CString strTempFilter = strFilterFull + _T("|") + strFileExt + _T("|");
 			strDatabaseFilter += strTempFilter;
 		}

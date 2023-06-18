@@ -6,9 +6,7 @@
 #include "AppUtil.h"
 #include "AppSettings.h"
 
-void EditorLexerDark::LoadLexer(CLanguageDatabase* pDatabase,
-											CEditorCtrl* pEditorCtrl,
-											const CString& czLexer)
+void EditorLexerDark::LoadLexer(CLanguageDatabase* pDatabase ,CEditorCtrl* pEditorCtrl, const CString& czLexer)
 {
 	if (!pDatabase) return;
 	if (czLexer == "ada")
@@ -807,7 +805,23 @@ void EditorLexerDark::Init_markdown_Editor(CLanguageDatabase* pDatabase, CEditor
 	pEditorCtrl->SetKeywords(EditorColorDark::g_markdown_KeyWords);
 	for (int i = 0; EditorColorDark::g_rgb_Syntax_markdown[i].iItem != -1; i++)
 	{
-		pEditorCtrl->SetLanguageCFontStyle(EditorColorDark::g_rgb_Syntax_markdown[i].iItem, EditorColorDark::g_rgb_Syntax_markdown[i].rgb);
+		auto iItem = EditorColorDark::g_rgb_Syntax_markdown[i].iItem;
+		auto rgb = EditorColorDark::g_rgb_Syntax_markdown[i].rgb;
+		if (iItem == SCE_MARKDOWN_PRECHAR || iItem == SCE_MARKDOWN_BLOCKQUOTE || iItem == SCE_MARKDOWN_CODE
+			|| iItem == SCE_MARKDOWN_CODE2 || iItem == SCE_MARKDOWN_CODEBK)
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+			pEditorCtrl->DoCommand(SCI_STYLESETITALIC, iItem, 1);
+		}
+		else if (iItem == SCE_MARKDOWN_STRIKEOUT || iItem == SCE_MARKDOWN_LINK)
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+			pEditorCtrl->DoCommand(SCI_STYLESETBOLD, iItem, 1);
+		}
+		else
+		{
+			pEditorCtrl->SetColorForStyle(iItem, rgb, AppSettingMgr.m_AppThemeColor);
+		}
 	}
 	pDatabase->SetLanguageName(EditorColorDark::g_str_markdown_language);
 	pDatabase->SetLanguageExtension(EditorColorDark::g_str_markdown_extention);

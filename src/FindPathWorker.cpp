@@ -12,6 +12,8 @@
 #include "PathUtil.h"
 #include "OSUtil.h"
 
+constexpr int InitialProgress = 20;
+
 CFindPathWorker::CFindPathWorker(CString strFolder,
 	CString strSearchTarget,
 	CString strSearchFilter,
@@ -28,7 +30,18 @@ CFindPathWorker::CFindPathWorker(CString strFolder,
 	CTime EndModifiedDate,
 	CTime StartCreatedDate,
 	CTime EndCreatedDate)
-{	m_strFolder = strFolder;	m_strSearchTarget = strSearchTarget;	m_bMatchCase = bMatchCase;	m_bSearchFileOnly = bSearchFileOnly;	m_bSearchWithSize = bSearchWithSize;	m_bSearchWitheModifiedDate = bSearchWitheModifiedDate;	m_bSearchWitheCreatedDate = bSearchWitheCreatedDate;	m_bSearchInSubdirectory = bSearchInSubdirectory;	m_bSearchWithoutMatchName = bSearchWithoutMatchName;	m_dMinFileSize = dMinFileSize;	m_dMaxFileSize = dMaxFileSize;
+{
+	m_strFolder = strFolder;
+	m_strSearchTarget = strSearchTarget;
+	m_bMatchCase = bMatchCase;
+	m_bSearchFileOnly = bSearchFileOnly;
+	m_bSearchWithSize = bSearchWithSize;
+	m_bSearchWitheModifiedDate = bSearchWitheModifiedDate;
+	m_bSearchWitheCreatedDate = bSearchWitheCreatedDate;
+	m_bSearchInSubdirectory = bSearchInSubdirectory;
+	m_bSearchWithoutMatchName = bSearchWithoutMatchName;
+	m_dMinFileSize = dMinFileSize;
+	m_dMaxFileSize = dMaxFileSize;
 	m_StartModifiedDate = StartModifiedDate;
 	m_EndModifiedDate = EndModifiedDate;
 	m_StartCreatedDate = StartCreatedDate;
@@ -44,7 +57,7 @@ CFindPathWorker::CFindPathWorker(CString strFolder)
 void CFindPathWorker::FindPathWithCondition()
 {
 	std::vector<CString> vecPath;
-	m_nFindProgress = 20;
+	m_nFindProgress = InitialProgress;
 	PathUtils::GetAllPathFromFolder(m_strFolder, vecPath, m_bSearchInSubdirectory);
 	m_nTotalSearch = (int)vecPath.size();
 	for (int i = 0; i < vecPath.size(); i++)
@@ -82,7 +95,7 @@ void CFindPathWorker::FindPathWithCondition()
 			}
 		}
 		// update progress
-		m_nFindProgress = 20 + static_cast<int>((i + 1) * 80 / m_nTotalSearch);
+		m_nFindProgress = InitialProgress + static_cast<int>((i + 1) * 80 / m_nTotalSearch);
 	}
 }
 

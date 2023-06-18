@@ -13,6 +13,7 @@
 #include "MediaView.h"
 #include "AppUtil.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -85,7 +86,7 @@ void CMediaView::OnInitialUpdate()
 			AfxMessageBox(_T("[Media Error] Can not open this file!"));
 			return;
 		}
-		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		if (!TemporarySettings.m_bIsReloadByPreviewMode)
 		{
 			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFileMediaPath);
 			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);

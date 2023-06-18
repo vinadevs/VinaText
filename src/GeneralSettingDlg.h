@@ -61,6 +61,7 @@ protected:
 	CComboBox m_DialogComboboxLimitSaveCombo;
 
 	int m_nRecentFileLimit{0};
+	double m_dPDFPageScrollSpeed{0};
 
 	BOOL m_bWarningForFileNotExist{ FALSE };
 	BOOL m_bShowTrackingBar{ FALSE };

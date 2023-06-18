@@ -81,6 +81,23 @@ namespace PICOJSON
 		}
 	}
 
+	inline void AddDouble(picojson::object& obj, const char* key, double inter)
+	{
+		std::ostringstream ostr;
+		ostr << inter;
+		obj.insert(std::make_pair(key, picojson::value(ostr.str())));
+	}
+
+	inline void ReadDouble(picojson::value& v, const char* key, double& inter)
+	{
+		picojson::value pvalue = v.get(key);
+		if (pvalue.is<std::string>())
+		{
+			std::istringstream istr(pvalue.get<std::string>());
+			istr >> inter;
+		}
+	}
+
 	inline void AddBOOL(picojson::object& obj, const char* key, BOOL boolValue)
 	{
 		std::ostringstream ostr;
@@ -161,6 +178,11 @@ public:
 		PICOJSON::ReadInteger(m_JsonRootValue, strKey.c_str(), value);
 	}
 
+	inline void ReadDouble(const std::string& strKey, double& value)
+	{
+		PICOJSON::ReadDouble(m_JsonRootValue, strKey.c_str(), value);
+	}
+
 	inline void ReadBOOL(const std::string& strKey, BOOL& boolValue)
 	{
 		PICOJSON::ReadBOOL(m_JsonRootValue, strKey.c_str(), boolValue);
@@ -203,6 +225,11 @@ public:
 	inline void AddInteger(const std::string& strKey, int value)
 	{
 		PICOJSON::AddInteger(m_JsonObject, strKey.c_str(), value);
+	}
+
+	inline void AddDouble(const std::string& strKey, double value)
+	{
+		PICOJSON::AddDouble(m_JsonObject, strKey.c_str(), value);
 	}
 
 	inline void AddBOOL(const std::string& strKey, BOOL boolValue)

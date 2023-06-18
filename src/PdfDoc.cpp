@@ -16,6 +16,7 @@
 #include "PdfDoc.h"
 #include "PdfView.h"
 #include "AppUtil.h"
+#include "TemporarySettings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -59,9 +60,9 @@ void CPdfDoc::ReloadPreviewDocument(const CString & strFilePath)
 	if (PathFileExists(strFilePath))
 	{
 		SetPathName(strFilePath);
-		AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = TRUE;
+		TemporarySettings.m_bIsReloadByPreviewMode = TRUE;
 		GetPdfView()->UpdatePreviewFileContent();
-		AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = FALSE;
+		TemporarySettings.m_bIsReloadByPreviewMode = FALSE;
 	}
 }
 

@@ -27,7 +27,7 @@ CQuickSearchDialog::CQuickSearchDialog(CWnd* pParent /*=NULL*/)
 	m_pImglist = NULL;
 	m_pFont = NULL;
 	m_pCurrentTabShow = NULL;
-	m_pEditorDoc = NULL;
+	m_pEditorView = NULL;
 	m_uiActiveTab = TABACTIVE::FIND_TAB;
 }
 
@@ -35,7 +35,7 @@ CQuickSearchDialog::~CQuickSearchDialog()
 {
 	DELETE_POINTER_CPP(m_pImglist);
 	DELETE_POINTER_CPP(m_pFont);
-	m_pEditorDoc = NULL;
+	m_pEditorView = NULL;
 	RenderIndicatorWordsAndCount(_T(""), 0);
 }
 
@@ -71,17 +71,13 @@ void CQuickSearchDialog::OnCancel()
 	CDialogEx::DestroyWindow();
 }
 
-void CQuickSearchDialog::SetParentDocument(CEditorDoc * pEditorDoc)
+void CQuickSearchDialog::SetParentView(CEditorView* pEditorView)
 {
-	if (m_pEditorDoc)
+	if (m_pEditorView)
 	{
-		CEditorView* pView = m_pEditorDoc->GetEditorView();
-		if (pView)
-		{
-			pView->RenderIndicatorWordsAndCount(_T(""), 0, FALSE);
-		}
+		m_pEditorView->RenderIndicatorWordsAndCount(_T(""), 0, FALSE);
 	}
-	m_pEditorDoc = pEditorDoc;
+	m_pEditorView = pEditorView;
 }
 
 void CQuickSearchDialog::InitSearchReplaceFromEditor(const CString & strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType)

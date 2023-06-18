@@ -13,6 +13,7 @@
 #include "PdfView.h"
 #include "AppUtil.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 
 #include "pdf/UXReader/UXReaderDocument.h"
 
@@ -234,7 +235,7 @@ void CPdfView::OnInitialUpdate()
 			}
 			SetCursor(oldCursor);
 		}
-		if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+		if (!TemporarySettings.m_bIsReloadByPreviewMode)
 		{
 			CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFilePDFPath);
 			OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);

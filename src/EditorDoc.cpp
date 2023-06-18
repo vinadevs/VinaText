@@ -26,6 +26,7 @@
 #include "MultiThreadWorker.h"
 #include "RecentCloseFileManager.h"
 #include "FileBrowser.h"
+#include "TemporarySettings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -144,9 +145,9 @@ void CEditorDoc::ReloadPreviewDocument(const CString & strFilePath)
 	{
 		AppSettingMgr.SaveRecentEditorCaretInfo(GetPathName()); // save old editor state
 		SetPathName(strFilePath);
-		AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = TRUE;
+		TemporarySettings.m_bIsReloadByPreviewMode = TRUE;
 		GetEditorView()->UpdatePreviewFileContent();
-		AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = FALSE;
+		TemporarySettings.m_bIsReloadByPreviewMode = FALSE;
 	}
 }
 

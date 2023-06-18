@@ -63,7 +63,7 @@ namespace AppUtils
 	CString		 WStdToCString(const std::wstring& stdSt);
 	std::wstring StdToWStd(const std::string& stdSt);
 	std::string WStdToStd(const std::wstring& stdSt);
-	CString GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
+	CString GetSubCStringBetweenTwoDelimiter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, CStringArray& arFields, BOOL bForceTrim = FALSE);
 	void SplitCString(const CString& strFields, const CString& strDelimiters, std::list<CString>& arFields, BOOL bForceTrim = FALSE);
 	void SplitFileContent(const CString& strFields, const CString& strDelimiters, std::vector<CString>& arFields); // recommend version

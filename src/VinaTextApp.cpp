@@ -33,6 +33,7 @@
 #include "LocalizationHandler.h"
 #include "CommandLine.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "SingleInstanceApp.h"
 #include "ProjectTempateCreatorDlg.h"
 #include "CodePageMFCDlg.h"
@@ -167,7 +168,7 @@ CVinaTextApp theApp;
 
 BOOL CVinaTextApp::InitInstance()
 {
-	m_bIsStartAppInistance = TRUE;
+	TemporarySettings.m_bIsStartAppInstance = TRUE;
 
 	// Parse command line for standard shell commands, DDE, file open
 	CCommandLineInfoEx cmdInfo;
@@ -321,7 +322,7 @@ BOOL CVinaTextApp::InitInstance()
 
 	if (cmdInfo.m_cmdOption == VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT)
 	{
-		m_bIsOpenInAdminMode = TRUE;
+		TemporarySettings.m_bIsOpenInAdminMode = TRUE;
 		if (!pMainFrame->LoadMDIState(GetRegSectionPath()))
 		{
 			m_pEditorDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
@@ -367,7 +368,7 @@ BOOL CVinaTextApp::InitInstance()
 
 	LoadRecentFilesData();
 
-	m_bIsStartAppInistance = FALSE;
+	TemporarySettings.m_bIsStartAppInstance = FALSE;
 
 	return TRUE;
 }
@@ -731,7 +732,7 @@ CDocument* CVinaTextApp::CreateWebDocument()
 
 CDocument * CVinaTextApp::CreateNewFileExplorerDocument(const CString& strNavigatePath)
 {
-	m_strFileExplorerNavigatePath = strNavigatePath;
+	TemporarySettings.m_strFileExplorerNavigatePath = strNavigatePath;
 	return m_pFileExplorerDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 }
 

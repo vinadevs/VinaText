@@ -7,12 +7,12 @@
 #*******************************************************************************/
 
 #include "stdafx.h"
-#include "VinaTextApp.h"
 #include "BaseDoc.h"
 #include "FileExplorerDoc.h"
 #include "AppUtil.h"
 #include "MainFrm.h"
 #include "RecentCloseFileManager.h"
+#include "TemporarySettings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -33,7 +33,7 @@ CBaseDoc::~CBaseDoc() {}
 
 BOOL CBaseDoc::OnOpenDocument(LPCTSTR lpszPathName)
 {
-	AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode = FALSE;
+	TemporarySettings.m_bIsReloadByPreviewMode = FALSE;
 	return CDocument::OnOpenDocument(lpszPathName);
 }
 
@@ -76,7 +76,7 @@ void CBaseDoc::PreprocessSaveFile(LPCTSTR lpszPathName)
 	CString strFileTitle = strFilePath.Mid(nPos + 1);
 	SetTitle(strFileTitle.GetBuffer());
 	strFileTitle.ReleaseBuffer();
-	AppUtils::GetVinaTextApp()->m_bIsSaveDocument = TRUE;
+	TemporarySettings.m_bIsSaveDocument = TRUE;
 }
 
 void CBaseDoc::OnFileSendMailEx()

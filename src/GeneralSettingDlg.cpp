@@ -49,6 +49,7 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bDetectFileChangeFromOutSide = m_bDetectFileChangeFromOutSide;
 		AppSettingMgr.m_bCheckFileSizeBeforeOpen = m_bCheckFileSizeBeforeOpen;
 		m_nRecentFileLimit > 16 ? AppSettingMgr.m_nRecentFileLimit = 16 : AppSettingMgr.m_nRecentFileLimit = m_nRecentFileLimit;
+		m_dPDFPageScrollSpeed > 10 ? AppSettingMgr.m_dPdfViewerWheelScrollFactor = 0.1 : AppSettingMgr.m_dPdfViewerWheelScrollFactor = (m_dPDFPageScrollSpeed / 100);
 
 		AppSettingMgr.m_BinaryFileExtensionList.RemoveAll();
 		AppUtils::SplitCString(m_strBinaryFileExtensionList, CSTRING_SPACE, AppSettingMgr.m_BinaryFileExtensionList);
@@ -70,6 +71,7 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bDetectFileChangeFromOutSide = AppSettingMgr.m_bDetectFileChangeFromOutSide;
 		m_bCheckFileSizeBeforeOpen = AppSettingMgr.m_bCheckFileSizeBeforeOpen;
 		m_nRecentFileLimit = AppSettingMgr.m_nRecentFileLimit;
+		m_dPDFPageScrollSpeed = AppSettingMgr.m_dPdfViewerWheelScrollFactor * 100;
 		m_strBinaryFileExtensionList = AppSettingMgr.m_strBinaryFileExtensionList;
 		UpdateData(FALSE);
 	}
@@ -92,6 +94,7 @@ void GeneralSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE, m_bDisplayMessageBoxForFileChange);
 	DDX_Control(pDX, ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO, m_DialogComboboxLimitSaveCombo);
 	DDX_Text(pDX, ID_RECENT_FILE_LIMIT_EDIT, m_nRecentFileLimit);
+	DDX_Text(pDX, ID_SETTING_PDF_WHEEL_SCROLL_SPEED, m_dPDFPageScrollSpeed);
 	DDX_Text(pDX, ID_BINARY_FILE_EXTENSION_LIST, m_strBinaryFileExtensionList);
 }
 

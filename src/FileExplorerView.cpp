@@ -14,6 +14,7 @@
 #include "AppUtil.h"
 #include "AppSettings.h"
 #include "ShellContextMenu.h"
+#include "TemporarySettings.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -293,9 +294,9 @@ void CFileExplorerView::OnInitialUpdate()
     TCHAR szCurrentDir[_MAX_PATH + 1];
     szCurrentDir[_MAX_PATH] = 0;
     
-	if (PathFileExists(AppUtils::GetVinaTextApp()->m_strFileExplorerNavigatePath))
+	if (PathFileExists(TemporarySettings.m_strFileExplorerNavigatePath))
 	{
-		if (!NavigateTo(AppUtils::GetVinaTextApp()->m_strFileExplorerNavigatePath))
+		if (!NavigateTo(TemporarySettings.m_strFileExplorerNavigatePath))
 		{
 			OnBrowseToProfileFolder();
 		}

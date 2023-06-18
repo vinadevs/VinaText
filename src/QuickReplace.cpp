@@ -16,6 +16,7 @@
 #include "Editor.h"
 #include "MainFrm.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "FileUtil.h"
 #include "QuickSearchDialog.h"
 
@@ -43,19 +44,26 @@ BOOL CQuickReplace::PreTranslateMessage(MSG * pMsg)
 			GetParent()->GetParent()->SendMessage(WM_CLOSE, 0, 0);
 			return TRUE;
 		}
-		else if (pMsg->wParam == 'F')
+		else if (pMsg->wParam == VK_RETURN && GetKeyState(VK_CONTROL) & 0x8000)
 		{
-			if (GetKeyState(VK_CONTROL) & 0x8000)
+			OnBnClickedEditorQuickReplaceAll();
+			return TRUE;
+		}
+		else if (pMsg->wParam == VK_RETURN && GetKeyState(VK_SHIFT) & 0x8000)
+		{
+			OnBnClickedEditorQuickReplaceNext();
+			return TRUE;
+		}
+		else if (pMsg->wParam == 'F' && GetKeyState(VK_CONTROL) & 0x8000)
+		{
+			auto const pParent = GetParent()->GetParent();
+			auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
+			if (pQSDialog)
 			{
-				auto const pParent = GetParent()->GetParent();
-				auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
-				if (pQSDialog)
-				{
-					CString strSearchWhat;
-					m_comboSearchWhat.GetWindowText(strSearchWhat);
-					pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
-					return TRUE;
-				}
+				CString strSearchWhat;
+				m_comboSearchWhat.GetWindowText(strSearchWhat);
+				pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
+				return TRUE;
 			}
 		}
 	}
@@ -78,18 +86,21 @@ BOOL CQuickReplace::OnInitDialog()
 
 void CQuickReplace::InitSearchReplaceFromEditor(const CString & strSearchWhat)
 {
-	if (strSearchWhat.IsEmpty())
+	CString strSearchWhatCB = strSearchWhat;
+	if (strSearchWhatCB.IsEmpty())
 	{
-		m_comboSearchWhat.SetFocus();
-		EnableButtons(FALSE);
+		m_comboSearchWhat.GetWindowText(strSearchWhatCB);
+		if (strSearchWhatCB.IsEmpty())
+			EnableButtons(FALSE);
+		else
+			EnableButtons(TRUE);
 	}
 	else
 	{
-		m_comboSearchWhat.SetWindowTextW(strSearchWhat);
-		SaveSearchString(strSearchWhat);
-		m_comboReplaceWith.SetFocus();
 		EnableButtons(TRUE);
 	}
+	m_comboSearchWhat.SetWindowTextW(strSearchWhatCB);
+	m_comboReplaceWith.SetFocus();
 }
 
 void CQuickReplace::InitComboSearchOption(unsigned int uiSearchOptions)
@@ -232,14 +243,13 @@ void CQuickReplace::LoadDialogState()
 	AppUtils::SplitCString(strSearchCBData, SAPERATOR_JSON_DATA, arrLineSearch);
 	for (auto i = arrLineSearch.GetSize() - 1; i >= 0; --i)
 	{
-		CString strText = arrLineSearch[i];
-		if (strText.IsEmpty()) continue;
+		if (arrLineSearch[i].IsEmpty()) continue;
 		if (m_comboSearchWhat.FindString(0, arrLineSearch[i]) < 0)
 		{
 			m_comboSearchWhat.InsertString(0, arrLineSearch[i]);
 		}
 	}
-
+	m_comboSearchWhat.SetWindowTextW(TemporarySettings.m_strComboboxQuickSearch);
 	CString strReplaceCBData;
 	jsonReader.ReadCString("combobox-replace-data", strReplaceCBData);
 	m_comboReplaceWith.ResetContent();
@@ -247,8 +257,7 @@ void CQuickReplace::LoadDialogState()
 	AppUtils::SplitCString(strReplaceCBData, SAPERATOR_JSON_DATA, arrLineReplace);
 	for (auto i = arrLineReplace.GetSize() - 1; i >= 0; --i)
 	{
-		CString strText = arrLineReplace[i];
-		if (strText.IsEmpty()) continue;
+		if (arrLineReplace[i].IsEmpty()) continue;
 		if (m_comboReplaceWith.FindString(0, arrLineReplace[i]) < 0)
 		{
 			m_comboReplaceWith.InsertString(0, arrLineReplace[i]);
@@ -257,7 +266,10 @@ void CQuickReplace::LoadDialogState()
 
 	CString strSearchOptionData;
 	jsonReader.ReadCString("combobox-search-option", strSearchOptionData);
-	m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
+	if (!strSearchOptionData.IsEmpty())
+		m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
+	else
+		m_comboSearchOption.SetCurSel(0);
 }
 
 void CQuickReplace::OnSearchEditChange()

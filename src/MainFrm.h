@@ -119,7 +119,6 @@ public:
 
 protected:
 	std::unordered_map<UINT, CString> m_FileRecentIDMap;
-	int					m_iCurrentTabCount = 0;
 	BOOL				m_bIsClosingMainFrame = FALSE;
 	CFont				m_Font;
 	CMenu				m_MainMenu;

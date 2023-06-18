@@ -436,7 +436,7 @@ HRESULT CFileExlorerContextMenu::SHBindToParentEx(LPCITEMIDLIST pidl, REFIID rii
 
 	LPBYTE pRel = GetPIDLPos(pidl, nCount - 1);
 	LPITEMIDLIST pidlParent = NULL;
-	pidlParent = CopyPIDL(pidl, pRel - (LPBYTE)pidl);
+	pidlParent = CopyPIDL(pidl, static_cast<int>(pRel - (LPBYTE)pidl));
 	IShellFolder * psfFolder = NULL;
 
 	if ((hr = psfDesktop->BindToObject(pidlParent, NULL, __uuidof (psfFolder), (void **)&psfFolder)) != S_OK)

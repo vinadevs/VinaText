@@ -16,6 +16,7 @@
 #include "Editor.h"
 #include "MainFrm.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "FileUtil.h"
 #include "FindReplaceTextWorker.h"
 #include "QuickSearchDialog.h"
@@ -35,18 +36,21 @@ CQuickSearch::~CQuickSearch()
 
 void CQuickSearch::InitSearchReplaceFromEditor(const CString & strSearchWhat)
 {
-	m_comboSearchWhat.SetWindowTextW(strSearchWhat);
-	m_comboSearchWhat.SetFocus();
-	SaveSearchString(strSearchWhat);
-	if (strSearchWhat.IsEmpty())
+	CString strSearchWhatCB = strSearchWhat;
+	if (strSearchWhatCB.IsEmpty())
 	{
-		EnableButtons(FALSE);
+		m_comboSearchWhat.GetWindowText(strSearchWhatCB);
+		if (strSearchWhatCB.IsEmpty())
+			EnableButtons(FALSE);
+		else
+			EnableButtons(TRUE);
 	}
 	else
 	{
 		EnableButtons(TRUE);
 	}
-	UpdateData(TRUE);
+	m_comboSearchWhat.SetWindowTextW(strSearchWhatCB);
+	m_comboSearchWhat.SetFocus();
 }
 
 void CQuickSearch::InitComboSearchOption(unsigned int uiSearchOptions)
@@ -100,19 +104,26 @@ BOOL CQuickSearch::PreTranslateMessage(MSG * pMsg)
 			GetParent()->GetParent()->SendMessage(WM_CLOSE, 0, 0);
 			return TRUE;
 		}
-		else if (pMsg->wParam == 'H')
+		else if (pMsg->wParam == VK_RETURN && GetKeyState(VK_CONTROL) & 0x8000)
 		{
-			if (GetKeyState(VK_CONTROL) & 0x8000)
+			OnBnClickedEditorQuickSearchAll();
+			return TRUE;
+		}
+		else if (pMsg->wParam == VK_RETURN && GetKeyState(VK_SHIFT) & 0x8000)
+		{
+			OnBnClickedEditorQuickSearchPrevious();
+			return TRUE;
+		}
+		else if (pMsg->wParam == 'H' && GetKeyState(VK_CONTROL) & 0x8000)
+		{
+			auto const pParent = GetParent()->GetParent();
+			auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
+			if (pQSDialog)
 			{
-				auto const pParent = GetParent()->GetParent();
-				auto const pQSDialog = dynamic_cast<CQuickSearchDialog*>(pParent);
-				if (pQSDialog)
-				{
-					CString strSearchWhat;
-					m_comboSearchWhat.GetWindowText(strSearchWhat);
-					pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
-					return TRUE;
-				}
+				CString strSearchWhat;
+				m_comboSearchWhat.GetWindowText(strSearchWhat);
+				pQSDialog->InitSearchReplaceFromEditor(strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
+				return TRUE;
 			}
 		}
 	}
@@ -305,7 +316,6 @@ void CQuickSearch::InitComboSearchResult()
 	m_comboSearchResult.AddString(_T("  Search All Results"));
 	m_comboSearchResult.AddString(_T("  Select All Results"));
 	m_comboSearchResult.AddString(_T("  Bookmark All Results"));
-	m_comboSearchOption.SetCurSel(0);
 }
 
 void CQuickSearch::OnCbnSelchangeEditorQuickSearchOptionCombo()
@@ -371,7 +381,6 @@ void CQuickSearch::InitComboSearchOption()
 	m_comboSearchOption.AddString(_T("  Match Whole Word Mode"));
 	m_comboSearchOption.AddString(_T("  Match Case & Whole Word Mode"));
 	m_comboSearchOption.AddString(_T("  Use Regular Expressions"));
-	m_comboSearchOption.SetCurSel(0);
 }
 
 void CQuickSearch::SaveDialogState()
@@ -392,6 +401,7 @@ void CQuickSearch::SaveDialogState()
 	jsonWriter.AddValue("combobox-search-option", std::to_string(m_comboSearchOption.GetCurSel()));
 	jsonWriter.AddValue("combobox-search-result", std::to_string(m_comboSearchResult.GetCurSel()));
 	jsonWriter.SaveFile();
+	TemporarySettings.m_strComboboxQuickSearch = GetSearchWhat();
 }
 
 void CQuickSearch::LoadDialogState()
@@ -410,19 +420,26 @@ void CQuickSearch::LoadDialogState()
 	AppUtils::SplitCString(strSearchCBData, SAPERATOR_JSON_DATA, arrLine);
 	for (auto i = arrLine.GetSize() - 1; i >= 0; --i)
 	{
-		CString strText = arrLine[i];
-		if (strText.IsEmpty()) continue;
-		if (m_comboSearchWhat.FindString(0, strText) < 0)
+		if (arrLine[i].IsEmpty()) continue;
+		if (m_comboSearchWhat.FindString(0, arrLine[i]) < 0)
 		{
-			m_comboSearchWhat.InsertString(0, strText);
+			m_comboSearchWhat.InsertString(0, arrLine[i]);
 		}
 	}
+	m_comboSearchWhat.SetWindowTextW(TemporarySettings.m_strComboboxQuickSearch);
 	CString strSearchOptionData;
 	jsonReader.ReadCString("combobox-search-option", strSearchOptionData);
-	m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
+	if (!strSearchOptionData.IsEmpty())
+		m_comboSearchOption.SetCurSel(AppUtils::CStringToInt(strSearchOptionData));
+	else
+		m_comboSearchOption.SetCurSel(0);
 	CString strSearchResultData;
 	jsonReader.ReadCString("combobox-search-result", strSearchResultData);
-	m_comboSearchResult.SetCurSel(AppUtils::CStringToInt(strSearchResultData));
+	if (!strSearchResultData.IsEmpty())
+		m_comboSearchResult.SetCurSel(AppUtils::CStringToInt(strSearchResultData));
+	else
+		m_comboSearchResult.SetCurSel(0);
+
 }
 
 void CQuickSearch::OnSearchEditChange()

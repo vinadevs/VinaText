@@ -226,6 +226,7 @@
     <ClInclude Include="ExplorerSettingDlg.h" />
     <ClInclude Include="FilePartition.h" />
     <ClInclude Include="GeneralSettingDlg.h" />
+    <ClInclude Include="TemporarySettings.h" />
     <ClInclude Include="WebDoc.h" />
     <ClInclude Include="WebView.h" />
     <ClInclude Include="LocalizationDatabase.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="ExplorerSettingDlg.cpp" />
     <ClCompile Include="FilePartition.cpp" />
     <ClCompile Include="GeneralSettingDlg.cpp" />
+    <ClCompile Include="TemporarySettings.cpp" />
     <ClCompile Include="WebDoc.cpp" />
     <ClCompile Include="WebView.cpp" />
     <ClCompile Include="LocalizationDatabase.cpp" />

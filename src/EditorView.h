@@ -202,8 +202,8 @@ public:
 	afx_msg void OnOptionsInsertLineNumberIndex();
 	afx_msg void OnOptionsInsertLineAlphabetIndex();
 	afx_msg void OnOptionsInsertLineRomanIndex();
-	afx_msg void OnOptionsSplitLineWithDemiliter();
-	afx_msg void OnOptionsJoinLineWithDemiliter();
+	afx_msg void OnOptionsSplitLineWithDelimiter();
+	afx_msg void OnOptionsJoinLineWithDelimiter();
 	afx_msg void OnOptionsSortLineAscending();
 	afx_msg void OnOptionsSortLineDescending();
 	afx_msg void OnOptionsSortLineAZ();
@@ -464,7 +464,7 @@ protected:
 	void GetAutoCompleteList(const CString& strWord, std::vector<CString>& listWord);
 	void AutoIndentationText();
 	void ProcessIndentationTab();
-	void ShowAutoCompleteByAddedWord(CString strWord);
+	void ShowAutoCompleteByAddedWord(const CString& strWord);
 	void ActiveDockWindow(DOCKABLE_PANE_TYPE type);
 	void Replace4SpacesByTab(BOOL bTabToSpace);
 	BOOL BlockComment(BLOCK_COMMENT_OPERATION blockCommentOperation);
@@ -484,7 +484,7 @@ protected:
 	void GetMatchedWordsOnFile(std::vector<CString>& listWord, const CString & inputChars);
 	void ToggleBracketAslevel(int level);
 	void StartSpellChecker();
-	void CHAR_ADDED_PROCESSOR(SCNotification *pScinNotification);
+	BOOL CHAR_ADDED_PROCESSOR(SCNotification *pScinNotification);
 	void OpenFileLanguageConfig(const CString & strLexerName);
 	void AdjustEditorPosition(int cx, int cy);
 	void ResetMultipleSelectionsBuffer();
@@ -516,7 +516,6 @@ protected:
 	BOOL m_bChangedExtensionFile = FALSE;
 	BOOL m_bToggleMoniterFileRealTime = FALSE;
 	BOOL m_bToggleShowAllCharater = FALSE;
-	BOOL m_bEnterKeyPressed = FALSE;
 	BOOL m_bIsIndicatorChar = FALSE;
 	BOOL m_bIsDeltaSpaceEnable = FALSE;
 	BOOL m_bDocumentReadOnly = FALSE;

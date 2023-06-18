@@ -22,6 +22,7 @@
 #include "WebDoc.h"
 #include "FileUtil.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "tinyXml\tinyxml.h"
 #include "StringHelper.h"        
 #include <imm.h>
@@ -347,7 +348,7 @@ std::string AppUtils::WStdToStd(const std::wstring& str)
 	return strStd;
 }
 
-CString AppUtils::GetSubCStringBetweenTwoDemiliter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop)
+CString AppUtils::GetSubCStringBetweenTwoDelimiter(const CString & strTarget, const CString & strDelimitersStart, const CString & strDelimitersStop)
 {
 	int nStartPos = strTarget.Find(strDelimitersStart);
 	int nStopPos = strTarget.Find(strDelimitersStop);
@@ -889,9 +890,9 @@ CString AppUtils::GetFileFormatDescription(const CString & strFileExt)
 			{
 				CString strLine = arrLines[i].Trim();
 				if (strLine.IsEmpty()) continue;
-				int demiliterPos = strLine.Find(_T("|"));
-				CString ext = strLine.Mid(0, demiliterPos).Trim();
-				CString desc = strLine.Mid(demiliterPos + 1).Trim();
+				int DelimiterPos = strLine.Find(_T("|"));
+				CString ext = strLine.Mid(0, DelimiterPos).Trim();
+				CString desc = strLine.Mid(DelimiterPos + 1).Trim();
 				AppUtils::GetVinaTextApp()->m_FileDescriptionData[ext.MakeLower()] = desc;
 				if (ext.CompareNoCase(_T(".") + strFileExt) == 0)
 				{
@@ -953,7 +954,6 @@ CFrameWnd* AppUtils::GetActiveFrame()
 CDocument* AppUtils::GetMDIActiveDocument()
 {
 	CDocument* pDoc = NULL;
-
 	CWnd* pWndMain = AfxGetMainWnd();
 	if (!pWndMain) return pDoc;
 	ASSERT(pWndMain->IsKindOf(RUNTIME_CLASS(CMDIFrameWnd))); // Not an MDI app.
@@ -970,7 +970,6 @@ CView* AppUtils::GetMDIActiveView()
 {
 	CDocument* pDoc = GetMDIActiveDocument();
 	if (!pDoc) return 0;
-
 	CFrameWnd* pMainFrame = (CFrameWnd*)AfxGetMainWnd();
 	if (!pMainFrame) return 0;
 	CFrameWnd* pChildFrame = pMainFrame->GetActiveFrame();
@@ -1963,7 +1962,7 @@ void AppUtils::CheckLastOpenDocument()
 	if (GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 0) {
 		const CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
 		ASSERT(pFrame); if (!pFrame) return;
-		if (!pFrame->IsClosingMainFrame() && !GetVinaTextApp()->m_bIsReloadDocument) {
+		if (!pFrame->IsClosingMainFrame() && !TemporarySettings.m_bIsReloadDocument) {
 			GetVinaTextApp()->OnFileNewEditor();
 		}
 	}

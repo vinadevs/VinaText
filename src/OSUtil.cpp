@@ -65,7 +65,8 @@ unsigned long OSUtils::CreateProcessSynchronous(const CString & lpVerb, const CS
 	unsigned long exitCode;
 	if (::GetExitCodeProcess(ShExecInfo.hProcess, &exitCode) == FALSE)
 	{
-		throw GetLastErrorAsString();
+		GetLastErrorAsString();
+		return exitCode;
 	}
 
 	LOG_OUTPUT_MESSAGE_COLOR(_T("> [System Command Line] ") + cmd + CSTRING_SPACE + args, BasicColors::orange);

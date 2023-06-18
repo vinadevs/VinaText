@@ -106,6 +106,9 @@ void CAppSettings::ResetAllSettings()
 	m_nExplorerExpandLimitLevel = 50;
 	m_nExplorerExpandLimitFileOpen = 20;
 	m_nEditorZoomFactor = 0;
+	
+	// plugins settings
+	m_dPdfViewerWheelScrollFactor = 0.08;
 
 	m_DocIDBuffer.clear();
 
@@ -194,6 +197,7 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonWriter.AddInteger("EditorZoomFactor", m_nEditorZoomFactor);
 	jsonWriter.AddInteger("DefaultToolbarTerminal", m_DefaultToolbarTerminal);
+	jsonWriter.AddDouble("PdfViewerWheelScrollFactor", m_dPdfViewerWheelScrollFactor);
 	jsonWriter.AddValue("NodeJSFolderPath", AppUtils::CStringToStd(m_strNodeJSFolderPath));
 	jsonWriter.AddValue("PythonFolderPath", AppUtils::CStringToStd(m_strPythonFolderPath));
 	jsonWriter.AddValue("AntiVirusProgram", AppUtils::CStringToStd(m_strAntiVirusProgram));
@@ -290,6 +294,7 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonReader.ReadInteger("EditorZoomFactor", m_nEditorZoomFactor);
 	jsonReader.ReadInteger("DefaultToolbarTerminal", (int&)m_DefaultToolbarTerminal);
+	jsonReader.ReadDouble("PdfViewerWheelScrollFactor", m_dPdfViewerWheelScrollFactor);
 	jsonReader.ReadCString("PythonFolderPath", m_strPythonFolderPath);
 	jsonReader.ReadCString("NodeJSFolderPath", m_strNodeJSFolderPath);
 	jsonReader.ReadCString("AntiVirusProgram", m_strAntiVirusProgram);

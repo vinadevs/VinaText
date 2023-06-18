@@ -38,6 +38,7 @@
 #include "PathComparatorDlg.h"
 #include "RecentCloseFileManager.h"
 #include "OpenTabWindows.h"
+#include "TemporarySettings.h"
 
 // CMainFrame
 
@@ -1791,11 +1792,11 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 			{
 				if (GetKeyState(VK_CONTROL) & 0x8000 && GetKeyState(VK_SHIFT) & 0x8000)
 				{
-					CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+					CEditorDoc* pEditorActiveView = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 					{
-						if (pEditorActiveDoc)
+						if (pEditorActiveView)
 						{
-							CEditorCtrl* pEditor = pEditorActiveDoc->GetEditorCtrl();
+							CEditorCtrl* pEditor = pEditorActiveView->GetEditorCtrl();
 							if (pEditor)
 							{
 								InitSearchReplaceFromEditor(pEditor->GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::SEARCH);
@@ -1814,11 +1815,11 @@ BOOL CMainFrame::PreTranslateMessage(MSG* pMsg)
 			case 'H':
 				if (GetKeyState(VK_CONTROL) & 0x8000 && GetKeyState(VK_SHIFT) & 0x8000)
 				{
-					CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+					CEditorDoc* pEditorActiveView = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 					{
-						if (pEditorActiveDoc)
+						if (pEditorActiveView)
 						{
-							CEditorCtrl* pEditor = pEditorActiveDoc->GetEditorCtrl();
+							CEditorCtrl* pEditor = pEditorActiveView->GetEditorCtrl();
 							if (pEditor)
 							{
 								InitSearchReplaceFromEditor(pEditor->GetSelectedText(), SEARCH_REPLACE_GOTO_DLG_TYPE::REPLACE);
@@ -2822,11 +2823,11 @@ LRESULT CMainFrame::OnAfxWmChangedActiveTab(WPARAM wParam, LPARAM lParam)
 	CEditorView* pView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 	if (pView)
 	{
-		if (!theApp.m_bIsStartAppInistance) // ignore when start up
+		if (!TemporarySettings.m_bIsStartAppInstance) // ignore when start up
 			pView->ReupdateTrackingBar();
 		if (!m_wndStatusBar.IsPaneVisible()) {
 			ShowPane(&m_wndStatusBar, TRUE, FALSE, TRUE);
-			if (!theApp.m_bIsStartAppInistance && AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1) {
+			if (!TemporarySettings.m_bIsStartAppInstance && AppUtils::GetDocumentTypeCount(DOCUMENT_TYPE::DOC_ALL) == 1) {
 				CDocument* pDoc = pView->GetDocument();
 				CString strTitle = pView->GetDocument()->GetTitle();
 				pDoc->SetTitle(_T("1"));
@@ -3041,15 +3042,15 @@ void CMainFrame::QuickSearchDialogChangedActiveTab()
 {
 	if (m_pQuickSearchDialog)
 	{
-		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
-		if (pParentDocument)
+		CEditorView* pParentView = m_pQuickSearchDialog->GetParentView();
+		if (pParentView)
 		{
-			CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-			if (pParentDocument == pEditorActiveDoc && !this->m_bIsMinimized && !m_pQuickSearchDialog->IsWindowVisible())
+			CEditorView* pEditorActiveView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+			if (pParentView == pEditorActiveView && !this->m_bIsMinimized && !m_pQuickSearchDialog->IsWindowVisible())
 			{
 				m_pQuickSearchDialog->ShowWindow(SW_SHOW);
 			}
-			else if (IsSameMDITabGroup(pParentDocument->GetEditorView(), pEditorActiveDoc->GetEditorView()))
+			else if (IsSameMDITabGroup(pParentView, pEditorActiveView))
 			{
 				m_pQuickSearchDialog->ShowWindow(SW_HIDE);
 			}
@@ -3061,10 +3062,10 @@ void CMainFrame::CloseQuickSearchDialog()
 {
 	if (m_pQuickSearchDialog)
 	{
-		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
-		if (pParentDocument)
+		CEditorView* pParentView = m_pQuickSearchDialog->GetParentView();
+		if (pParentView)
 		{
-			if (pParentDocument == dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument()))
+			if (pParentView == dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView()))
 			{
 				m_pQuickSearchDialog->OnCancel();
 			}
@@ -3076,17 +3077,17 @@ void CMainFrame::ResizeQuickSearchDialog()
 {
 	if (m_pQuickSearchDialog)
 	{
-		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
-		CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-		if (pParentDocument && pEditorActiveDoc)
+		CEditorView* pParentView = m_pQuickSearchDialog->GetParentView();
+		CEditorView* pEditorActiveView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+		if (pParentView && pEditorActiveView)
 		{
-			if (IsSameMDITabGroup(pParentDocument->GetEditorView(), pEditorActiveDoc->GetEditorView()))
+			if (IsSameMDITabGroup(pParentView, pEditorActiveView))
 			{
 				m_pQuickSearchDialog->ShowWindow(SW_HIDE);
 			}
 			else
 			{
-				CEditorCtrl* pEditor = pParentDocument->GetEditorCtrl();
+				CEditorCtrl* pEditor = pParentView->GetEditorCtrl();
 				if (pEditor)
 				{
 					CRect rect;
@@ -3138,22 +3139,22 @@ void CMainFrame::ShowQuickSearchDialog(SEARCH_REPLACE_GOTO_DLG_TYPE type)
 
 	if (m_pQuickSearchDialog)
 	{
-		auto pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+		auto pEditorActiveView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 		{
-			if (pEditorActiveDoc)
+			if (pEditorActiveView)
 			{
-				m_pQuickSearchDialog->SetParentDocument(pEditorActiveDoc);
+				m_pQuickSearchDialog->SetParentView(pEditorActiveView);
 			}
 		}
 	}
 
 	ResizeQuickSearchDialog();
 
-	CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	CEditorView* pEditorActiveView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
 	{
-		if (pEditorActiveDoc)
+		if (pEditorActiveView)
 		{
-			CEditorCtrl* pEditor = pEditorActiveDoc->GetEditorCtrl();
+			CEditorCtrl* pEditor = pEditorActiveView->GetEditorCtrl();
 			if (pEditor)
 			{
 				if (pEditor->GetSelectedText().IsEmpty() && m_wndSearchAndReplaceWindow.GetSafeHwnd() && m_wndSearchAndReplaceWindow.IsVisible())
@@ -3240,13 +3241,13 @@ BOOL CMainFrame::ActivateTabInGroup(INT_PTR nTabGroupIndex, int nTabItemIndex /*
 
 CString CMainFrame::GetQuickSearchWhat()
 {
-	CEditorDoc* pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
-	if (pEditorActiveDoc && m_pQuickSearchDialog)
+	CEditorView* pEditorActiveView = dynamic_cast<CEditorView*>(AppUtils::GetMDIActiveView());
+	if (pEditorActiveView && m_pQuickSearchDialog)
 	{
-		CEditorDoc* pParentDocument = m_pQuickSearchDialog->GetParentDocument();
-		if (pParentDocument)
+		CEditorView* pParentView = m_pQuickSearchDialog->GetParentView();
+		if (pParentView)
 		{
-			if (pParentDocument == pEditorActiveDoc)
+			if (pParentView == pEditorActiveView)
 			{
 				return m_pQuickSearchDialog->GetSearchWhat();
 			}
@@ -3320,11 +3321,11 @@ LRESULT CMainFrame::OnCompilerNotifyDebugLinePointer(WPARAM wParam, LPARAM lPara
 
 	if (lPointerLine > 0 && PathFileExists(szFileName))
 	{
-		auto pEditorActiveDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+		auto pEditorActiveView = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
 		{
-			if (pEditorActiveDoc)
+			if (pEditorActiveView)
 			{
-				auto pEditorActive = pEditorActiveDoc->GetEditorCtrl();
+				auto pEditorActive = pEditorActiveView->GetEditorCtrl();
 				if (pEditorActive)
 				{
 					pEditorActive->DeleteAllDebugPointer();
@@ -3683,9 +3684,9 @@ void CMainFrame::OnReLoadDocument()
 	CViewBase* pView = dynamic_cast<CViewBase*>(AppUtils::GetMDIActiveView());
 	if (pView)
 	{
-		AppUtils::GetVinaTextApp()->m_bIsReloadDocument = TRUE;
+		TemporarySettings.m_bIsReloadDocument = TRUE;
 		pView->OnInitialUpdate();
-		AppUtils::GetVinaTextApp()->m_bIsReloadDocument = FALSE;
+		TemporarySettings.m_bIsReloadDocument = FALSE;
 		CDocument* pDoc = GetActiveFrame()->GetActiveDocument();
 		ASSERT(pDoc); if (!pDoc) return;
 		if (PathFileExists(pDoc->GetPathName()))
@@ -4096,7 +4097,7 @@ void CMainFrame::OnToolPythonPipWindow()
 	// clipboard process...
 	CString strClipBoardText = GetClipboardPlainText();
 	PushTextToClipBoard(_T(".\\python(ver).exe -m pip install -t Lib\\site-packages -U <package-name>"));
-	OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+	OSUtils::PatseClipboardToCMD(TemporarySettings.m_hLatestHostWND);
 	PushTextToClipBoard(strClipBoardText);
 }
 
@@ -4120,7 +4121,7 @@ void CMainFrame::OnToolNodeJSNPMWindow()
 	// clipboard process...
 	CString strClipBoardText = GetClipboardPlainText();
 	PushTextToClipBoard(_T("npm install <package_name>"));
-	OSUtils::PatseClipboardToCMD(AppUtils::GetVinaTextApp()->m_hLatestHostWND);
+	OSUtils::PatseClipboardToCMD(TemporarySettings.m_hLatestHostWND);
 	PushTextToClipBoard(strClipBoardText);
 }
 

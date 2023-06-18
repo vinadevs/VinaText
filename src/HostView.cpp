@@ -13,6 +13,7 @@
 #include "HostView.h"
 #include "AppUtil.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 
 using namespace HostManager;
 
@@ -94,7 +95,7 @@ void CHostView::OnInitialUpdate()
 			{
 				SetWindowLong(m_hWWND, GWL_STYLE, WS_VISIBLE); // eraze title of child app window.
 			}
-			AppUtils::GetVinaTextApp()->m_hLatestHostWND = m_hWWND; // for global control
+			TemporarySettings.m_hLatestHostWND = m_hWWND; // for global control
 			LOG_OUTPUT_MESSAGE_FORMAT(_T("> [Host Application] Create host document for %s successfuly..."), strAppName);
 		}
 		else // no child window for our process

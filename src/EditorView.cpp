@@ -24,6 +24,7 @@
 #include "VinaTextProgressBar.h"
 #include "EditorDatabase.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "SearchEngine.h"
 #include "DirectoryNotifier.h"
 #include "Debugger.h"
@@ -241,8 +242,8 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_EDIT_END_INDEXING_NUMBER_LINE, OnOptionsInsertEndLineNumberIndex)
 	ON_COMMAND(ID_EDIT_INDEXING_ALPHABET_LINE, OnOptionsInsertLineAlphabetIndex)
 	ON_COMMAND(ID_EDIT_INDEXING_ROMAN_LINE, OnOptionsInsertLineRomanIndex)
-	ON_COMMAND(ID_EDIT_SPLIT_LINE_WITH_DEMILITER, OnOptionsSplitLineWithDemiliter)
-	ON_COMMAND(ID_EDIT_JOIN_LINE_WITH_DEMILITER, OnOptionsJoinLineWithDemiliter)
+	ON_COMMAND(ID_EDIT_SPLIT_LINE_WITH_DEMILITER, OnOptionsSplitLineWithDelimiter)
+	ON_COMMAND(ID_EDIT_JOIN_LINE_WITH_DEMILITER, OnOptionsJoinLineWithDelimiter)
 	ON_COMMAND(ID_EDIT_SORT_LINE_ASCENDING, OnOptionsSortLineAscending)
 	ON_COMMAND(ID_EDIT_SORT_LINE_DECENDING, OnOptionsSortLineDescending)
 	ON_COMMAND(ID_EDIT_SORT_LINE_AZ, OnOptionsSortLineAZ)
@@ -1241,7 +1242,7 @@ void CEditorView::LOG_BUILD_INFO_MESSAGE(const CString& strCMD, const CString& m
 	ActiveDockWindow(DOCKABLE_PANE_TYPE::BUILD_PANE);
 }
 
-void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
+BOOL CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 {
 	if (m_EditorCtrl.GetSelectionNumber() == SINGLE_SELECTION)
 	{
@@ -1249,30 +1250,34 @@ void CEditorView::CHAR_ADDED_PROCESSOR(SCNotification * pScinNotification)
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\t' || nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T("}"), lcurPos);
+				return FALSE;
 			}
 		}
 		else if (pScinNotification->ch == '[')
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\t' || nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T("]"), lcurPos);
+				return FALSE;
 			}
 		}
 		else if (pScinNotification->ch == '(')
 		{
 			int lcurPos = m_EditorCtrl.GetCurrentPosition();
 			int nChar = m_EditorCtrl.GetCharacterAtPosition(lcurPos);
-			if (nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
+			if (nChar == '\t' || nChar == '\n' || nChar == '\r' || nChar == ' ' || nChar == ')' || nChar == '}' || nChar == ']' || lcurPos == m_EditorCtrl.GetTextLength())
 			{
 				m_EditorCtrl.InsertText(_T(")"), lcurPos);
+				return FALSE;
 			}
 		}
 	}
+	return TRUE;
 }
 
 void CEditorView::OnTimer(UINT_PTR nIDEvent)
@@ -5051,12 +5056,12 @@ void CEditorView::OnOptionsInsertLineRomanIndex()
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
 
-void CEditorView::OnOptionsSplitLineWithDemiliter()
+void CEditorView::OnOptionsSplitLineWithDelimiter()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput =CSTRING_SPACE;
-	dlg.m_strDlgCaption = _T("Split Line With Demiliter X");
+	dlg.m_strDlgCaption = _T("Split Line With Delimiter");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -5083,12 +5088,12 @@ void CEditorView::OnOptionsSplitLineWithDemiliter()
 	RESTORE_VISIBLE_EDITOR_STATE_EDIT
 }
 
-void CEditorView::OnOptionsJoinLineWithDemiliter()
+void CEditorView::OnOptionsJoinLineWithDelimiter()
 {
 	BACKUP_VISIBLE_EDITOR_STATE_EDIT
 	CEditWithXDlg dlg;
 	dlg.m_sXInput =CSTRING_SPACE;
-	dlg.m_strDlgCaption = _T("Join Line With Demiliter X");
+	dlg.m_strDlgCaption = _T("Join Line With Delimiter");
 	if (dlg.DoModal() == IDOK)
 	{
 		if (dlg.m_sXInput.IsEmpty())
@@ -6176,18 +6181,20 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 		{
 			//auto typingProfiler = OSUtils::StartBenchmark();
 			if (m_EditorCtrl.IsReadOnlyEditor()) break;
-			CHAR_ADDED_PROCESSOR(pScinNotification);
-			if (AppSettingMgr.m_bEnableAutoComplete && !m_bEnableLargeFileEditMode)
+			if (CHAR_ADDED_PROCESSOR(pScinNotification))
 			{
-				CString strWord = m_EditorCtrl.GetRecentAddedText();
-				if (!strWord.IsEmpty())
+				if (AppSettingMgr.m_bEnableAutoComplete && !m_bEnableLargeFileEditMode && (isalpha(pScinNotification->ch) || '_' == pScinNotification->ch))
 				{
-					ShowAutoCompleteByAddedWord(strWord);
+					CString strWord = m_EditorCtrl.GetRecentAddedText();
+					if (!strWord.IsEmpty())
+					{
+						ShowAutoCompleteByAddedWord(strWord);
+					}
 				}
-			}
-			if (AppSettingMgr.m_bEnableProcessIndentationTab && m_bEnterKeyPressed && AppUtils::IsLanguageSupportLexer(m_CurrentDocLanguage) && !m_bEnableLargeFileEditMode)
-			{
-				ProcessIndentationTab();
+				if (AppSettingMgr.m_bEnableProcessIndentationTab && VK_RETURN == pScinNotification->ch && AppUtils::IsLanguageSupportLexer(m_CurrentDocLanguage) && !m_bEnableLargeFileEditMode)
+				{
+					ProcessIndentationTab();
+				}
 			}
 			//OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, typingProfiler, _T("> Benchmark charadded : "), IS_LIGHT_THEME ? BasicColors::black : BasicColors::green);
 		}
@@ -6308,7 +6315,7 @@ BOOL CEditorView::OnNotify(WPARAM wParam, LPARAM lParam, LRESULT * pResult)
 					}
 				}
 			}
-			else if (iModType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT) && !AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+			else if (iModType & (SC_MOD_INSERTTEXT | SC_MOD_DELETETEXT) && !TemporarySettings.m_bIsReloadByPreviewMode)
 			{
 				/*if (!(iModType & (SC_PERFORMED_UNDO | SC_PERFORMED_REDO)))
 				{
@@ -6445,7 +6452,6 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 {
 	m_nSpaceDelta = 0;
 	m_nIndicatorPos = 0;
-	m_bEnterKeyPressed = FALSE;
 	m_bIsIndicatorChar = FALSE;
 	m_bIsDeltaSpaceEnable = FALSE;
 
@@ -6472,7 +6478,6 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 	if (nNextIndicatorPos == 0 && m_nIndicatorPos == -1)
 	{
 		m_strTab.Empty();
-		m_bEnterKeyPressed = TRUE;
 		return;
 	}
 	if (deltaSpace != m_nIndicatorPos)
@@ -6588,7 +6593,6 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 			m_strTab = strCurrentLine.Mid(0, pos1);
 		}
 	}
-	m_bEnterKeyPressed = TRUE;
 }
 
 void CEditorView::ProcessIndentationTab()
@@ -6633,7 +6637,6 @@ void CEditorView::ProcessIndentationTab()
 	{
 		m_EditorCtrl.GotoPosition(lcurPos + m_strTab.GetLength());
 	}
-	m_bEnterKeyPressed = FALSE;
 }
 
 void CEditorView::ActiveDockWindow(DOCKABLE_PANE_TYPE type)
@@ -6641,7 +6644,7 @@ void CEditorView::ActiveDockWindow(DOCKABLE_PANE_TYPE type)
 	AppUtils::GetMainFrame()->ActiveDockPane(type);
 }
 
-void CEditorView::ShowAutoCompleteByAddedWord(CString strWord)
+void CEditorView::ShowAutoCompleteByAddedWord(const CString& strWord)
 {
 	std::vector<CString> vecListword;
 	GetAutoCompleteList(strWord, vecListword);
@@ -9723,8 +9726,8 @@ void CEditorView::OnTerminalRunActiveFileAsAdmin()
 {
 	if (PathFileExists(m_pDocument->GetPathName()))
 	{
-		CString strFullCmd = _T("\"") + m_pDocument->GetPathName() + _T("\"");
-		OSUtils::CreateProcessAsynchronous(_T("runas"), strFullCmd, NULL, NULL);
+		CString strFullCmd = _T("start \"\" \"CMD \" /c \"") + m_pDocument->GetPathName() + _T("\"");
+		OSUtils::RunSystemCMD(strFullCmd);
 	}
 }
 

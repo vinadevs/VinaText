@@ -15,6 +15,8 @@
 #include "UXReaderDestination.h"
 #include "UXReaderSelection.h"
 
+#include "../src/AppSettings.h"
+
 using namespace UXReader;
 
 //
@@ -28,7 +30,6 @@ constexpr int cachePagesLimit = 16;
 constexpr int useBitmapsLimit = 3072;
 
 constexpr double lineScrollFactor = 0.08;
-constexpr double wheelScrollFactor = 0.08;
 constexpr double pageScrollFactor = 0.95;
 
 static wchar_t *const kWindowClassName = L"UXReaderDocumentPaneClass";
@@ -681,25 +682,25 @@ void UXReader::UXReaderDocumentPane::LineScrollIncrementX(void)
 void UXReader::UXReaderDocumentPane::WheelScrollDecrementY(void)
 {
 
-	if (CanViewPortScrollDecrementY()) ViewPortScrollDecrementY(wheelScrollFactor);
+	if (CanViewPortScrollDecrementY()) ViewPortScrollDecrementY(AppSettingMgr.m_dPdfViewerWheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollIncrementY(void)
 {
 
-	if (CanViewPortScrollIncrementY()) ViewPortScrollIncrementY(wheelScrollFactor);
+	if (CanViewPortScrollIncrementY()) ViewPortScrollIncrementY(AppSettingMgr.m_dPdfViewerWheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollDecrementX(void)
 {
 
-	if (CanViewPortScrollDecrementX()) ViewPortScrollDecrementX(wheelScrollFactor);
+	if (CanViewPortScrollDecrementX()) ViewPortScrollDecrementX(AppSettingMgr.m_dPdfViewerWheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::WheelScrollIncrementX(void)
 {
 
-	if (CanViewPortScrollIncrementX()) ViewPortScrollIncrementX(wheelScrollFactor);
+	if (CanViewPortScrollIncrementX()) ViewPortScrollIncrementX(AppSettingMgr.m_dPdfViewerWheelScrollFactor);
 }
 
 void UXReader::UXReaderDocumentPane::PageScrollDecrementY(void)

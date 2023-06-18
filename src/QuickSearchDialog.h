@@ -15,7 +15,7 @@
 
 #define MARGIN_EDITOR_SCROLLBAR 20
 
-class CEditorDoc;
+class CEditorView;
 
 class CQuickSearchDialog : public CDialogEx
 {
@@ -28,8 +28,8 @@ public:
 	enum { IDD = IDD_DIALOG_QUICK_SEARCH_AND_REPLACE };
 
 	virtual void OnCancel();
-	void SetParentDocument(CEditorDoc* pEditorDoc);
-	CEditorDoc* GetParentDocument() { return m_pEditorDoc; }
+	void SetParentView(CEditorView* pEditorView);
+	CEditorView* GetParentView() { return m_pEditorView; }
 	void InitSearchReplaceFromEditor(const CString& strSearchWhat, SEARCH_REPLACE_GOTO_DLG_TYPE searchType);
 	CString GetSearchWhat();
 	unsigned int GetSearchOption();
@@ -59,7 +59,7 @@ private:
 	CFont *m_pFont;
 	CWnd* m_pCurrentTabShow;
 	TABACTIVE m_uiActiveTab;
-	CEditorDoc* m_pEditorDoc;
+	CEditorView* m_pEditorView;
 	CTabCtrl m_CTabCtrl;
 	CQuickReplace m_FindAndReplaceDlg;
 	CQuickSearch m_FindDlg;

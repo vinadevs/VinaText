@@ -722,6 +722,9 @@
     <ClInclude Include="OpenTabWindows.h">
       <Filter>Main Skeleton\Application</Filter>
     </ClInclude>
+    <ClInclude Include="TemporarySettings.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1251,6 +1254,9 @@
     </ClCompile>
     <ClCompile Include="OpenTabWindows.cpp">
       <Filter>Main Skeleton\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="TemporarySettings.cpp">
+      <Filter>Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

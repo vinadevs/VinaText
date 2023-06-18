@@ -11,6 +11,7 @@
 #include "LexerParser.h"
 #include "EditorDatabase.h"
 #include "AppSettings.h"
+#include "TemporarySettings.h"
 #include "VinaTextApp.h"
 
 #include "StringHelper.h"
@@ -1921,7 +1922,6 @@ BOOL CEditorCtrl::SearchBackward(const CString& strText)
 	lPos = static_cast<int>(DoCommand(SCI_FINDTEXT, m_nSearchflags, sptr_t(&tf)));
 	if (lPos >= 0)
 	{
-		SetFocus();
 		GotoPosition(lPos);
 		SetSelectionTextColor(BasicColors::yellow, 90);
 		DoCommand(SCI_SETSEL, tf.chrgText.cpMin, tf.chrgText.cpMax);
@@ -2691,7 +2691,7 @@ BOOL CEditorCtrl::LoadFile(const CString& strFilePath, int nLoadEncoding, BOOL b
 
 	UndoRedoRecordingStart();
 
-	if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode && !AppUtils::GetVinaTextApp()->m_bIsReloadDocument)
+	if (!TemporarySettings.m_bIsReloadByPreviewMode && !TemporarySettings.m_bIsReloadDocument)
 	{
 		CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), strFilePath);
 		OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);
@@ -2828,7 +2828,7 @@ BOOL CEditorCtrl::SaveFile(const CString& strFilePath)
 	}
 
 	CString strMsg;
-	if (AppUtils::GetVinaTextApp()->m_bIsOpenInAdminMode)
+	if (TemporarySettings.m_bIsOpenInAdminMode)
 	{
 		strMsg = AfxCStringFormat(_T("> [Save File Administrator] %s - timelapse: "), strFilePath);
 	}
@@ -2949,7 +2949,7 @@ BOOL CEditorCtrl::LoadDataFileToEditor(const CString& szFile, CString& m_strLexe
 	SetTextToEditor(strEditorText);
 	UndoRedoRecordingStart();
 
-	if (!AppUtils::GetVinaTextApp()->m_bIsReloadByPreviewMode)
+	if (!TemporarySettings.m_bIsReloadByPreviewMode)
 	{
 		CString strMsg = AfxCStringFormat(_T("> [Load File] %s - timelapse: "), szFile);
 		OSUtils::LogStopBenchmark(LOG_TARGET::MESSAGE_WINDOW, startMeasureTime, strMsg);

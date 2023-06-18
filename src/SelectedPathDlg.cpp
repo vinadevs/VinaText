@@ -136,6 +136,7 @@ void CSelectedPathDlg::OnBnClickedOk()
 	{
 		strPath = PathUtils::GetAbsolutePath(strPath);
 	}
+	pFrame->GetFileExplorerCtrl().Refresh();
 	HTREEITEM hItemFound = pFrame->GetFileExplorerCtrl().SetSelectedPath(strPath, m_bExpandChildPath);
 	if (hItemFound)
 	{
