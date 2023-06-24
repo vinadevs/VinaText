@@ -3966,10 +3966,10 @@ void CMainFrame::OnDeleteFile()
 	CString strFileToDelete = pDoc->GetPathName();
 	if (!PathFileExists(strFileToDelete))
 	{
-		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path \"%s\" does not exist!"), strFileToDelete);
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] Path \"%s\" does not exist!"), strFileToDelete);
 		return;
 	}
-	if (IDYES == AfxMessageBoxFormat(MB_YESNO | MB_ICONWARNING, _T("Are you sure want to delete file %s?"), pDoc->GetTitle()))
+	if (IDYES == AfxMessageBoxFormat(MB_YESNO | MB_ICONWARNING, _T("Send path \"%s\" to Recycle Bin?"), strFileToDelete))
 	{
 		// close document before change file in system...
 		AppUtils::CloseDocumentByFilePath(strFileToDelete);
@@ -3982,11 +3982,11 @@ void CMainFrame::OnDeleteFile()
 			{
 				GetFileExplorerCtrl().DeleteItem(hDeleteItem);
 			}
-			LOG_OUTPUT_MESSAGE_FORMAT(_T("> Deleted path %s, you can restore it from recycle bin..."), strFileToDelete);
+			LOG_OUTPUT_MESSAGE_FORMAT(_T("> Deleted path \"%s\", you can restore it from recycle bin..."), strFileToDelete);
 		}
 		else
 		{
-			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path %s does not allow to delete!"), strFileToDelete);
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Delete Error] Path \"%s\" does not allow to delete!"), strFileToDelete);
 		}
 	}
 }

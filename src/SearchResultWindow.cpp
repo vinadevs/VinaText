@@ -915,7 +915,7 @@ void CSearchResultList::OnEditSendToRecyclebin()
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
 		POSITION hasData = GetFirstSelectedItemPosition(); if (!hasData) return;
-		if (IDYES == AfxMessageBox(_T("Are you sure want to delete it?"), MB_YESNO | MB_ICONWARNING))
+		if (IDYES == AfxMessageBox(_T("Send selected path(s) to Recycle Bin?"), MB_YESNO | MB_ICONWARNING))
 		{
 			CSearchResultDlg* pPaneDlg = dynamic_cast<CSearchResultDlg*>(GetParent());
 			if (pPaneDlg)

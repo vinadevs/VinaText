@@ -41,7 +41,7 @@ void CFindTextWorker::SetParentWindow(CWnd* pWndParent)
 	m_pWndParent = pWndParent;
 }
 
-void CFindTextWorker::SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
+BOOL CFindTextWorker::SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
 {
 	pEditor->SetSearchflags(nSearchOptions);
 	if (!pEditor->SearchForward(strSearchWhat))
@@ -56,12 +56,14 @@ void CFindTextWorker::SearchForwardOnEditor(CEditorCtrl* pEditor, const CString&
 			if (!bHideMessageBox)
 			{
 				::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search Text"), MB_ICONINFORMATION);
+				return FALSE;
 			}
 		}
 	}
+	return TRUE;
 }
 
-void CFindTextWorker::SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
+BOOL CFindTextWorker::SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox)
 {
 	pEditor->SetSearchflags(nSearchOptions);
 	if (!pEditor->SearchBackward(strSearchWhat))
@@ -78,9 +80,11 @@ void CFindTextWorker::SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString
 			if (!bHideMessageBox)
 			{
 				::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search Text"), MB_ICONINFORMATION);
+				return FALSE;
 			}
 		}
 	}
+	return TRUE;
 }
 
 BOOL CFindTextWorker::SearchAllInEditor(const CString& strFilePath,
@@ -308,7 +312,7 @@ void CReplaceTextWorker::SetParentWindow(CWnd* pWndParent)
 	m_pWndParent = pWndParent;
 }
 
-void CReplaceTextWorker::ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox)
+BOOL CReplaceTextWorker::ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox)
 {
 	pEditor->SetSearchflags(nSearchOptions);
 	if (pEditor->ReplaceNext(strSearchWhat, strReplaceWith) == -1)
@@ -316,8 +320,10 @@ void CReplaceTextWorker::ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CStr
 		if (!bHideMessageBox)
 		{
 			::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace Text"), MB_ICONINFORMATION);
+			return FALSE;
 		}
 	}
+	return TRUE;
 }
 
 BOOL CReplaceTextWorker::ReplaceAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions)

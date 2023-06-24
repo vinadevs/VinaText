@@ -55,7 +55,7 @@ void CDeleteFileExtensionDlg::OnFilterEditChange()
 
 void CDeleteFileExtensionDlg::OnBnClickedOk()
 {
-	if (IDYES == AfxMessageBox(_T("Are you sure want to delete it?"), MB_YESNO | MB_ICONWARNING))
+	if (IDYES == AfxMessageBox(_T("Send file to Recycle Bin?"), MB_YESNO | MB_ICONWARNING))
 	{
 		CDlgBase::OnOK();
 	}

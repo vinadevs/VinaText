@@ -1719,13 +1719,13 @@ void CFileExplorerCtrl::OnClose()
 
 void CFileExplorerCtrl::OnDelete()
 {
-	if (IDYES == AfxMessageBox(_T("Are you sure want to delete it?"), MB_YESNO | MB_ICONWARNING))
+	HTREEITEM hSelItem = GetSelectedItem();
+	if (hSelItem)
 	{
-		HTREEITEM hSelItem = GetSelectedItem();
-		if (hSelItem)
+		CString strFileToDelete = ItemToPath(hSelItem);
+		if (PathFileExists(strFileToDelete))
 		{
-			CString strFileToDelete = ItemToPath(hSelItem);
-			if (PathFileExists(strFileToDelete))
+			if (IDYES == AfxMessageBoxFormat(MB_YESNO | MB_ICONWARNING, _T("Send path \"%s\" to Recycle Bin?"), strFileToDelete))
 			{
 				AppUtils::CloseDocumentByFilePath(strFileToDelete); // close document before delete file in system...
 				Sleep(500);
@@ -1738,6 +1738,10 @@ void CFileExplorerCtrl::OnDelete()
 					AfxMessageBoxFormat(MB_ICONWARNING, _T("[Error] Path \"%s\" does not allow to delete!"), strFileToDelete);
 				}
 			}
+		}
+		else
+		{
+			AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] Path \"%s\" does not exist!"), strFileToDelete);
 		}
 	}
 }

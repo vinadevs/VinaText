@@ -379,7 +379,10 @@ void CQuickReplace::OnBnClickedEditorQuickReplaceNext()
 		{
 			SaveSearchString(strSearchWhat);
 			SaveReplaceString(strReplaceWith);
-			CReplaceTextWorker::ReplaceForwardOnEditor(pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions);
+			if (!CReplaceTextWorker::ReplaceForwardOnEditor(pEditor, strSearchWhat, strReplaceWith, m_nSearchOptions))
+			{
+				m_comboSearchWhat.SetFocus();
+			}
 		}
 		else
 		{
@@ -447,6 +450,7 @@ void CQuickReplace::OnBnClickedEditorQuickReplaceAll()
 				else
 				{
 					::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Replace All Text"), MB_ICONINFORMATION);
+					m_comboSearchWhat.SetFocus();
 				}
 			}
 		}
@@ -489,7 +493,10 @@ void CQuickReplace::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BO
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
+			if (!CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox))
+			{
+				m_comboSearchWhat.SetFocus();
+			}
 		}
 	}
 }

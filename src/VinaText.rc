@@ -636,8 +636,8 @@ BEGIN
         BEGIN
             MENUITEM "Line Transpose\tCtrl+T",      ID_LINE_TRANSPOSE
             MENUITEM SEPARATOR
-            MENUITEM "Split Line With Delimiter X", ID_EDIT_SPLIT_LINE_WITH_DEMILITER
-            MENUITEM "Join Line With Delimiter X",  ID_EDIT_JOIN_LINE_WITH_DEMILITER
+            MENUITEM "Split Line With Delimiter",   ID_EDIT_SPLIT_LINE_WITH_DEMILITER
+            MENUITEM "Join Line With Delimiter",    ID_EDIT_JOIN_LINE_WITH_DEMILITER
             MENUITEM SEPARATOR
             MENUITEM "Sort Line Length Ascending",  ID_EDIT_SORT_LINE_ASCENDING
             MENUITEM "Sort Line Length Descending", ID_EDIT_SORT_LINE_DECENDING
@@ -1390,13 +1390,13 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,23,28,21,20
     LTEXT           "An opensource text editor and file viewer software",IDC_STATIC,64,14,180,22,SS_NOPREFIX
-    DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
+    DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
     LTEXT           "Release Version: 1.12",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
     LTEXT           "Commit Hash: 4b7c6647f9e8f40617314",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 18/06/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Release Date: 24/06/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1681,7 +1681,7 @@ BEGIN
     CONTROL         "Add Result To New Editor",IDC_CHECK_ADD_TO_EDITOR,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,209,255,128,10
     DEFPUSHBUTTON   "Next Match",IDC_BUTTON_SEARCH_PATH_NEXT_MATCH,51,301,75,21
-    GROUPBOX        "Search Define:",IDC_STATIC,0,5,369,102
+    GROUPBOX        "Search Definition:",IDC_STATIC,0,5,369,102
     GROUPBOX        "Search Options:",IDC_STATIC,0,115,369,114
     GROUPBOX        "Search Result:",IDC_STATIC,0,236,369,60
     CONTROL         "Add Result To Path Result Window",IDC_CHECK_ADD_TO_SEARCH_FILE_RESULT_WINDOW,
