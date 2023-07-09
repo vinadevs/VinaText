@@ -1393,10 +1393,10 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.12",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.13",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 4b7c6647f9e8f40617314",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 24/06/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 77626456e43cb223e5f12",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 09/07/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -2139,12 +2139,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.12"
+            VALUE "FileVersion", "1.13"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.12"
+            VALUE "ProductVersion", "1.13"
         END
     END
     BLOCK "VarFileInfo"
