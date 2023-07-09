@@ -171,7 +171,7 @@ void CEditorDoc::OnCloseDocument()
 		}
 		if (PathFileExists(strPathName))
 		{
-			if (!pFrame->IsClosingMainFrame())
+			if (!TemporarySettings.m_bIsClosingMainFrame)
 			{
 				if (pFrame->HasDebuggerDocument(this))
 				{

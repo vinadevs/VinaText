@@ -148,7 +148,7 @@ public:
 	int GetLineOnScreen();
 	void SetLineCenterBackwardDisplay(int lLine);
 	void DetectFileLexer(const CString & strFilePath);
-	void SetTabSettings(TabSpace ts);
+	void SetTabSettings(TabSpace ts, int tabWidth);
 	BOOL LoadFile(const CString& strFilePath, int nLoadEncoding = -1, BOOL bCreateIfMissing = FALSE);
 	BOOL SaveFile(const CString& strFilePath);
 	void SetFontname(int nStyle, CString szFontname);

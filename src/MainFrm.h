@@ -63,7 +63,6 @@ public:
 	CQuickSearchDialog* GetQuickSearchDialog() { return m_pQuickSearchDialog; }
 	CFileExplorerCtrl& GetFileExplorerCtrl() { return m_wndFileExplorer.GetFileExplorerCtrl(); }
 	CMDIClientAreaWnd& GetMDIClientAreaWnd() { return m_wndClientArea; }
-	BOOL IsClosingMainFrame() const { return m_bIsClosingMainFrame; }
 
 	// update from child controls to MainFrame
 	void ClearDataOnDockPane(DOCKABLE_PANE_TYPE type);
@@ -119,7 +118,6 @@ public:
 
 protected:
 	std::unordered_map<UINT, CString> m_FileRecentIDMap;
-	BOOL				m_bIsClosingMainFrame = FALSE;
 	CFont				m_Font;
 	CMenu				m_MainMenu;
 	CMainFrameToolBar   m_wndToolBar;

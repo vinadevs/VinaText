@@ -43,6 +43,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		FromIndicatorStyleCombobox();
 		FromRenderIndicatorActionCombobox();
 		FromDefaultEOLNewFileCombobox();
+		FromIndentationTypeCombobox();
 
 		AppSettingMgr.m_bAutoCompleteIgnoreCase = m_bAutoCompleteIgnoreCase;
 		AppSettingMgr.m_bAutoCompleteIgnoreNumbers = m_bAutoCompleteIgnoreNumbers;
@@ -73,6 +74,8 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_EditorFontSetting._isItalic = m_isItalic;
 		AppSettingMgr.m_EditorFontSetting._isUnderline = m_isUnderline;
 		AppSettingMgr.m_EditorFontSetting._color = m_color;
+		AppSettingMgr.m_bUseUserIndentationSettings = m_bUseUserIndentationSettings;
+		AppSettingMgr.m_nEditorIndentationWidth = m_nIndentationWidth;
 	}
 	else
 	{
@@ -86,6 +89,7 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		InitIndicatorStyleCombobox();
 		InitRenderIndicatorActionCombobox();
 		InitDefaultEOLNewFileCombobox();
+		InitIndentationTypeCombobox();
 
 		m_bAutoCompleteIgnoreCase = AppSettingMgr.m_bAutoCompleteIgnoreCase;
 		m_bAutoCompleteIgnoreNumbers = AppSettingMgr.m_bAutoCompleteIgnoreNumbers;
@@ -116,6 +120,8 @@ void EditorSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_isItalic = AppSettingMgr.m_EditorFontSetting._isItalic;
 		m_isUnderline = AppSettingMgr.m_EditorFontSetting._isUnderline;
 		m_color = AppSettingMgr.m_EditorFontSetting._color;
+		m_bUseUserIndentationSettings = AppSettingMgr.m_bUseUserIndentationSettings;
+		m_nIndentationWidth = AppSettingMgr.m_nEditorIndentationWidth;
 		UpdateData(FALSE);
 	}
 }
@@ -155,14 +161,16 @@ void EditorSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, ID_CARET_BLINK_COLOR_COMBO, m_CaretBlinkColorCombo);
 	DDX_Control(pDX, ID_DEFAULT_EOL_NEW_FILE_COMBO, m_DefaultEOLNewFileCombo);
 	DDX_Check(pDX, ID_AUTO_ADD_NEW_LINE_AT_EOF, m_bAutoAddNewLineAtTheEOF);
+	DDX_Control(pDX, IDC_COMBO_INDENTATION_TYPE, m_IndentationTypeCombo);
+	DDX_Text(pDX, IDC_EDIT_INDENTATION_WIDTH, m_nIndentationWidth);
+	DDX_Check(pDX, IDC_CHECK_USE_USER_CUSTOM_TAB_SETTINGS, m_bUseUserIndentationSettings);
 }
 
 BOOL EditorSettingDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
-
 	UpdateGUISettings(FALSE);
-
+	OnBnClickedCheckUseUserCustomTabSettings();
 	return TRUE;
 }
 
@@ -824,6 +832,22 @@ void EditorSettingDlg::FromDefaultEOLNewFileCombobox()
 	}
 }
 
+void EditorSettingDlg::FromIndentationTypeCombobox()
+{
+	int iSel = m_IndentationTypeCombo.GetCurSel();
+	switch (iSel)
+	{
+	case 0:
+		AppSettingMgr.m_editorIndentationType = TabSpace::Tabs;
+		break;
+	case 1:
+		AppSettingMgr.m_editorIndentationType = TabSpace::Spaces;
+		break;
+	default:
+		AppSettingMgr.m_editorIndentationType = TabSpace::Tabs;
+		break;
+	}
+}
 
 void EditorSettingDlg::InitRenderIndicatorActionCombobox()
 {
@@ -867,6 +891,25 @@ void EditorSettingDlg::InitDefaultEOLNewFileCombobox()
 	}
 }
 
+void EditorSettingDlg::InitIndentationTypeCombobox()
+{
+	m_IndentationTypeCombo.ResetContent();
+	m_IndentationTypeCombo.AddString(_T("Tab"));
+	m_IndentationTypeCombo.AddString(_T("Spaces"));
+	switch (AppSettingMgr.m_editorIndentationType)
+	{
+	case TabSpace::Tabs:
+		m_IndentationTypeCombo.SetCurSel(0);
+		break;
+	case TabSpace::Spaces:
+		m_IndentationTypeCombo.SetCurSel(1);
+		break;
+	default:
+		m_IndentationTypeCombo.SetCurSel(0);
+		break;
+	}
+}
+
 void EditorSettingDlg::FromRenderIndicatorActionCombobox()
 {
 	int iSel = m_RenderIndicatorActionCombo.GetCurSel();
@@ -885,11 +928,12 @@ void EditorSettingDlg::FromRenderIndicatorActionCombobox()
 }
 
 BEGIN_MESSAGE_MAP(EditorSettingDlg, CDialogEx)
-	ON_BN_CLICKED(ID_EDITOR_FONT_NAME_BUTTON, &EditorSettingDlg::OnBnClickedEditorFontNameButton)
 	ON_WM_HSCROLL()
 	ON_WM_VSCROLL()
 	ON_WM_MOUSEWHEEL()
 	ON_WM_SIZE()
+	ON_BN_CLICKED(ID_EDITOR_FONT_NAME_BUTTON, &EditorSettingDlg::OnBnClickedEditorFontNameButton)
+	ON_BN_CLICKED(IDC_CHECK_USE_USER_CUSTOM_TAB_SETTINGS, &EditorSettingDlg::OnBnClickedCheckUseUserCustomTabSettings)
 END_MESSAGE_MAP()
 
 // for scrolling //////////////////////////////////////////////////////////////
@@ -939,5 +983,20 @@ void EditorSettingDlg::OnBnClickedEditorFontNameButton()
 		m_isItalic = dlg.IsItalic();
 		m_isUnderline = dlg.IsUnderline();
 		m_color = dlg.GetColor();
+	}
+}
+
+void EditorSettingDlg::OnBnClickedCheckUseUserCustomTabSettings()
+{
+	CButton* pCheckbox = (CButton*)GetDlgItem(IDC_CHECK_USE_USER_CUSTOM_TAB_SETTINGS);
+	if (!pCheckbox->GetCheck())
+	{
+		GetDlgItem(IDC_COMBO_INDENTATION_TYPE)->EnableWindow(FALSE);
+		GetDlgItem(IDC_EDIT_INDENTATION_WIDTH)->EnableWindow(FALSE);
+	}
+	else
+	{
+		GetDlgItem(IDC_COMBO_INDENTATION_TYPE)->EnableWindow(TRUE);
+		GetDlgItem(IDC_EDIT_INDENTATION_WIDTH)->EnableWindow(TRUE);
 	}
 }

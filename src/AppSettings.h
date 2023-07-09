@@ -106,6 +106,8 @@ public:
 	BOOL m_bEnableShowHideFoldingMargin = FALSE;
 	BOOL m_bAutoSaveFileWhenCloseApp = TRUE;
 	BOOL m_bAutoAddNewLineAtTheEOF = FALSE;
+	BOOL m_bUseInstallPathAsAppDataPath = FALSE;
+	BOOL m_bUseUserIndentationSettings = FALSE;
 
 	// editor style
 	FOLDER_MARGIN_STYPE m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
@@ -163,6 +165,10 @@ public:
 	CStringArray m_BinaryFileExtensionList;
 	CString m_strBinaryFileExtensionList = _T("tga dds eot swf jar zip pyc pyo exe dll obj o a lib so dylib ncb sdf suo pdb idb DS_Store class psd db lnk o 7z tar ios mdb sqlite lib pyd opendb bin");
 	std::vector<CString>  m_MultipleClipboardBuffer;
+
+	// editor tab settings
+	TabSpace m_editorIndentationType = TabSpace::Tabs;
+	int m_nEditorIndentationWidth = SC_DEFAUFT_TAB_WIDTH;
 
 private:
 	// Settings can not edit by users...

@@ -60,6 +60,8 @@
 #define UNDOREDO_FREE (-1L)
 #define UNDOREDO_BLOCKED (-2L)
 
+#define SC_DEFAUFT_TAB_WIDTH 4
+
 namespace EditorLanguageDef
 {
 	//----------------------------------------------------------------------------

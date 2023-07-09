@@ -636,8 +636,8 @@ BEGIN
         BEGIN
             MENUITEM "Line Transpose\tCtrl+T",      ID_LINE_TRANSPOSE
             MENUITEM SEPARATOR
-            MENUITEM "Split Line With Delimiter X", ID_EDIT_SPLIT_LINE_WITH_DEMILITER
-            MENUITEM "Join Line With Delimiter X",  ID_EDIT_JOIN_LINE_WITH_DEMILITER
+            MENUITEM "Split Line With Delimiter",   ID_EDIT_SPLIT_LINE_WITH_DEMILITER
+            MENUITEM "Join Line With Delimiter",    ID_EDIT_JOIN_LINE_WITH_DEMILITER
             MENUITEM SEPARATOR
             MENUITEM "Sort Line Length Ascending",  ID_EDIT_SORT_LINE_ASCENDING
             MENUITEM "Sort Line Length Descending", ID_EDIT_SORT_LINE_DECENDING
@@ -1390,13 +1390,13 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,23,28,21,20
     LTEXT           "An opensource text editor and file viewer software",IDC_STATIC,64,14,180,22,SS_NOPREFIX
-    DEFPUSHBUTTON   "Got it!",IDOK,102,123,55,19,WS_GROUP
+    DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
     LTEXT           "Release Version: 1.12",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
     LTEXT           "Commit Hash: 4b7c6647f9e8f40617314",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 18/06/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Release Date: 24/06/2023",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -1681,7 +1681,7 @@ BEGIN
     CONTROL         "Add Result To New Editor",IDC_CHECK_ADD_TO_EDITOR,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,209,255,128,10
     DEFPUSHBUTTON   "Next Match",IDC_BUTTON_SEARCH_PATH_NEXT_MATCH,51,301,75,21
-    GROUPBOX        "Search Define:",IDC_STATIC,0,5,369,102
+    GROUPBOX        "Search Definition:",IDC_STATIC,0,5,369,102
     GROUPBOX        "Search Options:",IDC_STATIC,0,115,369,114
     GROUPBOX        "Search Result:",IDC_STATIC,0,236,369,60
     CONTROL         "Add Result To Path Result Window",IDC_CHECK_ADD_TO_SEARCH_FILE_RESULT_WINDOW,
@@ -1915,19 +1915,19 @@ BEGIN
     RTEXT           "Initial File Browser Path:",IDC_STATIC,17,121,111,8
     EDITTEXT        ID_INITIAL_FILE_PICKER_PATH_EDIT,146,119,138,12,ES_AUTOHSCROLL,WS_EX_ACCEPTFILES
     CONTROL         "Show Warning Dialog For Files Not Exist",ID_WARNING_FOR_FILE_NOT_EXIST,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,61,143,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,52,143,10
     CONTROL         "Show Right Side Tracking Bar",ID_SHOW_TRACKING_BAR,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,37,109,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,28,109,10
     CONTROL         "Use Initial File Browser Path",ID_ALLOW_USE_INITIAL_FILE_PICKER_PATH,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,85,105,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,76,105,10
     CONTROL         "Save Data From Bookmark Window",ID_SAVE_DATA_BOOKMARK_WINDOW,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,109,127,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,100,127,10
     CONTROL         "Detect File Change Events From Out Side",ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,133,148,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,124,148,10
     CONTROL         "Check Large File Size Before Open",ID_CHECK_FILE_SIZE_BEFORE_OPEN,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,157,125,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,148,125,10
     CONTROL         "Display Warning Dialog For File Change Events",ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,181,165,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,172,165,10
     RTEXT           "Dialog Combobox Limit Save:",IDC_STATIC,17,97,111,8
     COMBOBOX        ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO,146,95,138,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     RTEXT           "Saved Recent Files Limitation:",IDC_STATIC,17,144,111,8
@@ -1935,10 +1935,12 @@ BEGIN
     RTEXT           "Binary File Extension List:",IDC_STATIC,17,167,111,8
     EDITTEXT        ID_BINARY_FILE_EXTENSION_LIST,146,165,138,12,ES_AUTOHSCROLL
     GROUPBOX        "Customize Settings",IDC_STATIC,14,10,289,187
-    GROUPBOX        "Toggle Settings",IDC_STATIC,317,10,201,187
+    GROUPBOX        "Toggle Settings",IDC_STATIC,317,10,201,207
     GROUPBOX        "Plug-in Settings",IDC_STATIC,14,206,289,47
     RTEXT           "PDF Page Scroll Speed (1-10):",IDC_STATIC,17,227,111,8
     EDITTEXT        ID_SETTING_PDF_WHEEL_SCROLL_SPEED,146,225,138,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "Use Install Path As App Data Path",ID_USE_INSTALL_PATH_AS_APPDATA_PATH,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,340,194,125,10
 END
 
 IDD_DIALOG_SETTING_EXPLORER DIALOGEX 0, 0, 536, 428
@@ -2001,7 +2003,7 @@ BEGIN
     COMBOBOX        IDC_COMBO_DEFAULT_TERMINAL_WINDOWS,381,121,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
 END
 
-IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 543, 470
+IDD_DIALOG_SETTING_EDITOR DIALOGEX 0, 0, 543, 486
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_SYSMENU
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
@@ -2065,14 +2067,21 @@ BEGIN
     COMBOBOX        ID_RENDER_INDICATOR_ACTION_COMBO,380,236,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     RTEXT           "Caret Editor (Cursor) Color:",IDC_STATIC,245,191,118,8
     COMBOBOX        ID_CARET_BLINK_COLOR_COMBO,380,188,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,450
-    GROUPBOX        "Customize Settings",IDC_STATIC,238,11,284,450
+    GROUPBOX        "Toggle Editor Settings",IDC_STATIC,14,11,209,457
+    GROUPBOX        "Customize Settings",IDC_STATIC,238,11,284,457
     CONTROL         "Auto Save File When Close Application",ID_AUTO_SAVE_FILE_WHEN_CLOSE_APP,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,376,146,10
     RTEXT           "Default End Of Line For New File:",IDC_STATIC,245,357,118,8
     COMBOBOX        ID_DEFAULT_EOL_NEW_FILE_COMBO,380,355,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     CONTROL         "Auto Add New Line At End Of File",ID_AUTO_ADD_NEW_LINE_AT_EOF,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,37,397,146,10
+    GROUPBOX        "Indentation Tab And Spaces",IDC_STATIC,256,381,249,72
+    CONTROL         "Use customize indentation settings",IDC_CHECK_USE_USER_CUSTOM_TAB_SETTINGS,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,271,398,224,10
+    COMBOBOX        IDC_COMBO_INDENTATION_TYPE,370,415,126,30,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Indentation Type:",IDC_STATIC,271,418,84,8
+    LTEXT           "Indentation Width:",IDC_STATIC,271,435,84,8
+    EDITTEXT        IDC_EDIT_INDENTATION_WIDTH,370,434,126,12,ES_AUTOHSCROLL | ES_NUMBER
 END
 
 IDD_DIALOG_PATH_COMPARATOR DIALOGEX 0, 0, 347, 157
@@ -2389,7 +2398,7 @@ BEGIN
     IDD_DIALOG_SETTING_EDITOR, DIALOG
     BEGIN
         RIGHTMARGIN, 532
-        BOTTOMMARGIN, 468
+        BOTTOMMARGIN, 484
     END
 
     IDD_DIALOG_PATH_COMPARATOR, DIALOG

@@ -153,7 +153,11 @@ void CEditorCtrl::InitilizeSetting(CLanguageDatabase* pDatabase)
 		EditorLexerLight::LoadLexer(pDatabase, this, m_strLexerName) :
 		EditorLexerDark::LoadLexer(pDatabase, this, m_strLexerName);
 
-	SetTabSettings(m_tabSpace);
+	if (AppSettingMgr.m_bUseUserIndentationSettings) { // use user customize settings
+		SetTabSettings(AppSettingMgr.m_editorIndentationType, AppSettingMgr.m_nEditorIndentationWidth);
+		m_tabSpace = AppSettingMgr.m_editorIndentationType;
+	}
+	else SetTabSettings(m_tabSpace, SC_DEFAUFT_TAB_WIDTH); // default from file
 
 	SetDisplayLinenumbers(TRUE);
 
@@ -2520,9 +2524,9 @@ void CEditorCtrl::DetectFileLexer(const CString& strFilePath)
 	}
 }
 
-void CEditorCtrl::SetTabSettings(TabSpace ts)
+void CEditorCtrl::SetTabSettings(TabSpace ts, int tabWidth)
 {
-	DoCommand(SCI_SETTABWIDTH, 4);
+	DoCommand(SCI_SETTABWIDTH, tabWidth < 0 ? SC_DEFAUFT_TAB_WIDTH : tabWidth);
 	if (ts == TabSpace::Default)
 		DoCommand(SCI_SETUSETABS, 1);
 	else

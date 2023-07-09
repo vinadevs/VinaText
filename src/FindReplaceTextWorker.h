@@ -32,8 +32,8 @@ public:
 	void SetFileFilter(const CString& strFilePath);
 
 	static BOOL SearchAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, unsigned int nSearchOptions);
-	static void SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
-	static void SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+	static BOOL SearchForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+	static BOOL SearchBackwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
 
 	// return result data
 	TEXT_RESULT_SEARCH_REPLACE_DATA m_ResultSearchData;
@@ -68,7 +68,7 @@ public:
 	void SetParentWindow(CWnd* pWndParent);
 	void ReportFailedCases();
 
-	static void ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
+	static BOOL ReplaceForwardOnEditor(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions, BOOL bHideMessageBox = FALSE);
 	static BOOL ReplaceAllInEditor(const CString& strFilePath, CEditorCtrl* pEditor, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
 	static BOOL ReplaceAllInSelection(CEditorCtrl* pEditor, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
 

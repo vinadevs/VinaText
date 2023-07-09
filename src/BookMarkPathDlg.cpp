@@ -148,12 +148,18 @@ void CBookMarkPathDlg::InitListBookmarkPath(BOOL bIsAddBookMark)
 	PathUtils::OpenFile(m_strBookmarkFile, strFileContent);
 	AppUtils::SplitCString(strFileContent, EDITOR_NEW_LINE, arrPath);
 	int nCountPath = static_cast<int>(arrPath.GetCount());
+	if (nCountPath == 0) nCountPath = 1;
 
 	if (!bIsAddBookMark)
 	{
-		m_listPath.InsertColumn(0, AfxCStringFormat(_T("Saved Paths (%d)"), nCountPath), LVCFMT_LEFT, 500);
+		m_listPath.InsertColumn(0, AfxCStringFormat(_T("Saved Paths (%d)"), nCountPath - 1), LVCFMT_LEFT, 500);
 		m_listPath.InsertColumn(1, L"Description", LVCFMT_CENTER, 70);
 		m_listPath.InsertColumn(2, L"Status", LVCFMT_CENTER, 100);
+	}
+	else
+	{
+		m_listPath.DeleteColumn(0);
+		m_listPath.InsertColumn(0, AfxCStringFormat(_T("Saved Paths (%d)"), nCountPath - 1), LVCFMT_LEFT, 500);
 	}
 
 	m_listPath.DeleteAllItems();
@@ -220,7 +226,6 @@ void CBookMarkPathDlg::OnBnClickedAddBookbarkPath()
 
 void CBookMarkPathDlg::OnBnClickedRemoveBookbarkPath()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{
@@ -318,7 +323,6 @@ void CBookMarkPathDlg::OnBnClickedBookmarkToExplorer()
 
 void CBookMarkPathDlg::OnBnClickedBookmarkRevealInExplorer()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{
@@ -342,7 +346,6 @@ void CBookMarkPathDlg::OnBnClickedBookmarkRevealInExplorer()
 
 void CBookMarkPathDlg::OnBnClickedBookmarkCopyPath()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{
@@ -374,7 +377,6 @@ void CBookMarkPathDlg::OnBnClickedBookmarkCopyPath()
 
 void CBookMarkPathDlg::OnBnClickedBookmarkOpenCmd()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{
@@ -407,13 +409,14 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenCmd()
 
 void CBookMarkPathDlg::OnBnClickedBookmarkClearAll()
 {
-	// TODO: Add your control notification handler code here
 	m_listPath.DeleteAllItems();
+	m_listPath.DeleteColumn(0);
+	m_listPath.InsertColumn(0, AfxCStringFormat(_T("Saved Paths (%d)"), 0), LVCFMT_LEFT, 500);
+	::DeleteFile(m_strBookmarkFile);
 }
 
 void CBookMarkPathDlg::OnBnClickedBookmarkOpenContainer()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{
@@ -439,7 +442,6 @@ void CBookMarkPathDlg::OnBnClickedBookmarkOpenContainer()
 void CBookMarkPathDlg::OnNMDblclkListBookmarkPath(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
-	// TODO: Add your control notification handler code here
 	OnBnClickedBookmarkOpen();
 	*pResult = 0;
 }
@@ -447,7 +449,6 @@ void CBookMarkPathDlg::OnNMDblclkListBookmarkPath(NMHDR *pNMHDR, LRESULT *pResul
 
 void CBookMarkPathDlg::OnBnClickedBookmarkCopyClipboard()
 {
-	// TODO: Add your control notification handler code here
 	int selectedRow = m_listPath.GetSelectionMark();
 	if (selectedRow != -1)
 	{

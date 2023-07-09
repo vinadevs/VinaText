@@ -158,7 +158,10 @@ void CQuickSearch::DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox, BOO
 			{
 				SaveSearchString(strSearchWhat);
 			}
-			CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox);
+			if (!CFindTextWorker::SearchForwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions, bHideMessageBox))
+			{
+				m_comboSearchWhat.SetFocus();
+			}
 		}
 	}
 }
@@ -177,7 +180,10 @@ void CQuickSearch::DoSeachPrevious(CString strSearchWhat)
 		if (pEditor != NULL)
 		{
 			SaveSearchString(strSearchWhat);
-			CFindTextWorker::SearchBackwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions);
+			if (!CFindTextWorker::SearchBackwardOnEditor(pEditor, strSearchWhat, m_nSearchOptions))
+			{
+				m_comboSearchWhat.SetFocus();
+			}
 		}
 	}
 }
@@ -263,6 +269,7 @@ void CQuickSearch::OnBnClickedEditorQuickSearchAll()
 	if (bCantFoundWord)
 	{
 		::MessageBox(AfxGetMainWnd()->m_hWnd, AfxCStringFormat(_T("Word not found: %s"), strSearchWhat), _T("Search All Text"), MB_ICONINFORMATION);
+		m_comboSearchWhat.SetFocus();
 	}
 }
 
@@ -409,6 +416,8 @@ void CQuickSearch::LoadDialogState()
 	CString strJsonFilePath = PathUtils::GetVinaTextAppDataPath() + _T("quicksearch-dialog-state.json");
 	if (!PathFileExists(strJsonFilePath))
 	{
+		m_comboSearchOption.SetCurSel(0);
+		m_comboSearchResult.SetCurSel(0);
 		return;
 	}
 	JSonReader jsonReader(strJsonFilePath, "VinaText Quicksearch Dialog Saved States");

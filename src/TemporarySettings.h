@@ -13,7 +13,6 @@
 // all settings will not be saved into file
 
 #include "Singleton.h"
-#include "HostManager.h"
 
 class CTemporarySettings
 {
@@ -23,6 +22,7 @@ public:
 	BOOL m_bIsReloadDocument = FALSE;
 	BOOL m_bIsSaveDocument = FALSE;
 	BOOL m_bIsReloadByPreviewMode = FALSE;
+	BOOL m_bIsClosingMainFrame = FALSE;
 	HWND m_hLatestHostWND = NULL; // latest host window handle
 	CString m_strFileExplorerNavigatePath;
 	CString m_strComboboxQuickSearch;

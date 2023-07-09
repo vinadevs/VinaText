@@ -1420,7 +1420,7 @@ void CEditorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 BOOL CEditorView::SaveFileAndInitilizeEditor(const CString& szPath)
 {
 	BOOL bSaveResult = m_EditorCtrl.SaveFile(szPath);
-	if (bSaveResult)
+	if (bSaveResult && !TemporarySettings.m_bIsClosingMainFrame)
 	{
 		DetectCurrentDocLanguage();
 		CLanguageDatabase* pDatabase = GetLanguageDatabase();
@@ -6582,7 +6582,16 @@ void CEditorView::AutoIndentationText() // IMPORTANT FUNCTION!!!
 		}
 		else
 		{
-			m_strTab += EDITOR_TAB_4SPACE;
+			if (AppSettingMgr.m_bUseUserIndentationSettings)
+			{
+				for (int i = 0; i < AppSettingMgr.m_nEditorIndentationWidth; ++i) {
+					m_strTab += CSTRING_SPACE;
+				}
+			}
+			else
+			{
+				m_strTab += EDITOR_TAB_4SPACE;
+			}
 		}
 	}
 	else

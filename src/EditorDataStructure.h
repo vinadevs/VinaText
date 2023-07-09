@@ -208,6 +208,7 @@ enum class EOLFormat : int
 	Mac_Format,
 	Unix_Format
 };
+
 enum class TabSpace : int
 {
 	Default,

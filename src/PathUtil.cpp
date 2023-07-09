@@ -99,21 +99,43 @@ CString PathUtils::GetVinaTextBackUpPath()
 	return strPath;
 }
 
+namespace
+{
+	CString	GetVinaTextAppDataDefaultPath()
+	{
+		CString strPath;
+		::SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, strPath.GetBufferSetLength(_MAX_PATH));
+		strPath.ReleaseBuffer();
+		strPath.Append(_T("\\VinaText\\"));
+		if (!PathFileExists(strPath))
+		{
+			if (!CreateDirectory(strPath, NULL))
+			{
+				strPath = _T("");
+				return strPath;
+			}
+		}
+		return strPath;
+	}
+}
+
 CString PathUtils::GetVinaTextAppDataPath()
 {
-	CString strPath;
-	::SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, strPath.GetBufferSetLength(_MAX_PATH));
-	strPath.ReleaseBuffer();
-	strPath.Append(_T("\\VinaText\\"));
-	if (!PathFileExists(strPath))
+	CString strVinaTextPath = GetVinaTextPath();
+	strVinaTextPath.Append(_T("AppData\\"));
+	if (PathFileExists(strVinaTextPath))
 	{
-		if (!CreateDirectory(strPath, NULL))
-		{
-			strPath = _T("");
-			return strPath;
-		}
+		return strVinaTextPath;
 	}
-	return strPath;
+	else if (AppSettingMgr.m_bUseInstallPathAsAppDataPath)
+	{
+		if (!CreateDirectory(strVinaTextPath, NULL))
+		{
+			return GetVinaTextAppDataDefaultPath();
+		}
+		return strVinaTextPath;
+	}
+	return GetVinaTextAppDataDefaultPath();
 }
 
 CString PathUtils::GetLanguageSettingFilePath(const CString& strLanguageName)

@@ -51,6 +51,8 @@ void CAppSettings::ResetAllSettings()
 	m_bEnableShowHideFoldingMargin = FALSE;
 	m_bAutoSaveFileWhenCloseApp = TRUE;
 	m_bAutoAddNewLineAtTheEOF = FALSE;
+	m_bUseInstallPathAsAppDataPath = FALSE;
+	m_bUseUserIndentationSettings = FALSE;
 
 	// folder bar
 	m_FolderMarginStyle = FOLDER_MARGIN_STYPE::STYLE_TREE_BOX;
@@ -118,6 +120,10 @@ void CAppSettings::ResetAllSettings()
 
 	m_BinaryFileExtensionList.RemoveAll();
 	AppUtils::SplitCString(m_strBinaryFileExtensionList, CSTRING_SPACE, m_BinaryFileExtensionList);
+
+	// editor tab settings
+	m_editorIndentationType = TabSpace::Tabs;
+	m_nEditorIndentationWidth = SC_DEFAUFT_TAB_WIDTH;
 }
 
 BOOL CAppSettings::SaveSettingData()
@@ -166,6 +172,8 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
 	jsonWriter.AddBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
 	jsonWriter.AddBOOL("AutoAddNewLineAtTheEOF", m_bAutoAddNewLineAtTheEOF);
+	jsonWriter.AddBOOL("UseInstallPathAsAppDataPath", m_bUseInstallPathAsAppDataPath);
+	jsonWriter.AddBOOL("UseCustomEditorTabSettings", m_bUseUserIndentationSettings);
 	jsonWriter.AddValue("InitialFilePickerPath", AppUtils::CStringToStd(m_strInitialFilePickerPath));
 	jsonWriter.AddValue("LanguageSpellCheck", AppUtils::CStringToStd(m_strLanguageSpellCheck));
 	jsonWriter.AddValue("BinaryFileExtensionList", AppUtils::CStringToStd(m_strBinaryFileExtensionList));
@@ -196,6 +204,8 @@ BOOL CAppSettings::SaveSettingData()
 	jsonWriter.AddInteger("ExplorerExpandLimitFileOpen", m_nExplorerExpandLimitFileOpen);
 	jsonWriter.AddInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonWriter.AddInteger("EditorZoomFactor", m_nEditorZoomFactor);
+	jsonWriter.AddInteger("EditorTabSpace", static_cast<int>(m_editorIndentationType));
+	jsonWriter.AddInteger("EditorTabWidth", m_nEditorIndentationWidth);
 	jsonWriter.AddInteger("DefaultToolbarTerminal", m_DefaultToolbarTerminal);
 	jsonWriter.AddDouble("PdfViewerWheelScrollFactor", m_dPdfViewerWheelScrollFactor);
 	jsonWriter.AddValue("NodeJSFolderPath", AppUtils::CStringToStd(m_strNodeJSFolderPath));
@@ -263,6 +273,8 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadBOOL("AutoSaveFileWhenCloseApp", m_bAutoSaveFileWhenCloseApp);
 	jsonReader.ReadBOOL("AutoAddNewLineAtTheEOF", m_bAutoAddNewLineAtTheEOF);
 	jsonReader.ReadBOOL("EnableShowHideFoldingMargin", m_bEnableShowHideFoldingMargin);
+	jsonReader.ReadBOOL("UseInstallPathAsAppDataPath", m_bUseInstallPathAsAppDataPath);
+	jsonReader.ReadBOOL("UseCustomEditorTabSettings", m_bUseUserIndentationSettings);
 	jsonReader.ReadCString("BinaryFileExtensionList", m_strBinaryFileExtensionList);
 	jsonReader.ReadCString("InitialFilePickerPath", m_strInitialFilePickerPath);
 	jsonReader.ReadCString("LanguageSpellCheck", m_strLanguageSpellCheck);
@@ -294,6 +306,8 @@ BOOL CAppSettings::LoadSettingData()
 	jsonReader.ReadInteger("DialogComboboxLimitSave", m_nDialogComboboxLimitSave);
 	jsonReader.ReadInteger("EditorZoomFactor", m_nEditorZoomFactor);
 	jsonReader.ReadInteger("DefaultToolbarTerminal", (int&)m_DefaultToolbarTerminal);
+	jsonReader.ReadInteger("EditorTabSpace", (int&)m_editorIndentationType);
+	jsonReader.ReadInteger("EditorTabWidth", m_nEditorIndentationWidth);
 	jsonReader.ReadDouble("PdfViewerWheelScrollFactor", m_dPdfViewerWheelScrollFactor);
 	jsonReader.ReadCString("PythonFolderPath", m_strPythonFolderPath);
 	jsonReader.ReadCString("NodeJSFolderPath", m_strNodeJSFolderPath);

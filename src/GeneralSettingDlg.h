@@ -54,6 +54,7 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnBnClickedUseInstallPathAsAppdataPath();
 
 	CComboBox m_ActiveTabColorCombo;
 	CComboBox m_ThemeColorCombo;
@@ -70,6 +71,7 @@ protected:
 	BOOL m_bDetectFileChangeFromOutSide{ FALSE };
 	BOOL m_bCheckFileSizeBeforeOpen{ FALSE };
 	BOOL m_bDisplayMessageBoxForFileChange{ FALSE };
+	BOOL m_bUseInstallPathAsAppDataPath{ FALSE };
 
 	CString m_strBinaryFileExtensionList;
 	CString m_strInitialFilePickerPath;
@@ -77,5 +79,4 @@ protected:
 	GeneralSettingBrowse m_EditInitialFilePickerPath;
 
 	std::unique_ptr<CScrollHelper> m_pScrollHelper{ nullptr };
-
 };

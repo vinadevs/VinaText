@@ -937,7 +937,7 @@ void CPathResultList::OnEditSendToRecyclebin()
 	if (GetFocus()->m_hWnd == m_hWnd)
 	{
 		POSITION hasData = GetFirstSelectedItemPosition(); if (!hasData) return;
-		if (IDYES == AfxMessageBox(_T("Are you sure want to delete it?"), MB_YESNO | MB_ICONWARNING))
+		if (IDYES == AfxMessageBox(_T("Send selected path(s) to Recycle Bin?"), MB_YESNO | MB_ICONWARNING))
 		{
 			CPathResultDlg* pPaneDlg = dynamic_cast<CPathResultDlg*>(GetParent());
 			if (pPaneDlg)
@@ -968,7 +968,7 @@ void CPathResultList::OnEditSendToRecyclebin()
 						}
 						else
 						{
-							LOG_OUTPUT_MESSAGE_FORMAT(_T("[Delete Error] Path %s does not allow to delete!"), strFullPath);
+							LOG_OUTPUT_MESSAGE_FORMAT(_T("[Delete Path Error] Path %s does not allow to delete..."), strFullPath);
 						}
 					}
 				}

@@ -22,7 +22,8 @@ constexpr int DEFAULT_LFWEIGHT = 10;
 IMPLEMENT_DYNAMIC(GeneralSettingDlg, CDialogEx)
 
 GeneralSettingDlg::GeneralSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent) {
+	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent), m_bUseInstallPathAsAppDataPath(FALSE)
+{
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);
 	m_pScrollHelper->SetDisplaySize(0, 1500);
@@ -35,6 +36,7 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 	if (bFromGUI)
 	{
 		UpdateData(TRUE);
+
 		FromActiveTabColorCombobox();
 		FromThemeColorCombobox();
 		FromApplicationThemLookCombobox();
@@ -45,6 +47,7 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		AppSettingMgr.m_bShowTrackingBar = m_bShowTrackingBar;
 		AppSettingMgr.m_bUseInitialFilePickerPath = m_bUseInitialFilePickerPath;
 		AppSettingMgr.m_bDisplayMessageBoxForFileChange = m_bDisplayMessageBoxForFileChange;
+		AppSettingMgr.m_bUseInstallPathAsAppDataPath = m_bUseInstallPathAsAppDataPath;
 		AppSettingMgr.m_bSaveDataBookmarkWindow = m_bSaveDataBookmarkWindow;
 		AppSettingMgr.m_bDetectFileChangeFromOutSide = m_bDetectFileChangeFromOutSide;
 		AppSettingMgr.m_bCheckFileSizeBeforeOpen = m_bCheckFileSizeBeforeOpen;
@@ -70,9 +73,11 @@ void GeneralSettingDlg::UpdateGUISettings(BOOL bFromGUI)
 		m_bSaveDataBookmarkWindow = AppSettingMgr.m_bSaveDataBookmarkWindow;
 		m_bDetectFileChangeFromOutSide = AppSettingMgr.m_bDetectFileChangeFromOutSide;
 		m_bCheckFileSizeBeforeOpen = AppSettingMgr.m_bCheckFileSizeBeforeOpen;
+		m_bUseInstallPathAsAppDataPath = AppSettingMgr.m_bUseInstallPathAsAppDataPath;
 		m_nRecentFileLimit = AppSettingMgr.m_nRecentFileLimit;
 		m_dPDFPageScrollSpeed = AppSettingMgr.m_dPdfViewerWheelScrollFactor * 100;
 		m_strBinaryFileExtensionList = AppSettingMgr.m_strBinaryFileExtensionList;
+
 		UpdateData(FALSE);
 	}
 }
@@ -92,6 +97,7 @@ void GeneralSettingDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, ID_DETECT_FILE_CHANGE_FROM_OUT_SIDE, m_bDetectFileChangeFromOutSide);
 	DDX_Check(pDX, ID_CHECK_FILE_SIZE_BEFORE_OPEN, m_bCheckFileSizeBeforeOpen);
 	DDX_Check(pDX, ID_DISPLAY_MESSAGE_BOX_FOR_FILE_CHANGE, m_bDisplayMessageBoxForFileChange);
+	DDX_Check(pDX, ID_USE_INSTALL_PATH_AS_APPDATA_PATH, m_bUseInstallPathAsAppDataPath);
 	DDX_Control(pDX, ID_DIALOG_COMBOBOX_LIMIT_SAVE_COMBO, m_DialogComboboxLimitSaveCombo);
 	DDX_Text(pDX, ID_RECENT_FILE_LIMIT_EDIT, m_nRecentFileLimit);
 	DDX_Text(pDX, ID_SETTING_PDF_WHEEL_SCROLL_SPEED, m_dPDFPageScrollSpeed);
@@ -342,6 +348,7 @@ BEGIN_MESSAGE_MAP(GeneralSettingDlg, CDialogEx)
 	ON_WM_VSCROLL()
 	ON_WM_MOUSEWHEEL()
 	ON_WM_SIZE()
+	ON_BN_CLICKED(ID_USE_INSTALL_PATH_AS_APPDATA_PATH, &GeneralSettingDlg::OnBnClickedUseInstallPathAsAppdataPath)
 END_MESSAGE_MAP()
 
 // for scrolling //////////////////////////////////////////////////////////////
@@ -393,6 +400,16 @@ void GeneralSettingDlg::OnDropFiles(HDROP hDropInfo)
 		}
 	}
 	DragFinish(hDropInfo);
+}
+
+void GeneralSettingDlg::OnBnClickedUseInstallPathAsAppdataPath()
+{
+	CButton* pCheckbox = (CButton*)GetDlgItem(ID_USE_INSTALL_PATH_AS_APPDATA_PATH);
+	if (!pCheckbox->GetCheck())
+	{
+		CString strPortableAppDataPath = PathUtils::GetVinaTextAppDataPath();
+		AfxMessageBoxFormat(MB_ICONINFORMATION, _T("Please delete portable folder \"%s\" when you want to use default app data path."), strPortableAppDataPath);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////

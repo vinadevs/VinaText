@@ -38,6 +38,7 @@ protected:
 	afx_msg void OnVScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
 	afx_msg void OnSize(UINT nType, int cx, int cy);
+	afx_msg void OnBnClickedCheckUseUserCustomTabSettings();
 
 	void InitLanguageSpellCheckCombo();
 	void InitLanguageTranslateFromCombo();
@@ -48,6 +49,7 @@ protected:
 	void InitIndicatorStyleCombobox();
 	void InitRenderIndicatorActionCombobox();
 	void InitDefaultEOLNewFileCombobox();
+	void InitIndentationTypeCombobox();
 	void FromLanguageSpellCheckCombo();
 	void FromLanguageTranslateFromCombo();
 	void FromLanguageTranslateToCombo();
@@ -57,6 +59,7 @@ protected:
 	void FromIndicatorColorCombobox();
 	void FromIndicatorStyleCombobox();
 	void FromDefaultEOLNewFileCombobox();
+	void FromIndentationTypeCombobox();
 
 	CComboBox m_LanguageSpellCheckCombo;
 	CComboBox m_LanguageTranslateFromCombo;
@@ -67,6 +70,7 @@ protected:
 	CComboBox m_RenderIndicatorActionCombo;
 	CComboBox m_CaretBlinkColorCombo;
 	CComboBox m_DefaultEOLNewFileCombo;
+	CComboBox m_IndentationTypeCombo;
 
 	BOOL m_bAutoCompleteIgnoreCase{ FALSE };
 	BOOL m_bAutoCompleteIgnoreNumbers{ FALSE };
@@ -86,12 +90,14 @@ protected:
 	BOOL m_bEnableAutoDetectCodePage{ FALSE };
 	BOOL m_bAutoSaveFileWhenCloseApp{ FALSE };
 	BOOL m_bAutoAddNewLineAtTheEOF{ FALSE };
+	BOOL m_bUseUserIndentationSettings{ FALSE };
 
 	int m_nLineSpaceAbove{ 0 };
 	int m_nLineSpaceBelow{ 0 };
 	int m_nIntervalAutoSaveFileMinutes{ 0 };
 	int m_nLongLineMaximum{ 0 };
 	int m_nPageAlignmentWidth{ 0 };
+	int m_nIndentationWidth{ 4 };
 
 	CString m_lfFaceName = _T("Courier New");
 	int m_iPointSize = 12;

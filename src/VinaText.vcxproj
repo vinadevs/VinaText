@@ -82,8 +82,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>
-    </IncludePath>
+    <IncludePath>$(IncludePath);</IncludePath>
     <LibraryPath>$(LibraryPath);</LibraryPath>
     <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
@@ -98,6 +97,11 @@
     <LibraryPath>$(LibraryPath);</LibraryPath>
     <IntDir>..\temp\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Label="Vcpkg">
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <VcpkgManifestInstall>false</VcpkgManifestInstall>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
