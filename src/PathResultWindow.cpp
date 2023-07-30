@@ -459,12 +459,14 @@ void CPathResultDlg::OnFilterTextChanged()
 {
 	m_DisplayResultSearchData = m_OriginalResultSearchInfo;
 	CString strFilterText = m_wndEditFilter.GetCurrentText();
-	if (!strFilterText.IsEmpty() && strFilterText != _T(">"))
+	if (!strFilterText.IsEmpty() && strFilterText != _T("> > > Path Filter...") &&
+		strFilterText.Find(_T("[Search all paths")) == -1 &&
+		strFilterText != _T("!"))
 	{
 		PATH_RESULT_DATA_LIST filterData;
-		if (strFilterText.Find(_T(">")) != -1) // exclude filter
+		if (strFilterText.Find(_T("!")) != -1) // exclude filter
 		{
-			strFilterText.Replace(_T(">"), _T(""));
+			strFilterText.Replace(_T("!"), _T(""));
 			if (strFilterText.Find(_T(",")) != -1) // multiple filter
 			{
 				std::vector<CString> vecFilters = AppUtils::SplitterCString(strFilterText, ",");
@@ -550,7 +552,7 @@ void CPathResultDlg::InitListCtrl()
 void CPathResultDlg::InitFilterCtrl()
 {
 	if (!m_wndEditFilter.CreateEx(WS_EX_STATICEDGE, _T("edit"), _T(""),
-		WS_CHILD | WS_VISIBLE | ES_MULTILINE, CRect(0, 0, 0, 0), this, ID_FILTER_FILE_RESULT_PANE))
+		WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL, CRect(0, 0, 0, 0), this, ID_FILTER_FILE_RESULT_PANE))
 	{
 		TRACE0("Failed to create user input edit\n");
 		return;
@@ -1137,7 +1139,7 @@ HBRUSH CPathEditFilter::CtlColor(CDC* pDC, UINT nCtlColor)
 {
 	pDC->SetTextColor(BasicColors::white);
 	pDC->SetBkColor(BasicColors::light_green);
-	return ::GetSysColorBrush(COLOR_WINDOW);
+	return ::CreateSolidBrush(BasicColors::light_green);
 }
 
 void CPathEditFilter::OnSetFocus(CWnd * pOldWnd)

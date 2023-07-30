@@ -24,7 +24,7 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-static CString g_strSearchFilterMessage = _T("> > > File Filter...");
+static CString g_strSearchFilterMessage = _T("> > > Path Filter...");
 
 IMPLEMENT_DYNCREATE(CSearchResultWindow, CDockPaneBase)
 
@@ -193,7 +193,7 @@ void CSearchResultDlg::ClearResult()
 	ListView_SetExtendedListViewStyle(m_wndResultList.m_hWnd, LVS_EX_FULLROWSELECT);
 	m_wndResultList.SetItemCount(0);
 	m_wndResultList.DeleteAllItems();
-	g_strSearchFilterMessage = _T("> > > File Filter...");
+	g_strSearchFilterMessage = _T("> > > Path Filter...");
 	m_wndEditFilter.SetWindowTextW(g_strSearchFilterMessage);
 }
 
@@ -488,12 +488,15 @@ void CSearchResultDlg::OnFilterTextChanged()
 {
 	m_DisplayResultSearchData._vecSearchDataLine = m_OriginalResultSearchInfo;
 	CString strFilterText = m_wndEditFilter.GetCurrentText();
-	if (!strFilterText.IsEmpty() && strFilterText != _T(">"))
+	if (!strFilterText.IsEmpty() && strFilterText != _T("> > > Path Filter...") &&
+		strFilterText.Find(_T("[Search all ")) == -1 &&
+		strFilterText.Find(_T("[Replace all ")) == -1 &&
+		strFilterText != _T("!"))
 	{
 		TEXT_RESULT_SEARCH_REPLACE_DATA filterData;
-		if (strFilterText.Find(_T(">")) != -1) // exclude filter
+		if (strFilterText.Find(_T("!")) != -1) // exclude filter
 		{
-			strFilterText.Replace(_T(">"), _T(""));
+			strFilterText.Replace(_T("!"), _T(""));
 			if (strFilterText.Find(_T(",")) != -1) // multiple filter
 			{
 				std::vector<CString> vecFilters = AppUtils::SplitterCString(strFilterText, ",");
@@ -577,7 +580,7 @@ void CSearchResultDlg::InitListCtrl()
 void CSearchResultDlg::InitFilterCtrl()
 {
 	if (!m_wndEditFilter.CreateEx(WS_EX_STATICEDGE, _T("edit"), _T(""),
-		WS_CHILD | WS_VISIBLE | ES_MULTILINE, CRect(0, 0, 0, 0), this, ID_FILTER_SEARCH_RESULT_PANE))
+		WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL, CRect(0, 0, 0, 0), this, ID_FILTER_SEARCH_RESULT_PANE))
 	{
 		TRACE0("Failed to create user input edit\n");
 		return;
@@ -1143,7 +1146,7 @@ HBRUSH CEditFilter::CtlColor(CDC* pDC, UINT nCtlColor)
 {
 	pDC->SetTextColor(BasicColors::white);
 	pDC->SetBkColor(BasicColors::light_green);
-	return ::GetSysColorBrush(COLOR_WINDOW);
+	return ::CreateSolidBrush(BasicColors::light_green);
 }
 
 void CEditFilter::OnSetFocus(CWnd * pOldWnd)

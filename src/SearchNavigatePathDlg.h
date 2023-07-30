@@ -67,10 +67,10 @@ protected:
 	static UINT FindBackgroundThreadProc(LPVOID pParam);
 	HANDLE m_hThreadFindBackground = NULL;
 
-public:
 	afx_msg void OnBnClickedCheckSerachFileSize();
 	afx_msg void OnBnClickedCheckDateCreatedBetween();
 	afx_msg void OnBnClickedCheckDateModifiedBetween();
 	afx_msg void OnBnClickedCheckSearchAllPath();
+	afx_msg void OnBnClickedButtonRevealSearchFolder();
 	afx_msg void OnDropFiles(HDROP hDropInfo);
 };

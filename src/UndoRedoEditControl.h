@@ -196,5 +196,5 @@ protected:
 
 	CCommandHistory m_commandHistory;
 	bool m_contextMenuShownFirstTime;
-	CString m_pText;
+	LPTSTR m_pText;
 };

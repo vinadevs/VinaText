@@ -193,6 +193,7 @@ BEGIN_MESSAGE_MAP(CSearchNavigatePathDlg, CDlgBase)
 	ON_BN_CLICKED(IDC_CHECK_DATE_CREATED_BETWEEN, &CSearchNavigatePathDlg::OnBnClickedCheckDateCreatedBetween)
 	ON_BN_CLICKED(IDC_CHECK_DATE_MODIFIED_BETWEEN, &CSearchNavigatePathDlg::OnBnClickedCheckDateModifiedBetween)
 	ON_BN_CLICKED(IDC_CHECK_SEARCH_WITHOUT_MATCH_NAME, &CSearchNavigatePathDlg::OnBnClickedCheckSearchAllPath)
+	ON_BN_CLICKED(IDC_BUTTON_REVEAL_SEARCH_FOLDER, &CSearchNavigatePathDlg::OnBnClickedButtonRevealSearchFolder)
 END_MESSAGE_MAP()
 
 // CSearchNavigatePathDlg message handlers
@@ -216,7 +217,6 @@ void CSearchNavigatePathDlg::OnBnClickedOk()
 	ASSERT(pFrame);
 	if (!pFrame) return;
 
-	// TODO: Add your control notification handler code here
 	CString strSearchTarget;
 	GetDlgItem(IDC_EDIT_FILE_NAME)->GetWindowTextW(strSearchTarget);
 	int nIndex = strSearchTarget.ReverseFind(':'); // after : search target will reset
@@ -400,7 +400,6 @@ void CSearchNavigatePathDlg::OnEnChangeEditFilter()
 
 void CSearchNavigatePathDlg::OnBnClickedButtonSearchPathNextMatch()
 {
-	// TODO: Add your control notification handler code here
 	CString strSearchWhat;
 	m_EditUndoRedo.GetWindowText(strSearchWhat);
 	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
@@ -463,7 +462,6 @@ void CSearchNavigatePathDlg::OnBnClickedButtonSearchPathNextMatch()
 
 void CSearchNavigatePathDlg::OnBnClickedCheckSerachFileSize()
 {
-	// TODO: Add your control notification handler code here
 	UpdateData();
 	if (m_bSearchWithSize)
 	{
@@ -480,7 +478,6 @@ void CSearchNavigatePathDlg::OnBnClickedCheckSerachFileSize()
 
 void CSearchNavigatePathDlg::OnBnClickedCheckDateCreatedBetween()
 {
-	// TODO: Add your control notification handler code here
 	UpdateData();
 	if (m_bSearchWitheCreatedDate)
 	{
@@ -494,10 +491,8 @@ void CSearchNavigatePathDlg::OnBnClickedCheckDateCreatedBetween()
 	}
 }
 
-
 void CSearchNavigatePathDlg::OnBnClickedCheckDateModifiedBetween()
 {
-	// TODO: Add your control notification handler code here
 	UpdateData();
 	if (m_bSearchWitheModifiedDate)
 	{
@@ -513,7 +508,6 @@ void CSearchNavigatePathDlg::OnBnClickedCheckDateModifiedBetween()
 
 void CSearchNavigatePathDlg::OnBnClickedCheckSearchAllPath()
 {
-	// TODO: Add your control notification handler code here
 	UpdateData();
 	if (m_bSearchWithoutMatchName)
 	{
@@ -550,4 +544,11 @@ void CSearchNavigatePathDlg::OnDropFiles(HDROP hDropInfo)
 		}
 	}
 	DragFinish(hDropInfo);
+}
+
+void CSearchNavigatePathDlg::OnBnClickedButtonRevealSearchFolder()
+{
+	CMainFrame* pFrame = DYNAMIC_DOWNCAST(CMainFrame, AfxGetMainWnd());
+	ASSERT(pFrame); if (!pFrame) return;
+	pFrame->RevealInExplorerWindow(m_strFolder);
 }

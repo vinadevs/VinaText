@@ -893,7 +893,7 @@ HBRUSH CEditBuild::CtlColor(CDC* pDC, UINT nCtlColor)
 {
 	pDC->SetTextColor(BasicColors::white);
 	pDC->SetBkColor(BasicColors::light_green);
-	return ::GetSysColorBrush(COLOR_WINDOW);
+	return ::CreateSolidBrush(BasicColors::light_green);
 }
 
 void CEditBuild::OnSetFocus(CWnd * pOldWnd)
@@ -1569,7 +1569,7 @@ BOOL CBuildPaneDlg::OnInitDialog()
 	m_wndOutput.m_bEnableLineWrap = FALSE;
 
 	if (!m_wndUserInput.CreateEx(WS_EX_STATICEDGE, _T("edit"), _T(""),
-		WS_CHILD | WS_VISIBLE | ES_MULTILINE, CRect(0, 0, 0, 0), this, ID_USER_INPUT_OUTPUT_PANE))
+		WS_CHILD | WS_VISIBLE | ES_AUTOHSCROLL, CRect(0, 0, 0, 0), this, ID_USER_INPUT_OUTPUT_PANE))
 	{
 		TRACE0("Failed to create user input edit\n");
 		return FALSE;

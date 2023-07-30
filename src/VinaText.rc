@@ -1214,7 +1214,7 @@ BEGIN
     POPUP "Popup"
     BEGIN
         MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECT_ALL
-        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Copy Full Row\tCtrl+C",       ID_EDIT_COPY
         MENUITEM "Copy Full Path\tCtrl+Shift+C", ID_EDIT_COPY_FULL_PATH
         MENUITEM "Count Selection\tCtrl+R",     ID_EDIT_COUNT_SELECTION
         MENUITEM "Delete All\tCtrl+Delete",     ID_EDIT_CLEAR_ALL
@@ -1231,7 +1231,7 @@ BEGIN
     POPUP "Popup"
     BEGIN
         MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECT_ALL
-        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Copy Full Row\tCtrl+C",       ID_EDIT_COPY
         MENUITEM "Copy Full Path\tCtrl+Shift+C", ID_EDIT_COPY_FULL_PATH
         MENUITEM "Count Selection\tCtrl+R",     ID_EDIT_COUNT_SELECTION
         MENUITEM "Delete All\tCtrl+Delete",     ID_EDIT_CLEAR_ALL
@@ -1248,7 +1248,7 @@ BEGIN
     POPUP "Popup"
     BEGIN
         MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECT_ALL
-        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Copy Full Row\tCtrl+C",       ID_EDIT_COPY
         MENUITEM "Delete All\tCtrl+Delete",     ID_EDIT_CLEAR_ALL
         MENUITEM "Delete Bookmark\tDelete",     ID_EDIT_CLEAR_SELECTED
         MENUITEM "View In Editor\tCtrl+E",      ID_EDIT_LOG_TO_EDITOR
@@ -1262,7 +1262,7 @@ BEGIN
     POPUP "Popup"
     BEGIN
         MENUITEM "Select All\tCtrl+A",          ID_EDIT_SELECT_ALL
-        MENUITEM "Copy\tCtrl+C",                ID_EDIT_COPY
+        MENUITEM "Copy Full Row\tCtrl+C",       ID_EDIT_COPY
         MENUITEM "Delete All\tCtrl+Delete",     ID_EDIT_CLEAR_ALL
         MENUITEM "Delete Breakpoint\tDelete",   ID_EDIT_CLEAR_SELECTED
         MENUITEM "View In Editor\tCtrl+E",      ID_EDIT_LOG_TO_EDITOR
@@ -1705,9 +1705,10 @@ BEGIN
     CONTROL         "",IDC_DATETIMEPICKER_START_CREATED,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,139,177,94,15
     CONTROL         "",IDC_DATETIMEPICKER_END_CREATED,"SysDateTimePick32",DTS_RIGHTALIGN | WS_TABSTOP,253,176,94,15
     CONTROL         "Search Without Name (List all paths at search folder)",IDC_CHECK_SEARCH_WITHOUT_MATCH_NAME,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,92,207,10
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,22,92,200,10
     LTEXT           "Search Filter:",IDC_STATIC,10,70,56,8,0,WS_EX_RIGHT
     EDITTEXT        IDC_EDIT_PATH_FILTER,73,69,277,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "Reveal Search Folder",IDC_BUTTON_REVEAL_SEARCH_FOLDER,272,88,78,14
 END
 
 IDD_CODEPAGEMFC_DIALOG DIALOGEX 0, 0, 343, 335

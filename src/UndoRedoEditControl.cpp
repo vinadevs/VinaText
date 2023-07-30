@@ -421,7 +421,6 @@ LRESULT CUndoRedoEditControl::WindowProc(UINT message, WPARAM wParam, LPARAM lPa
 	return CEdit::WindowProc(message, wParam, lParam);
 }
 
-
 BEGIN_MESSAGE_MAP(CUndoRedoEditControl, CEdit)
 	ON_WM_CONTEXTMENU()
 	ON_WM_ENTERIDLE()
@@ -512,14 +511,6 @@ BOOL CUndoRedoEditControl::CreatePasteCommand()
 		return FALSE;
 	}
 	m_pText = reinterpret_cast<LPTSTR>(::GlobalLock(hglb));
-	if (m_pText.GetLength() > 2 && (m_pText.GetAt(m_pText.GetLength() - 1) == '\n' && m_pText.GetAt(m_pText.GetLength() - 2) == '\r'))
-	{
-		m_pText = m_pText.Mid(0, m_pText.GetLength() - 2);
-	}
-	else if (m_pText.GetLength() > 0 && (m_pText.GetAt(m_pText.GetLength() - 1) == '\n' || m_pText.GetAt(m_pText.GetLength() - 1) == '\r'))
-	{
-		m_pText = m_pText.Mid(0, m_pText.GetLength() - 1);
-	}
 	if (m_pText)
 	{
 		CreateInsertTextCommand(m_pText);
