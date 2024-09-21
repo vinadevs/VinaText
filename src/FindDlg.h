@@ -12,6 +12,7 @@
 #include "UndoRedoEditControl.h"
 #include "ComboboxMultiLine.h"
 #include "FindReplaceTextWorker.h"
+#include "WndResizer.h"
 
 class CScrollHelper;
 class CVinaTextProgressBar;
@@ -48,7 +49,9 @@ protected:
 	void DoSearchNext(CString strSearchWhat, BOOL bHideMessageBox = TRUE, BOOL bSaveSearchWord = TRUE);
 	void DoSeachPrevious(CString strSearchWhat);
 	void SearchAllInDocument(CDocument* pDoc, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, unsigned int nSearchOptions);
+	void RegisterResizingControls();
 
+	CWndResizer m_resizer;
 	CUndoRedoEditControl m_EditFilter;
 	CMFCEditBrowseCtrl m_EditSpecialPath;
 	CStringArray m_strSearchWhats;

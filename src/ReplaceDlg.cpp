@@ -137,6 +137,8 @@ BOOL CFindAndReplaceDlg::OnInitDialog()
 
 	::DragAcceptFiles(m_hWnd, TRUE);
 
+	RegisterResizingControls();
+
 	return TRUE;
 }
 
@@ -276,6 +278,28 @@ void CFindAndReplaceDlg::ReplaceAllInDocument(CDocument* pDoc,
 			return;
 		}
 	}
+}
+
+void CFindAndReplaceDlg::RegisterResizingControls()
+{
+	BOOL bOk = FALSE;
+	bOk = m_resizer.Hook(this);
+	ASSERT(bOk);
+
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_PATH_SPECIFIC_EDIT, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_REGEX_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_DLG_SCOPE_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_FILE_FILTER_EDIT, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_DLG_OPTIONS_STATIC, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_DLG_REPLACEWITH_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_REPLACE_DLG_FINDWHAT_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
 }
 
 void CFindAndReplaceDlg::OnReplaceAll()
@@ -789,6 +813,10 @@ void CFindAndReplaceDlg::OnSize(UINT nType, int cx, int cy)
 	CDialogEx::OnSize(nType, cx, cy);
 
 	m_pScrollHelper->OnSize(nType, cx, cy);
+
+	const std::vector<int> buttonIDs = { ID_EDITOR_REPLACE_DLG_FINDNEXT_BTN, ID_EDITOR_REPLACE_DLG_REPLACE_BTN, ID_EDITOR_REPLACE_DLG_REPLACE_ALL_BTN };
+	CRect rect; GetClientRect(&rect);
+	GuiUtils::ResizeControlsHorizontally(this, buttonIDs, rect.Width(), rect.Height());
 }
 
 void CFindAndReplaceDlg::UpdateSearchOptions()

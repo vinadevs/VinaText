@@ -94,7 +94,6 @@ public:
 	afx_msg void OnOptionsReturn();
 	afx_msg void OnOptionsShowSystemMenu();
 	afx_msg void OnEditCopy();
-	afx_msg void OnEditWithMsPaint();
 	afx_msg void OnUpdateEditCopy(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateOptionsLeftRotate(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateOptionsRightRotate(CCmdUI * pCmdUI);

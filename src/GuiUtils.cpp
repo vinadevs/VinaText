@@ -208,3 +208,33 @@ BOOL GuiUtils::PushFileObjectToClipboard(const CString & strFilePath)
 	}
 	return FALSE;
 }
+
+void GuiUtils::ResizeControlsHorizontally(CWnd* parentDialog, const std::vector<int>& controlIDs,
+	int cx, int cy, int padding, int spacing, int bolderOffsetLeft, int bolderOffsetRight)
+{
+	if (cx <= 0 || cy <= 0 || controlIDs.empty() || !parentDialog)
+		return;
+	// Calculate the total width available for buttons
+	const int totalWidth = cx - 2 * padding;  // Account for padding on both sides
+	// Number of controls (buttons) to resize
+	const int controlCount = static_cast<int>(controlIDs.size());
+	// Calculate the width of each control, considering the spacing between them
+	const int controlWidth = (totalWidth - (controlCount - 1) * spacing) / controlCount - bolderOffsetRight;
+	// Iterate through each control ID and resize it
+	for (int i = 0; i < controlCount; ++i)
+	{
+		// Get control by its ID
+		CWnd* pControl = parentDialog->GetDlgItem(controlIDs[i]);
+		if (pControl)
+		{
+			// Get the current position and size of the control
+			CRect rect;
+			pControl->GetWindowRect(&rect);
+			parentDialog->ScreenToClient(&rect);
+			// Calculate new left and right positions
+			const int newLeft = padding + i * (controlWidth + spacing) + bolderOffsetLeft;
+			// Resize the control, keeping the height unchanged
+			pControl->MoveWindow(newLeft, rect.top, controlWidth, rect.Height());
+		}
+	}
+}

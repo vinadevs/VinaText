@@ -725,6 +725,9 @@
     <ClInclude Include="TemporarySettings.h">
       <Filter>Settings</Filter>
     </ClInclude>
+    <ClInclude Include="WndResizer.h">
+      <Filter>Component GUI\MFC GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1257,6 +1260,9 @@
     </ClCompile>
     <ClCompile Include="TemporarySettings.cpp">
       <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="WndResizer.cpp">
+      <Filter>Component GUI\MFC GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

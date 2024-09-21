@@ -268,7 +268,7 @@ void CSearchAndReplaceWindowDlg::OnSize(UINT nType, int cx, int cy)
 	if (!cx || !cy) return;
 	int dx = cx - m_SaveRect.right;
 	int dy = cy - m_SaveRect.bottom;
-	CLockCtrlRedraw locker(this);
+	//CLockCtrlRedraw locker(this);
 	OffsetChildWindow(GetDlgItem(ID_PANE_SEARCH_AND_REPLACE_TAB), 0, cy, dx, dy);
 	if (m_CTabCtrl.m_hWnd != NULL)
 	{

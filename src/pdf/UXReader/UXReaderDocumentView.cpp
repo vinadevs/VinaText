@@ -390,7 +390,7 @@ void UXReader::UXReaderDocumentView::SearchProgress(const int index, const int f
 
 	if (auto item = m_ToolbarPane->SearchTextItem())
 	{
-		item->UpdateText(L"Matching words (" + std::to_wstring(found) + L")", 0x00008200);
+		item->UpdateText(L"Found (" + std::to_wstring(found) + L")", 0x00008200);
 	}
 }
 
@@ -401,7 +401,7 @@ void UXReader::UXReaderDocumentView::SearchFinished(bool cancel, const int found
 	{
 		const DWORD color = (cancel ? 0x00000000 : (found ? 0x00000000 : 0x000000E0));
 
-		std::wstring text(cancel ? L"" : L"Matching words (" + std::to_wstring(found) + L")");
+		std::wstring text(cancel ? L"" : L"Found (" + std::to_wstring(found) + L")");
 		item->UpdateText(text, color);
 	}
 

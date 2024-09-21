@@ -19,6 +19,13 @@ namespace GuiUtils
 	HTREEITEM FindTreeCtrlItem(const CString & name, CTreeCtrl & tree, HTREEITEM hRoot);
 	CSize GetTextSize(const CString& strText);
 	BOOL PushFileObjectToClipboard(const CString& strFilePath);
+	void ResizeControlsHorizontally(
+		CWnd* parentDialog,
+		const std::vector<int>& controlIDs,
+		int cx, int cy, int padding = 10,
+		int spacing = 10,
+		int bolderOffsetLeft = 15,
+		int bolderOffsetRight = 13);
 	inline void ForceRedrawCWnd(CWnd * pWnd)
 	{
 		if (pWnd) 

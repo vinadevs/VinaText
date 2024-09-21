@@ -47,7 +47,6 @@ BEGIN_MESSAGE_MAP(CImageView, CViewBase)
 	ON_WM_CONTEXTMENU()
 	ON_WM_SETFOCUS()
 
-	ON_COMMAND(ID_IMAGE_EDIT_WIH_MSPAINT, OnEditWithMsPaint)
 	ON_COMMAND(ID_IMAGE_EDIT_COPY, OnEditCopy)
 	ON_COMMAND(ID_IMAGE_ZOOM_IN, OnOptionsZoomUp)
 	ON_COMMAND(ID_IMAGE_ZOOM_OUT, OnOptionsZoomDown)
@@ -1132,11 +1131,6 @@ void CImageView::OnUpdateEditCopy(CCmdUI * pCmdUI)
 	{
 		pCmdUI->Enable(TRUE);
 	}
-}
-
-void CImageView::OnEditWithMsPaint()
-{
-	HostManager::HostApplicaton(HostManager::HOST_APP_TYPE::MS_PAINT, L"mspaint.exe", m_pDocument->GetPathName(), TRUE, FALSE);
 }
 
 CImageDoc* CImageView::GetImageDocument() const // non-debug version is inline

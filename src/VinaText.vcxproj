@@ -403,6 +403,7 @@
     <ClInclude Include="tinyXml\tinyxml.h" />
     <ClInclude Include="TreeHelper.h" />
     <ClInclude Include="UndoRedoEditControl.h" />
+    <ClInclude Include="WndResizer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AppAboutDlg.cpp" />
@@ -587,6 +588,7 @@
     <ClCompile Include="tinyXml\tinyxmlparser.cpp" />
     <ClCompile Include="TreeHelper.cpp" />
     <ClCompile Include="UndoRedoEditControl.cpp" />
+    <ClCompile Include="WndResizer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="VinaText.rc" />

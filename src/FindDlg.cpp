@@ -127,6 +127,8 @@ BOOL CFindDlg::OnInitDialog()
 
 	::DragAcceptFiles(m_hWnd, TRUE);
 
+	RegisterResizingControls();
+
 	return TRUE;
 }
 
@@ -300,6 +302,26 @@ void CFindDlg::SearchAllInDocument(CDocument* pDoc,
 			}
 		}
 	}
+}
+
+void CFindDlg::RegisterResizingControls()
+{
+	BOOL bOk = FALSE;
+	bOk = m_resizer.Hook(this);
+	ASSERT(bOk);
+
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_FILE_FILTER_EDIT, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_PATH_SPECIFIC_EDIT, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_REGEX_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_SCOPE_COMBO, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
+	bOk = m_resizer.SetAnchor(ID_EDITOR_SEARCH_GROUPBOX, ANCHOR_HORIZONTALLY);
+	ASSERT(bOk);
 }
 
 void CFindDlg::OnSearchAll()
@@ -661,6 +683,10 @@ void CFindDlg::OnSize(UINT nType, int cx, int cy)
 	CDialogEx::OnSize(nType, cx, cy);
 
 	m_pScrollHelper->OnSize(nType, cx, cy);
+
+	const std::vector<int> buttonIDs = { ID_EDITOR_SEARCH_NEXT, ID_EDITOR_SEARCH_PREVIOUS, ID_EDITOR_SEARCH_ALL };
+	CRect rect; GetClientRect(&rect);
+	GuiUtils::ResizeControlsHorizontally(this, buttonIDs, rect.Width(), rect.Height());
 }
 
 void CFindDlg::OnFilterEditChange()

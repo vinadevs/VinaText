@@ -12,6 +12,7 @@
 #include "UndoRedoEditControl.h"
 #include "ComboboxMultiLine.h"
 #include "FindReplaceTextWorker.h"
+#include "WndResizer.h"
 
 // CFindAndReplaceDlg dialog
 
@@ -69,6 +70,7 @@ protected:
 	std::unique_ptr<CVinaTextProgressBar> m_pReplaceProgressBar{nullptr};
 	static UINT ReplaceBackgroundThreadProc(LPVOID pParam);
 	HANDLE m_hThreadReplaceBackground = NULL;
+	CWndResizer m_resizer;
 
 	BOOL AskBeforeContinueReplace(const CString& strWhereToReplace);
 	void EnableButtons(BOOL bEnable);
@@ -76,6 +78,7 @@ protected:
 	void InitComboReplaceScope();
 	void InitComboRegexPattern();
 	void ReplaceAllInDocument(CDocument* pDoc, TEXT_RESULT_SEARCH_REPLACE_DATA& ResultSearchData, const CString& strSearchWhat, const CString& strReplaceWith, unsigned int nSearchOptions);
+	void RegisterResizingControls();
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	virtual void OnOK() {}
