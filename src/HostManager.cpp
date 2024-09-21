@@ -23,21 +23,7 @@ CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CSt
 		else 
 			AppUtils::CloseMDIDocument(pExistedDoc);
 	}
-	if (appType == HOST_APP_TYPE::MS_PAINT)
-	{
-		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
-			L"Microsoft Paint",
-			strAppPathToHost,
-			strAppArguments,
-			TRUE,
-			TRUE,
-			IDR_MSPAINT_DOC,
-			HOST_METHOD::USE_FINDWINDOWS,
-			500,
-			L"MSPaintApp",
-			bOpenFileMode);
-	}
-	else if (appType == HOST_APP_TYPE::TERMINAL_CMD)
+	if (appType == HOST_APP_TYPE::TERMINAL_CMD)
 	{
 		return AppUtils::GetVinaTextApp()->CreateNewHostDocument(
 			L"Terminal CMD",

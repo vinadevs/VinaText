@@ -49,7 +49,7 @@ protected:
 	afx_msg void OnEditLevel7();
 	afx_msg void OnEditLevel8();
 	afx_msg void OnEditLevel9();
-	afx_msg void OnEditSaveFile();
+	afx_msg void OnEditExportToEditor();
 	afx_msg void OnEditClear();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg LRESULT OnTreeItemSelect(WPARAM wParam, LPARAM lParam);

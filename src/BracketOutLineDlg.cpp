@@ -55,9 +55,10 @@ void CBracketOutLineDlg::UpdateFoldingMap(int nFoldingLevel)
 			m_BracketTree.SetItemImage(hRoot, 0, 0);
 			for (auto const& data : dataList)
 			{
-				if (data._lineText.Find(_T("(")) != -1)
+				const auto pos = data._lineText.Find(_T("("));
+				if (pos != -1)
 				{
-					HTREEITEM hChild = m_BracketTree.InsertItem(AppUtils::LongToCString(data._lineNumber) + _T(" | ") + data._lineText, 4, 4, hRoot);
+					HTREEITEM hChild = m_BracketTree.InsertItem(AppUtils::LongToCString(data._lineNumber) + _T(" | ") + data._lineText.Mid(0, pos), 4, 4, hRoot);
 					m_BracketTree.SetItemImage(hChild, 0, 0);
 				}
 			}
@@ -158,20 +159,23 @@ void CBracketOutLineDlg::OnEditLevel9()
 	UpdateFoldingMap(9);
 }
 
-void CBracketOutLineDlg::OnEditSaveFile()
+void CBracketOutLineDlg::OnEditExportToEditor()
 {
-	TCHAR  szFilter[] = _T("Text File(*.txt)|*.txt|CSV File(*.csv)|*.csv||");
-	CFileDialog fileDlg(FALSE, _T("txt"), _T("*.txt"), OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, szFilter);
-	if (fileDlg.DoModal() == IDOK)
+	const auto pDoc = dynamic_cast<CEditorDoc*>(AppUtils::GetMDIActiveDocument());
+	if (pDoc)
 	{
-		CString filename = fileDlg.GetPathName();
-		std::vector<CString> vecItemText = m_BracketTree.GetAllItemTexts();
-		CString strAllText;
-		for (auto const& strLine : vecItemText)
-		{ 
-			strAllText += strLine + _T("\n");
+		m_strFilePath.Empty();
+		const auto pEditor = pDoc->GetEditorCtrl();
+		if (pEditor != NULL)
+		{
+			std::vector<CString> vecItemText = m_BracketTree.GetAllItemTexts();
+			CString strAllText;
+			for (auto const& strLine : vecItemText)
+			{
+				strAllText += strLine + _T("\n");
+			}
+			AppUtils::CreateNewEditorWithText(pDoc->GetTitle() + _T("_FoldingMap"), strAllText);
 		}
-		PathUtils::SaveFileTruncate(filename, strAllText);
 	}
 }
 
@@ -202,7 +206,7 @@ BEGIN_MESSAGE_MAP(CBracketOutLineDlg, CDialogEx)
 	ON_COMMAND(ID_EDIT_FOLDING_MAP_LEVEL_7, &CBracketOutLineDlg::OnEditLevel7)
 	ON_COMMAND(ID_EDIT_FOLDING_MAP_LEVEL_8, &CBracketOutLineDlg::OnEditLevel8)
 	ON_COMMAND(ID_EDIT_FOLDING_MAP_LEVEL_9, &CBracketOutLineDlg::OnEditLevel9)
-	ON_COMMAND(ID_EDIT_FOLDING_MAP_SAVE_FILE, &CBracketOutLineDlg::OnEditSaveFile)
+	ON_COMMAND(ID_EDIT_FOLDING_MAP_TO_EDITOR, &CBracketOutLineDlg::OnEditExportToEditor)
 	ON_COMMAND(ID_EDIT_CLEAR_ALL, &CBracketOutLineDlg::OnEditClear)
 	ON_WM_CONTEXTMENU()
 	ON_WM_SIZE()

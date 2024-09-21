@@ -325,7 +325,6 @@ public:
   afx_msg void OnOpenFileContainer();
   afx_msg void OnLoadAutoCompleteDataset();
   afx_msg void OnDeleteFileByExtension();
-  afx_msg void OnEditWithMSPaint();
   afx_msg void OnUpOneLevel();
   afx_msg void OnRefresh();
   afx_msg void OnExpandAll();

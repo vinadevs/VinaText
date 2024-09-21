@@ -881,7 +881,6 @@ BEGIN
     BEGIN
         POPUP "Image Viewer"
         BEGIN
-            MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
             MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
             MENUITEM SEPARATOR
             MENUITEM "Zoom Out\tKeyDown",           ID_IMAGE_ZOOM_OUT
@@ -972,7 +971,6 @@ IDR_TREEFILECTRL_POPUP MENU
 BEGIN
     POPUP "_POPUP_"
     BEGIN
-        MENUITEM "Edit with Microsoft Paint",   ID_TREEFILECTRL_EDIT_WIH_MSPAINT
         MENUITEM "Refresh\tF5",                 ID_TREEFILECTRL_REFRESH
         MENUITEM SEPARATOR
         MENUITEM "Expand Folder (All Sub)\tCtrl+Shift+N", ID_TREEFILECTRL_EXPAND_ALL
@@ -1177,7 +1175,6 @@ IDR_IMAGE_POPUP MENU
 BEGIN
     POPUP "_POPUP_"
     BEGIN
-        MENUITEM "Edit With Microsoft Paint",   ID_IMAGE_EDIT_WIH_MSPAINT
         MENUITEM "Copy Image To Clipboard\tCtrl+C", ID_IMAGE_EDIT_COPY
         MENUITEM SEPARATOR
         MENUITEM "Zoom Out\tKeyDown",           ID_IMAGE_ZOOM_OUT
@@ -1288,7 +1285,7 @@ BEGIN
         MENUITEM "Level 9",                     ID_EDIT_FOLDING_MAP_LEVEL_9
         MENUITEM SEPARATOR
         MENUITEM "Clear",                       ID_EDIT_CLEAR_ALL
-        MENUITEM "Save To File",                ID_EDIT_FOLDING_MAP_SAVE_FILE
+        MENUITEM "View In Editor",              ID_EDIT_FOLDING_MAP_TO_EDITOR
     END
 END
 

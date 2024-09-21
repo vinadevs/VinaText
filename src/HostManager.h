@@ -12,7 +12,6 @@ namespace HostManager
 {
 	enum HOST_APP_TYPE : unsigned int
 	{
-		MS_PAINT,
 		TERMINAL_CMD,
 		TERMINAL_POWERSHELL,
 		FILE_EXPLORER,

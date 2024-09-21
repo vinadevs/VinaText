@@ -343,7 +343,7 @@ CString OSUtils::DateToCStringYMD(tm * time)
 	char* lOutString = new char[BUFFER_SIZE];
 	strftime(lOutString, BUFFER_SIZE, "%Y-%m-%d", time);
 	CString strTime(lOutString);
-	DELETE_POINTER_CPP(lOutString)
+	DELETE_POINTER_CPP_ARRAY(lOutString)
 	return strTime;
 }
 
@@ -360,7 +360,7 @@ CString OSUtils::DateToCStringABDHMSY(tm * time, BOOL bDisableSpecialChar)
 		strftime(lOutString, BUFFER_SIZE, "%a %b %d %H:%M:%S %Y", time);
 	}
 	CString strTime(lOutString);
-	DELETE_POINTER_CPP(lOutString)
+	DELETE_POINTER_CPP_ARRAY(lOutString)
 	return strTime;
 }
 

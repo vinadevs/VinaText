@@ -217,7 +217,6 @@ BEGIN_MESSAGE_MAP(CFileExplorerCtrl, FILETREECTRL_BASE_CLASS) //NOLINT(modernize
 	ON_COMMAND(ID_TREEFILECTRL_NEW_FILE_EXPLORER_TAB, &CFileExplorerCtrl::OnHostFileExplorer)
 	ON_COMMAND(ID_TREEFILECTRL_LOAD_AUTOCOMPLETE, &CFileExplorerCtrl::OnLoadAutoCompleteDataset)
 	ON_COMMAND(ID_TREEFILECTRL_DELETE_FILE_BY_EXTENSION, &CFileExplorerCtrl::OnDeleteFileByExtension)
-	ON_COMMAND(ID_TREEFILECTRL_EDIT_WIH_MSPAINT, &CFileExplorerCtrl::OnEditWithMSPaint)
 	ON_COMMAND(ID_TREEFILECTRL_FILE_CHROME, &CFileExplorerCtrl::OnOpenInChrome)
 	ON_COMMAND(ID_TREEFILECTRL_FILE_EDGE, &CFileExplorerCtrl::OnOpenInEdge)
 	ON_COMMAND(ID_TREEFILECTRL_FILE_FIREFOX, &CFileExplorerCtrl::OnOpenInFireFox)
@@ -1870,11 +1869,6 @@ void CFileExplorerCtrl::OnContextMenu(CWnd*, CPoint point)
 			if (pItem->m_sFQPath.CompareNoCase(_T("C:\\")) == 0)
 			{
 				pPopup->DeleteMenu(ID_TREEFILECTRL_CREATEFILE, MF_BYCOMMAND); // do not allow create new file at C
-			}
-
-			if (!PathUtils::IsImageFile(strFile))
-			{
-				pPopup->DeleteMenu(ID_TREEFILECTRL_EDIT_WIH_MSPAINT, MF_BYCOMMAND);
 			}
 
 			const DWORD dwAttributes = GetFileAttributes(pItem->m_sFQPath);
@@ -5835,22 +5829,6 @@ void CFileExplorerCtrl::OnDeleteFileByExtension()
 		}
 	}
 	SetFocus();
-}
-
-void CFileExplorerCtrl::OnEditWithMSPaint()
-{
-	HTREEITEM hItem = GetSelectedItem();
-	if (hItem)
-	{
-		CString sPath(ItemToPath(hItem));
-		if (PathFileExists(sPath))
-		{
-			if (PathUtils::IsImageFile(sPath))
-			{
-				HostApplicaton(HOST_APP_TYPE::MS_PAINT, L"mspaint.exe", sPath, TRUE, FALSE);
-			}
-		}
-	}
 }
 
 void CFileExplorerCtrl::SetMaxHistory(_In_ size_t nMaxHistory)
