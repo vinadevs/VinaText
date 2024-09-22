@@ -160,8 +160,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_CURRENT_LANGUAGE, OnUpdateOptionsFileType)
 	ON_UPDATE_COMMAND_UI(ID_INDICATOR_ENCODING, OnUpdateOptionsEncoding)
 	ON_UPDATE_COMMAND_UI(ID_OPTIONS_VIEW_LINENUMBERS, OnUpdateOptionsViewLinenumbers)
-	ON_COMMAND(ID_EDIT_CLEAR, OnOptionsEditClear)
-	ON_UPDATE_COMMAND_UI(ID_EDIT_CLEAR, OnUpdateOptionsEditClear)
 	ON_COMMAND(ID_EDIT_REDO, OnOptionsEditRedo)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_REDO, OnUpdateOptionsEditRedo)
 	ON_COMMAND(ID_EDIT_SELECT_ALL, OnOptionsEditSelectAll)
@@ -415,7 +413,6 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_SPLIT_SELECTION_INTO_LINES, OnOptionsSplitSelectionIntoLines)
 	ON_COMMAND(ID_ADD_PREIVOUS_LINE_SELECTION, OnOptionsSelectionAddPreviousLine)
 	ON_COMMAND(ID_ADD_NEXT_LINE_SELECTION, OnOptionsSelectionAddNextLine)
-	ON_COMMAND(ID_DOCUMENT_URL_ESCAPSE, OnOptionsUrlEscapse)
 	ON_COMMAND(ID_INVERT_SELECTION, OnOptionsSelectionInvert)
 
 	// load auto complete data set from external resource
@@ -839,23 +836,30 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 						return TRUE;
 					}
 					break;
-				case VK_TAB:
-					break;
+				case VK_DELETE:
+				{
+					if (m_EditorCtrl.IsTextSelected())
+					{
+						m_EditorCtrl.Clear();
+					}
+					else 
+					{
+						m_EditorCtrl.RemoveTextRange(m_EditorCtrl.GetCurrentPosition(), 1);
+					}
+					return TRUE;
+				}
 				case VK_BACK:
 					m_bBackSpaceKeyDown = TRUE;
 					break;
 				case VK_F1:
 					OnDocumentTranlateText();
 					return TRUE;
-					break;
 				case VK_F3:
 					OnDocumentGoogleIt();
 					return TRUE;
-					break;
 				case VK_F10:
 					OnStepOver();
 					return TRUE;
-					break;
 				case VK_F11:
 					if ((GetKeyState(VK_SHIFT) & 0x8000))
 					{
@@ -867,7 +871,6 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 						OnStepInto();
 						return TRUE;
 					}
-					break;
 				case VK_F12:
 					if ((GetKeyState(VK_SHIFT) & 0x8000))
 					{
@@ -879,7 +882,6 @@ BOOL CEditorView::PreTranslateMessage(MSG * pMsg)
 						OnWatchVariableValue();
 						return TRUE;
 					}
-					break;
 				case VK_UP:
 					if ((GetKeyState(VK_CONTROL) & 0x8000) && (GetKeyState(VK_SHIFT) & 0x8000))
 					{
@@ -3367,33 +3369,6 @@ void CEditorView::OnUpdateOptionsEncoding(CCmdUI * pCmdUI)
 	strLine.Format(IDS_ENCODING_INDICATOR, strCodePageName);
 	pCmdUI->SetText(strLine);
 	pCmdUI->Enable(TRUE);
-}
-
-void CEditorView::OnOptionsEditClear()
-{
-	CString stSelectedScript = m_EditorCtrl.GetSelectedText();
-	if (stSelectedScript.IsEmpty())
-	{
-		int nCurrentLine = m_EditorCtrl.GetCurrentLine();
-		m_EditorCtrl.SetStartSelection(m_EditorCtrl.GetLineStartPosition(nCurrentLine-1));
-		m_EditorCtrl.SetEndSelection(m_EditorCtrl.GetLineEndPosition(nCurrentLine-1));
-	}
-	m_EditorCtrl.Clear();
-}
-
-void CEditorView::OnUpdateOptionsEditClear(CCmdUI * pCmdUI)
-{
-	CEditorDoc *pDoc = GetEditorDocument();
-	ASSERT(pDoc);
-	if (!pDoc) return;
-	if (m_EditorCtrl.IsReadOnlyEditor())
-	{
-		pCmdUI->Enable(FALSE);
-	}
-	else
-	{
-		pCmdUI->Enable(TRUE);
-	}
 }
 
 void CEditorView::OnOptionsEditRedo()
@@ -9173,19 +9148,6 @@ void CEditorView::OnOptionsGenerateTimeDate()
 {
 	CString strCurrentTime = OSUtils::DateToCStringABDHMSY(OSUtils::GetCurrentTimeEx());
 	CString strResultText = AfxCStringFormat(_T("> [Timedate Generator] result: %s"), strCurrentTime);
-	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
-}
-
-void CEditorView::OnOptionsUrlEscapse()
-{
-	CString strSelectedText = m_EditorCtrl.GetSelectedText();
-	if (strSelectedText.IsEmpty())
-	{
-		AfxMessageBox(_T("[Generator Error] Text selection is empty."));
-		return;
-	}
-	std::string strEncoded = CWebHandler::EncodeStringForCurl(AppUtils::CStringToStd(strSelectedText));
-	CString strResultText = AfxCStringFormat(_T("> [Url Generator] result: %s"), strEncoded);
 	LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strResultText, BasicColors::orange);
 }
 

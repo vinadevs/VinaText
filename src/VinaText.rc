@@ -572,7 +572,6 @@ BEGIN
             MENUITEM "Remove Word Right\tCtrl+Delete", ID_DELETE_RIGHT_WORD
             MENUITEM "Remove To Begin Line",        ID_DELETE_TO_BEGIN_LINE
             MENUITEM "Remove To End Line",          ID_DELETE_TO_END_LINE
-            MENUITEM "Remove Selection\tDelete",    ID_EDIT_CLEAR
             MENUITEM SEPARATOR
             MENUITEM "Remove Duplicate Lines (Keep Line)", ID_EDIT_REMOVE_DUPLICATE_LINE
             MENUITEM "Remove Duplicate Lines (Include Line)", ID_EDIT_REMOVE_DUPLICATE_LINE_NOT_KEEP
@@ -866,7 +865,6 @@ BEGIN
             MENUITEM "Generate SHA-256 String",     ID_TOOL_CREATE_SHA256
             MENUITEM "Generate SHA-1 String",       ID_TOOL_CREATE_SHA1
             MENUITEM "Generate Time-Date String",   ID_TOOL_CREATE_TIMEDATE
-            MENUITEM "Generate Url Escape String",  ID_DOCUMENT_URL_ESCAPSE
         END
     END
     POPUP "Extensions"
@@ -1390,10 +1388,10 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.14",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.15",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 4c1354d54ae25d6d2ac",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 30/07/2023",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 6cb1d54f806599e",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 22/09/2024",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -2137,12 +2135,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.14"
+            VALUE "FileVersion", "1.15"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.14"
+            VALUE "ProductVersion", "1.15"
         END
     END
     BLOCK "VarFileInfo"

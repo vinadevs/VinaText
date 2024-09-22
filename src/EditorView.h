@@ -113,8 +113,6 @@ public:
 	afx_msg void OnUpdateOptionsSelections(CCmdUI * pCmdUI);
 	afx_msg void OnUpdateOptionsFileType(CCmdUI* pCmdUI);
 	afx_msg void OnUpdateOptionsEncoding(CCmdUI* pCmdUI);
-	afx_msg void OnOptionsEditClear();
-	afx_msg void OnUpdateOptionsEditClear(CCmdUI* pCmdUI);
 	afx_msg void OnOptionsEditRedo();
 	afx_msg void OnUpdateOptionsEditRedo(CCmdUI* pCmdUI);
 	afx_msg void OnOptionsEditSelectAll();
@@ -291,7 +289,6 @@ public:
 	afx_msg void OnOptionsSplitSelectionIntoLines();
 	afx_msg void OnOptionsSelectionAddPreviousLine();
 	afx_msg void OnOptionsSelectionAddNextLine();
-	afx_msg void OnOptionsUrlEscapse();
 	afx_msg void OnOptionsSelectionInvert();
 
 	// run codes

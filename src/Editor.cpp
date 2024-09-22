@@ -90,6 +90,8 @@ BOOL CEditorCtrl::Create(const CString& strWindowName, DWORD dwStyle, const RECT
 	{
 		ASSERT(m_pDirectPtr); return FALSE;
 	}
+	// bind Delete key to clear selected text or delete character at caret
+	//SendMessage(SCI_ASSIGNCMDKEY, (SCK_DELETE + (SCMOD_NORM << 16)), SCI_CLEAR);
 	return TRUE;
 }
 
