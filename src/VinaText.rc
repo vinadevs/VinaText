@@ -572,7 +572,6 @@ BEGIN
             MENUITEM "Remove Word Right\tCtrl+Delete", ID_DELETE_RIGHT_WORD
             MENUITEM "Remove To Begin Line",        ID_DELETE_TO_BEGIN_LINE
             MENUITEM "Remove To End Line",          ID_DELETE_TO_END_LINE
-            MENUITEM "Remove Selection\tDelete",    ID_EDIT_CLEAR
             MENUITEM SEPARATOR
             MENUITEM "Remove Duplicate Lines (Keep Line)", ID_EDIT_REMOVE_DUPLICATE_LINE
             MENUITEM "Remove Duplicate Lines (Include Line)", ID_EDIT_REMOVE_DUPLICATE_LINE_NOT_KEEP
@@ -866,7 +865,6 @@ BEGIN
             MENUITEM "Generate SHA-256 String",     ID_TOOL_CREATE_SHA256
             MENUITEM "Generate SHA-1 String",       ID_TOOL_CREATE_SHA1
             MENUITEM "Generate Time-Date String",   ID_TOOL_CREATE_TIMEDATE
-            MENUITEM "Generate Url Escape String",  ID_DOCUMENT_URL_ESCAPSE
         END
     END
     POPUP "Extensions"
