@@ -203,9 +203,9 @@ HWND OSUtils::GetHWNDFromClassNameAndProgramPath(const CString& strClassName, co
 
 void OSUtils::KillProcessByID(std::vector<DWORD>& vecProcessID)
 {
-	for (auto const& process_id : vecProcessID)
+	for (auto const& processId : vecProcessID)
 	{
-		const HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, false, process_id);
+		const HANDLE hProcess = OpenProcess(PROCESS_TERMINATE, false, processId);
 		TerminateProcess(hProcess, 1);
 		CloseHandle(hProcess);
 	}

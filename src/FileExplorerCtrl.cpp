@@ -4487,7 +4487,9 @@ bool CFileExplorerCtrl::EnumNetwork(_In_opt_ NETRESOURCE* pParentNetResource, _I
 				if (CanDisplayNetworkItem(pNewItem))
 					InsertFileItem(hParent, pNewItem, 0, GetIconIndex(pNewItem->m_sFQPath), GetSelIconIndex(pNewItem->m_sFQPath), true);
 				else
-					delete pNewItem;
+				{
+					DELETE_POINTER_CPP(pNewItem);
+				}
 			}
 #pragma warning(suppress: 26481)
 			else if (lpnrDrv[i].dwDisplayType == RESOURCEDISPLAYTYPE_SERVER)
@@ -4512,7 +4514,9 @@ bool CFileExplorerCtrl::EnumNetwork(_In_opt_ NETRESOURCE* pParentNetResource, _I
 					}
 				}
 				else
-					delete pNewItem;
+				{
+					DELETE_POINTER_CPP(pNewItem);
+				}
 			}
 			else
 			{
@@ -4536,7 +4540,9 @@ bool CFileExplorerCtrl::EnumNetwork(_In_opt_ NETRESOURCE* pParentNetResource, _I
 					InsertFileItem(hParent, pNewItem, 0, nIcon, nSelIcon, false);
 				}
 				else
-					delete pNewItem;
+				{
+					DELETE_POINTER_CPP(pNewItem);
+				}
 			}
 			bGotChildren = true;
 		}
@@ -4590,8 +4596,10 @@ HTREEITEM CFileExplorerCtrl::DisplayNetworkComputer(_In_ HTREEITEM hParent, _In_
 			hItem = InsertFileItem(hParent, pNewItem, 0, GetIconIndex(sServer), GetSelIconIndex(sServer), false);
 		}
 	}
-	else
-		delete pNewItem;
+	else 
+	{
+		DELETE_POINTER_CPP(pNewItem);
+	}
 
 #pragma warning(suppress: 26487)
 	return hItem;
@@ -6120,7 +6128,7 @@ BOOL CFileExplorerCtrl::OnDeleteItem(NMHDR* pNMHDR, LRESULT* pResult)
 #pragma warning(suppress: 26490)
 		auto pItem = reinterpret_cast<CFileExplorerCtrlItemInfo*>(pNMTreeView->itemOld.lParam);
 #pragma warning(suppress: 26486)
-		delete pItem;
+		DELETE_POINTER_CPP(pItem);
 	}
 	*pResult = 0;
 	return FALSE; //Allow the message to be reflected again

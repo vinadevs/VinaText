@@ -11,7 +11,7 @@
 #include "HostManager.h"
 #include "AppUtil.h"
 
-CDocument * HostManager::HostApplicaton(const HOST_APP_TYPE & appType, const CString & strAppPathToHost, const CString & strAppArguments, BOOL bOpenFileMode, BOOL bActiveExistedTab)
+CDocument* HostManager::HostApplicaton(const HOST_APP_TYPE& appType, const CString& strAppPathToHost, const CString & strAppArguments, BOOL bOpenFileMode, BOOL bActiveExistedTab)
 {
 	CDocument* pExistedDoc = AppUtils::GetExistedDocument(strAppArguments);
 	if (pExistedDoc)

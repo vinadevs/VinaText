@@ -529,7 +529,7 @@ public:
   CString m_sDestinationCopyPath;
   int m_nExpandCounterLevel = 0;
 
-  typedef std::vector<std::pair<CString, CString>> ExplorerPathData;
+  using ExplorerPathData = std::vector<std::pair<CString, CString>>;
   ExplorerPathData m_ExplorerPathData;
   CSearchNavigatePathDlg* m_pSearchFileDlg = NULL;
 
