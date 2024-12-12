@@ -25,7 +25,7 @@ namespace HostManager
 		USE_FOREGROUNDWINDOWS,
 	};
 
-	struct STHostAppInfo
+	struct STHostAppInfo final
 	{
 		CString m_strAppName;
 		CString m_strAppPathToHost;

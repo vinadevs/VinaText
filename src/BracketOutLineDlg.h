@@ -15,7 +15,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // CBracketOutLineDlg 
 
-class CBracketOutLineDlg : public CDialogEx
+class CBracketOutLineDlg final : public CDialogEx
 {
 	DECLARE_DYNAMIC(CBracketOutLineDlg)
 public:
