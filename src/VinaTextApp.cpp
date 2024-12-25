@@ -202,16 +202,12 @@ BOOL CVinaTextApp::InitInstance()
 
 	if (g_SingleInstanceVinaText.IsAppAlreadyRunning() 
 		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW
-		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT)
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_RESTART_APP)
 	{
-		if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew ||
-			cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
+		if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
 		{
-			WPARAM wpCmdLine = NULL;
-			if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
-			{
-				g_SingleInstanceVinaText.SendMessageToExistedInstance(cmdInfo.m_strFileName);
-			}
+			g_SingleInstanceVinaText.SendMessageToExistedInstance(cmdInfo.m_strFileName);
 		}
 		return FALSE;
 	}
@@ -328,7 +324,9 @@ BOOL CVinaTextApp::InitInstance()
 			m_pEditorDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 		}
 	}
-	else if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew && cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW)
+	else if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_RESTART_APP)
 	{
 		if (!pMainFrame->LoadMDIState(GetRegSectionPath()))
 		{

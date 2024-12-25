@@ -1506,6 +1506,11 @@ void CMainFrame::OnDestroy()
 		m_wndSearchAndReplaceWindow.SaveDialogState();
 	}
 
+	if (AppSettingMgr.ShouldResetWindowPlacements())
+	{
+		OSUtils::DeleteRegistryKey(_T("VinaText-Vinadevs"));
+	}
+
 	CMDIFrameWndEx::OnDestroy();
 }
 
@@ -3749,7 +3754,7 @@ void CMainFrame::OnMDITabMoveToNewVinaText()
 	if (PathFileExists(strPathVinaTextExe))
 	{
 		// Open new app instance...
-		BOOL bRet = OSUtils::CreateWin32Process(strPathVinaTextExe + _T(" -moveFileToNewInstance ") + +_T(" \"") + strPathName + _T("\""));
+		BOOL bRet = OSUtils::CreateWin32Process(strPathVinaTextExe + _T(" -moveFileToNewInstance ") + _T(" \"") + strPathName + _T("\""));
 		if (bRet)
 		{
 			// Create new instance fine so close current doc

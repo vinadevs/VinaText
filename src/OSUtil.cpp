@@ -281,6 +281,25 @@ CString OSUtils::GetRegistryAppPath(const CString & strEXEName)
 	return strFullPath;
 }
 
+void OSUtils::DeleteRegistryKey(const CString& lpSubKey)
+{
+	HKEY hKey;
+	LONG result = RegOpenKeyEx(HKEY_CURRENT_USER, _T("Software"), 0, KEY_WRITE, &hKey);
+	if (result == ERROR_SUCCESS)
+	{
+		result = RegDeleteTree(hKey, lpSubKey);
+		if (result != ERROR_SUCCESS)
+		{
+			assert(FALSE);
+		}
+		RegCloseKey(hKey);
+	}
+	else
+	{
+		assert(FALSE);
+	}
+}
+
 void OSUtils::OpenFileInWebBrowser(const CString& strEXEName, const CString& strFilePath)
 {
 	if (strEXEName.Find(_T("MicrosoftEdge")) != -1)
@@ -394,7 +413,7 @@ void OSUtils::UseAdministrationHandler()
 		CString strPathVinaTextExe = PathUtils::GetVinaTextExePath();
 		if (PathFileExists(strPathVinaTextExe))
 		{
-			intptr_t bRet = reinterpret_cast<intptr_t>(::ShellExecute(AppUtils::GetMainFrame()->GetSafeHwnd(), TEXT("runas"), strPathVinaTextExe, _T(" -openWithAdminRight "), NULL, SW_SHOW));
+			const intptr_t bRet = reinterpret_cast<intptr_t>(::ShellExecute(AppUtils::GetMainFrame()->GetSafeHwnd(), TEXT("runas"), strPathVinaTextExe, _T(" -openWithAdminRight "), NULL, SW_SHOW));
 			if (bRet)
 			{
 				if (bRet < SUCCESS_SHELL_EXEC_RET)
@@ -403,7 +422,7 @@ void OSUtils::UseAdministrationHandler()
 				}
 				else
 				{
-					::PostQuitMessage(0);
+					AppUtils::GetMainFrame()->DestroyWindow();
 				}
 			}
 		}
@@ -413,4 +432,26 @@ void OSUtils::UseAdministrationHandler()
 			LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
 		}
 	} 
+}
+
+void OSUtils::RestartAppplication()
+{
+	CString strPathVinaTextExe = PathUtils::GetVinaTextExePath();
+	if (PathFileExists(strPathVinaTextExe))
+	{
+		const BOOL bRet = OSUtils::CreateWin32Process(strPathVinaTextExe + _T(" -restartApplication "));
+		if (!bRet)
+		{
+			AfxMessageBox(_T("[Error] Could not restart VinaText."));
+		}
+		else
+		{
+			AppUtils::GetMainFrame()->DestroyWindow();
+		}
+	}
+	else
+	{
+		CString strMsg; strMsg.Format(_T("[Path Error] \"%s\" does not exist...\n"), strPathVinaTextExe);
+		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(strMsg, BasicColors::orange);
+	}
 }
