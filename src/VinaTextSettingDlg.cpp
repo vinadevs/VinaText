@@ -161,7 +161,7 @@ void VinaTextSettingDlg::OnBnClickedButtonResetSettings()
 		AppSettingMgr.ResetAllSettings();
 		AppSettingMgr.ResetWindowPlacements();
 		AppUtils::CloseAllDocument();
-		OSUtils::RestartAppplication();
+		OSUtils::RestartApplication();
 	}
 }
 

@@ -87,7 +87,7 @@ namespace EditorLanguageDef
 		_T("js|jsx"),							// SCLEX_CPP
 		_T("ts|tsx"),							// SCLEX_CPP
 		_T("lua"),								// SCLEX_LUA
-		_T("m"),                                      // SCLEX_MATLAB// SCLEX_LUA
+		_T("m"),                                      // SCLEX_MATLAB
 		_T("pas|inc|pp"),                         // SCLEX_PASCAL
 		_T("pl|pm|cgi|pod"),                          // SCLEX_PERL
 		_T("php|php3|php4|php5|phps|phpt|phtml"),     // SCLEX_PHP

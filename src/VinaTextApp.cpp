@@ -44,6 +44,8 @@
 
 #include "pdf/UXReader/UXReaderLibrary.h"
 
+#include "UserCustomizeData.h"
+
 // COM/ATL
 #include <initguid.h>
 #include "VinaText_i.c"
@@ -140,7 +142,7 @@ END_MESSAGE_MAP()
 
 // CVinaTextApp construction
 
-CVinaTextApp::CVinaTextApp()
+CVinaTextApp::CVinaTextApp() : m_userCustomizeData{ std::make_unique<CUserCustomizeData>() }
 {
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;
@@ -301,6 +303,9 @@ BOOL CVinaTextApp::InitInstance()
 	//######## DLL Loading End, Must be unloaded in ExitInstance() ###############################//
 
 	EnableLoadWindowPlacement(FALSE);
+
+	// load user customized data
+	m_userCustomizeData->LoadSyntaxHighlightUserData();
 
 	// create main MDI Frame window
 	CMainFrame* pMainFrame = new CMainFrame;

@@ -434,7 +434,7 @@ void OSUtils::UseAdministrationHandler()
 	} 
 }
 
-void OSUtils::RestartAppplication()
+void OSUtils::RestartApplication()
 {
 	CString strPathVinaTextExe = PathUtils::GetVinaTextExePath();
 	if (PathFileExists(strPathVinaTextExe))

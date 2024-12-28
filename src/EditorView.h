@@ -257,6 +257,7 @@ public:
 	afx_msg void OnEnableUserLexerLexerBashBatch();
 	afx_msg void OnEnableUserLexerLexerVBPascal();
 	afx_msg void OnDisableUserLexer();
+	afx_msg void OnAddLexerForFileExtension();
 	afx_msg void OnOptionAlignLeft();
 	afx_msg void OnOptionAlignRight();
 	afx_msg void OnOptionAlignCenter();

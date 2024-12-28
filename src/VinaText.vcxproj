@@ -224,6 +224,7 @@
     <ClInclude Include="ComboboxMultiLine.h" />
     <ClInclude Include="ComboBoxExtList.h" />
     <ClInclude Include="ComboboxRegexHelper.h" />
+    <ClInclude Include="UserCustomizeData.h" />
     <ClInclude Include="OpenTabWindows.h" />
     <ClInclude Include="DiffEngine.h" />
     <ClInclude Include="EditorSettingDlg.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="ComboboxMultiLine.cpp" />
     <ClCompile Include="ComboBoxExtList.cpp" />
     <ClCompile Include="ComboboxRegexHelper.cpp" />
+    <ClCompile Include="UserCustomizeData.cpp" />
     <ClCompile Include="OpenTabWindows.cpp" />
     <ClCompile Include="DiffEngine.cpp" />
     <ClCompile Include="EditorSettingDlg.cpp" />

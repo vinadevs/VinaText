@@ -44,5 +44,5 @@ namespace OSUtils
 	void		OpenFileInWebBrowser(const CString & strEXEName, const CString & strFilePath);
 	std::wstring GetCMDConsoleResult(const wchar_t * cmd);
 	void	    UseAdministrationHandler();
-	void	    RestartAppplication();
+	void	    RestartApplication();
 }

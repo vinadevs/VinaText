@@ -728,6 +728,9 @@
     <ClInclude Include="WndResizer.h">
       <Filter>Component GUI\MFC GUI</Filter>
     </ClInclude>
+    <ClInclude Include="UserCustomizeData.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EditorDatabase.cpp">
@@ -1263,6 +1266,9 @@
     </ClCompile>
     <ClCompile Include="WndResizer.cpp">
       <Filter>Component GUI\MFC GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="UserCustomizeData.cpp">
+      <Filter>Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

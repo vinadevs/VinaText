@@ -299,6 +299,7 @@ BEGIN_MESSAGE_MAP(CEditorView, CViewBase)
 	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_BASH_BATCH, OnEnableUserLexerLexerBashBatch)
 	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_VB_PASCAL, OnEnableUserLexerLexerVBPascal)
 	ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_NON, OnDisableUserLexer)
+    ON_COMMAND(ID_DOCUMENT_TEXT_LEXER_EXTENSION, OnAddLexerForFileExtension)
 	ON_COMMAND(ID_EDIT_ALIGN_LEFT, OnOptionAlignLeft)
 	ON_COMMAND(ID_EDIT_ALIGN_RIGHT, OnOptionAlignRight)
 	ON_COMMAND(ID_EDIT_ALIGN_CENTER, OnOptionAlignCenter)
@@ -9062,6 +9063,19 @@ void CEditorView::OnEnableUserLexerLexerVBPascal()
 void CEditorView::OnDisableUserLexer()
 {
 	ChangeUserLexer(_T(""));
+}
+
+void CEditorView::OnAddLexerForFileExtension()
+{
+	const CString syntaxHighlightUserDataPath = PathUtils::GetSyntaxHighlightUserDataPath();
+	if (PathFileExists(syntaxHighlightUserDataPath))
+	{
+		AppUtils::CreateDocumentFromFile(syntaxHighlightUserDataPath);
+	}
+	else
+	{
+		AfxMessageBoxFormat(MB_ICONWARNING, _T("[Path Error] \"%s\" does not exist!\n"), syntaxHighlightUserDataPath);
+	}
 }
 
 void CEditorView::ChangeToEditorReadOnly()

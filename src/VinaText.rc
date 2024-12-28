@@ -504,6 +504,8 @@ BEGIN
             MENUITEM "Color Style VisualBasic/Pascal", ID_DOCUMENT_TEXT_LEXER_VB_PASCAL
             MENUITEM SEPARATOR
             MENUITEM "Remove Current Color Style",  ID_DOCUMENT_TEXT_LEXER_NON
+            MENUITEM SEPARATOR
+            MENUITEM "Syntax Highlight For File Extension...", ID_DOCUMENT_TEXT_LEXER_EXTENSION
         END
         MENUITEM SEPARATOR
         POPUP "Convert"

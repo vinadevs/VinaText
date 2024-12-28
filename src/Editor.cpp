@@ -33,6 +33,8 @@
 #include "EditorColorDark.h"
 #include "EditorColorLight.h"
 
+#include "UserCustomizeData.h"
+
 CEditorCtrl::CEditorCtrl()
 {
 	m_wideBuf = std::make_unique<wchar_t[]>(m_wideBufSize);
@@ -3050,19 +3052,40 @@ BOOL CEditorCtrl::SaveEditorDataToFile(const CString& szFile, CString& m_strLexe
 CString CEditorCtrl::GetLexerNameFromExtension(const CString& szExtension)
 {
 	int lexerIndex = 0;
-	CString pExtension = EditorLanguageDef::arrLangExtensions[lexerIndex];
-	while (!pExtension.IsEmpty())
+	const auto& userArrLangExtensions = AppUtils::GetVinaTextApp()->m_userCustomizeData->GetSyntaxHighlightUserData();
+	if (userArrLangExtensions.empty())
 	{
-		CLexingParser parser(EditorLanguageDef::arrLangExtensions[lexerIndex], _T("|"));
-		while (parser.HasMoreTokens())
+		CString extension = EditorLanguageDef::arrLangExtensions[lexerIndex];
+		while (!extension.IsEmpty())
 		{
-			if (parser.Next().CompareNoCase(szExtension) == 0)
+			CLexingParser parser(EditorLanguageDef::arrLangExtensions[lexerIndex], _T("|"));
+			while (parser.HasMoreTokens())
 			{
-				return AppUtils::StdToCString(EditorLanguageDef::arrLexerNames[lexerIndex]);
+				if (parser.Next().CompareNoCase(szExtension) == 0)
+				{
+					return AppUtils::StdToCString(EditorLanguageDef::arrLexerNames[lexerIndex]);
+				}
 			}
+			lexerIndex++;
+			extension = EditorLanguageDef::arrLangExtensions[lexerIndex];
 		}
-		lexerIndex++;
-		pExtension = EditorLanguageDef::arrLangExtensions[lexerIndex];
+	}
+	else
+	{
+		CString extension = userArrLangExtensions[lexerIndex];
+		while (!extension.IsEmpty())
+		{
+			CLexingParser parser(userArrLangExtensions[lexerIndex], _T("|"));
+			while (parser.HasMoreTokens())
+			{
+				if (parser.Next().CompareNoCase(szExtension) == 0)
+				{
+					return AppUtils::StdToCString(EditorLanguageDef::arrLexerNames[lexerIndex]);
+				}
+			}
+			lexerIndex++;
+			extension = userArrLangExtensions[lexerIndex];
+		}
 	}
 	return LEXER_PLAIN_TEXT;
 }
