@@ -1,0 +1,55 @@
+//////////////////////////////////////////////////////////////////////////
+// 
+//    Vinatext Syntax Highlight Settings
+// -----------------------------------------------------------------------
+// This is a part of Vinatext Project
+// Copyright(C) www.vinatext.dev - vinadevs
+// This file can be used, distributed or modified under MIT license
+//
+// HOW TO SUPPORT SYNTAX HIGHLIGHT FOR A NEW FILE FORMAT
+// IF YOU WANT FILE EXTENTION .vala USING CSHAPE (C#) HIGHLIGHT SYNTAX
+// - 1. ADD "vala" AFTER "|" EX: SYNTAX_HIGHLIGHT_CSHAPE : cs|vala
+// - 2. SAVE THIS FILE AND REOPEN VINATEXT
+//////////////////////////////////////////////////////////////////////////
+
+SYNTAX_HIGHLIGHT_PYTHON        :   py|pyw|
+SYNTAX_HIGHLIGHT_CPP           :   cpp|cxx|h|hh|hpp|hxx|cc|
+SYNTAX_HIGHLIGHT_ADA           :   ada|ads|adb|
+SYNTAX_HIGHLIGHT_ASM           :   asm|
+SYNTAX_HIGHLIGHT_INNOSETUP     :   iss|
+SYNTAX_HIGHLIGHT_BASH          :   sh|
+SYNTAX_HIGHLIGHT_BATCH         :   bat|cmd|nt|
+SYNTAX_HIGHLIGHT_C             :   c|
+SYNTAX_HIGHLIGHT_CMAKE         :   cmake|
+SYNTAX_HIGHLIGHT_CSHAPE        :   cs|vala|
+SYNTAX_HIGHLIGHT_CSS           :   css|
+SYNTAX_HIGHLIGHT_ERLANG        :   erl|hrl|
+SYNTAX_HIGHLIGHT_FORTRAN       :   f|for|f90|f95|f77|
+SYNTAX_HIGHLIGHT_HTML          :   htm|html|shtml|htt|cfm|tpl|hta|
+SYNTAX_HIGHLIGHT_JAVA          :   java|
+SYNTAX_HIGHLIGHT_JAVASCRIPT    :   js|jsx|
+SYNTAX_HIGHLIGHT_TYPESCRIPT    :   ts|tsx|
+SYNTAX_HIGHLIGHT_LUA           :   lua|
+SYNTAX_HIGHLIGHT_MATLAB        :   m|
+SYNTAX_HIGHLIGHT_PASCAL        :   pas|inc|pp|
+SYNTAX_HIGHLIGHT_PERL          :   pl|pm|cgi|pod|
+SYNTAX_HIGHLIGHT_PHP           :   php|php3|php4|php5|phps|phpt|phtml|
+SYNTAX_HIGHLIGHT_POWERSHELL    :   ps1|psm1|
+SYNTAX_HIGHLIGHT_RUBY          :   rb|
+SYNTAX_HIGHLIGHT_RUST          :   rs|
+SYNTAX_HIGHLIGHT_SQL           :   sql|spec|body|sps|spb|sf|sp|
+SYNTAX_HIGHLIGHT_TCL           :   tcl|
+SYNTAX_HIGHLIGHT_VISUALBASIC   :   vb|vbs|frm|cls|ctl|pag|dsr|dob|
+SYNTAX_HIGHLIGHT_VERILOG       :   v|sv|vh|svh|
+SYNTAX_HIGHLIGHT_VHDL          :   vhd|vhdl|
+SYNTAX_HIGHLIGHT_XML           :   xml|gcl|xsl|svg|xul|xsd|dtd|xslt|axl|
+SYNTAX_HIGHLIGHT_JSON          :   json|
+SYNTAX_HIGHLIGHT_GOLANG        :   go|
+SYNTAX_HIGHLIGHT_MARKDOWN      :   md|markdown|rmd|
+SYNTAX_HIGHLIGHT_PROTOBUF      :   proto|
+SYNTAX_HIGHLIGHT_R             :   r|
+SYNTAX_HIGHLIGHT_LICENSE       :   lic|
+SYNTAX_HIGHLIGHT_RESOURCE      :   rc|
+SYNTAX_HIGHLIGHT_AUTOIT        :   au3|
+SYNTAX_HIGHLIGHT_BASIC         :   bas|
+SYNTAX_HIGHLIGHT_VCPROJECT     :   vcxproj|filters|user|vcproj|csproj|csxproj|vbproj|dbproj|sln|
