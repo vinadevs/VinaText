@@ -44,6 +44,8 @@
 
 #include "pdf/UXReader/UXReaderLibrary.h"
 
+#include "UserCustomizeData.h"
+
 // COM/ATL
 #include <initguid.h>
 #include "VinaText_i.c"
@@ -140,7 +142,7 @@ END_MESSAGE_MAP()
 
 // CVinaTextApp construction
 
-CVinaTextApp::CVinaTextApp()
+CVinaTextApp::CVinaTextApp() : m_userCustomizeData{ std::make_unique<CUserCustomizeData>() }
 {
 	// support Restart Manager
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;
@@ -202,16 +204,12 @@ BOOL CVinaTextApp::InitInstance()
 
 	if (g_SingleInstanceVinaText.IsAppAlreadyRunning() 
 		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW
-		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT)
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_RESTART_APP)
 	{
-		if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew ||
-			cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
+		if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
 		{
-			WPARAM wpCmdLine = NULL;
-			if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileOpen)
-			{
-				g_SingleInstanceVinaText.SendMessageToExistedInstance(cmdInfo.m_strFileName);
-			}
+			g_SingleInstanceVinaText.SendMessageToExistedInstance(cmdInfo.m_strFileName);
 		}
 		return FALSE;
 	}
@@ -306,6 +304,9 @@ BOOL CVinaTextApp::InitInstance()
 
 	EnableLoadWindowPlacement(FALSE);
 
+	// load user customized data
+	m_userCustomizeData->LoadSyntaxHighlightUserData();
+
 	// create main MDI Frame window
 	CMainFrame* pMainFrame = new CMainFrame;
 	if (!pMainFrame || !pMainFrame->LoadFrame(IDR_MAINFRAME))
@@ -328,7 +329,9 @@ BOOL CVinaTextApp::InitInstance()
 			m_pEditorDocTemplate->OpenNewDocument(NULL, FALSE, TRUE);
 		}
 	}
-	else if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew && cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW)
+	else if (cmdInfo.m_nShellCommand == CCommandLineInfo::FileNew
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_MOVE_TO_NEW_WINDOW
+		&& cmdInfo.m_cmdOption != VINATEXT_CMD_OPTION::VINATEXT_CMD_RESTART_APP)
 	{
 		if (!pMainFrame->LoadMDIState(GetRegSectionPath()))
 		{

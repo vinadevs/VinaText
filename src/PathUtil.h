@@ -26,6 +26,7 @@ namespace PathUtils
 	CString	GetUserExtensionPath();
 	CString	GetVinaTextPackagePath();
 	CString	GetVinaTextLocalizationPath();
+	CString GetSyntaxHighlightUserDataPath();
 	CString GetAbsolutePath(const CString& strPath);
 	CString GetDataBaseFileFilter();
 	CString	GetWindowSystemPath();

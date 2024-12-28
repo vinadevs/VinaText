@@ -504,6 +504,8 @@ BEGIN
             MENUITEM "Color Style VisualBasic/Pascal", ID_DOCUMENT_TEXT_LEXER_VB_PASCAL
             MENUITEM SEPARATOR
             MENUITEM "Remove Current Color Style",  ID_DOCUMENT_TEXT_LEXER_NON
+            MENUITEM SEPARATOR
+            MENUITEM "Syntax Highlight For File Extension...", ID_DOCUMENT_TEXT_LEXER_EXTENSION
         END
         MENUITEM SEPARATOR
         POPUP "Convert"
@@ -1388,10 +1390,10 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,102,123,55,19,WS_GROUP
     CONTROL         "https://www.vinatext.dev",IDC_MFCLINK_VINATEXT,"MfcLink",WS_TABSTOP,112,102,105,12
     LTEXT           "Home Page:",IDC_STATIC,64,103,40,8
-    LTEXT           "Release Version: 1.15",IDC_STATIC,64,32,125,8
+    LTEXT           "Release Version: 1.16",IDC_STATIC,64,32,125,8
     LTEXT           "License Note: Freeware (MIT)",IDC_STATIC,64,50,100,8
-    LTEXT           "Commit Hash: 6cb1d54f806599e",IDC_STATIC,63,67,180,8
-    LTEXT           "Release Date: 22/09/2024",IDC_STATIC,64,84,139,8
+    LTEXT           "Commit Hash: 448291a255115e7",IDC_STATIC,63,67,180,8
+    LTEXT           "Release Date: 28/12/2024",IDC_STATIC,64,84,139,8
 END
 
 IDD_BRACKET_OUTLINE DIALOGEX 0, 0, 227, 216
@@ -2135,12 +2137,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Vinadevs"
             VALUE "FileDescription", "VinaText"
-            VALUE "FileVersion", "1.15"
+            VALUE "FileVersion", "1.16"
             VALUE "InternalName", "VinaText.exe"
             VALUE "LegalCopyright", "Vinadevs.  All rights reserved."
             VALUE "OriginalFilename", "VinaText.exe"
             VALUE "ProductName", "VinaText"
-            VALUE "ProductVersion", "1.15"
+            VALUE "ProductVersion", "1.16"
         END
     END
     BLOCK "VarFileInfo"

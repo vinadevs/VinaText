@@ -40,7 +40,9 @@ namespace OSUtils
 	void		PatseClipboardToCMD(HWND hCMD);
 	void		ChangeIME(HWND hWnd, DWORD dwNewKeybLayout, BOOL bOpen);
 	CString		GetRegistryAppPath(const CString& strEXEName);
+	void        DeleteRegistryKey(const CString& lpSubKey);
 	void		OpenFileInWebBrowser(const CString & strEXEName, const CString & strFilePath);
 	std::wstring GetCMDConsoleResult(const wchar_t * cmd);
 	void	    UseAdministrationHandler();
+	void	    RestartApplication();
 }

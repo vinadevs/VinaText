@@ -22,7 +22,7 @@ constexpr int DEFAULT_LFWEIGHT = 10;
 IMPLEMENT_DYNAMIC(GeneralSettingDlg, CDialogEx)
 
 GeneralSettingDlg::GeneralSettingDlg(CWnd* pParent /*=nullptr*/)
-	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent), m_bUseInstallPathAsAppDataPath(FALSE)
+	: CDialogEx(IDD_DIALOG_SETTING_GENERAL, pParent)
 {
 	m_pScrollHelper = std::make_unique<CScrollHelper>();
 	m_pScrollHelper->AttachWnd(this);

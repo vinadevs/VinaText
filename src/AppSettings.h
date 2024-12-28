@@ -54,6 +54,8 @@ public:
 	void SaveRecentEditorCaretInfo(const CString& strPathName);
 	RecentEditorInfo GetRecentEditorCaretInfo(const CString& strPathName);
 	void ResetEditorCaretInfo();
+	void ResetWindowPlacements();
+	BOOL ShouldResetWindowPlacements() const;
 
 	// save/load from file
 	BOOL SaveSettingData();
@@ -106,7 +108,7 @@ public:
 	BOOL m_bEnableShowHideFoldingMargin = FALSE;
 	BOOL m_bAutoSaveFileWhenCloseApp = TRUE;
 	BOOL m_bAutoAddNewLineAtTheEOF = FALSE;
-	BOOL m_bUseInstallPathAsAppDataPath = FALSE;
+	BOOL m_bUseInstallPathAsAppDataPath = TRUE;
 	BOOL m_bUseUserIndentationSettings = FALSE;
 
 	// editor style
@@ -179,6 +181,10 @@ private:
 	// Document ID
 	typedef std::unordered_set<int> DocumentEmptyIDBuffer;
 	DocumentEmptyIDBuffer m_DocIDBuffer;
+
+	// reset workspace
+	BOOL m_bResetWindowPlacements = FALSE;
+
 	// singleton
 	SINGLETON_IMPLEMENT(CAppSettings)
 };

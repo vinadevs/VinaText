@@ -17,6 +17,10 @@
 #include "HostManager.h"
 #include "VinaText_i.h"
 
+#include <memory>
+
+class CUserCustomizeData;
+
 class CVinaTextApp : public CWinAppEx
 {
 public:
@@ -90,6 +94,9 @@ public:
 	CMultiDocTemplateEx* m_pHostDocTemplate = NULL;
 	CMultiDocTemplateEx* m_pFileExplorerDocTemplate = NULL;
 	CMultiDocTemplateEx* m_pWebDocTemplate = NULL;
+
+	// Customize User Data
+	std::unique_ptr<CUserCustomizeData> m_userCustomizeData;
 
 	DECLARE_MESSAGE_MAP()
 protected:

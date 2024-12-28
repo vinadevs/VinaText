@@ -15,6 +15,7 @@
 #include "AppSettings.h"
 #include "RAIIUtils.h"
 #include "MainFrm.h"
+#include "afxtaskdialog.h"
 
 // VinaTextSettingDlg dialog
 
@@ -128,7 +129,25 @@ void VinaTextSettingDlg::OnBnClickedOk()
 
 void VinaTextSettingDlg::OnBnClickedButtonResetSettings()
 {
-	if (IDYES == AfxMessageBox(_T("[Warning] This operation will reset all your settings to original default state, do you want to reset?"), MB_YESNO | MB_ICONWARNING))
+	constexpr int RESET_SETTINGS_ONLY_APP_ID = 501;
+	constexpr int RESET_ALL_AND_RESTART_APP_ID = 502;
+	constexpr int CANCEL_ID = 503;
+	auto fTaskResetDialog = [&]() -> BOOL
+	{
+		CString strMessage = _T("[Warning] This operation will reset all your settings to original default state, please choose an action:");
+		CTaskDialog dlg(_T(""), strMessage, _T("VinaText"), 0/*TDCBF_OK_BUTTON*/);
+		dlg.SetMainIcon(TD_WARNING_ICON);
+		dlg.AddCommandControl(RESET_SETTINGS_ONLY_APP_ID, _T("Reset all settings but do NOT restart Vinatext."));
+		dlg.AddCommandControl(RESET_ALL_AND_RESTART_APP_ID, _T("Reset all settings and window placements then restart Vinatext."));
+		dlg.AddCommandControl(CANCEL_ID, _T("Cancel"));
+		dlg.SetDialogWidth(300);
+		dlg.SetDefaultCommandControl(RESET_SETTINGS_ONLY_APP_ID);
+		dlg.DoModal();
+		return dlg.GetSelectedCommandControlID();
+	};
+
+	int nUserOption = fTaskResetDialog();
+	if (nUserOption == RESET_SETTINGS_ONLY_APP_ID)
 	{
 		AppSettingMgr.ResetAllSettings();
 		// Load original settings to dialog setting
@@ -136,6 +155,13 @@ void VinaTextSettingDlg::OnBnClickedButtonResetSettings()
 		// Update original to App GUI
 		UpdateSettings(TRUE);
 		LOG_OUTPUT_MESSAGE_ACTIVE_PANE(_T("> [Prerefence] all settings reset to original default state..."));
+	}
+	else if (nUserOption == RESET_ALL_AND_RESTART_APP_ID)
+	{
+		AppSettingMgr.ResetAllSettings();
+		AppSettingMgr.ResetWindowPlacements();
+		AppUtils::CloseAllDocument();
+		OSUtils::RestartApplication();
 	}
 }
 

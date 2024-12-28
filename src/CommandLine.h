@@ -16,6 +16,7 @@ enum class VINATEXT_CMD_OPTION : unsigned int
 	VINATEXT_CMD_OPTION_INIT = 0,
 	VINATEXT_CMD_MOVE_TO_NEW_WINDOW = 1,
 	VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT = 2,
+	VINATEXT_CMD_RESTART_APP = 3,
 }; 
 
 class CCommandLineInfoEx : public CCommandLineInfo

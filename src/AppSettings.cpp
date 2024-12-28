@@ -51,7 +51,7 @@ void CAppSettings::ResetAllSettings()
 	m_bEnableShowHideFoldingMargin = FALSE;
 	m_bAutoSaveFileWhenCloseApp = TRUE;
 	m_bAutoAddNewLineAtTheEOF = FALSE;
-	m_bUseInstallPathAsAppDataPath = FALSE;
+	m_bUseInstallPathAsAppDataPath = TRUE;
 	m_bUseUserIndentationSettings = FALSE;
 
 	// folder bar
@@ -373,6 +373,16 @@ CString CAppSettings::CreateDocumentUndefTitle()
 void CAppSettings::ResetEditorCaretInfo()
 {
 	m_RecentEditorCaretInfo.clear();
+}
+
+void CAppSettings::ResetWindowPlacements()
+{
+	m_bResetWindowPlacements = TRUE;
+}
+
+BOOL CAppSettings::ShouldResetWindowPlacements() const
+{
+	return m_bResetWindowPlacements;
 }
 
 void CAppSettings::SaveRecentEditorCaretInfo(const CString& strPathName)

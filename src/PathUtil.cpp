@@ -359,6 +359,11 @@ CString PathUtils::GetVinaTextLocalizationPath()
 	return strPath;
 }
 
+CString PathUtils::GetSyntaxHighlightUserDataPath()
+{
+	return PathUtils::GetVinaTextPackagePath() + _T("data-packages\\syntax-highlight-file-extension.dat");;
+}
+
 CString PathUtils::GetAbsolutePath(const CString& strPath)
 {
 	TCHAR path[_MAX_PATH];

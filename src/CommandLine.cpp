@@ -35,6 +35,11 @@ void CCommandLineInfoEx::ParseParam(const TCHAR* pszParam, BOOL bFlag, BOOL bLas
 			m_cmdOption = VINATEXT_CMD_OPTION::VINATEXT_CMD_REOPEN_WITH_ADMIN_RIGHT;
 			return;
 		}
+		else if (strParam == _T("restartApplication"))
+		{
+			m_cmdOption = VINATEXT_CMD_OPTION::VINATEXT_CMD_RESTART_APP;
+			return;
+		}
 	}
 	CCommandLineInfo::ParseParam(pszParam, bFlag, bLast);
 }
