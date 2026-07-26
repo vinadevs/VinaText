@@ -1,0 +1,6065 @@
+{
+  "_generatedBy": "tools/extract_language_data.py",
+  "_source": "src/EditorColorDark.h",
+  "name": "dark",
+  "palette": {
+    "Orange": "#FD971F",
+    "black": "#000000",
+    "blue": "#0000FF",
+    "builtin": "#66D9EF",
+    "comment": "#A6E22E",
+    "comment_monokai": "#AAAAAA",
+    "currentline": "#F92672",
+    "cyan": "#00FFFF",
+    "darkorange": "#FF8C00",
+    "definition": "#00FF00",
+    "editorCaretColor": "#FFFFFF",
+    "editorFolderBackColor": "#808080",
+    "editorFolderForeColor": "#505050",
+    "editorIndicatorColor": "#FFFFFF",
+    "editorMarginBarColor": "#505050",
+    "editorSpellCheckColor": "#EBF500",
+    "editorTagMatchColor": "#EBF500",
+    "editorTextColor": "#FFFFFF",
+    "green": "#00FF00",
+    "instance": "#924900",
+    "keyword": "#FF2878",
+    "light_orange": "#FF8C00",
+    "linenumber": "#FFFFFF",
+    "magenta": "#FF00FF",
+    "number": "#AE81FF",
+    "olive": "#808000",
+    "orange": "#FF4500",
+    "peachpuff": "#FFC8B9",
+    "red": "#FF0000",
+    "string": "#E69F66",
+    "white": "#FFFFFF",
+    "yellow": "#EBF500",
+    "yellowgreen": "#9ACD32"
+  },
+  "languages": {
+    "Text": [
+      {
+        "style": "SCE_P_COMMENTLINE",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_COMMENTBLOCK",
+        "value": 12,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_NUMBER",
+        "value": 2,
+        "color": "yellowgreen"
+      },
+      {
+        "style": "SCE_P_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_CLASSNAME",
+        "value": 8,
+        "color": "cyan"
+      },
+      {
+        "style": "SCE_P_STRING",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_CHARACTER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_OPERATOR",
+        "value": 10,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_DEFNAME",
+        "value": 9,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_P_STRINGEOL",
+        "value": 13,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_WORD",
+        "value": 5,
+        "color": "darkorange"
+      },
+      {
+        "style": "SCE_P_WORD2",
+        "value": 14,
+        "color": "darkorange"
+      },
+      {
+        "style": "SCE_P_TRIPLE",
+        "value": 6,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_TRIPLEDOUBLE",
+        "value": 7,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_DECORATOR",
+        "value": 15,
+        "color": "builtin"
+      }
+    ],
+    "ada": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "asm": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "keyword"
+      }
+    ],
+    "autoit": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "keyword"
+      }
+    ],
+    "bash": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "batch": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "editorTextColor"
+      }
+    ],
+    "c": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "cmake": [
+      {
+        "style": "SCE_CMAKE_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_CMAKE_COMMENT",
+        "value": 1,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_CMAKE_STRINGDQ",
+        "value": 2,
+        "color": "string"
+      },
+      {
+        "style": "SCE_CMAKE_STRINGLQ",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_CMAKE_STRINGRQ",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_CMAKE_COMMANDS",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CMAKE_PARAMETERS",
+        "value": 6,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_VARIABLE",
+        "value": 7,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_USERDEFINED",
+        "value": 8,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_WHILEDEF",
+        "value": 9,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_FOREACHDEF",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_IFDEFINEDEF",
+        "value": 11,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_CMAKE_MACRODEF",
+        "value": 12,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_CMAKE_STRINGVAR",
+        "value": 13,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CMAKE_NUMBER",
+        "value": 14,
+        "color": "number"
+      }
+    ],
+    "cpp": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "cs": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "css": [
+      {
+        "style": "SCE_CSS_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_CSS_TAG",
+        "value": 1,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_CLASS",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_CSS_PSEUDOCLASS",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_UNKNOWN_PSEUDOCLASS",
+        "value": 4,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_CSS_OPERATOR",
+        "value": 5,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_CSS_IDENTIFIER",
+        "value": 6,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CSS_UNKNOWN_IDENTIFIER",
+        "value": 7,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CSS_VALUE",
+        "value": 8,
+        "color": "number"
+      },
+      {
+        "style": "SCE_CSS_COMMENT",
+        "value": 9,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_CSS_ID",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_CSS_IMPORTANT",
+        "value": 11,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_CSS_DIRECTIVE",
+        "value": 12,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_DOUBLESTRING",
+        "value": 13,
+        "color": "string"
+      },
+      {
+        "style": "SCE_CSS_SINGLESTRING",
+        "value": 14,
+        "color": "string"
+      },
+      {
+        "style": "SCE_CSS_IDENTIFIER2",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_ATTRIBUTE",
+        "value": 16,
+        "color": "peachpuff"
+      },
+      {
+        "style": "SCE_CSS_IDENTIFIER3",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_PSEUDOELEMENT",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_EXTENDED_IDENTIFIER",
+        "value": 19,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_EXTENDED_PSEUDOCLASS",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_EXTENDED_PSEUDOELEMENT",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_MEDIA",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_CSS_VARIABLE",
+        "value": 23,
+        "color": "editorTextColor"
+      }
+    ],
+    "erlang": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "flexlicense": [
+      {
+        "style": "SCE_P_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_COMMENTLINE",
+        "value": 1,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_NUMBER",
+        "value": 2,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_STRING",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_CHARACTER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_TRIPLE",
+        "value": 6,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_TRIPLEDOUBLE",
+        "value": 7,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_CLASSNAME",
+        "value": 8,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_DEFNAME",
+        "value": 9,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_P_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_COMMENTBLOCK",
+        "value": 12,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_STRINGEOL",
+        "value": 13,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_WORD2",
+        "value": 14,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_DECORATOR",
+        "value": 15,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_FSTRING",
+        "value": 16,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FCHARACTER",
+        "value": 17,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FTRIPLE",
+        "value": 18,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FTRIPLEDOUBLE",
+        "value": 19,
+        "color": "string"
+      }
+    ],
+    "fortran": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "freebasic": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "go": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "editorTextColor"
+      }
+    ],
+    "html": [
+      {
+        "style": "SCE_H_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_H_TAG",
+        "value": 1,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_H_TAGUNKNOWN",
+        "value": 2,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_H_ATTRIBUTE",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_ATTRIBUTEUNKNOWN",
+        "value": 4,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_NUMBER",
+        "value": 5,
+        "color": "number"
+      },
+      {
+        "style": "SCE_H_DOUBLESTRING",
+        "value": 6,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_H_SINGLESTRING",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_H_OTHER",
+        "value": 8,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_H_COMMENT",
+        "value": 9,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_H_ENTITY",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_H_TAGEND",
+        "value": 11,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_H_XMLSTART",
+        "value": 12,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_XMLEND",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_H_SCRIPT",
+        "value": 14,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_ASP",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_ASPAT",
+        "value": 16,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_CDATA",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_QUESTION",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_H_VALUE",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_H_XCCOMMENT",
+        "value": 20,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_DEFAULT",
+        "value": 21,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_COMMAND",
+        "value": 22,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_1ST_PARAM",
+        "value": 23,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_DOUBLESTRING",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_H_SGML_SIMPLESTRING",
+        "value": 25,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_ERROR",
+        "value": 26,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_SPECIAL",
+        "value": 27,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_ENTITY",
+        "value": 28,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_COMMENT",
+        "value": 29,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_1ST_PARAM_COMMENT",
+        "value": 30,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_H_SGML_BLOCK_DEFAULT",
+        "value": 31,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_HJ_START",
+        "value": 40,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_HJ_DEFAULT",
+        "value": 41,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_HJ_COMMENT",
+        "value": 42,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJ_COMMENTLINE",
+        "value": 43,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJ_COMMENTDOC",
+        "value": 44,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJ_NUMBER",
+        "value": 45,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HJ_WORD",
+        "value": 46,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_HJ_KEYWORD",
+        "value": 47,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_HJ_DOUBLESTRING",
+        "value": 48,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HJ_SINGLESTRING",
+        "value": 49,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HJ_SYMBOLS",
+        "value": 50,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HJ_STRINGEOL",
+        "value": 51,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_HJ_REGEX",
+        "value": 52,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HJA_START",
+        "value": 55,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_HJA_DEFAULT",
+        "value": 56,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HJA_COMMENT",
+        "value": 57,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJA_COMMENTLINE",
+        "value": 58,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJA_COMMENTDOC",
+        "value": 59,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HJA_NUMBER",
+        "value": 60,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HJA_WORD",
+        "value": 61,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_HJA_KEYWORD",
+        "value": 62,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_HJA_DOUBLESTRING",
+        "value": 63,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HJA_SINGLESTRING",
+        "value": 64,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HJA_SYMBOLS",
+        "value": 65,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HJA_STRINGEOL",
+        "value": 66,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_HJA_REGEX",
+        "value": 67,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HB_START",
+        "value": 70,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HB_DEFAULT",
+        "value": 71,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HB_COMMENTLINE",
+        "value": 72,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HB_NUMBER",
+        "value": 73,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HB_WORD",
+        "value": 74,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HB_STRING",
+        "value": 75,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HB_IDENTIFIER",
+        "value": 76,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HB_STRINGEOL",
+        "value": 77,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_HBA_START",
+        "value": 80,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HBA_DEFAULT",
+        "value": 81,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HBA_COMMENTLINE",
+        "value": 82,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HBA_NUMBER",
+        "value": 83,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HBA_WORD",
+        "value": 84,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HBA_STRING",
+        "value": 85,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HBA_IDENTIFIER",
+        "value": 86,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HBA_STRINGEOL",
+        "value": 87,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_HP_START",
+        "value": 90,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_DEFAULT",
+        "value": 91,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_COMMENTLINE",
+        "value": 92,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HP_NUMBER",
+        "value": 93,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HP_STRING",
+        "value": 94,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_CHARACTER",
+        "value": 95,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_WORD",
+        "value": 96,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HP_TRIPLE",
+        "value": 97,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_TRIPLEDOUBLE",
+        "value": 98,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_CLASSNAME",
+        "value": 99,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HP_DEFNAME",
+        "value": 100,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HP_OPERATOR",
+        "value": 101,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HP_IDENTIFIER",
+        "value": 102,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_COMPLEX_VARIABLE",
+        "value": 104,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_START",
+        "value": 105,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_DEFAULT",
+        "value": 106,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_COMMENTLINE",
+        "value": 107,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HPA_NUMBER",
+        "value": 108,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HPA_STRING",
+        "value": 109,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_CHARACTER",
+        "value": 110,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_WORD",
+        "value": 111,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HPA_TRIPLE",
+        "value": 112,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_TRIPLEDOUBLE",
+        "value": 113,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_CLASSNAME",
+        "value": 114,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HPA_DEFNAME",
+        "value": 115,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPA_OPERATOR",
+        "value": 116,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HPA_IDENTIFIER",
+        "value": 117,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_DEFAULT",
+        "value": 118,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_HPHP_HSTRING",
+        "value": 119,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_SIMPLESTRING",
+        "value": 120,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_WORD",
+        "value": 121,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_HPHP_NUMBER",
+        "value": 122,
+        "color": "number"
+      },
+      {
+        "style": "SCE_HPHP_VARIABLE",
+        "value": 123,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_COMMENT",
+        "value": 124,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HPHP_COMMENTLINE",
+        "value": 125,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_HPHP_HSTRING_VARIABLE",
+        "value": 126,
+        "color": "string"
+      },
+      {
+        "style": "SCE_HPHP_OPERATOR",
+        "value": 127,
+        "color": "builtin"
+      }
+    ],
+    "inno": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "keyword"
+      }
+    ],
+    "java": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "javascript": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "json": [
+      {
+        "style": "SCE_JSON_DEFAULT",
+        "value": 0,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_JSON_NUMBER",
+        "value": 1,
+        "color": "number"
+      },
+      {
+        "style": "SCE_JSON_STRING",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_JSON_STRINGEOL",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_JSON_PROPERTYNAME",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_JSON_ESCAPESEQUENCE",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_JSON_LINECOMMENT",
+        "value": 6,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_JSON_BLOCKCOMMENT",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_JSON_OPERATOR",
+        "value": 8,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_JSON_URI",
+        "value": 9,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_JSON_COMPACTIRI",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_JSON_KEYWORD",
+        "value": 11,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_JSON_LDKEYWORD",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_JSON_ERROR",
+        "value": 13,
+        "color": "editorTextColor"
+      }
+    ],
+    "lua": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "makefile": [
+      {
+        "style": "SCE_MAKE_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_MAKE_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_MAKE_PREPROCESSOR",
+        "value": 2,
+        "color": "string"
+      },
+      {
+        "style": "SCE_MAKE_IDENTIFIER",
+        "value": 3,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_MAKE_OPERATOR",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_MAKE_TARGET",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_MAKE_IDEOL",
+        "value": 9,
+        "color": "editorTextColor"
+      }
+    ],
+    "markdown": [
+      {
+        "style": "SCE_MARKDOWN_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_MARKDOWN_LINE_BEGIN",
+        "value": 1,
+        "color": "red"
+      },
+      {
+        "style": "SCE_MARKDOWN_STRONG1",
+        "value": 2,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_MARKDOWN_STRONG2",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_MARKDOWN_EM1",
+        "value": 4,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_MARKDOWN_EM2",
+        "value": 5,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER1",
+        "value": 6,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER2",
+        "value": 7,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER3",
+        "value": 8,
+        "color": "number"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER4",
+        "value": 9,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER5",
+        "value": 10,
+        "color": "red"
+      },
+      {
+        "style": "SCE_MARKDOWN_HEADER6",
+        "value": 11,
+        "color": "yellowgreen"
+      },
+      {
+        "style": "SCE_MARKDOWN_PRECHAR",
+        "value": 12,
+        "color": "string"
+      },
+      {
+        "style": "SCE_MARKDOWN_ULIST_ITEM",
+        "value": 13,
+        "color": "red"
+      },
+      {
+        "style": "SCE_MARKDOWN_BLOCKQUOTE",
+        "value": 15,
+        "color": "string"
+      },
+      {
+        "style": "SCE_MARKDOWN_STRIKEOUT",
+        "value": 16,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_MARKDOWN_HRULE",
+        "value": 17,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_MARKDOWN_LINK",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_MARKDOWN_CODE",
+        "value": 19,
+        "color": "string"
+      },
+      {
+        "style": "SCE_MARKDOWN_CODE2",
+        "value": 20,
+        "color": "string"
+      },
+      {
+        "style": "SCE_MARKDOWN_CODEBK",
+        "value": 21,
+        "color": "string"
+      }
+    ],
+    "matlab": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "pascal": [
+      {
+        "style": "SCE_PAS_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_PAS_IDENTIFIER",
+        "value": 1,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_PAS_COMMENT",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_PAS_COMMENT2",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_PAS_COMMENTLINE",
+        "value": 4,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_PAS_PREPROCESSOR",
+        "value": 5,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_PAS_PREPROCESSOR2",
+        "value": 6,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_PAS_HEXNUMBER",
+        "value": 8,
+        "color": "number"
+      },
+      {
+        "style": "SCE_PAS_WORD",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_PAS_STRING",
+        "value": 10,
+        "color": "string"
+      },
+      {
+        "style": "SCE_PAS_STRINGEOL",
+        "value": 11,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_PAS_CHARACTER",
+        "value": 12,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_PAS_OPERATOR",
+        "value": 13,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_PAS_ASM",
+        "value": 14,
+        "color": "red"
+      }
+    ],
+    "perl": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "php": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "powershell": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "editorTextColor"
+      }
+    ],
+    "protobuf": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "keyword"
+      }
+    ],
+    "python": [
+      {
+        "style": "SCE_P_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_COMMENTLINE",
+        "value": 1,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_NUMBER",
+        "value": 2,
+        "color": "number"
+      },
+      {
+        "style": "SCE_P_STRING",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_CHARACTER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_TRIPLE",
+        "value": 6,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_TRIPLEDOUBLE",
+        "value": 7,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_CLASSNAME",
+        "value": 8,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_DEFNAME",
+        "value": 9,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_P_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_COMMENTBLOCK",
+        "value": 12,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_P_STRINGEOL",
+        "value": 13,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_WORD2",
+        "value": 14,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_DECORATOR",
+        "value": 15,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_FSTRING",
+        "value": 16,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FCHARACTER",
+        "value": 17,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FTRIPLE",
+        "value": 18,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_FTRIPLEDOUBLE",
+        "value": 19,
+        "color": "string"
+      }
+    ],
+    "python_2": [
+      {
+        "style": "SCE_P_COMMENTLINE",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_COMMENTBLOCK",
+        "value": 12,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_NUMBER",
+        "value": 2,
+        "color": "yellowgreen"
+      },
+      {
+        "style": "SCE_P_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_CLASSNAME",
+        "value": 8,
+        "color": "cyan"
+      },
+      {
+        "style": "SCE_P_STRING",
+        "value": 3,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_CHARACTER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_P_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_OPERATOR",
+        "value": 10,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_P_DEFNAME",
+        "value": 9,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_P_STRINGEOL",
+        "value": 13,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_P_WORD",
+        "value": 5,
+        "color": "darkorange"
+      },
+      {
+        "style": "SCE_P_WORD2",
+        "value": 14,
+        "color": "darkorange"
+      },
+      {
+        "style": "SCE_P_TRIPLE",
+        "value": 6,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_TRIPLEDOUBLE",
+        "value": 7,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_P_DECORATOR",
+        "value": 15,
+        "color": "builtin"
+      }
+    ],
+    "r": [
+      {
+        "style": "SCE_R_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_R_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_R_KWORD",
+        "value": 2,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_R_BASEKWORD",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_R_OTHERKWORD",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_R_NUMBER",
+        "value": 5,
+        "color": "number"
+      },
+      {
+        "style": "SCE_R_STRING",
+        "value": 6,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_R_STRING2",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_R_OPERATOR",
+        "value": 8,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_R_IDENTIFIER",
+        "value": 9,
+        "color": "light_orange"
+      },
+      {
+        "style": "SCE_R_INFIX",
+        "value": 10,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_R_INFIXEOL",
+        "value": 11,
+        "color": "yellow"
+      }
+    ],
+    "resource": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "keyword"
+      }
+    ],
+    "ruby": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "rust": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "editorTextColor"
+      }
+    ],
+    "sql": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "tcl": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "typescript": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "vb": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "vcxproject": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "comment_monokai"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "verilog": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "vhdl": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "instance"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "comment"
+      }
+    ],
+    "xml": [
+      {
+        "style": "SCE_C_DEFAULT",
+        "value": 0,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_COMMENT",
+        "value": 1,
+        "color": "keyword"
+      },
+      {
+        "style": "SCE_C_COMMENTLINE",
+        "value": 2,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_COMMENTDOC",
+        "value": 3,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_NUMBER",
+        "value": 4,
+        "color": "number"
+      },
+      {
+        "style": "SCE_C_WORD",
+        "value": 5,
+        "color": "comment"
+      },
+      {
+        "style": "SCE_C_STRING",
+        "value": 6,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_CHARACTER",
+        "value": 7,
+        "color": "string"
+      },
+      {
+        "style": "SCE_C_UUID",
+        "value": 8,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_PREPROCESSOR",
+        "value": 9,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_OPERATOR",
+        "value": 10,
+        "color": "builtin"
+      },
+      {
+        "style": "SCE_C_IDENTIFIER",
+        "value": 11,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_STRINGEOL",
+        "value": 12,
+        "color": "editorTextColor"
+      },
+      {
+        "style": "SCE_C_VERBATIM",
+        "value": 13,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_REGEX",
+        "value": 14,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_COMMENTLINEDOC",
+        "value": 15,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_WORD2",
+        "value": 16,
+        "color": "orange"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORD",
+        "value": 17,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_COMMENTDOCKEYWORDERROR",
+        "value": 18,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_GLOBALCLASS",
+        "value": 19,
+        "color": "magenta"
+      },
+      {
+        "style": "SCE_C_STRINGRAW",
+        "value": 20,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_TRIPLEVERBATIM",
+        "value": 21,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_HASHQUOTEDSTRING",
+        "value": 22,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENT",
+        "value": 23,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_PREPROCESSORCOMMENTDOC",
+        "value": 24,
+        "color": "yellow"
+      },
+      {
+        "style": "SCE_C_USERLITERAL",
+        "value": 25,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_TASKMARKER",
+        "value": 26,
+        "color": "definition"
+      },
+      {
+        "style": "SCE_C_ESCAPESEQUENCE",
+        "value": 27,
+        "color": "definition"
+      }
+    ]
+  }
+}

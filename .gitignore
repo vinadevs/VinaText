@@ -8,3 +8,6 @@ bin/x64/Release/VinaText.pdb
 bin/x64/Debug/VinaText.exe
 bin/x64/Debug/VinaText.pdb
 bin/x64
+# Python bytecode from tools/
+__pycache__/
+*.pyc
