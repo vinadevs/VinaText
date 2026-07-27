@@ -30,7 +30,12 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIGHT_H = os.path.join(ROOT, "src", "EditorColorLight.h")
 DARK_H = os.path.join(ROOT, "src", "EditorColorDark.h")
 SCILEXER_H = os.path.join(ROOT, "include", "scintilla", "SciLexer.h")
-DATA_DIR = os.path.join(ROOT, "data")
+# Runtime data lives under Packages/, matching the existing layout the app already
+# uses (PathUtils::GetVinaTextPackagePath -> "Packages\"). Today that tree only
+# exists per-configuration under bin/x64/{Debug,Release}/Packages and the two copies
+# have already diverged; this root-level copy is the single source of truth, and
+# Phase 0's CMake is expected to copy it to the output directory.
+DATA_DIR = os.path.join(ROOT, "Packages", "data-packages")
 
 META_FIELDS = {
     "language": "name",
@@ -258,7 +263,8 @@ def main():
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(doc, f, indent=2, ensure_ascii=False)
                 f.write("\n")
-            print("wrote data/%-18s %7d bytes" % (fname, os.path.getsize(path)))
+            print("wrote %-40s %7d bytes"
+                  % (os.path.relpath(path, ROOT), os.path.getsize(path)))
 
     # verify against what is actually on disk, not the in-memory objects
     on_disk = json.load(open(os.path.join(DATA_DIR, "languages.json"), encoding="utf-8"))
